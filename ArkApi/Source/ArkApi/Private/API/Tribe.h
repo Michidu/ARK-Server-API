@@ -4,130 +4,128 @@
 
 struct FTribeData
 {
-	void SetTribeName(FString a0) { *(FString*)GetAddress(this, "FTribeData", "TribeName") = a0; };
-	FString GetTribeName() const { return *(FString*)GetAddress(this, "FTribeData", "TribeName"); };
-	void SetOwnerPlayerDataID(unsigned int a0) { *(unsigned int*)GetAddress(this, "FTribeData", "OwnerPlayerDataID") = a0; };
-	unsigned int GetOwnerPlayerDataID() const { return *(unsigned int*)GetAddress(this, "FTribeData", "OwnerPlayerDataID"); };
-	void SetTribeID(int a0) { *(int*)GetAddress(this, "FTribeData", "TribeID") = a0; };
-	int GetTribeID() const { return *(int*)GetAddress(this, "FTribeData", "TribeID"); };
-	void SetMembersPlayerName(TArray<FString, FDefaultAllocator> a0) { *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersPlayerName") = a0; };
-	TArray<FString, FDefaultAllocator> GetMembersPlayerName() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersPlayerName"); };
-	void SetMembersPlayerDataID(TArray<unsigned int, FDefaultAllocator> a0) { *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersPlayerDataID") = a0; };
-	TArray<unsigned int, FDefaultAllocator> GetMembersPlayerDataID() const { return *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersPlayerDataID"); };
-	void SetMembersRankGroups(TArray<unsigned char, FDefaultAllocator> a0) { *(TArray<unsigned char, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersRankGroups") = a0; };
-	TArray<unsigned char, FDefaultAllocator> GetMembersRankGroups() const { return *(TArray<unsigned char, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersRankGroups"); };
-	void SetTribeAdmins(TArray<unsigned int, FDefaultAllocator> a0) { *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeAdmins") = a0; };
-	TArray<unsigned int, FDefaultAllocator> GetTribeAdmins() const { return *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeAdmins"); };
-	void SetTribeAlliances(TArray<FTribeAlliance, FDefaultAllocator> a0) { *(TArray<FTribeAlliance, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeAlliances") = a0; };
-	TArray<FTribeAlliance, FDefaultAllocator> GetTribeAlliances() const { return *(TArray<FTribeAlliance, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeAlliances"); };
-	void SetbSetGovernment(bool a0) { *(bool*)GetAddress(this, "FTribeData", "bSetGovernment") = a0; };
-	bool GetbSetGovernment() const { return *(bool*)GetAddress(this, "FTribeData", "bSetGovernment"); };
-	void SetMembersConfigs(TArray<FPrimalPlayerCharacterConfigStruct, FDefaultAllocator> a0) { *(TArray<FPrimalPlayerCharacterConfigStruct, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersConfigs") = a0; };
-	TArray<FPrimalPlayerCharacterConfigStruct, FDefaultAllocator> GetMembersConfigs() const { return *(TArray<FPrimalPlayerCharacterConfigStruct, FDefaultAllocator>*)GetAddress(this, "FTribeData", "MembersConfigs"); };
-	void SetTribeWars(TArray<FTribeWar, FDefaultAllocator> a0) { *(TArray<FTribeWar, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeWars") = a0; };
-	TArray<FTribeWar, FDefaultAllocator> GetTribeWars() const { return *(TArray<FTribeWar, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeWars"); };
-	void SetTribeLog(TArray<FString, FDefaultAllocator> a0) { *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeLog") = a0; };
-	TArray<FString, FDefaultAllocator> GetTribeLog() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeLog"); };
-	void SetLogIndex(int a0) { *(int*)GetAddress(this, "FTribeData", "LogIndex") = a0; };
-	int GetLogIndex() const { return *(int*)GetAddress(this, "FTribeData", "LogIndex"); };
-	void SetTribeRankGroups(TArray<FTribeRankGroup, FDefaultAllocator> a0) { *(TArray<FTribeRankGroup, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeRankGroups") = a0; };
-	TArray<FTribeRankGroup, FDefaultAllocator> GetTribeRankGroups() const { return *(TArray<FTribeRankGroup, FDefaultAllocator>*)GetAddress(this, "FTribeData", "TribeRankGroups"); };
-	FTribeGovernment* GetTribeGovernment() const { return (FTribeGovernment*)GetAddress(this, "FTribeData", "TribeGovernment"); };
+	FString GetTribeNameField() const { return GetNativeField<FString>(this, "FTribeData", "TribeName"); }
+	void SetTribeNameField(FString newValue) { SetNativeField(this, "FTribeData", "TribeName", newValue); }
+	unsigned int GetOwnerPlayerDataIDField() const { return GetNativeField<unsigned int>(this, "FTribeData", "OwnerPlayerDataID"); }
+	void SetOwnerPlayerDataIDField(unsigned int newValue) { SetNativeField(this, "FTribeData", "OwnerPlayerDataID", newValue); }
+	int GetTribeIDField() const { return GetNativeField<int>(this, "FTribeData", "TribeID"); }
+	void SetTribeIDField(int newValue) { SetNativeField(this, "FTribeData", "TribeID", newValue); }
+	TArray<FString, FDefaultAllocator> GetMembersPlayerNameField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "FTribeData", "MembersPlayerName"); }
+	TArray<unsigned int, FDefaultAllocator> GetMembersPlayerDataIDField() const { return GetNativeField<TArray<unsigned int, FDefaultAllocator>>(this, "FTribeData", "MembersPlayerDataID"); }
+	TArray<unsigned char, FDefaultAllocator> GetMembersRankGroupsField() const { return GetNativeField<TArray<unsigned char, FDefaultAllocator>>(this, "FTribeData", "MembersRankGroups"); }
+	void SetMembersRankGroupsField(TArray<unsigned char, FDefaultAllocator> newValue) { SetNativeField(this, "FTribeData", "MembersRankGroups", newValue); }
+	TArray<unsigned int, FDefaultAllocator> GetTribeAdminsField() const { return GetNativeField<TArray<unsigned int, FDefaultAllocator>>(this, "FTribeData", "TribeAdmins"); }
+	void SetTribeAdminsField(TArray<unsigned int, FDefaultAllocator> newValue) { SetNativeField(this, "FTribeData", "TribeAdmins", newValue); }
+	TArray<FTribeAlliance, FDefaultAllocator> GetTribeAlliancesField() const { return GetNativeField<TArray<FTribeAlliance, FDefaultAllocator>>(this, "FTribeData", "TribeAlliances"); }
+	void SetTribeAlliancesField(TArray<FTribeAlliance, FDefaultAllocator> newValue) { SetNativeField(this, "FTribeData", "TribeAlliances", newValue); }
+	bool GetbSetGovernmentField() const { return GetNativeField<bool>(this, "FTribeData", "bSetGovernment"); }
+	void SetbSetGovernmentField(bool newValue) { SetNativeField(this, "FTribeData", "bSetGovernment", newValue); }
+	FTribeGovernment* GetTribeGovernmentField() const { return GetNativePointerField<FTribeGovernment*>(this, "FTribeData", "TribeGovernment"); }
+	TArray<FPrimalPlayerCharacterConfigStruct, FDefaultAllocator> GetMembersConfigsField() const { return GetNativeField<TArray<FPrimalPlayerCharacterConfigStruct, FDefaultAllocator>>(this, "FTribeData", "MembersConfigs"); }
+	TArray<FTribeWar, FDefaultAllocator> GetTribeWarsField() const { return GetNativeField<TArray<FTribeWar, FDefaultAllocator>>(this, "FTribeData", "TribeWars"); }
+	TArray<FString, FDefaultAllocator> GetTribeLogField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "FTribeData", "TribeLog"); }
+	void SetTribeLogField(TArray<FString, FDefaultAllocator> newValue) { SetNativeField(this, "FTribeData", "TribeLog", newValue); }
+	int GetLogIndexField() const { return GetNativeField<int>(this, "FTribeData", "LogIndex"); }
+	void SetLogIndexField(int newValue) { SetNativeField(this, "FTribeData", "LogIndex", newValue); }
+	TArray<FTribeRankGroup, FDefaultAllocator> GetTribeRankGroupsField() const { return GetNativeField<TArray<FTribeRankGroup, FDefaultAllocator>>(this, "FTribeData", "TribeRankGroups"); }
 
 	// Functions
 
-	bool IsTribeWarActive(int a1, UWorld* a2, bool a3) { return static_cast<bool(_cdecl*)(DWORD64, int, UWorld*, bool)>(GetAddress("FTribeData", "IsTribeWarActive"))((DWORD64)this, a1, a2, a3); }
-	bool HasTribeWarRequest(int a1, UWorld* a2) { return static_cast<bool(_cdecl*)(DWORD64, int, UWorld*)>(GetAddress("FTribeData", "HasTribeWarRequest"))((DWORD64)this, a1, a2); }
-	void RefreshTribeWars(UWorld* a1) { static_cast<void(_cdecl*)(DWORD64, UWorld*)>(GetAddress("FTribeData", "RefreshTribeWars"))((DWORD64)this, a1); }
-	FTribeAlliance* FindTribeAlliance(unsigned int a1) { return static_cast<FTribeAlliance*(_cdecl*)(DWORD64, unsigned int)>(GetAddress("FTribeData", "FindTribeAlliance"))((DWORD64)this, a1); }
-	bool IsTribeAlliedWith(unsigned int a1) { return static_cast<bool(_cdecl*)(DWORD64, unsigned int)>(GetAddress("FTribeData", "IsTribeAlliedWith"))((DWORD64)this, a1); }
-	int GetDefaultRankGroupIndex() { return static_cast<int(_cdecl*)(DWORD64)>(GetAddress("FTribeData", "GetDefaultRankGroupIndex"))((DWORD64)this); }
-	bool GetTribeRankGroupForPlayer(unsigned int a1, FTribeRankGroup& a2) { return static_cast<bool(_cdecl*)(DWORD64, unsigned int, FTribeRankGroup&)>(GetAddress("FTribeData", "GetTribeRankGroupForPlayer"))((DWORD64)this, a1, a2); }
-	int GetBestRankGroupForRank(int a1) { return static_cast<int(_cdecl*)(DWORD64, int)>(GetAddress("FTribeData", "GetBestRankGroupForRank"))((DWORD64)this, a1); }
+	bool IsTribeWarActive(int TribeID, UWorld * ForWorld, bool bIncludeUnstarted) { return NativeCall<bool, int, UWorld *, bool>((DWORD64)this, "FTribeData", "IsTribeWarActive", TribeID, ForWorld, bIncludeUnstarted); }
+	bool HasTribeWarRequest(int TribeID, UWorld * ForWorld) { return NativeCall<bool, int, UWorld *>((DWORD64)this, "FTribeData", "HasTribeWarRequest", TribeID, ForWorld); }
+	void RefreshTribeWars(UWorld * ForWorld) { NativeCall<void, UWorld *>((DWORD64)this, "FTribeData", "RefreshTribeWars", ForWorld); }
+	FTribeAlliance * FindTribeAlliance(unsigned int AllianceID) { return NativeCall<FTribeAlliance *, unsigned int>((DWORD64)this, "FTribeData", "FindTribeAlliance", AllianceID); }
+	bool IsTribeAlliedWith(unsigned int OtherTribeID) { return NativeCall<bool, unsigned int>((DWORD64)this, "FTribeData", "IsTribeAlliedWith", OtherTribeID); }
+	bool GetTribeRankGroupForPlayer(unsigned int PlayerDataID, FTribeRankGroup * outRankGroup) { return NativeCall<bool, unsigned int, FTribeRankGroup *>((DWORD64)this, "FTribeData", "GetTribeRankGroupForPlayer", PlayerDataID, outRankGroup); }
+	int GetBestRankGroupForRank(int Rank) { return NativeCall<int, int>((DWORD64)this, "FTribeData", "GetBestRankGroupForRank", Rank); }
+	int GetDefaultRankGroupIndex() { return NativeCall<int>((DWORD64)this, "FTribeData", "GetDefaultRankGroupIndex"); }
+	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeData", "StaticStruct"); }
 };
 
 struct FTribeWar
 {
-	void SetEnemyTribeID(int a0) { *(int*)GetAddress(this, "FTribeWar", "EnemyTribeID") = a0; };
-	int GetEnemyTribeID() const { return *(int*)GetAddress(this, "FTribeWar", "EnemyTribeID"); };
-	void SetStartDayNumber(int a0) { *(int*)GetAddress(this, "FTribeWar", "StartDayNumber") = a0; };
-	int GetStartDayNumber() const { return *(int*)GetAddress(this, "FTribeWar", "StartDayNumber"); };
-	void SetEndDayNumber(int a0) { *(int*)GetAddress(this, "FTribeWar", "EndDayNumber") = a0; };
-	int GetEndDayNumber() const { return *(int*)GetAddress(this, "FTribeWar", "EndDayNumber"); };
-	void SetStartDayTime(float a0) { *(float*)GetAddress(this, "FTribeWar", "StartDayTime") = a0; };
-	float GetStartDayTime() const { return *(float*)GetAddress(this, "FTribeWar", "StartDayTime"); };
-	void SetEndDayTime(float a0) { *(float*)GetAddress(this, "FTribeWar", "EndDayTime") = a0; };
-	float GetEndDayTime() const { return *(float*)GetAddress(this, "FTribeWar", "EndDayTime"); };
-	void SetbIsApproved(bool a0) { *(bool*)GetAddress(this, "FTribeWar", "bIsApproved") = a0; };
-	bool GetbIsApproved() const { return *(bool*)GetAddress(this, "FTribeWar", "bIsApproved"); };
-	void SetInitiatingTribeID(int a0) { *(int*)GetAddress(this, "FTribeWar", "InitiatingTribeID") = a0; };
-	int GetInitiatingTribeID() const { return *(int*)GetAddress(this, "FTribeWar", "InitiatingTribeID"); };
-	void SetEnemyTribeName(FString a0) { *(FString*)GetAddress(this, "FTribeWar", "EnemyTribeName") = a0; };
-	FString GetEnemyTribeName() const { return *(FString*)GetAddress(this, "FTribeWar", "EnemyTribeName"); };
+	int GetEnemyTribeIDField() const { return GetNativeField<int>(this, "FTribeWar", "EnemyTribeID"); }
+	void SetEnemyTribeIDField(int newValue) { SetNativeField(this, "FTribeWar", "EnemyTribeID", newValue); }
+	int GetStartDayNumberField() const { return GetNativeField<int>(this, "FTribeWar", "StartDayNumber"); }
+	void SetStartDayNumberField(int newValue) { SetNativeField(this, "FTribeWar", "StartDayNumber", newValue); }
+	int GetEndDayNumberField() const { return GetNativeField<int>(this, "FTribeWar", "EndDayNumber"); }
+	void SetEndDayNumberField(int newValue) { SetNativeField(this, "FTribeWar", "EndDayNumber", newValue); }
+	float GetStartDayTimeField() const { return GetNativeField<float>(this, "FTribeWar", "StartDayTime"); }
+	void SetStartDayTimeField(float newValue) { SetNativeField(this, "FTribeWar", "StartDayTime", newValue); }
+	float GetEndDayTimeField() const { return GetNativeField<float>(this, "FTribeWar", "EndDayTime"); }
+	void SetEndDayTimeField(float newValue) { SetNativeField(this, "FTribeWar", "EndDayTime", newValue); }
+	bool GetbIsApprovedField() const { return GetNativeField<bool>(this, "FTribeWar", "bIsApproved"); }
+	void SetbIsApprovedField(bool newValue) { SetNativeField(this, "FTribeWar", "bIsApproved", newValue); }
+	int GetInitiatingTribeIDField() const { return GetNativeField<int>(this, "FTribeWar", "InitiatingTribeID"); }
+	void SetInitiatingTribeIDField(int newValue) { SetNativeField(this, "FTribeWar", "InitiatingTribeID", newValue); }
+	FString GetEnemyTribeNameField() const { return GetNativeField<FString>(this, "FTribeWar", "EnemyTribeName"); }
+	void SetEnemyTribeNameField(FString newValue) { SetNativeField(this, "FTribeWar", "EnemyTribeName", newValue); }
 
 	// Functions
 
-	bool IsCurrentlyActive(UWorld* a1) { return static_cast<bool(_cdecl*)(DWORD64, UWorld*)>(GetAddress("FTribeWar", "IsCurrentlyActive"))((DWORD64)this, a1); }
-	FString* GetDescriptiveString(FString* res, UWorld* a1) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, UWorld*)>(GetAddress("FTribeWar", "GetDescriptiveString"))((DWORD64)this, res, a1); }
-	bool IsTribeWarOn(UWorld* a1) { return static_cast<bool(_cdecl*)(DWORD64, UWorld*)>(GetAddress("FTribeWar", "IsTribeWarOn"))((DWORD64)this, a1); }
-	bool CanBeRejected(UWorld* a1) { return static_cast<bool(_cdecl*)(DWORD64, UWorld*)>(GetAddress("FTribeWar", "CanBeRejected"))((DWORD64)this, a1); }
-	FString* GetWarTimeString(FString* res, int a1, float a2) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, int, float)>(GetAddress("FTribeWar", "GetWarTimeString"))((DWORD64)this, res, a1, a2); }
+	bool CanBeRejected(UWorld * ForWorld) { return NativeCall<bool, UWorld *>((DWORD64)this, "FTribeWar", "CanBeRejected", ForWorld); }
+	bool IsCurrentlyActive(UWorld * ForWorld) { return NativeCall<bool, UWorld *>((DWORD64)this, "FTribeWar", "IsCurrentlyActive", ForWorld); }
+	bool IsTribeWarOn(UWorld * ForWorld) { return NativeCall<bool, UWorld *>((DWORD64)this, "FTribeWar", "IsTribeWarOn", ForWorld); }
+	FString * GetDescriptiveString(FString * result, UWorld * ForWorld) { return NativeCall<FString *, FString *, UWorld *>((DWORD64)this, "FTribeWar", "GetDescriptiveString", result, ForWorld); }
+	FString * GetWarTimeString(FString * result, int DayNumber, float DayTime) { return NativeCall<FString *, FString *, int, float>((DWORD64)this, "FTribeWar", "GetWarTimeString", result, DayNumber, DayTime); }
+	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeWar", "StaticStruct"); }
 };
 
 struct FTribeRankGroup
 {
-	void SetRankGroupName(FString a0) { *(FString*)GetAddress(this, "FTribeRankGroup", "RankGroupName") = a0; };
-	FString GetRankGroupName() const { return *(FString*)GetAddress(this, "FTribeRankGroup", "RankGroupName"); };
-	void SetRankGroupRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "RankGroupRank") = a0; };
-	unsigned char GetRankGroupRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "RankGroupRank"); };
-	void SetInventoryRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "InventoryRank") = a0; };
-	unsigned char GetInventoryRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "InventoryRank"); };
-	void SetStructureActivationRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "StructureActivationRank") = a0; };
-	unsigned char GetStructureActivationRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "StructureActivationRank"); };
-	void SetNewStructureActivationRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "NewStructureActivationRank") = a0; };
-	unsigned char GetNewStructureActivationRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "NewStructureActivationRank"); };
-	void SetNewStructureInventoryRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "NewStructureInventoryRank") = a0; };
-	unsigned char GetNewStructureInventoryRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "NewStructureInventoryRank"); };
-	void SetPetOrderRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "PetOrderRank") = a0; };
-	unsigned char GetPetOrderRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "PetOrderRank"); };
-	void SetPetRidingRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "PetRidingRank") = a0; };
-	unsigned char GetPetRidingRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "PetRidingRank"); };
-	void SetInviteToGroupRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "InviteToGroupRank") = a0; };
-	unsigned char GetInviteToGroupRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "InviteToGroupRank"); };
-	void SetMaxPromotionGroupRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "MaxPromotionGroupRank") = a0; };
-	unsigned char GetMaxPromotionGroupRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "MaxPromotionGroupRank"); };
-	void SetMaxDemotionGroupRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "MaxDemotionGroupRank") = a0; };
-	unsigned char GetMaxDemotionGroupRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "MaxDemotionGroupRank"); };
-	void SetMaxBanishmentGroupRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "MaxBanishmentGroupRank") = a0; };
-	unsigned char GetMaxBanishmentGroupRank() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "MaxBanishmentGroupRank"); };
-	void SetNumInvitesRemaining(unsigned char a0) { *(unsigned char*)GetAddress(this, "FTribeRankGroup", "NumInvitesRemaining") = a0; };
-	unsigned char GetNumInvitesRemaining() const { return *(unsigned char*)GetAddress(this, "FTribeRankGroup", "NumInvitesRemaining"); };
+	FString GetRankGroupNameField() const { return GetNativeField<FString>(this, "FTribeRankGroup", "RankGroupName"); }
+	void SetRankGroupNameField(FString newValue) { SetNativeField(this, "FTribeRankGroup", "RankGroupName", newValue); }
+	char GetRankGroupRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "RankGroupRank"); }
+	void SetRankGroupRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "RankGroupRank", newValue); }
+	char GetInventoryRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "InventoryRank"); }
+	void SetInventoryRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "InventoryRank", newValue); }
+	char GetStructureActivationRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "StructureActivationRank"); }
+	void SetStructureActivationRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "StructureActivationRank", newValue); }
+	char GetNewStructureActivationRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "NewStructureActivationRank"); }
+	void SetNewStructureActivationRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "NewStructureActivationRank", newValue); }
+	char GetNewStructureInventoryRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "NewStructureInventoryRank"); }
+	void SetNewStructureInventoryRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "NewStructureInventoryRank", newValue); }
+	char GetPetOrderRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "PetOrderRank"); }
+	void SetPetOrderRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "PetOrderRank", newValue); }
+	char GetPetRidingRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "PetRidingRank"); }
+	void SetPetRidingRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "PetRidingRank", newValue); }
+	char GetInviteToGroupRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "InviteToGroupRank"); }
+	void SetInviteToGroupRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "InviteToGroupRank", newValue); }
+	char GetMaxPromotionGroupRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "MaxPromotionGroupRank"); }
+	void SetMaxPromotionGroupRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "MaxPromotionGroupRank", newValue); }
+	char GetMaxDemotionGroupRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "MaxDemotionGroupRank"); }
+	void SetMaxDemotionGroupRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "MaxDemotionGroupRank", newValue); }
+	char GetMaxBanishmentGroupRankField() const { return GetNativeField<char>(this, "FTribeRankGroup", "MaxBanishmentGroupRank"); }
+	void SetMaxBanishmentGroupRankField(char newValue) { SetNativeField(this, "FTribeRankGroup", "MaxBanishmentGroupRank", newValue); }
+	char GetNumInvitesRemainingField() const { return GetNativeField<char>(this, "FTribeRankGroup", "NumInvitesRemaining"); }
+	void SetNumInvitesRemainingField(char newValue) { SetNativeField(this, "FTribeRankGroup", "NumInvitesRemaining", newValue); }
+
+	// Functions
+
+	void ValidateSettings() { NativeCall<void>((DWORD64)this, "FTribeRankGroup", "ValidateSettings"); }
 };
 
 struct FTribeAlliance
 {
-	void SetAllianceName(FString a0) { *(FString*)GetAddress(this, "FTribeAlliance", "AllianceName") = a0; };
-	FString GetAllianceName() const { return *(FString*)GetAddress(this, "FTribeAlliance", "AllianceName"); };
-	void SetAllianceID(unsigned int a0) { *(unsigned int*)GetAddress(this, "FTribeAlliance", "AllianceID") = a0; };
-	unsigned int GetAllianceID() const { return *(unsigned int*)GetAddress(this, "FTribeAlliance", "AllianceID"); };
-	void SetMembersTribeName(TArray<FString, FDefaultAllocator> a0) { *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "FTribeAlliance", "MembersTribeName") = a0; };
-	TArray<FString, FDefaultAllocator> GetMembersTribeName() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "FTribeAlliance", "MembersTribeName"); };
-	void SetMembersTribeID(TArray<unsigned int, FDefaultAllocator> a0) { *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeAlliance", "MembersTribeID") = a0; };
-	TArray<unsigned int, FDefaultAllocator> GetMembersTribeID() const { return *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeAlliance", "MembersTribeID"); };
-	void SetAdminsTribeID(TArray<unsigned int, FDefaultAllocator> a0) { *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeAlliance", "AdminsTribeID") = a0; };
-	TArray<unsigned int, FDefaultAllocator> GetAdminsTribeID() const { return *(TArray<unsigned int, FDefaultAllocator>*)GetAddress(this, "FTribeAlliance", "AdminsTribeID"); };
+	FString GetAllianceNameField() const { return GetNativeField<FString>(this, "FTribeAlliance", "AllianceName"); }
+	void SetAllianceNameField(FString newValue) { SetNativeField(this, "FTribeAlliance", "AllianceName", newValue); }
+	unsigned int GetAllianceIDField() const { return GetNativeField<unsigned int>(this, "FTribeAlliance", "AllianceID"); }
+	void SetAllianceIDField(unsigned int newValue) { SetNativeField(this, "FTribeAlliance", "AllianceID", newValue); }
+	TArray<FString, FDefaultAllocator> GetMembersTribeNameField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "FTribeAlliance", "MembersTribeName"); }
+	TArray<unsigned int, FDefaultAllocator> GetMembersTribeIDField() const { return GetNativeField<TArray<unsigned int, FDefaultAllocator>>(this, "FTribeAlliance", "MembersTribeID"); }
+	TArray<unsigned int, FDefaultAllocator> GetAdminsTribeIDField() const { return GetNativeField<TArray<unsigned int, FDefaultAllocator>>(this, "FTribeAlliance", "AdminsTribeID"); }
 };
 
 struct FTribeGovernment
 {
-	void SetTribeGovern_PINCode(int a0) { *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_PINCode") = a0; };
-	int GetTribeGovern_PINCode() const { return *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_PINCode"); };
-	void SetTribeGovern_DinoOwnership(int a0) { *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_DinoOwnership") = a0; };
-	int GetTribeGovern_DinoOwnership() const { return *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_DinoOwnership"); };
-	void SetTribeGovern_StructureOwnership(int a0) { *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_StructureOwnership") = a0; };
-	int GetTribeGovern_StructureOwnership() const { return *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_StructureOwnership"); };
-	void SetTribeGovern_DinoTaming(int a0) { *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_DinoTaming") = a0; };
-	int GetTribeGovern_DinoTaming() const { return *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_DinoTaming"); };
-	void SetTribeGovern_DinoUnclaimAdminOnly(int a0) { *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_DinoUnclaimAdminOnly") = a0; };
-	int GetTribeGovern_DinoUnclaimAdminOnly() const { return *(int*)GetAddress(this, "FTribeGovernment", "TribeGovern_DinoUnclaimAdminOnly"); };
+	int GetTribeGovern_PINCodeField() const { return GetNativeField<int>(this, "FTribeGovernment", "TribeGovern_PINCode"); }
+	void SetTribeGovern_PINCodeField(int newValue) { SetNativeField(this, "FTribeGovernment", "TribeGovern_PINCode", newValue); }
+	int GetTribeGovern_DinoOwnershipField() const { return GetNativeField<int>(this, "FTribeGovernment", "TribeGovern_DinoOwnership"); }
+	void SetTribeGovern_DinoOwnershipField(int newValue) { SetNativeField(this, "FTribeGovernment", "TribeGovern_DinoOwnership", newValue); }
+	int GetTribeGovern_StructureOwnershipField() const { return GetNativeField<int>(this, "FTribeGovernment", "TribeGovern_StructureOwnership"); }
+	void SetTribeGovern_StructureOwnershipField(int newValue) { SetNativeField(this, "FTribeGovernment", "TribeGovern_StructureOwnership", newValue); }
+	int GetTribeGovern_DinoTamingField() const { return GetNativeField<int>(this, "FTribeGovernment", "TribeGovern_DinoTaming"); }
+	void SetTribeGovern_DinoTamingField(int newValue) { SetNativeField(this, "FTribeGovernment", "TribeGovern_DinoTaming", newValue); }
+	int GetTribeGovern_DinoUnclaimAdminOnlyField() const { return GetNativeField<int>(this, "FTribeGovernment", "TribeGovern_DinoUnclaimAdminOnly"); }
+	void SetTribeGovern_DinoUnclaimAdminOnlyField(int newValue) { SetNativeField(this, "FTribeGovernment", "TribeGovern_DinoUnclaimAdminOnly", newValue); }
 };

@@ -10,709 +10,843 @@ struct FItemNetID
 
 struct UPrimalInventoryComponent
 {
-	//TArray<TWeakObjectPtr<AShooterPlayerController, FWeakObjectPtr>, FDefaultAllocator> GetRemoteViewingInventoryPlayerControllers() const { return *(TArray<TWeakObjectPtr<AShooterPlayerController, FWeakObjectPtr>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "RemoteViewingInventoryPlayerControllers"); };
-	void SetInventoryItems(TArray<UPrimalItem *, FDefaultAllocator> a0) { *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "InventoryItems") = a0; };
-	TArray<UPrimalItem *, FDefaultAllocator> GetInventoryItems() const { return *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "InventoryItems"); };
-	void SetEquippedItems(TArray<UPrimalItem *, FDefaultAllocator> a0) { *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "EquippedItems") = a0; };
-	TArray<UPrimalItem *, FDefaultAllocator> GetEquippedItems() const { return *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "EquippedItems"); };
-	void SetItemSlots(TArray<UPrimalItem *, FDefaultAllocator> a0) { *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSlots") = a0; };
-	TArray<UPrimalItem *, FDefaultAllocator> GetItemSlots() const { return *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSlots"); };
-	void SetArkTributeItems(TArray<UPrimalItem *, FDefaultAllocator> a0) { *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ArkTributeItems") = a0; };
-	TArray<UPrimalItem *, FDefaultAllocator> GetArkTributeItems() const { return *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ArkTributeItems"); };
-	void SetAllDyeColorItems(TArray<UPrimalItem *, FDefaultAllocator> a0) { *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "AllDyeColorItems") = a0; };
-	TArray<UPrimalItem *, FDefaultAllocator> GetAllDyeColorItems() const { return *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "AllDyeColorItems"); };
-	//TArray<FItemCraftQueueEntry, FDefaultAllocator> GetItemCraftQueueEntries() const { return *(TArray<FItemCraftQueueEntry, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemCraftQueueEntries"); };
-	TArray<TEnumAsByte<enum EPrimalEquipmentType_Type>, FDefaultAllocator> GetEquippableItemTypes() const { return *(TArray<TEnumAsByte<enum EPrimalEquipmentType_Type>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "EquippableItemTypes"); };
-	//void SetItemSpoilingTimeMultipliers(TArray<FItemMultiplier, FDefaultAllocator> a0) { *(TArray<FItemMultiplier, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSpoilingTimeMultipliers") = a0; };
-	//TArray<FItemMultiplier, FDefaultAllocator> GetItemSpoilingTimeMultipliers() const { return *(TArray<FItemMultiplier, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSpoilingTimeMultipliers"); };
-	void SetMaxInventoryItems(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "MaxInventoryItems") = a0; };
-	int GetMaxInventoryItems() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "MaxInventoryItems"); };
-	void SetMaxInventoryWeight(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxInventoryWeight") = a0; };
-	float GetMaxInventoryWeight() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxInventoryWeight"); };
-	void SetTribeGroupInventoryRank(unsigned char a0) { *(unsigned char*)GetAddress(this, "UPrimalInventoryComponent", "TribeGroupInventoryRank") = a0; };
-	unsigned char GetTribeGroupInventoryRank() const { return *(unsigned char*)GetAddress(this, "UPrimalInventoryComponent", "TribeGroupInventoryRank"); };
-	void SetNumSlots(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "NumSlots") = a0; };
-	int GetNumSlots() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "NumSlots"); };
-	void SetMaxItemCraftQueueEntries(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemCraftQueueEntries") = a0; };
-	int GetMaxItemCraftQueueEntries() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemCraftQueueEntries"); };
-	void SetCraftingItemSpeed(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "CraftingItemSpeed") = a0; };
-	float GetCraftingItemSpeed() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "CraftingItemSpeed"); };
-	void SetRemoteInventoryDescriptionString(FString a0) { *(FString*)GetAddress(this, "UPrimalInventoryComponent", "RemoteInventoryDescriptionString") = a0; };
-	FString GetRemoteInventoryDescriptionString() const { return *(FString*)GetAddress(this, "UPrimalInventoryComponent", "RemoteInventoryDescriptionString"); };
-	//void SetEngramRequirementClassOverride(TSubclassOf<UPrimalItem> a0) { *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalInventoryComponent", "EngramRequirementClassOverride") = a0; };
-	//TSubclassOf<UPrimalItem> GetEngramRequirementClassOverride() const { return *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalInventoryComponent", "EngramRequirementClassOverride"); };
-	//TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultInventoryItems() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultInventoryItems"); };
-	void SetDefaultInventoryItemsRandomCustomStrings(TArray<FString, FDefaultAllocator> a0) { *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStrings") = a0; };
-	TArray<FString, FDefaultAllocator> GetDefaultInventoryItemsRandomCustomStrings() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStrings"); };
-	void SetDefaultInventoryItemsRandomCustomStringsWeights(TArray<float, FDefaultAllocator> a0) { *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStringsWeights") = a0; };
-	TArray<float, FDefaultAllocator> GetDefaultInventoryItemsRandomCustomStringsWeights() const { return *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStringsWeights"); };
-
-	/*void SetCheatInventoryItems(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "CheatInventoryItems") = a0; };
-	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetCheatInventoryItems() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "CheatInventoryItems"); };
-	void SetDefaultEquippedItems(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultEquippedItems") = a0; };
-	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultEquippedItems() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultEquippedItems"); };
-	void SetDefaultEquippedItemSkins(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultEquippedItemSkins") = a0; };
-	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultEquippedItemSkins() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultEquippedItemSkins"); };
-	void SetDefaultSlotItems(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultSlotItems") = a0; };
-	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultSlotItems() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultSlotItems"); };
-	void SetItemSpawnActorClassOverrides(TArray<FItemSpawnActorClassOverride, FDefaultAllocator> a0) { *(TArray<FItemSpawnActorClassOverride, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSpawnActorClassOverrides") = a0; };
-	TArray<FItemSpawnActorClassOverride, FDefaultAllocator> GetItemSpawnActorClassOverrides() const { return *(TArray<FItemSpawnActorClassOverride, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSpawnActorClassOverrides"); };
-	void SetOnlyAllowCraftingItemClasses(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "OnlyAllowCraftingItemClasses") = a0; };
-	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetOnlyAllowCraftingItemClasses() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "OnlyAllowCraftingItemClasses"); };
-	void SetDefaultEngrams(TArray<unsigned char, FDefaultAllocator> a0) { *(TArray<unsigned char, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultEngrams") = a0; };*/
-	TArray<unsigned char, FDefaultAllocator> GetDefaultEngrams() const { return *(TArray<unsigned char, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultEngrams"); };
-	void SetDefaultInventoryQualities(TArray<float, FDefaultAllocator> a0) { *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultInventoryQualities") = a0; };
-	TArray<float, FDefaultAllocator> GetDefaultInventoryQualities() const { return *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DefaultInventoryQualities"); };
-	FString GetInventoryNameOverride() const { return *(FString*)GetAddress(this, "UPrimalInventoryComponent", "InventoryNameOverride"); };
-	void SetMaxRemoteInventoryViewingDistance(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxRemoteInventoryViewingDistance") = a0; };
-	float GetMaxRemoteInventoryViewingDistance() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxRemoteInventoryViewingDistance"); };
-	void SetActiveInventoryRefreshInterval(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "ActiveInventoryRefreshInterval") = a0; };
-	float GetActiveInventoryRefreshInterval() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "ActiveInventoryRefreshInterval"); };
-	void SetAbsoluteMaxInventoryItems(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "AbsoluteMaxInventoryItems") = a0; };
-	int GetAbsoluteMaxInventoryItems() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "AbsoluteMaxInventoryItems"); };
-	void SetLastInventoryRefreshTime(double a0) { *(double*)GetAddress(this, "UPrimalInventoryComponent", "LastInventoryRefreshTime") = a0; };
-	double GetLastInventoryRefreshTime() const { return *(double*)GetAddress(this, "UPrimalInventoryComponent", "LastInventoryRefreshTime"); };
-	//void SetForceAllowItemStackings(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ForceAllowItemStackings") = a0; };
-	//TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetForceAllowItemStackings() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ForceAllowItemStackings"); };
-	void SetDropItemRotationOffset(FRotator a0) { *(FRotator*)GetAddress(this, "UPrimalInventoryComponent", "DropItemRotationOffset") = a0; };
-	FRotator GetDropItemRotationOffset() const { return *(FRotator*)GetAddress(this, "UPrimalInventoryComponent", "DropItemRotationOffset"); };
-	//void SetItemCraftingConsumptionReplenishments(TArray<FItemCraftingConsumptionReplenishment, FDefaultAllocator> a0) { *(TArray<FItemCraftingConsumptionReplenishment, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemCraftingConsumptionReplenishments") = a0; };
-	//TArray<FItemCraftingConsumptionReplenishment, FDefaultAllocator> GetItemCraftingConsumptionReplenishments() const { return *(TArray<FItemCraftingConsumptionReplenishment, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemCraftingConsumptionReplenishments"); };
-	void SetMaxItemCooldownTimeClear(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemCooldownTimeClear") = a0; };
-	float GetMaxItemCooldownTimeClear() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemCooldownTimeClear"); };
-	//void SetMaxItemTemplateQuantities(TArray<FItemMultiplier, FDefaultAllocator> a0) { *(TArray<FItemMultiplier, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemTemplateQuantities") = a0; };
-	//TArray<FItemMultiplier, FDefaultAllocator> GetMaxItemTemplateQuantities() const { return *(TArray<FItemMultiplier, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemTemplateQuantities"); };
-	void SetCraftingItems(TArray<UPrimalItem *, FDefaultAllocator> a0) { *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "CraftingItems") = a0; };
-	TArray<UPrimalItem *, FDefaultAllocator> GetCraftingItems() const { return *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "CraftingItems"); };
-	void SetDisplayDefaultItemInventoryCount(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "DisplayDefaultItemInventoryCount") = a0; };
-	int GetDisplayDefaultItemInventoryCount() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "DisplayDefaultItemInventoryCount"); };
-	void SetbHasBeenRegistered(bool a0) { *(bool*)GetAddress(this, "UPrimalInventoryComponent", "bHasBeenRegistered") = a0; };
-	bool GetbHasBeenRegistered() const { return *(bool*)GetAddress(this, "UPrimalInventoryComponent", "bHasBeenRegistered"); };
-	//TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetLastUsedItemClasses() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "LastUsedItemClasses"); };
-	void SetLastUsedItemTimes(TArray<double, FDefaultAllocator> a0) { *(TArray<double, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "LastUsedItemTimes") = a0; };
-	TArray<double, FDefaultAllocator> GetLastUsedItemTimes() const { return *(TArray<double, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "LastUsedItemTimes"); };
-	void SetInvUpdatedFrame(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "InvUpdatedFrame") = a0; };
-	int GetInvUpdatedFrame() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "InvUpdatedFrame"); };
-	void SetLastRefreshCheckItemTime(double a0) { *(double*)GetAddress(this, "UPrimalInventoryComponent", "LastRefreshCheckItemTime") = a0; };
-	double GetLastRefreshCheckItemTime() const { return *(double*)GetAddress(this, "UPrimalInventoryComponent", "LastRefreshCheckItemTime"); };
-	void SetbLastPreventUseItemSpoilingTimeMultipliers(bool a0) { *(bool*)GetAddress(this, "UPrimalInventoryComponent", "bLastPreventUseItemSpoilingTimeMultipliers") = a0; };
-	bool GetbLastPreventUseItemSpoilingTimeMultipliers() const { return *(bool*)GetAddress(this, "UPrimalInventoryComponent", "bLastPreventUseItemSpoilingTimeMultipliers"); };
-	void SetNextItemSpoilingID(FItemNetID a0) { *(FItemNetID*)GetAddress(this, "UPrimalInventoryComponent", "NextItemSpoilingID") = a0; };
-	FItemNetID GetNextItemSpoilingID() const { return *(FItemNetID*)GetAddress(this, "UPrimalInventoryComponent", "NextItemSpoilingID"); };
-	void SetNextItemConsumptionID(FItemNetID a0) { *(FItemNetID*)GetAddress(this, "UPrimalInventoryComponent", "NextItemConsumptionID") = a0; };
-	FItemNetID GetNextItemConsumptionID() const { return *(FItemNetID*)GetAddress(this, "UPrimalInventoryComponent", "NextItemConsumptionID"); };
-	void SetMinItemSets(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "MinItemSets") = a0; };
-	float GetMinItemSets() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "MinItemSets"); };
-	void SetMaxItemSets(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemSets") = a0; };
-	float GetMaxItemSets() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxItemSets"); };
-	void SetNumItemSetsPower(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "NumItemSetsPower") = a0; };
-	float GetNumItemSetsPower() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "NumItemSetsPower"); };
-	//void SetItemSets(TArray<FSupplyCrateItemSet, FDefaultAllocator> a0) { *(TArray<FSupplyCrateItemSet, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSets") = a0; };
-	//TArray<FSupplyCrateItemSet, FDefaultAllocator> GetItemSets() const { return *(TArray<FSupplyCrateItemSet, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemSets"); };
-	//void SetAdditionalItemSets(TArray<FSupplyCrateItemSet, FDefaultAllocator> a0) { *(TArray<FSupplyCrateItemSet, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "AdditionalItemSets") = a0; };
-	//TArray<FSupplyCrateItemSet, FDefaultAllocator> GetAdditionalItemSets() const { return *(TArray<FSupplyCrateItemSet, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "AdditionalItemSets"); };
-	void SetSetQuantityWeights(TArray<float, FDefaultAllocator> a0) { *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "SetQuantityWeights") = a0; };
-	TArray<float, FDefaultAllocator> GetSetQuantityWeights() const { return *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "SetQuantityWeights"); };
-	void SetSetQuantityValues(TArray<float, FDefaultAllocator> a0) { *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "SetQuantityValues") = a0; };
-	TArray<float, FDefaultAllocator> GetSetQuantityValues() const { return *(TArray<float, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "SetQuantityValues"); };
-	void SetMaxInventoryAccessDistance(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxInventoryAccessDistance") = a0; };
-	float GetMaxInventoryAccessDistance() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "MaxInventoryAccessDistance"); };
-	//void SetItemClassWeightMultipliers(TArray<FItemMultiplier, FDefaultAllocator> a0) { *(TArray<FItemMultiplier, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemClassWeightMultipliers") = a0; };
-	//TArray<FItemMultiplier, FDefaultAllocator> GetItemClassWeightMultipliers() const { return *(TArray<FItemMultiplier, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "ItemClassWeightMultipliers"); };
-	void SetGenerateItemSetsQualityMultiplierMin(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMin") = a0; };
-	float GetGenerateItemSetsQualityMultiplierMin() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMin"); };
-	void SetGenerateItemSetsQualityMultiplierMax(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMax") = a0; };
-	float GetGenerateItemSetsQualityMultiplierMax() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMax"); };
-	void SetDefaultCraftingRequirementsMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalInventoryComponent", "DefaultCraftingRequirementsMultiplier") = a0; };
-	float GetDefaultCraftingRequirementsMultiplier() const { return *(float*)GetAddress(this, "UPrimalInventoryComponent", "DefaultCraftingRequirementsMultiplier"); };
-	void SetDefaultCraftingQuantityMultiplier(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "DefaultCraftingQuantityMultiplier") = a0; };
-	int GetDefaultCraftingQuantityMultiplier() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "DefaultCraftingQuantityMultiplier"); };
-	void SetSavedForceDefaultInventoryRefreshVersion(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "SavedForceDefaultInventoryRefreshVersion") = a0; };
-	int GetSavedForceDefaultInventoryRefreshVersion() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "SavedForceDefaultInventoryRefreshVersion"); };
-	void SetForceDefaultInventoryRefreshVersion(int a0) { *(int*)GetAddress(this, "UPrimalInventoryComponent", "ForceDefaultInventoryRefreshVersion") = a0; };
-	int GetForceDefaultInventoryRefreshVersion() const { return *(int*)GetAddress(this, "UPrimalInventoryComponent", "ForceDefaultInventoryRefreshVersion"); };
-	//void SetTamedDinoForceConsiderFoodTypes(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "TamedDinoForceConsiderFoodTypes") = a0; };
-	//TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetTamedDinoForceConsiderFoodTypes() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "TamedDinoForceConsiderFoodTypes"); };
-	void SetDinoAutoHealingItems(TArray<UPrimalItem *, FDefaultAllocator> a0) { *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DinoAutoHealingItems") = a0; };
-	TArray<UPrimalItem *, FDefaultAllocator> GetDinoAutoHealingItems() const { return *(TArray<UPrimalItem *, FDefaultAllocator>*)GetAddress(this, "UPrimalInventoryComponent", "DinoAutoHealingItems"); };
+	TArray<AWeakObjectPtr<AShooterPlayerController>, FDefaultAllocator> GetRemoteViewingInventoryPlayerControllersField() const { return GetNativeField<TArray<AWeakObjectPtr<AShooterPlayerController>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "RemoteViewingInventoryPlayerControllers"); }
+	TArray<UPrimalItem *, FDefaultAllocator> GetInventoryItemsField() const { return GetNativeField<TArray<UPrimalItem *, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "InventoryItems"); }
+	TArray<UPrimalItem *, FDefaultAllocator> GetEquippedItemsField() const { return GetNativeField<TArray<UPrimalItem *, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "EquippedItems"); }
+	void SetEquippedItemsField(TArray<UPrimalItem *, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "EquippedItems", newValue); }
+	TArray<UPrimalItem *, FDefaultAllocator> GetItemSlotsField() const { return GetNativeField<TArray<UPrimalItem *, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ItemSlots"); }
+	void SetItemSlotsField(TArray<UPrimalItem *, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ItemSlots", newValue); }
+	TArray<UPrimalItem *, FDefaultAllocator> GetArkTributeItemsField() const { return GetNativeField<TArray<UPrimalItem *, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ArkTributeItems"); }
+	void SetArkTributeItemsField(TArray<UPrimalItem *, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ArkTributeItems", newValue); }
+	TArray<UPrimalItem *, FDefaultAllocator> GetAllDyeColorItemsField() const { return GetNativeField<TArray<UPrimalItem *, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "AllDyeColorItems"); }
+	void SetAllDyeColorItemsField(TArray<UPrimalItem *, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "AllDyeColorItems", newValue); }
+	//TArray<FItemCraftQueueEntry, FDefaultAllocator> GetItemCraftQueueEntriesField() const { return GetNativeField<TArray<FItemCraftQueueEntry, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ItemCraftQueueEntries"); }
+	//TArray<TEnumAsByte<enum EPrimalEquipmentType::Type>, FDefaultAllocator> GetEquippableItemTypesField() const { return GetNativeField<TArray<TEnumAsByte<enum EPrimalEquipmentType::Type>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "EquippableItemTypes"); }
+	//void SetEquippableItemTypesField(TArray<TEnumAsByte<enum EPrimalEquipmentType::Type>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "EquippableItemTypes", newValue); }
+	//TArray<FItemMultiplier, FDefaultAllocator> GetItemSpoilingTimeMultipliersField() const { return GetNativeField<TArray<FItemMultiplier, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ItemSpoilingTimeMultipliers"); }
+	//void SetItemSpoilingTimeMultipliersField(TArray<FItemMultiplier, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ItemSpoilingTimeMultipliers", newValue); }
+	int GetMaxInventoryItemsField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "MaxInventoryItems"); }
+	void SetMaxInventoryItemsField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MaxInventoryItems", newValue); }
+	float GetMaxInventoryWeightField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "MaxInventoryWeight"); }
+	void SetMaxInventoryWeightField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MaxInventoryWeight", newValue); }
+	char GetTribeGroupInventoryRankField() const { return GetNativeField<char>(this, "UPrimalInventoryComponent", "TribeGroupInventoryRank"); }
+	void SetTribeGroupInventoryRankField(char newValue) { SetNativeField(this, "UPrimalInventoryComponent", "TribeGroupInventoryRank", newValue); }
+	int GetNumSlotsField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "NumSlots"); }
+	void SetNumSlotsField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "NumSlots", newValue); }
+	int GetMaxItemCraftQueueEntriesField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "MaxItemCraftQueueEntries"); }
+	void SetMaxItemCraftQueueEntriesField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MaxItemCraftQueueEntries", newValue); }
+	float GetCraftingItemSpeedField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "CraftingItemSpeed"); }
+	void SetCraftingItemSpeedField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "CraftingItemSpeed", newValue); }
+	FString GetRemoteInventoryDescriptionStringField() const { return GetNativeField<FString>(this, "UPrimalInventoryComponent", "RemoteInventoryDescriptionString"); }
+	void SetRemoteInventoryDescriptionStringField(FString newValue) { SetNativeField(this, "UPrimalInventoryComponent", "RemoteInventoryDescriptionString", newValue); }
+	TSubclassOf<UPrimalItem> GetEngramRequirementClassOverrideField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalInventoryComponent", "EngramRequirementClassOverride"); }
+	void SetEngramRequirementClassOverrideField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "EngramRequirementClassOverride", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetRemoteAddItemOnlyAllowItemClassesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "RemoteAddItemOnlyAllowItemClasses"); }
+	void SetRemoteAddItemOnlyAllowItemClassesField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "RemoteAddItemOnlyAllowItemClasses", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetRemoteAddItemPreventItemClassesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "RemoteAddItemPreventItemClasses"); }
+	void SetRemoteAddItemPreventItemClassesField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "RemoteAddItemPreventItemClasses", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultInventoryItemsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultInventoryItems"); }
+	void SetDefaultInventoryItemsField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultInventoryItems", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultInventoryItems2Field() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultInventoryItems2"); }
+	void SetDefaultInventoryItems2Field(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultInventoryItems2", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultInventoryItems3Field() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultInventoryItems3"); }
+	void SetDefaultInventoryItems3Field(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultInventoryItems3", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultInventoryItems4Field() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultInventoryItems4"); }
+	void SetDefaultInventoryItems4Field(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultInventoryItems4", newValue); }
+	TArray<FString, FDefaultAllocator> GetDefaultInventoryItemsRandomCustomStringsField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStrings"); }
+	void SetDefaultInventoryItemsRandomCustomStringsField(TArray<FString, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStrings", newValue); }
+	TArray<float, FDefaultAllocator> GetDefaultInventoryItemsRandomCustomStringsWeightsField() const { return GetNativeField<TArray<float, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStringsWeights"); }
+	void SetDefaultInventoryItemsRandomCustomStringsWeightsField(TArray<float, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultInventoryItemsRandomCustomStringsWeights", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetCheatInventoryItemsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "CheatInventoryItems"); }
+	void SetCheatInventoryItemsField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "CheatInventoryItems", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultEquippedItemsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultEquippedItems"); }
+	void SetDefaultEquippedItemsField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultEquippedItems", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultEquippedItemSkinsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultEquippedItemSkins"); }
+	void SetDefaultEquippedItemSkinsField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultEquippedItemSkins", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetDefaultSlotItemsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultSlotItems"); }
+	void SetDefaultSlotItemsField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultSlotItems", newValue); }
+	//TArray<FItemSpawnActorClassOverride, FDefaultAllocator> GetItemSpawnActorClassOverridesField() const { return GetNativeField<TArray<FItemSpawnActorClassOverride, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ItemSpawnActorClassOverrides"); }
+	//void SetItemSpawnActorClassOverridesField(TArray<FItemSpawnActorClassOverride, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ItemSpawnActorClassOverrides", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetOnlyAllowCraftingItemClassesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "OnlyAllowCraftingItemClasses"); }
+	void SetOnlyAllowCraftingItemClassesField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "OnlyAllowCraftingItemClasses", newValue); }
+	TArray<unsigned char, FDefaultAllocator> GetDefaultEngramsField() const { return GetNativeField<TArray<unsigned char, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultEngrams"); }
+	void SetDefaultEngramsField(TArray<unsigned char, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultEngrams", newValue); }
+	TArray<unsigned char, FDefaultAllocator> GetDefaultEngrams2Field() const { return GetNativeField<TArray<unsigned char, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultEngrams2"); }
+	void SetDefaultEngrams2Field(TArray<unsigned char, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultEngrams2", newValue); }
+	TArray<unsigned char, FDefaultAllocator> GetDefaultEngrams3Field() const { return GetNativeField<TArray<unsigned char, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultEngrams3"); }
+	void SetDefaultEngrams3Field(TArray<unsigned char, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultEngrams3", newValue); }
+	TArray<unsigned char, FDefaultAllocator> GetDefaultEngrams4Field() const { return GetNativeField<TArray<unsigned char, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultEngrams4"); }
+	void SetDefaultEngrams4Field(TArray<unsigned char, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultEngrams4", newValue); }
+	TArray<float, FDefaultAllocator> GetDefaultInventoryQualitiesField() const { return GetNativeField<TArray<float, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DefaultInventoryQualities"); }
+	void SetDefaultInventoryQualitiesField(TArray<float, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultInventoryQualities", newValue); }
+	FString GetInventoryNameOverrideField() const { return GetNativeField<FString>(this, "UPrimalInventoryComponent", "InventoryNameOverride"); }
+	void SetInventoryNameOverrideField(FString newValue) { SetNativeField(this, "UPrimalInventoryComponent", "InventoryNameOverride", newValue); }
+	float GetMaxRemoteInventoryViewingDistanceField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "MaxRemoteInventoryViewingDistance"); }
+	void SetMaxRemoteInventoryViewingDistanceField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MaxRemoteInventoryViewingDistance", newValue); }
+	float GetActiveInventoryRefreshIntervalField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "ActiveInventoryRefreshInterval"); }
+	void SetActiveInventoryRefreshIntervalField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ActiveInventoryRefreshInterval", newValue); }
+	int GetAbsoluteMaxInventoryItemsField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "AbsoluteMaxInventoryItems"); }
+	void SetAbsoluteMaxInventoryItemsField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "AbsoluteMaxInventoryItems", newValue); }
+	long double GetLastInventoryRefreshTimeField() const { return GetNativeField<long double>(this, "UPrimalInventoryComponent", "LastInventoryRefreshTime"); }
+	void SetLastInventoryRefreshTimeField(long double newValue) { SetNativeField(this, "UPrimalInventoryComponent", "LastInventoryRefreshTime", newValue); }
+	//TSubclassOf<ADroppedItem> GetDroppedItemTemplateOverrideField() const { return GetNativeField<TSubclassOf<ADroppedItem>>(this, "UPrimalInventoryComponent", "DroppedItemTemplateOverride"); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetForceAllowItemStackingsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ForceAllowItemStackings"); }
+	void SetForceAllowItemStackingsField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ForceAllowItemStackings", newValue); }
+	FRotator GetDropItemRotationOffsetField() const { return GetNativeField<FRotator>(this, "UPrimalInventoryComponent", "DropItemRotationOffset"); }
+	void SetDropItemRotationOffsetField(FRotator newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DropItemRotationOffset", newValue); }
+	//TArray<FItemCraftingConsumptionReplenishment, FDefaultAllocator> GetItemCraftingConsumptionReplenishmentsField() const { return GetNativeField<TArray<FItemCraftingConsumptionReplenishment, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ItemCraftingConsumptionReplenishments"); }
+	float GetMaxItemCooldownTimeClearField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "MaxItemCooldownTimeClear"); }
+	void SetMaxItemCooldownTimeClearField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MaxItemCooldownTimeClear", newValue); }
+	//TArray<FActorClassAttachmentInfo, FDefaultAllocator> GetWeaponAsEquipmentAttachmentInfosField() const { return GetNativeField<TArray<FActorClassAttachmentInfo, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "WeaponAsEquipmentAttachmentInfos"); }
+	TArray<UPrimalItem *, FDefaultAllocator> GetCraftingItemsField() const { return GetNativeField<TArray<UPrimalItem *, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "CraftingItems"); }
+	void SetCraftingItemsField(TArray<UPrimalItem *, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "CraftingItems", newValue); }
+	int GetDisplayDefaultItemInventoryCountField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "DisplayDefaultItemInventoryCount"); }
+	void SetDisplayDefaultItemInventoryCountField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DisplayDefaultItemInventoryCount", newValue); }
+	bool GetbHasBeenRegisteredField() const { return GetNativeField<bool>(this, "UPrimalInventoryComponent", "bHasBeenRegistered"); }
+	void SetbHasBeenRegisteredField(bool newValue) { SetNativeField(this, "UPrimalInventoryComponent", "bHasBeenRegistered", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetLastUsedItemClassesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "LastUsedItemClasses"); }
+	void SetLastUsedItemClassesField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "LastUsedItemClasses", newValue); }
+	TArray<double, FDefaultAllocator> GetLastUsedItemTimesField() const { return GetNativeField<TArray<double, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "LastUsedItemTimes"); }
+	void SetLastUsedItemTimesField(TArray<double, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "LastUsedItemTimes", newValue); }
+	int GetInvUpdatedFrameField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "InvUpdatedFrame"); }
+	void SetInvUpdatedFrameField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "InvUpdatedFrame", newValue); }
+	long double GetLastRefreshCheckItemTimeField() const { return GetNativeField<long double>(this, "UPrimalInventoryComponent", "LastRefreshCheckItemTime"); }
+	void SetLastRefreshCheckItemTimeField(long double newValue) { SetNativeField(this, "UPrimalInventoryComponent", "LastRefreshCheckItemTime", newValue); }
+	bool GetbLastPreventUseItemSpoilingTimeMultipliersField() const { return GetNativeField<bool>(this, "UPrimalInventoryComponent", "bLastPreventUseItemSpoilingTimeMultipliers"); }
+	void SetbLastPreventUseItemSpoilingTimeMultipliersField(bool newValue) { SetNativeField(this, "UPrimalInventoryComponent", "bLastPreventUseItemSpoilingTimeMultipliers", newValue); }
+	FItemNetID GetNextItemSpoilingIDField() const { return GetNativeField<FItemNetID>(this, "UPrimalInventoryComponent", "NextItemSpoilingID"); }
+	void SetNextItemSpoilingIDField(FItemNetID newValue) { SetNativeField(this, "UPrimalInventoryComponent", "NextItemSpoilingID", newValue); }
+	FItemNetID GetNextItemConsumptionIDField() const { return GetNativeField<FItemNetID>(this, "UPrimalInventoryComponent", "NextItemConsumptionID"); }
+	void SetNextItemConsumptionIDField(FItemNetID newValue) { SetNativeField(this, "UPrimalInventoryComponent", "NextItemConsumptionID", newValue); }
+	float GetMinItemSetsField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "MinItemSets"); }
+	void SetMinItemSetsField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MinItemSets", newValue); }
+	float GetMaxItemSetsField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "MaxItemSets"); }
+	void SetMaxItemSetsField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MaxItemSets", newValue); }
+	float GetNumItemSetsPowerField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "NumItemSetsPower"); }
+	void SetNumItemSetsPowerField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "NumItemSetsPower", newValue); }
+	//TArray<FSupplyCrateItemSet, FDefaultAllocator> GetItemSetsField() const { return GetNativeField<TArray<FSupplyCrateItemSet, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ItemSets"); }
+	//TArray<FSupplyCrateItemSet, FDefaultAllocator> GetAdditionalItemSetsField() const { return GetNativeField<TArray<FSupplyCrateItemSet, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "AdditionalItemSets"); }
+	//TSubclassOf<UPrimalSupplyCrateItemSets> GetItemSetsOverrideField() const { return GetNativeField<TSubclassOf<UPrimalSupplyCrateItemSets>>(this, "UPrimalInventoryComponent", "ItemSetsOverride"); }
+	TArray<float, FDefaultAllocator> GetSetQuantityWeightsField() const { return GetNativeField<TArray<float, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "SetQuantityWeights"); }
+	void SetSetQuantityWeightsField(TArray<float, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "SetQuantityWeights", newValue); }
+	TArray<float, FDefaultAllocator> GetSetQuantityValuesField() const { return GetNativeField<TArray<float, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "SetQuantityValues"); }
+	void SetSetQuantityValuesField(TArray<float, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "SetQuantityValues", newValue); }
+	float GetMaxInventoryAccessDistanceField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "MaxInventoryAccessDistance"); }
+	void SetMaxInventoryAccessDistanceField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "MaxInventoryAccessDistance", newValue); }
+	TArray<FString, FDefaultAllocator> GetServerCustomFolderField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ServerCustomFolder"); }
+	void SetServerCustomFolderField(TArray<FString, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ServerCustomFolder", newValue); }
+	TArray<TSubclassOf<UPrimalInventoryComponent>, FDefaultAllocator> GetForceAllowCraftingForInventoryComponentsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalInventoryComponent>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ForceAllowCraftingForInventoryComponents"); }
+	void SetForceAllowCraftingForInventoryComponentsField(TArray<TSubclassOf<UPrimalInventoryComponent>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ForceAllowCraftingForInventoryComponents", newValue); }
+	//TArray<FItemMultiplier, FDefaultAllocator> GetItemClassWeightMultipliersField() const { return GetNativeField<TArray<FItemMultiplier, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "ItemClassWeightMultipliers"); }
+	float GetGenerateItemSetsQualityMultiplierMinField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMin"); }
+	void SetGenerateItemSetsQualityMultiplierMinField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMin", newValue); }
+	float GetGenerateItemSetsQualityMultiplierMaxField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMax"); }
+	void SetGenerateItemSetsQualityMultiplierMaxField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "GenerateItemSetsQualityMultiplierMax", newValue); }
+	float GetDefaultCraftingRequirementsMultiplierField() const { return GetNativeField<float>(this, "UPrimalInventoryComponent", "DefaultCraftingRequirementsMultiplier"); }
+	void SetDefaultCraftingRequirementsMultiplierField(float newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultCraftingRequirementsMultiplier", newValue); }
+	int GetDefaultCraftingQuantityMultiplierField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "DefaultCraftingQuantityMultiplier"); }
+	void SetDefaultCraftingQuantityMultiplierField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DefaultCraftingQuantityMultiplier", newValue); }
+	int GetSavedForceDefaultInventoryRefreshVersionField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "SavedForceDefaultInventoryRefreshVersion"); }
+	void SetSavedForceDefaultInventoryRefreshVersionField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "SavedForceDefaultInventoryRefreshVersion", newValue); }
+	int GetForceDefaultInventoryRefreshVersionField() const { return GetNativeField<int>(this, "UPrimalInventoryComponent", "ForceDefaultInventoryRefreshVersion"); }
+	void SetForceDefaultInventoryRefreshVersionField(int newValue) { SetNativeField(this, "UPrimalInventoryComponent", "ForceDefaultInventoryRefreshVersion", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetTamedDinoForceConsiderFoodTypesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "TamedDinoForceConsiderFoodTypes"); }
+	void SetTamedDinoForceConsiderFoodTypesField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "TamedDinoForceConsiderFoodTypes", newValue); }
+	TArray<UPrimalItem *, FDefaultAllocator> GetDinoAutoHealingItemsField() const { return GetNativeField<TArray<UPrimalItem *, FDefaultAllocator>>(this, "UPrimalInventoryComponent", "DinoAutoHealingItems"); }
+	void SetDinoAutoHealingItemsField(TArray<UPrimalItem *, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalInventoryComponent", "DinoAutoHealingItems", newValue); }
 
 	// Functions
 
-	bool CanEquipItem(UPrimalItem* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "CanEquipItem"))((DWORD64)this, a1); }
-	void NotifyItemRemoved(UPrimalItem* a1) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "NotifyItemRemoved"))((DWORD64)this, a1); }
-	void NotifyItemAdded(UPrimalItem* a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*, bool)>(GetAddress("UPrimalInventoryComponent", "NotifyItemAdded"))((DWORD64)this, a1, a2); }
-	void NotifyItemQuantityUpdated(UPrimalItem* a1, int a2) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*, int)>(GetAddress("UPrimalInventoryComponent", "NotifyItemQuantityUpdated"))((DWORD64)this, a1, a2); }
-	void NotifyArkItemAdded() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "NotifyArkItemAdded"))((DWORD64)this); }
-	void NotifyClientItemArkTributeStatusChanged(UPrimalItem* a1, bool a2, bool a3) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*, bool, bool)>(GetAddress("UPrimalInventoryComponent", "NotifyClientItemArkTributeStatusChanged"))((DWORD64)this, a1, a2, a3); }
-	void NotifyClientsItemStatus(UPrimalItem* a1, bool a2, bool a3, bool a4, bool a5, bool a6, UPrimalItem* a7, FItemNetID* a8, bool a9, bool a10, bool a11) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*, bool, bool, bool, bool, bool, UPrimalItem*, FItemNetID*, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "NotifyClientsItemStatus"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11); }
-	UPrimalItem* AddItem(const FItemNetInfo& a1, bool a2, bool a3, bool a4, FItemNetID* a5, bool a6) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, const FItemNetInfo&, bool, bool, bool, FItemNetID*, bool)>(GetAddress("UPrimalInventoryComponent", "AddItem"))((DWORD64)this, a1, a2, a3, a4, a5, a6); }
-	void AddArkTributeItem(const FItemNetInfo& a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, const FItemNetInfo&, bool)>(GetAddress("UPrimalInventoryComponent", "AddArkTributeItem"))((DWORD64)this, a1, a2); }
-	void RequestAddArkTributeItem(const FItemNetInfo& a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, const FItemNetInfo&, bool)>(GetAddress("UPrimalInventoryComponent", "RequestAddArkTributeItem"))((DWORD64)this, a1, a2); }
-	void LoadArkTriuteItems(const TArray<FItemNetInfo, FDefaultAllocator>& a1) { static_cast<void(_cdecl*)(DWORD64, const TArray<FItemNetInfo, FDefaultAllocator>&)>(GetAddress("UPrimalInventoryComponent", "LoadArkTriuteItems"))((DWORD64)this, a1); }
-	UPrimalItem* FindItem(const FItemNetID& a1, bool a2, bool a3, int* a4) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, const FItemNetID&, bool, bool, int*)>(GetAddress("UPrimalInventoryComponent", "FindItem"))((DWORD64)this, a1, a2, a3, a4); }
-	TArray<UPrimalItem *, FDefaultAllocator> FindColorItem(FColor a1, bool a2) { return static_cast<TArray<UPrimalItem *, FDefaultAllocator>(_cdecl*)(DWORD64, FColor, bool)>(GetAddress("UPrimalInventoryComponent", "FindColorItem"))((DWORD64)this, a1, a2); }
-	TArray<UPrimalItem *, FDefaultAllocator> FindBrushColorItem(short a1) { return static_cast<TArray<UPrimalItem *, FDefaultAllocator>(_cdecl*)(DWORD64, short)>(GetAddress("UPrimalInventoryComponent", "FindBrushColorItem"))((DWORD64)this, a1); }
-	UPrimalItem* FindArkTributeItem(const FItemNetID& a1) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, const FItemNetID&)>(GetAddress("UPrimalInventoryComponent", "FindArkTributeItem"))((DWORD64)this, a1); }
-	void ClientFinishReceivingItems(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalInventoryComponent", "ClientFinishReceivingItems"))((DWORD64)this, a1); }
-	void ClientStartReceivingItems(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalInventoryComponent", "ClientStartReceivingItems"))((DWORD64)this, a1); }
-	void ServerRequestItems(AShooterPlayerController* a1, bool a2, bool a3) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*, bool, bool)>(GetAddress("UPrimalInventoryComponent", "ServerRequestItems"))((DWORD64)this, a1, a2, a3); }
-	AShooterPlayerController* GetOwnerController() { return static_cast<AShooterPlayerController*(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "GetOwnerController"))((DWORD64)this); }
-	void DropItem(const FItemNetInfo& a1, bool a2, const FVector& a3, const FRotator& a4, bool a5, bool a6, bool a7, bool a8) { static_cast<void(_cdecl*)(DWORD64, const FItemNetInfo&, bool, const FVector&, const FRotator&, bool, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "DropItem"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8); }
-	//ADroppedItem* StaticDropItem(AActor* a1, const FItemNetInfo& a2, TSubclassOf<ADroppedItem> a3, const FRotator& a4, bool a5, const FVector& a6, const FRotator& a7, bool a8, bool a9, bool a10, bool a11) { return static_cast<ADroppedItem*(_cdecl*)(DWORD64, AActor*, const FItemNetInfo&, TSubclassOf<ADroppedItem>, const FRotator&, bool, const FVector&, const FRotator&, bool, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "StaticDropItem"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11); }
-	//ADroppedItem* StaticDropNewItem(AActor* a1, TSubclassOf<UPrimalItem> a2, float a3, bool a4, int a5, bool a6, TSubclassOf<ADroppedItem> a7, const FRotator& a8, bool a9, const FVector& a10, const FRotator& a11, bool a12, bool a13, bool a14, bool a15) { return static_cast<ADroppedItem*(_cdecl*)(DWORD64, AActor*, TSubclassOf<UPrimalItem>, float, bool, int, bool, TSubclassOf<ADroppedItem>, const FRotator&, bool, const FVector&, const FRotator&, bool, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "StaticDropNewItem"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15); }
-	bool ServerEquipItem(FItemNetID& a1) { return static_cast<bool(_cdecl*)(DWORD64, FItemNetID&)>(GetAddress("UPrimalInventoryComponent", "ServerEquipItem"))((DWORD64)this, a1); }
-	UPrimalItem* AddItemObject(UPrimalItem* a1) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "AddItemObject"))((DWORD64)this, a1); }
-	bool RemoveItem(const FItemNetID& a1, bool a2, bool a3, bool a4, bool a5) { return static_cast<bool(_cdecl*)(DWORD64, const FItemNetID&, bool, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "RemoveItem"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	void OnArkTributeItemsRemoved(bool a1, const TArray<FItemNetInfo, FDefaultAllocator>& a2, const TArray<FItemNetInfo, FDefaultAllocator>& a3, int a4, const FString& a5) { static_cast<void(_cdecl*)(DWORD64, bool, const TArray<FItemNetInfo, FDefaultAllocator>&, const TArray<FItemNetInfo, FDefaultAllocator>&, int, const FString&)>(GetAddress("UPrimalInventoryComponent", "OnArkTributeItemsRemoved"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	void OnArkTributeItemsAdded(bool a1, const TArray<FItemNetInfo, FDefaultAllocator>& a2) { static_cast<void(_cdecl*)(DWORD64, bool, const TArray<FItemNetInfo, FDefaultAllocator>&)>(GetAddress("UPrimalInventoryComponent", "OnArkTributeItemsAdded"))((DWORD64)this, a1, a2); }
-	bool RemoveArkTributeItem(FItemNetID& a1, unsigned int a2) { return static_cast<bool(_cdecl*)(DWORD64, FItemNetID&, unsigned int)>(GetAddress("UPrimalInventoryComponent", "RemoveArkTributeItem"))((DWORD64)this, a1, a2); }
-	bool IsLocalInventoryViewer() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "IsLocalInventoryViewer"))((DWORD64)this); }
-	void GiveInitialItems(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalInventoryComponent", "GiveInitialItems"))((DWORD64)this, a1); }
-	bool RemoteInventoryAllowViewing(AShooterPlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("UPrimalInventoryComponent", "RemoteInventoryAllowViewing"))((DWORD64)this, a1); }
-	bool BPRemoteInventoryAllowAddItems(AShooterPlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("UPrimalInventoryComponent", "BPRemoteInventoryAllowAddItems"))((DWORD64)this, a1); }
-	bool RemoteInventoryAllowAddItems(AShooterPlayerController* a1, UPrimalItem* a2, int* a3) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*, UPrimalItem*, int*)>(GetAddress("UPrimalInventoryComponent", "RemoteInventoryAllowAddItems"))((DWORD64)this, a1, a2, a3); }
-	bool RemoteInventoryAllowRemoveItems(AShooterPlayerController* a1, UPrimalItem* a2, int* a3) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*, UPrimalItem*, int*)>(GetAddress("UPrimalInventoryComponent", "RemoteInventoryAllowRemoveItems"))((DWORD64)this, a1, a2, a3); }
-	bool BPCustomRemoteInventoryAllowAddItems(AShooterPlayerController* a1, UPrimalItem* a2, int a3) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*, UPrimalItem*, int)>(GetAddress("UPrimalInventoryComponent", "BPCustomRemoteInventoryAllowAddItems"))((DWORD64)this, a1, a2, a3); }
-	bool RemoteInventoryAllowCraftingItems(AShooterPlayerController* a1, bool a2) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*, bool)>(GetAddress("UPrimalInventoryComponent", "RemoteInventoryAllowCraftingItems"))((DWORD64)this, a1, a2); }
-	bool RemoteInventoryAllowRepairingItems(AShooterPlayerController* a1, bool a2) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*, bool)>(GetAddress("UPrimalInventoryComponent", "RemoteInventoryAllowRepairingItems"))((DWORD64)this, a1, a2); }
-	void ServerViewRemoteInventory(AShooterPlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("UPrimalInventoryComponent", "ServerViewRemoteInventory"))((DWORD64)this, a1); }
-	void ServerCloseRemoteInventory(AShooterPlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("UPrimalInventoryComponent", "ServerCloseRemoteInventory"))((DWORD64)this, a1); }
-	bool ServerAddToArkTributeInventory(FItemNetID& a1, TArray<unsigned __int64, FDefaultAllocator> a2, FItemNetInfo* a3) { return static_cast<bool(_cdecl*)(DWORD64, FItemNetID&, TArray<unsigned __int64, FDefaultAllocator>, FItemNetInfo*)>(GetAddress("UPrimalInventoryComponent", "ServerAddToArkTributeInventory"))((DWORD64)this, a1, a2, a3); }
-	bool ServerAddFromArkTributeInventory(FItemNetID& a1, int a2) { return static_cast<bool(_cdecl*)(DWORD64, FItemNetID&, int)>(GetAddress("UPrimalInventoryComponent", "ServerAddFromArkTributeInventory"))((DWORD64)this, a1, a2); }
-	UPrimalItem* AddAfterRemovingFromArkTributeInventory(UPrimalItem* a1, const FItemNetInfo& a2) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, UPrimalItem*, const FItemNetInfo&)>(GetAddress("UPrimalInventoryComponent", "AddAfterRemovingFromArkTributeInventory"))((DWORD64)this, a1, a2); }
-	void ServerCraftItem(FItemNetID& a1, AShooterPlayerController* a2) { static_cast<void(_cdecl*)(DWORD64, FItemNetID&, AShooterPlayerController*)>(GetAddress("UPrimalInventoryComponent", "ServerCraftItem"))((DWORD64)this, a1, a2); }
-	void ServerAddItemToSlot(FItemNetID a1, int a2) { static_cast<void(_cdecl*)(DWORD64, FItemNetID, int)>(GetAddress("UPrimalInventoryComponent", "ServerAddItemToSlot"))((DWORD64)this, a1, a2); }
-	void ServerRemoveItemFromSlot(FItemNetID a1) { static_cast<void(_cdecl*)(DWORD64, FItemNetID)>(GetAddress("UPrimalInventoryComponent", "ServerRemoveItemFromSlot"))((DWORD64)this, a1); }
-	void ServerSplitItemStack(FItemNetID a1, int a2) { static_cast<void(_cdecl*)(DWORD64, FItemNetID, int)>(GetAddress("UPrimalInventoryComponent", "ServerSplitItemStack"))((DWORD64)this, a1, a2); }
-	void ServerMergeItemStack(FItemNetID a1) { static_cast<void(_cdecl*)(DWORD64, FItemNetID)>(GetAddress("UPrimalInventoryComponent", "ServerMergeItemStack"))((DWORD64)this, a1); }
-	void ServerForceMergeItemStack(FItemNetID a1, FItemNetID a2) { static_cast<void(_cdecl*)(DWORD64, FItemNetID, FItemNetID)>(GetAddress("UPrimalInventoryComponent", "ServerForceMergeItemStack"))((DWORD64)this, a1, a2); }
-	void RemoteDeleteCustomFolder(const FString& a1, int a2) { static_cast<void(_cdecl*)(DWORD64, const FString&, int)>(GetAddress("UPrimalInventoryComponent", "RemoteDeleteCustomFolder"))((DWORD64)this, a1, a2); }
-	void RemoteAddItemToCustomFolder(const FString& a1, int a2, FItemNetID a3) { static_cast<void(_cdecl*)(DWORD64, const FString&, int, FItemNetID)>(GetAddress("UPrimalInventoryComponent", "RemoteAddItemToCustomFolder"))((DWORD64)this, a1, a2, a3); }
-	void RemoteDeleteItemFromCustomFolder(AShooterPlayerController* a1, const FString& a2, int a3, FItemNetID a4) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*, const FString&, int, FItemNetID)>(GetAddress("UPrimalInventoryComponent", "RemoteDeleteItemFromCustomFolder"))((DWORD64)this, a1, a2, a3, a4); }
-	void SetEquippedItemsOwnerNoSee(bool a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, bool, bool)>(GetAddress("UPrimalInventoryComponent", "SetEquippedItemsOwnerNoSee"))((DWORD64)this, a1, a2); }
-	FString* GetInventoryName(FString* res, bool a1) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, bool)>(GetAddress("UPrimalInventoryComponent", "GetInventoryName"))((DWORD64)this, res, a1); }
-	UPrimalItem* GetEquippedItemOfType(EPrimalEquipmentType_Type a1) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, EPrimalEquipmentType_Type)>(GetAddress("UPrimalInventoryComponent", "GetEquippedItemOfType"))((DWORD64)this, a1); }
-	void LocalUseItemSlot(int a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, int, bool)>(GetAddress("UPrimalInventoryComponent", "LocalUseItemSlot"))((DWORD64)this, a1, a2); }
-	//bool OverrideBlueprintCraftingRequirement(TSubclassOf<UPrimalItem> a1, int a2) { return static_cast<bool(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, int)>(GetAddress("UPrimalInventoryComponent", "OverrideBlueprintCraftingRequirement"))((DWORD64)this, a1, a2); }
-	//bool AllowCraftingResourceConsumption(TSubclassOf<UPrimalItem> a1, int a2) { return static_cast<bool(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, int)>(GetAddress("UPrimalInventoryComponent", "AllowCraftingResourceConsumption"))((DWORD64)this, a1, a2); }
-	//int GetItemTemplateQuantity(TSubclassOf<UPrimalItem> a1, UPrimalItem* a2, bool a3, bool a4, bool a5) { return static_cast<int(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, UPrimalItem*, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "GetItemTemplateQuantity"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	//int IncrementItemTemplateQuantity(TSubclassOf<UPrimalItem> a1, int a2, bool a3, bool a4, UPrimalItem** a5, UPrimalItem** a6, bool a7, bool a8, bool a9, bool a10, bool a11) { return static_cast<int(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, int, bool, bool, UPrimalItem**, UPrimalItem**, bool, bool, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "IncrementItemTemplateQuantity"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11); }
-	//UPrimalItem* GetItemOfTemplate(TSubclassOf<UPrimalItem> a1, bool a2, bool a3, bool a4, bool a5, bool a6, UPrimalItem* a7, bool a8, int* a9, bool a10, bool a11, bool a12, bool a13) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, bool, bool, bool, bool, bool, UPrimalItem*, bool, int*, bool, bool, bool, bool)>(GetAddress("UPrimalInventoryComponent", "GetItemOfTemplate"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13); }
-	//float GetTotalEquippedItemStat(EPrimalItemStat::Type a1) { return static_cast<float(_cdecl*)(DWORD64, EPrimalItemStat::Type)>(GetAddress("UPrimalInventoryComponent", "GetTotalEquippedItemStat"))((DWORD64)this, a1); }
-	//float GetEquippedArmorRating(EPrimalEquipmentType::Type a1) { return static_cast<float(_cdecl*)(DWORD64, EPrimalEquipmentType::Type)>(GetAddress("UPrimalInventoryComponent", "GetEquippedArmorRating"))((DWORD64)this, a1); }
-	void ConsumeArmorDurability(float a1, bool a2, EPrimalEquipmentType_Type a3) { static_cast<void(_cdecl*)(DWORD64, float, bool, EPrimalEquipmentType_Type)>(GetAddress("UPrimalInventoryComponent", "ConsumeArmorDurability"))((DWORD64)this, a1, a2, a3); }
-	void AddItemCrafting(UPrimalItem* a1) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "AddItemCrafting"))((DWORD64)this, a1); }
-	void RemoveItemCrafting(UPrimalItem* a1) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "RemoveItemCrafting"))((DWORD64)this, a1); }
-	float GetCraftingSpeed() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "GetCraftingSpeed"))((DWORD64)this); }
-	void ServerRepairItem(FItemNetID& a1, AShooterPlayerController* a2) { static_cast<void(_cdecl*)(DWORD64, FItemNetID&, AShooterPlayerController*)>(GetAddress("UPrimalInventoryComponent", "ServerRepairItem"))((DWORD64)this, a1, a2); }
-	bool IsLocal() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "IsLocal"))((DWORD64)this); }
-	void CheckForAutoCraftBlueprints() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "CheckForAutoCraftBlueprints"))((DWORD64)this); }
-	void SetCraftingEnabled(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalInventoryComponent", "SetCraftingEnabled"))((DWORD64)this, a1); }
-	bool IsCraftingAllowed(UPrimalItem* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "IsCraftingAllowed"))((DWORD64)this, a1); }
-	float GetInventoryWeight() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "GetInventoryWeight"))((DWORD64)this); }
-	void OnRegister() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "OnRegister"))((DWORD64)this); }
-	//UPrimalItem* FindInventoryStackableItemCompareQuantity(TSubclassOf<UPrimalItem> a1, bool a2, UPrimalItem* a3) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, bool, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "FindInventoryStackableItemCompareQuantity"))((DWORD64)this, a1, a2, a3); }
-	UPrimalCharacterStatusComponent* GetCharacterStatusComponent() { return static_cast<UPrimalCharacterStatusComponent*(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "GetCharacterStatusComponent"))((DWORD64)this); }
-	void ServerUseInventoryItem(FItemNetID& a1, AShooterPlayerController* a2) { static_cast<void(_cdecl*)(DWORD64, FItemNetID&, AShooterPlayerController*)>(GetAddress("UPrimalInventoryComponent", "ServerUseInventoryItem"))((DWORD64)this, a1, a2); }
-	void SwapInventoryItems(FItemNetID& a1, FItemNetID& a2) { static_cast<void(_cdecl*)(DWORD64, FItemNetID&, FItemNetID&)>(GetAddress("UPrimalInventoryComponent", "SwapInventoryItems"))((DWORD64)this, a1, a2); }
-	void InventoryRefresh() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "InventoryRefresh"))((DWORD64)this); }
-	void ActivePlayerInventoryTick(float a1) { static_cast<void(_cdecl*)(DWORD64, float)>(GetAddress("UPrimalInventoryComponent", "ActivePlayerInventoryTick"))((DWORD64)this, a1); }
-	float GetSpoilingTimeMultiplier(UPrimalItem* a1) { return static_cast<float(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "GetSpoilingTimeMultiplier"))((DWORD64)this, a1); }
-	void ServerUseItemWithItem(const FItemNetID& a1, const FItemNetID& a2, int a3) { static_cast<void(_cdecl*)(DWORD64, const FItemNetID&, const FItemNetID&, int)>(GetAddress("UPrimalInventoryComponent", "ServerUseItemWithItem"))((DWORD64)this, a1, a2, a3); }
-	void UsedItem(UPrimalItem* a1) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "UsedItem"))((DWORD64)this, a1); }
-	void RegisterComponentTickFunctions(bool a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, bool, bool)>(GetAddress("UPrimalInventoryComponent", "RegisterComponentTickFunctions"))((DWORD64)this, a1, a2); }
-	void ClearCraftQueue() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "ClearCraftQueue"))((DWORD64)this); }
-	void UpdatedCraftQueue() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "UpdatedCraftQueue"))((DWORD64)this); }
-	void StopAllCraftingRepairing() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "StopAllCraftingRepairing"))((DWORD64)this); }
-	void AddToCraftQueue(UPrimalItem* a1, AShooterPlayerController* a2, bool a3) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*, AShooterPlayerController*, bool)>(GetAddress("UPrimalInventoryComponent", "AddToCraftQueue"))((DWORD64)this, a1, a2, a3); }
-	void LoadedFromSaveGame() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "LoadedFromSaveGame"))((DWORD64)this); }
-	bool IsOwnedByPlayer() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "IsOwnedByPlayer"))((DWORD64)this); }
-	//bool DropInventoryDeposit(double a1, bool a2, bool a3, TSubclassOf<APrimalStructureItemContainer> a4, APrimalStructureItemContainer* a5, APrimalStructureItemContainer** a6, AActor* a7, FString a8, FString a9) { return static_cast<bool(_cdecl*)(DWORD64, double, bool, bool, TSubclassOf<APrimalStructureItemContainer>, APrimalStructureItemContainer*, APrimalStructureItemContainer**, AActor*, FString, FString)>(GetAddress("UPrimalInventoryComponent", "DropInventoryDeposit"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8, a9); }
-	//float GetTotalDurabilityOfTemplate(TSubclassOf<UPrimalItem> a1) { return static_cast<float(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>)>(GetAddress("UPrimalInventoryComponent", "GetTotalDurabilityOfTemplate"))((DWORD64)this, a1); }
-	bool AllowAddInventoryItem(UPrimalItem* a1, int* a2, bool a3) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*, int*, bool)>(GetAddress("UPrimalInventoryComponent", "AllowAddInventoryItem"))((DWORD64)this, a1, a2, a3); }
-	void RefreshItemSpoilingTimes() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "RefreshItemSpoilingTimes"))((DWORD64)this); }
-	bool GenerateCrateItems(float a1, float a2, int a3, float a4, float a5, float a6) { return static_cast<bool(_cdecl*)(DWORD64, float, float, int, float, float, float)>(GetAddress("UPrimalInventoryComponent", "GenerateCrateItems"))((DWORD64)this, a1, a2, a3, a4, a5, a6); }
-	//void CheckReplenishSlotIndex(int a1, TSubclassOf<UPrimalItem> a2) { static_cast<void(_cdecl*)(DWORD64, int, TSubclassOf<UPrimalItem>)>(GetAddress("UPrimalInventoryComponent", "CheckReplenishSlotIndex"))((DWORD64)this, a1, a2); }
-	//int GetCraftQueueResourceCost(TSubclassOf<UPrimalItem> a1, UPrimalItem* a2) { return static_cast<int(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "GetCraftQueueResourceCost"))((DWORD64)this, a1, a2); }
-	void CheckRefreshDefaultInventoryItems() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "CheckRefreshDefaultInventoryItems"))((DWORD64)this); }
-	bool AllowEquippingItemType(EPrimalEquipmentType_Type a1) { return static_cast<bool(_cdecl*)(DWORD64, EPrimalEquipmentType_Type)>(GetAddress("UPrimalInventoryComponent", "AllowEquippingItemType"))((DWORD64)this, a1); }
-	float GetDamageTorpidityIncreaseMultiplierScale() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "GetDamageTorpidityIncreaseMultiplierScale"))((DWORD64)this); }
-	float GetItemWeightMultiplier(UPrimalItem* a1) { return static_cast<float(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "GetItemWeightMultiplier"))((DWORD64)this, a1); }
-	void UpdateTribeGroupInventoryRank(unsigned char a1) { static_cast<void(_cdecl*)(DWORD64, unsigned char)>(GetAddress("UPrimalInventoryComponent", "UpdateTribeGroupInventoryRank"))((DWORD64)this, a1); }
-	float OverrideItemMinimumUseInterval(const UPrimalItem* a1) { return static_cast<float(_cdecl*)(DWORD64, const UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "OverrideItemMinimumUseInterval"))((DWORD64)this, a1); }
-	UPrimalItem* BPFindItemWithID(int a1, int a2) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, int, int)>(GetAddress("UPrimalInventoryComponent", "BPFindItemWithID"))((DWORD64)this, a1, a2); }
-	bool IsValidCraftingResource(UPrimalItem* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "IsValidCraftingResource"))((DWORD64)this, a1); }
-	void RemoveItemSpoilingTimer(UPrimalItem* a1) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalInventoryComponent", "RemoveItemSpoilingTimer"))((DWORD64)this, a1); }
-	bool LoadAdditionalStructureEngrams() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalInventoryComponent", "LoadAdditionalStructureEngrams"))((DWORD64)this); }
+	static UClass* StaticClass() { return NativeCall<UClass *>(nullptr, "UPrimalInventoryComponent", "StaticClass"); }
+	void OnRegister() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "OnRegister"); }
+	//bool AllowEquippingItemType(EPrimalEquipmentType::Type equipmentType) { return NativeCall<bool, EPrimalEquipmentType::Type>((DWORD64)this, "UPrimalInventoryComponent", "AllowEquippingItemType", equipmentType); }
+	bool CanEquipItem(UPrimalItem* anItem) { return NativeCall<bool, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "CanEquipItem", anItem); }
+	bool AllowAddInventoryItem(UPrimalItem* anItem, int* requestedQuantity, bool OnlyAddAll) { return NativeCall<bool, UPrimalItem *, int *, bool>((DWORD64)this, "UPrimalInventoryComponent", "AllowAddInventoryItem", anItem, requestedQuantity, OnlyAddAll); }
+	UPrimalItem* AddItem(FItemNetInfo* theItemInfo, bool bEquipItem, bool AddToSlot, bool bDontStack, FItemNetID* InventoryInsertAfterItemID, bool ShowHUDNotification, bool bDontRecalcSpoilingTime) { return NativeCall<UPrimalItem *, FItemNetInfo *, bool, bool, bool, FItemNetID *, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "AddItem", theItemInfo, bEquipItem, AddToSlot, bDontStack, InventoryInsertAfterItemID, ShowHUDNotification, bDontRecalcSpoilingTime); }
+	bool IsLocalInventoryViewer() { return NativeCall<bool>((DWORD64)this, "UPrimalInventoryComponent", "IsLocalInventoryViewer"); }
+	void NotifyItemAdded(UPrimalItem* theItem, bool bEquippedItem) { NativeCall<void, UPrimalItem *, bool>((DWORD64)this, "UPrimalInventoryComponent", "NotifyItemAdded", theItem, bEquippedItem); }
+	void NotifyArkItemAdded() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "NotifyArkItemAdded"); }
+	void NotifyItemRemoved(UPrimalItem* theItem) { NativeCall<void, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "NotifyItemRemoved", theItem); }
+	void RemoveItemSpoilingTimer(UPrimalItem* theItem) { NativeCall<void, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "RemoveItemSpoilingTimer", theItem); }
+	bool LoadAdditionalStructureEngrams() { return NativeCall<bool>((DWORD64)this, "UPrimalInventoryComponent", "LoadAdditionalStructureEngrams"); }
+	bool RemoveItem(FItemNetID* itemID, bool bDoDrop, bool bSecondryAction, bool bForceRemoval, bool showHUDMessage) { return NativeCall<bool, FItemNetID *, bool, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "RemoveItem", itemID, bDoDrop, bSecondryAction, bForceRemoval, showHUDMessage); }
+	bool ServerEquipItem(FItemNetID* itemID) { return NativeCall<bool, FItemNetID *>((DWORD64)this, "UPrimalInventoryComponent", "ServerEquipItem", itemID); }
+	void DropItem(FItemNetInfo* theInfo, bool bOverrideSpawnTransform, FVector* LocationOverride, FRotator* RotationOverride, bool bPreventDropImpulse, bool bThrow, bool bSecondryAction, bool bSetItemDropLocation) { NativeCall<void, FItemNetInfo *, bool, FVector *, FRotator *, bool, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "DropItem", theInfo, bOverrideSpawnTransform, LocationOverride, RotationOverride, bPreventDropImpulse, bThrow, bSecondryAction, bSetItemDropLocation); }
+	//ADroppedItem * StaticDropNewItem(AActor * forActor TSubclassOf<UPrimalItem> AnItemClass, float ItemQuality, bool bForceNoBlueprint, int QuantityOverride, bool bForceBlueprint, TSubclassOf<ADroppedItem> TheDroppedTemplateOverride, FRotator * DroppedRotationOffset, bool bOverrideSpawnTransform, FVector * LocationOverride, FRotator * RotationOverride, bool bPreventDropImpulse, bool bThrow, bool bSecondaryAction, bool bSetItemDropLocation) { return NativeCall<ADroppedItem *, AActor *, TSubclassOf<UPrimalItem>, float, bool, int, bool, TSubclassOf<ADroppedItem>, FRotator *, bool, FVector *, FRotator *, bool, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "StaticDropNewItem", forActor, AnItemClass, ItemQuality, bForceNoBlueprint, QuantityOverride, bForceBlueprint, TheDroppedTemplateOverride, DroppedRotationOffset, bOverrideSpawnTransform, LocationOverride, RotationOverride, bPreventDropImpulse, bThrow, bSecondaryAction, bSetItemDropLocation); }
+	//ADroppedItem * StaticDropItem(AActor * forActor FItemNetInfo * theInfo, TSubclassOf<ADroppedItem> TheDroppedTemplateOverride, FRotator * DroppedRotationOffset, bool bOverrideSpawnTransform, FVector * LocationOverride, FRotator * RotationOverride, bool bPreventDropImpulse, bool bThrow, bool bSecondryAction, bool bSetItemDropLocation) { return NativeCall<ADroppedItem *, AActor *, FItemNetInfo *, TSubclassOf<ADroppedItem>, FRotator *, bool, FVector *, FRotator *, bool, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "StaticDropItem", forActor, theInfo, TheDroppedTemplateOverride, DroppedRotationOffset, bOverrideSpawnTransform, LocationOverride, RotationOverride, bPreventDropImpulse, bThrow, bSecondryAction, bSetItemDropLocation); }
+	AShooterPlayerController* GetOwnerController() { return NativeCall<AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "GetOwnerController"); }
+	void UpdateNetWeaponClipAmmo(UPrimalItem* anItem, int ammo) { NativeCall<void, UPrimalItem *, int>((DWORD64)this, "UPrimalInventoryComponent", "UpdateNetWeaponClipAmmo", anItem, ammo); }
+	void NotifyClientsItemStatus(UPrimalItem* anItem, bool bEquippedItem, bool bRemovedItem, bool bOnlyUpdateQuantity, bool bOnlyUpdateDurability, bool bOnlyNotifyItemSwap, UPrimalItem* anItem2, FItemNetID* InventoryInsertAfterItemID, bool bUsedItem, bool bNotifyCraftQueue, bool ShowHUDNotification) { NativeCall<void, UPrimalItem *, bool, bool, bool, bool, bool, UPrimalItem *, FItemNetID *, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "NotifyClientsItemStatus", anItem, bEquippedItem, bRemovedItem, bOnlyUpdateQuantity, bOnlyUpdateDurability, bOnlyNotifyItemSwap, anItem2, InventoryInsertAfterItemID, bUsedItem, bNotifyCraftQueue, ShowHUDNotification); }
+	void NotifyClientItemArkTributeStatusChanged(UPrimalItem* anItem, bool bRemoved, bool bFromLoad) { NativeCall<void, UPrimalItem *, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "NotifyClientItemArkTributeStatusChanged", anItem, bRemoved, bFromLoad); }
+	void ServerRequestItems(AShooterPlayerController* forPC, bool bEquippedItems, bool bIsFirstSpawn) { NativeCall<void, AShooterPlayerController *, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "ServerRequestItems", forPC, bEquippedItems, bIsFirstSpawn); }
+	void ClientStartReceivingItems(bool bEquippedItems) { NativeCall<void, bool>((DWORD64)this, "UPrimalInventoryComponent", "ClientStartReceivingItems", bEquippedItems); }
+	void ClientFinishReceivingItems(bool bEquippedItems) { NativeCall<void, bool>((DWORD64)this, "UPrimalInventoryComponent", "ClientFinishReceivingItems", bEquippedItems); }
+	TArray<UPrimalItem *, FDefaultAllocator>* FindColorItem(TArray<UPrimalItem *, FDefaultAllocator>* result, FColor theColor, bool bEquippedItems) { return NativeCall<TArray<UPrimalItem *, FDefaultAllocator> *, TArray<UPrimalItem *, FDefaultAllocator> *, FColor, bool>((DWORD64)this, "UPrimalInventoryComponent", "FindColorItem", result, theColor, bEquippedItems); }
+	TArray<UPrimalItem *, FDefaultAllocator>* FindBrushColorItem(TArray<UPrimalItem *, FDefaultAllocator>* result, __int16 ArchIndex) { return NativeCall<TArray<UPrimalItem *, FDefaultAllocator> *, TArray<UPrimalItem *, FDefaultAllocator> *, __int16>((DWORD64)this, "UPrimalInventoryComponent", "FindBrushColorItem", result, ArchIndex); }
+	UPrimalItem* FindItem(FItemNetID* ItemID, bool bEquippedItems, bool bAllItems, int* itemIdx) { return NativeCall<UPrimalItem *, FItemNetID *, bool, bool, int *>((DWORD64)this, "UPrimalInventoryComponent", "FindItem", ItemID, bEquippedItems, bAllItems, itemIdx); }
+	void GiveInitialItems(bool SkipEngrams) { NativeCall<void, bool>((DWORD64)this, "UPrimalInventoryComponent", "GiveInitialItems", SkipEngrams); }
+	void InitializeInventory() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "InitializeInventory"); }
+	void CheckRefreshDefaultInventoryItems() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "CheckRefreshDefaultInventoryItems"); }
+	void SetEquippedItemsOwnerNoSee(bool bNewOwnerNoSee, bool bForceHideFirstPerson) { NativeCall<void, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "SetEquippedItemsOwnerNoSee", bNewOwnerNoSee, bForceHideFirstPerson); }
+	bool RemoteInventoryAllowViewing(AShooterPlayerController* PC) { return NativeCall<bool, AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "RemoteInventoryAllowViewing", PC); }
+	bool RemoteInventoryAllowAddItems(AShooterPlayerController* PC, UPrimalItem* anItem, int* anItemQuantityOverride) { return NativeCall<bool, AShooterPlayerController *, UPrimalItem *, int *>((DWORD64)this, "UPrimalInventoryComponent", "RemoteInventoryAllowAddItems", PC, anItem, anItemQuantityOverride); }
+	bool RemoteInventoryAllowRemoveItems(AShooterPlayerController* PC, UPrimalItem* anItemToTransfer, int* requestedQuantity) { return NativeCall<bool, AShooterPlayerController *, UPrimalItem *, int *>((DWORD64)this, "UPrimalInventoryComponent", "RemoteInventoryAllowRemoveItems", PC, anItemToTransfer, requestedQuantity); }
+	bool RemoteInventoryAllowCraftingItems(AShooterPlayerController* PC, bool bIgnoreEnabled) { return NativeCall<bool, AShooterPlayerController *, bool>((DWORD64)this, "UPrimalInventoryComponent", "RemoteInventoryAllowCraftingItems", PC, bIgnoreEnabled); }
+	bool RemoteInventoryAllowRepairingItems(AShooterPlayerController* PC, bool bIgnoreEnabled) { return NativeCall<bool, AShooterPlayerController *, bool>((DWORD64)this, "UPrimalInventoryComponent", "RemoteInventoryAllowRepairingItems", PC, bIgnoreEnabled); }
+	void ServerViewRemoteInventory(AShooterPlayerController* ByPC) { NativeCall<void, AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "ServerViewRemoteInventory", ByPC); }
+	void ServerCloseRemoteInventory(AShooterPlayerController* ByPC) { NativeCall<void, AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "ServerCloseRemoteInventory", ByPC); }
+	void OnComponentDestroyed() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "OnComponentDestroyed"); }
+	void GetCustomFolderItems() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "GetCustomFolderItems"); }
+	bool AddToFolders(TArray<FString, FDefaultAllocator>* FoldersFound, UPrimalItem* anItem) { return NativeCall<bool, TArray<FString, FDefaultAllocator> *, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "AddToFolders", FoldersFound, anItem); }
+	FString* GetInventoryName(FString* result, bool bIsEquipped) { return NativeCall<FString *, FString *, bool>((DWORD64)this, "UPrimalInventoryComponent", "GetInventoryName", result, bIsEquipped); }
+	int GetFirstUnoccupiedSlot(AShooterPlayerState* forPlayerState, UPrimalItem* forItem) { return NativeCall<int, AShooterPlayerState *, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "GetFirstUnoccupiedSlot", forPlayerState, forItem); }
+	void ServerRemoveItemFromSlot_Implementation(FItemNetID ItemID) { NativeCall<void, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "ServerRemoveItemFromSlot_Implementation", ItemID); }
+	void ServerAddItemToSlot_Implementation(FItemNetID ItemID, int SlotIndex) { NativeCall<void, FItemNetID, int>((DWORD64)this, "UPrimalInventoryComponent", "ServerAddItemToSlot_Implementation", ItemID, SlotIndex); }
+	//UPrimalItem * GetEquippedItemOfType(EPrimalEquipmentType::Type aType) { return NativeCall<UPrimalItem *, EPrimalEquipmentType::Type>((DWORD64)this, "UPrimalInventoryComponent", "GetEquippedItemOfType", aType); }
+	int IncrementItemTemplateQuantity(TSubclassOf<UPrimalItem> ItemTemplate, int amount, bool bReplicateToClient, bool bIsBlueprint, UPrimalItem** UseSpecificItem, UPrimalItem** IncrementedItem, bool bRequireExactClassMatch, bool bIsCraftingResourceConsumption, bool bIsFromUseConsumption, bool bIsArkTributeItem, bool ShowHUDNotification, bool bDontRecalcSpoilingTime) { return NativeCall<int, TSubclassOf<UPrimalItem>, int, bool, bool, UPrimalItem **, UPrimalItem **, bool, bool, bool, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "IncrementItemTemplateQuantity", ItemTemplate, amount, bReplicateToClient, bIsBlueprint, UseSpecificItem, IncrementedItem, bRequireExactClassMatch, bIsCraftingResourceConsumption, bIsFromUseConsumption, bIsArkTributeItem, ShowHUDNotification, bDontRecalcSpoilingTime); }
+	bool IncrementArkTributeItemQuantity(UPrimalItem* NewItem, UPrimalItem** IncrementedItem) { return NativeCall<bool, UPrimalItem *, UPrimalItem **>((DWORD64)this, "UPrimalInventoryComponent", "IncrementArkTributeItemQuantity", NewItem, IncrementedItem); }
+	UPrimalItem* GetItemOfTemplate(TSubclassOf<UPrimalItem> ItemTemplate, bool bOnlyInventoryItems, bool bOnlyEquippedItems, bool IgnoreItemsWithFullQuantity, bool bFavorSlotItems, bool bIsBlueprint, UPrimalItem* CheckCanStackWithItem, bool bRequiresExactClassMatch, int* CheckCanStackWithItemQuantityOverride, bool bIgnoreSlotItems, bool bOnlyArkTributeItems, bool bPreferEngram, bool bIsForCraftingConsumption) { return NativeCall<UPrimalItem *, TSubclassOf<UPrimalItem>, bool, bool, bool, bool, bool, UPrimalItem *, bool, int *, bool, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "GetItemOfTemplate", ItemTemplate, bOnlyInventoryItems, bOnlyEquippedItems, IgnoreItemsWithFullQuantity, bFavorSlotItems, bIsBlueprint, CheckCanStackWithItem, bRequiresExactClassMatch, CheckCanStackWithItemQuantityOverride, bIgnoreSlotItems, bOnlyArkTributeItems, bPreferEngram, bIsForCraftingConsumption); }
+	int GetCraftQueueResourceCost(TSubclassOf<UPrimalItem> ItemTemplate, UPrimalItem* IgnoreFirstItem) { return NativeCall<int, TSubclassOf<UPrimalItem>, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "GetCraftQueueResourceCost", ItemTemplate, IgnoreFirstItem); }
+	int GetItemTemplateQuantity(TSubclassOf<UPrimalItem> ItemTemplate, UPrimalItem* IgnoreItem, bool bIgnoreBlueprints, bool bCheckValidForCrafting, bool bRequireExactClassMatch) { return NativeCall<int, TSubclassOf<UPrimalItem>, UPrimalItem *, bool, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "GetItemTemplateQuantity", ItemTemplate, IgnoreItem, bIgnoreBlueprints, bCheckValidForCrafting, bRequireExactClassMatch); }
+	float GetTotalDurabilityOfTemplate(TSubclassOf<UPrimalItem> ItemTemplate) { return NativeCall<float, TSubclassOf<UPrimalItem>>((DWORD64)this, "UPrimalInventoryComponent", "GetTotalDurabilityOfTemplate", ItemTemplate); }
+	void LocalUseItemSlot(int slotIndex, bool bForceCraft) { NativeCall<void, int, bool>((DWORD64)this, "UPrimalInventoryComponent", "LocalUseItemSlot", slotIndex, bForceCraft); }
+	//float GetTotalEquippedItemStat(EPrimalItemStat::Type statType) { return NativeCall<float, EPrimalItemStat::Type>((DWORD64)this, "UPrimalInventoryComponent", "GetTotalEquippedItemStat", statType); }
+	//float GetEquippedArmorRating(EPrimalEquipmentType::Type equipmentType) { return NativeCall<float, EPrimalEquipmentType::Type>((DWORD64)this, "UPrimalInventoryComponent", "GetEquippedArmorRating", equipmentType); }
+	//void ConsumeArmorDurability(float ConsumptionAmount, bool bAllArmorTypes, EPrimalEquipmentType::Type SpecificArmorType) { NativeCall<void, float, bool, EPrimalEquipmentType::Type>((DWORD64)this, "UPrimalInventoryComponent", "ConsumeArmorDurability", ConsumptionAmount, bAllArmorTypes, SpecificArmorType); }
+	void ServerCraftItem(FItemNetID* itemID, AShooterPlayerController* ByPC) { NativeCall<void, FItemNetID *, AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "ServerCraftItem", itemID, ByPC); }
+	void AddToCraftQueue(UPrimalItem* anItem, AShooterPlayerController* ByPC, bool bIsRepair) { NativeCall<void, UPrimalItem *, AShooterPlayerController *, bool>((DWORD64)this, "UPrimalInventoryComponent", "AddToCraftQueue", anItem, ByPC, bIsRepair); }
+	void ClearCraftQueue() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "ClearCraftQueue"); }
+	void ServerRepairItem(FItemNetID* itemID, AShooterPlayerController* ByPC) { NativeCall<void, FItemNetID *, AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "ServerRepairItem", itemID, ByPC); }
+	void ServerUseInventoryItem(FItemNetID* itemID, AShooterPlayerController* ByPC) { NativeCall<void, FItemNetID *, AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "ServerUseInventoryItem", itemID, ByPC); }
+	void ServerUseItemWithItem(FItemNetID* itemID1, FItemNetID* itemID2, int AdditionalData) { NativeCall<void, FItemNetID *, FItemNetID *, int>((DWORD64)this, "UPrimalInventoryComponent", "ServerUseItemWithItem", itemID1, itemID2, AdditionalData); }
+	void SwapInventoryItems(FItemNetID* itemID1, FItemNetID* itemID2) { NativeCall<void, FItemNetID *, FItemNetID *>((DWORD64)this, "UPrimalInventoryComponent", "SwapInventoryItems", itemID1, itemID2); }
+	void AddItemCrafting(UPrimalItem* craftingItem) { NativeCall<void, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "AddItemCrafting", craftingItem); }
+	void RemoveItemCrafting(UPrimalItem* craftingItem) { NativeCall<void, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "RemoveItemCrafting", craftingItem); }
+	void StopAllCraftingRepairing() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "StopAllCraftingRepairing"); }
+	void TickCraftQueue(float DeltaTime, AShooterGameState* theGameState) { NativeCall<void, float, AShooterGameState *>((DWORD64)this, "UPrimalInventoryComponent", "TickCraftQueue", DeltaTime, theGameState); }
+	float GetCraftingSpeed() { return NativeCall<float>((DWORD64)this, "UPrimalInventoryComponent", "GetCraftingSpeed"); }
+	bool IsLocal() { return NativeCall<bool>((DWORD64)this, "UPrimalInventoryComponent", "IsLocal"); }
+	void Unstasised() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "Unstasised"); }
+	void CheckForAutoCraftBlueprints() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "CheckForAutoCraftBlueprints"); }
+	bool IsCraftingAllowed(UPrimalItem* anItem) { return NativeCall<bool, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "IsCraftingAllowed", anItem); }
+	void SetCraftingEnabled(bool bEnable) { NativeCall<void, bool>((DWORD64)this, "UPrimalInventoryComponent", "SetCraftingEnabled", bEnable); }
+	float GetInventoryWeight() { return NativeCall<float>((DWORD64)this, "UPrimalInventoryComponent", "GetInventoryWeight"); }
+	void ServerSplitItemStack_Implementation(FItemNetID ItemID, int AmountToSplit) { NativeCall<void, FItemNetID, int>((DWORD64)this, "UPrimalInventoryComponent", "ServerSplitItemStack_Implementation", ItemID, AmountToSplit); }
+	void ServerMergeItemStack_Implementation(FItemNetID ItemID) { NativeCall<void, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "ServerMergeItemStack_Implementation", ItemID); }
+	void ServerForceMergeItemStack_Implementation(FItemNetID Item1ID, FItemNetID Item2ID) { NativeCall<void, FItemNetID, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "ServerForceMergeItemStack_Implementation", Item1ID, Item2ID); }
+	void RemoteDeleteCustomFolder(FString* CFolderName, int InventoryCompType) { NativeCall<void, FString *, int>((DWORD64)this, "UPrimalInventoryComponent", "RemoteDeleteCustomFolder", CFolderName, InventoryCompType); }
+	void RemoteAddItemToCustomFolder(FString* CFolderName, int InventoryCompType, FItemNetID ItemId) { NativeCall<void, FString *, int, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "RemoteAddItemToCustomFolder", CFolderName, InventoryCompType, ItemId); }
+	void RemoteDeleteItemFromCustomFolder(AShooterPlayerController* PC, FString* CFolderName, int InventoryCompType, FItemNetID ItemId) { NativeCall<void, AShooterPlayerController *, FString *, int, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "RemoteDeleteItemFromCustomFolder", PC, CFolderName, InventoryCompType, ItemId); }
+	UPrimalItem* FindInventoryStackableItemCompareQuantity(TSubclassOf<UPrimalItem> ItemClass, bool bFindLeastQuantity, UPrimalItem* StacksWithAndIgnoreItem) { return NativeCall<UPrimalItem *, TSubclassOf<UPrimalItem>, bool, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "FindInventoryStackableItemCompareQuantity", ItemClass, bFindLeastQuantity, StacksWithAndIgnoreItem); }
+	UPrimalCharacterStatusComponent* GetCharacterStatusComponent() { return NativeCall<UPrimalCharacterStatusComponent *>((DWORD64)this, "UPrimalInventoryComponent", "GetCharacterStatusComponent"); }
+	void ClientMultiUse(APlayerController* ForPC, int UseIndex, int hitBodyIndex) { NativeCall<void, APlayerController *, int, int>((DWORD64)this, "UPrimalInventoryComponent", "ClientMultiUse", ForPC, UseIndex, hitBodyIndex); }
+	bool TryMultiUse(APlayerController* ForPC, int UseIndex, int hitBodyIndex) { return NativeCall<bool, APlayerController *, int, int>((DWORD64)this, "UPrimalInventoryComponent", "TryMultiUse", ForPC, UseIndex, hitBodyIndex); }
+	void ActivePlayerInventoryTick(float DeltaTime) { NativeCall<void, float>((DWORD64)this, "UPrimalInventoryComponent", "ActivePlayerInventoryTick", DeltaTime); }
+	void InventoryRefresh() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "InventoryRefresh"); }
+	void RefreshItemSpoilingTimes() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "RefreshItemSpoilingTimes"); }
+	void NotifyCraftingItemConsumption(TSubclassOf<UPrimalItem> ItemTemplate, int amount) { NativeCall<void, TSubclassOf<UPrimalItem>, int>((DWORD64)this, "UPrimalInventoryComponent", "NotifyCraftingItemConsumption", ItemTemplate, amount); }
+	float GetSpoilingTimeMultiplier(UPrimalItem* anItem) { return NativeCall<float, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "GetSpoilingTimeMultiplier", anItem); }
+	void UsedItem(UPrimalItem* anItem) { NativeCall<void, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "UsedItem", anItem); }
+	void RegisterComponentTickFunctions(bool bRegister, bool bSaveAndRestoreComponentTickState) { NativeCall<void, bool, bool>((DWORD64)this, "UPrimalInventoryComponent", "RegisterComponentTickFunctions", bRegister, bSaveAndRestoreComponentTickState); }
+	void UpdatedCraftQueue() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "UpdatedCraftQueue"); }
+	void LoadedFromSaveGame() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "LoadedFromSaveGame"); }
+	//void ClientItemMessageNotification_Implementation(FItemNetID ItemID, EPrimalItemMessage::Type ItemMessageType) { NativeCall<void, FItemNetID, EPrimalItemMessage::Type>((DWORD64)this, "UPrimalInventoryComponent", "ClientItemMessageNotification_Implementation", ItemID, ItemMessageType); }
+	bool IsOwnedByPlayer() { return NativeCall<bool>((DWORD64)this, "UPrimalInventoryComponent", "IsOwnedByPlayer"); }
+	bool DropInventoryDeposit() { return NativeCall<bool>((DWORD64)this, "UPrimalInventoryComponent", "DropInventoryDeposit"); }
+	//bool GetGroundLocation(FVector * theGroundLoc, FVector * OffsetUp, FVector * OffsetDown, APrimalStructure ** LandedOnStructure, AActor * IgnoreActor, bool bCheckAnyStationary, UPrimitiveComponent ** LandedOnComponent) { return NativeCall<bool, FVector *, FVector *, FVector *, APrimalStructure **, AActor *, bool, UPrimitiveComponent **>((DWORD64)this, "UPrimalInventoryComponent", "GetGroundLocation", theGroundLoc, OffsetUp, OffsetDown, LandedOnStructure, IgnoreActor, bCheckAnyStationary, LandedOnComponent); }
+	AActor* CraftedBlueprintSpawnActor(TSubclassOf<UPrimalItem> ForItemClass, TSubclassOf<AActor> ActorClassToSpawn) { return NativeCall<AActor *, TSubclassOf<UPrimalItem>, TSubclassOf<AActor>>((DWORD64)this, "UPrimalInventoryComponent", "CraftedBlueprintSpawnActor", ForItemClass, ActorClassToSpawn); }
+	bool GenerateCrateItems(float MinQualityMultiplier, float MaxQualityMultiplier, int NumPasses, float QuantityMultiplier, float SetPowerWeight, float MaxItemDifficultyClamp) { return NativeCall<bool, float, float, int, float, float, float>((DWORD64)this, "UPrimalInventoryComponent", "GenerateCrateItems", MinQualityMultiplier, MaxQualityMultiplier, NumPasses, QuantityMultiplier, SetPowerWeight, MaxItemDifficultyClamp); }
+	UPrimalItem* FindArkTributeItem(FItemNetID* ItemID) { return NativeCall<UPrimalItem *, FItemNetID *>((DWORD64)this, "UPrimalInventoryComponent", "FindArkTributeItem", ItemID); }
+	void SetNextItemSpoilingID_Implementation(FItemNetID NextItemID) { NativeCall<void, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "SetNextItemSpoilingID_Implementation", NextItemID); }
+	void SetNextItemConsumptionID_Implementation(FItemNetID NextItemID) { NativeCall<void, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "SetNextItemConsumptionID_Implementation", NextItemID); }
+	void CheckReplenishSlotIndex(int slotIndex, TSubclassOf<UPrimalItem> ClassCheckOverride) { NativeCall<void, int, TSubclassOf<UPrimalItem>>((DWORD64)this, "UPrimalInventoryComponent", "CheckReplenishSlotIndex", slotIndex, ClassCheckOverride); }
+	void OnArkTributeItemsRemoved(bool Success, TArray<FItemNetInfo, FDefaultAllocator>* RemovedItems, TArray<FItemNetInfo, FDefaultAllocator>* NotFoundItems, int FailureResponseCode, FString* FailureResponseMessage) { NativeCall<void, bool, TArray<FItemNetInfo, FDefaultAllocator> *, TArray<FItemNetInfo, FDefaultAllocator> *, int, FString *>((DWORD64)this, "UPrimalInventoryComponent", "OnArkTributeItemsRemoved", Success, RemovedItems, NotFoundItems, FailureResponseCode, FailureResponseMessage); }
+	void ClientOnArkTributeItemsAdded_Implementation() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "ClientOnArkTributeItemsAdded_Implementation"); }
+	void OnArkTributeItemsAdded(bool Success, TArray<FItemNetInfo, FDefaultAllocator>* AddedItems) { NativeCall<void, bool, TArray<FItemNetInfo, FDefaultAllocator> *>((DWORD64)this, "UPrimalInventoryComponent", "OnArkTributeItemsAdded", Success, AddedItems); }
+	bool RemoveArkTributeItem(FItemNetID* itemID, unsigned int Quantity) { return NativeCall<bool, FItemNetID *, unsigned int>((DWORD64)this, "UPrimalInventoryComponent", "RemoveArkTributeItem", itemID, Quantity); }
+	bool ServerAddToArkTributeInventory() { return NativeCall<bool>((DWORD64)this, "UPrimalInventoryComponent", "ServerAddToArkTributeInventory"); }
+	UPrimalItem* AddAfterRemovingFromArkTributeInventory(UPrimalItem* Item, FItemNetInfo* MyItem) { return NativeCall<UPrimalItem *, UPrimalItem *, FItemNetInfo *>((DWORD64)this, "UPrimalInventoryComponent", "AddAfterRemovingFromArkTributeInventory", Item, MyItem); }
+	bool ServerAddFromArkTributeInventory(FItemNetID* itemID, int Quantity) { return NativeCall<bool, FItemNetID *, int>((DWORD64)this, "UPrimalInventoryComponent", "ServerAddFromArkTributeInventory", itemID, Quantity); }
+	void RequestAddArkTributeItem(FItemNetInfo* theItemInfo, bool bFromLoad) { NativeCall<void, FItemNetInfo *, bool>((DWORD64)this, "UPrimalInventoryComponent", "RequestAddArkTributeItem", theItemInfo, bFromLoad); }
+	void AddArkTributeItem(FItemNetInfo* theItemInfo, bool bFromLoad) { NativeCall<void, FItemNetInfo *, bool>((DWORD64)this, "UPrimalInventoryComponent", "AddArkTributeItem", theItemInfo, bFromLoad); }
+	void LoadArkTriuteItems(TArray<FItemNetInfo, FDefaultAllocator>* ItemInfos) { NativeCall<void, TArray<FItemNetInfo, FDefaultAllocator> *>((DWORD64)this, "UPrimalInventoryComponent", "LoadArkTriuteItems", ItemInfos); }
+	void NotifyItemQuantityUpdated(UPrimalItem* anItem, int amount) { NativeCall<void, UPrimalItem *, int>((DWORD64)this, "UPrimalInventoryComponent", "NotifyItemQuantityUpdated", anItem, amount); }
+	bool IsServerCustomFolder(int InventoryCompType) { return NativeCall<bool, int>((DWORD64)this, "UPrimalInventoryComponent", "IsServerCustomFolder", InventoryCompType); }
+	void AddCustomFolder() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "AddCustomFolder"); }
+	void RemoveCustomFolder() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "RemoveCustomFolder"); }
+	TArray<FString, FDefaultAllocator>* GetCustomFolders(TArray<FString, FDefaultAllocator>* result, int InventoryCompType) { return NativeCall<TArray<FString, FDefaultAllocator> *, TArray<FString, FDefaultAllocator> *, int>((DWORD64)this, "UPrimalInventoryComponent", "GetCustomFolders", result, InventoryCompType); }
+	void DeleteItemFromCustomFolder() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "DeleteItemFromCustomFolder"); }
+	bool OverrideBlueprintCraftingRequirement(TSubclassOf<UPrimalItem> ItemTemplate, int ItemQuantity) { return NativeCall<bool, TSubclassOf<UPrimalItem>, int>((DWORD64)this, "UPrimalInventoryComponent", "OverrideBlueprintCraftingRequirement", ItemTemplate, ItemQuantity); }
+	bool AllowCraftingResourceConsumption(TSubclassOf<UPrimalItem> ItemTemplate, int ItemQuantity) { return NativeCall<bool, TSubclassOf<UPrimalItem>, int>((DWORD64)this, "UPrimalInventoryComponent", "AllowCraftingResourceConsumption", ItemTemplate, ItemQuantity); }
+	float GetDamageTorpidityIncreaseMultiplierScale() { return NativeCall<float>((DWORD64)this, "UPrimalInventoryComponent", "GetDamageTorpidityIncreaseMultiplierScale"); }
+	float GetItemWeightMultiplier(UPrimalItem* anItem) { return NativeCall<float, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "GetItemWeightMultiplier", anItem); }
+	void UpdateTribeGroupInventoryRank_Implementation(char NewRank) { NativeCall<void, char>((DWORD64)this, "UPrimalInventoryComponent", "UpdateTribeGroupInventoryRank_Implementation", NewRank); }
+	float OverrideItemMinimumUseInterval(UPrimalItem* theItem) { return NativeCall<float, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "OverrideItemMinimumUseInterval", theItem); }
+	UPrimalItem* AddItemObject(UPrimalItem* anItem) { return NativeCall<UPrimalItem *, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "AddItemObject", anItem); }
+	UPrimalItem* BPFindItemWithID(int ItemID1, int ItemID2) { return NativeCall<UPrimalItem *, int, int>((DWORD64)this, "UPrimalInventoryComponent", "BPFindItemWithID", ItemID1, ItemID2); }
+	bool BPRemoteInventoryAllowAddItems(AShooterPlayerController* PC) { return NativeCall<bool, AShooterPlayerController *>((DWORD64)this, "UPrimalInventoryComponent", "BPRemoteInventoryAllowAddItems", PC); }
+	bool IsValidCraftingResource(UPrimalItem* theItem) { return NativeCall<bool, UPrimalItem *>((DWORD64)this, "UPrimalInventoryComponent", "IsValidCraftingResource", theItem); }
+	void OnComponentCreated() { NativeCall<void>((DWORD64)this, "UPrimalInventoryComponent", "OnComponentCreated"); }
+	void Serialize(FArchive* Ar) { NativeCall<void, FArchive *>((DWORD64)this, "UPrimalInventoryComponent", "Serialize", Ar); }
+	bool BPCustomRemoteInventoryAllowAddItems(AShooterPlayerController* PC, UPrimalItem* anItem, int anItemQuantityOverride) { return NativeCall<bool, AShooterPlayerController *, UPrimalItem *, int>((DWORD64)this, "UPrimalInventoryComponent", "BPCustomRemoteInventoryAllowAddItems", PC, anItem, anItemQuantityOverride); }
+	//void ClientItemMessageNotification(FItemNetID ItemID, EPrimalItemMessage::Type ItemMessageType) { NativeCall<void, FItemNetID, EPrimalItemMessage::Type>((DWORD64)this, "UPrimalInventoryComponent", "ClientItemMessageNotification", ItemID, ItemMessageType); }
+	void ServerAddItemToSlot(FItemNetID ItemID, int SlotIndex) { NativeCall<void, FItemNetID, int>((DWORD64)this, "UPrimalInventoryComponent", "ServerAddItemToSlot", ItemID, SlotIndex); }
+	void ServerForceMergeItemStack(FItemNetID Item1ID, FItemNetID Item2ID) { NativeCall<void, FItemNetID, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "ServerForceMergeItemStack", Item1ID, Item2ID); }
+	void ServerMergeItemStack(FItemNetID ItemID) { NativeCall<void, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "ServerMergeItemStack", ItemID); }
+	void ServerRemoveItemFromSlot(FItemNetID ItemID) { NativeCall<void, FItemNetID>((DWORD64)this, "UPrimalInventoryComponent", "ServerRemoveItemFromSlot", ItemID); }
+	void ServerSplitItemStack(FItemNetID ItemID, int AmountToSplit) { NativeCall<void, FItemNetID, int>((DWORD64)this, "UPrimalInventoryComponent", "ServerSplitItemStack", ItemID, AmountToSplit); }
+	void UpdateTribeGroupInventoryRank(char NewRank) { NativeCall<void, char>((DWORD64)this, "UPrimalInventoryComponent", "UpdateTribeGroupInventoryRank", NewRank); }
 };
 
 struct UPrimalItem
 {
-	void SetDinoAutoHealingThresholdPercent(float a0) { *(float*)GetAddress(this, "UPrimalItem", "DinoAutoHealingThresholdPercent") = a0; };
-	float GetDinoAutoHealingThresholdPercent() const { return *(float*)GetAddress(this, "UPrimalItem", "DinoAutoHealingThresholdPercent"); };
-	void SetDinoAutoHealingUseTimeInterval(float a0) { *(float*)GetAddress(this, "UPrimalItem", "DinoAutoHealingUseTimeInterval") = a0; };
-	float GetDinoAutoHealingUseTimeInterval() const { return *(float*)GetAddress(this, "UPrimalItem", "DinoAutoHealingUseTimeInterval"); };
-	void SetArkTributeVersion(int a0) { *(int*)GetAddress(this, "UPrimalItem", "ArkTributeVersion") = a0; };
-	int GetArkTributeVersion() const { return *(int*)GetAddress(this, "UPrimalItem", "ArkTributeVersion"); };
-	void SetEquipRequiresExplicitOwnerTags(TArray<FName, FDefaultAllocator> a0) { *(TArray<FName, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "EquipRequiresExplicitOwnerTags") = a0; };
-	TArray<FName, FDefaultAllocator> GetEquipRequiresExplicitOwnerTags() const { return *(TArray<FName, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "EquipRequiresExplicitOwnerTags"); };
-	void SetExpirationTimeUTC(unsigned int a0) { *(unsigned int*)GetAddress(this, "UPrimalItem", "ExpirationTimeUTC") = a0; };
-	unsigned int GetExpirationTimeUTC() const { return *(unsigned int*)GetAddress(this, "UPrimalItem", "ExpirationTimeUTC"); };
-	void SetBlueprintAllowMaxCraftings(int a0) { *(int*)GetAddress(this, "UPrimalItem", "BlueprintAllowMaxCraftings") = a0; };
-	int GetBlueprintAllowMaxCraftings() const { return *(int*)GetAddress(this, "UPrimalItem", "BlueprintAllowMaxCraftings"); };
-	void SetAbstractItemCraftingDescription(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "AbstractItemCraftingDescription") = a0; };
-	FString GetAbstractItemCraftingDescription() const { return *(FString*)GetAddress(this, "UPrimalItem", "AbstractItemCraftingDescription"); };
-	//void SetItemSkinUseOnItemClasses(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "ItemSkinUseOnItemClasses") = a0; };
-	//TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetItemSkinUseOnItemClasses() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "ItemSkinUseOnItemClasses"); };
-	void SetRandomChanceToBeBlueprint(float a0) { *(float*)GetAddress(this, "UPrimalItem", "RandomChanceToBeBlueprint") = a0; };
-	float GetRandomChanceToBeBlueprint() const { return *(float*)GetAddress(this, "UPrimalItem", "RandomChanceToBeBlueprint"); };
-
-	/*void SetActorClassAttachmentInfos(TArray<FActorClassAttachmentInfo, FDefaultAllocator> a0) { *(TArray<FActorClassAttachmentInfo, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "ActorClassAttachmentInfos") = a0; };
-	TArray<FActorClassAttachmentInfo, FDefaultAllocator> GetActorClassAttachmentInfos() const { return *(TArray<FActorClassAttachmentInfo, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "ActorClassAttachmentInfos"); };
-	void SetItemAttachmentInfos(TArray<FItemAttachmentInfo, FDefaultAllocator>* a0) { *(TArray<FItemAttachmentInfo, FDefaultAllocator>**)GetAddress(this, "UPrimalItem", "ItemAttachmentInfos") = a0; };
-	TArray<FItemAttachmentInfo, FDefaultAllocator>* GetItemAttachmentInfos() const { return *(TArray<FItemAttachmentInfo, FDefaultAllocator>**)GetAddress(this, "UPrimalItem", "ItemAttachmentInfos"); };
-	void SetDynamicItemAttachmentInfos(TArray<FItemAttachmentInfo, FDefaultAllocator> a0) { *(TArray<FItemAttachmentInfo, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "DynamicItemAttachmentInfos") = a0; };
-	TArray<FItemAttachmentInfo, FDefaultAllocator> GetDynamicItemAttachmentInfos() const { return *(TArray<FItemAttachmentInfo, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "DynamicItemAttachmentInfos"); };
-	void SetItemSkinAddItemAttachments(TArray<FItemAttachmentInfo, FDefaultAllocator> a0) { *(TArray<FItemAttachmentInfo, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "ItemSkinAddItemAttachments") = a0; };
-	TArray<FItemAttachmentInfo, FDefaultAllocator> GetItemSkinAddItemAttachments() const { return *(TArray<FItemAttachmentInfo, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "ItemSkinAddItemAttachments"); };
-*/
-	TEnumAsByte<enum EPrimalItemType> GetMyItemType() const { return *(TEnumAsByte<enum EPrimalItemType>*)GetAddress(this, "UPrimalItem", "MyItemType"); };
-	//TEnumAsByte<enum EPrimalConsumableType> GetMyConsumableType() const { return *(TEnumAsByte<enum EPrimalConsumableType>*)GetAddress(this, "UPrimalItem", "MyConsumableType"); };
-	TEnumAsByte<enum EPrimalEquipmentType> GetMyEquipmentType() const { return *(TEnumAsByte<enum EPrimalEquipmentType>*)GetAddress(this, "UPrimalItem", "MyEquipmentType"); };
-	void SetExtraItemCategoryFlags(int a0) { *(int*)GetAddress(this, "UPrimalItem", "ExtraItemCategoryFlags") = a0; };
-	int GetExtraItemCategoryFlags() const { return *(int*)GetAddress(this, "UPrimalItem", "ExtraItemCategoryFlags"); };
-	void SetBlockingShieldFPVTranslation(FVector a0) { *(FVector*)GetAddress(this, "UPrimalItem", "BlockingShieldFPVTranslation") = a0; };
-	FVector GetBlockingShieldFPVTranslation() const { return *(FVector*)GetAddress(this, "UPrimalItem", "BlockingShieldFPVTranslation"); };
-	void SetBlockingShieldFPVRotation(FRotator a0) { *(FRotator*)GetAddress(this, "UPrimalItem", "BlockingShieldFPVRotation") = a0; };
-	FRotator GetBlockingShieldFPVRotation() const { return *(FRotator*)GetAddress(this, "UPrimalItem", "BlockingShieldFPVRotation"); };
-	void SetShieldBlockDamagePercentage(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ShieldBlockDamagePercentage") = a0; };
-	float GetShieldBlockDamagePercentage() const { return *(float*)GetAddress(this, "UPrimalItem", "ShieldBlockDamagePercentage"); };
-	void SetShieldDamageToDurabilityRatio(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ShieldDamageToDurabilityRatio") = a0; };
-	float GetShieldDamageToDurabilityRatio() const { return *(float*)GetAddress(this, "UPrimalItem", "ShieldDamageToDurabilityRatio"); };
-	void SetCraftingMinLevelRequirement(int a0) { *(int*)GetAddress(this, "UPrimalItem", "CraftingMinLevelRequirement") = a0; };
-	int GetCraftingMinLevelRequirement() const { return *(int*)GetAddress(this, "UPrimalItem", "CraftingMinLevelRequirement"); };
-	void SetCraftingCooldownInterval(float a0) { *(float*)GetAddress(this, "UPrimalItem", "CraftingCooldownInterval") = a0; };
-	float GetCraftingCooldownInterval() const { return *(float*)GetAddress(this, "UPrimalItem", "CraftingCooldownInterval"); };
-	void SetCraftItemButtonStringOverride(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "CraftItemButtonStringOverride") = a0; };
-	FString GetCraftItemButtonStringOverride() const { return *(FString*)GetAddress(this, "UPrimalItem", "CraftItemButtonStringOverride"); };
-	void SetUseSpawnActorLocOffset(FVector a0) { *(FVector*)GetAddress(this, "UPrimalItem", "UseSpawnActorLocOffset") = a0; };
-	FVector GetUseSpawnActorLocOffset() const { return *(FVector*)GetAddress(this, "UPrimalItem", "UseSpawnActorLocOffset"); };
-	void SetSlotIndex(int a0) { *(int*)GetAddress(this, "UPrimalItem", "SlotIndex") = a0; };
-	int GetSlotIndex() const { return *(int*)GetAddress(this, "UPrimalItem", "SlotIndex"); };
-	FItemNetID GetItemID() const { return *(FItemNetID*)GetAddress(this, "UPrimalItem", "ItemID"); };
-	void SetItemCustomData(int a0) { *(int*)GetAddress(this, "UPrimalItem", "ItemCustomData") = a0; };
-	int GetItemCustomData() const { return *(int*)GetAddress(this, "UPrimalItem", "ItemCustomData"); };
-	//TSubclassOf<UPrimalItem> GetItemSkinTemplate() const { return *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "ItemSkinTemplate"); };
-	void SetItemRating(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ItemRating") = a0; };
-	float GetItemRating() const { return *(float*)GetAddress(this, "UPrimalItem", "ItemRating"); };
-	void SetCraftQueue(unsigned short a0) { *(unsigned short*)GetAddress(this, "UPrimalItem", "CraftQueue") = a0; };
-	unsigned short GetCraftQueue() const { return *(unsigned short*)GetAddress(this, "UPrimalItem", "CraftQueue"); };
-	void SetCraftingSkill(float a0) { *(float*)GetAddress(this, "UPrimalItem", "CraftingSkill") = a0; };
-	float GetCraftingSkill() const { return *(float*)GetAddress(this, "UPrimalItem", "CraftingSkill"); };
-	void SetCustomItemName(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "CustomItemName") = a0; };
-	FString GetCustomItemName() const { return *(FString*)GetAddress(this, "UPrimalItem", "CustomItemName"); };
-	void SetCustomItemDescription(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "CustomItemDescription") = a0; };
-	FString GetCustomItemDescription() const { return *(FString*)GetAddress(this, "UPrimalItem", "CustomItemDescription"); };
-	void SetCustomColors(TArray<FColor, FDefaultAllocator> a0) { *(TArray<FColor, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CustomColors") = a0; };
-	TArray<FColor, FDefaultAllocator> GetCustomColors() const { return *(TArray<FColor, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CustomColors"); };
-	//void SetCustomResourceRequirements(TArray<FCraftingResourceRequirement, FDefaultAllocator> a0) { *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CustomResourceRequirements") = a0; };
-	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetCustomResourceRequirements() const { return *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CustomResourceRequirements"); };
-	void SetNextCraftCompletionTime(double a0) { *(double*)GetAddress(this, "UPrimalItem", "NextCraftCompletionTime") = a0; };
-	double GetNextCraftCompletionTime() const { return *(double*)GetAddress(this, "UPrimalItem", "NextCraftCompletionTime"); };
-	//TWeakObjectPtr<UPrimalInventoryComponent, FWeakObjectPtr> GetOwnerInventory() const { return *(TWeakObjectPtr<UPrimalInventoryComponent, FWeakObjectPtr>*)GetAddress(this, "UPrimalItem", "OwnerInventory"); };
-	void SetItemQualityIndex(unsigned char a0) { *(unsigned char*)GetAddress(this, "UPrimalItem", "ItemQualityIndex") = a0; };
-	unsigned char GetItemQualityIndex() const { return *(unsigned char*)GetAddress(this, "UPrimalItem", "ItemQualityIndex"); };
-	void SetIngredient_WeightIncreasePerQuantity(float a0) { *(float*)GetAddress(this, "UPrimalItem", "Ingredient_WeightIncreasePerQuantity") = a0; };
-	float GetIngredient_WeightIncreasePerQuantity() const { return *(float*)GetAddress(this, "UPrimalItem", "Ingredient_WeightIncreasePerQuantity"); };
-	void SetIngredient_FoodIncreasePerQuantity(float a0) { *(float*)GetAddress(this, "UPrimalItem", "Ingredient_FoodIncreasePerQuantity") = a0; };
-	float GetIngredient_FoodIncreasePerQuantity() const { return *(float*)GetAddress(this, "UPrimalItem", "Ingredient_FoodIncreasePerQuantity"); };
-	void SetIngredient_HealthIncreasePerQuantity(float a0) { *(float*)GetAddress(this, "UPrimalItem", "Ingredient_HealthIncreasePerQuantity") = a0; };
-	float GetIngredient_HealthIncreasePerQuantity() const { return *(float*)GetAddress(this, "UPrimalItem", "Ingredient_HealthIncreasePerQuantity"); };
-	void SetIngredient_WaterIncreasePerQuantity(float a0) { *(float*)GetAddress(this, "UPrimalItem", "Ingredient_WaterIncreasePerQuantity") = a0; };
-	float GetIngredient_WaterIncreasePerQuantity() const { return *(float*)GetAddress(this, "UPrimalItem", "Ingredient_WaterIncreasePerQuantity"); };
-	void SetIngredient_StaminaIncreasePerQuantity(float a0) { *(float*)GetAddress(this, "UPrimalItem", "Ingredient_StaminaIncreasePerQuantity") = a0; };
-	float GetIngredient_StaminaIncreasePerQuantity() const { return *(float*)GetAddress(this, "UPrimalItem", "Ingredient_StaminaIncreasePerQuantity"); };
-	void SetDescriptiveNameBase(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "DescriptiveNameBase") = a0; };
-	FString GetDescriptiveNameBase() const { return *(FString*)GetAddress(this, "UPrimalItem", "DescriptiveNameBase"); };
-	void SetItemDescription(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "ItemDescription") = a0; };
-	FString GetItemDescription() const { return *(FString*)GetAddress(this, "UPrimalItem", "ItemDescription"); };
-	void SetDurabilityStringShort(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "DurabilityStringShort") = a0; };
-	FString GetDurabilityStringShort() const { return *(FString*)GetAddress(this, "UPrimalItem", "DurabilityStringShort"); };
-	void SetDurabilityString(FString a0) { *(FString*)GetAddress(this, "UPrimalItem", "DurabilityString") = a0; };
-	FString GetDurabilityString() const { return *(FString*)GetAddress(this, "UPrimalItem", "DurabilityString"); };
-	void SetDroppedItemLifeSpanOverride(float a0) { *(float*)GetAddress(this, "UPrimalItem", "DroppedItemLifeSpanOverride") = a0; };
-	float GetDroppedItemLifeSpanOverride() const { return *(float*)GetAddress(this, "UPrimalItem", "DroppedItemLifeSpanOverride"); };
-	//void SetSpoilingItem(TSubclassOf<UPrimalItem> a0) { *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "SpoilingItem") = a0; };
-	//TSubclassOf<UPrimalItem> GetSpoilingItem() const { return *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "SpoilingItem"); };
-	//void SetUseRequiresOwnerActorClasses(TArray<TSubclassOf<AActor>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<AActor>, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "UseRequiresOwnerActorClasses") = a0; };
-	//TArray<TSubclassOf<AActor>, FDefaultAllocator> GetUseRequiresOwnerActorClasses() const { return *(TArray<TSubclassOf<AActor>, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "UseRequiresOwnerActorClasses"); };
-	//void SetPreservingItemClass(TSubclassOf<UPrimalItem> a0) { *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "PreservingItemClass") = a0; };
-	//TSubclassOf<UPrimalItem> GetPreservingItemClass() const { return *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "PreservingItemClass"); };
-	void SetPreservingItemSpoilingTimeMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "PreservingItemSpoilingTimeMultiplier") = a0; };
-	float GetPreservingItemSpoilingTimeMultiplier() const { return *(float*)GetAddress(this, "UPrimalItem", "PreservingItemSpoilingTimeMultiplier"); };
-	void SetSpoilingTime(float a0) { *(float*)GetAddress(this, "UPrimalItem", "SpoilingTime") = a0; };
-	float GetSpoilingTime() const { return *(float*)GetAddress(this, "UPrimalItem", "SpoilingTime"); };
-	void SetCraftingConsumesDurability(int a0) { *(int*)GetAddress(this, "UPrimalItem", "CraftingConsumesDurability") = a0; };
-	int GetCraftingConsumesDurability() const { return *(int*)GetAddress(this, "UPrimalItem", "CraftingConsumesDurability"); };
-	void SetRepairResourceRequirementMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "RepairResourceRequirementMultiplier") = a0; };
-	float GetRepairResourceRequirementMultiplier() const { return *(float*)GetAddress(this, "UPrimalItem", "RepairResourceRequirementMultiplier"); };
-	void SetBaseItemWeight(float a0) { *(float*)GetAddress(this, "UPrimalItem", "BaseItemWeight") = a0; };
-	float GetBaseItemWeight() const { return *(float*)GetAddress(this, "UPrimalItem", "BaseItemWeight"); };
-	void SetDurabilityIncreaseMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "DurabilityIncreaseMultiplier") = a0; };
-	float GetDurabilityIncreaseMultiplier() const { return *(float*)GetAddress(this, "UPrimalItem", "DurabilityIncreaseMultiplier"); };
-	void SetNewItemDurabilityOverride(float a0) { *(float*)GetAddress(this, "UPrimalItem", "NewItemDurabilityOverride") = a0; };
-	float GetNewItemDurabilityOverride() const { return *(float*)GetAddress(this, "UPrimalItem", "NewItemDurabilityOverride"); };
-	void SetDurabilityDecreaseMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "DurabilityDecreaseMultiplier") = a0; };
-	float GetDurabilityDecreaseMultiplier() const { return *(float*)GetAddress(this, "UPrimalItem", "DurabilityDecreaseMultiplier"); };
-	void SetUseDecreaseDurability(float a0) { *(float*)GetAddress(this, "UPrimalItem", "UseDecreaseDurability") = a0; };
-	float GetUseDecreaseDurability() const { return *(float*)GetAddress(this, "UPrimalItem", "UseDecreaseDurability"); };
-	void SetAutoDurabilityDecreaseInterval(float a0) { *(float*)GetAddress(this, "UPrimalItem", "AutoDurabilityDecreaseInterval") = a0; };
-	float GetAutoDurabilityDecreaseInterval() const { return *(float*)GetAddress(this, "UPrimalItem", "AutoDurabilityDecreaseInterval"); };
-	void SetAutoDecreaseMinDurability(float a0) { *(float*)GetAddress(this, "UPrimalItem", "AutoDecreaseMinDurability") = a0; };
-	float GetAutoDecreaseMinDurability() const { return *(float*)GetAddress(this, "UPrimalItem", "AutoDecreaseMinDurability"); };
-	void SetAutoDecreaseDurabilityAmountPerInterval(float a0) { *(float*)GetAddress(this, "UPrimalItem", "AutoDecreaseDurabilityAmountPerInterval") = a0; };
-	float GetAutoDecreaseDurabilityAmountPerInterval() const { return *(float*)GetAddress(this, "UPrimalItem", "AutoDecreaseDurabilityAmountPerInterval"); };
-	void SetUseDecreaseDurabilityMin(float a0) { *(float*)GetAddress(this, "UPrimalItem", "UseDecreaseDurabilityMin") = a0; };
-	float GetUseDecreaseDurabilityMin() const { return *(float*)GetAddress(this, "UPrimalItem", "UseDecreaseDurabilityMin"); };
-	void SetUseMinDurabilityRequirement(float a0) { *(float*)GetAddress(this, "UPrimalItem", "UseMinDurabilityRequirement") = a0; };
-	float GetUseMinDurabilityRequirement() const { return *(float*)GetAddress(this, "UPrimalItem", "UseMinDurabilityRequirement"); };
-	void SetResourceRarity(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ResourceRarity") = a0; };
-	float GetResourceRarity() const { return *(float*)GetAddress(this, "UPrimalItem", "ResourceRarity"); };
-	void SetBlueprintTimeToCraft(float a0) { *(float*)GetAddress(this, "UPrimalItem", "BlueprintTimeToCraft") = a0; };
-	float GetBlueprintTimeToCraft() const { return *(float*)GetAddress(this, "UPrimalItem", "BlueprintTimeToCraft"); };
-	void SetBlueprintWeight(float a0) { *(float*)GetAddress(this, "UPrimalItem", "BlueprintWeight") = a0; };
-	float GetBlueprintWeight() const { return *(float*)GetAddress(this, "UPrimalItem", "BlueprintWeight"); };
-	void SetMinimumUseInterval(float a0) { *(float*)GetAddress(this, "UPrimalItem", "MinimumUseInterval") = a0; };
-	float GetMinimumUseInterval() const { return *(float*)GetAddress(this, "UPrimalItem", "MinimumUseInterval"); };
-	void SetTimeForFullRepair(float a0) { *(float*)GetAddress(this, "UPrimalItem", "TimeForFullRepair") = a0; };
-	float GetTimeForFullRepair() const { return *(float*)GetAddress(this, "UPrimalItem", "TimeForFullRepair"); };
-	void SetBaseCraftingXP(float a0) { *(float*)GetAddress(this, "UPrimalItem", "BaseCraftingXP") = a0; };
-	float GetBaseCraftingXP() const { return *(float*)GetAddress(this, "UPrimalItem", "BaseCraftingXP"); };
-	void SetBaseRepairingXP(float a0) { *(float*)GetAddress(this, "UPrimalItem", "BaseRepairingXP") = a0; };
-	float GetBaseRepairingXP() const { return *(float*)GetAddress(this, "UPrimalItem", "BaseRepairingXP"); };
-	//void SetBaseCraftingResourceRequirements(TArray<FCraftingResourceRequirement, FDefaultAllocator> a0) { *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "BaseCraftingResourceRequirements") = a0; };
-	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetBaseCraftingResourceRequirements() const { return *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "BaseCraftingResourceRequirements"); };
-	//void SetOverrideRepairingRequirements(TArray<FCraftingResourceRequirement, FDefaultAllocator> a0) { *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "OverrideRepairingRequirements") = a0; };
-	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetOverrideRepairingRequirements() const { return *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "OverrideRepairingRequirements"); };
-	void SetWeaponClipAmmo(unsigned int a0) { *(unsigned int*)GetAddress(this, "UPrimalItem", "WeaponClipAmmo") = a0; };
-	unsigned int GetWeaponClipAmmo() const { return *(unsigned int*)GetAddress(this, "UPrimalItem", "WeaponClipAmmo"); };
-	void SetWeaponFrequency(float a0) { *(float*)GetAddress(this, "UPrimalItem", "WeaponFrequency") = a0; };
-	float GetWeaponFrequency() const { return *(float*)GetAddress(this, "UPrimalItem", "WeaponFrequency"); };
-	void SetLastTimeToShowInfo(double a0) { *(double*)GetAddress(this, "UPrimalItem", "LastTimeToShowInfo") = a0; };
-	double GetLastTimeToShowInfo() const { return *(double*)GetAddress(this, "UPrimalItem", "LastTimeToShowInfo"); };
-	void SetItemVersion(unsigned char a0) { *(unsigned char*)GetAddress(this, "UPrimalItem", "ItemVersion") = a0; };
-	unsigned char GetItemVersion() const { return *(unsigned char*)GetAddress(this, "UPrimalItem", "ItemVersion"); };
-	void SetItemDurability(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ItemDurability") = a0; };
-	float GetItemDurability() const { return *(float*)GetAddress(this, "UPrimalItem", "ItemDurability"); };
-	void SetMinItemDurability(float a0) { *(float*)GetAddress(this, "UPrimalItem", "MinItemDurability") = a0; };
-	float GetMinItemDurability() const { return *(float*)GetAddress(this, "UPrimalItem", "MinItemDurability"); };
-	void SetSavedDurability(float a0) { *(float*)GetAddress(this, "UPrimalItem", "SavedDurability") = a0; };
-	float GetSavedDurability() const { return *(float*)GetAddress(this, "UPrimalItem", "SavedDurability"); };
-	void SetAlternateItemIconBelowDurabilityValue(float a0) { *(float*)GetAddress(this, "UPrimalItem", "AlternateItemIconBelowDurabilityValue") = a0; };
-	float GetAlternateItemIconBelowDurabilityValue() const { return *(float*)GetAddress(this, "UPrimalItem", "AlternateItemIconBelowDurabilityValue"); };
-	void SetItemQuantity(int a0) { *(int*)GetAddress(this, "UPrimalItem", "ItemQuantity") = a0; };
-	int GetItemQuantity() const { return *(int*)GetAddress(this, "UPrimalItem", "ItemQuantity"); };
-	void SetMaxItemQuantity(int a0) { *(int*)GetAddress(this, "UPrimalItem", "MaxItemQuantity") = a0; };
-	int GetMaxItemQuantity() const { return *(int*)GetAddress(this, "UPrimalItem", "MaxItemQuantity"); };
-	void SetSteamItemUserIDs(TArray<unsigned __int64, FDefaultAllocator> a0) { *(TArray<unsigned __int64, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "SteamItemUserIDs") = a0; };
-	TArray<unsigned __int64, FDefaultAllocator> GetSteamItemUserIDs() const { return *(TArray<unsigned __int64, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "SteamItemUserIDs"); };
-	void SetWeaponAmmoOverrideItemCDO(UPrimalItem* a0) { *(UPrimalItem**)GetAddress(this, "UPrimalItem", "WeaponAmmoOverrideItemCDO") = a0; };
-	UPrimalItem* GetWeaponAmmoOverrideItemCDO() const { return *(UPrimalItem**)GetAddress(this, "UPrimalItem", "WeaponAmmoOverrideItemCDO"); };
-	void SetCreationTime(double a0) { *(double*)GetAddress(this, "UPrimalItem", "CreationTime") = a0; };
-	double GetCreationTime() const { return *(double*)GetAddress(this, "UPrimalItem", "CreationTime"); };
-	void SetLastAutoDurabilityDecreaseTime(double a0) { *(double*)GetAddress(this, "UPrimalItem", "LastAutoDurabilityDecreaseTime") = a0; };
-	double GetLastAutoDurabilityDecreaseTime() const { return *(double*)GetAddress(this, "UPrimalItem", "LastAutoDurabilityDecreaseTime"); };
-	void SetLastUseTime(double a0) { *(double*)GetAddress(this, "UPrimalItem", "LastUseTime") = a0; };
-	double GetLastUseTime() const { return *(double*)GetAddress(this, "UPrimalItem", "LastUseTime"); };
-	void SetLastLocalUseTime(double a0) { *(double*)GetAddress(this, "UPrimalItem", "LastLocalUseTime") = a0; };
-	double GetLastLocalUseTime() const { return *(double*)GetAddress(this, "UPrimalItem", "LastLocalUseTime"); };
-	void SetTempSlotIndex(int a0) { *(int*)GetAddress(this, "UPrimalItem", "TempSlotIndex") = a0; };
-	int GetTempSlotIndex() const { return *(int*)GetAddress(this, "UPrimalItem", "TempSlotIndex"); };
-	void SetMyItemSkin(UPrimalItem* a0) { *(UPrimalItem**)GetAddress(this, "UPrimalItem", "MyItemSkin") = a0; };
-	UPrimalItem* GetMyItemSkin() const { return *(UPrimalItem**)GetAddress(this, "UPrimalItem", "MyItemSkin"); };
-	//void SetCropPhasesData(TArray<FCropItemPhaseData, FDefaultAllocator> a0) { *(TArray<FCropItemPhaseData, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CropPhasesData") = a0; };
-	//TArray<FCropItemPhaseData, FDefaultAllocator> GetCropPhasesData() const { return *(TArray<FCropItemPhaseData, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CropPhasesData"); };
-	void SetCropGrowingFertilizerConsumptionRate(float a0) { *(float*)GetAddress(this, "UPrimalItem", "CropGrowingFertilizerConsumptionRate") = a0; };
-	float GetCropGrowingFertilizerConsumptionRate() const { return *(float*)GetAddress(this, "UPrimalItem", "CropGrowingFertilizerConsumptionRate"); };
-	void SetCropMaxFruitFertilizerConsumptionRate(float a0) { *(float*)GetAddress(this, "UPrimalItem", "CropMaxFruitFertilizerConsumptionRate") = a0; };
-	float GetCropMaxFruitFertilizerConsumptionRate() const { return *(float*)GetAddress(this, "UPrimalItem", "CropMaxFruitFertilizerConsumptionRate"); };
-	void SetCropGrowingWaterConsumptionRate(float a0) { *(float*)GetAddress(this, "UPrimalItem", "CropGrowingWaterConsumptionRate") = a0; };
-	float GetCropGrowingWaterConsumptionRate() const { return *(float*)GetAddress(this, "UPrimalItem", "CropGrowingWaterConsumptionRate"); };
-	void SetCropMaxFruitWaterConsumptionRate(float a0) { *(float*)GetAddress(this, "UPrimalItem", "CropMaxFruitWaterConsumptionRate") = a0; };
-	float GetCropMaxFruitWaterConsumptionRate() const { return *(float*)GetAddress(this, "UPrimalItem", "CropMaxFruitWaterConsumptionRate"); };
-	void SetCropMaxFruits(int a0) { *(int*)GetAddress(this, "UPrimalItem", "CropMaxFruits") = a0; };
-	int GetCropMaxFruits() const { return *(int*)GetAddress(this, "UPrimalItem", "CropMaxFruits"); };
-	void SetCropNoFertilizerOrWaterCacheReductionRate(float a0) { *(float*)GetAddress(this, "UPrimalItem", "CropNoFertilizerOrWaterCacheReductionRate") = a0; };
-	float GetCropNoFertilizerOrWaterCacheReductionRate() const { return *(float*)GetAddress(this, "UPrimalItem", "CropNoFertilizerOrWaterCacheReductionRate"); };
-	void SetFertilizerEffectivenessMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "FertilizerEffectivenessMultiplier") = a0; };
-	float GetFertilizerEffectivenessMultiplier() const { return *(float*)GetAddress(this, "UPrimalItem", "FertilizerEffectivenessMultiplier"); };
-	void SetEggAlertDinosAggroAmount(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggAlertDinosAggroAmount") = a0; };
-	float GetEggAlertDinosAggroAmount() const { return *(float*)GetAddress(this, "UPrimalItem", "EggAlertDinosAggroAmount"); };
-	void SetEggAlertDinosAggroRadius(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggAlertDinosAggroRadius") = a0; };
-	float GetEggAlertDinosAggroRadius() const { return *(float*)GetAddress(this, "UPrimalItem", "EggAlertDinosAggroRadius"); };
-	void SetEggAlertDinosAggroTags(TArray<FName, FDefaultAllocator> a0) { *(TArray<FName, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "EggAlertDinosAggroTags") = a0; };
-	TArray<FName, FDefaultAllocator> GetEggAlertDinosAggroTags() const { return *(TArray<FName, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "EggAlertDinosAggroTags"); };
-	void SetEggAlertDinosForcedAggroTime(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggAlertDinosForcedAggroTime") = a0; };
-	float GetEggAlertDinosForcedAggroTime() const { return *(float*)GetAddress(this, "UPrimalItem", "EggAlertDinosForcedAggroTime"); };
-	void SetEggMaximumDistanceFromOriginalDropToAlertDinos(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggMaximumDistanceFromOriginalDropToAlertDinos") = a0; };
-	float GetEggMaximumDistanceFromOriginalDropToAlertDinos() const { return *(float*)GetAddress(this, "UPrimalItem", "EggMaximumDistanceFromOriginalDropToAlertDinos"); };
-	//void SetBrokenGiveItemClass(TSubclassOf<UPrimalItem> a0) { *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "BrokenGiveItemClass") = a0; };
-	//TSubclassOf<UPrimalItem> GetBrokenGiveItemClass() const { return *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "BrokenGiveItemClass"); };
-	void SetClearColorDurabilityThreshold(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ClearColorDurabilityThreshold") = a0; };
-	float GetClearColorDurabilityThreshold() const { return *(float*)GetAddress(this, "UPrimalItem", "ClearColorDurabilityThreshold"); };
-	void SetOriginalItemDropLocation(FVector a0) { *(FVector*)GetAddress(this, "UPrimalItem", "OriginalItemDropLocation") = a0; };
-	FVector GetOriginalItemDropLocation() const { return *(FVector*)GetAddress(this, "UPrimalItem", "OriginalItemDropLocation"); };
-	void SetDurabilityBarColorForeground(FLinearColor a0) { *(FLinearColor*)GetAddress(this, "UPrimalItem", "DurabilityBarColorForeground") = a0; };
-	FLinearColor GetDurabilityBarColorForeground() const { return *(FLinearColor*)GetAddress(this, "UPrimalItem", "DurabilityBarColorForeground"); };
-	void SetDurabilityBarColorBackground(FLinearColor a0) { *(FLinearColor*)GetAddress(this, "UPrimalItem", "DurabilityBarColorBackground") = a0; };
-	FLinearColor GetDurabilityBarColorBackground() const { return *(FLinearColor*)GetAddress(this, "UPrimalItem", "DurabilityBarColorBackground"); };
-	//void SetOverrideCooldownTimeItemClass(TSubclassOf<UPrimalItem> a0) { *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "OverrideCooldownTimeItemClass") = a0; };
-	//TSubclassOf<UPrimalItem> GetOverrideCooldownTimeItemClass() const { return *(TSubclassOf<UPrimalItem>*)GetAddress(this, "UPrimalItem", "OverrideCooldownTimeItemClass"); };
-	void SetMinDurabilityForCraftingResource(float a0) { *(float*)GetAddress(this, "UPrimalItem", "MinDurabilityForCraftingResource") = a0; };
-	float GetMinDurabilityForCraftingResource() const { return *(float*)GetAddress(this, "UPrimalItem", "MinDurabilityForCraftingResource"); };
-	void SetResourceRequirementIncreaseRatingPower(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ResourceRequirementIncreaseRatingPower") = a0; };
-	float GetResourceRequirementIncreaseRatingPower() const { return *(float*)GetAddress(this, "UPrimalItem", "ResourceRequirementIncreaseRatingPower"); };
-	void SetResourceRequirementRatingScale(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ResourceRequirementRatingScale") = a0; };
-	float GetResourceRequirementRatingScale() const { return *(float*)GetAddress(this, "UPrimalItem", "ResourceRequirementRatingScale"); };
-	void SetResourceRequirementRatingIncreasePercentage(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ResourceRequirementRatingIncreasePercentage") = a0; };
-	float GetResourceRequirementRatingIncreasePercentage() const { return *(float*)GetAddress(this, "UPrimalItem", "ResourceRequirementRatingIncreasePercentage"); };
-	void SetNextSpoilingTime(double a0) { *(double*)GetAddress(this, "UPrimalItem", "NextSpoilingTime") = a0; };
-	double GetNextSpoilingTime() const { return *(double*)GetAddress(this, "UPrimalItem", "NextSpoilingTime"); };
-	void SetLastSpoilingTime(double a0) { *(double*)GetAddress(this, "UPrimalItem", "LastSpoilingTime") = a0; };
-	double GetLastSpoilingTime() const { return *(double*)GetAddress(this, "UPrimalItem", "LastSpoilingTime"); };
-	void SetDefaultFolderPaths(TArray<FString, FDefaultAllocator> a0) { *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "DefaultFolderPaths") = a0; };
-	TArray<FString, FDefaultAllocator> GetDefaultFolderPaths() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "DefaultFolderPaths"); };
-	void SetDefaultWeaponMeshName(FName a0) { *(FName*)GetAddress(this, "UPrimalItem", "DefaultWeaponMeshName") = a0; };
-	FName GetDefaultWeaponMeshName() const { return *(FName*)GetAddress(this, "UPrimalItem", "DefaultWeaponMeshName"); };
-	void SetLastCalculatedTotalAmmoInvUpdatedFrame(int a0) { *(int*)GetAddress(this, "UPrimalItem", "LastCalculatedTotalAmmoInvUpdatedFrame") = a0; };
-	int GetLastCalculatedTotalAmmoInvUpdatedFrame() const { return *(int*)GetAddress(this, "UPrimalItem", "LastCalculatedTotalAmmoInvUpdatedFrame"); };
-	void SetWeaponTotalAmmo(int a0) { *(int*)GetAddress(this, "UPrimalItem", "WeaponTotalAmmo") = a0; };
-	int GetWeaponTotalAmmo() const { return *(int*)GetAddress(this, "UPrimalItem", "WeaponTotalAmmo"); };
-	void SetCraftingResourceRequirements(TArray<unsigned short, FDefaultAllocator> a0) { *(TArray<unsigned short, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CraftingResourceRequirements") = a0; };
-	TArray<unsigned short, FDefaultAllocator> GetCraftingResourceRequirements() const { return *(TArray<unsigned short, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CraftingResourceRequirements"); };
-	void SetSpawnOnWaterEncroachmentBoxExtent(FVector a0) { *(FVector*)GetAddress(this, "UPrimalItem", "SpawnOnWaterEncroachmentBoxExtent") = a0; };
-	FVector GetSpawnOnWaterEncroachmentBoxExtent() const { return *(FVector*)GetAddress(this, "UPrimalItem", "SpawnOnWaterEncroachmentBoxExtent"); };
-	//void SetSaddlePassengerSeats(TArray<FSaddlePassengerSeatDefinition, FDefaultAllocator> a0) { *(TArray<FSaddlePassengerSeatDefinition, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "SaddlePassengerSeats") = a0; };
-	//TArray<FSaddlePassengerSeatDefinition, FDefaultAllocator> GetSaddlePassengerSeats() const { return *(TArray<FSaddlePassengerSeatDefinition, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "SaddlePassengerSeats"); };
-	void SetSaddleOverrideRiderSocketName(FName a0) { *(FName*)GetAddress(this, "UPrimalItem", "SaddleOverrideRiderSocketName") = a0; };
-	FName GetSaddleOverrideRiderSocketName() const { return *(FName*)GetAddress(this, "UPrimalItem", "SaddleOverrideRiderSocketName"); };
-	//void SetEggDinoClassToSpawn(TSubclassOf<APrimalDinoCharacter> a0) { *(TSubclassOf<APrimalDinoCharacter>*)GetAddress(this, "UPrimalItem", "EggDinoClassToSpawn") = a0; };
-	//TSubclassOf<APrimalDinoCharacter> GetEggDinoClassToSpawn() const { return *(TSubclassOf<APrimalDinoCharacter>*)GetAddress(this, "UPrimalItem", "EggDinoClassToSpawn"); };
-	void SetEggTamedIneffectivenessModifier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggTamedIneffectivenessModifier") = a0; };
-	float GetEggTamedIneffectivenessModifier() const { return *(float*)GetAddress(this, "UPrimalItem", "EggTamedIneffectivenessModifier"); };
-	void SetEggLoseDurabilityPerSecond(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggLoseDurabilityPerSecond") = a0; };
-	float GetEggLoseDurabilityPerSecond() const { return *(float*)GetAddress(this, "UPrimalItem", "EggLoseDurabilityPerSecond"); };
-	void SetExtraEggLoseDurabilityPerSecondMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "ExtraEggLoseDurabilityPerSecondMultiplier") = a0; };
-	float GetExtraEggLoseDurabilityPerSecondMultiplier() const { return *(float*)GetAddress(this, "UPrimalItem", "ExtraEggLoseDurabilityPerSecondMultiplier"); };
-	void SetEggMinTemperature(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggMinTemperature") = a0; };
-	float GetEggMinTemperature() const { return *(float*)GetAddress(this, "UPrimalItem", "EggMinTemperature"); };
-	void SetEggMaxTemperature(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggMaxTemperature") = a0; };
-	float GetEggMaxTemperature() const { return *(float*)GetAddress(this, "UPrimalItem", "EggMaxTemperature"); };
-	void SetEggDroppedInvalidTempLoseItemRatingSpeed(float a0) { *(float*)GetAddress(this, "UPrimalItem", "EggDroppedInvalidTempLoseItemRatingSpeed") = a0; };
-	float GetEggDroppedInvalidTempLoseItemRatingSpeed() const { return *(float*)GetAddress(this, "UPrimalItem", "EggDroppedInvalidTempLoseItemRatingSpeed"); };
-	void SetRecipeCraftingSkillScale(float a0) { *(float*)GetAddress(this, "UPrimalItem", "RecipeCraftingSkillScale") = a0; };
-	float GetRecipeCraftingSkillScale() const { return *(float*)GetAddress(this, "UPrimalItem", "RecipeCraftingSkillScale"); };
-	void SetCustomItemID(int a0) { *(int*)GetAddress(this, "UPrimalItem", "CustomItemID") = a0; };
-	int GetCustomItemID() const { return *(int*)GetAddress(this, "UPrimalItem", "CustomItemID"); };
-	void SetAddDinoTargetingRange(float a0) { *(float*)GetAddress(this, "UPrimalItem", "AddDinoTargetingRange") = a0; };
-	float GetAddDinoTargetingRange() const { return *(float*)GetAddress(this, "UPrimalItem", "AddDinoTargetingRange"); };
-	void SetDamageTorpidityArmorRating(float a0) { *(float*)GetAddress(this, "UPrimalItem", "DamageTorpidityArmorRating") = a0; };
-	float GetDamageTorpidityArmorRating() const { return *(float*)GetAddress(this, "UPrimalItem", "DamageTorpidityArmorRating"); };
-	void SetUseParticleEffectSocketName(FName a0) { *(FName*)GetAddress(this, "UPrimalItem", "UseParticleEffectSocketName") = a0; };
-	FName GetUseParticleEffectSocketName() const { return *(FName*)GetAddress(this, "UPrimalItem", "UseParticleEffectSocketName"); };
-	void SetUseGiveDinoTameAffinityPercent(float a0) { *(float*)GetAddress(this, "UPrimalItem", "UseGiveDinoTameAffinityPercent") = a0; };
-	float GetUseGiveDinoTameAffinityPercent() const { return *(float*)GetAddress(this, "UPrimalItem", "UseGiveDinoTameAffinityPercent"); };
-	//void SetCraftingAdditionalItemsToGive(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> a0) { *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CraftingAdditionalItemsToGive") = a0; };
-	//TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetCraftingAdditionalItemsToGive() const { return *(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>*)GetAddress(this, "UPrimalItem", "CraftingAdditionalItemsToGive"); };
-	void SetLastValidItemVersion(int a0) { *(int*)GetAddress(this, "UPrimalItem", "LastValidItemVersion") = a0; };
-	int GetLastValidItemVersion() const { return *(int*)GetAddress(this, "UPrimalItem", "LastValidItemVersion"); };
-	void SetGlobalTameAffinityMultiplier(float a0) { *(float*)GetAddress(this, "UPrimalItem", "GlobalTameAffinityMultiplier") = a0; };
-	float GetGlobalTameAffinityMultiplier() const { return *(float*)GetAddress(this, "UPrimalItem", "GlobalTameAffinityMultiplier"); };
-	void SetCraftingGiveItemCount(int a0) { *(int*)GetAddress(this, "UPrimalItem", "CraftingGiveItemCount") = a0; };
-	int GetCraftingGiveItemCount() const { return *(int*)GetAddress(this, "UPrimalItem", "CraftingGiveItemCount"); };
-	void SetCraftingGivesItemQuantityOverride(int a0) { *(int*)GetAddress(this, "UPrimalItem", "CraftingGivesItemQuantityOverride") = a0; };
-	int GetCraftingGivesItemQuantityOverride() const { return *(int*)GetAddress(this, "UPrimalItem", "CraftingGivesItemQuantityOverride"); };
-	void SetUseUnlocksEmoteName(FName a0) { *(FName*)GetAddress(this, "UPrimalItem", "UseUnlocksEmoteName") = a0; };
-	FName GetUseUnlocksEmoteName() const { return *(FName*)GetAddress(this, "UPrimalItem", "UseUnlocksEmoteName"); };
-	void SetClusterSpoilingTimeUTC(double a0) { *(double*)GetAddress(this, "UPrimalItem", "ClusterSpoilingTimeUTC") = a0; };
-	double GetClusterSpoilingTimeUTC() const { return *(double*)GetAddress(this, "UPrimalItem", "ClusterSpoilingTimeUTC"); };
-	void SetEggRandomMutationsFemale(int a0) { *(int*)GetAddress(this, "UPrimalItem", "EggRandomMutationsFemale") = a0; };
-	int GetEggRandomMutationsFemale() const { return *(int*)GetAddress(this, "UPrimalItem", "EggRandomMutationsFemale"); };
-	void SetEggRandomMutationsMale(int a0) { *(int*)GetAddress(this, "UPrimalItem", "EggRandomMutationsMale") = a0; };
-	int GetEggRandomMutationsMale() const { return *(int*)GetAddress(this, "UPrimalItem", "EggRandomMutationsMale"); };
+	float GetDinoAutoHealingThresholdPercentField() const { return GetNativeField<float>(this, "UPrimalItem", "DinoAutoHealingThresholdPercent"); }
+	void SetDinoAutoHealingThresholdPercentField(float newValue) { SetNativeField(this, "UPrimalItem", "DinoAutoHealingThresholdPercent", newValue); }
+	float GetDinoAutoHealingUseTimeIntervalField() const { return GetNativeField<float>(this, "UPrimalItem", "DinoAutoHealingUseTimeInterval"); }
+	void SetDinoAutoHealingUseTimeIntervalField(float newValue) { SetNativeField(this, "UPrimalItem", "DinoAutoHealingUseTimeInterval", newValue); }
+	int GetArkTributeVersionField() const { return GetNativeField<int>(this, "UPrimalItem", "ArkTributeVersion"); }
+	void SetArkTributeVersionField(int newValue) { SetNativeField(this, "UPrimalItem", "ArkTributeVersion", newValue); }
+	TArray<TSubclassOf<AActor>, FDefaultAllocator> GetEquipRequiresExplicitOwnerClassesField() const { return GetNativeField<TArray<TSubclassOf<AActor>, FDefaultAllocator>>(this, "UPrimalItem", "EquipRequiresExplicitOwnerClasses"); }
+	void SetEquipRequiresExplicitOwnerClassesField(TArray<TSubclassOf<AActor>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "EquipRequiresExplicitOwnerClasses", newValue); }
+	TArray<FName, FDefaultAllocator> GetEquipRequiresExplicitOwnerTagsField() const { return GetNativeField<TArray<FName, FDefaultAllocator>>(this, "UPrimalItem", "EquipRequiresExplicitOwnerTags"); }
+	void SetEquipRequiresExplicitOwnerTagsField(TArray<FName, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "EquipRequiresExplicitOwnerTags", newValue); }
+	unsigned int GetExpirationTimeUTCField() const { return GetNativeField<unsigned int>(this, "UPrimalItem", "ExpirationTimeUTC"); }
+	void SetExpirationTimeUTCField(unsigned int newValue) { SetNativeField(this, "UPrimalItem", "ExpirationTimeUTC", newValue); }
+	int GetBlueprintAllowMaxCraftingsField() const { return GetNativeField<int>(this, "UPrimalItem", "BlueprintAllowMaxCraftings"); }
+	void SetBlueprintAllowMaxCraftingsField(int newValue) { SetNativeField(this, "UPrimalItem", "BlueprintAllowMaxCraftings", newValue); }
+	FString GetAbstractItemCraftingDescriptionField() const { return GetNativeField<FString>(this, "UPrimalItem", "AbstractItemCraftingDescription"); }
+	void SetAbstractItemCraftingDescriptionField(FString newValue) { SetNativeField(this, "UPrimalItem", "AbstractItemCraftingDescription", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetItemSkinUseOnItemClassesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalItem", "ItemSkinUseOnItemClasses"); }
+	void SetItemSkinUseOnItemClassesField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "ItemSkinUseOnItemClasses", newValue); }
+	float GetRandomChanceToBeBlueprintField() const { return GetNativeField<float>(this, "UPrimalItem", "RandomChanceToBeBlueprint"); }
+	void SetRandomChanceToBeBlueprintField(float newValue) { SetNativeField(this, "UPrimalItem", "RandomChanceToBeBlueprint", newValue); }
+	//TArray<FActorClassAttachmentInfo, FDefaultAllocator> GetActorClassAttachmentInfosField() const { return GetNativeField<TArray<FActorClassAttachmentInfo, FDefaultAllocator>>(this, "UPrimalItem", "ActorClassAttachmentInfos"); }
+	//TArray<FItemAttachmentInfo, FDefaultAllocator> * GetItemAttachmentInfosField() const { return GetNativeField<TArray<FItemAttachmentInfo, FDefaultAllocator> *>(this, "UPrimalItem", "ItemAttachmentInfos"); }
+	//TArray<FItemAttachmentInfo, FDefaultAllocator> GetDynamicItemAttachmentInfosField() const { return GetNativeField<TArray<FItemAttachmentInfo, FDefaultAllocator>>(this, "UPrimalItem", "DynamicItemAttachmentInfos"); }
+	//TArray<FItemAttachmentInfo, FDefaultAllocator> GetItemSkinAddItemAttachmentsField() const { return GetNativeField<TArray<FItemAttachmentInfo, FDefaultAllocator>>(this, "UPrimalItem", "ItemSkinAddItemAttachments"); }
+	//TEnumAsByte<enum EPrimalItemType::Type> GetMyItemTypeField() const { return GetNativeField<TEnumAsByte<enum EPrimalItemType::Type>>(this, "UPrimalItem", "MyItemType"); }
+	//TEnumAsByte<enum EPrimalConsumableType::Type> GetMyConsumableTypeField() const { return GetNativeField<TEnumAsByte<enum EPrimalConsumableType::Type>>(this, "UPrimalItem", "MyConsumableType"); }
+	//TEnumAsByte<enum EPrimalEquipmentType::Type> GetMyEquipmentTypeField() const { return GetNativeField<TEnumAsByte<enum EPrimalEquipmentType::Type>>(this, "UPrimalItem", "MyEquipmentType"); }
+	int GetExtraItemCategoryFlagsField() const { return GetNativeField<int>(this, "UPrimalItem", "ExtraItemCategoryFlags"); }
+	void SetExtraItemCategoryFlagsField(int newValue) { SetNativeField(this, "UPrimalItem", "ExtraItemCategoryFlags", newValue); }
+	FVector GetBlockingShieldFPVTranslationField() const { return GetNativeField<FVector>(this, "UPrimalItem", "BlockingShieldFPVTranslation"); }
+	void SetBlockingShieldFPVTranslationField(FVector newValue) { SetNativeField(this, "UPrimalItem", "BlockingShieldFPVTranslation", newValue); }
+	FRotator GetBlockingShieldFPVRotationField() const { return GetNativeField<FRotator>(this, "UPrimalItem", "BlockingShieldFPVRotation"); }
+	void SetBlockingShieldFPVRotationField(FRotator newValue) { SetNativeField(this, "UPrimalItem", "BlockingShieldFPVRotation", newValue); }
+	float GetShieldBlockDamagePercentageField() const { return GetNativeField<float>(this, "UPrimalItem", "ShieldBlockDamagePercentage"); }
+	void SetShieldBlockDamagePercentageField(float newValue) { SetNativeField(this, "UPrimalItem", "ShieldBlockDamagePercentage", newValue); }
+	float GetShieldDamageToDurabilityRatioField() const { return GetNativeField<float>(this, "UPrimalItem", "ShieldDamageToDurabilityRatio"); }
+	void SetShieldDamageToDurabilityRatioField(float newValue) { SetNativeField(this, "UPrimalItem", "ShieldDamageToDurabilityRatio", newValue); }
+	int GetCraftingMinLevelRequirementField() const { return GetNativeField<int>(this, "UPrimalItem", "CraftingMinLevelRequirement"); }
+	void SetCraftingMinLevelRequirementField(int newValue) { SetNativeField(this, "UPrimalItem", "CraftingMinLevelRequirement", newValue); }
+	float GetCraftingCooldownIntervalField() const { return GetNativeField<float>(this, "UPrimalItem", "CraftingCooldownInterval"); }
+	void SetCraftingCooldownIntervalField(float newValue) { SetNativeField(this, "UPrimalItem", "CraftingCooldownInterval", newValue); }
+	TSubclassOf<AActor> GetCraftingActorToSpawnField() const { return GetNativeField<TSubclassOf<AActor>>(this, "UPrimalItem", "CraftingActorToSpawn"); }
+	void SetCraftingActorToSpawnField(TSubclassOf<AActor> newValue) { SetNativeField(this, "UPrimalItem", "CraftingActorToSpawn", newValue); }
+	FString GetCraftItemButtonStringOverrideField() const { return GetNativeField<FString>(this, "UPrimalItem", "CraftItemButtonStringOverride"); }
+	void SetCraftItemButtonStringOverrideField(FString newValue) { SetNativeField(this, "UPrimalItem", "CraftItemButtonStringOverride", newValue); }
+	TSubclassOf<AActor> GetUseSpawnActorClassField() const { return GetNativeField<TSubclassOf<AActor>>(this, "UPrimalItem", "UseSpawnActorClass"); }
+	void SetUseSpawnActorClassField(TSubclassOf<AActor> newValue) { SetNativeField(this, "UPrimalItem", "UseSpawnActorClass", newValue); }
+	FVector GetUseSpawnActorLocOffsetField() const { return GetNativeField<FVector>(this, "UPrimalItem", "UseSpawnActorLocOffset"); }
+	void SetUseSpawnActorLocOffsetField(FVector newValue) { SetNativeField(this, "UPrimalItem", "UseSpawnActorLocOffset", newValue); }
+	int GetSlotIndexField() const { return GetNativeField<int>(this, "UPrimalItem", "SlotIndex"); }
+	void SetSlotIndexField(int newValue) { SetNativeField(this, "UPrimalItem", "SlotIndex", newValue); }
+	FItemNetID GetItemIDField() const { return GetNativeField<FItemNetID>(this, "UPrimalItem", "ItemID"); }
+	void SetItemIDField(FItemNetID newValue) { SetNativeField(this, "UPrimalItem", "ItemID", newValue); }
+	int GetItemCustomDataField() const { return GetNativeField<int>(this, "UPrimalItem", "ItemCustomData"); }
+	void SetItemCustomDataField(int newValue) { SetNativeField(this, "UPrimalItem", "ItemCustomData", newValue); }
+	TSubclassOf<UPrimalItem> GetItemCustomClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "ItemCustomClass"); }
+	void SetItemCustomClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "ItemCustomClass", newValue); }
+	int GetItemSkinTemplateIndexField() const { return GetNativeField<int>(this, "UPrimalItem", "ItemSkinTemplateIndex"); }
+	void SetItemSkinTemplateIndexField(int newValue) { SetNativeField(this, "UPrimalItem", "ItemSkinTemplateIndex", newValue); }
+	TSubclassOf<UPrimalItem> GetItemSkinTemplateField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "ItemSkinTemplate"); }
+	void SetItemSkinTemplateField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "ItemSkinTemplate", newValue); }
+	float GetItemRatingField() const { return GetNativeField<float>(this, "UPrimalItem", "ItemRating"); }
+	void SetItemRatingField(float newValue) { SetNativeField(this, "UPrimalItem", "ItemRating", newValue); }
+	unsigned __int16 GetCraftQueueField() const { return GetNativeField<unsigned __int16>(this, "UPrimalItem", "CraftQueue"); }
+	void SetCraftQueueField(unsigned __int16 newValue) { SetNativeField(this, "UPrimalItem", "CraftQueue", newValue); }
+	float GetCraftingSkillField() const { return GetNativeField<float>(this, "UPrimalItem", "CraftingSkill"); }
+	void SetCraftingSkillField(float newValue) { SetNativeField(this, "UPrimalItem", "CraftingSkill", newValue); }
+	FString GetCustomItemNameField() const { return GetNativeField<FString>(this, "UPrimalItem", "CustomItemName"); }
+	void SetCustomItemNameField(FString newValue) { SetNativeField(this, "UPrimalItem", "CustomItemName", newValue); }
+	FString GetCustomItemDescriptionField() const { return GetNativeField<FString>(this, "UPrimalItem", "CustomItemDescription"); }
+	void SetCustomItemDescriptionField(FString newValue) { SetNativeField(this, "UPrimalItem", "CustomItemDescription", newValue); }
+	TArray<FColor, FDefaultAllocator> GetCustomColorsField() const { return GetNativeField<TArray<FColor, FDefaultAllocator>>(this, "UPrimalItem", "CustomColors"); }
+	void SetCustomColorsField(TArray<FColor, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "CustomColors", newValue); }
+	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetCustomResourceRequirementsField() const { return GetNativeField<TArray<FCraftingResourceRequirement, FDefaultAllocator>>(this, "UPrimalItem", "CustomResourceRequirements"); }
+	//void SetCustomResourceRequirementsField(TArray<FCraftingResourceRequirement, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "CustomResourceRequirements", newValue); }
+	long double GetNextCraftCompletionTimeField() const { return GetNativeField<long double>(this, "UPrimalItem", "NextCraftCompletionTime"); }
+	void SetNextCraftCompletionTimeField(long double newValue) { SetNativeField(this, "UPrimalItem", "NextCraftCompletionTime", newValue); }
+	AWeakObjectPtr<UPrimalInventoryComponent> GetOwnerInventoryField() const { return GetNativeField<AWeakObjectPtr<UPrimalInventoryComponent>>(this, "UPrimalItem", "OwnerInventory"); }
+	char GetItemQualityIndexField() const { return GetNativeField<char>(this, "UPrimalItem", "ItemQualityIndex"); }
+	void SetItemQualityIndexField(char newValue) { SetNativeField(this, "UPrimalItem", "ItemQualityIndex", newValue); }
+	TSubclassOf<UPrimalItem> GetSupportDragOntoItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "SupportDragOntoItemClass"); }
+	void SetSupportDragOntoItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "SupportDragOntoItemClass", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetSupportDragOntoItemClassesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalItem", "SupportDragOntoItemClasses"); }
+	void SetSupportDragOntoItemClassesField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "SupportDragOntoItemClasses", newValue); }
+	TArray<TSubclassOf<AShooterWeapon>, FDefaultAllocator> GetSkinWeaponTemplatesField() const { return GetNativeField<TArray<TSubclassOf<AShooterWeapon>, FDefaultAllocator>>(this, "UPrimalItem", "SkinWeaponTemplates"); }
+	void SetSkinWeaponTemplatesField(TArray<TSubclassOf<AShooterWeapon>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "SkinWeaponTemplates", newValue); }
+	TSubclassOf<AShooterWeapon> GetAmmoSupportDragOntoWeaponItemWeaponTemplateField() const { return GetNativeField<TSubclassOf<AShooterWeapon>>(this, "UPrimalItem", "AmmoSupportDragOntoWeaponItemWeaponTemplate"); }
+	void SetAmmoSupportDragOntoWeaponItemWeaponTemplateField(TSubclassOf<AShooterWeapon> newValue) { SetNativeField(this, "UPrimalItem", "AmmoSupportDragOntoWeaponItemWeaponTemplate", newValue); }
+	TArray<TSubclassOf<AShooterWeapon>, FDefaultAllocator> GetAmmoSupportDragOntoWeaponItemWeaponTemplatesField() const { return GetNativeField<TArray<TSubclassOf<AShooterWeapon>, FDefaultAllocator>>(this, "UPrimalItem", "AmmoSupportDragOntoWeaponItemWeaponTemplates"); }
+	void SetAmmoSupportDragOntoWeaponItemWeaponTemplatesField(TArray<TSubclassOf<AShooterWeapon>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "AmmoSupportDragOntoWeaponItemWeaponTemplates", newValue); }
+	//TArray<FUseItemAddCharacterStatusValue, FDefaultAllocator> GetUseItemAddCharacterStatusValuesField() const { return GetNativeField<TArray<FUseItemAddCharacterStatusValue, FDefaultAllocator>>(this, "UPrimalItem", "UseItemAddCharacterStatusValues"); }
+	float GetIngredient_WeightIncreasePerQuantityField() const { return GetNativeField<float>(this, "UPrimalItem", "Ingredient_WeightIncreasePerQuantity"); }
+	void SetIngredient_WeightIncreasePerQuantityField(float newValue) { SetNativeField(this, "UPrimalItem", "Ingredient_WeightIncreasePerQuantity", newValue); }
+	float GetIngredient_FoodIncreasePerQuantityField() const { return GetNativeField<float>(this, "UPrimalItem", "Ingredient_FoodIncreasePerQuantity"); }
+	void SetIngredient_FoodIncreasePerQuantityField(float newValue) { SetNativeField(this, "UPrimalItem", "Ingredient_FoodIncreasePerQuantity", newValue); }
+	float GetIngredient_HealthIncreasePerQuantityField() const { return GetNativeField<float>(this, "UPrimalItem", "Ingredient_HealthIncreasePerQuantity"); }
+	void SetIngredient_HealthIncreasePerQuantityField(float newValue) { SetNativeField(this, "UPrimalItem", "Ingredient_HealthIncreasePerQuantity", newValue); }
+	float GetIngredient_WaterIncreasePerQuantityField() const { return GetNativeField<float>(this, "UPrimalItem", "Ingredient_WaterIncreasePerQuantity"); }
+	void SetIngredient_WaterIncreasePerQuantityField(float newValue) { SetNativeField(this, "UPrimalItem", "Ingredient_WaterIncreasePerQuantity", newValue); }
+	float GetIngredient_StaminaIncreasePerQuantityField() const { return GetNativeField<float>(this, "UPrimalItem", "Ingredient_StaminaIncreasePerQuantity"); }
+	void SetIngredient_StaminaIncreasePerQuantityField(float newValue) { SetNativeField(this, "UPrimalItem", "Ingredient_StaminaIncreasePerQuantity", newValue); }
+	FString GetDescriptiveNameBaseField() const { return GetNativeField<FString>(this, "UPrimalItem", "DescriptiveNameBase"); }
+	void SetDescriptiveNameBaseField(FString newValue) { SetNativeField(this, "UPrimalItem", "DescriptiveNameBase", newValue); }
+	FString GetItemDescriptionField() const { return GetNativeField<FString>(this, "UPrimalItem", "ItemDescription"); }
+	void SetItemDescriptionField(FString newValue) { SetNativeField(this, "UPrimalItem", "ItemDescription", newValue); }
+	FString GetDurabilityStringShortField() const { return GetNativeField<FString>(this, "UPrimalItem", "DurabilityStringShort"); }
+	void SetDurabilityStringShortField(FString newValue) { SetNativeField(this, "UPrimalItem", "DurabilityStringShort", newValue); }
+	FString GetDurabilityStringField() const { return GetNativeField<FString>(this, "UPrimalItem", "DurabilityString"); }
+	void SetDurabilityStringField(FString newValue) { SetNativeField(this, "UPrimalItem", "DurabilityString", newValue); }
+	float GetDroppedItemLifeSpanOverrideField() const { return GetNativeField<float>(this, "UPrimalItem", "DroppedItemLifeSpanOverride"); }
+	void SetDroppedItemLifeSpanOverrideField(float newValue) { SetNativeField(this, "UPrimalItem", "DroppedItemLifeSpanOverride", newValue); }
+	FVector GetDroppedMeshOverrideScale3DField() const { return GetNativeField<FVector>(this, "UPrimalItem", "DroppedMeshOverrideScale3D"); }
+	void SetDroppedMeshOverrideScale3DField(FVector newValue) { SetNativeField(this, "UPrimalItem", "DroppedMeshOverrideScale3D", newValue); }
+	TSubclassOf<UPrimalItem> GetSpoilingItemField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "SpoilingItem"); }
+	void SetSpoilingItemField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "SpoilingItem", newValue); }
+	TArray<TSubclassOf<AActor>, FDefaultAllocator> GetUseRequiresOwnerActorClassesField() const { return GetNativeField<TArray<TSubclassOf<AActor>, FDefaultAllocator>>(this, "UPrimalItem", "UseRequiresOwnerActorClasses"); }
+	void SetUseRequiresOwnerActorClassesField(TArray<TSubclassOf<AActor>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "UseRequiresOwnerActorClasses", newValue); }
+	TSubclassOf<UPrimalItem> GetPreservingItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "PreservingItemClass"); }
+	void SetPreservingItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "PreservingItemClass", newValue); }
+	float GetPreservingItemSpoilingTimeMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "PreservingItemSpoilingTimeMultiplier"); }
+	void SetPreservingItemSpoilingTimeMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "PreservingItemSpoilingTimeMultiplier", newValue); }
+	float GetSpoilingTimeField() const { return GetNativeField<float>(this, "UPrimalItem", "SpoilingTime"); }
+	void SetSpoilingTimeField(float newValue) { SetNativeField(this, "UPrimalItem", "SpoilingTime", newValue); }
+	int GetCraftingConsumesDurabilityField() const { return GetNativeField<int>(this, "UPrimalItem", "CraftingConsumesDurability"); }
+	void SetCraftingConsumesDurabilityField(int newValue) { SetNativeField(this, "UPrimalItem", "CraftingConsumesDurability", newValue); }
+	float GetRepairResourceRequirementMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "RepairResourceRequirementMultiplier"); }
+	void SetRepairResourceRequirementMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "RepairResourceRequirementMultiplier", newValue); }
+	float GetBaseItemWeightField() const { return GetNativeField<float>(this, "UPrimalItem", "BaseItemWeight"); }
+	void SetBaseItemWeightField(float newValue) { SetNativeField(this, "UPrimalItem", "BaseItemWeight", newValue); }
+	float GetDurabilityIncreaseMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "DurabilityIncreaseMultiplier"); }
+	void SetDurabilityIncreaseMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "DurabilityIncreaseMultiplier", newValue); }
+	float GetNewItemDurabilityOverrideField() const { return GetNativeField<float>(this, "UPrimalItem", "NewItemDurabilityOverride"); }
+	void SetNewItemDurabilityOverrideField(float newValue) { SetNativeField(this, "UPrimalItem", "NewItemDurabilityOverride", newValue); }
+	float GetDurabilityDecreaseMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "DurabilityDecreaseMultiplier"); }
+	void SetDurabilityDecreaseMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "DurabilityDecreaseMultiplier", newValue); }
+	float GetUseDecreaseDurabilityField() const { return GetNativeField<float>(this, "UPrimalItem", "UseDecreaseDurability"); }
+	void SetUseDecreaseDurabilityField(float newValue) { SetNativeField(this, "UPrimalItem", "UseDecreaseDurability", newValue); }
+	float GetAutoDurabilityDecreaseIntervalField() const { return GetNativeField<float>(this, "UPrimalItem", "AutoDurabilityDecreaseInterval"); }
+	void SetAutoDurabilityDecreaseIntervalField(float newValue) { SetNativeField(this, "UPrimalItem", "AutoDurabilityDecreaseInterval", newValue); }
+	float GetAutoDecreaseMinDurabilityField() const { return GetNativeField<float>(this, "UPrimalItem", "AutoDecreaseMinDurability"); }
+	void SetAutoDecreaseMinDurabilityField(float newValue) { SetNativeField(this, "UPrimalItem", "AutoDecreaseMinDurability", newValue); }
+	float GetAutoDecreaseDurabilityAmountPerIntervalField() const { return GetNativeField<float>(this, "UPrimalItem", "AutoDecreaseDurabilityAmountPerInterval"); }
+	void SetAutoDecreaseDurabilityAmountPerIntervalField(float newValue) { SetNativeField(this, "UPrimalItem", "AutoDecreaseDurabilityAmountPerInterval", newValue); }
+	float GetUseDecreaseDurabilityMinField() const { return GetNativeField<float>(this, "UPrimalItem", "UseDecreaseDurabilityMin"); }
+	void SetUseDecreaseDurabilityMinField(float newValue) { SetNativeField(this, "UPrimalItem", "UseDecreaseDurabilityMin", newValue); }
+	float GetUseMinDurabilityRequirementField() const { return GetNativeField<float>(this, "UPrimalItem", "UseMinDurabilityRequirement"); }
+	void SetUseMinDurabilityRequirementField(float newValue) { SetNativeField(this, "UPrimalItem", "UseMinDurabilityRequirement", newValue); }
+	float GetResourceRarityField() const { return GetNativeField<float>(this, "UPrimalItem", "ResourceRarity"); }
+	void SetResourceRarityField(float newValue) { SetNativeField(this, "UPrimalItem", "ResourceRarity", newValue); }
+	float GetBlueprintTimeToCraftField() const { return GetNativeField<float>(this, "UPrimalItem", "BlueprintTimeToCraft"); }
+	void SetBlueprintTimeToCraftField(float newValue) { SetNativeField(this, "UPrimalItem", "BlueprintTimeToCraft", newValue); }
+	float GetBlueprintWeightField() const { return GetNativeField<float>(this, "UPrimalItem", "BlueprintWeight"); }
+	void SetBlueprintWeightField(float newValue) { SetNativeField(this, "UPrimalItem", "BlueprintWeight", newValue); }
+	float GetMinimumUseIntervalField() const { return GetNativeField<float>(this, "UPrimalItem", "MinimumUseInterval"); }
+	void SetMinimumUseIntervalField(float newValue) { SetNativeField(this, "UPrimalItem", "MinimumUseInterval", newValue); }
+	float GetTimeForFullRepairField() const { return GetNativeField<float>(this, "UPrimalItem", "TimeForFullRepair"); }
+	void SetTimeForFullRepairField(float newValue) { SetNativeField(this, "UPrimalItem", "TimeForFullRepair", newValue); }
+	float GetBaseCraftingXPField() const { return GetNativeField<float>(this, "UPrimalItem", "BaseCraftingXP"); }
+	void SetBaseCraftingXPField(float newValue) { SetNativeField(this, "UPrimalItem", "BaseCraftingXP", newValue); }
+	float GetBaseRepairingXPField() const { return GetNativeField<float>(this, "UPrimalItem", "BaseRepairingXP"); }
+	void SetBaseRepairingXPField(float newValue) { SetNativeField(this, "UPrimalItem", "BaseRepairingXP", newValue); }
+	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetBaseCraftingResourceRequirementsField() const { return GetNativeField<TArray<FCraftingResourceRequirement, FDefaultAllocator>>(this, "UPrimalItem", "BaseCraftingResourceRequirements"); }
+	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetOverrideRepairingRequirementsField() const { return GetNativeField<TArray<FCraftingResourceRequirement, FDefaultAllocator>>(this, "UPrimalItem", "OverrideRepairingRequirements"); }
+	//FItemStatInfo[8] GetItemStatInfosField() const { return GetNativeField<FItemStatInfo[8]>(this, "UPrimalItem", "ItemStatInfos"); }
+	//unsigned __int16[8] GetItemStatValuesField() const { return GetNativeField<unsigned __int16[8]>(this, "UPrimalItem", "ItemStatValues"); }
+	unsigned int GetWeaponClipAmmoField() const { return GetNativeField<unsigned int>(this, "UPrimalItem", "WeaponClipAmmo"); }
+	void SetWeaponClipAmmoField(unsigned int newValue) { SetNativeField(this, "UPrimalItem", "WeaponClipAmmo", newValue); }
+	float GetWeaponFrequencyField() const { return GetNativeField<float>(this, "UPrimalItem", "WeaponFrequency"); }
+	void SetWeaponFrequencyField(float newValue) { SetNativeField(this, "UPrimalItem", "WeaponFrequency", newValue); }
+	long double GetLastTimeToShowInfoField() const { return GetNativeField<long double>(this, "UPrimalItem", "LastTimeToShowInfo"); }
+	void SetLastTimeToShowInfoField(long double newValue) { SetNativeField(this, "UPrimalItem", "LastTimeToShowInfo", newValue); }
+	char GetItemVersionField() const { return GetNativeField<char>(this, "UPrimalItem", "ItemVersion"); }
+	void SetItemVersionField(char newValue) { SetNativeField(this, "UPrimalItem", "ItemVersion", newValue); }
+	float GetItemDurabilityField() const { return GetNativeField<float>(this, "UPrimalItem", "ItemDurability"); }
+	void SetItemDurabilityField(float newValue) { SetNativeField(this, "UPrimalItem", "ItemDurability", newValue); }
+	float GetMinItemDurabilityField() const { return GetNativeField<float>(this, "UPrimalItem", "MinItemDurability"); }
+	void SetMinItemDurabilityField(float newValue) { SetNativeField(this, "UPrimalItem", "MinItemDurability", newValue); }
+	float GetSavedDurabilityField() const { return GetNativeField<float>(this, "UPrimalItem", "SavedDurability"); }
+	void SetSavedDurabilityField(float newValue) { SetNativeField(this, "UPrimalItem", "SavedDurability", newValue); }
+	TSubclassOf<AShooterWeapon> GetWeaponTemplateField() const { return GetNativeField<TSubclassOf<AShooterWeapon>>(this, "UPrimalItem", "WeaponTemplate"); }
+	void SetWeaponTemplateField(TSubclassOf<AShooterWeapon> newValue) { SetNativeField(this, "UPrimalItem", "WeaponTemplate", newValue); }
+	float GetAlternateItemIconBelowDurabilityValueField() const { return GetNativeField<float>(this, "UPrimalItem", "AlternateItemIconBelowDurabilityValue"); }
+	void SetAlternateItemIconBelowDurabilityValueField(float newValue) { SetNativeField(this, "UPrimalItem", "AlternateItemIconBelowDurabilityValue", newValue); }
+	//__int16[6] GetItemColorIDField() const { return GetNativeField<__int16[6]>(this, "UPrimalItem", "ItemColorID"); }
+	//__int16[6] GetPreSkinItemColorIDField() const { return GetNativeField<__int16[6]>(this, "UPrimalItem", "PreSkinItemColorID"); }
+	//char[6] GetbUseItemColorField() const { return GetNativeField<char[6]>(this, "UPrimalItem", "bUseItemColor"); }
+	//TSubclassOf<UPrimalColorSet> GetRandomColorSetField() const { return GetNativeField<TSubclassOf<UPrimalColorSet>>(this, "UPrimalItem", "RandomColorSet"); }
+	int GetItemQuantityField() const { return GetNativeField<int>(this, "UPrimalItem", "ItemQuantity"); }
+	void SetItemQuantityField(int newValue) { SetNativeField(this, "UPrimalItem", "ItemQuantity", newValue); }
+	int GetMaxItemQuantityField() const { return GetNativeField<int>(this, "UPrimalItem", "MaxItemQuantity"); }
+	void SetMaxItemQuantityField(int newValue) { SetNativeField(this, "UPrimalItem", "MaxItemQuantity", newValue); }
+	TArray<unsigned __int64, FDefaultAllocator> GetSteamItemUserIDsField() const { return GetNativeField<TArray<unsigned __int64, FDefaultAllocator>>(this, "UPrimalItem", "SteamItemUserIDs"); }
+	void SetSteamItemUserIDsField(TArray<unsigned __int64, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "SteamItemUserIDs", newValue); }
+	TSubclassOf<APrimalStructure> GetStructureToBuildField() const { return GetNativeField<TSubclassOf<APrimalStructure>>(this, "UPrimalItem", "StructureToBuild"); }
+	void SetStructureToBuildField(TSubclassOf<APrimalStructure> newValue) { SetNativeField(this, "UPrimalItem", "StructureToBuild", newValue); }
+	TSubclassOf<UPrimalItem> GetGiveItemWhenUsedField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "GiveItemWhenUsed"); }
+	void SetGiveItemWhenUsedField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "GiveItemWhenUsed", newValue); }
+	TArray<TSubclassOf<UPrimalInventoryComponent>, FDefaultAllocator> GetCraftingRequiresInventoryComponentField() const { return GetNativeField<TArray<TSubclassOf<UPrimalInventoryComponent>, FDefaultAllocator>>(this, "UPrimalItem", "CraftingRequiresInventoryComponent"); }
+	void SetCraftingRequiresInventoryComponentField(TArray<TSubclassOf<UPrimalInventoryComponent>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "CraftingRequiresInventoryComponent", newValue); }
+	//TSubclassOf<ADroppedItem> GetDroppedItemTemplateOverrideField() const { return GetNativeField<TSubclassOf<ADroppedItem>>(this, "UPrimalItem", "DroppedItemTemplateOverride"); }
+	//TSubclassOf<ADroppedItem> GetDroppedItemTemplateForSecondryActionField() const { return GetNativeField<TSubclassOf<ADroppedItem>>(this, "UPrimalItem", "DroppedItemTemplateForSecondryAction"); }
+	//TSubclassOf<APrimalBuff> GetBuffToGiveOwnerCharacterField() const { return GetNativeField<TSubclassOf<APrimalBuff>>(this, "UPrimalItem", "BuffToGiveOwnerCharacter"); }
+	FRotator GetPreviewCameraRotationField() const { return GetNativeField<FRotator>(this, "UPrimalItem", "PreviewCameraRotation"); }
+	void SetPreviewCameraRotationField(FRotator newValue) { SetNativeField(this, "UPrimalItem", "PreviewCameraRotation", newValue); }
+	FVector GetPreviewCameraPivotOffsetField() const { return GetNativeField<FVector>(this, "UPrimalItem", "PreviewCameraPivotOffset"); }
+	void SetPreviewCameraPivotOffsetField(FVector newValue) { SetNativeField(this, "UPrimalItem", "PreviewCameraPivotOffset", newValue); }
+	float GetPreviewCameraDistanceScaleFactorField() const { return GetNativeField<float>(this, "UPrimalItem", "PreviewCameraDistanceScaleFactor"); }
+	void SetPreviewCameraDistanceScaleFactorField(float newValue) { SetNativeField(this, "UPrimalItem", "PreviewCameraDistanceScaleFactor", newValue); }
+	float GetPreviewCameraDefaultZoomMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "PreviewCameraDefaultZoomMultiplier"); }
+	void SetPreviewCameraDefaultZoomMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "PreviewCameraDefaultZoomMultiplier", newValue); }
+	float GetPreviewCameraMaxZoomMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "PreviewCameraMaxZoomMultiplier"); }
+	void SetPreviewCameraMaxZoomMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "PreviewCameraMaxZoomMultiplier", newValue); }
+	FName GetPlayerMeshTextureMaskParamNameField() const { return GetNativeField<FName>(this, "UPrimalItem", "PlayerMeshTextureMaskParamName"); }
+	void SetPlayerMeshTextureMaskParamNameField(FName newValue) { SetNativeField(this, "UPrimalItem", "PlayerMeshTextureMaskParamName", newValue); }
+	int GetPlayerMeshTextureMaskMaterialIndexField() const { return GetNativeField<int>(this, "UPrimalItem", "PlayerMeshTextureMaskMaterialIndex"); }
+	void SetPlayerMeshTextureMaskMaterialIndexField(int newValue) { SetNativeField(this, "UPrimalItem", "PlayerMeshTextureMaskMaterialIndex", newValue); }
+	FName GetFPVHandsMeshTextureMaskParamNameField() const { return GetNativeField<FName>(this, "UPrimalItem", "FPVHandsMeshTextureMaskParamName"); }
+	void SetFPVHandsMeshTextureMaskParamNameField(FName newValue) { SetNativeField(this, "UPrimalItem", "FPVHandsMeshTextureMaskParamName", newValue); }
+	int GetFPVHandsMeshTextureMaskMaterialIndexField() const { return GetNativeField<int>(this, "UPrimalItem", "FPVHandsMeshTextureMaskMaterialIndex"); }
+	void SetFPVHandsMeshTextureMaskMaterialIndexField(int newValue) { SetNativeField(this, "UPrimalItem", "FPVHandsMeshTextureMaskMaterialIndex", newValue); }
+	UPrimalItem* GetWeaponAmmoOverrideItemCDOField() const { return GetNativeField<UPrimalItem *>(this, "UPrimalItem", "WeaponAmmoOverrideItemCDO"); }
+	void SetWeaponAmmoOverrideItemCDOField(UPrimalItem* newValue) { SetNativeField(this, "UPrimalItem", "WeaponAmmoOverrideItemCDO", newValue); }
+	long double GetCreationTimeField() const { return GetNativeField<long double>(this, "UPrimalItem", "CreationTime"); }
+	void SetCreationTimeField(long double newValue) { SetNativeField(this, "UPrimalItem", "CreationTime", newValue); }
+	long double GetLastAutoDurabilityDecreaseTimeField() const { return GetNativeField<long double>(this, "UPrimalItem", "LastAutoDurabilityDecreaseTime"); }
+	void SetLastAutoDurabilityDecreaseTimeField(long double newValue) { SetNativeField(this, "UPrimalItem", "LastAutoDurabilityDecreaseTime", newValue); }
+	long double GetLastUseTimeField() const { return GetNativeField<long double>(this, "UPrimalItem", "LastUseTime"); }
+	void SetLastUseTimeField(long double newValue) { SetNativeField(this, "UPrimalItem", "LastUseTime", newValue); }
+	long double GetLastLocalUseTimeField() const { return GetNativeField<long double>(this, "UPrimalItem", "LastLocalUseTime"); }
+	void SetLastLocalUseTimeField(long double newValue) { SetNativeField(this, "UPrimalItem", "LastLocalUseTime", newValue); }
+	int GetTempSlotIndexField() const { return GetNativeField<int>(this, "UPrimalItem", "TempSlotIndex"); }
+	void SetTempSlotIndexField(int newValue) { SetNativeField(this, "UPrimalItem", "TempSlotIndex", newValue); }
+	AWeakObjectPtr<AShooterWeapon> GetAssociatedWeaponField() const { return GetNativeField<AWeakObjectPtr<AShooterWeapon>>(this, "UPrimalItem", "AssociatedWeapon"); }
+	void SetAssociatedWeaponField(AWeakObjectPtr<AShooterWeapon> newValue) { SetNativeField(this, "UPrimalItem", "AssociatedWeapon", newValue); }
+	UPrimalItem* GetMyItemSkinField() const { return GetNativeField<UPrimalItem *>(this, "UPrimalItem", "MyItemSkin"); }
+	void SetMyItemSkinField(UPrimalItem* newValue) { SetNativeField(this, "UPrimalItem", "MyItemSkin", newValue); }
+	AWeakObjectPtr<AShooterCharacter> GetLastOwnerPlayerField() const { return GetNativeField<AWeakObjectPtr<AShooterCharacter>>(this, "UPrimalItem", "LastOwnerPlayer"); }
+	void SetLastOwnerPlayerField(AWeakObjectPtr<AShooterCharacter> newValue) { SetNativeField(this, "UPrimalItem", "LastOwnerPlayer", newValue); }
+	//TArray<FCropItemPhaseData, FDefaultAllocator> GetCropPhasesDataField() const { return GetNativeField<TArray<FCropItemPhaseData, FDefaultAllocator>>(this, "UPrimalItem", "CropPhasesData"); }
+	float GetCropGrowingFertilizerConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalItem", "CropGrowingFertilizerConsumptionRate"); }
+	void SetCropGrowingFertilizerConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalItem", "CropGrowingFertilizerConsumptionRate", newValue); }
+	float GetCropMaxFruitFertilizerConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalItem", "CropMaxFruitFertilizerConsumptionRate"); }
+	void SetCropMaxFruitFertilizerConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalItem", "CropMaxFruitFertilizerConsumptionRate", newValue); }
+	float GetCropGrowingWaterConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalItem", "CropGrowingWaterConsumptionRate"); }
+	void SetCropGrowingWaterConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalItem", "CropGrowingWaterConsumptionRate", newValue); }
+	float GetCropMaxFruitWaterConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalItem", "CropMaxFruitWaterConsumptionRate"); }
+	void SetCropMaxFruitWaterConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalItem", "CropMaxFruitWaterConsumptionRate", newValue); }
+	int GetCropMaxFruitsField() const { return GetNativeField<int>(this, "UPrimalItem", "CropMaxFruits"); }
+	void SetCropMaxFruitsField(int newValue) { SetNativeField(this, "UPrimalItem", "CropMaxFruits", newValue); }
+	float GetCropNoFertilizerOrWaterCacheReductionRateField() const { return GetNativeField<float>(this, "UPrimalItem", "CropNoFertilizerOrWaterCacheReductionRate"); }
+	void SetCropNoFertilizerOrWaterCacheReductionRateField(float newValue) { SetNativeField(this, "UPrimalItem", "CropNoFertilizerOrWaterCacheReductionRate", newValue); }
+	float GetFertilizerEffectivenessMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "FertilizerEffectivenessMultiplier"); }
+	void SetFertilizerEffectivenessMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "FertilizerEffectivenessMultiplier", newValue); }
+	float GetEggAlertDinosAggroAmountField() const { return GetNativeField<float>(this, "UPrimalItem", "EggAlertDinosAggroAmount"); }
+	void SetEggAlertDinosAggroAmountField(float newValue) { SetNativeField(this, "UPrimalItem", "EggAlertDinosAggroAmount", newValue); }
+	float GetEggAlertDinosAggroRadiusField() const { return GetNativeField<float>(this, "UPrimalItem", "EggAlertDinosAggroRadius"); }
+	void SetEggAlertDinosAggroRadiusField(float newValue) { SetNativeField(this, "UPrimalItem", "EggAlertDinosAggroRadius", newValue); }
+	TArray<FName, FDefaultAllocator> GetEggAlertDinosAggroTagsField() const { return GetNativeField<TArray<FName, FDefaultAllocator>>(this, "UPrimalItem", "EggAlertDinosAggroTags"); }
+	void SetEggAlertDinosAggroTagsField(TArray<FName, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "EggAlertDinosAggroTags", newValue); }
+	float GetEggAlertDinosForcedAggroTimeField() const { return GetNativeField<float>(this, "UPrimalItem", "EggAlertDinosForcedAggroTime"); }
+	void SetEggAlertDinosForcedAggroTimeField(float newValue) { SetNativeField(this, "UPrimalItem", "EggAlertDinosForcedAggroTime", newValue); }
+	float GetEggMaximumDistanceFromOriginalDropToAlertDinosField() const { return GetNativeField<float>(this, "UPrimalItem", "EggMaximumDistanceFromOriginalDropToAlertDinos"); }
+	void SetEggMaximumDistanceFromOriginalDropToAlertDinosField(float newValue) { SetNativeField(this, "UPrimalItem", "EggMaximumDistanceFromOriginalDropToAlertDinos", newValue); }
+	TSubclassOf<UPrimalItem> GetBrokenGiveItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "BrokenGiveItemClass"); }
+	void SetBrokenGiveItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "BrokenGiveItemClass", newValue); }
+	float GetClearColorDurabilityThresholdField() const { return GetNativeField<float>(this, "UPrimalItem", "ClearColorDurabilityThreshold"); }
+	void SetClearColorDurabilityThresholdField(float newValue) { SetNativeField(this, "UPrimalItem", "ClearColorDurabilityThreshold", newValue); }
+	TSubclassOf<UPrimalItem> GetItemClassToUseAsInitialCustomDataField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "ItemClassToUseAsInitialCustomData"); }
+	void SetItemClassToUseAsInitialCustomDataField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "ItemClassToUseAsInitialCustomData", newValue); }
+	FVector GetOriginalItemDropLocationField() const { return GetNativeField<FVector>(this, "UPrimalItem", "OriginalItemDropLocation"); }
+	void SetOriginalItemDropLocationField(FVector newValue) { SetNativeField(this, "UPrimalItem", "OriginalItemDropLocation", newValue); }
+	FLinearColor GetDurabilityBarColorForegroundField() const { return GetNativeField<FLinearColor>(this, "UPrimalItem", "DurabilityBarColorForeground"); }
+	void SetDurabilityBarColorForegroundField(FLinearColor newValue) { SetNativeField(this, "UPrimalItem", "DurabilityBarColorForeground", newValue); }
+	FLinearColor GetDurabilityBarColorBackgroundField() const { return GetNativeField<FLinearColor>(this, "UPrimalItem", "DurabilityBarColorBackground"); }
+	void SetDurabilityBarColorBackgroundField(FLinearColor newValue) { SetNativeField(this, "UPrimalItem", "DurabilityBarColorBackground", newValue); }
+	TSubclassOf<UPrimalItem> GetOverrideCooldownTimeItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "OverrideCooldownTimeItemClass"); }
+	void SetOverrideCooldownTimeItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "OverrideCooldownTimeItemClass", newValue); }
+	float GetMinDurabilityForCraftingResourceField() const { return GetNativeField<float>(this, "UPrimalItem", "MinDurabilityForCraftingResource"); }
+	void SetMinDurabilityForCraftingResourceField(float newValue) { SetNativeField(this, "UPrimalItem", "MinDurabilityForCraftingResource", newValue); }
+	float GetResourceRequirementIncreaseRatingPowerField() const { return GetNativeField<float>(this, "UPrimalItem", "ResourceRequirementIncreaseRatingPower"); }
+	void SetResourceRequirementIncreaseRatingPowerField(float newValue) { SetNativeField(this, "UPrimalItem", "ResourceRequirementIncreaseRatingPower", newValue); }
+	float GetResourceRequirementRatingScaleField() const { return GetNativeField<float>(this, "UPrimalItem", "ResourceRequirementRatingScale"); }
+	void SetResourceRequirementRatingScaleField(float newValue) { SetNativeField(this, "UPrimalItem", "ResourceRequirementRatingScale", newValue); }
+	float GetResourceRequirementRatingIncreasePercentageField() const { return GetNativeField<float>(this, "UPrimalItem", "ResourceRequirementRatingIncreasePercentage"); }
+	void SetResourceRequirementRatingIncreasePercentageField(float newValue) { SetNativeField(this, "UPrimalItem", "ResourceRequirementRatingIncreasePercentage", newValue); }
+	long double GetNextSpoilingTimeField() const { return GetNativeField<long double>(this, "UPrimalItem", "NextSpoilingTime"); }
+	void SetNextSpoilingTimeField(long double newValue) { SetNativeField(this, "UPrimalItem", "NextSpoilingTime", newValue); }
+	long double GetLastSpoilingTimeField() const { return GetNativeField<long double>(this, "UPrimalItem", "LastSpoilingTime"); }
+	void SetLastSpoilingTimeField(long double newValue) { SetNativeField(this, "UPrimalItem", "LastSpoilingTime", newValue); }
+	TArray<FString, FDefaultAllocator> GetDefaultFolderPathsField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "UPrimalItem", "DefaultFolderPaths"); }
+	void SetDefaultFolderPathsField(TArray<FString, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "DefaultFolderPaths", newValue); }
+	FName GetDefaultWeaponMeshNameField() const { return GetNativeField<FName>(this, "UPrimalItem", "DefaultWeaponMeshName"); }
+	void SetDefaultWeaponMeshNameField(FName newValue) { SetNativeField(this, "UPrimalItem", "DefaultWeaponMeshName", newValue); }
+	int GetLastCalculatedTotalAmmoInvUpdatedFrameField() const { return GetNativeField<int>(this, "UPrimalItem", "LastCalculatedTotalAmmoInvUpdatedFrame"); }
+	void SetLastCalculatedTotalAmmoInvUpdatedFrameField(int newValue) { SetNativeField(this, "UPrimalItem", "LastCalculatedTotalAmmoInvUpdatedFrame", newValue); }
+	int GetWeaponTotalAmmoField() const { return GetNativeField<int>(this, "UPrimalItem", "WeaponTotalAmmo"); }
+	void SetWeaponTotalAmmoField(int newValue) { SetNativeField(this, "UPrimalItem", "WeaponTotalAmmo", newValue); }
+	TSubclassOf<UPrimalItem> GetEngramRequirementItemClassOverrideField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "UPrimalItem", "EngramRequirementItemClassOverride"); }
+	void SetEngramRequirementItemClassOverrideField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "UPrimalItem", "EngramRequirementItemClassOverride", newValue); }
+	TArray<unsigned short, FDefaultAllocator> GetCraftingResourceRequirementsField() const { return GetNativeField<TArray<unsigned short, FDefaultAllocator>>(this, "UPrimalItem", "CraftingResourceRequirements"); }
+	void SetCraftingResourceRequirementsField(TArray<unsigned short, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "CraftingResourceRequirements", newValue); }
+	FVector GetSpawnOnWaterEncroachmentBoxExtentField() const { return GetNativeField<FVector>(this, "UPrimalItem", "SpawnOnWaterEncroachmentBoxExtent"); }
+	void SetSpawnOnWaterEncroachmentBoxExtentField(FVector newValue) { SetNativeField(this, "UPrimalItem", "SpawnOnWaterEncroachmentBoxExtent", newValue); }
+	TArray<TSubclassOf<AActor>, FDefaultAllocator> GetOnlyUsableOnSpecificClassesField() const { return GetNativeField<TArray<TSubclassOf<AActor>, FDefaultAllocator>>(this, "UPrimalItem", "OnlyUsableOnSpecificClasses"); }
+	void SetOnlyUsableOnSpecificClassesField(TArray<TSubclassOf<AActor>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "OnlyUsableOnSpecificClasses", newValue); }
+	//TArray<FSaddlePassengerSeatDefinition, FDefaultAllocator> GetSaddlePassengerSeatsField() const { return GetNativeField<TArray<FSaddlePassengerSeatDefinition, FDefaultAllocator>>(this, "UPrimalItem", "SaddlePassengerSeats"); }
+	FName GetSaddleOverrideRiderSocketNameField() const { return GetNativeField<FName>(this, "UPrimalItem", "SaddleOverrideRiderSocketName"); }
+	void SetSaddleOverrideRiderSocketNameField(FName newValue) { SetNativeField(this, "UPrimalItem", "SaddleOverrideRiderSocketName", newValue); }
+	TSubclassOf<APrimalDinoCharacter> GetEggDinoClassToSpawnField() const { return GetNativeField<TSubclassOf<APrimalDinoCharacter>>(this, "UPrimalItem", "EggDinoClassToSpawn"); }
+	void SetEggDinoClassToSpawnField(TSubclassOf<APrimalDinoCharacter> newValue) { SetNativeField(this, "UPrimalItem", "EggDinoClassToSpawn", newValue); }
+	//char[12] GetEggNumberOfLevelUpPointsAppliedField() const { return GetNativeField<char[12]>(this, "UPrimalItem", "EggNumberOfLevelUpPointsApplied"); }
+	float GetEggTamedIneffectivenessModifierField() const { return GetNativeField<float>(this, "UPrimalItem", "EggTamedIneffectivenessModifier"); }
+	void SetEggTamedIneffectivenessModifierField(float newValue) { SetNativeField(this, "UPrimalItem", "EggTamedIneffectivenessModifier", newValue); }
+	//char[6] GetEggColorSetIndicesField() const { return GetNativeField<char[6]>(this, "UPrimalItem", "EggColorSetIndices"); }
+	float GetEggLoseDurabilityPerSecondField() const { return GetNativeField<float>(this, "UPrimalItem", "EggLoseDurabilityPerSecond"); }
+	void SetEggLoseDurabilityPerSecondField(float newValue) { SetNativeField(this, "UPrimalItem", "EggLoseDurabilityPerSecond", newValue); }
+	float GetExtraEggLoseDurabilityPerSecondMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "ExtraEggLoseDurabilityPerSecondMultiplier"); }
+	void SetExtraEggLoseDurabilityPerSecondMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "ExtraEggLoseDurabilityPerSecondMultiplier", newValue); }
+	float GetEggMinTemperatureField() const { return GetNativeField<float>(this, "UPrimalItem", "EggMinTemperature"); }
+	void SetEggMinTemperatureField(float newValue) { SetNativeField(this, "UPrimalItem", "EggMinTemperature", newValue); }
+	float GetEggMaxTemperatureField() const { return GetNativeField<float>(this, "UPrimalItem", "EggMaxTemperature"); }
+	void SetEggMaxTemperatureField(float newValue) { SetNativeField(this, "UPrimalItem", "EggMaxTemperature", newValue); }
+	float GetEggDroppedInvalidTempLoseItemRatingSpeedField() const { return GetNativeField<float>(this, "UPrimalItem", "EggDroppedInvalidTempLoseItemRatingSpeed"); }
+	void SetEggDroppedInvalidTempLoseItemRatingSpeedField(float newValue) { SetNativeField(this, "UPrimalItem", "EggDroppedInvalidTempLoseItemRatingSpeed", newValue); }
+	float GetRecipeCraftingSkillScaleField() const { return GetNativeField<float>(this, "UPrimalItem", "RecipeCraftingSkillScale"); }
+	void SetRecipeCraftingSkillScaleField(float newValue) { SetNativeField(this, "UPrimalItem", "RecipeCraftingSkillScale", newValue); }
+	int GetCustomItemIDField() const { return GetNativeField<int>(this, "UPrimalItem", "CustomItemID"); }
+	void SetCustomItemIDField(int newValue) { SetNativeField(this, "UPrimalItem", "CustomItemID", newValue); }
+	float GetAddDinoTargetingRangeField() const { return GetNativeField<float>(this, "UPrimalItem", "AddDinoTargetingRange"); }
+	void SetAddDinoTargetingRangeField(float newValue) { SetNativeField(this, "UPrimalItem", "AddDinoTargetingRange", newValue); }
+	float GetDamageTorpidityArmorRatingField() const { return GetNativeField<float>(this, "UPrimalItem", "DamageTorpidityArmorRating"); }
+	void SetDamageTorpidityArmorRatingField(float newValue) { SetNativeField(this, "UPrimalItem", "DamageTorpidityArmorRating", newValue); }
+	FName GetUseParticleEffectSocketNameField() const { return GetNativeField<FName>(this, "UPrimalItem", "UseParticleEffectSocketName"); }
+	void SetUseParticleEffectSocketNameField(FName newValue) { SetNativeField(this, "UPrimalItem", "UseParticleEffectSocketName", newValue); }
+	float GetUseGiveDinoTameAffinityPercentField() const { return GetNativeField<float>(this, "UPrimalItem", "UseGiveDinoTameAffinityPercent"); }
+	void SetUseGiveDinoTameAffinityPercentField(float newValue) { SetNativeField(this, "UPrimalItem", "UseGiveDinoTameAffinityPercent", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetCraftingAdditionalItemsToGiveField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalItem", "CraftingAdditionalItemsToGive"); }
+	void SetCraftingAdditionalItemsToGiveField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "CraftingAdditionalItemsToGive", newValue); }
+	int GetLastValidItemVersionField() const { return GetNativeField<int>(this, "UPrimalItem", "LastValidItemVersion"); }
+	void SetLastValidItemVersionField(int newValue) { SetNativeField(this, "UPrimalItem", "LastValidItemVersion", newValue); }
+	float GetGlobalTameAffinityMultiplierField() const { return GetNativeField<float>(this, "UPrimalItem", "GlobalTameAffinityMultiplier"); }
+	void SetGlobalTameAffinityMultiplierField(float newValue) { SetNativeField(this, "UPrimalItem", "GlobalTameAffinityMultiplier", newValue); }
+	int GetCraftingGiveItemCountField() const { return GetNativeField<int>(this, "UPrimalItem", "CraftingGiveItemCount"); }
+	void SetCraftingGiveItemCountField(int newValue) { SetNativeField(this, "UPrimalItem", "CraftingGiveItemCount", newValue); }
+	int GetCraftingGivesItemQuantityOverrideField() const { return GetNativeField<int>(this, "UPrimalItem", "CraftingGivesItemQuantityOverride"); }
+	void SetCraftingGivesItemQuantityOverrideField(int newValue) { SetNativeField(this, "UPrimalItem", "CraftingGivesItemQuantityOverride", newValue); }
+	FName GetUseUnlocksEmoteNameField() const { return GetNativeField<FName>(this, "UPrimalItem", "UseUnlocksEmoteName"); }
+	void SetUseUnlocksEmoteNameField(FName newValue) { SetNativeField(this, "UPrimalItem", "UseUnlocksEmoteName", newValue); }
+	long double GetClusterSpoilingTimeUTCField() const { return GetNativeField<long double>(this, "UPrimalItem", "ClusterSpoilingTimeUTC"); }
+	void SetClusterSpoilingTimeUTCField(long double newValue) { SetNativeField(this, "UPrimalItem", "ClusterSpoilingTimeUTC", newValue); }
+	//TArray<FDinoAncestorsEntry, FDefaultAllocator> GetEggDinoAncestorsField() const { return GetNativeField<TArray<FDinoAncestorsEntry, FDefaultAllocator>>(this, "UPrimalItem", "EggDinoAncestors"); }
+	//TArray<FDinoAncestorsEntry, FDefaultAllocator> GetEggDinoAncestorsMaleField() const { return GetNativeField<TArray<FDinoAncestorsEntry, FDefaultAllocator>>(this, "UPrimalItem", "EggDinoAncestorsMale"); }
+	int GetEggRandomMutationsFemaleField() const { return GetNativeField<int>(this, "UPrimalItem", "EggRandomMutationsFemale"); }
+	void SetEggRandomMutationsFemaleField(int newValue) { SetNativeField(this, "UPrimalItem", "EggRandomMutationsFemale", newValue); }
+	int GetEggRandomMutationsMaleField() const { return GetNativeField<int>(this, "UPrimalItem", "EggRandomMutationsMale"); }
+	void SetEggRandomMutationsMaleField(int newValue) { SetNativeField(this, "UPrimalItem", "EggRandomMutationsMale", newValue); }
+	TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> GetEquippingRequiresEngramsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator>>(this, "UPrimalItem", "EquippingRequiresEngrams"); }
+	void SetEquippingRequiresEngramsField(TArray<TSubclassOf<UPrimalItem>, FDefaultAllocator> newValue) { SetNativeField(this, "UPrimalItem", "EquippingRequiresEngrams", newValue); }
+	//TArray<FCustomItemData, FDefaultAllocator> GetCustomItemDatasField() const { return GetNativeField<TArray<FCustomItemData, FDefaultAllocator>>(this, "UPrimalItem", "CustomItemDatas"); }
 
 	// Functions
 
-	int IncrementItemQuantity(int a1, bool a2, bool a3, bool a4, bool a5, bool a6) { return static_cast<int(_cdecl*)(DWORD64, int, bool, bool, bool, bool, bool)>(GetAddress("UPrimalItem", "IncrementItemQuantity"))((DWORD64)this, a1, a2, a3, a4, a5, a6); }
-	void UpdatedItem() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "UpdatedItem"))((DWORD64)this); }
-	void EquippedItem() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "EquippedItem"))((DWORD64)this); }
-	void AddedToInventory() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "AddedToInventory"))((DWORD64)this); }
-	void UnequippedItem() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "UnequippedItem"))((DWORD64)this); }
-	FString* GetItemDescription(FString* res, bool a1) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, bool)>(GetAddress("UPrimalItem", "GetItemDescription"))((DWORD64)this, res, a1); }
-	FString* GetItemName(FString* result, bool a1, bool a2) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, bool, bool)>(GetAddress("UPrimalItem", "GetItemName"))((DWORD64)this, result, a1, a2); }
-	void AddToInventory(UPrimalInventoryComponent* a1, bool a2, bool a3, FItemNetID* a4, bool a5) { static_cast<void(_cdecl*)(DWORD64, UPrimalInventoryComponent*, bool, bool, FItemNetID*, bool)>(GetAddress("UPrimalItem", "AddToInventory"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	void AddToArkTributeInvenroty(UPrimalInventoryComponent* a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, UPrimalInventoryComponent*, bool)>(GetAddress("UPrimalItem", "AddToArkTributeInvenroty"))((DWORD64)this, a1, a2); }
-	bool AllowInventoryItem(UPrimalInventoryComponent* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "AllowInventoryItem"))((DWORD64)this, a1); }
-	bool AllowEquipItem(UPrimalInventoryComponent* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "AllowEquipItem"))((DWORD64)this, a1); }
-	bool AllowSlotting(UPrimalInventoryComponent* a1, bool a2) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*, bool)>(GetAddress("UPrimalItem", "AllowSlotting"))((DWORD64)this, a1, a2); }
-	void InitNewItem(float a1, UPrimalInventoryComponent* a2, float a3) { static_cast<void(_cdecl*)(DWORD64, float, UPrimalInventoryComponent*, float)>(GetAddress("UPrimalItem", "InitNewItem"))((DWORD64)this, a1, a2, a3); }
-	void InitFromNetInfo(const FItemNetInfo& a1) { static_cast<void(_cdecl*)(DWORD64, const FItemNetInfo&)>(GetAddress("UPrimalItem", "InitFromNetInfo"))((DWORD64)this, a1); }
-	//FItemNetInfo GetItemNetInfo() { return static_cast<FItemNetInfo(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetItemNetInfo"))((DWORD64)this); }
-	UPrimalItem* CreateItemFromNetInfo(const FItemNetInfo& a1) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, const FItemNetInfo&)>(GetAddress("UPrimalItem", "CreateItemFromNetInfo"))((DWORD64)this, a1); }
-	//UPrimalItem* AddNewItem(TSubclassOf<UPrimalItem> a1, UPrimalInventoryComponent* a2, bool a3, bool a4, float a5, bool a6, int a7, bool a8, float a9, bool a10, TSubclassOf<UPrimalItem> a11) { return static_cast<UPrimalItem*(_cdecl*)(DWORD64, TSubclassOf<UPrimalItem>, UPrimalInventoryComponent*, bool, bool, float, bool, int, bool, float, bool, TSubclassOf<UPrimalItem>)>(GetAddress("UPrimalItem", "AddNewItem"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11); }
-	bool RemoveItemFromInventory(bool a1, bool a2) { return static_cast<bool(_cdecl*)(DWORD64, bool, bool)>(GetAddress("UPrimalItem", "RemoveItemFromInventory"))((DWORD64)this, a1, a2); }
-	bool RemoveItemFromArkTributeInventory() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "RemoveItemFromArkTributeInventory"))((DWORD64)this); }
-	void SetOwnerNoSee(bool a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, bool, bool)>(GetAddress("UPrimalItem", "SetOwnerNoSee"))((DWORD64)this, a1, a2); }
-	void RemoveAttachments(AActor* a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, AActor*, bool)>(GetAddress("UPrimalItem", "RemoveAttachments"))((DWORD64)this, a1, a2); }
-	AActor* GetOwnerActor() { return static_cast<AActor*(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetOwnerActor"))((DWORD64)this); }
-	bool AllowSubobjectInstancing() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "AllowSubobjectInstancing"))((DWORD64)this); }
-	float GetItemWeight(bool a1, bool a2) { return static_cast<float(_cdecl*)(DWORD64, bool, bool)>(GetAddress("UPrimalItem", "GetItemWeight"))((DWORD64)this, a1, a2); }
-	void AddToSlot(int a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, int, bool)>(GetAddress("UPrimalItem", "AddToSlot"))((DWORD64)this, a1, a2); }
-	void RemoveFromSlot(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "RemoveFromSlot"))((DWORD64)this, a1); }
-	int GetExplicitEntryIndexType() { return static_cast<int(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetExplicitEntryIndexType"))((DWORD64)this); }
-	void Use(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "Use"))((DWORD64)this, a1); }
-	void LocalUse(AShooterPlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("UPrimalItem", "LocalUse"))((DWORD64)this, a1); }
-	void UnequipWeapon(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "UnequipWeapon"))((DWORD64)this, a1); }
-	FString* GetEntryDescription(FString* res) { return static_cast<FString*(_cdecl*)(DWORD64, FString*)>(GetAddress("UPrimalItem", "GetEntryDescription"))((DWORD64)this, res); }
-	void InitializeItem(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "InitializeItem"))((DWORD64)this, a1); }
-	int GetItemQuantity() { return static_cast<int(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetItemQuantity"))((DWORD64)this); }
-	FString GetMiscInfoString() { return static_cast<FString(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetMiscInfoString"))((DWORD64)this); }
-	float GetMiscInfoFontScale() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetMiscInfoFontScale"))((DWORD64)this); }
-	FString* GetItemTypeString(FString *result) { return static_cast<FString*(_cdecl*)(DWORD64, FString*)>(GetAddress("UPrimalItem", "GetItemTypeString"))((DWORD64)this, result); }
-	FString* GetItemSubtypeString(FString *result) { return static_cast<FString*(_cdecl*)(DWORD64, FString*)>(GetAddress("UPrimalItem", "GetItemSubtypeString"))((DWORD64)this, result); }
-	FString* GetItemStatsString(FString *result) { return static_cast<FString*(_cdecl*)(DWORD64, FString*)>(GetAddress("UPrimalItem", "GetItemStatsString"))((DWORD64)this, result); }
-	//float GetItemStatModifier(EPrimalItemStat::Type a1) { return static_cast<float(_cdecl*)(DWORD64, EPrimalItemStat::Type)>(GetAddress("UPrimalItem", "GetItemStatModifier"))((DWORD64)this, a1); }
-	//FString GetItemStatString(EPrimalItemStat::Type a1) { return static_cast<FString(_cdecl*)(DWORD64, EPrimalItemStat::Type)>(GetAddress("UPrimalItem", "GetItemStatString"))((DWORD64)this, a1); }
-	bool UsesDurability() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "UsesDurability"))((DWORD64)this); }
-	float GetDurabilityPercentage() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetDurabilityPercentage"))((DWORD64)this); }
-	void AddItemDurability(float a1) { static_cast<void(_cdecl*)(DWORD64, float)>(GetAddress("UPrimalItem", "AddItemDurability"))((DWORD64)this, a1); }
-	FString* GetCraftingRequirementsString(FString* res, UPrimalInventoryComponent* a1) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "GetCraftingRequirementsString"))((DWORD64)this, res, a1); }
-	bool MeetBlueprintCraftingRequirements(UPrimalInventoryComponent* a1, int a2, AShooterPlayerController* a3, bool a4, bool a5) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*, int, AShooterPlayerController*, bool, bool)>(GetAddress("UPrimalItem", "MeetBlueprintCraftingRequirements"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	void CraftBlueprint() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CraftBlueprint"))((DWORD64)this); }
-	void GenerateItemID(FItemNetID& a1) { static_cast<void(_cdecl*)(DWORD64, FItemNetID&)>(GetAddress("UPrimalItem", "GenerateItemID"))((DWORD64)this, a1); }
-	UPrimalItem* FinishCraftingBlueprint() { return static_cast<UPrimalItem*(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "FinishCraftingBlueprint"))((DWORD64)this); }
-	float GetCraftingPercent() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetCraftingPercent"))((DWORD64)this); }
-	void SetQuantity(int a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, int, bool)>(GetAddress("UPrimalItem", "SetQuantity"))((DWORD64)this, a1, a2); }
-	bool CanRepair(bool a1) { return static_cast<bool(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "CanRepair"))((DWORD64)this, a1); }
-	bool CanCraft() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CanCraft"))((DWORD64)this); }
-	bool MeetRepairingRequirements(UPrimalInventoryComponent* a1, bool a2) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*, bool)>(GetAddress("UPrimalItem", "MeetRepairingRequirements"))((DWORD64)this, a1, a2); }
-	FString* GetRepairingRequirementsString(FString* res, UPrimalInventoryComponent* a1, bool a2, float a3) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, UPrimalInventoryComponent*, bool, float)>(GetAddress("UPrimalItem", "GetRepairingRequirementsString"))((DWORD64)this, res, a1, a2, a3); }
-	void RepairItem() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "RepairItem"))((DWORD64)this); }
-	void FinishRepairing() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "FinishRepairing"))((DWORD64)this); }
-	float GetRepairingPercent() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetRepairingPercent"))((DWORD64)this); }
-	bool CanUse(bool a1) { return static_cast<bool(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "CanUse"))((DWORD64)this, a1); }
-	void Used(UPrimalItem* a1, int a2) { static_cast<void(_cdecl*)(DWORD64, UPrimalItem*, int)>(GetAddress("UPrimalItem", "Used"))((DWORD64)this, a1, a2); }
-	bool CanStackWithItem(UPrimalItem* a1, int* a2) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*, int*)>(GetAddress("UPrimalItem", "CanStackWithItem"))((DWORD64)this, a1, a2); }
-	void StopCraftingRepairing(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "StopCraftingRepairing"))((DWORD64)this, a1); }
-	bool CheckAutoCraftBlueprint() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CheckAutoCraftBlueprint"))((DWORD64)this); }
-	float GetTimeToCraftBlueprint() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetTimeToCraftBlueprint"))((DWORD64)this); }
-	float GetTimeForFullRepair() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetTimeForFullRepair"))((DWORD64)this); }
-	bool IsBroken() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "IsBroken"))((DWORD64)this); }
-	bool AllowUseInInventory(bool a1, AShooterPlayerController* a2, bool a3) { return static_cast<bool(_cdecl*)(DWORD64, bool, AShooterPlayerController*, bool)>(GetAddress("UPrimalItem", "AllowUseInInventory"))((DWORD64)this, a1, a2, a3); }
-	bool CanBeArkTributeItem() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CanBeArkTributeItem"))((DWORD64)this); }
-	void SetEngramBlueprint() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "SetEngramBlueprint"))((DWORD64)this); }
-	void ConsumeCraftingRequirementsPercent(UPrimalInventoryComponent* a1, float a2) { static_cast<void(_cdecl*)(DWORD64, UPrimalInventoryComponent*, float)>(GetAddress("UPrimalItem", "ConsumeCraftingRequirementsPercent"))((DWORD64)this, a1, a2); }
-	bool TestMeetsCraftingRequirementsPercent(UPrimalInventoryComponent* a1, float a2) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*, float)>(GetAddress("UPrimalItem", "TestMeetsCraftingRequirementsPercent"))((DWORD64)this, a1, a2); }
-	void InventoryRefreshCheckItem() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "InventoryRefreshCheckItem"))((DWORD64)this); }
-	bool CanSpoil() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CanSpoil"))((DWORD64)this); }
-	bool IsValidForCrafting() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "IsValidForCrafting"))((DWORD64)this); }
-	bool IsOwnerInWater() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "IsOwnerInWater"))((DWORD64)this); }
-	bool AllowRemoteAddToInventory(UPrimalInventoryComponent* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "AllowRemoteAddToInventory"))((DWORD64)this, a1); }
-	bool BPAllowRemoteAddToInventory(UPrimalInventoryComponent* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "BPAllowRemoteAddToInventory"))((DWORD64)this, a1); }
-	bool CanDrop() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CanDrop"))((DWORD64)this); }
-	float GetSpoilingTime() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetSpoilingTime"))((DWORD64)this); }
-	void PickupAlertDinos(AActor* a1) { static_cast<void(_cdecl*)(DWORD64, AActor*)>(GetAddress("UPrimalItem", "PickupAlertDinos"))((DWORD64)this, a1); }
-	void GetItemAttachmentInfos(AActor* a1) { static_cast<void(_cdecl*)(DWORD64, AActor*)>(GetAddress("UPrimalItem", "GetItemAttachmentInfos"))((DWORD64)this, a1); }
-	void SetAttachedMeshesMaterialScalarParamValue(FName a1, float a2) { static_cast<void(_cdecl*)(DWORD64, FName, float)>(GetAddress("UPrimalItem", "SetAttachedMeshesMaterialScalarParamValue"))((DWORD64)this, a1, a2); }
-	FLinearColor* GetColorForItemColorID(FLinearColor* res, int a1, int a2) { return static_cast<FLinearColor*(_cdecl*)(DWORD64, FLinearColor*, int, int)>(GetAddress("UPrimalItem", "GetColorForItemColorID"))((DWORD64)this, res, a1, a2); }
-	FLinearColor* StaticGetColorForItemColorID(FLinearColor* res, int a1) { return static_cast<FLinearColor*(_cdecl*)(DWORD64, FLinearColor*, int)>(GetAddress("UPrimalItem", "StaticGetColorForItemColorID"))((DWORD64)this, res, a1); }
-	void InitItemIcon() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "InitItemIcon"))((DWORD64)this); }
-	bool CanUseWithItemSource(UPrimalItem* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalItem", "CanUseWithItemSource"))((DWORD64)this, a1); }
-	bool CanUseWithItemDestination(UPrimalItem* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*)>(GetAddress("UPrimalItem", "CanUseWithItemDestination"))((DWORD64)this, a1); }
-	bool UseItemOntoItem(UPrimalItem* a1, int a2) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalItem*, int)>(GetAddress("UPrimalItem", "UseItemOntoItem"))((DWORD64)this, a1, a2); }
-	void LocalUseItemOntoItem(AShooterPlayerController* a1, UPrimalItem* a2) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*, UPrimalItem*)>(GetAddress("UPrimalItem", "LocalUseItemOntoItem"))((DWORD64)this, a1, a2); }
-	FString* GetPrimaryColorName(FString* res) { return static_cast<FString*(_cdecl*)(DWORD64, FString*)>(GetAddress("UPrimalItem", "GetPrimaryColorName"))((DWORD64)this, res); }
-	void Serialize(FArchive& a1) { static_cast<void(_cdecl*)(DWORD64, FArchive&)>(GetAddress("UPrimalItem", "Serialize"))((DWORD64)this, a1); }
-	void RemoveClipAmmo(bool a1) { static_cast<void(_cdecl*)(DWORD64, bool)>(GetAddress("UPrimalItem", "RemoveClipAmmo"))((DWORD64)this, a1); }
-	void ServerRemoveItemSkin() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "ServerRemoveItemSkin"))((DWORD64)this); }
-	float GetRemainingCooldownTime() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetRemainingCooldownTime"))((DWORD64)this); }
-	bool CanFullyCraft() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CanFullyCraft"))((DWORD64)this); }
-	bool ProcessEditText(AShooterPlayerController* a1, const FString& a2, bool a3) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*, const FString&, bool)>(GetAddress("UPrimalItem", "ProcessEditText"))((DWORD64)this, a1, a2, a3); }
-	void NotifyEditText(AShooterPlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("UPrimalItem", "NotifyEditText"))((DWORD64)this, a1); }
-	void RecalcSpoilingTime(double a1, float a2, UPrimalInventoryComponent* a3) { static_cast<void(_cdecl*)(DWORD64, double, float, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "RecalcSpoilingTime"))((DWORD64)this, a1, a2, a3); }
-	void RemoveWeaponAccessory() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "RemoveWeaponAccessory"))((DWORD64)this); }
-	int GetMaximumAdditionalCrafting(UPrimalInventoryComponent* a1) { return static_cast<int(_cdecl*)(DWORD64, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "GetMaximumAdditionalCrafting"))((DWORD64)this, a1); }
-	bool CanSpawnOverWater(AActor* a1, FTransform& a2) { return static_cast<bool(_cdecl*)(DWORD64, AActor*, FTransform&)>(GetAddress("UPrimalItem", "CanSpawnOverWater"))((DWORD64)this, a1, a2); }
-	void InventoryLoadedFromSaveGame() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "InventoryLoadedFromSaveGame"))((DWORD64)this); }
-	void CalcRecipeStats() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "CalcRecipeStats"))((DWORD64)this); }
-	float GetWeaponTemplateMeleeDamageAmount() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetWeaponTemplateMeleeDamageAmount"))((DWORD64)this); }
-	float GetWeaponTemplateDurabilityToConsumePerMeleeHit() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetWeaponTemplateDurabilityToConsumePerMeleeHit"))((DWORD64)this); }
-	float GetWeaponTemplateHarvestDamageMultiplier() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "GetWeaponTemplateHarvestDamageMultiplier"))((DWORD64)this); }
-	FString* BPAllowCrafting(FString* res, AShooterPlayerController* a1) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, AShooterPlayerController*)>(GetAddress("UPrimalItem", "BPAllowCrafting"))((DWORD64)this, res, a1); }
-	bool BPCanAddToInventory(UPrimalInventoryComponent* a1) { return static_cast<bool(_cdecl*)(DWORD64, UPrimalInventoryComponent*)>(GetAddress("UPrimalItem", "BPCanAddToInventory"))((DWORD64)this, a1); }
-	bool IsCooldownReadyForUse() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "IsCooldownReadyForUse"))((DWORD64)this); }
-	bool IsUsableConsumable() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("UPrimalItem", "IsUsableConsumable"))((DWORD64)this); }
+	FItemNetInfo* GetItemNetInfo(FItemNetInfo* result) { return NativeCall<FItemNetInfo *, FItemNetInfo *>((DWORD64)this, "UPrimalItem", "GetItemNetInfo", result); }
+	void InitFromNetInfo(FItemNetInfo* theInfo) { NativeCall<void, FItemNetInfo *>((DWORD64)this, "UPrimalItem", "InitFromNetInfo", theInfo); }
+	void AddItemDurability(float durabilityToAdd) { NativeCall<void, float>((DWORD64)this, "UPrimalItem", "AddItemDurability", durabilityToAdd); }
+	void InitNewItem(float ItemQuality, UPrimalInventoryComponent* toInventory, float MaxItemDifficultyClamp) { NativeCall<void, float, UPrimalInventoryComponent *, float>((DWORD64)this, "UPrimalItem", "InitNewItem", ItemQuality, toInventory, MaxItemDifficultyClamp); }
+	bool AllowEquipItem(UPrimalInventoryComponent* toInventory) { return NativeCall<bool, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "AllowEquipItem", toInventory); }
+	bool AllowInventoryItem(UPrimalInventoryComponent* toInventory) { return NativeCall<bool, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "AllowInventoryItem", toInventory); }
+	void AddToInventory(UPrimalInventoryComponent* toInventory, bool bEquipItem, bool AddToSlotItems, FItemNetID* InventoryInsertAfterItemID, bool ShowHUDNotification, bool bDontRecalcSpoilingTime) { NativeCall<void, UPrimalInventoryComponent *, bool, bool, FItemNetID *, bool, bool>((DWORD64)this, "UPrimalItem", "AddToInventory", toInventory, bEquipItem, AddToSlotItems, InventoryInsertAfterItemID, ShowHUDNotification, bDontRecalcSpoilingTime); }
+	bool RemoveItemFromArkTributeInventory() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "RemoveItemFromArkTributeInventory"); }
+	bool RemoveItemFromInventory(bool bForceRemoval, bool showHUDMessage) { return NativeCall<bool, bool, bool>((DWORD64)this, "UPrimalItem", "RemoveItemFromInventory", bForceRemoval, showHUDMessage); }
+	float GetSpoilingTime() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetSpoilingTime"); }
+	static UPrimalItem* AddNewItem(TSubclassOf<UPrimalItem> ItemArchetype, UPrimalInventoryComponent* GiveToInventory, bool bEquipItem, bool bDontStack, float ItemQuality, bool bForceNoBlueprint, int quantityOverride, bool bForceBlueprint, float MaxItemDifficultyClamp, bool CreateOnClient, TSubclassOf<UPrimalItem> ApplyItemSkin) { return NativeCall<UPrimalItem *, TSubclassOf<UPrimalItem>, UPrimalInventoryComponent *, bool, bool, float, bool, int, bool, float, bool, TSubclassOf<UPrimalItem>>(nullptr, "UPrimalItem", "AddNewItem", ItemArchetype, GiveToInventory, bEquipItem, bDontStack, ItemQuality, bForceNoBlueprint, quantityOverride, bForceBlueprint, MaxItemDifficultyClamp, CreateOnClient, ApplyItemSkin); }
+	static UPrimalItem* CreateItemFromNetInfo(FItemNetInfo* newItemInfo) { return NativeCall<UPrimalItem *, FItemNetInfo *>(nullptr, "UPrimalItem", "CreateItemFromNetInfo", newItemInfo); }
+	FString* GetItemName(FString* result, bool bIncludeQuantity, bool bShortName) { return NativeCall<FString *, FString *, bool, bool>((DWORD64)this, "UPrimalItem", "GetItemName", result, bIncludeQuantity, bShortName); }
+	FLinearColor* GetItemQualityColor(FLinearColor* result) { return NativeCall<FLinearColor *, FLinearColor *>((DWORD64)this, "UPrimalItem", "GetItemQualityColor", result); }
+	FString* GetItemDescription(FString* result, bool bGetLongDescription) { return NativeCall<FString *, FString *, bool>((DWORD64)this, "UPrimalItem", "GetItemDescription", result, bGetLongDescription); }
+	void EquippedItem() { NativeCall<void>((DWORD64)this, "UPrimalItem", "EquippedItem"); }
+	void UnequippedItem() { NativeCall<void>((DWORD64)this, "UPrimalItem", "UnequippedItem"); }
+	void UpdatedItem() { NativeCall<void>((DWORD64)this, "UPrimalItem", "UpdatedItem"); }
+	void SetOwnerNoSee(bool bNoSee, bool bForceHideFirstPerson) { NativeCall<void, bool, bool>((DWORD64)this, "UPrimalItem", "SetOwnerNoSee", bNoSee, bForceHideFirstPerson); }
+	void RemoveAttachments(AActor* UseOtherActor, bool bRefreshDefaultAttachments) { NativeCall<void, AActor *, bool>((DWORD64)this, "UPrimalItem", "RemoveAttachments", UseOtherActor, bRefreshDefaultAttachments); }
+	AActor* GetOwnerActor() { return NativeCall<AActor *>((DWORD64)this, "UPrimalItem", "GetOwnerActor"); }
+	FString* GetEntryString(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetEntryString", result); }
+	float GetItemWeight(bool bJustOneQuantity, bool bForceNotBlueprintWeight) { return NativeCall<float, bool, bool>((DWORD64)this, "UPrimalItem", "GetItemWeight", bJustOneQuantity, bForceNotBlueprintWeight); }
+	void AddToSlot(int theSlotIndex, bool bForce) { NativeCall<void, int, bool>((DWORD64)this, "UPrimalItem", "AddToSlot", theSlotIndex, bForce); }
+	void RemoveFromSlot(bool bForce) { NativeCall<void, bool>((DWORD64)this, "UPrimalItem", "RemoveFromSlot", bForce); }
+	bool AllowSlotting(UPrimalInventoryComponent* toInventory, bool bForce) { return NativeCall<bool, UPrimalInventoryComponent *, bool>((DWORD64)this, "UPrimalItem", "AllowSlotting", toInventory, bForce); }
+	bool IsBroken() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "IsBroken"); }
+	int GetExplicitEntryIndexType() { return NativeCall<int>((DWORD64)this, "UPrimalItem", "GetExplicitEntryIndexType"); }
+	void Use(bool bOverridePlayerInput) { NativeCall<void, bool>((DWORD64)this, "UPrimalItem", "Use", bOverridePlayerInput); }
+	float GetRemainingCooldownTime() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetRemainingCooldownTime"); }
+	bool CanSpawnOverWater(AActor* ownerActor, FTransform* SpawnTransform) { return NativeCall<bool, AActor *, FTransform *>((DWORD64)this, "UPrimalItem", "CanSpawnOverWater", ownerActor, SpawnTransform); }
+	bool IsCooldownReadyForUse() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "IsCooldownReadyForUse"); }
+	bool CanUse(bool bIgnoreCooldown) { return NativeCall<bool, bool>((DWORD64)this, "UPrimalItem", "CanUse", bIgnoreCooldown); }
+	void LocalUse(AShooterPlayerController* ForPC) { NativeCall<void, AShooterPlayerController *>((DWORD64)this, "UPrimalItem", "LocalUse", ForPC); }
+	void UnequipWeapon(bool bDelayedUnequip) { NativeCall<void, bool>((DWORD64)this, "UPrimalItem", "UnequipWeapon", bDelayedUnequip); }
+	FString* GetEntryDescription(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetEntryDescription", result); }
+	void AddedToInventory() { NativeCall<void>((DWORD64)this, "UPrimalItem", "AddedToInventory"); }
+	void InitializeItem(bool bForceReinit) { NativeCall<void, bool>((DWORD64)this, "UPrimalItem", "InitializeItem", bForceReinit); }
+	FLinearColor* GetColorForItemColorID(FLinearColor* result, int SetNum, int ID) { return NativeCall<FLinearColor *, FLinearColor *, int, int>((DWORD64)this, "UPrimalItem", "GetColorForItemColorID", result, SetNum, ID); }
+	static FLinearColor* StaticGetColorForItemColorID(FLinearColor* result, int ID) { return NativeCall<FLinearColor *, FLinearColor *, int>(nullptr, "UPrimalItem", "StaticGetColorForItemColorID", result, ID); }
+	int GetItemQuantity() { return NativeCall<int>((DWORD64)this, "UPrimalItem", "GetItemQuantity"); }
+	float GetMiscInfoFontScale() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetMiscInfoFontScale"); }
+	FString* GetMiscInfoString(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetMiscInfoString", result); }
+	int IncrementItemQuantity(int amount, bool bReplicateToClient, bool bDontUpdateWeight, bool bIsFromUseConsumption, bool bIsArkTributeItem, bool bIsFromCraftingConsumption) { return NativeCall<int, int, bool, bool, bool, bool, bool>((DWORD64)this, "UPrimalItem", "IncrementItemQuantity", amount, bReplicateToClient, bDontUpdateWeight, bIsFromUseConsumption, bIsArkTributeItem, bIsFromCraftingConsumption); }
+	FString* GetItemTypeString(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetItemTypeString", result); }
+	FString* GetItemSubtypeString(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetItemSubtypeString", result); }
+	FString* GetItemStatsString(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetItemStatsString", result); }
+	bool MeetBlueprintCraftingRequirements(UPrimalInventoryComponent* compareInventoryComp, int CraftAmountOverride, AShooterPlayerController* ForPlayer, bool bIsForCraftQueueAddition, bool bTestFullQueue) { return NativeCall<bool, UPrimalInventoryComponent *, int, AShooterPlayerController *, bool, bool>((DWORD64)this, "UPrimalItem", "MeetBlueprintCraftingRequirements", compareInventoryComp, CraftAmountOverride, ForPlayer, bIsForCraftQueueAddition, bTestFullQueue); }
+	bool TestMeetsCraftingRequirementsPercent(UPrimalInventoryComponent* invComp, float Percent) { return NativeCall<bool, UPrimalInventoryComponent *, float>((DWORD64)this, "UPrimalItem", "TestMeetsCraftingRequirementsPercent", invComp, Percent); }
+	void ConsumeCraftingRequirementsPercent(UPrimalInventoryComponent* invComp, float Percent) { NativeCall<void, UPrimalInventoryComponent *, float>((DWORD64)this, "UPrimalItem", "ConsumeCraftingRequirementsPercent", invComp, Percent); }
+	FString* GetCraftingRequirementsString(FString* result, UPrimalInventoryComponent* compareInventoryComp) { return NativeCall<FString *, FString *, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "GetCraftingRequirementsString", result, compareInventoryComp); }
+	bool MeetRepairingRequirements(UPrimalInventoryComponent* compareInventoryComp, bool bIsForCraftQueueAddition) { return NativeCall<bool, UPrimalInventoryComponent *, bool>((DWORD64)this, "UPrimalItem", "MeetRepairingRequirements", compareInventoryComp, bIsForCraftQueueAddition); }
+	FString* GetRepairingRequirementsString(FString* result, UPrimalInventoryComponent* compareInventoryComp, bool bUseBaseRequeriments, float OverrideRepairPercent) { return NativeCall<FString *, FString *, UPrimalInventoryComponent *, bool, float>((DWORD64)this, "UPrimalItem", "GetRepairingRequirementsString", result, compareInventoryComp, bUseBaseRequeriments, OverrideRepairPercent); }
+	//float GetItemStatModifier(EPrimalItemStat::Type statType) { return NativeCall<float, EPrimalItemStat::Type>((DWORD64)this, "UPrimalItem", "GetItemStatModifier", statType); }
+	//FString * GetItemStatString(FString * result, EPrimalItemStat::Type statType) { return NativeCall<FString *, FString *, EPrimalItemStat::Type>((DWORD64)this, "UPrimalItem", "GetItemStatString", result, statType); }
+	bool UsesDurability() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "UsesDurability"); }
+	bool CanRepair(bool bIgnoreInventoryRequirement) { return NativeCall<bool, bool>((DWORD64)this, "UPrimalItem", "CanRepair", bIgnoreInventoryRequirement); }
+	float GetDurabilityPercentage() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetDurabilityPercentage"); }
+	void CraftBlueprint() { NativeCall<void>((DWORD64)this, "UPrimalItem", "CraftBlueprint"); }
+	bool CanFullyCraft() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "CanFullyCraft"); }
+	void StopCraftingRepairing(bool bCheckIfCraftingOrRepairing) { NativeCall<void, bool>((DWORD64)this, "UPrimalItem", "StopCraftingRepairing", bCheckIfCraftingOrRepairing); }
+	UPrimalItem* FinishCraftingBlueprint() { return NativeCall<UPrimalItem *>((DWORD64)this, "UPrimalItem", "FinishCraftingBlueprint"); }
+	float GetTimeToCraftBlueprint() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetTimeToCraftBlueprint"); }
+	float GetTimeForFullRepair() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetTimeForFullRepair"); }
+	void GenerateItemID(FItemNetID* TheItemID) { NativeCall<void, FItemNetID *>((DWORD64)this, "UPrimalItem", "GenerateItemID", TheItemID); }
+	void TickCraftingItem(float DeltaTime, AShooterGameState* theGameState) { NativeCall<void, float, AShooterGameState *>((DWORD64)this, "UPrimalItem", "TickCraftingItem", DeltaTime, theGameState); }
+	float GetCraftingPercent() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetCraftingPercent"); }
+	float GetRepairingPercent() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetRepairingPercent"); }
+	void SetQuantity(int NewQuantity, bool ShowHUDNotification) { NativeCall<void, int, bool>((DWORD64)this, "UPrimalItem", "SetQuantity", NewQuantity, ShowHUDNotification); }
+	void RepairItem() { NativeCall<void>((DWORD64)this, "UPrimalItem", "RepairItem"); }
+	void FinishRepairing() { NativeCall<void>((DWORD64)this, "UPrimalItem", "FinishRepairing"); }
+	void Used(UPrimalItem* DestinationItem, int AdditionalData) { NativeCall<void, UPrimalItem *, int>((DWORD64)this, "UPrimalItem", "Used", DestinationItem, AdditionalData); }
+	void RemoveWeaponAccessory() { NativeCall<void>((DWORD64)this, "UPrimalItem", "RemoveWeaponAccessory"); }
+	void ServerRemoveItemSkin() { NativeCall<void>((DWORD64)this, "UPrimalItem", "ServerRemoveItemSkin"); }
+	void RemoveClipAmmo(bool bDontUpdateItem) { NativeCall<void, bool>((DWORD64)this, "UPrimalItem", "RemoveClipAmmo", bDontUpdateItem); }
+	bool CanStackWithItem(UPrimalItem* otherItem, int* QuantityOverride) { return NativeCall<bool, UPrimalItem *, int *>((DWORD64)this, "UPrimalItem", "CanStackWithItem", otherItem, QuantityOverride); }
+	bool CheckAutoCraftBlueprint() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "CheckAutoCraftBlueprint"); }
+	bool CanCraft() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "CanCraft"); }
+	FString* GetCraftRepairInvReqString(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetCraftRepairInvReqString", result); }
+	bool AllowUseInInventory(bool bIsRemoteInventory, AShooterPlayerController* ByPC, bool DontCheckActor) { return NativeCall<bool, bool, AShooterPlayerController *, bool>((DWORD64)this, "UPrimalItem", "AllowUseInInventory", bIsRemoteInventory, ByPC, DontCheckActor); }
+	bool CanBeArkTributeItem() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "CanBeArkTributeItem"); }
+	void SetEngramBlueprint() { NativeCall<void>((DWORD64)this, "UPrimalItem", "SetEngramBlueprint"); }
+	bool CanSpoil() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "CanSpoil"); }
+	void RecalcSpoilingTime(long double TimeSeconds, float SpoilPercent, UPrimalInventoryComponent* forComp) { NativeCall<void, long double, float, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "RecalcSpoilingTime", TimeSeconds, SpoilPercent, forComp); }
+	void InventoryRefreshCheckItem() { NativeCall<void>((DWORD64)this, "UPrimalItem", "InventoryRefreshCheckItem"); }
+	bool IsValidForCrafting() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "IsValidForCrafting"); }
+	bool IsOwnerInWater() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "IsOwnerInWater"); }
+	bool AllowRemoteAddToInventory(UPrimalInventoryComponent* invComp) { return NativeCall<bool, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "AllowRemoteAddToInventory", invComp); }
+	bool CanDrop() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "CanDrop"); }
+	void PickupAlertDinos(AActor* groundItem) { NativeCall<void, AActor *>((DWORD64)this, "UPrimalItem", "PickupAlertDinos", groundItem); }
+	void GetItemAttachmentInfos(AActor* OwnerActor) { NativeCall<void, AActor *>((DWORD64)this, "UPrimalItem", "GetItemAttachmentInfos", OwnerActor); }
+	void SetAttachedMeshesMaterialScalarParamValue(FName ParamName, float Value) { NativeCall<void, FName, float>((DWORD64)this, "UPrimalItem", "SetAttachedMeshesMaterialScalarParamValue", ParamName, Value); }
+	bool CanUseWithItemSource(UPrimalItem* DestinationItem) { return NativeCall<bool, UPrimalItem *>((DWORD64)this, "UPrimalItem", "CanUseWithItemSource", DestinationItem); }
+	bool CanUseWithItemDestination(UPrimalItem* SourceItem) { return NativeCall<bool, UPrimalItem *>((DWORD64)this, "UPrimalItem", "CanUseWithItemDestination", SourceItem); }
+	bool UseItemOntoItem(UPrimalItem* DestinationItem, int AdditionalData) { return NativeCall<bool, UPrimalItem *, int>((DWORD64)this, "UPrimalItem", "UseItemOntoItem", DestinationItem, AdditionalData); }
+	void LocalUseItemOntoItem(AShooterPlayerController* ForPC, UPrimalItem* DestinationItem) { NativeCall<void, AShooterPlayerController *, UPrimalItem *>((DWORD64)this, "UPrimalItem", "LocalUseItemOntoItem", ForPC, DestinationItem); }
+	FString* GetPrimaryColorName(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "GetPrimaryColorName", result); }
+	void Serialize(FArchive* Ar) { NativeCall<void, FArchive *>((DWORD64)this, "UPrimalItem", "Serialize", Ar); }
+	bool ProcessEditText(AShooterPlayerController* ForPC, FString* TextToUse, bool __formal) { return NativeCall<bool, AShooterPlayerController *, FString *, bool>((DWORD64)this, "UPrimalItem", "ProcessEditText", ForPC, TextToUse, __formal); }
+	void NotifyEditText(AShooterPlayerController* PC) { NativeCall<void, AShooterPlayerController *>((DWORD64)this, "UPrimalItem", "NotifyEditText", PC); }
+	void AddToArkTributeInvenroty(UPrimalInventoryComponent* toInventory, bool bFromLoad) { NativeCall<void, UPrimalInventoryComponent *, bool>((DWORD64)this, "UPrimalItem", "AddToArkTributeInvenroty", toInventory, bFromLoad); }
+	int GetMaximumAdditionalCrafting(UPrimalInventoryComponent* forComp) { return NativeCall<int, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "GetMaximumAdditionalCrafting", forComp); }
+	float GetWeaponTemplateMeleeDamageAmount() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetWeaponTemplateMeleeDamageAmount"); }
+	float GetWeaponTemplateDurabilityToConsumePerMeleeHit() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetWeaponTemplateDurabilityToConsumePerMeleeHit"); }
+	TSubclassOf<UDamageType>* GetWeaponTemplateMeleeDamageType(TSubclassOf<UDamageType>* result) { return NativeCall<TSubclassOf<UDamageType> *, TSubclassOf<UDamageType> *>((DWORD64)this, "UPrimalItem", "GetWeaponTemplateMeleeDamageType", result); }
+	TSubclassOf<UDamageType>* GetWeaponTemplateHarvestDamageType(TSubclassOf<UDamageType>* result) { return NativeCall<TSubclassOf<UDamageType> *, TSubclassOf<UDamageType> *>((DWORD64)this, "UPrimalItem", "GetWeaponTemplateHarvestDamageType", result); }
+	float GetWeaponTemplateHarvestDamageMultiplier() { return NativeCall<float>((DWORD64)this, "UPrimalItem", "GetWeaponTemplateHarvestDamageMultiplier"); }
+	void CalcRecipeStats() { NativeCall<void>((DWORD64)this, "UPrimalItem", "CalcRecipeStats"); }
+	bool IsUsableConsumable() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "IsUsableConsumable"); }
+	bool CanEquipWeapon() { return NativeCall<bool>((DWORD64)this, "UPrimalItem", "CanEquipWeapon"); }
+	FString* BPAllowCrafting(FString* result, AShooterPlayerController* ForPC) { return NativeCall<FString *, FString *, AShooterPlayerController *>((DWORD64)this, "UPrimalItem", "BPAllowCrafting", result, ForPC); }
+	bool BPAllowRemoteAddToInventory(UPrimalInventoryComponent* invComp) { return NativeCall<bool, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "BPAllowRemoteAddToInventory", invComp); }
+	bool BPCanAddToInventory(UPrimalInventoryComponent* toInventory) { return NativeCall<bool, UPrimalInventoryComponent *>((DWORD64)this, "UPrimalItem", "BPCanAddToInventory", toInventory); }
+	FString* BPGetCustomInventoryWidgetText(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UPrimalItem", "BPGetCustomInventoryWidgetText", result); }
 };
 
 struct FItemNetInfo
 {
-	FItemNetID GetItemID() const { return *(FItemNetID*)GetAddress(this, "FItemNetInfo", "ItemID"); };
-	void SetExpirationTimeUTC(unsigned int a0) { *(unsigned int*)GetAddress(this, "FItemNetInfo", "ExpirationTimeUTC") = a0; };
-	unsigned int GetExpirationTimeUTC() const { return *(unsigned int*)GetAddress(this, "FItemNetInfo", "ExpirationTimeUTC"); };
-	void SetOwnerPlayerDataId(unsigned __int64 a0) { *(unsigned __int64*)GetAddress(this, "FItemNetInfo", "OwnerPlayerDataId") = a0; };
-	unsigned __int64 GetOwnerPlayerDataId() const { return *(unsigned __int64*)GetAddress(this, "FItemNetInfo", "OwnerPlayerDataId"); };
-	void SetSlotIndex(int a0) { *(int*)GetAddress(this, "FItemNetInfo", "SlotIndex") = a0; };
-	int GetSlotIndex() const { return *(int*)GetAddress(this, "FItemNetInfo", "SlotIndex"); };
-	void SetWeaponClipAmmo(unsigned int a0) { *(unsigned int*)GetAddress(this, "FItemNetInfo", "WeaponClipAmmo") = a0; };
-	unsigned int GetWeaponClipAmmo() const { return *(unsigned int*)GetAddress(this, "FItemNetInfo", "WeaponClipAmmo"); };
-	void SetCreationTime(double a0) { *(double*)GetAddress(this, "FItemNetInfo", "CreationTime") = a0; };
-	double GetCreationTime() const { return *(double*)GetAddress(this, "FItemNetInfo", "CreationTime"); };
-	void SetItemDurability(float a0) { *(float*)GetAddress(this, "FItemNetInfo", "ItemDurability") = a0; };
-	float GetItemDurability() const { return *(float*)GetAddress(this, "FItemNetInfo", "ItemDurability"); };
-	void SetItemRating(float a0) { *(float*)GetAddress(this, "FItemNetInfo", "ItemRating") = a0; };
-	float GetItemRating() const { return *(float*)GetAddress(this, "FItemNetInfo", "ItemRating"); };
-	void SetItemQualityIndex(unsigned char a0) { *(unsigned char*)GetAddress(this, "FItemNetInfo", "ItemQualityIndex") = a0; };
-	unsigned char GetItemQualityIndex() const { return *(unsigned char*)GetAddress(this, "FItemNetInfo", "ItemQualityIndex"); };
-	void SetItemQuantity(unsigned int a0) { *(unsigned int*)GetAddress(this, "FItemNetInfo", "ItemQuantity") = a0; };
-	unsigned int GetItemQuantity() const { return *(unsigned int*)GetAddress(this, "FItemNetInfo", "ItemQuantity"); };
-	void SetCraftQueue(unsigned short a0) { *(unsigned short*)GetAddress(this, "FItemNetInfo", "CraftQueue") = a0; };
-	unsigned short GetCraftQueue() const { return *(unsigned short*)GetAddress(this, "FItemNetInfo", "CraftQueue"); };
-	void SetNextCraftCompletionTime(double a0) { *(double*)GetAddress(this, "FItemNetInfo", "NextCraftCompletionTime") = a0; };
-	double GetNextCraftCompletionTime() const { return *(double*)GetAddress(this, "FItemNetInfo", "NextCraftCompletionTime"); };
-	void SetCraftingSkill(float a0) { *(float*)GetAddress(this, "FItemNetInfo", "CraftingSkill") = a0; };
-	float GetCraftingSkill() const { return *(float*)GetAddress(this, "FItemNetInfo", "CraftingSkill"); };
-	void SetCustomItemName(FString a0) { *(FString*)GetAddress(this, "FItemNetInfo", "CustomItemName") = a0; };
-	FString GetCustomItemName() const { return *(FString*)GetAddress(this, "FItemNetInfo", "CustomItemName"); };
-	void SetCustomItemDescription(FString a0) { *(FString*)GetAddress(this, "FItemNetInfo", "CustomItemDescription") = a0; };
-	FString GetCustomItemDescription() const { return *(FString*)GetAddress(this, "FItemNetInfo", "CustomItemDescription"); };
-	void SetCustomItemColors(TArray<FColor, FDefaultAllocator> a0) { *(TArray<FColor, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "CustomItemColors") = a0; };
-	TArray<FColor, FDefaultAllocator> GetCustomItemColors() const { return *(TArray<FColor, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "CustomItemColors"); };
-	//void SetCustomResourceRequirements(TArray<FCraftingResourceRequirement, FDefaultAllocator> a0) { *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "CustomResourceRequirements") = a0; };
-	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetCustomResourceRequirements() const { return *(TArray<FCraftingResourceRequirement, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "CustomResourceRequirements"); };
-	void SetNextSpoilingTime(double a0) { *(double*)GetAddress(this, "FItemNetInfo", "NextSpoilingTime") = a0; };
-	double GetNextSpoilingTime() const { return *(double*)GetAddress(this, "FItemNetInfo", "NextSpoilingTime"); };
-	void SetLastSpoilingTime(double a0) { *(double*)GetAddress(this, "FItemNetInfo", "LastSpoilingTime") = a0; };
-	double GetLastSpoilingTime() const { return *(double*)GetAddress(this, "FItemNetInfo", "LastSpoilingTime"); };
-	void SetLastAutoDurabilityDecreaseTime(double a0) { *(double*)GetAddress(this, "FItemNetInfo", "LastAutoDurabilityDecreaseTime") = a0; };
-	double GetLastAutoDurabilityDecreaseTime() const { return *(double*)GetAddress(this, "FItemNetInfo", "LastAutoDurabilityDecreaseTime"); };
-	void SetOriginalItemDropLocation(FVector a0) { *(FVector*)GetAddress(this, "FItemNetInfo", "OriginalItemDropLocation") = a0; };
-	FVector GetOriginalItemDropLocation() const { return *(FVector*)GetAddress(this, "FItemNetInfo", "OriginalItemDropLocation"); };
-	void SetEggTamedIneffectivenessModifier(float a0) { *(float*)GetAddress(this, "FItemNetInfo", "EggTamedIneffectivenessModifier") = a0; };
-	float GetEggTamedIneffectivenessModifier() const { return *(float*)GetAddress(this, "FItemNetInfo", "EggTamedIneffectivenessModifier"); };
-	void SetItemVersion(unsigned char a0) { *(unsigned char*)GetAddress(this, "FItemNetInfo", "ItemVersion") = a0; };
-	unsigned char GetItemVersion() const { return *(unsigned char*)GetAddress(this, "FItemNetInfo", "ItemVersion"); };
-	void SetCustomItemID(int a0) { *(int*)GetAddress(this, "FItemNetInfo", "CustomItemID") = a0; };
-	int GetCustomItemID() const { return *(int*)GetAddress(this, "FItemNetInfo", "CustomItemID"); };
-	void SetSteamUserItemID(TArray<unsigned __int64, FDefaultAllocator> a0) { *(TArray<unsigned __int64, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "SteamUserItemID") = a0; };
-	TArray<unsigned __int64, FDefaultAllocator> GetSteamUserItemID() const { return *(TArray<unsigned __int64, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "SteamUserItemID"); };
-	void SetClusterSpoilingTimeUTC(double a0) { *(double*)GetAddress(this, "FItemNetInfo", "ClusterSpoilingTimeUTC") = a0; };
-	double GetClusterSpoilingTimeUTC() const { return *(double*)GetAddress(this, "FItemNetInfo", "ClusterSpoilingTimeUTC"); };
-	//void SetEggDinoAncestors(TArray<FDinoAncestorsEntry, FDefaultAllocator> a0) { *(TArray<FDinoAncestorsEntry, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "EggDinoAncestors") = a0; };
-	//TArray<FDinoAncestorsEntry, FDefaultAllocator> GetEggDinoAncestors() const { return *(TArray<FDinoAncestorsEntry, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "EggDinoAncestors"); };
-	//void SetEggDinoAncestorsMale(TArray<FDinoAncestorsEntry, FDefaultAllocator> a0) { *(TArray<FDinoAncestorsEntry, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "EggDinoAncestorsMale") = a0; };
-	//TArray<FDinoAncestorsEntry, FDefaultAllocator> GetEggDinoAncestorsMale() const { return *(TArray<FDinoAncestorsEntry, FDefaultAllocator>*)GetAddress(this, "FItemNetInfo", "EggDinoAncestorsMale"); };
-	void SetEggRandomMutationsFemale(int a0) { *(int*)GetAddress(this, "FItemNetInfo", "EggRandomMutationsFemale") = a0; };
-	int GetEggRandomMutationsFemale() const { return *(int*)GetAddress(this, "FItemNetInfo", "EggRandomMutationsFemale"); };
-	void SetEggRandomMutationsMale(int a0) { *(int*)GetAddress(this, "FItemNetInfo", "EggRandomMutationsMale") = a0; };
-	int GetEggRandomMutationsMale() const { return *(int*)GetAddress(this, "FItemNetInfo", "EggRandomMutationsMale"); };
+	TSubclassOf<UPrimalItem> GetItemArchetypeField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "FItemNetInfo", "ItemArchetype"); }
+	void SetItemArchetypeField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "FItemNetInfo", "ItemArchetype", newValue); }
+	FItemNetID GetItemIDField() const { return GetNativeField<FItemNetID>(this, "FItemNetInfo", "ItemID"); }
+	void SetItemIDField(FItemNetID newValue) { SetNativeField(this, "FItemNetInfo", "ItemID", newValue); }
+	unsigned int GetExpirationTimeUTCField() const { return GetNativeField<unsigned int>(this, "FItemNetInfo", "ExpirationTimeUTC"); }
+	void SetExpirationTimeUTCField(unsigned int newValue) { SetNativeField(this, "FItemNetInfo", "ExpirationTimeUTC", newValue); }
+	//TArray<FCustomItemData, FDefaultAllocator> GetCustomItemDatasField() const { return GetNativeField<TArray<FCustomItemData, FDefaultAllocator>>(this, "FItemNetInfo", "CustomItemDatas"); }
+	unsigned __int64 GetOwnerPlayerDataIdField() const { return GetNativeField<unsigned __int64>(this, "FItemNetInfo", "OwnerPlayerDataId"); }
+	void SetOwnerPlayerDataIdField(unsigned __int64 newValue) { SetNativeField(this, "FItemNetInfo", "OwnerPlayerDataId", newValue); }
+	int GetSlotIndexField() const { return GetNativeField<int>(this, "FItemNetInfo", "SlotIndex"); }
+	void SetSlotIndexField(int newValue) { SetNativeField(this, "FItemNetInfo", "SlotIndex", newValue); }
+	unsigned int GetWeaponClipAmmoField() const { return GetNativeField<unsigned int>(this, "FItemNetInfo", "WeaponClipAmmo"); }
+	void SetWeaponClipAmmoField(unsigned int newValue) { SetNativeField(this, "FItemNetInfo", "WeaponClipAmmo", newValue); }
+	long double GetCreationTimeField() const { return GetNativeField<long double>(this, "FItemNetInfo", "CreationTime"); }
+	void SetCreationTimeField(long double newValue) { SetNativeField(this, "FItemNetInfo", "CreationTime", newValue); }
+	float GetItemDurabilityField() const { return GetNativeField<float>(this, "FItemNetInfo", "ItemDurability"); }
+	void SetItemDurabilityField(float newValue) { SetNativeField(this, "FItemNetInfo", "ItemDurability", newValue); }
+	float GetItemRatingField() const { return GetNativeField<float>(this, "FItemNetInfo", "ItemRating"); }
+	void SetItemRatingField(float newValue) { SetNativeField(this, "FItemNetInfo", "ItemRating", newValue); }
+	char GetItemQualityIndexField() const { return GetNativeField<char>(this, "FItemNetInfo", "ItemQualityIndex"); }
+	void SetItemQualityIndexField(char newValue) { SetNativeField(this, "FItemNetInfo", "ItemQualityIndex", newValue); }
+	unsigned int GetItemQuantityField() const { return GetNativeField<unsigned int>(this, "FItemNetInfo", "ItemQuantity"); }
+	void SetItemQuantityField(unsigned int newValue) { SetNativeField(this, "FItemNetInfo", "ItemQuantity", newValue); }
+	unsigned __int16 GetCraftQueueField() const { return GetNativeField<unsigned __int16>(this, "FItemNetInfo", "CraftQueue"); }
+	void SetCraftQueueField(unsigned __int16 newValue) { SetNativeField(this, "FItemNetInfo", "CraftQueue", newValue); }
+	long double GetNextCraftCompletionTimeField() const { return GetNativeField<long double>(this, "FItemNetInfo", "NextCraftCompletionTime"); }
+	void SetNextCraftCompletionTimeField(long double newValue) { SetNativeField(this, "FItemNetInfo", "NextCraftCompletionTime", newValue); }
+	//unsigned __int16[8] GetItemStatValuesField() const { return GetNativeField<unsigned __int16[8]>(this, "FItemNetInfo", "ItemStatValues"); }
+	//__int16[6] GetItemColorIDField() const { return GetNativeField<__int16[6]>(this, "FItemNetInfo", "ItemColorID"); }
+	TSubclassOf<UPrimalItem> GetItemCustomClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "FItemNetInfo", "ItemCustomClass"); }
+	void SetItemCustomClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "FItemNetInfo", "ItemCustomClass", newValue); }
+	TSubclassOf<UPrimalItem> GetItemSkinTemplateField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "FItemNetInfo", "ItemSkinTemplate"); }
+	void SetItemSkinTemplateField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "FItemNetInfo", "ItemSkinTemplate", newValue); }
+	float GetCraftingSkillField() const { return GetNativeField<float>(this, "FItemNetInfo", "CraftingSkill"); }
+	void SetCraftingSkillField(float newValue) { SetNativeField(this, "FItemNetInfo", "CraftingSkill", newValue); }
+	FString GetCustomItemNameField() const { return GetNativeField<FString>(this, "FItemNetInfo", "CustomItemName"); }
+	void SetCustomItemNameField(FString newValue) { SetNativeField(this, "FItemNetInfo", "CustomItemName", newValue); }
+	FString GetCustomItemDescriptionField() const { return GetNativeField<FString>(this, "FItemNetInfo", "CustomItemDescription"); }
+	void SetCustomItemDescriptionField(FString newValue) { SetNativeField(this, "FItemNetInfo", "CustomItemDescription", newValue); }
+	TArray<FColor, FDefaultAllocator> GetCustomItemColorsField() const { return GetNativeField<TArray<FColor, FDefaultAllocator>>(this, "FItemNetInfo", "CustomItemColors"); }
+	void SetCustomItemColorsField(TArray<FColor, FDefaultAllocator> newValue) { SetNativeField(this, "FItemNetInfo", "CustomItemColors", newValue); }
+	//TArray<FCraftingResourceRequirement, FDefaultAllocator> GetCustomResourceRequirementsField() const { return GetNativeField<TArray<FCraftingResourceRequirement, FDefaultAllocator>>(this, "FItemNetInfo", "CustomResourceRequirements"); }
+	long double GetNextSpoilingTimeField() const { return GetNativeField<long double>(this, "FItemNetInfo", "NextSpoilingTime"); }
+	void SetNextSpoilingTimeField(long double newValue) { SetNativeField(this, "FItemNetInfo", "NextSpoilingTime", newValue); }
+	long double GetLastSpoilingTimeField() const { return GetNativeField<long double>(this, "FItemNetInfo", "LastSpoilingTime"); }
+	void SetLastSpoilingTimeField(long double newValue) { SetNativeField(this, "FItemNetInfo", "LastSpoilingTime", newValue); }
+	AWeakObjectPtr<AShooterCharacter> GetLastOwnerPlayerField() const { return GetNativeField<AWeakObjectPtr<AShooterCharacter>>(this, "FItemNetInfo", "LastOwnerPlayer"); }
+	long double GetLastAutoDurabilityDecreaseTimeField() const { return GetNativeField<long double>(this, "FItemNetInfo", "LastAutoDurabilityDecreaseTime"); }
+	void SetLastAutoDurabilityDecreaseTimeField(long double newValue) { SetNativeField(this, "FItemNetInfo", "LastAutoDurabilityDecreaseTime", newValue); }
+	FVector GetOriginalItemDropLocationField() const { return GetNativeField<FVector>(this, "FItemNetInfo", "OriginalItemDropLocation"); }
+	void SetOriginalItemDropLocationField(FVector newValue) { SetNativeField(this, "FItemNetInfo", "OriginalItemDropLocation", newValue); }
+	//__int16[6] GetPreSkinItemColorIDField() const { return GetNativeField<__int16[6]>(this, "FItemNetInfo", "PreSkinItemColorID"); }
+	float GetEggTamedIneffectivenessModifierField() const { return GetNativeField<float>(this, "FItemNetInfo", "EggTamedIneffectivenessModifier"); }
+	void SetEggTamedIneffectivenessModifierField(float newValue) { SetNativeField(this, "FItemNetInfo", "EggTamedIneffectivenessModifier", newValue); }
+	//char[6] GetEggColorSetIndicesField() const { return GetNativeField<char[6]>(this, "FItemNetInfo", "EggColorSetIndices"); }
+	char GetItemVersionField() const { return GetNativeField<char>(this, "FItemNetInfo", "ItemVersion"); }
+	void SetItemVersionField(char newValue) { SetNativeField(this, "FItemNetInfo", "ItemVersion", newValue); }
+	int GetCustomItemIDField() const { return GetNativeField<int>(this, "FItemNetInfo", "CustomItemID"); }
+	void SetCustomItemIDField(int newValue) { SetNativeField(this, "FItemNetInfo", "CustomItemID", newValue); }
+	TArray<unsigned __int64, FDefaultAllocator> GetSteamUserItemIDField() const { return GetNativeField<TArray<unsigned __int64, FDefaultAllocator>>(this, "FItemNetInfo", "SteamUserItemID"); }
+	void SetSteamUserItemIDField(TArray<unsigned __int64, FDefaultAllocator> newValue) { SetNativeField(this, "FItemNetInfo", "SteamUserItemID", newValue); }
+	long double GetClusterSpoilingTimeUTCField() const { return GetNativeField<long double>(this, "FItemNetInfo", "ClusterSpoilingTimeUTC"); }
+	void SetClusterSpoilingTimeUTCField(long double newValue) { SetNativeField(this, "FItemNetInfo", "ClusterSpoilingTimeUTC", newValue); }
+	//TArray<FDinoAncestorsEntry, FDefaultAllocator> GetEggDinoAncestorsField() const { return GetNativeField<TArray<FDinoAncestorsEntry, FDefaultAllocator>>(this, "FItemNetInfo", "EggDinoAncestors"); }
+	//TArray<FDinoAncestorsEntry, FDefaultAllocator> GetEggDinoAncestorsMaleField() const { return GetNativeField<TArray<FDinoAncestorsEntry, FDefaultAllocator>>(this, "FItemNetInfo", "EggDinoAncestorsMale"); }
+	int GetEggRandomMutationsFemaleField() const { return GetNativeField<int>(this, "FItemNetInfo", "EggRandomMutationsFemale"); }
+	void SetEggRandomMutationsFemaleField(int newValue) { SetNativeField(this, "FItemNetInfo", "EggRandomMutationsFemale", newValue); }
+	int GetEggRandomMutationsMaleField() const { return GetNativeField<int>(this, "FItemNetInfo", "EggRandomMutationsMale"); }
+	void SetEggRandomMutationsMaleField(int newValue) { SetNativeField(this, "FItemNetInfo", "EggRandomMutationsMale", newValue); }
 };

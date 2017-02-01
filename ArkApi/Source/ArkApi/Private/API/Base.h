@@ -3,8 +3,7 @@
 
 #include "ArkApiPrivatePCH.h"
 #include <windows.h>
-
-#define ARK_EXPORTS
+#include <string>
 
 #ifdef ARK_EXPORTS
 #define ARK_API __declspec(dllexport) 
@@ -15,7 +14,7 @@
 // Structs forward declaration
 
 struct AShooterPlayerController;
-struct APlayerController;
+class APlayerController;
 struct UShooterCheatManager;
 struct AShooterCharacter;
 struct UPlayer;
@@ -25,7 +24,7 @@ struct UPrimalItem;
 struct APrimalCharacter;
 struct APrimalDinoCharacter;
 struct FItemNetInfo;
-struct APawn;
+class APawn;
 struct UCheatManager;
 struct UShooterCheatManager;
 struct ACustomGameMode;
@@ -59,41 +58,30 @@ struct FPrimalPlayerDataStruct;
 struct FUniqueNetIdRepl;
 struct FPrimalPersistentCharacterStatsStruct;
 struct UPrimalCharacterStatusComponent;
-struct USceneComponent;
-struct ULevel;
+class USceneComponent;
+class ULevel;
 struct ULevelBase;
 struct FDamageEvent;
 struct FHitResult;
 struct AShooterGameState;
+struct RCONClientConnection;
+struct RCONPacket;
+struct URCONServer;
+class FUniqueNetId;
+struct UGameplayStatics;
+class UObjectBase;
+class UObjectBaseUtility;
+class UClass;
 
 // Address helpers
 
-ARK_API DWORD64 GetAddress(const void* base, const char* structure, const char* offset);
-ARK_API DWORD64 GetAddress(LPVOID base, const char* structure, const char* offset);
-ARK_API LPVOID GetAddress(const char* structure, const char* offset);
+ARK_API DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset);
+ARK_API DWORD64 GetAddress(LPVOID base, const std::string& structure, const std::string& offset);
+ARK_API LPVOID GetAddress(const std::string& structure, const std::string& offset);
 
-// Replacement for TWeakObjectPtr
-
-template <typename T>
-struct AWeakObjectPtr
-{
-	int ObjectIndex;
-	int ObjectSerialNumber;
-
-	FORCEINLINE T& operator*() const
-	{
-		return *Get(true);
-	}
-
-	FORCEINLINE T* operator->() const
-	{
-		return Get(true);
-	}
-
-	T* Get(bool a1) const { return static_cast<T*(_cdecl*)(DWORD64, bool)>(GetAddress("FWeakObjectPtr", "Get"))((DWORD64)this, a1); }
-};
-
+#include "UE.h"
 #include "Ark.h"
+#include "Enums.h"
 #include "GameMode.h"
 #include "GameState.h"
 #include "Inventory.h"
@@ -101,6 +89,5 @@ struct AWeakObjectPtr
 #include "Actor.h"
 #include "Tribe.h"
 #include "PrimalStructure.h"
-#include "Enums.h"
 
 #endif

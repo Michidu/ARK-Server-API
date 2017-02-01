@@ -14,8 +14,9 @@ namespace Ark
 
 	ARK_API void SetHook(const std::string& structure, const std::string& funcName, LPVOID pDetour, LPVOID* ppOriginal);
 
-	ARK_API void AddChatCommand(const std::string& command, std::function<void(AShooterPlayerController*, FString*, int)> callback);
-	ARK_API void AddConsoleCommand(const std::string& command, std::function<void(APlayerController*, FString*, bool)> callback);
+	ARK_API void AddChatCommand(const FString& command, const std::function<void(AShooterPlayerController*, FString*, int)>& callback);
+	ARK_API void AddConsoleCommand(const FString& command, const std::function<void(APlayerController*, FString*, bool)>& callback);
+	ARK_API void AddRconCommand(const FString& command, const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback);
 
-	ARK_API void AddOnTickCallback(std::function<void(float)> callback);
+	ARK_API void AddOnTickCallback(const std::function<void(float)>& callback);
 }

@@ -7,7 +7,6 @@
 #include "JsonUtils.h"
 #include "Hooks.h"
 #include "UpdateManager.h"
-#include "ApiUtils.h"
 
 namespace fs = std::experimental::filesystem;
 

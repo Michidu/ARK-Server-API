@@ -55,3 +55,12 @@ enum ECollisionChannel
 	ECC_OverlapAllStatic_Deprecated = 0x22,
 	ECC_MAX = 0x23,
 };
+
+enum EXPType
+{
+	Generic,
+	Kill,
+	Harvest,
+	Craft,
+	Special
+};

@@ -1,9 +1,9 @@
 #include "ArkApiPrivatePCH.h"
 #include "Ark.h"
-#include <vector>
 #include <functional>
 #include "ApiUtils.h"
 #include "Hooks.h"
+#include "Commands.h"
 
 namespace Ark
 {
@@ -22,18 +22,23 @@ namespace Ark
 		Hooks::SetHook(structure, funcName, pDetour, ppOriginal);
 	}
 
-	void AddChatCommand(const std::string& command, std::function<void(AShooterPlayerController*, FString*, int)> callback)
+	void AddChatCommand(const FString& command, const std::function<void(AShooterPlayerController*, FString*, int)>& callback)
 	{
-		ApiUtils::AddChatCommand(command, callback);
+		Commands::AddChatCommand(command, callback);
 	}
 
-	void AddConsoleCommand(const std::string& command, std::function<void(APlayerController*, FString*, bool)> callback)
+	void AddConsoleCommand(const FString& command, const std::function<void(APlayerController*, FString*, bool)>& callback)
 	{
-		ApiUtils::AddConsoleCommand(command, callback);
+		Commands::AddConsoleCommand(command, callback);
 	}
 
-	void AddOnTickCallback(std::function<void(float)> callback)
+	void AddRconCommand(const FString& command, const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback)
 	{
-		ApiUtils::AddOnTickCallback(callback);
+		Commands::AddRconCommand(command, callback);
+	}
+
+	void AddOnTickCallback(const std::function<void(float)>& callback)
+	{
+		Commands::AddOnTickCallback(callback);
 	}
 }

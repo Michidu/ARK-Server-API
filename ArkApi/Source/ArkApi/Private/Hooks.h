@@ -17,9 +17,9 @@ namespace Hooks
 	void SetHook(const std::string& structure, const std::string& funcName, LPVOID pDetour, LPVOID* ppOriginal);
 
 	// Address helpers
-	DWORD64 GetAddress(const void* base, const char* structure, const char* offset);
-	DWORD64 GetAddress(LPVOID base, const char* structure, const char* offset);
-	LPVOID GetAddress(const char* structure, const char* offset);
+	DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset);
+	DWORD64 GetAddress(LPVOID base, const std::string& structure, const std::string& offset);
+	LPVOID GetAddress(const std::string& structure, const std::string& offset);
 
 	// Hooks declaration
 	DECLARE_HOOK(UWorld_InitWorld, void, UWorld*, DWORD64);
@@ -27,6 +27,7 @@ namespace Hooks
 	DECLARE_HOOK(AShooterGameMode_InitGame, void, AShooterGameMode*, FString*, FString*, FString*);
 	DECLARE_HOOK(AShooterPlayerController_ServerSendChatMessage_Impl, void, AShooterPlayerController*, FString*, int);
 	DECLARE_HOOK(APlayerController_ConsoleCommand, FString*, APlayerController*, FString*, FString*, bool);
+	DECLARE_HOOK(RCONClientConnection_ProcessRCONPacket, void, RCONClientConnection*, RCONPacket*, UWorld*);
 }
 
 #endif

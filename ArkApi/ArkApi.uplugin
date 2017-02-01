@@ -10,14 +10,13 @@
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
-	"EnabledByDefault": false,
 	"CanContainContent": false,
 	"IsBetaVersion": false,
 	"Installed": false,
 	"Modules": [
 		{
 			"Name": "ArkApi",
-			"Type": "Runtime",
+			"Type": "Developer",
 			"LoadingPhase": "Default"
 		}
 	]

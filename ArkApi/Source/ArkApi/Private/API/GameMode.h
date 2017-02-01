@@ -5,60 +5,149 @@
 class UWorld
 {
 public:
-	void SetbIsIdle(bool a0) { *(bool*)GetAddress(this, "UWorld", "bIsIdle") = a0; };
-	bool GetbIsIdle() const { return *(bool*)GetAddress(this, "UWorld", "bIsIdle"); };
-	TArray<AActor *, FDefaultAllocator> GetNetworkActors() const { return *(TArray<AActor *, FDefaultAllocator>*)GetAddress(this, "UWorld", "NetworkActors"); };
-	void SetPlayerNum(int a0) { *(int*)GetAddress(this, "UWorld", "PlayerNum") = a0; };
-	int GetPlayerNum() const { return *(int*)GetAddress(this, "UWorld", "PlayerNum"); };
-	void SetTimeSeconds(double a0) { *(double*)GetAddress(this, "UWorld", "TimeSeconds") = a0; };
-	double GetTimeSeconds() const { return *(double*)GetAddress(this, "UWorld", "TimeSeconds"); };
-	void SetLoadedAtTimeSeconds(double a0) { *(double*)GetAddress(this, "UWorld", "LoadedAtTimeSeconds") = a0; };
-	double GetLoadedAtTimeSeconds() const { return *(double*)GetAddress(this, "UWorld", "LoadedAtTimeSeconds"); };
-	void SetRealTimeSeconds(double a0) { *(double*)GetAddress(this, "UWorld", "RealTimeSeconds") = a0; };
-	double GetRealTimeSeconds() const { return *(double*)GetAddress(this, "UWorld", "RealTimeSeconds"); };
-	void SetAudioTimeSeconds(double a0) { *(double*)GetAddress(this, "UWorld", "AudioTimeSeconds") = a0; };
-	double GetAudioTimeSeconds() const { return *(double*)GetAddress(this, "UWorld", "AudioTimeSeconds"); };
-	void SetDeltaTimeSeconds(float a0) { *(float*)GetAddress(this, "UWorld", "DeltaTimeSeconds") = a0; };
-	float GetDeltaTimeSeconds() const { return *(float*)GetAddress(this, "UWorld", "DeltaTimeSeconds"); };
-	void SetPauseDelay(float a0) { *(float*)GetAddress(this, "UWorld", "PauseDelay") = a0; };
-	float GetPauseDelay() const { return *(float*)GetAddress(this, "UWorld", "PauseDelay"); };
-	FIntVector GetOriginLocation() const { return *(FIntVector*)GetAddress(this, "UWorld", "OriginLocation"); };
-	void SetRequestedOriginLocation(FIntVector a0) { *(FIntVector*)GetAddress(this, "UWorld", "RequestedOriginLocation") = a0; };
-	FIntVector GetRequestedOriginLocation() const { return *(FIntVector*)GetAddress(this, "UWorld", "RequestedOriginLocation"); };
-	void SetbOriginOffsetThisFrame(bool a0) { *(bool*)GetAddress(this, "UWorld", "bOriginOffsetThisFrame") = a0; };
-	bool GetbOriginOffsetThisFrame() const { return *(bool*)GetAddress(this, "UWorld", "bOriginOffsetThisFrame"); };
-	void SetCurrentDayTime(FString a0) { *(FString*)GetAddress(this, "UWorld", "CurrentDayTime") = a0; };
-	FString GetCurrentDayTime() const { return *(FString*)GetAddress(this, "UWorld", "CurrentDayTime"); };
-	ULevel* GetPersistentLevel() const { return *(ULevel**)GetAddress(this, "UWorld", "PersistentLevel"); };
-	ULevel* GetCurrentLevel() const { return *(ULevel**)GetAddress(this, "UWorld", "CurrentLevel"); };
-	TArray<AWeakObjectPtr<APlayerController>, FDefaultAllocator> GetPlayerControllerList() const { return *(TArray<AWeakObjectPtr<APlayerController>, FDefaultAllocator>*)GetAddress(this, "UWorld", "PlayerControllerList"); };
-	TArray<AWeakObjectPtr<AController>, FDefaultAllocator> GetControllerList() const { return *(TArray<AWeakObjectPtr<AController>, FDefaultAllocator>*)GetAddress(this, "UWorld", "ControllerList"); };
-	TArray<AWeakObjectPtr<APawn>, FDefaultAllocator> GetPawnList() const { return *(TArray<AWeakObjectPtr<APawn>, FDefaultAllocator>*)GetAddress(this, "UWorld", "PawnList"); };
+	TArray<TSubclassOf<AActor>, FDefaultAllocator> GetActorsClassesAllowedToSaveField() const { return GetNativeField<TArray<TSubclassOf<AActor>, FDefaultAllocator>>(this, "UWorld", "ActorsClassesAllowedToSave"); }
+	bool GetbIsIdleField() const { return GetNativeField<bool>(this, "UWorld", "bIsIdle"); }
+	void SetbIsIdleField(bool newValue) { SetNativeField(this, "UWorld", "bIsIdle", newValue); }
+	ULevel* GetPersistentLevelField() const { return GetNativeField<ULevel *>(this, "UWorld", "PersistentLevel"); }
+	AGameState* GetGameStateField() const { return GetNativeField<AGameState *>(this, "UWorld", "GameState"); }
+	TArray<UObject *, FDefaultAllocator> GetExtraReferencedObjectsField() const { return GetNativeField<TArray<UObject *, FDefaultAllocator>>(this, "UWorld", "ExtraReferencedObjects"); }
+	FString GetStreamingLevelsPrefixField() const { return GetNativeField<FString>(this, "UWorld", "StreamingLevelsPrefix"); }
+	void SetStreamingLevelsPrefixField(FString newValue) { SetNativeField(this, "UWorld", "StreamingLevelsPrefix", newValue); }
+	ULevel* GetCurrentLevelPendingVisibilityField() const { return GetNativeField<ULevel *>(this, "UWorld", "CurrentLevelPendingVisibility"); }
+	void SetCurrentLevelPendingVisibilityField(ULevel* newValue) { SetNativeField(this, "UWorld", "CurrentLevelPendingVisibility", newValue); }
+	TArray<FVector, FDefaultAllocator> GetViewLocationsRenderedLastFrameField() const { return GetNativeField<TArray<FVector, FDefaultAllocator>>(this, "UWorld", "ViewLocationsRenderedLastFrame"); }
+	AGameMode* GetAuthorityGameModeField() const { return GetNativeField<AGameMode *>(this, "UWorld", "AuthorityGameMode"); }
+	TArray<ULevel *, FDefaultAllocator> GetLevelsField() const { return GetNativeField<TArray<ULevel *, FDefaultAllocator>>(this, "UWorld", "Levels"); }
+	TArray<AActor *, FDefaultAllocator> GetNetworkActorsField() const { return GetNativeField<TArray<AActor *, FDefaultAllocator>>(this, "UWorld", "NetworkActors"); }
+	ULevel* GetCurrentLevelField() const { return GetNativeField<ULevel *>(this, "UWorld", "CurrentLevel"); }
+	int GetFrameCounterField() const { return GetNativeField<int>(this, "UWorld", "FrameCounter"); }
+	void SetFrameCounterField(int newValue) { SetNativeField(this, "UWorld", "FrameCounter", newValue); }
+	bool GetGamePreviewField() const { return GetNativeField<bool>(this, "UWorld", "GamePreview"); }
+	void SetGamePreviewField(bool newValue) { SetNativeField(this, "UWorld", "GamePreview", newValue); }
+	TArray<AWeakObjectPtr<AController>, FDefaultAllocator> GetControllerListField() const { return GetNativeField<TArray<AWeakObjectPtr<AController>, FDefaultAllocator>>(this, "UWorld", "ControllerList"); }
+	TArray<AWeakObjectPtr<APlayerController>, FDefaultAllocator> GetPlayerControllerListField() const { return GetNativeField<TArray<AWeakObjectPtr<APlayerController>, FDefaultAllocator>>(this, "UWorld", "PlayerControllerList"); }
+	TArray<AWeakObjectPtr<APawn>, FDefaultAllocator> GetPawnListField() const { return GetNativeField<TArray<AWeakObjectPtr<APawn>, FDefaultAllocator>>(this, "UWorld", "PawnList"); }
+	bool GetbPostTickComponentUpdateField() const { return GetNativeField<bool>(this, "UWorld", "bPostTickComponentUpdate"); }
+	void SetbPostTickComponentUpdateField(bool newValue) { SetNativeField(this, "UWorld", "bPostTickComponentUpdate", newValue); }
+	int GetPlayerNumField() const { return GetNativeField<int>(this, "UWorld", "PlayerNum"); }
+	void SetPlayerNumField(int newValue) { SetNativeField(this, "UWorld", "PlayerNum", newValue); }
+	float GetTimeSinceLastPendingKillPurgeField() const { return GetNativeField<float>(this, "UWorld", "TimeSinceLastPendingKillPurge"); }
+	void SetTimeSinceLastPendingKillPurgeField(float newValue) { SetNativeField(this, "UWorld", "TimeSinceLastPendingKillPurge", newValue); }
+	bool GetFullPurgeTriggeredField() const { return GetNativeField<bool>(this, "UWorld", "FullPurgeTriggered"); }
+	void SetFullPurgeTriggeredField(bool newValue) { SetNativeField(this, "UWorld", "FullPurgeTriggered", newValue); }
+	bool GetbShouldDelayGarbageCollectField() const { return GetNativeField<bool>(this, "UWorld", "bShouldDelayGarbageCollect"); }
+	void SetbShouldDelayGarbageCollectField(bool newValue) { SetNativeField(this, "UWorld", "bShouldDelayGarbageCollect", newValue); }
+	bool GetbIsWorldInitializedField() const { return GetNativeField<bool>(this, "UWorld", "bIsWorldInitialized"); }
+	void SetbIsWorldInitializedField(bool newValue) { SetNativeField(this, "UWorld", "bIsWorldInitialized", newValue); }
+	int GetAllowLevelLoadOverrideField() const { return GetNativeField<int>(this, "UWorld", "AllowLevelLoadOverride"); }
+	void SetAllowLevelLoadOverrideField(int newValue) { SetNativeField(this, "UWorld", "AllowLevelLoadOverride", newValue); }
+	int GetStreamingVolumeUpdateDelayField() const { return GetNativeField<int>(this, "UWorld", "StreamingVolumeUpdateDelay"); }
+	void SetStreamingVolumeUpdateDelayField(int newValue) { SetNativeField(this, "UWorld", "StreamingVolumeUpdateDelay", newValue); }
+	bool GetbIsLevelStreamingFrozenField() const { return GetNativeField<bool>(this, "UWorld", "bIsLevelStreamingFrozen"); }
+	void SetbIsLevelStreamingFrozenField(bool newValue) { SetNativeField(this, "UWorld", "bIsLevelStreamingFrozen", newValue); }
+	bool GetbShouldForceUnloadStreamingLevelsField() const { return GetNativeField<bool>(this, "UWorld", "bShouldForceUnloadStreamingLevels"); }
+	void SetbShouldForceUnloadStreamingLevelsField(bool newValue) { SetNativeField(this, "UWorld", "bShouldForceUnloadStreamingLevels", newValue); }
+	bool GetbShouldForceVisibleStreamingLevelsField() const { return GetNativeField<bool>(this, "UWorld", "bShouldForceVisibleStreamingLevels"); }
+	void SetbShouldForceVisibleStreamingLevelsField(bool newValue) { SetNativeField(this, "UWorld", "bShouldForceVisibleStreamingLevels", newValue); }
+	bool GetbDoDelayedUpdateCullDistanceVolumesField() const { return GetNativeField<bool>(this, "UWorld", "bDoDelayedUpdateCullDistanceVolumes"); }
+	void SetbDoDelayedUpdateCullDistanceVolumesField(bool newValue) { SetNativeField(this, "UWorld", "bDoDelayedUpdateCullDistanceVolumes", newValue); }
+	bool GetbIsRunningConstructionScriptField() const { return GetNativeField<bool>(this, "UWorld", "bIsRunningConstructionScript"); }
+	void SetbIsRunningConstructionScriptField(bool newValue) { SetNativeField(this, "UWorld", "bIsRunningConstructionScript", newValue); }
+	bool GetbShouldSimulatePhysicsField() const { return GetNativeField<bool>(this, "UWorld", "bShouldSimulatePhysics"); }
+	void SetbShouldSimulatePhysicsField(bool newValue) { SetNativeField(this, "UWorld", "bShouldSimulatePhysics", newValue); }
+	FName GetDebugDrawTraceTagField() const { return GetNativeField<FName>(this, "UWorld", "DebugDrawTraceTag"); }
+	void SetDebugDrawTraceTagField(FName newValue) { SetNativeField(this, "UWorld", "DebugDrawTraceTag", newValue); }
+	long double GetLastTimeUnbuiltLightingWasEncounteredField() const { return GetNativeField<long double>(this, "UWorld", "LastTimeUnbuiltLightingWasEncountered"); }
+	void SetLastTimeUnbuiltLightingWasEncounteredField(long double newValue) { SetNativeField(this, "UWorld", "LastTimeUnbuiltLightingWasEncountered", newValue); }
+	long double GetTimeSecondsField() const { return GetNativeField<long double>(this, "UWorld", "TimeSeconds"); }
+	void SetTimeSecondsField(long double newValue) { SetNativeField(this, "UWorld", "TimeSeconds", newValue); }
+	long double GetLoadedAtTimeSecondsField() const { return GetNativeField<long double>(this, "UWorld", "LoadedAtTimeSeconds"); }
+	void SetLoadedAtTimeSecondsField(long double newValue) { SetNativeField(this, "UWorld", "LoadedAtTimeSeconds", newValue); }
+	long double GetRealTimeSecondsField() const { return GetNativeField<long double>(this, "UWorld", "RealTimeSeconds"); }
+	void SetRealTimeSecondsField(long double newValue) { SetNativeField(this, "UWorld", "RealTimeSeconds", newValue); }
+	long double GetAudioTimeSecondsField() const { return GetNativeField<long double>(this, "UWorld", "AudioTimeSeconds"); }
+	void SetAudioTimeSecondsField(long double newValue) { SetNativeField(this, "UWorld", "AudioTimeSeconds", newValue); }
+	float GetDeltaTimeSecondsField() const { return GetNativeField<float>(this, "UWorld", "DeltaTimeSeconds"); }
+	void SetDeltaTimeSecondsField(float newValue) { SetNativeField(this, "UWorld", "DeltaTimeSeconds", newValue); }
+	float GetPauseDelayField() const { return GetNativeField<float>(this, "UWorld", "PauseDelay"); }
+	void SetPauseDelayField(float newValue) { SetNativeField(this, "UWorld", "PauseDelay", newValue); }
+	bool GetbBlockAllOnNextLevelStreamingProcessField() const { return GetNativeField<bool>(this, "UWorld", "bBlockAllOnNextLevelStreamingProcess"); }
+	void SetbBlockAllOnNextLevelStreamingProcessField(bool newValue) { SetNativeField(this, "UWorld", "bBlockAllOnNextLevelStreamingProcess", newValue); }
+	FIntVector GetOriginLocationField() const { return GetNativeField<FIntVector>(this, "UWorld", "OriginLocation"); }
+	void SetOriginLocationField(FIntVector newValue) { SetNativeField(this, "UWorld", "OriginLocation", newValue); }
+	FIntVector GetRequestedOriginLocationField() const { return GetNativeField<FIntVector>(this, "UWorld", "RequestedOriginLocation"); }
+	void SetRequestedOriginLocationField(FIntVector newValue) { SetNativeField(this, "UWorld", "RequestedOriginLocation", newValue); }
+	bool GetbOriginOffsetThisFrameField() const { return GetNativeField<bool>(this, "UWorld", "bOriginOffsetThisFrame"); }
+	void SetbOriginOffsetThisFrameField(bool newValue) { SetNativeField(this, "UWorld", "bOriginOffsetThisFrame", newValue); }
+	bool GetbFlushingLevelStreamingField() const { return GetNativeField<bool>(this, "UWorld", "bFlushingLevelStreaming"); }
+	void SetbFlushingLevelStreamingField(bool newValue) { SetNativeField(this, "UWorld", "bFlushingLevelStreaming", newValue); }
+	long double GetForceBlockLoadTimeoutField() const { return GetNativeField<long double>(this, "UWorld", "ForceBlockLoadTimeout"); }
+	void SetForceBlockLoadTimeoutField(long double newValue) { SetNativeField(this, "UWorld", "ForceBlockLoadTimeout", newValue); }
+	FString GetNextURLField() const { return GetNativeField<FString>(this, "UWorld", "NextURL"); }
+	void SetNextURLField(FString newValue) { SetNativeField(this, "UWorld", "NextURL", newValue); }
+	float GetNextSwitchCountdownField() const { return GetNativeField<float>(this, "UWorld", "NextSwitchCountdown"); }
+	void SetNextSwitchCountdownField(float newValue) { SetNativeField(this, "UWorld", "NextSwitchCountdown", newValue); }
+	FName GetCommittedPersistentLevelNameField() const { return GetNativeField<FName>(this, "UWorld", "CommittedPersistentLevelName"); }
+	void SetCommittedPersistentLevelNameField(FName newValue) { SetNativeField(this, "UWorld", "CommittedPersistentLevelName", newValue); }
+	FString GetCurrentDayTimeField() const { return GetNativeField<FString>(this, "UWorld", "CurrentDayTime"); }
+	void SetCurrentDayTimeField(FString newValue) { SetNativeField(this, "UWorld", "CurrentDayTime", newValue); }
 
 	// Functions
 
-	APlayerController* GetFirstPlayerController() { return static_cast<APlayerController*(_cdecl*)(DWORD64)>(GetAddress("UWorld", "GetFirstPlayerController"))((DWORD64)this); }
-	//ULocalPlayer* GetFirstLocalPlayerFromController() { return static_cast<ULocalPlayer*(_cdecl*)(DWORD64)>(GetAddress("UWorld", "GetFirstLocalPlayerFromController"))((DWORD64)this); }
-	float GetDefaultGravityZ() { return static_cast<float(_cdecl*)(DWORD64)>(GetAddress("UWorld", "GetDefaultGravityZ"))((DWORD64)this); }
-	FString* GetMapName(FString* res) { return static_cast<FString*(_cdecl*)(DWORD64, FString*)>(GetAddress("UWorld", "GetMapName"))((DWORD64)this, res); }
-	void RemoveController(AController* a1) { static_cast<void(_cdecl*)(DWORD64, AController*)>(GetAddress("UWorld", "RemoveController"))((DWORD64)this, a1); }
-	void CleanupActors() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("UWorld", "CleanupActors"))((DWORD64)this); }
-	bool DestroyActor(AActor* a1, bool a2, bool a3) { return static_cast<bool(_cdecl*)(DWORD64, AActor*, bool, bool)>(GetAddress("UWorld", "DestroyActor"))((DWORD64)this, a1, a2, a3); }
-	void RemoveActor(AActor* a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, AActor*, bool)>(GetAddress("UWorld", "RemoveActor"))((DWORD64)this, a1, a2); }
-	//AActor* SpawnActor(UClass* a1, const FVector* a2, const FRotator* a3, const FActorSpawnParameters& a4) { return static_cast<AActor*(_cdecl*)(DWORD64, UClass*, const FVector*, const FRotator*, const FActorSpawnParameters&)>(GetAddress("UWorld", "SpawnActor"))((DWORD64)this, a1, a2, a3, a4); }
-	bool FindTeleportSpot(AActor* a1, FVector& a2, FRotator a3, const FVector& a4) { return static_cast<bool(_cdecl*)(DWORD64, AActor*, FVector&, FRotator, const FVector&)>(GetAddress("UWorld", "FindTeleportSpot"))((DWORD64)this, a1, a2, a3, a4); }
-	int GetActorCount() { return static_cast<int(_cdecl*)(DWORD64)>(GetAddress("UWorld", "GetActorCount"))((DWORD64)this); }
-	int GetNetRelevantActorCount() { return static_cast<int(_cdecl*)(DWORD64)>(GetAddress("UWorld", "GetNetRelevantActorCount"))((DWORD64)this); }
+	AActor* SpawnActor(UClass* Class, FVector* Location, FRotator* Rotation, FActorSpawnParameters* SpawnParameters) { return NativeCall<AActor *, UClass *, FVector *, FRotator *, FActorSpawnParameters *>((DWORD64)this, "UWorld", "SpawnActor", Class, Location, Rotation, SpawnParameters); }
+	bool DestroyActor(AActor* ThisActor, bool bNetForce, bool bShouldModifyLevel) { return NativeCall<bool, AActor *, bool, bool>((DWORD64)this, "UWorld", "DestroyActor", ThisActor, bNetForce, bShouldModifyLevel); }
+	bool FindTeleportSpot() { return NativeCall<bool>((DWORD64)this, "UWorld", "FindTeleportSpot"); }
+	bool EncroachingBlockingGeometry() { return NativeCall<bool>((DWORD64)this, "UWorld", "EncroachingBlockingGeometry"); }
+	bool IsPaused() { return NativeCall<bool>((DWORD64)this, "UWorld", "IsPaused"); }
+	void ProcessLevelStreamingVolumes(FVector* OverrideViewLocation) { NativeCall<void, FVector *>((DWORD64)this, "UWorld", "ProcessLevelStreamingVolumes", OverrideViewLocation); }
+	void CleanupActors() { NativeCall<void>((DWORD64)this, "UWorld", "CleanupActors"); }
+	void UpdateAllReflectionCaptures() { NativeCall<void>((DWORD64)this, "UWorld", "UpdateAllReflectionCaptures"); }
+	void FinishDestroy() { NativeCall<void>((DWORD64)this, "UWorld", "FinishDestroy"); }
+	void PostLoad() { NativeCall<void>((DWORD64)this, "UWorld", "PostLoad"); }
+	bool PreSaveRoot(const wchar_t* Filename, TArray<FString, FDefaultAllocator>* AdditionalPackagesToCook) { return NativeCall<bool, const wchar_t *, TArray<FString, FDefaultAllocator> *>((DWORD64)this, "UWorld", "PreSaveRoot", Filename, AdditionalPackagesToCook); }
+	void PostSaveRoot(bool bCleanupIsRequired) { NativeCall<void, bool>((DWORD64)this, "UWorld", "PostSaveRoot", bCleanupIsRequired); }
+	void SetupParameterCollectionInstances() { NativeCall<void>((DWORD64)this, "UWorld", "SetupParameterCollectionInstances"); }
+	void RemoveActor(AActor* Actor, bool bShouldModifyLevel) { NativeCall<void, AActor *, bool>((DWORD64)this, "UWorld", "RemoveActor", Actor, bShouldModifyLevel); }
+	bool AllowAudioPlayback() { return NativeCall<bool>((DWORD64)this, "UWorld", "AllowAudioPlayback"); }
+	void ClearWorldComponents() { NativeCall<void>((DWORD64)this, "UWorld", "ClearWorldComponents"); }
+	void UpdateWorldComponents(bool bRerunConstructionScripts, bool bCurrentLevelOnly) { NativeCall<void, bool, bool>((DWORD64)this, "UWorld", "UpdateWorldComponents", bRerunConstructionScripts, bCurrentLevelOnly); }
+	void UpdateCullDistanceVolumes() { NativeCall<void>((DWORD64)this, "UWorld", "UpdateCullDistanceVolumes"); }
+	void ModifyLevel(ULevel* Level) { NativeCall<void, ULevel *>((DWORD64)this, "UWorld", "ModifyLevel", Level); }
+	void EnsureCollisionTreeIsBuilt() { NativeCall<void>((DWORD64)this, "UWorld", "EnsureCollisionTreeIsBuilt"); }
+	void AddToWorld(ULevel* Level, FTransform* LevelTransform, bool bAlwaysConsiderTimeLimit) { NativeCall<void, ULevel *, FTransform *, bool>((DWORD64)this, "UWorld", "AddToWorld", Level, LevelTransform, bAlwaysConsiderTimeLimit); }
+	void RemoveFromWorld(ULevel* Level) { NativeCall<void, ULevel *>((DWORD64)this, "UWorld", "RemoveFromWorld", Level); }
+	bool AreAlwaysLoadedLevelsLoaded() { return NativeCall<bool>((DWORD64)this, "UWorld", "AreAlwaysLoadedLevelsLoaded"); }
+	bool AllowLevelLoadRequests() { return NativeCall<bool>((DWORD64)this, "UWorld", "AllowLevelLoadRequests"); }
+	void CleanupWorld(bool bSessionEnded, bool bCleanupResources, UWorld* NewWorld) { NativeCall<void, bool, bool, UWorld *>((DWORD64)this, "UWorld", "CleanupWorld", bSessionEnded, bCleanupResources, NewWorld); }
+	APlayerController* GetFirstPlayerController() { return NativeCall<APlayerController *>((DWORD64)this, "UWorld", "GetFirstPlayerController"); }
+	float GetDefaultGravityZ() { return NativeCall<float>((DWORD64)this, "UWorld", "GetDefaultGravityZ"); }
+	FString* GetMapName(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UWorld", "GetMapName", result); }
+	bool IsPreparingMapChange() { return NativeCall<bool>((DWORD64)this, "UWorld", "IsPreparingMapChange"); }
+	bool SetNewWorldOrigin() { return NativeCall<bool>((DWORD64)this, "UWorld", "SetNewWorldOrigin"); }
+	void NavigateTo() { NativeCall<void>((DWORD64)this, "UWorld", "NavigateTo"); }
+	void SeamlessTravel() { NativeCall<void>((DWORD64)this, "UWorld", "SeamlessTravel"); }
+	bool IsInSeamlessTravel() { return NativeCall<bool>((DWORD64)this, "UWorld", "IsInSeamlessTravel"); }
+	void UpdateConstraintActors() { NativeCall<void>((DWORD64)this, "UWorld", "UpdateConstraintActors"); }
+	int GetActorCount() { return NativeCall<int>((DWORD64)this, "UWorld", "GetActorCount"); }
+	int GetNetRelevantActorCount() { return NativeCall<int>((DWORD64)this, "UWorld", "GetNetRelevantActorCount"); }
+	bool ContainsLevel(ULevel* InLevel) { return NativeCall<bool, ULevel *>((DWORD64)this, "UWorld", "ContainsLevel", InLevel); }
+	FString* GetLocalURL(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UWorld", "GetLocalURL", result); }
+	FString* GetAddressURL(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UWorld", "GetAddressURL", result); }
+	void ServerTravel(FString* FURL, bool bAbsolute, bool bShouldSkipGameNotify) { NativeCall<void, FString *, bool, bool>((DWORD64)this, "UWorld", "ServerTravel", FURL, bAbsolute, bShouldSkipGameNotify); }
+	void StartAsyncTrace() { NativeCall<void>((DWORD64)this, "UWorld", "StartAsyncTrace"); }
+	void FinishAsyncTrace() { NativeCall<void>((DWORD64)this, "UWorld", "FinishAsyncTrace"); }
+	void SetupPhysicsTickFunctions(float DeltaSeconds) { NativeCall<void, float>((DWORD64)this, "UWorld", "SetupPhysicsTickFunctions", DeltaSeconds); }
+	void FinishPhysicsSim() { NativeCall<void>((DWORD64)this, "UWorld", "FinishPhysicsSim"); }
 };
 
 // Level
 
 struct ULevelBase
 {
-	TTransArray<AActor *> GetActors() const { return *(TTransArray<AActor *>*)GetAddress(this, "ULevelBase", "Actors"); };
+	TTransArray<AActor *> GetActorsField() const { return GetNativeField<TTransArray<AActor *>>(this, "ULevelBase", "Actors"); }
 };
 
-struct ULevel : ULevelBase
+class ULevel : ULevelBase
 {
 };
 
@@ -66,679 +155,804 @@ struct ULevel : ULevelBase
 
 struct AGameMode
 {
-	FName GetMatchState() const { return *(FName*)GetAddress(this, "AGameMode", "MatchState"); };
-	void SetOptionsString(FString a0) { *(FString*)GetAddress(this, "AGameMode", "OptionsString") = a0; };
-	FString GetOptionsString() const { return *(FString*)GetAddress(this, "AGameMode", "OptionsString"); };
-	void SetNumSpectators(int a0) { *(int*)GetAddress(this, "AGameMode", "NumSpectators") = a0; };
-	int GetNumSpectators() const { return *(int*)GetAddress(this, "AGameMode", "NumSpectators"); };
-	void SetNumPlayers(int a0) { *(int*)GetAddress(this, "AGameMode", "NumPlayers") = a0; };
-	int GetNumPlayers() const { return *(int*)GetAddress(this, "AGameMode", "NumPlayers"); };
-	void SetNumBots(int a0) { *(int*)GetAddress(this, "AGameMode", "NumBots") = a0; };
-	int GetNumBots() const { return *(int*)GetAddress(this, "AGameMode", "NumBots"); };
-	void SetMinRespawnDelay(float a0) { *(float*)GetAddress(this, "AGameMode", "MinRespawnDelay") = a0; };
-	float GetMinRespawnDelay() const { return *(float*)GetAddress(this, "AGameMode", "MinRespawnDelay"); };
-	AGameSession* GetGameSession() const { return *(AGameSession**)GetAddress(this, "AGameMode", "GameSession"); };
-	void SetNumTravellingPlayers(int a0) { *(int*)GetAddress(this, "AGameMode", "NumTravellingPlayers") = a0; };
-	int GetNumTravellingPlayers() const { return *(int*)GetAddress(this, "AGameMode", "NumTravellingPlayers"); };
-	void SetCurrentID(int a0) { *(int*)GetAddress(this, "AGameMode", "CurrentID") = a0; };
-	int GetCurrentID() const { return *(int*)GetAddress(this, "AGameMode", "CurrentID"); };
-	void SetDefaultPlayerName(FString a0) { *(FString*)GetAddress(this, "AGameMode", "DefaultPlayerName") = a0; };
-	FString GetDefaultPlayerName() const { return *(FString*)GetAddress(this, "AGameMode", "DefaultPlayerName"); };
-	void SetPlayerStarts(TArray<APlayerStart *, FDefaultAllocator> a0) { *(TArray<APlayerStart *, FDefaultAllocator>*)GetAddress(this, "AGameMode", "PlayerStarts") = a0; };
-	TArray<APlayerStart *, FDefaultAllocator> GetPlayerStarts() const { return *(TArray<APlayerStart *, FDefaultAllocator>*)GetAddress(this, "AGameMode", "PlayerStarts"); };
-	AGameState* GetGameState() const { return *(AGameState**)GetAddress(this, "AGameMode", "GameState"); };
-	void SetInactivePlayerArray(TArray<APlayerState *, FDefaultAllocator> a0) { *(TArray<APlayerState *, FDefaultAllocator>*)GetAddress(this, "AGameMode", "InactivePlayerArray") = a0; };
-	TArray<APlayerState *, FDefaultAllocator> GetInactivePlayerArray() const { return *(TArray<APlayerState *, FDefaultAllocator>*)GetAddress(this, "AGameMode", "InactivePlayerArray"); };
+	FName GetMatchStateField() const { return GetNativeField<FName>(this, "AGameMode", "MatchState"); }
+	void SetMatchStateField(FName newValue) { SetNativeField(this, "AGameMode", "MatchState", newValue); }
+	FString GetOptionsStringField() const { return GetNativeField<FString>(this, "AGameMode", "OptionsString"); }
+	void SetOptionsStringField(FString newValue) { SetNativeField(this, "AGameMode", "OptionsString", newValue); }
+	TSubclassOf<APawn> GetDefaultPawnClassField() const { return GetNativeField<TSubclassOf<APawn>>(this, "AGameMode", "DefaultPawnClass"); }
+	void SetDefaultPawnClassField(TSubclassOf<APawn> newValue) { SetNativeField(this, "AGameMode", "DefaultPawnClass", newValue); }
+	int GetNumSpectatorsField() const { return GetNativeField<int>(this, "AGameMode", "NumSpectators"); }
+	void SetNumSpectatorsField(int newValue) { SetNativeField(this, "AGameMode", "NumSpectators", newValue); }
+	int GetNumPlayersField() const { return GetNativeField<int>(this, "AGameMode", "NumPlayers"); }
+	void SetNumPlayersField(int newValue) { SetNativeField(this, "AGameMode", "NumPlayers", newValue); }
+	int GetNumBotsField() const { return GetNativeField<int>(this, "AGameMode", "NumBots"); }
+	void SetNumBotsField(int newValue) { SetNativeField(this, "AGameMode", "NumBots", newValue); }
+	float GetMinRespawnDelayField() const { return GetNativeField<float>(this, "AGameMode", "MinRespawnDelay"); }
+	void SetMinRespawnDelayField(float newValue) { SetNativeField(this, "AGameMode", "MinRespawnDelay", newValue); }
+	AGameSession* GetGameSessionField() const { return GetNativeField<AGameSession *>(this, "AGameMode", "GameSession"); }
+	void SetGameSessionField(AGameSession* newValue) { SetNativeField(this, "AGameMode", "GameSession", newValue); }
+	int GetNumTravellingPlayersField() const { return GetNativeField<int>(this, "AGameMode", "NumTravellingPlayers"); }
+	void SetNumTravellingPlayersField(int newValue) { SetNativeField(this, "AGameMode", "NumTravellingPlayers", newValue); }
+	int GetCurrentIDField() const { return GetNativeField<int>(this, "AGameMode", "CurrentID"); }
+	void SetCurrentIDField(int newValue) { SetNativeField(this, "AGameMode", "CurrentID", newValue); }
+	FString GetDefaultPlayerNameField() const { return GetNativeField<FString>(this, "AGameMode", "DefaultPlayerName"); }
+	void SetDefaultPlayerNameField(FString newValue) { SetNativeField(this, "AGameMode", "DefaultPlayerName", newValue); }
+	TArray<APlayerStart *, FDefaultAllocator> GetPlayerStartsField() const { return GetNativeField<TArray<APlayerStart *, FDefaultAllocator>>(this, "AGameMode", "PlayerStarts"); }
+	void SetPlayerStartsField(TArray<APlayerStart *, FDefaultAllocator> newValue) { SetNativeField(this, "AGameMode", "PlayerStarts", newValue); }
+	TSubclassOf<APlayerController> GetPlayerControllerClassField() const { return GetNativeField<TSubclassOf<APlayerController>>(this, "AGameMode", "PlayerControllerClass"); }
+	void SetPlayerControllerClassField(TSubclassOf<APlayerController> newValue) { SetNativeField(this, "AGameMode", "PlayerControllerClass", newValue); }
+	TSubclassOf<APlayerState> GetPlayerStateClassField() const { return GetNativeField<TSubclassOf<APlayerState>>(this, "AGameMode", "PlayerStateClass"); }
+	void SetPlayerStateClassField(TSubclassOf<APlayerState> newValue) { SetNativeField(this, "AGameMode", "PlayerStateClass", newValue); }
+	TSubclassOf<AGameState> GetGameStateClassField() const { return GetNativeField<TSubclassOf<AGameState>>(this, "AGameMode", "GameStateClass"); }
+	void SetGameStateClassField(TSubclassOf<AGameState> newValue) { SetNativeField(this, "AGameMode", "GameStateClass", newValue); }
+	AGameState* GetGameStateField() const { return GetNativeField<AGameState *>(this, "AGameMode", "GameState"); }
+	void SetGameStateField(AGameState* newValue) { SetNativeField(this, "AGameMode", "GameState", newValue); }
+	TArray<APlayerState *, FDefaultAllocator> GetInactivePlayerArrayField() const { return GetNativeField<TArray<APlayerState *, FDefaultAllocator>>(this, "AGameMode", "InactivePlayerArray"); }
+	void SetInactivePlayerArrayField(TArray<APlayerState *, FDefaultAllocator> newValue) { SetNativeField(this, "AGameMode", "InactivePlayerArray", newValue); }
+	float GetInactivePlayerStateLifeSpanField() const { return GetNativeField<float>(this, "AGameMode", "InactivePlayerStateLifeSpan"); }
+	void SetInactivePlayerStateLifeSpanField(float newValue) { SetNativeField(this, "AGameMode", "InactivePlayerStateLifeSpan", newValue); }
 
 	// Functions
 
-	bool ShouldSpawnAtStartSpot_Implementation(AController* a1) { return static_cast<bool(_cdecl*)(DWORD64, AController*)>(GetAddress("AGameMode", "ShouldSpawnAtStartSpot_Implementation"))((DWORD64)this, a1); }
-	AActor* ChoosePlayerStart_Implementation(AController* a1) { return static_cast<AActor*(_cdecl*)(DWORD64, AController*)>(GetAddress("AGameMode", "ChoosePlayerStart_Implementation"))((DWORD64)this, a1); }
-	bool HasMatchStarted() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "HasMatchStarted"))((DWORD64)this); }
-	bool IsMatchInProgress() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "IsMatchInProgress"))((DWORD64)this); }
-	bool HasMatchEnded() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "HasMatchEnded"))((DWORD64)this); }
-	void StartPlay() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "StartPlay"))((DWORD64)this); }
-	void StartMatch() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "StartMatch"))((DWORD64)this); }
-	void EndMatch() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "EndMatch"))((DWORD64)this); }
-	void StartToLeaveMap() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "StartToLeaveMap"))((DWORD64)this); }
-	void RestartGame() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "RestartGame"))((DWORD64)this); }
-	bool IsFirstPlayerSpawn(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "IsFirstPlayerSpawn"))((DWORD64)this, a1); }
-	void ReturnToMainMenuHost() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "ReturnToMainMenuHost"))((DWORD64)this); }
-	void AbortMatch() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "AbortMatch"))((DWORD64)this); }
-	void DDoSDetected() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "DDoSDetected"))((DWORD64)this); }
-	void SetMatchState(FName a1) { static_cast<void(_cdecl*)(DWORD64, FName)>(GetAddress("AGameMode", "SetMatchState"))((DWORD64)this, a1); }
-	void HandleMatchIsWaitingToStart() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "HandleMatchIsWaitingToStart"))((DWORD64)this); }
-	bool ReadyToStartMatch() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "ReadyToStartMatch"))((DWORD64)this); }
-	void HandleMatchHasStarted() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "HandleMatchHasStarted"))((DWORD64)this); }
-	bool ReadyToEndMatch() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "ReadyToEndMatch"))((DWORD64)this); }
-	void HandleMatchHasEnded() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "HandleMatchHasEnded"))((DWORD64)this); }
-	void HandleLeavingMap() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "HandleLeavingMap"))((DWORD64)this); }
-	void HandleMatchAborted() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "HandleMatchAborted"))((DWORD64)this); }
-	void BeginUnloadingWorld() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "BeginUnloadingWorld"))((DWORD64)this); }
-	void SetBandwidthLimit(float a1) { static_cast<void(_cdecl*)(DWORD64, float)>(GetAddress("AGameMode", "SetBandwidthLimit"))((DWORD64)this, a1); }
-	bool ShouldReset(AActor* a1) { return static_cast<bool(_cdecl*)(DWORD64, AActor*)>(GetAddress("AGameMode", "ShouldReset"))((DWORD64)this, a1); }
-	void ResetLevel() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "ResetLevel"))((DWORD64)this); }
-	bool ShouldStartInCinematicMode(bool& a1, bool& a2, bool& a3, bool& a4) { return static_cast<bool(_cdecl*)(DWORD64, bool&, bool&, bool&, bool&)>(GetAddress("AGameMode", "ShouldStartInCinematicMode"))((DWORD64)this, a1, a2, a3, a4); }
-	void RemovePlayerControllerFromPlayerCount(APlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "RemovePlayerControllerFromPlayerCount"))((DWORD64)this, a1); }
-	int GetNumPlayers() { return static_cast<int(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "GetNumPlayers"))((DWORD64)this); }
-	void ClearPause() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "ClearPause"))((DWORD64)this); }
-	void ForceClearUnpauseDelegates(AActor* a1) { static_cast<void(_cdecl*)(DWORD64, AActor*)>(GetAddress("AGameMode", "ForceClearUnpauseDelegates"))((DWORD64)this, a1); }
-	bool GrabOption(FString& a1, FString& a2) { return static_cast<bool(_cdecl*)(DWORD64, FString&, FString&)>(GetAddress("AGameMode", "GrabOption"))((DWORD64)this, a1, a2); }
-	void GetKeyValue(const FString& a1, FString& a2, FString& a3) { static_cast<void(_cdecl*)(DWORD64, const FString&, FString&, FString&)>(GetAddress("AGameMode", "GetKeyValue"))((DWORD64)this, a1, a2, a3); }
-	bool HasOption(const FString& a1, const FString& a2) { return static_cast<bool(_cdecl*)(DWORD64, const FString&, const FString&)>(GetAddress("AGameMode", "HasOption"))((DWORD64)this, a1, a2); }
-	void NotifyPendingConnectionLost() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "NotifyPendingConnectionLost"))((DWORD64)this); }
-	bool GetTravelType() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "GetTravelType"))((DWORD64)this); }
-	void ProcessServerTravel(const FString& a1, bool a2) { static_cast<void(_cdecl*)(DWORD64, const FString&, bool)>(GetAddress("AGameMode", "ProcessServerTravel"))((DWORD64)this, a1, a2); }
-	APlayerController* ProcessClientTravel(FString& a1, FGuid a2, bool a3, bool a4) { return static_cast<APlayerController*(_cdecl*)(DWORD64, FString&, FGuid, bool, bool)>(GetAddress("AGameMode", "ProcessClientTravel"))((DWORD64)this, a1, a2, a3, a4); }
-	APlayerController* SpawnPlayerController(const FVector& a1, const FRotator& a2) { return static_cast<APlayerController*(_cdecl*)(DWORD64, const FVector&, const FRotator&)>(GetAddress("AGameMode", "SpawnPlayerController"))((DWORD64)this, a1, a2); }
-	bool MustSpectate(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "MustSpectate"))((DWORD64)this, a1); }
-	void InitStartSpot(AActor* a1, AController* a2) { static_cast<void(_cdecl*)(DWORD64, AActor*, AController*)>(GetAddress("AGameMode", "InitStartSpot"))((DWORD64)this, a1, a2); }
-	void AddPlayerStart(APlayerStart* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerStart*)>(GetAddress("AGameMode", "AddPlayerStart"))((DWORD64)this, a1); }
-	void RemovePlayerStart(APlayerStart* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerStart*)>(GetAddress("AGameMode", "RemovePlayerStart"))((DWORD64)this, a1); }
-	APawn* SpawnDefaultPawnFor(AController* a1, AActor* a2) { return static_cast<APawn*(_cdecl*)(DWORD64, AController*, AActor*)>(GetAddress("AGameMode", "SpawnDefaultPawnFor"))((DWORD64)this, a1, a2); }
-	void ReplicateStreamingStatus(APlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "ReplicateStreamingStatus"))((DWORD64)this, a1); }
-	void GenericPlayerInitialization(AController* a1) { static_cast<void(_cdecl*)(DWORD64, AController*)>(GetAddress("AGameMode", "GenericPlayerInitialization"))((DWORD64)this, a1); }
-	void StartNewPlayer(APlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "StartNewPlayer"))((DWORD64)this, a1); }
-	void Logout(AController* a1) { static_cast<void(_cdecl*)(DWORD64, AController*)>(GetAddress("AGameMode", "Logout"))((DWORD64)this, a1); }
-	void SetPlayerDefaults(APawn* a1) { static_cast<void(_cdecl*)(DWORD64, APawn*)>(GetAddress("AGameMode", "SetPlayerDefaults"))((DWORD64)this, a1); }
-	bool CanSpectate(APlayerController* a1, APlayerState* a2) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*, APlayerState*)>(GetAddress("AGameMode", "CanSpectate"))((DWORD64)this, a1, a2); }
-	void ChangeName(AController* a1, const FString& a2, bool a3) { static_cast<void(_cdecl*)(DWORD64, AController*, const FString&, bool)>(GetAddress("AGameMode", "ChangeName"))((DWORD64)this, a1, a2, a3); }
-	void SendPlayer(APlayerController* a1, const FString& a2) { static_cast<void(_cdecl*)(DWORD64, APlayerController*, const FString&)>(GetAddress("AGameMode", "SendPlayer"))((DWORD64)this, a1, a2); }
-	void Broadcast(AActor* a1, const FString& a2, FName a3) { static_cast<void(_cdecl*)(DWORD64, AActor*, const FString&, FName)>(GetAddress("AGameMode", "Broadcast"))((DWORD64)this, a1, a2, a3); }
-	AActor* FindPlayerStart(AController* a1, const FString& a2) { return static_cast<AActor*(_cdecl*)(DWORD64, AController*, const FString&)>(GetAddress("AGameMode", "FindPlayerStart"))((DWORD64)this, a1, a2); }
-	AActor* ChoosePlayerStart(AController* a1) { return static_cast<AActor*(_cdecl*)(DWORD64, AController*)>(GetAddress("AGameMode", "ChoosePlayerStart"))((DWORD64)this, a1); }
-	bool PlayerCanRestart(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "PlayerCanRestart"))((DWORD64)this, a1); }
-	void UpdateGameplayMuteList(APlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "UpdateGameplayMuteList"))((DWORD64)this, a1); }
-	bool AllowCheats(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "AllowCheats"))((DWORD64)this, a1); }
-	bool AllowPausing(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "AllowPausing"))((DWORD64)this, a1); }
-	void AddInactivePlayer(APlayerState* a1, APlayerController* a2) { static_cast<void(_cdecl*)(DWORD64, APlayerState*, APlayerController*)>(GetAddress("AGameMode", "AddInactivePlayer"))((DWORD64)this, a1, a2); }
-	bool FindInactivePlayer(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "FindInactivePlayer"))((DWORD64)this, a1); }
-	void OverridePlayerState(APlayerController* a1, APlayerState* a2) { static_cast<void(_cdecl*)(DWORD64, APlayerController*, APlayerState*)>(GetAddress("AGameMode", "OverridePlayerState"))((DWORD64)this, a1, a2); }
-	void GetSeamlessTravelActorList(bool a1, TArray<AActor *, FDefaultAllocator>& a2) { static_cast<void(_cdecl*)(DWORD64, bool, TArray<AActor *, FDefaultAllocator>&)>(GetAddress("AGameMode", "GetSeamlessTravelActorList"))((DWORD64)this, a1, a2); }
-	void SetSeamlessTravelViewTarget(APlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AGameMode", "SetSeamlessTravelViewTarget"))((DWORD64)this, a1); }
-	void MatineeCancelled() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "MatineeCancelled"))((DWORD64)this); }
-	void RestartPlayer(AController* a1) { static_cast<void(_cdecl*)(DWORD64, AController*)>(GetAddress("AGameMode", "RestartPlayer"))((DWORD64)this, a1); }
-	void DefaultTimer() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "DefaultTimer"))((DWORD64)this); }
-	bool GetIsMapActor() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AGameMode", "GetIsMapActor"))((DWORD64)this); }
-	void SpawnedPawnFor(AController* a1, APawn* a2) { static_cast<void(_cdecl*)(DWORD64, AController*, APawn*)>(GetAddress("AGameMode", "SpawnedPawnFor"))((DWORD64)this, a1, a2); }
-	bool TeleportTo(const FVector& a1, const FRotator& a2, bool a3, bool a4) { return static_cast<bool(_cdecl*)(DWORD64, const FVector&, const FRotator&, bool, bool)>(GetAddress("AGameMode", "TeleportTo"))((DWORD64)this, a1, a2, a3, a4); }
+	FString* GetNetworkNumber(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "AGameMode", "GetNetworkNumber", result); }
+	void SwapPlayerControllers(APlayerController* OldPC, APlayerController* NewPC) { NativeCall<void, APlayerController *, APlayerController *>((DWORD64)this, "AGameMode", "SwapPlayerControllers", OldPC, NewPC); }
+	void ForceClearUnpauseDelegates(AActor* PauseActor) { NativeCall<void, AActor *>((DWORD64)this, "AGameMode", "ForceClearUnpauseDelegates", PauseActor); }
+	void InitGame(FString* MapName, FString* Options, FString* ErrorMessage) { NativeCall<void, FString *, FString *, FString *>((DWORD64)this, "AGameMode", "InitGame", MapName, Options, ErrorMessage); }
+	void RestartGame() { NativeCall<void>((DWORD64)this, "AGameMode", "RestartGame"); }
+	void ReturnToMainMenuHost() { NativeCall<void>((DWORD64)this, "AGameMode", "ReturnToMainMenuHost"); }
+	void PostLogin(APlayerController* NewPlayer) { NativeCall<void, APlayerController *>((DWORD64)this, "AGameMode", "PostLogin", NewPlayer); }
+	bool ShouldStartInCinematicMode(bool* OutHidePlayer, bool* OutHideHUD, bool* OutDisableMovement, bool* OutDisableTurning) { return NativeCall<bool, bool *, bool *, bool *, bool *>((DWORD64)this, "AGameMode", "ShouldStartInCinematicMode", OutHidePlayer, OutHideHUD, OutDisableMovement, OutDisableTurning); }
+	void SetPlayerDefaults(APawn* PlayerPawn) { NativeCall<void, APawn *>((DWORD64)this, "AGameMode", "SetPlayerDefaults", PlayerPawn); }
+	void Logout(AController* Exiting) { NativeCall<void, AController *>((DWORD64)this, "AGameMode", "Logout", Exiting); }
+	void InitGameState() { NativeCall<void>((DWORD64)this, "AGameMode", "InitGameState"); }
+	AActor* FindPlayerStart(AController* Player, FString* IncomingName) { return NativeCall<AActor *, AController *, FString *>((DWORD64)this, "AGameMode", "FindPlayerStart", Player, IncomingName); }
+	void PreInitializeComponents() { NativeCall<void>((DWORD64)this, "AGameMode", "PreInitializeComponents"); }
+	void RestartPlayer(AController* NewPlayer) { NativeCall<void, AController *>((DWORD64)this, "AGameMode", "RestartPlayer", NewPlayer); }
+	void StartPlay() { NativeCall<void>((DWORD64)this, "AGameMode", "StartPlay"); }
+	void HandleMatchIsWaitingToStart() { NativeCall<void>((DWORD64)this, "AGameMode", "HandleMatchIsWaitingToStart"); }
+	bool ReadyToStartMatch() { return NativeCall<bool>((DWORD64)this, "AGameMode", "ReadyToStartMatch"); }
+	void StartMatch() { NativeCall<void>((DWORD64)this, "AGameMode", "StartMatch"); }
+	void HandleMatchHasStarted() { NativeCall<void>((DWORD64)this, "AGameMode", "HandleMatchHasStarted"); }
+	void EndMatch() { NativeCall<void>((DWORD64)this, "AGameMode", "EndMatch"); }
+	void HandleMatchHasEnded() { NativeCall<void>((DWORD64)this, "AGameMode", "HandleMatchHasEnded"); }
+	void StartToLeaveMap() { NativeCall<void>((DWORD64)this, "AGameMode", "StartToLeaveMap"); }
+	void AbortMatch() { NativeCall<void>((DWORD64)this, "AGameMode", "AbortMatch"); }
+	bool HasMatchStarted() { return NativeCall<bool>((DWORD64)this, "AGameMode", "HasMatchStarted"); }
+	bool IsMatchInProgress() { return NativeCall<bool>((DWORD64)this, "AGameMode", "IsMatchInProgress"); }
+	bool HasMatchEnded() { return NativeCall<bool>((DWORD64)this, "AGameMode", "HasMatchEnded"); }
+	void SetMatchState(FName NewState) { NativeCall<void, FName>((DWORD64)this, "AGameMode", "SetMatchState", NewState); }
+	void ResetLevel() { NativeCall<void>((DWORD64)this, "AGameMode", "ResetLevel"); }
+	void HandleSeamlessTravelPlayer(AController** C) { NativeCall<void, AController **>((DWORD64)this, "AGameMode", "HandleSeamlessTravelPlayer", C); }
+	void SetSeamlessTravelViewTarget(APlayerController* PC) { NativeCall<void, APlayerController *>((DWORD64)this, "AGameMode", "SetSeamlessTravelViewTarget", PC); }
+	void ProcessServerTravel(FString* URL, bool bAbsolute) { NativeCall<void, FString *, bool>((DWORD64)this, "AGameMode", "ProcessServerTravel", URL, bAbsolute); }
+	void GetSeamlessTravelActorList(bool bToEntry, TArray<AActor *, FDefaultAllocator>* ActorList) { NativeCall<void, bool, TArray<AActor *, FDefaultAllocator> *>((DWORD64)this, "AGameMode", "GetSeamlessTravelActorList", bToEntry, ActorList); }
+	void SetBandwidthLimit(float AsyncIOBandwidthLimit) { NativeCall<void, float>((DWORD64)this, "AGameMode", "SetBandwidthLimit", AsyncIOBandwidthLimit); }
+	bool MustSpectate(APlayerController* NewPlayerController) { return NativeCall<bool, APlayerController *>((DWORD64)this, "AGameMode", "MustSpectate", NewPlayerController); }
+	void RemovePlayerControllerFromPlayerCount(APlayerController* PC) { NativeCall<void, APlayerController *>((DWORD64)this, "AGameMode", "RemovePlayerControllerFromPlayerCount", PC); }
+	int GetNumPlayers() { return NativeCall<int>((DWORD64)this, "AGameMode", "GetNumPlayers"); }
+	void ClearPause() { NativeCall<void>((DWORD64)this, "AGameMode", "ClearPause"); }
+	bool GrabOption(FString* Options, FString* Result) { return NativeCall<bool, FString *, FString *>((DWORD64)this, "AGameMode", "GrabOption", Options, Result); }
+	void GetKeyValue(FString* Pair, FString* Key, FString* Value) { NativeCall<void, FString *, FString *, FString *>((DWORD64)this, "AGameMode", "GetKeyValue", Pair, Key, Value); }
+	FString* ParseOption(FString* result, FString* Options, FString* InKey) { return NativeCall<FString *, FString *, FString *, FString *>((DWORD64)this, "AGameMode", "ParseOption", result, Options, InKey); }
+	bool HasOption(FString* Options, FString* InKey) { return NativeCall<bool, FString *, FString *>((DWORD64)this, "AGameMode", "HasOption", Options, InKey); }
+	FString* GetDefaultGameClassPath(FString* result, FString* MapName, FString* Options, FString* Portal) { return NativeCall<FString *, FString *, FString *, FString *, FString *>((DWORD64)this, "AGameMode", "GetDefaultGameClassPath", result, MapName, Options, Portal); }
+	TSubclassOf<AGameSession>* GetGameSessionClass(TSubclassOf<AGameSession>* result) { return NativeCall<TSubclassOf<AGameSession> *, TSubclassOf<AGameSession> *>((DWORD64)this, "AGameMode", "GetGameSessionClass", result); }
+	APlayerController* ProcessClientTravel() { return NativeCall<APlayerController *>((DWORD64)this, "AGameMode", "ProcessClientTravel"); }
+	APlayerController* SpawnPlayerController(FVector* SpawnLocation, FRotator* SpawnRotation) { return NativeCall<APlayerController *, FVector *, FRotator *>((DWORD64)this, "AGameMode", "SpawnPlayerController", SpawnLocation, SpawnRotation); }
+	TSubclassOf<UObject>* GetDefaultPawnClassForController_Implementation(TSubclassOf<UObject>* result, AController* InController) { return NativeCall<TSubclassOf<UObject> *, TSubclassOf<UObject> *, AController *>((DWORD64)this, "AGameMode", "GetDefaultPawnClassForController_Implementation", result, InController); }
+	APawn* SpawnDefaultPawnFor(AController* NewPlayer, AActor* StartSpot) { return NativeCall<APawn *, AController *, AActor *>((DWORD64)this, "AGameMode", "SpawnDefaultPawnFor", NewPlayer, StartSpot); }
+	void GenericPlayerInitialization(AController* C) { NativeCall<void, AController *>((DWORD64)this, "AGameMode", "GenericPlayerInitialization", C); }
+	void StartNewPlayer(APlayerController* NewPlayer) { NativeCall<void, APlayerController *>((DWORD64)this, "AGameMode", "StartNewPlayer", NewPlayer); }
+	void ChangeName(AController* Other, FString* S, bool bNameChange) { NativeCall<void, AController *, FString *, bool>((DWORD64)this, "AGameMode", "ChangeName", Other, S, bNameChange); }
+	void SendPlayer(APlayerController* aPlayer, FString* FURL) { NativeCall<void, APlayerController *, FString *>((DWORD64)this, "AGameMode", "SendPlayer", aPlayer, FURL); }
+	void Broadcast(AActor* Sender, FString* Msg, FName Type) { NativeCall<void, AActor *, FString *, FName>((DWORD64)this, "AGameMode", "Broadcast", Sender, Msg, Type); }
+	bool ShouldSpawnAtStartSpot_Implementation(AController* Player) { return NativeCall<bool, AController *>((DWORD64)this, "AGameMode", "ShouldSpawnAtStartSpot_Implementation", Player); }
+	void AddPlayerStart(APlayerStart* NewPlayerStart) { NativeCall<void, APlayerStart *>((DWORD64)this, "AGameMode", "AddPlayerStart", NewPlayerStart); }
+	void RemovePlayerStart(APlayerStart* RemovedPlayerStart) { NativeCall<void, APlayerStart *>((DWORD64)this, "AGameMode", "RemovePlayerStart", RemovedPlayerStart); }
+	AActor* ChoosePlayerStart_Implementation(AController* Player) { return NativeCall<AActor *, AController *>((DWORD64)this, "AGameMode", "ChoosePlayerStart_Implementation", Player); }
+	bool PlayerCanRestart(APlayerController* Player) { return NativeCall<bool, APlayerController *>((DWORD64)this, "AGameMode", "PlayerCanRestart", Player); }
+	void UpdateGameplayMuteList(APlayerController* aPlayer) { NativeCall<void, APlayerController *>((DWORD64)this, "AGameMode", "UpdateGameplayMuteList", aPlayer); }
+	bool AllowCheats(APlayerController* P) { return NativeCall<bool, APlayerController *>((DWORD64)this, "AGameMode", "AllowCheats", P); }
+	bool AllowPausing(APlayerController* PC) { return NativeCall<bool, APlayerController *>((DWORD64)this, "AGameMode", "AllowPausing", PC); }
+	void AddInactivePlayer(APlayerState* PlayerState, APlayerController* PC) { NativeCall<void, APlayerState *, APlayerController *>((DWORD64)this, "AGameMode", "AddInactivePlayer", PlayerState, PC); }
+	bool FindInactivePlayer(APlayerController* PC) { return NativeCall<bool, APlayerController *>((DWORD64)this, "AGameMode", "FindInactivePlayer", PC); }
+	void OverridePlayerState(APlayerController* PC, APlayerState* OldPlayerState) { NativeCall<void, APlayerController *, APlayerState *>((DWORD64)this, "AGameMode", "OverridePlayerState", PC, OldPlayerState); }
+	void PostSeamlessTravel() { NativeCall<void>((DWORD64)this, "AGameMode", "PostSeamlessTravel"); }
+	AActor* ChoosePlayerStart(AController* Player) { return NativeCall<AActor *, AController *>((DWORD64)this, "AGameMode", "ChoosePlayerStart", Player); }
 };
 
 struct AShooterGameMode : AGameMode
 {
-	void SetLastRepopulationIndexToCheck(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "LastRepopulationIndexToCheck") = a0; };
-	int GetLastRepopulationIndexToCheck() const { return *(int*)GetAddress(this, "AShooterGameMode", "LastRepopulationIndexToCheck"); };
-	TSet<unsigned int, DefaultKeyFuncs<unsigned int, 0>, FDefaultSetAllocator> GetTribesIds() const { return *(TSet<unsigned int, DefaultKeyFuncs<unsigned int, 0>, FDefaultSetAllocator>*)GetAddress(this, "AShooterGameMode", "TribesIds"); };
-	TMap<int, unsigned __int64, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, unsigned __int64, 0>> GetPlayersIds() const { return *(TMap<int, unsigned __int64, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, unsigned __int64, 0>>*)GetAddress(this, "AShooterGameMode", "PlayersIds"); };
-	FString GetLaunchOptions() const { return *(FString*)GetAddress(this, "AShooterGameMode", "LaunchOptions"); };
-	TArray<FTribeData, FDefaultAllocator> GetTribesData() const { return *(TArray<FTribeData, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "TribesData"); };
-	void SetbAutoCreateNewPlayerData(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAutoCreateNewPlayerData") = a0; };
-	bool GetbAutoCreateNewPlayerData() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAutoCreateNewPlayerData"); };
-	void SetbIsRestarting(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bIsRestarting") = a0; };
-	bool GetbIsRestarting() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bIsRestarting"); };
-	void SetbProximityVoiceChat(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bProximityVoiceChat") = a0; };
-	bool GetbProximityVoiceChat() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bProximityVoiceChat"); };
-	void SetbProximityChat(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bProximityChat") = a0; };
-	bool GetbProximityChat() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bProximityChat"); };
-	void SetbAutoRestoreBackups(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAutoRestoreBackups") = a0; };
-	bool GetbAutoRestoreBackups() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAutoRestoreBackups"); };
-	void SetDifficultyValue(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DifficultyValue") = a0; };
-	float GetDifficultyValue() const { return *(float*)GetAddress(this, "AShooterGameMode", "DifficultyValue"); };
-	void SetDifficultyValueMin(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DifficultyValueMin") = a0; };
-	float GetDifficultyValueMin() const { return *(float*)GetAddress(this, "AShooterGameMode", "DifficultyValueMin"); };
-	void SetDifficultyValueMax(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DifficultyValueMax") = a0; };
-	float GetDifficultyValueMax() const { return *(float*)GetAddress(this, "AShooterGameMode", "DifficultyValueMax"); };
-	void SetProximityRadius(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "ProximityRadius") = a0; };
-	float GetProximityRadius() const { return *(float*)GetAddress(this, "AShooterGameMode", "ProximityRadius"); };
-	void SetProximityRadiusUnconsiousScale(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "ProximityRadiusUnconsiousScale") = a0; };
-	float GetProximityRadiusUnconsiousScale() const { return *(float*)GetAddress(this, "AShooterGameMode", "ProximityRadiusUnconsiousScale"); };
-	void SetbIsOfficialServer(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bIsOfficialServer") = a0; };
-	bool GetbIsOfficialServer() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bIsOfficialServer"); };
-	void SetbServerAllowArkDownload(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerAllowArkDownload") = a0; };
-	bool GetbServerAllowArkDownload() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerAllowArkDownload"); };
-	void SetbServerAllowThirdPersonPlayer(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerAllowThirdPersonPlayer") = a0; };
-	bool GetbServerAllowThirdPersonPlayer() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerAllowThirdPersonPlayer"); };
-	void SetbUseExclusiveList(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bUseExclusiveList") = a0; };
-	bool GetbUseExclusiveList() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bUseExclusiveList"); };
-	void SetbAlwaysNotifyPlayerLeft(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAlwaysNotifyPlayerLeft") = a0; };
-	bool GetbAlwaysNotifyPlayerLeft() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAlwaysNotifyPlayerLeft"); };
-	void SetbAlwaysNotifyPlayerJoined(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAlwaysNotifyPlayerJoined") = a0; };
-	bool GetbAlwaysNotifyPlayerJoined() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAlwaysNotifyPlayerJoined"); };
-	void SetbServerHardcore(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerHardcore") = a0; };
-	bool GetbServerHardcore() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerHardcore"); };
-	void SetbServerPVE(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerPVE") = a0; };
-	bool GetbServerPVE() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerPVE"); };
-	void SetbServerCrosshair(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerCrosshair") = a0; };
-	bool GetbServerCrosshair() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerCrosshair"); };
-	void SetbServerForceNoHUD(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerForceNoHUD") = a0; };
-	bool GetbServerForceNoHUD() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerForceNoHUD"); };
-	void SetbMapPlayerLocation(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bMapPlayerLocation") = a0; };
-	bool GetbMapPlayerLocation() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bMapPlayerLocation"); };
-	void SetbAllowFlyerCarryPvE(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowFlyerCarryPvE") = a0; };
-	bool GetbAllowFlyerCarryPvE() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowFlyerCarryPvE"); };
-	void SetbDisableStructureDecayPvE(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableStructureDecayPvE") = a0; };
-	bool GetbDisableStructureDecayPvE() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableStructureDecayPvE"); };
-	void SetbDisableDinoDecayPvE(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableDinoDecayPvE") = a0; };
-	bool GetbDisableDinoDecayPvE() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableDinoDecayPvE"); };
-	void SetbEnablePvPGamma(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bEnablePvPGamma") = a0; };
-	bool GetbEnablePvPGamma() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bEnablePvPGamma"); };
-	void SetbDisablePvEGamma(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisablePvEGamma") = a0; };
-	bool GetbDisablePvEGamma() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisablePvEGamma"); };
-	void SetbClampResourceHarvestDamage(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bClampResourceHarvestDamage") = a0; };
-	bool GetbClampResourceHarvestDamage() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bClampResourceHarvestDamage"); };
-	void SetbPreventStructurePainting(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventStructurePainting") = a0; };
-	bool GetbPreventStructurePainting() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventStructurePainting"); };
-	void SetbAllowCaveBuildingPvE(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowCaveBuildingPvE") = a0; };
-	bool GetbAllowCaveBuildingPvE() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowCaveBuildingPvE"); };
-	void SetbAdminLogging(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAdminLogging") = a0; };
-	bool GetbAdminLogging() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAdminLogging"); };
-	void SetbPvPStructureDecay(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPvPStructureDecay") = a0; };
-	bool GetbPvPStructureDecay() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPvPStructureDecay"); };
-	void SetbAutoDestroyStructures(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAutoDestroyStructures") = a0; };
-	bool GetbAutoDestroyStructures() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAutoDestroyStructures"); };
-	void SetbForceAllStructureLocking(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bForceAllStructureLocking") = a0; };
-	bool GetbForceAllStructureLocking() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bForceAllStructureLocking"); };
-	void SetbAllowDeprecatedStructures(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowDeprecatedStructures") = a0; };
-	bool GetbAllowDeprecatedStructures() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowDeprecatedStructures"); };
-	void SetbPreventTribeAlliances(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventTribeAlliances") = a0; };
-	bool GetbPreventTribeAlliances() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventTribeAlliances"); };
-	void SetbAllowHitMarkers(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowHitMarkers") = a0; };
-	bool GetbAllowHitMarkers() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowHitMarkers"); };
-	void SetbOnlyAutoDestroyCoreStructures(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bOnlyAutoDestroyCoreStructures") = a0; };
-	bool GetbOnlyAutoDestroyCoreStructures() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bOnlyAutoDestroyCoreStructures"); };
-	void SetbPreventMateBoost(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventMateBoost") = a0; };
-	bool GetbPreventMateBoost() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventMateBoost"); };
-	void SetbTribeLogDestroyedEnemyStructures(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bTribeLogDestroyedEnemyStructures") = a0; };
-	bool GetbTribeLogDestroyedEnemyStructures() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bTribeLogDestroyedEnemyStructures"); };
-	void SetbPvEAllowStructuresAtSupplyDrops(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPvEAllowStructuresAtSupplyDrops") = a0; };
-	bool GetbPvEAllowStructuresAtSupplyDrops() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPvEAllowStructuresAtSupplyDrops"); };
-	void SetTheMaxStructuresInRange(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "TheMaxStructuresInRange") = a0; };
-	int GetTheMaxStructuresInRange() const { return *(int*)GetAddress(this, "AShooterGameMode", "TheMaxStructuresInRange"); };
-	void SetRCONPort(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "RCONPort") = a0; };
-	int GetRCONPort() const { return *(int*)GetAddress(this, "AShooterGameMode", "RCONPort"); };
-	void SetDayCycleSpeedScale(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DayCycleSpeedScale") = a0; };
-	float GetDayCycleSpeedScale() const { return *(float*)GetAddress(this, "AShooterGameMode", "DayCycleSpeedScale"); };
-	void SetNightTimeSpeedScale(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "NightTimeSpeedScale") = a0; };
-	float GetNightTimeSpeedScale() const { return *(float*)GetAddress(this, "AShooterGameMode", "NightTimeSpeedScale"); };
-	void SetDayTimeSpeedScale(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DayTimeSpeedScale") = a0; };
-	float GetDayTimeSpeedScale() const { return *(float*)GetAddress(this, "AShooterGameMode", "DayTimeSpeedScale"); };
-	void SetPvEStructureDecayPeriodMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PvEStructureDecayPeriodMultiplier") = a0; };
-	float GetPvEStructureDecayPeriodMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PvEStructureDecayPeriodMultiplier"); };
-	void SetStructurePreventResourceRadiusMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "StructurePreventResourceRadiusMultiplier") = a0; };
-	float GetStructurePreventResourceRadiusMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "StructurePreventResourceRadiusMultiplier"); };
-	void SetPvEDinoDecayPeriodMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PvEDinoDecayPeriodMultiplier") = a0; };
-	float GetPvEDinoDecayPeriodMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PvEDinoDecayPeriodMultiplier"); };
-	void SetResourcesRespawnPeriodMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "ResourcesRespawnPeriodMultiplier") = a0; };
-	float GetResourcesRespawnPeriodMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "ResourcesRespawnPeriodMultiplier"); };
-	void SetMaxTamedDinos(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "MaxTamedDinos") = a0; };
-	float GetMaxTamedDinos() const { return *(float*)GetAddress(this, "AShooterGameMode", "MaxTamedDinos"); };
-	void SetListenServerTetherDistanceMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "ListenServerTetherDistanceMultiplier") = a0; };
-	float GetListenServerTetherDistanceMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "ListenServerTetherDistanceMultiplier"); };
-	void SetPerPlatformMaxStructuresMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PerPlatformMaxStructuresMultiplier") = a0; };
-	float GetPerPlatformMaxStructuresMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PerPlatformMaxStructuresMultiplier"); };
-	void SetAutoDestroyOldStructuresMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "AutoDestroyOldStructuresMultiplier") = a0; };
-	float GetAutoDestroyOldStructuresMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "AutoDestroyOldStructuresMultiplier"); };
-	void SetRCONServerGameLogBuffer(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "RCONServerGameLogBuffer") = a0; };
-	float GetRCONServerGameLogBuffer() const { return *(float*)GetAddress(this, "AShooterGameMode", "RCONServerGameLogBuffer"); };
-	void SetKickIdlePlayersPeriod(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "KickIdlePlayersPeriod") = a0; };
-	float GetKickIdlePlayersPeriod() const { return *(float*)GetAddress(this, "AShooterGameMode", "KickIdlePlayersPeriod"); };
-	void SetMateBoostEffectMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "MateBoostEffectMultiplier") = a0; };
-	float GetMateBoostEffectMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "MateBoostEffectMultiplier"); };
-	void SetAutoSavePeriodMinutes(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "AutoSavePeriodMinutes") = a0; };
-	float GetAutoSavePeriodMinutes() const { return *(float*)GetAddress(this, "AShooterGameMode", "AutoSavePeriodMinutes"); };
-	void SetXPMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "XPMultiplier") = a0; };
-	float GetXPMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "XPMultiplier"); };
-	void SetKillXPMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "KillXPMultiplier") = a0; };
-	float GetKillXPMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "KillXPMultiplier"); };
-	void SetHarvestXPMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "HarvestXPMultiplier") = a0; };
-	float GetHarvestXPMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "HarvestXPMultiplier"); };
-	void SetCraftXPMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "CraftXPMultiplier") = a0; };
-	float GetCraftXPMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "CraftXPMultiplier"); };
-	void SetGenericXPMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "GenericXPMultiplier") = a0; };
-	float GetGenericXPMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "GenericXPMultiplier"); };
-	void SetSpecialXPMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "SpecialXPMultiplier") = a0; };
-	float GetSpecialXPMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "SpecialXPMultiplier"); };
-	void SetRandomAutoSaveSpread(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "RandomAutoSaveSpread") = a0; };
-	float GetRandomAutoSaveSpread() const { return *(float*)GetAddress(this, "AShooterGameMode", "RandomAutoSaveSpread"); };
-	void SetSteamAPIKey(FString a0) { *(FString*)GetAddress(this, "AShooterGameMode", "SteamAPIKey") = a0; };
-	FString GetSteamAPIKey() const { return *(FString*)GetAddress(this, "AShooterGameMode", "SteamAPIKey"); };
-	void SetLastServerNotificationMessage(FString a0) { *(FString*)GetAddress(this, "AShooterGameMode", "LastServerNotificationMessage") = a0; };
-	FString GetLastServerNotificationMessage() const { return *(FString*)GetAddress(this, "AShooterGameMode", "LastServerNotificationMessage"); };
-	void SetLastServerNotificationRecievedAt(double a0) { *(double*)GetAddress(this, "AShooterGameMode", "LastServerNotificationRecievedAt") = a0; };
-	double GetLastServerNotificationRecievedAt() const { return *(double*)GetAddress(this, "AShooterGameMode", "LastServerNotificationRecievedAt"); };
-	void SetLastExecSaveTime(double a0) { *(double*)GetAddress(this, "AShooterGameMode", "LastExecSaveTime") = a0; };
-	double GetLastExecSaveTime() const { return *(double*)GetAddress(this, "AShooterGameMode", "LastExecSaveTime"); };
-	void SetLastTimeSavedWorld(double a0) { *(double*)GetAddress(this, "AShooterGameMode", "LastTimeSavedWorld") = a0; };
-	double GetLastTimeSavedWorld() const { return *(double*)GetAddress(this, "AShooterGameMode", "LastTimeSavedWorld"); };
-	void SetLastClaimedGameCode(FString a0) { *(FString*)GetAddress(this, "AShooterGameMode", "LastClaimedGameCode") = a0; };
-	FString GetLastClaimedGameCode() const { return *(FString*)GetAddress(this, "AShooterGameMode", "LastClaimedGameCode"); };
-	TArray<FString, FDefaultAllocator> GetArkGameCodes() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ArkGameCodes"); };
-	void SetbIsCurrentlyRequestingKey(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bIsCurrentlyRequestingKey") = a0; };
-	bool GetbIsCurrentlyRequestingKey() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bIsCurrentlyRequestingKey"); };
-	void SetSaveDirectoryName(FString a0) { *(FString*)GetAddress(this, "AShooterGameMode", "SaveDirectoryName") = a0; };
-	FString GetSaveDirectoryName() const { return *(FString*)GetAddress(this, "AShooterGameMode", "SaveDirectoryName"); };
-	TArray<UPrimalPlayerData *, FDefaultAllocator> GetPlayerDatas() const { return *(TArray<UPrimalPlayerData *, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "PlayerDatas"); };
-	void SetbPopulatingSpawnZones(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPopulatingSpawnZones") = a0; };
-	bool GetbPopulatingSpawnZones() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPopulatingSpawnZones"); };
-	void SetbRestartedAPlayer(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bRestartedAPlayer") = a0; };
-	bool GetbRestartedAPlayer() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bRestartedAPlayer"); };
-	void SetbForceRespawnDinos(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bForceRespawnDinos") = a0; };
-	bool GetbForceRespawnDinos() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bForceRespawnDinos"); };
-	void SetbFirstSaveWorld(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bFirstSaveWorld") = a0; };
-	bool GetbFirstSaveWorld() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bFirstSaveWorld"); };
-	void SetbAllowRaidDinoFeeding(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowRaidDinoFeeding") = a0; };
-	bool GetbAllowRaidDinoFeeding() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowRaidDinoFeeding"); };
-	void SetLastBackupTime(FDateTime a0) { *(FDateTime*)GetAddress(this, "AShooterGameMode", "LastBackupTime") = a0; };
-	FDateTime GetLastBackupTime() const { return *(FDateTime*)GetAddress(this, "AShooterGameMode", "LastBackupTime"); };
-	void SetLastSaveWorldTime(FDateTime a0) { *(FDateTime*)GetAddress(this, "AShooterGameMode", "LastSaveWorldTime") = a0; };
-	FDateTime GetLastSaveWorldTime() const { return *(FDateTime*)GetAddress(this, "AShooterGameMode", "LastSaveWorldTime"); };
-	void SetTamedDinoDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "TamedDinoDamageMultiplier") = a0; };
-	float GetTamedDinoDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "TamedDinoDamageMultiplier"); };
-	void SetDinoDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoDamageMultiplier") = a0; };
-	float GetDinoDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoDamageMultiplier"); };
-	void SetPlayerDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PlayerDamageMultiplier") = a0; };
-	float GetPlayerDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PlayerDamageMultiplier"); };
-	void SetStructureDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "StructureDamageMultiplier") = a0; };
-	float GetStructureDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "StructureDamageMultiplier"); };
-	void SetPlayerResistanceMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PlayerResistanceMultiplier") = a0; };
-	float GetPlayerResistanceMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PlayerResistanceMultiplier"); };
-	void SetDinoResistanceMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoResistanceMultiplier") = a0; };
-	float GetDinoResistanceMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoResistanceMultiplier"); };
-	void SetTamedDinoResistanceMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "TamedDinoResistanceMultiplier") = a0; };
-	float GetTamedDinoResistanceMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "TamedDinoResistanceMultiplier"); };
-	void SetStructureResistanceMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "StructureResistanceMultiplier") = a0; };
-	float GetStructureResistanceMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "StructureResistanceMultiplier"); };
-	void SetbJoinInProgressGamesAsSpectator(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bJoinInProgressGamesAsSpectator") = a0; };
-	bool GetbJoinInProgressGamesAsSpectator() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bJoinInProgressGamesAsSpectator"); };
-	void SetTamingSpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "TamingSpeedMultiplier") = a0; };
-	float GetTamingSpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "TamingSpeedMultiplier"); };
-	void SetHarvestAmountMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "HarvestAmountMultiplier") = a0; };
-	float GetHarvestAmountMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "HarvestAmountMultiplier"); };
-	void SetHarvestHealthMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "HarvestHealthMultiplier") = a0; };
-	float GetHarvestHealthMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "HarvestHealthMultiplier"); };
-	void SetPlayerCharacterWaterDrainMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterWaterDrainMultiplier") = a0; };
-	float GetPlayerCharacterWaterDrainMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterWaterDrainMultiplier"); };
-	void SetPlayerCharacterFoodDrainMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterFoodDrainMultiplier") = a0; };
-	float GetPlayerCharacterFoodDrainMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterFoodDrainMultiplier"); };
-	void SetDinoCharacterFoodDrainMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoCharacterFoodDrainMultiplier") = a0; };
-	float GetDinoCharacterFoodDrainMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoCharacterFoodDrainMultiplier"); };
-	void SetRaidDinoCharacterFoodDrainMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "RaidDinoCharacterFoodDrainMultiplier") = a0; };
-	float GetRaidDinoCharacterFoodDrainMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "RaidDinoCharacterFoodDrainMultiplier"); };
-	void SetPlayerCharacterStaminaDrainMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterStaminaDrainMultiplier") = a0; };
-	float GetPlayerCharacterStaminaDrainMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterStaminaDrainMultiplier"); };
-	void SetDinoCharacterStaminaDrainMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoCharacterStaminaDrainMultiplier") = a0; };
-	float GetDinoCharacterStaminaDrainMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoCharacterStaminaDrainMultiplier"); };
-	void SetPlayerCharacterHealthRecoveryMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterHealthRecoveryMultiplier") = a0; };
-	float GetPlayerCharacterHealthRecoveryMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PlayerCharacterHealthRecoveryMultiplier"); };
-	void SetDinoCharacterHealthRecoveryMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoCharacterHealthRecoveryMultiplier") = a0; };
-	float GetDinoCharacterHealthRecoveryMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoCharacterHealthRecoveryMultiplier"); };
-	void SetCarnivoreNaturalTargetingRangeMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "CarnivoreNaturalTargetingRangeMultiplier") = a0; };
-	float GetCarnivoreNaturalTargetingRangeMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "CarnivoreNaturalTargetingRangeMultiplier"); };
-	void SetCarnivorePlayerAggroMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "CarnivorePlayerAggroMultiplier") = a0; };
-	float GetCarnivorePlayerAggroMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "CarnivorePlayerAggroMultiplier"); };
-	void SetHerbivoreNaturalTargetingRangeMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "HerbivoreNaturalTargetingRangeMultiplier") = a0; };
-	float GetHerbivoreNaturalTargetingRangeMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "HerbivoreNaturalTargetingRangeMultiplier"); };
-	void SetHerbivorePlayerAggroMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "HerbivorePlayerAggroMultiplier") = a0; };
-	float GetHerbivorePlayerAggroMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "HerbivorePlayerAggroMultiplier"); };
-	void SetAIForceTargetPlayers(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "AIForceTargetPlayers") = a0; };
-	bool GetAIForceTargetPlayers() const { return *(bool*)GetAddress(this, "AShooterGameMode", "AIForceTargetPlayers"); };
-	void SetAIForceOverlapCheck(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "AIForceOverlapCheck") = a0; };
-	bool GetAIForceOverlapCheck() const { return *(bool*)GetAddress(this, "AShooterGameMode", "AIForceOverlapCheck"); };
-	void SetDinoCountMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoCountMultiplier") = a0; };
-	float GetDinoCountMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoCountMultiplier"); };
-	void SetbDisableSaveLoad(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableSaveLoad") = a0; };
-	bool GetbDisableSaveLoad() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableSaveLoad"); };
-	void SetbDisableXP(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableXP") = a0; };
-	bool GetbDisableXP() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableXP"); };
-	void SetbDisableDynamicMusic(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableDynamicMusic") = a0; };
-	bool GetbDisableDynamicMusic() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableDynamicMusic"); };
-	TArray<FPlayerDeathReason, FDefaultAllocator> GetPlayerDeathReasons() const { return *(TArray<FPlayerDeathReason, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "PlayerDeathReasons"); };
+	int GetLastRepopulationIndexToCheckField() const { return GetNativeField<int>(this, "AShooterGameMode", "LastRepopulationIndexToCheck"); }
+	void SetLastRepopulationIndexToCheckField(int newValue) { SetNativeField(this, "AShooterGameMode", "LastRepopulationIndexToCheck", newValue); }
+	FString GetAlarmNotificationKeyField() const { return GetNativeField<FString>(this, "AShooterGameMode", "AlarmNotificationKey"); }
+	void SetAlarmNotificationKeyField(FString newValue) { SetNativeField(this, "AShooterGameMode", "AlarmNotificationKey", newValue); }
+	FString GetAlarmNotificationURLField() const { return GetNativeField<FString>(this, "AShooterGameMode", "AlarmNotificationURL"); }
+	void SetAlarmNotificationURLField(FString newValue) { SetNativeField(this, "AShooterGameMode", "AlarmNotificationURL", newValue); }
+	FString GetBanFileNameField() const { return GetNativeField<FString>(this, "AShooterGameMode", "BanFileName"); }
+	void SetBanFileNameField(FString newValue) { SetNativeField(this, "AShooterGameMode", "BanFileName", newValue); }
+	TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0>> GetBannedMapField() const { return GetNativeField<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0>>>(this, "AShooterGameMode", "BannedMap"); }
+	void SetBannedMapField(TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0>> newValue) { SetNativeField(this, "AShooterGameMode", "BannedMap", newValue); }
+	long double GetLastTimeCheckedForSaveBackupField() const { return GetNativeField<long double>(this, "AShooterGameMode", "LastTimeCheckedForSaveBackup"); }
+	void SetLastTimeCheckedForSaveBackupField(long double newValue) { SetNativeField(this, "AShooterGameMode", "LastTimeCheckedForSaveBackup", newValue); }
+	int GetLastDayOfYearBackedUpField() const { return GetNativeField<int>(this, "AShooterGameMode", "LastDayOfYearBackedUp"); }
+	void SetLastDayOfYearBackedUpField(int newValue) { SetNativeField(this, "AShooterGameMode", "LastDayOfYearBackedUp", newValue); }
+	FProcHandle GetGameBackupProcHandleField() const { return GetNativeField<FProcHandle>(this, "AShooterGameMode", "GameBackupProcHandle"); }
+	void SetGameBackupProcHandleField(FProcHandle newValue) { SetNativeField(this, "AShooterGameMode", "GameBackupProcHandle", newValue); }
+	long double GetTimeLastStartedDoingRemoteBackupField() const { return GetNativeField<long double>(this, "AShooterGameMode", "TimeLastStartedDoingRemoteBackup"); }
+	void SetTimeLastStartedDoingRemoteBackupField(long double newValue) { SetNativeField(this, "AShooterGameMode", "TimeLastStartedDoingRemoteBackup", newValue); }
+	bool GetInitiatedArkTributeAvailabilityCheckField() const { return GetNativeField<bool>(this, "AShooterGameMode", "InitiatedArkTributeAvailabilityCheck"); }
+	void SetInitiatedArkTributeAvailabilityCheckField(bool newValue) { SetNativeField(this, "AShooterGameMode", "InitiatedArkTributeAvailabilityCheck", newValue); }
+	URCONServer* GetRCONSocketField() const { return GetNativeField<URCONServer *>(this, "AShooterGameMode", "RCONSocket"); }
+	void SetRCONSocketField(URCONServer* newValue) { SetNativeField(this, "AShooterGameMode", "RCONSocket", newValue); }
+	FString GetPlayersJoinNoCheckFilenameField() const { return GetNativeField<FString>(this, "AShooterGameMode", "PlayersJoinNoCheckFilename"); }
+	void SetPlayersJoinNoCheckFilenameField(FString newValue) { SetNativeField(this, "AShooterGameMode", "PlayersJoinNoCheckFilename", newValue); }
+	FString GetPlayersExclusiveCheckFilenameField() const { return GetNativeField<FString>(this, "AShooterGameMode", "PlayersExclusiveCheckFilename"); }
+	void SetPlayersExclusiveCheckFilenameField(FString newValue) { SetNativeField(this, "AShooterGameMode", "PlayersExclusiveCheckFilename", newValue); }
+	int GetTerrainGeneratorVersionField() const { return GetNativeField<int>(this, "AShooterGameMode", "TerrainGeneratorVersion"); }
+	void SetTerrainGeneratorVersionField(int newValue) { SetNativeField(this, "AShooterGameMode", "TerrainGeneratorVersion", newValue); }
+	//TArray<FUniqueNetIdUInt64, FDefaultAllocator> GetPlayersJoinNoCheckField() const { return GetNativeField<TArray<FUniqueNetIdUInt64, FDefaultAllocator>>(this, "AShooterGameMode", "PlayersJoinNoCheck"); }
+	//TArray<FUniqueNetIdUInt64, FDefaultAllocator> GetPlayersExclusiveListField() const { return GetNativeField<TArray<FUniqueNetIdUInt64, FDefaultAllocator>>(this, "AShooterGameMode", "PlayersExclusiveList"); }
+	TArray<APlayerStart *, FDefaultAllocator> GetUsedPlayerStartsField() const { return GetNativeField<TArray<APlayerStart *, FDefaultAllocator>>(this, "AShooterGameMode", "UsedPlayerStarts"); }
+	void SetUsedPlayerStartsField(TArray<APlayerStart *, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "UsedPlayerStarts", newValue); }
+	void* GetGameBackupPipeReadField() const { return GetNativeField<void *>(this, "AShooterGameMode", "GameBackupPipeRead"); }
+	void SetGameBackupPipeReadField(void* newValue) { SetNativeField(this, "AShooterGameMode", "GameBackupPipeRead", newValue); }
+	void* GetGameBackupPipeWriteField() const { return GetNativeField<void *>(this, "AShooterGameMode", "GameBackupPipeWrite"); }
+	void SetGameBackupPipeWriteField(void* newValue) { SetNativeField(this, "AShooterGameMode", "GameBackupPipeWrite", newValue); }
+	TSet<unsigned int, DefaultKeyFuncs<unsigned int, 0>, FDefaultSetAllocator> GetTribesIdsField() const { return GetNativeField<TSet<unsigned int, DefaultKeyFuncs<unsigned int, 0>, FDefaultSetAllocator>>(this, "AShooterGameMode", "TribesIds"); }
+	void SetTribesIdsField(TSet<unsigned int, DefaultKeyFuncs<unsigned int, 0>, FDefaultSetAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "TribesIds", newValue); }
+	TMap<int, unsigned __int64, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, unsigned __int64, 0>> GetPlayersIdsField() const { return GetNativeField<TMap<int, unsigned __int64, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, unsigned __int64, 0>>>(this, "AShooterGameMode", "PlayersIds"); }
+	void SetPlayersIdsField(TMap<int, unsigned __int64, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, unsigned __int64, 0>> newValue) { SetNativeField(this, "AShooterGameMode", "PlayersIds", newValue); }
+	FString GetLaunchOptionsField() const { return GetNativeField<FString>(this, "AShooterGameMode", "LaunchOptions"); }
+	void SetLaunchOptionsField(FString newValue) { SetNativeField(this, "AShooterGameMode", "LaunchOptions", newValue); }
+	TArray<FTribeData, FDefaultAllocator> GetTribesDataField() const { return GetNativeField<TArray<FTribeData, FDefaultAllocator>>(this, "AShooterGameMode", "TribesData"); }
+	void SetTribesDataField(TArray<FTribeData, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "TribesData", newValue); }
+	FString GetPGMapNameField() const { return GetNativeField<FString>(this, "AShooterGameMode", "PGMapName"); }
+	void SetPGMapNameField(FString newValue) { SetNativeField(this, "AShooterGameMode", "PGMapName", newValue); }
+	FString GetPGTerrainPropertiesStringField() const { return GetNativeField<FString>(this, "AShooterGameMode", "PGTerrainPropertiesString"); }
+	void SetPGTerrainPropertiesStringField(FString newValue) { SetNativeField(this, "AShooterGameMode", "PGTerrainPropertiesString", newValue); }
+	TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0>> GetPGTerrainPropertiesField() const { return GetNativeField<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0>>>(this, "AShooterGameMode", "PGTerrainProperties"); }
+	void SetPGTerrainPropertiesField(TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0>> newValue) { SetNativeField(this, "AShooterGameMode", "PGTerrainProperties", newValue); }
+	bool GetbAutoCreateNewPlayerDataField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAutoCreateNewPlayerData"); }
+	void SetbAutoCreateNewPlayerDataField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAutoCreateNewPlayerData", newValue); }
+	bool GetbIsRestartingField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bIsRestarting"); }
+	void SetbIsRestartingField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bIsRestarting", newValue); }
+	bool GetbProximityVoiceChatField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bProximityVoiceChat"); }
+	void SetbProximityVoiceChatField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bProximityVoiceChat", newValue); }
+	bool GetbProximityChatField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bProximityChat"); }
+	void SetbProximityChatField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bProximityChat", newValue); }
+	bool GetbAutoRestoreBackupsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAutoRestoreBackups"); }
+	void SetbAutoRestoreBackupsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAutoRestoreBackups", newValue); }
+	float GetDifficultyValueField() const { return GetNativeField<float>(this, "AShooterGameMode", "DifficultyValue"); }
+	void SetDifficultyValueField(float newValue) { SetNativeField(this, "AShooterGameMode", "DifficultyValue", newValue); }
+	float GetDifficultyValueMinField() const { return GetNativeField<float>(this, "AShooterGameMode", "DifficultyValueMin"); }
+	void SetDifficultyValueMinField(float newValue) { SetNativeField(this, "AShooterGameMode", "DifficultyValueMin", newValue); }
+	float GetDifficultyValueMaxField() const { return GetNativeField<float>(this, "AShooterGameMode", "DifficultyValueMax"); }
+	void SetDifficultyValueMaxField(float newValue) { SetNativeField(this, "AShooterGameMode", "DifficultyValueMax", newValue); }
+	float GetProximityRadiusField() const { return GetNativeField<float>(this, "AShooterGameMode", "ProximityRadius"); }
+	void SetProximityRadiusField(float newValue) { SetNativeField(this, "AShooterGameMode", "ProximityRadius", newValue); }
+	float GetProximityRadiusUnconsiousScaleField() const { return GetNativeField<float>(this, "AShooterGameMode", "ProximityRadiusUnconsiousScale"); }
+	void SetProximityRadiusUnconsiousScaleField(float newValue) { SetNativeField(this, "AShooterGameMode", "ProximityRadiusUnconsiousScale", newValue); }
+	TSubclassOf<UCheatManager> GetCheatClassField() const { return GetNativeField<TSubclassOf<UCheatManager>>(this, "AShooterGameMode", "CheatClass"); }
+	void SetCheatClassField(TSubclassOf<UCheatManager> newValue) { SetNativeField(this, "AShooterGameMode", "CheatClass", newValue); }
+	bool GetbIsOfficialServerField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bIsOfficialServer"); }
+	void SetbIsOfficialServerField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bIsOfficialServer", newValue); }
+	bool GetbServerAllowArkDownloadField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerAllowArkDownload"); }
+	void SetbServerAllowArkDownloadField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerAllowArkDownload", newValue); }
+	bool GetbServerAllowThirdPersonPlayerField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerAllowThirdPersonPlayer"); }
+	void SetbServerAllowThirdPersonPlayerField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerAllowThirdPersonPlayer", newValue); }
+	bool GetbUseExclusiveListField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bUseExclusiveList"); }
+	void SetbUseExclusiveListField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bUseExclusiveList", newValue); }
+	bool GetbAlwaysNotifyPlayerLeftField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAlwaysNotifyPlayerLeft"); }
+	void SetbAlwaysNotifyPlayerLeftField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAlwaysNotifyPlayerLeft", newValue); }
+	bool GetbAlwaysNotifyPlayerJoinedField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAlwaysNotifyPlayerJoined"); }
+	void SetbAlwaysNotifyPlayerJoinedField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAlwaysNotifyPlayerJoined", newValue); }
+	bool GetbServerHardcoreField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerHardcore"); }
+	void SetbServerHardcoreField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerHardcore", newValue); }
+	bool GetbServerPVEField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerPVE"); }
+	void SetbServerPVEField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerPVE", newValue); }
+	bool GetbServerCrosshairField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerCrosshair"); }
+	void SetbServerCrosshairField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerCrosshair", newValue); }
+	bool GetbServerForceNoHUDField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerForceNoHUD"); }
+	void SetbServerForceNoHUDField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerForceNoHUD", newValue); }
+	bool GetbMapPlayerLocationField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bMapPlayerLocation"); }
+	void SetbMapPlayerLocationField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bMapPlayerLocation", newValue); }
+	bool GetbAllowFlyerCarryPvEField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowFlyerCarryPvE"); }
+	void SetbAllowFlyerCarryPvEField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowFlyerCarryPvE", newValue); }
+	bool GetbDisableStructureDecayPvEField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableStructureDecayPvE"); }
+	void SetbDisableStructureDecayPvEField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableStructureDecayPvE", newValue); }
+	bool GetbDisableDinoDecayPvEField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableDinoDecayPvE"); }
+	void SetbDisableDinoDecayPvEField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableDinoDecayPvE", newValue); }
+	bool GetbEnablePvPGammaField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bEnablePvPGamma"); }
+	void SetbEnablePvPGammaField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bEnablePvPGamma", newValue); }
+	bool GetbDisablePvEGammaField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisablePvEGamma"); }
+	void SetbDisablePvEGammaField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisablePvEGamma", newValue); }
+	bool GetbClampResourceHarvestDamageField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bClampResourceHarvestDamage"); }
+	void SetbClampResourceHarvestDamageField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bClampResourceHarvestDamage", newValue); }
+	bool GetbPreventStructurePaintingField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventStructurePainting"); }
+	void SetbPreventStructurePaintingField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventStructurePainting", newValue); }
+	bool GetbAllowCaveBuildingPvEField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowCaveBuildingPvE"); }
+	void SetbAllowCaveBuildingPvEField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowCaveBuildingPvE", newValue); }
+	bool GetbAdminLoggingField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAdminLogging"); }
+	void SetbAdminLoggingField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAdminLogging", newValue); }
+	bool GetbPvPStructureDecayField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPvPStructureDecay"); }
+	void SetbPvPStructureDecayField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPvPStructureDecay", newValue); }
+	bool GetbAutoDestroyStructuresField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAutoDestroyStructures"); }
+	void SetbAutoDestroyStructuresField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAutoDestroyStructures", newValue); }
+	bool GetbForceAllStructureLockingField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bForceAllStructureLocking"); }
+	void SetbForceAllStructureLockingField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bForceAllStructureLocking", newValue); }
+	bool GetbAllowDeprecatedStructuresField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowDeprecatedStructures"); }
+	void SetbAllowDeprecatedStructuresField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowDeprecatedStructures", newValue); }
+	bool GetbPreventTribeAlliancesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventTribeAlliances"); }
+	void SetbPreventTribeAlliancesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventTribeAlliances", newValue); }
+	bool GetbAllowHitMarkersField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowHitMarkers"); }
+	void SetbAllowHitMarkersField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowHitMarkers", newValue); }
+	bool GetbOnlyAutoDestroyCoreStructuresField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bOnlyAutoDestroyCoreStructures"); }
+	void SetbOnlyAutoDestroyCoreStructuresField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bOnlyAutoDestroyCoreStructures", newValue); }
+	bool GetbPreventMateBoostField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventMateBoost"); }
+	void SetbPreventMateBoostField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventMateBoost", newValue); }
+	bool GetbTribeLogDestroyedEnemyStructuresField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bTribeLogDestroyedEnemyStructures"); }
+	void SetbTribeLogDestroyedEnemyStructuresField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bTribeLogDestroyedEnemyStructures", newValue); }
+	bool GetbPvEAllowStructuresAtSupplyDropsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPvEAllowStructuresAtSupplyDrops"); }
+	void SetbPvEAllowStructuresAtSupplyDropsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPvEAllowStructuresAtSupplyDrops", newValue); }
+	int GetTheMaxStructuresInRangeField() const { return GetNativeField<int>(this, "AShooterGameMode", "TheMaxStructuresInRange"); }
+	void SetTheMaxStructuresInRangeField(int newValue) { SetNativeField(this, "AShooterGameMode", "TheMaxStructuresInRange", newValue); }
+	int GetRCONPortField() const { return GetNativeField<int>(this, "AShooterGameMode", "RCONPort"); }
+	void SetRCONPortField(int newValue) { SetNativeField(this, "AShooterGameMode", "RCONPort", newValue); }
+	float GetDayCycleSpeedScaleField() const { return GetNativeField<float>(this, "AShooterGameMode", "DayCycleSpeedScale"); }
+	void SetDayCycleSpeedScaleField(float newValue) { SetNativeField(this, "AShooterGameMode", "DayCycleSpeedScale", newValue); }
+	float GetNightTimeSpeedScaleField() const { return GetNativeField<float>(this, "AShooterGameMode", "NightTimeSpeedScale"); }
+	void SetNightTimeSpeedScaleField(float newValue) { SetNativeField(this, "AShooterGameMode", "NightTimeSpeedScale", newValue); }
+	float GetDayTimeSpeedScaleField() const { return GetNativeField<float>(this, "AShooterGameMode", "DayTimeSpeedScale"); }
+	void SetDayTimeSpeedScaleField(float newValue) { SetNativeField(this, "AShooterGameMode", "DayTimeSpeedScale", newValue); }
+	float GetPvEStructureDecayPeriodMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PvEStructureDecayPeriodMultiplier"); }
+	void SetPvEStructureDecayPeriodMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PvEStructureDecayPeriodMultiplier", newValue); }
+	float GetStructurePreventResourceRadiusMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "StructurePreventResourceRadiusMultiplier"); }
+	void SetStructurePreventResourceRadiusMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "StructurePreventResourceRadiusMultiplier", newValue); }
+	float GetPvEDinoDecayPeriodMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PvEDinoDecayPeriodMultiplier"); }
+	void SetPvEDinoDecayPeriodMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PvEDinoDecayPeriodMultiplier", newValue); }
+	float GetResourcesRespawnPeriodMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "ResourcesRespawnPeriodMultiplier"); }
+	void SetResourcesRespawnPeriodMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "ResourcesRespawnPeriodMultiplier", newValue); }
+	float GetMaxTamedDinosField() const { return GetNativeField<float>(this, "AShooterGameMode", "MaxTamedDinos"); }
+	void SetMaxTamedDinosField(float newValue) { SetNativeField(this, "AShooterGameMode", "MaxTamedDinos", newValue); }
+	float GetListenServerTetherDistanceMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "ListenServerTetherDistanceMultiplier"); }
+	void SetListenServerTetherDistanceMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "ListenServerTetherDistanceMultiplier", newValue); }
+	float GetPerPlatformMaxStructuresMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PerPlatformMaxStructuresMultiplier"); }
+	void SetPerPlatformMaxStructuresMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PerPlatformMaxStructuresMultiplier", newValue); }
+	float GetAutoDestroyOldStructuresMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "AutoDestroyOldStructuresMultiplier"); }
+	void SetAutoDestroyOldStructuresMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "AutoDestroyOldStructuresMultiplier", newValue); }
+	float GetRCONServerGameLogBufferField() const { return GetNativeField<float>(this, "AShooterGameMode", "RCONServerGameLogBuffer"); }
+	void SetRCONServerGameLogBufferField(float newValue) { SetNativeField(this, "AShooterGameMode", "RCONServerGameLogBuffer", newValue); }
+	float GetKickIdlePlayersPeriodField() const { return GetNativeField<float>(this, "AShooterGameMode", "KickIdlePlayersPeriod"); }
+	void SetKickIdlePlayersPeriodField(float newValue) { SetNativeField(this, "AShooterGameMode", "KickIdlePlayersPeriod", newValue); }
+	float GetMateBoostEffectMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "MateBoostEffectMultiplier"); }
+	void SetMateBoostEffectMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "MateBoostEffectMultiplier", newValue); }
+	float GetAutoSavePeriodMinutesField() const { return GetNativeField<float>(this, "AShooterGameMode", "AutoSavePeriodMinutes"); }
+	void SetAutoSavePeriodMinutesField(float newValue) { SetNativeField(this, "AShooterGameMode", "AutoSavePeriodMinutes", newValue); }
+	float GetXPMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "XPMultiplier"); }
+	void SetXPMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "XPMultiplier", newValue); }
+	float GetKillXPMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "KillXPMultiplier"); }
+	void SetKillXPMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "KillXPMultiplier", newValue); }
+	float GetHarvestXPMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "HarvestXPMultiplier"); }
+	void SetHarvestXPMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "HarvestXPMultiplier", newValue); }
+	float GetCraftXPMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "CraftXPMultiplier"); }
+	void SetCraftXPMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "CraftXPMultiplier", newValue); }
+	float GetGenericXPMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "GenericXPMultiplier"); }
+	void SetGenericXPMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "GenericXPMultiplier", newValue); }
+	float GetSpecialXPMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "SpecialXPMultiplier"); }
+	void SetSpecialXPMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "SpecialXPMultiplier", newValue); }
+	float GetRandomAutoSaveSpreadField() const { return GetNativeField<float>(this, "AShooterGameMode", "RandomAutoSaveSpread"); }
+	void SetRandomAutoSaveSpreadField(float newValue) { SetNativeField(this, "AShooterGameMode", "RandomAutoSaveSpread", newValue); }
+	FString GetSteamAPIKeyField() const { return GetNativeField<FString>(this, "AShooterGameMode", "SteamAPIKey"); }
+	void SetSteamAPIKeyField(FString newValue) { SetNativeField(this, "AShooterGameMode", "SteamAPIKey", newValue); }
+	FString GetLastServerNotificationMessageField() const { return GetNativeField<FString>(this, "AShooterGameMode", "LastServerNotificationMessage"); }
+	void SetLastServerNotificationMessageField(FString newValue) { SetNativeField(this, "AShooterGameMode", "LastServerNotificationMessage", newValue); }
+	long double GetLastServerNotificationRecievedAtField() const { return GetNativeField<long double>(this, "AShooterGameMode", "LastServerNotificationRecievedAt"); }
+	void SetLastServerNotificationRecievedAtField(long double newValue) { SetNativeField(this, "AShooterGameMode", "LastServerNotificationRecievedAt", newValue); }
+	long double GetLastExecSaveTimeField() const { return GetNativeField<long double>(this, "AShooterGameMode", "LastExecSaveTime"); }
+	void SetLastExecSaveTimeField(long double newValue) { SetNativeField(this, "AShooterGameMode", "LastExecSaveTime", newValue); }
+	long double GetLastTimeSavedWorldField() const { return GetNativeField<long double>(this, "AShooterGameMode", "LastTimeSavedWorld"); }
+	void SetLastTimeSavedWorldField(long double newValue) { SetNativeField(this, "AShooterGameMode", "LastTimeSavedWorld", newValue); }
+	FString GetLastClaimedGameCodeField() const { return GetNativeField<FString>(this, "AShooterGameMode", "LastClaimedGameCode"); }
+	void SetLastClaimedGameCodeField(FString newValue) { SetNativeField(this, "AShooterGameMode", "LastClaimedGameCode", newValue); }
+	TArray<FString, FDefaultAllocator> GetArkGameCodesField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "AShooterGameMode", "ArkGameCodes"); }
+	void SetArkGameCodesField(TArray<FString, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "ArkGameCodes", newValue); }
+	bool GetbIsCurrentlyRequestingKeyField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bIsCurrentlyRequestingKey"); }
+	void SetbIsCurrentlyRequestingKeyField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bIsCurrentlyRequestingKey", newValue); }
+	FString GetSaveDirectoryNameField() const { return GetNativeField<FString>(this, "AShooterGameMode", "SaveDirectoryName"); }
+	void SetSaveDirectoryNameField(FString newValue) { SetNativeField(this, "AShooterGameMode", "SaveDirectoryName", newValue); }
+	TArray<UPrimalPlayerData *, FDefaultAllocator> GetPlayerDatasField() const { return GetNativeField<TArray<UPrimalPlayerData *, FDefaultAllocator>>(this, "AShooterGameMode", "PlayerDatas"); }
+	void SetPlayerDatasField(TArray<UPrimalPlayerData *, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "PlayerDatas", newValue); }
+	int GetNPCZoneManagerModField() const { return GetNativeField<int>(this, "AShooterGameMode", "NPCZoneManagerMod"); }
+	void SetNPCZoneManagerModField(int newValue) { SetNativeField(this, "AShooterGameMode", "NPCZoneManagerMod", newValue); }
+	bool GetbPopulatingSpawnZonesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPopulatingSpawnZones"); }
+	void SetbPopulatingSpawnZonesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPopulatingSpawnZones", newValue); }
+	bool GetbRestartedAPlayerField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bRestartedAPlayer"); }
+	void SetbRestartedAPlayerField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bRestartedAPlayer", newValue); }
+	bool GetbForceRespawnDinosField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bForceRespawnDinos"); }
+	void SetbForceRespawnDinosField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bForceRespawnDinos", newValue); }
+	bool GetbFirstSaveWorldField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bFirstSaveWorld"); }
+	void SetbFirstSaveWorldField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bFirstSaveWorld", newValue); }
+	bool GetbAllowRaidDinoFeedingField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowRaidDinoFeeding"); }
+	void SetbAllowRaidDinoFeedingField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowRaidDinoFeeding", newValue); }
+	FDateTime GetLastBackupTimeField() const { return GetNativeField<FDateTime>(this, "AShooterGameMode", "LastBackupTime"); }
+	void SetLastBackupTimeField(FDateTime newValue) { SetNativeField(this, "AShooterGameMode", "LastBackupTime", newValue); }
+	FDateTime GetLastSaveWorldTimeField() const { return GetNativeField<FDateTime>(this, "AShooterGameMode", "LastSaveWorldTime"); }
+	void SetLastSaveWorldTimeField(FDateTime newValue) { SetNativeField(this, "AShooterGameMode", "LastSaveWorldTime", newValue); }
+	float GetTamedDinoDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "TamedDinoDamageMultiplier"); }
+	void SetTamedDinoDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "TamedDinoDamageMultiplier", newValue); }
+	float GetDinoDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoDamageMultiplier"); }
+	void SetDinoDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoDamageMultiplier", newValue); }
+	float GetPlayerDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PlayerDamageMultiplier"); }
+	void SetPlayerDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PlayerDamageMultiplier", newValue); }
+	float GetStructureDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "StructureDamageMultiplier"); }
+	void SetStructureDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "StructureDamageMultiplier", newValue); }
+	float GetPlayerResistanceMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PlayerResistanceMultiplier"); }
+	void SetPlayerResistanceMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PlayerResistanceMultiplier", newValue); }
+	float GetDinoResistanceMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoResistanceMultiplier"); }
+	void SetDinoResistanceMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoResistanceMultiplier", newValue); }
+	float GetTamedDinoResistanceMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "TamedDinoResistanceMultiplier"); }
+	void SetTamedDinoResistanceMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "TamedDinoResistanceMultiplier", newValue); }
+	float GetStructureResistanceMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "StructureResistanceMultiplier"); }
+	void SetStructureResistanceMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "StructureResistanceMultiplier", newValue); }
+	bool GetbJoinInProgressGamesAsSpectatorField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bJoinInProgressGamesAsSpectator"); }
+	void SetbJoinInProgressGamesAsSpectatorField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bJoinInProgressGamesAsSpectator", newValue); }
+	float GetTamingSpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "TamingSpeedMultiplier"); }
+	void SetTamingSpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "TamingSpeedMultiplier", newValue); }
+	float GetHarvestAmountMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "HarvestAmountMultiplier"); }
+	void SetHarvestAmountMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "HarvestAmountMultiplier", newValue); }
+	float GetHarvestHealthMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "HarvestHealthMultiplier"); }
+	void SetHarvestHealthMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "HarvestHealthMultiplier", newValue); }
+	float GetPlayerCharacterWaterDrainMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PlayerCharacterWaterDrainMultiplier"); }
+	void SetPlayerCharacterWaterDrainMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PlayerCharacterWaterDrainMultiplier", newValue); }
+	float GetPlayerCharacterFoodDrainMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PlayerCharacterFoodDrainMultiplier"); }
+	void SetPlayerCharacterFoodDrainMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PlayerCharacterFoodDrainMultiplier", newValue); }
+	float GetDinoCharacterFoodDrainMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoCharacterFoodDrainMultiplier"); }
+	void SetDinoCharacterFoodDrainMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoCharacterFoodDrainMultiplier", newValue); }
+	float GetRaidDinoCharacterFoodDrainMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "RaidDinoCharacterFoodDrainMultiplier"); }
+	void SetRaidDinoCharacterFoodDrainMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "RaidDinoCharacterFoodDrainMultiplier", newValue); }
+	float GetPlayerCharacterStaminaDrainMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PlayerCharacterStaminaDrainMultiplier"); }
+	void SetPlayerCharacterStaminaDrainMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PlayerCharacterStaminaDrainMultiplier", newValue); }
+	float GetDinoCharacterStaminaDrainMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoCharacterStaminaDrainMultiplier"); }
+	void SetDinoCharacterStaminaDrainMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoCharacterStaminaDrainMultiplier", newValue); }
+	float GetPlayerCharacterHealthRecoveryMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PlayerCharacterHealthRecoveryMultiplier"); }
+	void SetPlayerCharacterHealthRecoveryMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PlayerCharacterHealthRecoveryMultiplier", newValue); }
+	float GetDinoCharacterHealthRecoveryMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoCharacterHealthRecoveryMultiplier"); }
+	void SetDinoCharacterHealthRecoveryMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoCharacterHealthRecoveryMultiplier", newValue); }
+	float GetCarnivoreNaturalTargetingRangeMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "CarnivoreNaturalTargetingRangeMultiplier"); }
+	void SetCarnivoreNaturalTargetingRangeMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "CarnivoreNaturalTargetingRangeMultiplier", newValue); }
+	float GetCarnivorePlayerAggroMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "CarnivorePlayerAggroMultiplier"); }
+	void SetCarnivorePlayerAggroMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "CarnivorePlayerAggroMultiplier", newValue); }
+	float GetHerbivoreNaturalTargetingRangeMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "HerbivoreNaturalTargetingRangeMultiplier"); }
+	void SetHerbivoreNaturalTargetingRangeMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "HerbivoreNaturalTargetingRangeMultiplier", newValue); }
+	float GetHerbivorePlayerAggroMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "HerbivorePlayerAggroMultiplier"); }
+	void SetHerbivorePlayerAggroMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "HerbivorePlayerAggroMultiplier", newValue); }
+	bool GetAIForceTargetPlayersField() const { return GetNativeField<bool>(this, "AShooterGameMode", "AIForceTargetPlayers"); }
+	void SetAIForceTargetPlayersField(bool newValue) { SetNativeField(this, "AShooterGameMode", "AIForceTargetPlayers", newValue); }
+	bool GetAIForceOverlapCheckField() const { return GetNativeField<bool>(this, "AShooterGameMode", "AIForceOverlapCheck"); }
+	void SetAIForceOverlapCheckField(bool newValue) { SetNativeField(this, "AShooterGameMode", "AIForceOverlapCheck", newValue); }
+	float GetDinoCountMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoCountMultiplier"); }
+	void SetDinoCountMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoCountMultiplier", newValue); }
+	bool GetbDisableSaveLoadField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableSaveLoad"); }
+	void SetbDisableSaveLoadField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableSaveLoad", newValue); }
+	bool GetbDisableXPField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableXP"); }
+	void SetbDisableXPField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableXP", newValue); }
+	bool GetbDisableDynamicMusicField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableDynamicMusic"); }
+	void SetbDisableDynamicMusicField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableDynamicMusic", newValue); }
+	TArray<FPlayerDeathReason, FDefaultAllocator> GetPlayerDeathReasonsField() const { return GetNativeField<TArray<FPlayerDeathReason, FDefaultAllocator>>(this, "AShooterGameMode", "PlayerDeathReasons"); }
+	void SetPlayerDeathReasonsField(TArray<FPlayerDeathReason, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "PlayerDeathReasons", newValue); }
 
-	/*void SetLevelExperienceRampOverrides(TArray<FLevelExperienceRamp, FDefaultAllocator> a0) { *(TArray<FLevelExperienceRamp, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "LevelExperienceRampOverrides") = a0; };
-	TArray<FLevelExperienceRamp, FDefaultAllocator> GetLevelExperienceRampOverrides() const { return *(TArray<FLevelExperienceRamp, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "LevelExperienceRampOverrides"); };
-	void SetOverridePlayerLevelEngramPoints(TArray<int, FDefaultAllocator> a0) { *(TArray<int, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverridePlayerLevelEngramPoints") = a0; };
-	TArray<int, FDefaultAllocator> GetOverridePlayerLevelEngramPoints() const { return *(TArray<int, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverridePlayerLevelEngramPoints"); };
-	void SetExcludeItemIndices(TArray<int, FDefaultAllocator> a0) { *(TArray<int, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ExcludeItemIndices") = a0; };
-	TArray<int, FDefaultAllocator> GetExcludeItemIndices() const { return *(TArray<int, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ExcludeItemIndices"); };
-	void SetOverrideEngramEntries(TArray<FEngramEntryOverride, FDefaultAllocator> a0) { *(TArray<FEngramEntryOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverrideEngramEntries") = a0; };
-	TArray<FEngramEntryOverride, FDefaultAllocator> GetOverrideEngramEntries() const { return *(TArray<FEngramEntryOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverrideEngramEntries"); };
-	void SetOverrideNamedEngramEntries(TArray<FEngramEntryOverride, FDefaultAllocator> a0) { *(TArray<FEngramEntryOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverrideNamedEngramEntries") = a0; };
-	TArray<FEngramEntryOverride, FDefaultAllocator> GetOverrideNamedEngramEntries() const { return *(TArray<FEngramEntryOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverrideNamedEngramEntries"); };
-	void SetPreventDinoTameClassNames(TArray<FString, FDefaultAllocator> a0) { *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "PreventDinoTameClassNames") = a0; };
-	TArray<FString, FDefaultAllocator> GetPreventDinoTameClassNames() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "PreventDinoTameClassNames"); };
-	void SetDinoSpawnWeightMultipliers(TArray<FDinoSpawnWeightMultiplier, FDefaultAllocator> a0) { *(TArray<FDinoSpawnWeightMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "DinoSpawnWeightMultipliers") = a0; };
-	TArray<FDinoSpawnWeightMultiplier, FDefaultAllocator> GetDinoSpawnWeightMultipliers() const { return *(TArray<FDinoSpawnWeightMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "DinoSpawnWeightMultipliers"); };
-	void SetDinoClassResistanceMultipliers(TArray<FClassMultiplier, FDefaultAllocator> a0) { *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "DinoClassResistanceMultipliers") = a0; };
-	TArray<FClassMultiplier, FDefaultAllocator> GetDinoClassResistanceMultipliers() const { return *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "DinoClassResistanceMultipliers"); };
-	void SetTamedDinoClassResistanceMultipliers(TArray<FClassMultiplier, FDefaultAllocator> a0) { *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "TamedDinoClassResistanceMultipliers") = a0; };
-	TArray<FClassMultiplier, FDefaultAllocator> GetTamedDinoClassResistanceMultipliers() const { return *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "TamedDinoClassResistanceMultipliers"); };
-	void SetDinoClassDamageMultipliers(TArray<FClassMultiplier, FDefaultAllocator> a0) { *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "DinoClassDamageMultipliers") = a0; };
-	TArray<FClassMultiplier, FDefaultAllocator> GetDinoClassDamageMultipliers() const { return *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "DinoClassDamageMultipliers"); };
-	void SetTamedDinoClassDamageMultipliers(TArray<FClassMultiplier, FDefaultAllocator> a0) { *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "TamedDinoClassDamageMultipliers") = a0; };
-	TArray<FClassMultiplier, FDefaultAllocator> GetTamedDinoClassDamageMultipliers() const { return *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "TamedDinoClassDamageMultipliers"); };
-	void SetHarvestResourceItemAmountClassMultipliers(TArray<FClassMultiplier, FDefaultAllocator> a0) { *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "HarvestResourceItemAmountClassMultipliers") = a0; };
-	TArray<FClassMultiplier, FDefaultAllocator> GetHarvestResourceItemAmountClassMultipliers() const { return *(TArray<FClassMultiplier, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "HarvestResourceItemAmountClassMultipliers"); };
-	void SetNPCReplacements(TArray<FClassNameReplacement, FDefaultAllocator> a0) { *(TArray<FClassNameReplacement, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "NPCReplacements") = a0; };
-	TArray<FClassNameReplacement, FDefaultAllocator> GetNPCReplacements() const { return *(TArray<FClassNameReplacement, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "NPCReplacements"); };*/
-	void SetPvPZoneStructureDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PvPZoneStructureDamageMultiplier") = a0; };
-	float GetPvPZoneStructureDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PvPZoneStructureDamageMultiplier"); };
-	void SetbOnlyAllowSpecifiedEngrams(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bOnlyAllowSpecifiedEngrams") = a0; };
-	bool GetbOnlyAllowSpecifiedEngrams() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bOnlyAllowSpecifiedEngrams"); };
-	void SetOverrideMaxExperiencePointsPlayer(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "OverrideMaxExperiencePointsPlayer") = a0; };
-	int GetOverrideMaxExperiencePointsPlayer() const { return *(int*)GetAddress(this, "AShooterGameMode", "OverrideMaxExperiencePointsPlayer"); };
-	void SetOverrideMaxExperiencePointsDino(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "OverrideMaxExperiencePointsDino") = a0; };
-	int GetOverrideMaxExperiencePointsDino() const { return *(int*)GetAddress(this, "AShooterGameMode", "OverrideMaxExperiencePointsDino"); };
-	void SetGlobalSpoilingTimeMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "GlobalSpoilingTimeMultiplier") = a0; };
-	float GetGlobalSpoilingTimeMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "GlobalSpoilingTimeMultiplier"); };
-	void SetGlobalItemDecompositionTimeMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "GlobalItemDecompositionTimeMultiplier") = a0; };
-	float GetGlobalItemDecompositionTimeMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "GlobalItemDecompositionTimeMultiplier"); };
-	void SetGlobalCorpseDecompositionTimeMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "GlobalCorpseDecompositionTimeMultiplier") = a0; };
-	float GetGlobalCorpseDecompositionTimeMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "GlobalCorpseDecompositionTimeMultiplier"); };
-	void SetMaxFallSpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "MaxFallSpeedMultiplier") = a0; };
-	float GetMaxFallSpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "MaxFallSpeedMultiplier"); };
-	void SetbAutoPvETimer(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAutoPvETimer") = a0; };
-	bool GetbAutoPvETimer() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAutoPvETimer"); };
-	void SetbAutoPvEUseSystemTime(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAutoPvEUseSystemTime") = a0; };
-	bool GetbAutoPvEUseSystemTime() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAutoPvEUseSystemTime"); };
-	void SetbUsingStructureDestructionTag(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bUsingStructureDestructionTag") = a0; };
-	bool GetbUsingStructureDestructionTag() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bUsingStructureDestructionTag"); };
-	void SetStructureDestructionTag(FName a0) { *(FName*)GetAddress(this, "AShooterGameMode", "StructureDestructionTag") = a0; };
-	FName GetStructureDestructionTag() const { return *(FName*)GetAddress(this, "AShooterGameMode", "StructureDestructionTag"); };
-	void SetAutoPvEStartTimeSeconds(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "AutoPvEStartTimeSeconds") = a0; };
-	float GetAutoPvEStartTimeSeconds() const { return *(float*)GetAddress(this, "AShooterGameMode", "AutoPvEStartTimeSeconds"); };
-	void SetAutoPvEStopTimeSeconds(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "AutoPvEStopTimeSeconds") = a0; };
-	float GetAutoPvEStopTimeSeconds() const { return *(float*)GetAddress(this, "AShooterGameMode", "AutoPvEStopTimeSeconds"); };
-	void SetTributeItemExpirationSeconds(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "TributeItemExpirationSeconds") = a0; };
-	int GetTributeItemExpirationSeconds() const { return *(int*)GetAddress(this, "AShooterGameMode", "TributeItemExpirationSeconds"); };
-	void SetTributeDinoExpirationSeconds(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "TributeDinoExpirationSeconds") = a0; };
-	int GetTributeDinoExpirationSeconds() const { return *(int*)GetAddress(this, "AShooterGameMode", "TributeDinoExpirationSeconds"); };
-	void SetTributeCharacterExpirationSeconds(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "TributeCharacterExpirationSeconds") = a0; };
-	int GetTributeCharacterExpirationSeconds() const { return *(int*)GetAddress(this, "AShooterGameMode", "TributeCharacterExpirationSeconds"); };
-	void SetPreventDownloadSurvivors(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "PreventDownloadSurvivors") = a0; };
-	bool GetPreventDownloadSurvivors() const { return *(bool*)GetAddress(this, "AShooterGameMode", "PreventDownloadSurvivors"); };
-	void SetPreventDownloadItems(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "PreventDownloadItems") = a0; };
-	bool GetPreventDownloadItems() const { return *(bool*)GetAddress(this, "AShooterGameMode", "PreventDownloadItems"); };
-	void SetPreventDownloadDinos(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "PreventDownloadDinos") = a0; };
-	bool GetPreventDownloadDinos() const { return *(bool*)GetAddress(this, "AShooterGameMode", "PreventDownloadDinos"); };
-	void SetbPreventUploadSurvivors(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventUploadSurvivors") = a0; };
-	bool GetbPreventUploadSurvivors() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventUploadSurvivors"); };
-	void SetbPreventUploadItems(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventUploadItems") = a0; };
-	bool GetbPreventUploadItems() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventUploadItems"); };
-	void SetbPreventUploadDinos(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventUploadDinos") = a0; };
-	bool GetbPreventUploadDinos() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventUploadDinos"); };
-	void SetMaxTributeItems(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxTributeItems") = a0; };
-	int GetMaxTributeItems() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxTributeItems"); };
-	void SetMaxTributeDinos(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxTributeDinos") = a0; };
-	int GetMaxTributeDinos() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxTributeDinos"); };
-	void SetMaxTributeCharacters(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxTributeCharacters") = a0; };
-	int GetMaxTributeCharacters() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxTributeCharacters"); };
-	void SetbIncreasePvPRespawnInterval(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bIncreasePvPRespawnInterval") = a0; };
-	bool GetbIncreasePvPRespawnInterval() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bIncreasePvPRespawnInterval"); };
-	void SetIncreasePvPRespawnIntervalCheckPeriod(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "IncreasePvPRespawnIntervalCheckPeriod") = a0; };
-	float GetIncreasePvPRespawnIntervalCheckPeriod() const { return *(float*)GetAddress(this, "AShooterGameMode", "IncreasePvPRespawnIntervalCheckPeriod"); };
-	void SetIncreasePvPRespawnIntervalMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "IncreasePvPRespawnIntervalMultiplier") = a0; };
-	float GetIncreasePvPRespawnIntervalMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "IncreasePvPRespawnIntervalMultiplier"); };
-	void SetIncreasePvPRespawnIntervalBaseAmount(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "IncreasePvPRespawnIntervalBaseAmount") = a0; };
-	float GetIncreasePvPRespawnIntervalBaseAmount() const { return *(float*)GetAddress(this, "AShooterGameMode", "IncreasePvPRespawnIntervalBaseAmount"); };
-	void SetResourceNoReplenishRadiusStructures(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "ResourceNoReplenishRadiusStructures") = a0; };
-	float GetResourceNoReplenishRadiusStructures() const { return *(float*)GetAddress(this, "AShooterGameMode", "ResourceNoReplenishRadiusStructures"); };
-	void SetResourceNoReplenishRadiusPlayers(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "ResourceNoReplenishRadiusPlayers") = a0; };
-	float GetResourceNoReplenishRadiusPlayers() const { return *(float*)GetAddress(this, "AShooterGameMode", "ResourceNoReplenishRadiusPlayers"); };
-	void SetCropGrowthSpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "CropGrowthSpeedMultiplier") = a0; };
-	float GetCropGrowthSpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "CropGrowthSpeedMultiplier"); };
-	void SetLayEggIntervalMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "LayEggIntervalMultiplier") = a0; };
-	float GetLayEggIntervalMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "LayEggIntervalMultiplier"); };
-	void SetPoopIntervalMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PoopIntervalMultiplier") = a0; };
-	float GetPoopIntervalMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PoopIntervalMultiplier"); };
-	void SetCropDecaySpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "CropDecaySpeedMultiplier") = a0; };
-	float GetCropDecaySpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "CropDecaySpeedMultiplier"); };
-	void SetbAllowChatFromDeadNonAdmins(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowChatFromDeadNonAdmins") = a0; };
-	bool GetbAllowChatFromDeadNonAdmins() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowChatFromDeadNonAdmins"); };
-	void SetbAllowDisablingSpectator(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowDisablingSpectator") = a0; };
-	bool GetbAllowDisablingSpectator() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowDisablingSpectator"); };
-	void SetbPvEDisableFriendlyFire(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPvEDisableFriendlyFire") = a0; };
-	bool GetbPvEDisableFriendlyFire() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPvEDisableFriendlyFire"); };
-	void SetbFlyerPlatformAllowUnalignedDinoBasing(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bFlyerPlatformAllowUnalignedDinoBasing") = a0; };
-	bool GetbFlyerPlatformAllowUnalignedDinoBasing() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bFlyerPlatformAllowUnalignedDinoBasing"); };
-	void SetMaxPerTribePlatformSaddleStructureLimit(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxPerTribePlatformSaddleStructureLimit") = a0; };
-	int GetMaxPerTribePlatformSaddleStructureLimit() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxPerTribePlatformSaddleStructureLimit"); };
-	void SetMaxPlatformSaddleStructureLimit(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxPlatformSaddleStructureLimit") = a0; };
-	int GetMaxPlatformSaddleStructureLimit() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxPlatformSaddleStructureLimit"); };
-	void SetMaxDinoBaseLevel(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxDinoBaseLevel") = a0; };
-	int GetMaxDinoBaseLevel() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxDinoBaseLevel"); };
-	void SetMaxNumberOfPlayersInTribe(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxNumberOfPlayersInTribe") = a0; };
-	int GetMaxNumberOfPlayersInTribe() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxNumberOfPlayersInTribe"); };
-	void SetMatingIntervalMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "MatingIntervalMultiplier") = a0; };
-	float GetMatingIntervalMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "MatingIntervalMultiplier"); };
-	void SetEggHatchSpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "EggHatchSpeedMultiplier") = a0; };
-	float GetEggHatchSpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "EggHatchSpeedMultiplier"); };
-	void SetBabyMatureSpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "BabyMatureSpeedMultiplier") = a0; };
-	float GetBabyMatureSpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "BabyMatureSpeedMultiplier"); };
-	void SetBabyFoodConsumptionSpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "BabyFoodConsumptionSpeedMultiplier") = a0; };
-	float GetBabyFoodConsumptionSpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "BabyFoodConsumptionSpeedMultiplier"); };
-	void SetCurrentPlatformSaddleStructures(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "CurrentPlatformSaddleStructures") = a0; };
-	int GetCurrentPlatformSaddleStructures() const { return *(int*)GetAddress(this, "AShooterGameMode", "CurrentPlatformSaddleStructures"); };
-	void SetbCustomGameModeAllowSpectatorJoinAfterMatchStart(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bCustomGameModeAllowSpectatorJoinAfterMatchStart") = a0; };
-	bool GetbCustomGameModeAllowSpectatorJoinAfterMatchStart() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bCustomGameModeAllowSpectatorJoinAfterMatchStart"); };
-	void SetGameplayLogFile(FOutputDeviceFile a0) { *(FOutputDeviceFile*)GetAddress(this, "AShooterGameMode", "GameplayLogFile") = a0; };
-	FOutputDeviceFile GetGameplayLogFile() const { return *(FOutputDeviceFile*)GetAddress(this, "AShooterGameMode", "GameplayLogFile"); };
-	void SetServerGameLogFile(FOutputDeviceFile a0) { *(FOutputDeviceFile*)GetAddress(this, "AShooterGameMode", "ServerGameLogFile") = a0; };
-	FOutputDeviceFile GetServerGameLogFile() const { return *(FOutputDeviceFile*)GetAddress(this, "AShooterGameMode", "ServerGameLogFile"); };
-	void SetbGameplayLogEnabled(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bGameplayLogEnabled") = a0; };
-	bool GetbGameplayLogEnabled() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bGameplayLogEnabled"); };
-	void SetbServerGameLogEnabled(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerGameLogEnabled") = a0; };
-	bool GetbServerGameLogEnabled() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerGameLogEnabled"); };
-	void SetBonusSupplyCrateItemGiveInterval(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "BonusSupplyCrateItemGiveInterval") = a0; };
-	float GetBonusSupplyCrateItemGiveInterval() const { return *(float*)GetAddress(this, "AShooterGameMode", "BonusSupplyCrateItemGiveInterval"); };
-	void SetStructureDamageRepairCooldown(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "StructureDamageRepairCooldown") = a0; };
-	float GetStructureDamageRepairCooldown() const { return *(float*)GetAddress(this, "AShooterGameMode", "StructureDamageRepairCooldown"); };
-	void SetCustomRecipeEffectivenessMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "CustomRecipeEffectivenessMultiplier") = a0; };
-	float GetCustomRecipeEffectivenessMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "CustomRecipeEffectivenessMultiplier"); };
-	void SetCustomRecipeSkillMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "CustomRecipeSkillMultiplier") = a0; };
-	float GetCustomRecipeSkillMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "CustomRecipeSkillMultiplier"); };
-	void SetBonusSupplyCrateItemString(FString a0) { *(FString*)GetAddress(this, "AShooterGameMode", "BonusSupplyCrateItemString") = a0; };
-	FString GetBonusSupplyCrateItemString() const { return *(FString*)GetAddress(this, "AShooterGameMode", "BonusSupplyCrateItemString"); };
-	void SetbPvEAllowTribeWar(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPvEAllowTribeWar") = a0; };
-	bool GetbPvEAllowTribeWar() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPvEAllowTribeWar"); };
-	void SetbPvEAllowTribeWarCancel(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPvEAllowTribeWarCancel") = a0; };
-	bool GetbPvEAllowTribeWarCancel() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPvEAllowTribeWarCancel"); };
-	void SetbAllowCustomRecipes(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowCustomRecipes") = a0; };
-	bool GetbAllowCustomRecipes() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowCustomRecipes"); };
-	void SetbPassiveDefensesDamageRiderlessDinos(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPassiveDefensesDamageRiderlessDinos") = a0; };
-	bool GetbPassiveDefensesDamageRiderlessDinos() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPassiveDefensesDamageRiderlessDinos"); };
-	void SetLastBonusSupplyCrateItemGiveTime(double a0) { *(double*)GetAddress(this, "AShooterGameMode", "LastBonusSupplyCrateItemGiveTime") = a0; };
-	double GetLastBonusSupplyCrateItemGiveTime() const { return *(double*)GetAddress(this, "AShooterGameMode", "LastBonusSupplyCrateItemGiveTime"); };
-	void SetbEnableDeathTeamSpectator(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bEnableDeathTeamSpectator") = a0; };
-	bool GetbEnableDeathTeamSpectator() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bEnableDeathTeamSpectator"); };
-	void SetbTribeStoreCharacterConfiguration(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bTribeStoreCharacterConfiguration") = a0; };
-	bool GetbTribeStoreCharacterConfiguration() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bTribeStoreCharacterConfiguration"); };
-	void SetPvEActiveTribeWars(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> a0) { *(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>>*)GetAddress(this, "AShooterGameMode", "PvEActiveTribeWars") = a0; };
-	TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> GetPvEActiveTribeWars() const { return *(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>>*)GetAddress(this, "AShooterGameMode", "PvEActiveTribeWars"); };
-	void SetTribeAllies(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> a0) { *(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>>*)GetAddress(this, "AShooterGameMode", "TribeAllies") = a0; };
-	TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> GetTribeAllies() const { return *(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>>*)GetAddress(this, "AShooterGameMode", "TribeAllies"); };
-	void SetMaxTribeLogs(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "MaxTribeLogs") = a0; };
-	int GetMaxTribeLogs() const { return *(int*)GetAddress(this, "AShooterGameMode", "MaxTribeLogs"); };
-	void SetCachedGameLog(TArray<FString, FDefaultAllocator> a0) { *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "CachedGameLog") = a0; };
-	TArray<FString, FDefaultAllocator> GetCachedGameLog() const { return *(TArray<FString, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "CachedGameLog"); };
-	void SetbDisableFriendlyFire(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableFriendlyFire") = a0; };
-	bool GetbDisableFriendlyFire() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableFriendlyFire"); };
-	void SetbAllowInactiveTribes(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowInactiveTribes") = a0; };
-	bool GetbAllowInactiveTribes() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowInactiveTribes"); };
-	void SetbForceMapPlayerLocation(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bForceMapPlayerLocation") = a0; };
-	bool GetbForceMapPlayerLocation() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bForceMapPlayerLocation"); };
-	void SetDinoHarvestingDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoHarvestingDamageMultiplier") = a0; };
-	float GetDinoHarvestingDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoHarvestingDamageMultiplier"); };
-	void SetPlayerHarvestingDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PlayerHarvestingDamageMultiplier") = a0; };
-	float GetPlayerHarvestingDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "PlayerHarvestingDamageMultiplier"); };
-	void SetDinoTurretDamageMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "DinoTurretDamageMultiplier") = a0; };
-	float GetDinoTurretDamageMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "DinoTurretDamageMultiplier"); };
-	void SetbDisableLootCrates(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableLootCrates") = a0; };
-	bool GetbDisableLootCrates() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableLootCrates"); };
-	void SetExtinctionEventTimeInterval(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "ExtinctionEventTimeInterval") = a0; };
-	float GetExtinctionEventTimeInterval() const { return *(float*)GetAddress(this, "AShooterGameMode", "ExtinctionEventTimeInterval"); };
-	void SetbEnableExtraStructurePreventionVolumes(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bEnableExtraStructurePreventionVolumes") = a0; };
-	bool GetbEnableExtraStructurePreventionVolumes() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bEnableExtraStructurePreventionVolumes"); };
-	void SetNextExtinctionEventUTC(unsigned int a0) { *(unsigned int*)GetAddress(this, "AShooterGameMode", "NextExtinctionEventUTC") = a0; };
-	unsigned int GetNextExtinctionEventUTC() const { return *(unsigned int*)GetAddress(this, "AShooterGameMode", "NextExtinctionEventUTC"); };
-	void SetbForceAllowCaveFlyers(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bForceAllowCaveFlyers") = a0; };
-	bool GetbForceAllowCaveFlyers() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bForceAllowCaveFlyers"); };
-	void SetbDoExtinctionEvent(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDoExtinctionEvent") = a0; };
-	bool GetbDoExtinctionEvent() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDoExtinctionEvent"); };
-	void SetbPreventOfflinePvP(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventOfflinePvP") = a0; };
-	bool GetbPreventOfflinePvP() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventOfflinePvP"); };
-	void SetbPvPDinoDecay(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPvPDinoDecay") = a0; };
-	bool GetbPvPDinoDecay() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPvPDinoDecay"); };
-	void SetbOverideStructurePlatformPrevention(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bOverideStructurePlatformPrevention") = a0; };
-	bool GetbOverideStructurePlatformPrevention() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bOverideStructurePlatformPrevention"); };
-	void SetbAllowAnyoneBabyImprintCuddle(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bAllowAnyoneBabyImprintCuddle") = a0; };
-	bool GetbAllowAnyoneBabyImprintCuddle() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bAllowAnyoneBabyImprintCuddle"); };
-	void SetbDisableImprintDinoBuff(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDisableImprintDinoBuff") = a0; };
-	bool GetbDisableImprintDinoBuff() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDisableImprintDinoBuff"); };
-	void SetbShowFloatingDamageText(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bShowFloatingDamageText") = a0; };
-	bool GetbShowFloatingDamageText() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bShowFloatingDamageText"); };
-	void SetbOnlyDecayUnsnappedCoreStructures(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bOnlyDecayUnsnappedCoreStructures") = a0; };
-	bool GetbOnlyDecayUnsnappedCoreStructures() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bOnlyDecayUnsnappedCoreStructures"); };
-	void SetbFastDecayUnsnappedCoreStructures(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bFastDecayUnsnappedCoreStructures") = a0; };
-	bool GetbFastDecayUnsnappedCoreStructures() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bFastDecayUnsnappedCoreStructures"); };
-	void SetbDestroyUnconnectedWaterPipes(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bDestroyUnconnectedWaterPipes") = a0; };
-	bool GetbDestroyUnconnectedWaterPipes() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bDestroyUnconnectedWaterPipes"); };
-	void SetPreventOfflinePvPInterval(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "PreventOfflinePvPInterval") = a0; };
-	float GetPreventOfflinePvPInterval() const { return *(float*)GetAddress(this, "AShooterGameMode", "PreventOfflinePvPInterval"); };
+	/*TArray<FLevelExperienceRamp, FDefaultAllocator> GetLevelExperienceRampOverridesField() const { return GetNativeField<TArray<FLevelExperienceRamp, FDefaultAllocator>>(this, "AShooterGameMode", "LevelExperienceRampOverrides"); }
+	void SetLevelExperienceRampOverridesField(TArray<FLevelExperienceRamp, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "LevelExperienceRampOverrides", newValue); }
+	TArray<int, FDefaultAllocator> GetOverridePlayerLevelEngramPointsField() const { return GetNativeField<TArray<int, FDefaultAllocator>>(this, "AShooterGameMode", "OverridePlayerLevelEngramPoints"); }
+	void SetOverridePlayerLevelEngramPointsField(TArray<int, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "OverridePlayerLevelEngramPoints", newValue); }
+	TArray<int, FDefaultAllocator> GetExcludeItemIndicesField() const { return GetNativeField<TArray<int, FDefaultAllocator>>(this, "AShooterGameMode", "ExcludeItemIndices"); }
+	void SetExcludeItemIndicesField(TArray<int, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "ExcludeItemIndices", newValue); }
+	TArray<FEngramEntryOverride, FDefaultAllocator> GetOverrideEngramEntriesField() const { return GetNativeField<TArray<FEngramEntryOverride, FDefaultAllocator>>(this, "AShooterGameMode", "OverrideEngramEntries"); }
+	void SetOverrideEngramEntriesField(TArray<FEngramEntryOverride, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "OverrideEngramEntries", newValue); }
+	TArray<FEngramEntryOverride, FDefaultAllocator> GetOverrideNamedEngramEntriesField() const { return GetNativeField<TArray<FEngramEntryOverride, FDefaultAllocator>>(this, "AShooterGameMode", "OverrideNamedEngramEntries"); }
+	void SetOverrideNamedEngramEntriesField(TArray<FEngramEntryOverride, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "OverrideNamedEngramEntries", newValue); }
+	TArray<FString, FDefaultAllocator> GetPreventDinoTameClassNamesField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "AShooterGameMode", "PreventDinoTameClassNames"); }
+	void SetPreventDinoTameClassNamesField(TArray<FString, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "PreventDinoTameClassNames", newValue); }
+	TArray<FDinoSpawnWeightMultiplier, FDefaultAllocator> GetDinoSpawnWeightMultipliersField() const { return GetNativeField<TArray<FDinoSpawnWeightMultiplier, FDefaultAllocator>>(this, "AShooterGameMode", "DinoSpawnWeightMultipliers"); }
+	void SetDinoSpawnWeightMultipliersField(TArray<FDinoSpawnWeightMultiplier, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "DinoSpawnWeightMultipliers", newValue); }
+	TArray<FClassMultiplier, FDefaultAllocator> GetDinoClassResistanceMultipliersField() const { return GetNativeField<TArray<FClassMultiplier, FDefaultAllocator>>(this, "AShooterGameMode", "DinoClassResistanceMultipliers"); }
+	void SetDinoClassResistanceMultipliersField(TArray<FClassMultiplier, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "DinoClassResistanceMultipliers", newValue); }
+	TArray<FClassMultiplier, FDefaultAllocator> GetTamedDinoClassResistanceMultipliersField() const { return GetNativeField<TArray<FClassMultiplier, FDefaultAllocator>>(this, "AShooterGameMode", "TamedDinoClassResistanceMultipliers"); }
+	void SetTamedDinoClassResistanceMultipliersField(TArray<FClassMultiplier, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "TamedDinoClassResistanceMultipliers", newValue); }
+	TArray<FClassMultiplier, FDefaultAllocator> GetDinoClassDamageMultipliersField() const { return GetNativeField<TArray<FClassMultiplier, FDefaultAllocator>>(this, "AShooterGameMode", "DinoClassDamageMultipliers"); }
+	void SetDinoClassDamageMultipliersField(TArray<FClassMultiplier, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "DinoClassDamageMultipliers", newValue); }
+	TArray<FClassMultiplier, FDefaultAllocator> GetTamedDinoClassDamageMultipliersField() const { return GetNativeField<TArray<FClassMultiplier, FDefaultAllocator>>(this, "AShooterGameMode", "TamedDinoClassDamageMultipliers"); }
+	void SetTamedDinoClassDamageMultipliersField(TArray<FClassMultiplier, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "TamedDinoClassDamageMultipliers", newValue); }
+	TArray<FClassMultiplier, FDefaultAllocator> GetHarvestResourceItemAmountClassMultipliersField() const { return GetNativeField<TArray<FClassMultiplier, FDefaultAllocator>>(this, "AShooterGameMode", "HarvestResourceItemAmountClassMultipliers"); }
+	void SetHarvestResourceItemAmountClassMultipliersField(TArray<FClassMultiplier, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "HarvestResourceItemAmountClassMultipliers", newValue); }
+	TArray<FClassNameReplacement, FDefaultAllocator> GetNPCReplacementsField() const { return GetNativeField<TArray<FClassNameReplacement, FDefaultAllocator>>(this, "AShooterGameMode", "NPCReplacements"); }
+	void SetNPCReplacementsField(TArray<FClassNameReplacement, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "NPCReplacements", newValue); }*/
+	float GetPvPZoneStructureDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PvPZoneStructureDamageMultiplier"); }
+	void SetPvPZoneStructureDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PvPZoneStructureDamageMultiplier", newValue); }
+	bool GetbOnlyAllowSpecifiedEngramsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bOnlyAllowSpecifiedEngrams"); }
+	void SetbOnlyAllowSpecifiedEngramsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bOnlyAllowSpecifiedEngrams", newValue); }
+	int GetOverrideMaxExperiencePointsPlayerField() const { return GetNativeField<int>(this, "AShooterGameMode", "OverrideMaxExperiencePointsPlayer"); }
+	void SetOverrideMaxExperiencePointsPlayerField(int newValue) { SetNativeField(this, "AShooterGameMode", "OverrideMaxExperiencePointsPlayer", newValue); }
+	int GetOverrideMaxExperiencePointsDinoField() const { return GetNativeField<int>(this, "AShooterGameMode", "OverrideMaxExperiencePointsDino"); }
+	void SetOverrideMaxExperiencePointsDinoField(int newValue) { SetNativeField(this, "AShooterGameMode", "OverrideMaxExperiencePointsDino", newValue); }
+	float GetGlobalSpoilingTimeMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "GlobalSpoilingTimeMultiplier"); }
+	void SetGlobalSpoilingTimeMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "GlobalSpoilingTimeMultiplier", newValue); }
+	float GetGlobalItemDecompositionTimeMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "GlobalItemDecompositionTimeMultiplier"); }
+	void SetGlobalItemDecompositionTimeMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "GlobalItemDecompositionTimeMultiplier", newValue); }
+	float GetGlobalCorpseDecompositionTimeMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "GlobalCorpseDecompositionTimeMultiplier"); }
+	void SetGlobalCorpseDecompositionTimeMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "GlobalCorpseDecompositionTimeMultiplier", newValue); }
+	float GetMaxFallSpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "MaxFallSpeedMultiplier"); }
+	void SetMaxFallSpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "MaxFallSpeedMultiplier", newValue); }
+	bool GetbAutoPvETimerField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAutoPvETimer"); }
+	void SetbAutoPvETimerField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAutoPvETimer", newValue); }
+	bool GetbAutoPvEUseSystemTimeField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAutoPvEUseSystemTime"); }
+	void SetbAutoPvEUseSystemTimeField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAutoPvEUseSystemTime", newValue); }
+	bool GetbUsingStructureDestructionTagField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bUsingStructureDestructionTag"); }
+	void SetbUsingStructureDestructionTagField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bUsingStructureDestructionTag", newValue); }
+	FName GetStructureDestructionTagField() const { return GetNativeField<FName>(this, "AShooterGameMode", "StructureDestructionTag"); }
+	void SetStructureDestructionTagField(FName newValue) { SetNativeField(this, "AShooterGameMode", "StructureDestructionTag", newValue); }
+	float GetAutoPvEStartTimeSecondsField() const { return GetNativeField<float>(this, "AShooterGameMode", "AutoPvEStartTimeSeconds"); }
+	void SetAutoPvEStartTimeSecondsField(float newValue) { SetNativeField(this, "AShooterGameMode", "AutoPvEStartTimeSeconds", newValue); }
+	float GetAutoPvEStopTimeSecondsField() const { return GetNativeField<float>(this, "AShooterGameMode", "AutoPvEStopTimeSeconds"); }
+	void SetAutoPvEStopTimeSecondsField(float newValue) { SetNativeField(this, "AShooterGameMode", "AutoPvEStopTimeSeconds", newValue); }
+	int GetTributeItemExpirationSecondsField() const { return GetNativeField<int>(this, "AShooterGameMode", "TributeItemExpirationSeconds"); }
+	void SetTributeItemExpirationSecondsField(int newValue) { SetNativeField(this, "AShooterGameMode", "TributeItemExpirationSeconds", newValue); }
+	int GetTributeDinoExpirationSecondsField() const { return GetNativeField<int>(this, "AShooterGameMode", "TributeDinoExpirationSeconds"); }
+	void SetTributeDinoExpirationSecondsField(int newValue) { SetNativeField(this, "AShooterGameMode", "TributeDinoExpirationSeconds", newValue); }
+	int GetTributeCharacterExpirationSecondsField() const { return GetNativeField<int>(this, "AShooterGameMode", "TributeCharacterExpirationSeconds"); }
+	void SetTributeCharacterExpirationSecondsField(int newValue) { SetNativeField(this, "AShooterGameMode", "TributeCharacterExpirationSeconds", newValue); }
+	bool GetPreventDownloadSurvivorsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "PreventDownloadSurvivors"); }
+	void SetPreventDownloadSurvivorsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "PreventDownloadSurvivors", newValue); }
+	bool GetPreventDownloadItemsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "PreventDownloadItems"); }
+	void SetPreventDownloadItemsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "PreventDownloadItems", newValue); }
+	bool GetPreventDownloadDinosField() const { return GetNativeField<bool>(this, "AShooterGameMode", "PreventDownloadDinos"); }
+	void SetPreventDownloadDinosField(bool newValue) { SetNativeField(this, "AShooterGameMode", "PreventDownloadDinos", newValue); }
+	bool GetbPreventUploadSurvivorsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventUploadSurvivors"); }
+	void SetbPreventUploadSurvivorsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventUploadSurvivors", newValue); }
+	bool GetbPreventUploadItemsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventUploadItems"); }
+	void SetbPreventUploadItemsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventUploadItems", newValue); }
+	bool GetbPreventUploadDinosField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventUploadDinos"); }
+	void SetbPreventUploadDinosField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventUploadDinos", newValue); }
+	int GetMaxTributeItemsField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxTributeItems"); }
+	void SetMaxTributeItemsField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxTributeItems", newValue); }
+	int GetMaxTributeDinosField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxTributeDinos"); }
+	void SetMaxTributeDinosField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxTributeDinos", newValue); }
+	int GetMaxTributeCharactersField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxTributeCharacters"); }
+	void SetMaxTributeCharactersField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxTributeCharacters", newValue); }
+	bool GetbIncreasePvPRespawnIntervalField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bIncreasePvPRespawnInterval"); }
+	void SetbIncreasePvPRespawnIntervalField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bIncreasePvPRespawnInterval", newValue); }
+	float GetIncreasePvPRespawnIntervalCheckPeriodField() const { return GetNativeField<float>(this, "AShooterGameMode", "IncreasePvPRespawnIntervalCheckPeriod"); }
+	void SetIncreasePvPRespawnIntervalCheckPeriodField(float newValue) { SetNativeField(this, "AShooterGameMode", "IncreasePvPRespawnIntervalCheckPeriod", newValue); }
+	float GetIncreasePvPRespawnIntervalMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "IncreasePvPRespawnIntervalMultiplier"); }
+	void SetIncreasePvPRespawnIntervalMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "IncreasePvPRespawnIntervalMultiplier", newValue); }
+	float GetIncreasePvPRespawnIntervalBaseAmountField() const { return GetNativeField<float>(this, "AShooterGameMode", "IncreasePvPRespawnIntervalBaseAmount"); }
+	void SetIncreasePvPRespawnIntervalBaseAmountField(float newValue) { SetNativeField(this, "AShooterGameMode", "IncreasePvPRespawnIntervalBaseAmount", newValue); }
+	float GetResourceNoReplenishRadiusStructuresField() const { return GetNativeField<float>(this, "AShooterGameMode", "ResourceNoReplenishRadiusStructures"); }
+	void SetResourceNoReplenishRadiusStructuresField(float newValue) { SetNativeField(this, "AShooterGameMode", "ResourceNoReplenishRadiusStructures", newValue); }
+	float GetResourceNoReplenishRadiusPlayersField() const { return GetNativeField<float>(this, "AShooterGameMode", "ResourceNoReplenishRadiusPlayers"); }
+	void SetResourceNoReplenishRadiusPlayersField(float newValue) { SetNativeField(this, "AShooterGameMode", "ResourceNoReplenishRadiusPlayers", newValue); }
+	float GetCropGrowthSpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "CropGrowthSpeedMultiplier"); }
+	void SetCropGrowthSpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "CropGrowthSpeedMultiplier", newValue); }
+	float GetLayEggIntervalMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "LayEggIntervalMultiplier"); }
+	void SetLayEggIntervalMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "LayEggIntervalMultiplier", newValue); }
+	float GetPoopIntervalMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PoopIntervalMultiplier"); }
+	void SetPoopIntervalMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PoopIntervalMultiplier", newValue); }
+	float GetCropDecaySpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "CropDecaySpeedMultiplier"); }
+	void SetCropDecaySpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "CropDecaySpeedMultiplier", newValue); }
+	bool GetbAllowChatFromDeadNonAdminsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowChatFromDeadNonAdmins"); }
+	void SetbAllowChatFromDeadNonAdminsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowChatFromDeadNonAdmins", newValue); }
+	bool GetbAllowDisablingSpectatorField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowDisablingSpectator"); }
+	void SetbAllowDisablingSpectatorField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowDisablingSpectator", newValue); }
+	bool GetbPvEDisableFriendlyFireField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPvEDisableFriendlyFire"); }
+	void SetbPvEDisableFriendlyFireField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPvEDisableFriendlyFire", newValue); }
+	bool GetbFlyerPlatformAllowUnalignedDinoBasingField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bFlyerPlatformAllowUnalignedDinoBasing"); }
+	void SetbFlyerPlatformAllowUnalignedDinoBasingField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bFlyerPlatformAllowUnalignedDinoBasing", newValue); }
+	int GetMaxPerTribePlatformSaddleStructureLimitField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxPerTribePlatformSaddleStructureLimit"); }
+	void SetMaxPerTribePlatformSaddleStructureLimitField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxPerTribePlatformSaddleStructureLimit", newValue); }
+	int GetMaxPlatformSaddleStructureLimitField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxPlatformSaddleStructureLimit"); }
+	void SetMaxPlatformSaddleStructureLimitField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxPlatformSaddleStructureLimit", newValue); }
+	int GetMaxDinoBaseLevelField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxDinoBaseLevel"); }
+	void SetMaxDinoBaseLevelField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxDinoBaseLevel", newValue); }
+	int GetMaxNumberOfPlayersInTribeField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxNumberOfPlayersInTribe"); }
+	void SetMaxNumberOfPlayersInTribeField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxNumberOfPlayersInTribe", newValue); }
+	float GetMatingIntervalMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "MatingIntervalMultiplier"); }
+	void SetMatingIntervalMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "MatingIntervalMultiplier", newValue); }
+	float GetEggHatchSpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "EggHatchSpeedMultiplier"); }
+	void SetEggHatchSpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "EggHatchSpeedMultiplier", newValue); }
+	float GetBabyMatureSpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "BabyMatureSpeedMultiplier"); }
+	void SetBabyMatureSpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "BabyMatureSpeedMultiplier", newValue); }
+	float GetBabyFoodConsumptionSpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "BabyFoodConsumptionSpeedMultiplier"); }
+	void SetBabyFoodConsumptionSpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "BabyFoodConsumptionSpeedMultiplier", newValue); }
+	int GetCurrentPlatformSaddleStructuresField() const { return GetNativeField<int>(this, "AShooterGameMode", "CurrentPlatformSaddleStructures"); }
+	void SetCurrentPlatformSaddleStructuresField(int newValue) { SetNativeField(this, "AShooterGameMode", "CurrentPlatformSaddleStructures", newValue); }
 
-	/*void SetOverrideItemCraftingCosts(TArray<FItemCraftingCostOverride, FDefaultAllocator> a0) { *(TArray<FItemCraftingCostOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverrideItemCraftingCosts") = a0; };
-	TArray<FItemCraftingCostOverride, FDefaultAllocator> GetOverrideItemCraftingCosts() const { return *(TArray<FItemCraftingCostOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "OverrideItemCraftingCosts"); };
-	void SetConfigOverrideItemCraftingCosts(TArray<FConfigItemCraftingCostOverride, FDefaultAllocator> a0) { *(TArray<FConfigItemCraftingCostOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigOverrideItemCraftingCosts") = a0; };
-	TArray<FConfigItemCraftingCostOverride, FDefaultAllocator> GetConfigOverrideItemCraftingCosts() const { return *(TArray<FConfigItemCraftingCostOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigOverrideItemCraftingCosts"); };
-	void SetConfigOverrideSupplyCrateItems(TArray<FConfigSupplyCrateItemsOverride, FDefaultAllocator> a0) { *(TArray<FConfigSupplyCrateItemsOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigOverrideSupplyCrateItems") = a0; };
-	TArray<FConfigSupplyCrateItemsOverride, FDefaultAllocator> GetConfigOverrideSupplyCrateItems() const { return *(TArray<FConfigSupplyCrateItemsOverride, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigOverrideSupplyCrateItems"); };
-	void SetConfigOverrideNPCSpawnEntriesContainer(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> a0) { *(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigOverrideNPCSpawnEntriesContainer") = a0; };
-	TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> GetConfigOverrideNPCSpawnEntriesContainer() const { return *(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigOverrideNPCSpawnEntriesContainer"); };
-	void SetConfigAddNPCSpawnEntriesContainer(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> a0) { *(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigAddNPCSpawnEntriesContainer") = a0; };
-	TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> GetConfigAddNPCSpawnEntriesContainer() const { return *(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigAddNPCSpawnEntriesContainer"); };
-	void SetConfigSubtractNPCSpawnEntriesContainer(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> a0) { *(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigSubtractNPCSpawnEntriesContainer") = a0; };
-	TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> GetConfigSubtractNPCSpawnEntriesContainer() const { return *(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "ConfigSubtractNPCSpawnEntriesContainer"); };*/
-	void SetBabyImprintingStatScaleMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "BabyImprintingStatScaleMultiplier") = a0; };
-	float GetBabyImprintingStatScaleMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "BabyImprintingStatScaleMultiplier"); };
-	void SetBabyCuddleIntervalMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "BabyCuddleIntervalMultiplier") = a0; };
-	float GetBabyCuddleIntervalMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "BabyCuddleIntervalMultiplier"); };
-	void SetBabyCuddleGracePeriodMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "BabyCuddleGracePeriodMultiplier") = a0; };
-	float GetBabyCuddleGracePeriodMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "BabyCuddleGracePeriodMultiplier"); };
-	void SetBabyCuddleLoseImprintQualitySpeedMultiplier(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "BabyCuddleLoseImprintQualitySpeedMultiplier") = a0; };
-	float GetBabyCuddleLoseImprintQualitySpeedMultiplier() const { return *(float*)GetAddress(this, "AShooterGameMode", "BabyCuddleLoseImprintQualitySpeedMultiplier"); };
-	void SetbPreventDiseases(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bPreventDiseases") = a0; };
-	bool GetbPreventDiseases() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bPreventDiseases"); };
-	void SetbNonPermanentDiseases(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bNonPermanentDiseases") = a0; };
-	bool GetbNonPermanentDiseases() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bNonPermanentDiseases"); };
-	void SetSaveForceRespawnDinosVersion(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "SaveForceRespawnDinosVersion") = a0; };
-	int GetSaveForceRespawnDinosVersion() const { return *(int*)GetAddress(this, "AShooterGameMode", "SaveForceRespawnDinosVersion"); };
-	void SetServerID(unsigned __int64 a0) { *(unsigned __int64*)GetAddress(this, "AShooterGameMode", "ServerID") = a0; };
-	unsigned __int64 GetServerID() const { return *(unsigned __int64*)GetAddress(this, "AShooterGameMode", "ServerID"); };
-	void SetLoadForceRespawnDinosVersion(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "LoadForceRespawnDinosVersion") = a0; };
-	int GetLoadForceRespawnDinosVersion() const { return *(int*)GetAddress(this, "AShooterGameMode", "LoadForceRespawnDinosVersion"); };
-	void SetbIsLoadedServer(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bIsLoadedServer") = a0; };
-	bool GetbIsLoadedServer() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bIsLoadedServer"); };
-	void SetSupportedSpawnRegions(TArray<int, FDefaultAllocator> a0) { *(TArray<int, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "SupportedSpawnRegions") = a0; };
-	TArray<int, FDefaultAllocator> GetSupportedSpawnRegions() const { return *(TArray<int, FDefaultAllocator>*)GetAddress(this, "AShooterGameMode", "SupportedSpawnRegions"); };
-	void SetbServerUseDinoList(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bServerUseDinoList") = a0; };
-	bool GetbServerUseDinoList() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bServerUseDinoList"); };
-	void SetMaxAllowedRespawnInterval(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "MaxAllowedRespawnInterval") = a0; };
-	float GetMaxAllowedRespawnInterval() const { return *(float*)GetAddress(this, "AShooterGameMode", "MaxAllowedRespawnInterval"); };
-	void SetbUseDinoLevelUpAnimations(bool a0) { *(bool*)GetAddress(this, "AShooterGameMode", "bUseDinoLevelUpAnimations") = a0; };
-	bool GetbUseDinoLevelUpAnimations() const { return *(bool*)GetAddress(this, "AShooterGameMode", "bUseDinoLevelUpAnimations"); };
-	void SetMinimumDinoReuploadInterval(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "MinimumDinoReuploadInterval") = a0; };
-	float GetMinimumDinoReuploadInterval() const { return *(float*)GetAddress(this, "AShooterGameMode", "MinimumDinoReuploadInterval"); };
-	void SetNPCCount(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "NPCCount") = a0; };
-	int GetNPCCount() const { return *(int*)GetAddress(this, "AShooterGameMode", "NPCCount"); };
-	void SetNPCActiveCount(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "NPCActiveCount") = a0; };
-	int GetNPCActiveCount() const { return *(int*)GetAddress(this, "AShooterGameMode", "NPCActiveCount"); };
-	void SetSaveGameCustomVersion(int a0) { *(int*)GetAddress(this, "AShooterGameMode", "SaveGameCustomVersion") = a0; };
-	int GetSaveGameCustomVersion() const { return *(int*)GetAddress(this, "AShooterGameMode", "SaveGameCustomVersion"); };
-	void SetOverrideOfficialDifficulty(float a0) { *(float*)GetAddress(this, "AShooterGameMode", "OverrideOfficialDifficulty") = a0; };
-	float GetOverrideOfficialDifficulty() const { return *(float*)GetAddress(this, "AShooterGameMode", "OverrideOfficialDifficulty"); };
+	/*float[12] GetPerLevelStatsMultiplier_PlayerField() const { return GetNativeField<float[12]>(this, "AShooterGameMode", "PerLevelStatsMultiplier_Player"); }
+	void SetPerLevelStatsMultiplier_PlayerField(float[12] newValue) { SetNativeField(this, "AShooterGameMode", "PerLevelStatsMultiplier_Player", newValue); }
+	float[12] GetPerLevelStatsMultiplier_DinoTamedField() const { return GetNativeField<float[12]>(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoTamed"); }
+	void SetPerLevelStatsMultiplier_DinoTamedField(float[12] newValue) { SetNativeField(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoTamed", newValue); }
+	float[12] GetPerLevelStatsMultiplier_DinoTamed_AddField() const { return GetNativeField<float[12]>(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoTamed_Add"); }
+	void SetPerLevelStatsMultiplier_DinoTamed_AddField(float[12] newValue) { SetNativeField(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoTamed_Add", newValue); }
+	float[12] GetPerLevelStatsMultiplier_DinoTamed_AffinityField() const { return GetNativeField<float[12]>(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoTamed_Affinity"); }
+	void SetPerLevelStatsMultiplier_DinoTamed_AffinityField(float[12] newValue) { SetNativeField(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoTamed_Affinity", newValue); }
+	float[12] GetPerLevelStatsMultiplier_DinoWildField() const { return GetNativeField<float[12]>(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoWild"); }
+	void SetPerLevelStatsMultiplier_DinoWildField(float[12] newValue) { SetNativeField(this, "AShooterGameMode", "PerLevelStatsMultiplier_DinoWild", newValue); }*/
+	bool GetbCustomGameModeAllowSpectatorJoinAfterMatchStartField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bCustomGameModeAllowSpectatorJoinAfterMatchStart"); }
+	void SetbCustomGameModeAllowSpectatorJoinAfterMatchStartField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bCustomGameModeAllowSpectatorJoinAfterMatchStart", newValue); }
+	FOutputDeviceFile GetGameplayLogFileField() const { return GetNativeField<FOutputDeviceFile>(this, "AShooterGameMode", "GameplayLogFile"); }
+	void SetGameplayLogFileField(FOutputDeviceFile newValue) { SetNativeField(this, "AShooterGameMode", "GameplayLogFile", newValue); }
+	FOutputDeviceFile GetServerGameLogFileField() const { return GetNativeField<FOutputDeviceFile>(this, "AShooterGameMode", "ServerGameLogFile"); }
+	void SetServerGameLogFileField(FOutputDeviceFile newValue) { SetNativeField(this, "AShooterGameMode", "ServerGameLogFile", newValue); }
+	bool GetbGameplayLogEnabledField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bGameplayLogEnabled"); }
+	void SetbGameplayLogEnabledField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bGameplayLogEnabled", newValue); }
+	bool GetbServerGameLogEnabledField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerGameLogEnabled"); }
+	void SetbServerGameLogEnabledField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerGameLogEnabled", newValue); }
+	TSubclassOf<UPrimalItem> GetBonusSupplyCrateItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "AShooterGameMode", "BonusSupplyCrateItemClass"); }
+	void SetBonusSupplyCrateItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "AShooterGameMode", "BonusSupplyCrateItemClass", newValue); }
+	float GetBonusSupplyCrateItemGiveIntervalField() const { return GetNativeField<float>(this, "AShooterGameMode", "BonusSupplyCrateItemGiveInterval"); }
+	void SetBonusSupplyCrateItemGiveIntervalField(float newValue) { SetNativeField(this, "AShooterGameMode", "BonusSupplyCrateItemGiveInterval", newValue); }
+	float GetStructureDamageRepairCooldownField() const { return GetNativeField<float>(this, "AShooterGameMode", "StructureDamageRepairCooldown"); }
+	void SetStructureDamageRepairCooldownField(float newValue) { SetNativeField(this, "AShooterGameMode", "StructureDamageRepairCooldown", newValue); }
+	float GetCustomRecipeEffectivenessMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "CustomRecipeEffectivenessMultiplier"); }
+	void SetCustomRecipeEffectivenessMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "CustomRecipeEffectivenessMultiplier", newValue); }
+	float GetCustomRecipeSkillMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "CustomRecipeSkillMultiplier"); }
+	void SetCustomRecipeSkillMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "CustomRecipeSkillMultiplier", newValue); }
+	FString GetBonusSupplyCrateItemStringField() const { return GetNativeField<FString>(this, "AShooterGameMode", "BonusSupplyCrateItemString"); }
+	void SetBonusSupplyCrateItemStringField(FString newValue) { SetNativeField(this, "AShooterGameMode", "BonusSupplyCrateItemString", newValue); }
+	bool GetbPvEAllowTribeWarField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPvEAllowTribeWar"); }
+	void SetbPvEAllowTribeWarField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPvEAllowTribeWar", newValue); }
+	bool GetbPvEAllowTribeWarCancelField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPvEAllowTribeWarCancel"); }
+	void SetbPvEAllowTribeWarCancelField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPvEAllowTribeWarCancel", newValue); }
+	bool GetbAllowCustomRecipesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowCustomRecipes"); }
+	void SetbAllowCustomRecipesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowCustomRecipes", newValue); }
+	bool GetbPassiveDefensesDamageRiderlessDinosField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPassiveDefensesDamageRiderlessDinos"); }
+	void SetbPassiveDefensesDamageRiderlessDinosField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPassiveDefensesDamageRiderlessDinos", newValue); }
+	long double GetLastBonusSupplyCrateItemGiveTimeField() const { return GetNativeField<long double>(this, "AShooterGameMode", "LastBonusSupplyCrateItemGiveTime"); }
+	void SetLastBonusSupplyCrateItemGiveTimeField(long double newValue) { SetNativeField(this, "AShooterGameMode", "LastBonusSupplyCrateItemGiveTime", newValue); }
+	bool GetbEnableDeathTeamSpectatorField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bEnableDeathTeamSpectator"); }
+	void SetbEnableDeathTeamSpectatorField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bEnableDeathTeamSpectator", newValue); }
+	bool GetbTribeStoreCharacterConfigurationField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bTribeStoreCharacterConfiguration"); }
+	void SetbTribeStoreCharacterConfigurationField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bTribeStoreCharacterConfiguration", newValue); }
+	TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> GetPvEActiveTribeWarsField() const { return GetNativeField<TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>>>(this, "AShooterGameMode", "PvEActiveTribeWars"); }
+	void SetPvEActiveTribeWarsField(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> newValue) { SetNativeField(this, "AShooterGameMode", "PvEActiveTribeWars", newValue); }
+	TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> GetTribeAlliesField() const { return GetNativeField<TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>>>(this, "AShooterGameMode", "TribeAllies"); }
+	void SetTribeAlliesField(TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0>> newValue) { SetNativeField(this, "AShooterGameMode", "TribeAllies", newValue); }
+	int GetMaxTribeLogsField() const { return GetNativeField<int>(this, "AShooterGameMode", "MaxTribeLogs"); }
+	void SetMaxTribeLogsField(int newValue) { SetNativeField(this, "AShooterGameMode", "MaxTribeLogs", newValue); }
+	TArray<FString, FDefaultAllocator> GetCachedGameLogField() const { return GetNativeField<TArray<FString, FDefaultAllocator>>(this, "AShooterGameMode", "CachedGameLog"); }
+	void SetCachedGameLogField(TArray<FString, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "CachedGameLog", newValue); }
+	bool GetbDisableFriendlyFireField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableFriendlyFire"); }
+	void SetbDisableFriendlyFireField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableFriendlyFire", newValue); }
+	bool GetbAllowInactiveTribesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowInactiveTribes"); }
+	void SetbAllowInactiveTribesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowInactiveTribes", newValue); }
+	bool GetbForceMapPlayerLocationField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bForceMapPlayerLocation"); }
+	void SetbForceMapPlayerLocationField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bForceMapPlayerLocation", newValue); }
+	float GetDinoHarvestingDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoHarvestingDamageMultiplier"); }
+	void SetDinoHarvestingDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoHarvestingDamageMultiplier", newValue); }
+	float GetPlayerHarvestingDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "PlayerHarvestingDamageMultiplier"); }
+	void SetPlayerHarvestingDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "PlayerHarvestingDamageMultiplier", newValue); }
+	float GetDinoTurretDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "DinoTurretDamageMultiplier"); }
+	void SetDinoTurretDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "DinoTurretDamageMultiplier", newValue); }
+	bool GetbDisableLootCratesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableLootCrates"); }
+	void SetbDisableLootCratesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableLootCrates", newValue); }
+	float GetExtinctionEventTimeIntervalField() const { return GetNativeField<float>(this, "AShooterGameMode", "ExtinctionEventTimeInterval"); }
+	void SetExtinctionEventTimeIntervalField(float newValue) { SetNativeField(this, "AShooterGameMode", "ExtinctionEventTimeInterval", newValue); }
+	bool GetbEnableExtraStructurePreventionVolumesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bEnableExtraStructurePreventionVolumes"); }
+	void SetbEnableExtraStructurePreventionVolumesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bEnableExtraStructurePreventionVolumes", newValue); }
+	unsigned int GetNextExtinctionEventUTCField() const { return GetNativeField<unsigned int>(this, "AShooterGameMode", "NextExtinctionEventUTC"); }
+	void SetNextExtinctionEventUTCField(unsigned int newValue) { SetNativeField(this, "AShooterGameMode", "NextExtinctionEventUTC", newValue); }
+	bool GetbForceAllowCaveFlyersField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bForceAllowCaveFlyers"); }
+	void SetbForceAllowCaveFlyersField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bForceAllowCaveFlyers", newValue); }
+	bool GetbDoExtinctionEventField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDoExtinctionEvent"); }
+	void SetbDoExtinctionEventField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDoExtinctionEvent", newValue); }
+	bool GetbPreventOfflinePvPField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventOfflinePvP"); }
+	void SetbPreventOfflinePvPField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventOfflinePvP", newValue); }
+	bool GetbPvPDinoDecayField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPvPDinoDecay"); }
+	void SetbPvPDinoDecayField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPvPDinoDecay", newValue); }
+	bool GetbOverideStructurePlatformPreventionField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bOverideStructurePlatformPrevention"); }
+	void SetbOverideStructurePlatformPreventionField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bOverideStructurePlatformPrevention", newValue); }
+	bool GetbAllowAnyoneBabyImprintCuddleField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowAnyoneBabyImprintCuddle"); }
+	void SetbAllowAnyoneBabyImprintCuddleField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowAnyoneBabyImprintCuddle", newValue); }
+	bool GetbDisableImprintDinoBuffField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDisableImprintDinoBuff"); }
+	void SetbDisableImprintDinoBuffField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDisableImprintDinoBuff", newValue); }
+	bool GetbShowFloatingDamageTextField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bShowFloatingDamageText"); }
+	void SetbShowFloatingDamageTextField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bShowFloatingDamageText", newValue); }
+	bool GetbOnlyDecayUnsnappedCoreStructuresField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bOnlyDecayUnsnappedCoreStructures"); }
+	void SetbOnlyDecayUnsnappedCoreStructuresField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bOnlyDecayUnsnappedCoreStructures", newValue); }
+	bool GetbFastDecayUnsnappedCoreStructuresField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bFastDecayUnsnappedCoreStructures"); }
+	void SetbFastDecayUnsnappedCoreStructuresField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bFastDecayUnsnappedCoreStructures", newValue); }
+	bool GetbDestroyUnconnectedWaterPipesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bDestroyUnconnectedWaterPipes"); }
+	void SetbDestroyUnconnectedWaterPipesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bDestroyUnconnectedWaterPipes", newValue); }
+	bool GetbAllowCrateSpawnsOnTopOfStructuresField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bAllowCrateSpawnsOnTopOfStructures"); }
+	void SetbAllowCrateSpawnsOnTopOfStructuresField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bAllowCrateSpawnsOnTopOfStructures", newValue); }
+	float GetPreventOfflinePvPIntervalField() const { return GetNativeField<float>(this, "AShooterGameMode", "PreventOfflinePvPInterval"); }
+	void SetPreventOfflinePvPIntervalField(float newValue) { SetNativeField(this, "AShooterGameMode", "PreventOfflinePvPInterval", newValue); }
+
+	/*TArray<FItemCraftingCostOverride, FDefaultAllocator> GetOverrideItemCraftingCostsField() const { return GetNativeField<TArray<FItemCraftingCostOverride, FDefaultAllocator>>(this, "AShooterGameMode", "OverrideItemCraftingCosts"); }
+	void SetOverrideItemCraftingCostsField(TArray<FItemCraftingCostOverride, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "OverrideItemCraftingCosts", newValue); }
+	TArray<FConfigItemCraftingCostOverride, FDefaultAllocator> GetConfigOverrideItemCraftingCostsField() const { return GetNativeField<TArray<FConfigItemCraftingCostOverride, FDefaultAllocator>>(this, "AShooterGameMode", "ConfigOverrideItemCraftingCosts"); }
+	void SetConfigOverrideItemCraftingCostsField(TArray<FConfigItemCraftingCostOverride, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "ConfigOverrideItemCraftingCosts", newValue); }
+	TArray<FConfigSupplyCrateItemsOverride, FDefaultAllocator> GetConfigOverrideSupplyCrateItemsField() const { return GetNativeField<TArray<FConfigSupplyCrateItemsOverride, FDefaultAllocator>>(this, "AShooterGameMode", "ConfigOverrideSupplyCrateItems"); }
+	void SetConfigOverrideSupplyCrateItemsField(TArray<FConfigSupplyCrateItemsOverride, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "ConfigOverrideSupplyCrateItems", newValue); }
+	TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> GetConfigOverrideNPCSpawnEntriesContainerField() const { return GetNativeField<TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>>(this, "AShooterGameMode", "ConfigOverrideNPCSpawnEntriesContainer"); }
+	void SetConfigOverrideNPCSpawnEntriesContainerField(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "ConfigOverrideNPCSpawnEntriesContainer", newValue); }
+	TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> GetConfigAddNPCSpawnEntriesContainerField() const { return GetNativeField<TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>>(this, "AShooterGameMode", "ConfigAddNPCSpawnEntriesContainer"); }
+	void SetConfigAddNPCSpawnEntriesContainerField(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "ConfigAddNPCSpawnEntriesContainer", newValue); }
+	TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> GetConfigSubtractNPCSpawnEntriesContainerField() const { return GetNativeField<TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator>>(this, "AShooterGameMode", "ConfigSubtractNPCSpawnEntriesContainer"); }
+	void SetConfigSubtractNPCSpawnEntriesContainerField(TArray<FConfigNPCSpawnEntriesContainer, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "ConfigSubtractNPCSpawnEntriesContainer", newValue); }
+	float GetBabyImprintingStatScaleMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "BabyImprintingStatScaleMultiplier"); }*/
+	void SetBabyImprintingStatScaleMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "BabyImprintingStatScaleMultiplier", newValue); }
+	float GetBabyCuddleIntervalMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "BabyCuddleIntervalMultiplier"); }
+	void SetBabyCuddleIntervalMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "BabyCuddleIntervalMultiplier", newValue); }
+	float GetBabyCuddleGracePeriodMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "BabyCuddleGracePeriodMultiplier"); }
+	void SetBabyCuddleGracePeriodMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "BabyCuddleGracePeriodMultiplier", newValue); }
+	float GetBabyCuddleLoseImprintQualitySpeedMultiplierField() const { return GetNativeField<float>(this, "AShooterGameMode", "BabyCuddleLoseImprintQualitySpeedMultiplier"); }
+	void SetBabyCuddleLoseImprintQualitySpeedMultiplierField(float newValue) { SetNativeField(this, "AShooterGameMode", "BabyCuddleLoseImprintQualitySpeedMultiplier", newValue); }
+	bool GetbPreventDiseasesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bPreventDiseases"); }
+	void SetbPreventDiseasesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bPreventDiseases", newValue); }
+	bool GetbNonPermanentDiseasesField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bNonPermanentDiseases"); }
+	void SetbNonPermanentDiseasesField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bNonPermanentDiseases", newValue); }
+	int GetSaveForceRespawnDinosVersionField() const { return GetNativeField<int>(this, "AShooterGameMode", "SaveForceRespawnDinosVersion"); }
+	void SetSaveForceRespawnDinosVersionField(int newValue) { SetNativeField(this, "AShooterGameMode", "SaveForceRespawnDinosVersion", newValue); }
+	unsigned __int64 GetServerIDField() const { return GetNativeField<unsigned __int64>(this, "AShooterGameMode", "ServerID"); }
+	void SetServerIDField(unsigned __int64 newValue) { SetNativeField(this, "AShooterGameMode", "ServerID", newValue); }
+	int GetLoadForceRespawnDinosVersionField() const { return GetNativeField<int>(this, "AShooterGameMode", "LoadForceRespawnDinosVersion"); }
+	void SetLoadForceRespawnDinosVersionField(int newValue) { SetNativeField(this, "AShooterGameMode", "LoadForceRespawnDinosVersion", newValue); }
+	bool GetbIsLoadedServerField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bIsLoadedServer"); }
+	void SetbIsLoadedServerField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bIsLoadedServer", newValue); }
+	TArray<int, FDefaultAllocator> GetSupportedSpawnRegionsField() const { return GetNativeField<TArray<int, FDefaultAllocator>>(this, "AShooterGameMode", "SupportedSpawnRegions"); }
+	void SetSupportedSpawnRegionsField(TArray<int, FDefaultAllocator> newValue) { SetNativeField(this, "AShooterGameMode", "SupportedSpawnRegions", newValue); }
+	bool GetbServerUseDinoListField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bServerUseDinoList"); }
+	void SetbServerUseDinoListField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bServerUseDinoList", newValue); }
+	float GetMaxAllowedRespawnIntervalField() const { return GetNativeField<float>(this, "AShooterGameMode", "MaxAllowedRespawnInterval"); }
+	void SetMaxAllowedRespawnIntervalField(float newValue) { SetNativeField(this, "AShooterGameMode", "MaxAllowedRespawnInterval", newValue); }
+	bool GetbUseDinoLevelUpAnimationsField() const { return GetNativeField<bool>(this, "AShooterGameMode", "bUseDinoLevelUpAnimations"); }
+	void SetbUseDinoLevelUpAnimationsField(bool newValue) { SetNativeField(this, "AShooterGameMode", "bUseDinoLevelUpAnimations", newValue); }
+	float GetMinimumDinoReuploadIntervalField() const { return GetNativeField<float>(this, "AShooterGameMode", "MinimumDinoReuploadInterval"); }
+	void SetMinimumDinoReuploadIntervalField(float newValue) { SetNativeField(this, "AShooterGameMode", "MinimumDinoReuploadInterval", newValue); }
+	int GetNPCCountField() const { return GetNativeField<int>(this, "AShooterGameMode", "NPCCount"); }
+	void SetNPCCountField(int newValue) { SetNativeField(this, "AShooterGameMode", "NPCCount", newValue); }
+	int GetNPCActiveCountField() const { return GetNativeField<int>(this, "AShooterGameMode", "NPCActiveCount"); }
+	void SetNPCActiveCountField(int newValue) { SetNativeField(this, "AShooterGameMode", "NPCActiveCount", newValue); }
+	int GetSaveGameCustomVersionField() const { return GetNativeField<int>(this, "AShooterGameMode", "SaveGameCustomVersion"); }
+	void SetSaveGameCustomVersionField(int newValue) { SetNativeField(this, "AShooterGameMode", "SaveGameCustomVersion", newValue); }
+	float GetOverrideOfficialDifficultyField() const { return GetNativeField<float>(this, "AShooterGameMode", "OverrideOfficialDifficulty"); }
+	void SetOverrideOfficialDifficultyField(float newValue) { SetNativeField(this, "AShooterGameMode", "OverrideOfficialDifficulty", newValue); }
+	FOutputDeviceFile GetDinoDupeIDLogFileField() const { return GetNativeField<FOutputDeviceFile>(this, "AShooterGameMode", "DinoDupeIDLogFile"); }
+	void SetDinoDupeIDLogFileField(FOutputDeviceFile newValue) { SetNativeField(this, "AShooterGameMode", "DinoDupeIDLogFile", newValue); }
 
 	// Functions
 
-	AActor* ChoosePlayerStart_Implementation(AController* a1) { return static_cast<AActor*(_cdecl*)(DWORD64, AController*)>(GetAddress("AShooterGameMode", "ChoosePlayerStart_Implementation"))((DWORD64)this, a1); }
-	bool ShouldSpawnAtStartSpot_Implementation(AController* a1) { return static_cast<bool(_cdecl*)(DWORD64, AController*)>(GetAddress("AShooterGameMode", "ShouldSpawnAtStartSpot_Implementation"))((DWORD64)this, a1); }
-	float ModifyDamage(float a1, AActor* a2, const FDamageEvent& a3, AController* a4, AActor* a5) { return static_cast<float(_cdecl*)(DWORD64, float, AActor*, const FDamageEvent&, AController*, AActor*)>(GetAddress("AShooterGameMode", "ModifyDamage"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	void Killed(AController* a1, AController* a2, APawn* a3, const UDamageType* a4) { static_cast<void(_cdecl*)(DWORD64, AController*, AController*, APawn*, const UDamageType*)>(GetAddress("AShooterGameMode", "Killed"))((DWORD64)this, a1, a2, a3, a4); }
-	bool CanDealDamage(AShooterPlayerState* a1, AShooterPlayerState* a2) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerState*, AShooterPlayerState*)>(GetAddress("AShooterGameMode", "CanDealDamage"))((DWORD64)this, a1, a2); }
-	bool AllowCheats(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AShooterGameMode", "AllowCheats"))((DWORD64)this, a1); }
-	void CheckForRepopulation() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "CheckForRepopulation"))((DWORD64)this); }
-	void SetMessageOfTheDay(const FString& a1) { static_cast<void(_cdecl*)(DWORD64, const FString&)>(GetAddress("AShooterGameMode", "SetMessageOfTheDay"))((DWORD64)this, a1); }
-	void ShowMessageOfTheDay() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "ShowMessageOfTheDay"))((DWORD64)this); }
-	void SaveWorld() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "SaveWorld"))((DWORD64)this); }
-	bool LoadWorld() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "LoadWorld"))((DWORD64)this); }
-	void ClearSavesAndRestart() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "ClearSavesAndRestart"))((DWORD64)this); }
-	void DeletePlayerData(AShooterPlayerState* a1) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerState*)>(GetAddress("AShooterGameMode", "DeletePlayerData"))((DWORD64)this, a1); }
-	void GetServerNotification() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "GetServerNotification"))((DWORD64)this); }
-	bool KickPlayer(FString a1, FString a2) { return static_cast<bool(_cdecl*)(DWORD64, FString, FString)>(GetAddress("AShooterGameMode", "KickPlayer"))((DWORD64)this, a1, a2); }
-	bool BanPlayer(FString a1, FString a2) { return static_cast<bool(_cdecl*)(DWORD64, FString, FString)>(GetAddress("AShooterGameMode", "BanPlayer"))((DWORD64)this, a1, a2); }
-	bool UnbanPlayer(FString a1, FString a2) { return static_cast<bool(_cdecl*)(DWORD64, FString, FString)>(GetAddress("AShooterGameMode", "UnbanPlayer"))((DWORD64)this, a1, a2); }
-	void KickAllPlayersAndReload() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "KickAllPlayersAndReload"))((DWORD64)this); }
-	void SaveBannedList() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "SaveBannedList"))((DWORD64)this); }
-	void LoadBannedList() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "LoadBannedList"))((DWORD64)this); }
-	void SavePlayersJoinNoCheckList() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "SavePlayersJoinNoCheckList"))((DWORD64)this); }
-	void LoadPlayersJoinNoCheckList() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "LoadPlayersJoinNoCheckList"))((DWORD64)this); }
-	bool IsPlayerAllowedToJoinNoCheck(const FUniqueNetIdUInt64& a1) { return static_cast<bool(_cdecl*)(DWORD64, const FUniqueNetIdUInt64&)>(GetAddress("AShooterGameMode", "IsPlayerAllowedToJoinNoCheck"))((DWORD64)this, a1); }
-	void CheckArkTributeAvailability() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "CheckArkTributeAvailability"))((DWORD64)this); }
-	bool IsSpawnpointAllowed(APlayerStart* a1, AController* a2) { return static_cast<bool(_cdecl*)(DWORD64, APlayerStart*, AController*)>(GetAddress("AShooterGameMode", "IsSpawnpointAllowed"))((DWORD64)this, a1, a2); }
-	bool IsSpawnpointPreferred(APlayerStart* a1, AController* a2) { return static_cast<bool(_cdecl*)(DWORD64, APlayerStart*, AController*)>(GetAddress("AShooterGameMode", "IsSpawnpointPreferred"))((DWORD64)this, a1, a2); }
-	void HandleLeavingMap() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "HandleLeavingMap"))((DWORD64)this); }
-	bool ReadyToStartMatch() { return static_cast<bool(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "ReadyToStartMatch"))((DWORD64)this); }
-	void CheckIsOfficialServer() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "CheckIsOfficialServer"))((DWORD64)this); }
-	void StartNewPlayer(APlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AShooterGameMode", "StartNewPlayer"))((DWORD64)this, a1); }
-	UPrimalPlayerData* GetPlayerData(const FString& a1) { return static_cast<UPrimalPlayerData*(_cdecl*)(DWORD64, const FString&)>(GetAddress("AShooterGameMode", "GetPlayerData"))((DWORD64)this, a1); }
-	APawn* SpawnDefaultPawnFor(AController* a1, AActor* a2) { return static_cast<APawn*(_cdecl*)(DWORD64, AController*, AActor*)>(GetAddress("AShooterGameMode", "SpawnDefaultPawnFor"))((DWORD64)this, a1, a2); }
-	unsigned __int64 AddNewTribe(AShooterPlayerState* a1, const FString& a2, const FTribeGovernment& a3) { return static_cast<unsigned __int64(_cdecl*)(DWORD64, AShooterPlayerState*, const FString&, const FTribeGovernment&)>(GetAddress("AShooterGameMode", "AddNewTribe"))((DWORD64)this, a1, a2, a3); }
-	void RemoveTribe(unsigned __int64 a1) { static_cast<void(_cdecl*)(DWORD64, unsigned __int64)>(GetAddress("AShooterGameMode", "RemoveTribe"))((DWORD64)this, a1); }
-	void RemovePlayerFromTribe(unsigned __int64 a1, unsigned __int64 a2, bool a3) { static_cast<void(_cdecl*)(DWORD64, unsigned __int64, unsigned __int64, bool)>(GetAddress("AShooterGameMode", "RemovePlayerFromTribe"))((DWORD64)this, a1, a2, a3); }
-	int GetTribeIDOfPlayerID(unsigned __int64 a1) { return static_cast<int(_cdecl*)(DWORD64, unsigned __int64)>(GetAddress("AShooterGameMode", "GetTribeIDOfPlayerID"))((DWORD64)this, a1); }
-	void HandleTransferCharacterDialogResult(bool a1, AShooterPlayerController* a2) { static_cast<void(_cdecl*)(DWORD64, bool, AShooterPlayerController*)>(GetAddress("AShooterGameMode", "HandleTransferCharacterDialogResult"))((DWORD64)this, a1, a2); }
-	void Logout(AController* a1) { static_cast<void(_cdecl*)(DWORD64, AController*)>(GetAddress("AShooterGameMode", "Logout"))((DWORD64)this, a1); }
-	bool IsFirstPlayerSpawn(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AShooterGameMode", "IsFirstPlayerSpawn"))((DWORD64)this, a1); }
-	TArray<FString, FDefaultAllocator> GetWhiteListedMap() { return static_cast<TArray<FString, FDefaultAllocator>(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "GetWhiteListedMap"))((DWORD64)this); }
-	bool GetOrLoadTribeData(int a1, FTribeData& a2) { return static_cast<bool(_cdecl*)(DWORD64, int, FTribeData&)>(GetAddress("AShooterGameMode", "GetOrLoadTribeData"))((DWORD64)this, a1, a2); }
-	void LoadTribeIds() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "LoadTribeIds"))((DWORD64)this); }
-	void LoadPlayerDataIds() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "LoadPlayerDataIds"))((DWORD64)this); }
-	unsigned int GenerateTribeId() { return static_cast<unsigned int(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "GenerateTribeId"))((DWORD64)this); }
-	unsigned int GeneratePlayerDataId(unsigned __int64 a1) { return static_cast<unsigned int(_cdecl*)(DWORD64, unsigned __int64)>(GetAddress("AShooterGameMode", "GeneratePlayerDataId"))((DWORD64)this, a1); }
-	void SendServerChatMessage(const FString& a1, FLinearColor a2, bool a3, int a4, int a5) { static_cast<void(_cdecl*)(DWORD64, const FString&, FLinearColor, bool, int, int)>(GetAddress("AShooterGameMode", "SendServerChatMessage"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	void SendServerDirectMessage(const FString& a1, const FString& a2, FLinearColor a3, bool a4, int a5, int a6, const FString& a7) { static_cast<void(_cdecl*)(DWORD64, const FString&, const FString&, FLinearColor, bool, int, int, const FString&)>(GetAddress("AShooterGameMode", "SendServerDirectMessage"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7); }
-	float GetDinoDamageMultiplier(APrimalDinoCharacter* a1) { return static_cast<float(_cdecl*)(DWORD64, APrimalDinoCharacter*)>(GetAddress("AShooterGameMode", "GetDinoDamageMultiplier"))((DWORD64)this, a1); }
-	float GetDinoResistanceMultiplier(APrimalDinoCharacter* a1) { return static_cast<float(_cdecl*)(DWORD64, APrimalDinoCharacter*)>(GetAddress("AShooterGameMode", "GetDinoResistanceMultiplier"))((DWORD64)this, a1); }
-	void ListenServerClampPlayerLocations() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "ListenServerClampPlayerLocations"))((DWORD64)this); }
-	FString* ValidateTribeName(FString* res, FString a1) { return static_cast<FString*(_cdecl*)(DWORD64, FString*, FString)>(GetAddress("AShooterGameMode", "ValidateTribeName"))((DWORD64)this, res, a1); }
-	void AdjustDamage(AActor* a1, float& a2, const FDamageEvent& a3, AController* a4, AActor* a5) { static_cast<void(_cdecl*)(DWORD64, AActor*, float&, const FDamageEvent&, AController*, AActor*)>(GetAddress("AShooterGameMode", "AdjustDamage"))((DWORD64)this, a1, a2, a3, a4, a5); }
-	bool AllowAddToTribe(AShooterPlayerState* a1, const FTribeData& a2) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerState*, const FTribeData&)>(GetAddress("AShooterGameMode", "AllowAddToTribe"))((DWORD64)this, a1, a2); }
-	bool AllowClearTribe(AShooterPlayerState* a1) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerState*)>(GetAddress("AShooterGameMode", "AllowClearTribe"))((DWORD64)this, a1); }
-	bool AllowRenameTribe(AShooterPlayerState* a1, const FString& a2) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerState*, const FString&)>(GetAddress("AShooterGameMode", "AllowRenameTribe"))((DWORD64)this, a1, a2); }
-	bool AllowNotifyRemotePlayerDeath(AShooterCharacter* a1) { return static_cast<bool(_cdecl*)(DWORD64, AShooterCharacter*)>(GetAddress("AShooterGameMode", "AllowNotifyRemotePlayerDeath"))((DWORD64)this, a1); }
-	bool AllowSpectatorJoinAfterMatchStart(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AShooterGameMode", "AllowSpectatorJoinAfterMatchStart"))((DWORD64)this, a1); }
-	bool IsUsedSpawnPointStillSupported(APlayerStart* a1, AController* a2) { return static_cast<bool(_cdecl*)(DWORD64, APlayerStart*, AController*)>(GetAddress("AShooterGameMode", "IsUsedSpawnPointStillSupported"))((DWORD64)this, a1, a2); }
-	void SetTimeOfDay(const FString& a1) { static_cast<void(_cdecl*)(DWORD64, const FString&)>(GetAddress("AShooterGameMode", "SetTimeOfDay"))((DWORD64)this, a1); }
-	bool PlayerCanRestart(APlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, APlayerController*)>(GetAddress("AShooterGameMode", "PlayerCanRestart"))((DWORD64)this, a1); }
-	void KickPlayerController(APlayerController* a1, const FString& a2) { static_cast<void(_cdecl*)(DWORD64, APlayerController*, const FString&)>(GetAddress("AShooterGameMode", "KickPlayerController"))((DWORD64)this, a1, a2); }
-	bool HandleNewPlayer(AShooterPlayerController* a1, UPrimalPlayerData* a2, AShooterCharacter* a3, bool a4) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*, UPrimalPlayerData*, AShooterCharacter*, bool)>(GetAddress("AShooterGameMode", "HandleNewPlayer"))((DWORD64)this, a1, a2, a3, a4); }
-	bool IsPlayerAllowedToCheat(AShooterPlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("AShooterGameMode", "IsPlayerAllowedToCheat"))((DWORD64)this, a1); }
-	bool IsPlayerControllerAllowedToJoinNoCheck(AShooterPlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("AShooterGameMode", "IsPlayerControllerAllowedToJoinNoCheck"))((DWORD64)this, a1); }
-	bool IsPlayerControllerAllowedToExclusiveJoin(AShooterPlayerController* a1) { return static_cast<bool(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("AShooterGameMode", "IsPlayerControllerAllowedToExclusiveJoin"))((DWORD64)this, a1); }
-	void PrintToGameplayLog(const FString& a1) { static_cast<void(_cdecl*)(DWORD64, const FString&)>(GetAddress("AShooterGameMode", "PrintToGameplayLog"))((DWORD64)this, a1); }
-	void PrintToServerGameLog(const FString& a1) { static_cast<void(_cdecl*)(DWORD64, const FString&)>(GetAddress("AShooterGameMode", "PrintToServerGameLog"))((DWORD64)this, a1); }
-	void LoadedFromSaveGame() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "LoadedFromSaveGame"))((DWORD64)this); }
-	void RemoveInactivePlayersAndTribes() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "RemoveInactivePlayersAndTribes"))((DWORD64)this); }
-	bool IsTribeWar(int a1, int a2) { return static_cast<bool(_cdecl*)(DWORD64, int, int)>(GetAddress("AShooterGameMode", "IsTribeWar"))((DWORD64)this, a1, a2); }
-	void UpdateTribeWars() { static_cast<void(_cdecl*)(DWORD64)>(GetAddress("AShooterGameMode", "UpdateTribeWars"))((DWORD64)this); }
-	void AddToTribeLog(int a1, const FString& a2) { static_cast<void(_cdecl*)(DWORD64, int, const FString&)>(GetAddress("AShooterGameMode", "AddToTribeLog"))((DWORD64)this, a1, a2); }
-	int ForceCreateTribe(const FString& a1, int a2) { return static_cast<int(_cdecl*)(DWORD64, const FString&, int)>(GetAddress("AShooterGameMode", "ForceCreateTribe"))((DWORD64)this, a1, a2); }
-	int ForceAddPlayerToTribe(AShooterPlayerState* a1, const FString& a2) { return static_cast<int(_cdecl*)(DWORD64, AShooterPlayerState*, const FString&)>(GetAddress("AShooterGameMode", "ForceAddPlayerToTribe"))((DWORD64)this, a1, a2); }
-	int GetNumberOfLivePlayersOnTribe(const FString& a1) { return static_cast<int(_cdecl*)(DWORD64, const FString&)>(GetAddress("AShooterGameMode", "GetNumberOfLivePlayersOnTribe"))((DWORD64)this, a1); }
-	bool TriggerLevelCustomEvents(UWorld* a1, const FString& a2) { return static_cast<bool(_cdecl*)(DWORD64, UWorld*, const FString&)>(GetAddress("AShooterGameMode", "TriggerLevelCustomEvents"))((DWORD64)this, a1, a2); }
-	bool AreTribesAllied(int a1, int a2) { return static_cast<bool(_cdecl*)(DWORD64, int, int)>(GetAddress("AShooterGameMode", "AreTribesAllied"))((DWORD64)this, a1, a2); }
-	void AddTribeWar(int a1, int a2, int a3, int a4, float a5, float a6, bool a7) { static_cast<void(_cdecl*)(DWORD64, int, int, int, int, float, float, bool)>(GetAddress("AShooterGameMode", "AddTribeWar"))((DWORD64)this, a1, a2, a3, a4, a5, a6, a7); }
-	void AddPlayerID(int a1, unsigned __int64 a2) { static_cast<void(_cdecl*)(DWORD64, int, unsigned __int64)>(GetAddress("AShooterGameMode", "AddPlayerID"))((DWORD64)this, a1, a2); }
-	unsigned __int64 GetSteamIDForPlayerID(int a1) { return static_cast<unsigned __int64(_cdecl*)(DWORD64, int)>(GetAddress("AShooterGameMode", "GetSteamIDForPlayerID"))((DWORD64)this, a1); }
-	void DownloadTransferredPlayer(AShooterPlayerController* a1) { static_cast<void(_cdecl*)(DWORD64, AShooterPlayerController*)>(GetAddress("AShooterGameMode", "DownloadTransferredPlayer"))((DWORD64)this, a1); }
+	bool AllowAddXP(UPrimalCharacterStatusComponent* forComp) { return NativeCall<bool, UPrimalCharacterStatusComponent *>((DWORD64)this, "AShooterGameMode", "AllowAddXP", forComp); }
+	void CheckArkTributeAvailability() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "CheckArkTributeAvailability"); }
+	void ArkTributeAvailabilityRequestComplete() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "ArkTributeAvailabilityRequestComplete"); }
+	void InitGame(FString* MapName, FString* Options, FString* ErrorMessage) { NativeCall<void, FString *, FString *, FString *>((DWORD64)this, "AShooterGameMode", "InitGame", MapName, Options, ErrorMessage); }
+	void InitOptionBool() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "InitOptionBool"); }
+	void InitOptionString() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "InitOptionString"); }
+	void InitOptionFloat() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "InitOptionFloat"); }
+	void InitOptionInteger() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "InitOptionInteger"); }
+	bool GetBoolOption(FString* Options, FString* ParseString, bool CurrentValue) { return NativeCall<bool, FString *, FString *, bool>((DWORD64)this, "AShooterGameMode", "GetBoolOption", Options, ParseString, CurrentValue); }
+	float GetFloatOption(FString* Options, FString* ParseString, float CurrentValue) { return NativeCall<float, FString *, FString *, float>((DWORD64)this, "AShooterGameMode", "GetFloatOption", Options, ParseString, CurrentValue); }
+	int GetIntOption(FString* Options, FString* ParseString, int CurrentValue) { return NativeCall<int, FString *, FString *, int>((DWORD64)this, "AShooterGameMode", "GetIntOption", Options, ParseString, CurrentValue); }
+	void InitOptions() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "InitOptions"); }
+	float GetFloatOptionIni() { return NativeCall<float>((DWORD64)this, "AShooterGameMode", "GetFloatOptionIni"); }
+	int GetIntOptionIni() { return NativeCall<int>((DWORD64)this, "AShooterGameMode", "GetIntOptionIni"); }
+	FString* GetStringOption() { return NativeCall<FString *>((DWORD64)this, "AShooterGameMode", "GetStringOption"); }
+	void SaveWorld() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "SaveWorld"); }
+	void ClearSavesAndRestart() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "ClearSavesAndRestart"); }
+	bool LoadWorld() { return NativeCall<bool>((DWORD64)this, "AShooterGameMode", "LoadWorld"); }
+	TSubclassOf<AGameSession>* GetGameSessionClass(TSubclassOf<AGameSession>* result) { return NativeCall<TSubclassOf<AGameSession> *, TSubclassOf<AGameSession> *>((DWORD64)this, "AShooterGameMode", "GetGameSessionClass", result); }
+	void HandleMatchHasStarted() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "HandleMatchHasStarted"); }
+	void HandleLeavingMap() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "HandleLeavingMap"); }
+	void PostLogin(APlayerController* NewPlayer) { NativeCall<void, APlayerController *>((DWORD64)this, "AShooterGameMode", "PostLogin", NewPlayer); }
+	TArray<FString, FDefaultAllocator>* GetWhiteListedMap(TArray<FString, FDefaultAllocator>* result) { return NativeCall<TArray<FString, FDefaultAllocator> *, TArray<FString, FDefaultAllocator> *>((DWORD64)this, "AShooterGameMode", "GetWhiteListedMap", result); }
+	void Killed(AController* Killer, AController* KilledPlayer, APawn* KilledPawn, UDamageType* DamageType) { NativeCall<void, AController *, AController *, APawn *, UDamageType *>((DWORD64)this, "AShooterGameMode", "Killed", Killer, KilledPlayer, KilledPawn, DamageType); }
+	TSubclassOf<UObject>* GetDefaultPawnClassForController_Implementation(TSubclassOf<UObject>* result, AController* InController) { return NativeCall<TSubclassOf<UObject> *, TSubclassOf<UObject> *, AController *>((DWORD64)this, "AShooterGameMode", "GetDefaultPawnClassForController_Implementation", result, InController); }
+	AActor* ChoosePlayerStart_Implementation(AController* Player) { return NativeCall<AActor *, AController *>((DWORD64)this, "AShooterGameMode", "ChoosePlayerStart_Implementation", Player); }
+	bool IsSpawnpointPreferred(APlayerStart* SpawnPoint, AController* Player) { return NativeCall<bool, APlayerStart *, AController *>((DWORD64)this, "AShooterGameMode", "IsSpawnpointPreferred", SpawnPoint, Player); }
+	bool IsFirstPlayerSpawn(APlayerController* NewPlayer) { return NativeCall<bool, APlayerController *>((DWORD64)this, "AShooterGameMode", "IsFirstPlayerSpawn", NewPlayer); }
+	UPrimalPlayerData* GetPlayerData(FString* PlayerDataID) { return NativeCall<UPrimalPlayerData *, FString *>((DWORD64)this, "AShooterGameMode", "GetPlayerData", PlayerDataID); }
+	void StartNewPlayer(APlayerController* NewPlayer) { NativeCall<void, APlayerController *>((DWORD64)this, "AShooterGameMode", "StartNewPlayer", NewPlayer); }
+	void StartNewShooterPlayer(APlayerController* NewPlayer, bool bForceCreateNewPlayerData, bool bIsFromLogin, FPrimalPlayerCharacterConfigStruct* charConfig, UPrimalPlayerData* ArkPlayerData) { NativeCall<void, APlayerController *, bool, bool, FPrimalPlayerCharacterConfigStruct *, UPrimalPlayerData *>((DWORD64)this, "AShooterGameMode", "StartNewShooterPlayer", NewPlayer, bForceCreateNewPlayerData, bIsFromLogin, charConfig, ArkPlayerData); }
+	void HandleTransferCharacterDialogResult(bool bAccept, AShooterPlayerController* NewPlayer) { NativeCall<void, bool, AShooterPlayerController *>((DWORD64)this, "AShooterGameMode", "HandleTransferCharacterDialogResult", bAccept, NewPlayer); }
+	void Logout(AController* Exiting) { NativeCall<void, AController *>((DWORD64)this, "AShooterGameMode", "Logout", Exiting); }
+	FVector* GetTracedSpawnLocation(FVector* result, FVector* SpawnLoc, float CharHalfHeight) { return NativeCall<FVector *, FVector *, FVector *, float>((DWORD64)this, "AShooterGameMode", "GetTracedSpawnLocation", result, SpawnLoc, CharHalfHeight); }
+	void SetMessageOfTheDay(FString* Message) { NativeCall<void, FString *>((DWORD64)this, "AShooterGameMode", "SetMessageOfTheDay", Message); }
+	void ShowMessageOfTheDay() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "ShowMessageOfTheDay"); }
+	APawn* SpawnDefaultPawnFor(AController* NewPlayer, AActor* StartSpot) { return NativeCall<APawn *, AController *, AActor *>((DWORD64)this, "AShooterGameMode", "SpawnDefaultPawnFor", NewPlayer, StartSpot); }
+	FPrimalPlayerCharacterConfigStruct* ValidateCharacterConfig(FPrimalPlayerCharacterConfigStruct* result, FPrimalPlayerCharacterConfigStruct* charConfig) { return NativeCall<FPrimalPlayerCharacterConfigStruct *, FPrimalPlayerCharacterConfigStruct *, FPrimalPlayerCharacterConfigStruct *>((DWORD64)this, "AShooterGameMode", "ValidateCharacterConfig", result, charConfig); }
+	FString* GenerateProfileFileName(FString* result, FUniqueNetIdRepl* UniqueId, FString* NetworkAddresss, FString* PlayerName) { return NativeCall<FString *, FString *, FUniqueNetIdRepl *, FString *, FString *>((DWORD64)this, "AShooterGameMode", "GenerateProfileFileName", result, UniqueId, NetworkAddresss, PlayerName); }
+	UPrimalPlayerData* LoadPlayerData(AShooterPlayerState* PlayerState, bool bIsLoadingBackup) { return NativeCall<UPrimalPlayerData *, AShooterPlayerState *, bool>((DWORD64)this, "AShooterGameMode", "LoadPlayerData", PlayerState, bIsLoadingBackup); }
+	void DeletePlayerData(AShooterPlayerState* PlayerState) { NativeCall<void, AShooterPlayerState *>((DWORD64)this, "AShooterGameMode", "DeletePlayerData", PlayerState); }
+	//TSharedPtr<FWriteFileTaskInfo, 0> * SavePlayerData(TSharedPtr<FWriteFileTaskInfo, 0> * result, UPrimalPlayerData * PlayerData) { return NativeCall<TSharedPtr<FWriteFileTaskInfo, 0> *, TSharedPtr<FWriteFileTaskInfo, 0> *, UPrimalPlayerData *>((DWORD64)this, "AShooterGameMode", "SavePlayerData", result, PlayerData); }
+	//TSharedPtr<FWriteFileTaskInfo, 0> * SaveTribeData() { return NativeCall<TSharedPtr<FWriteFileTaskInfo, 0> *>((DWORD64)this, "AShooterGameMode", "SaveTribeData"); }
+	bool GetOrLoadTribeData(int TribeID, FTribeData* LoadedTribeData) { return NativeCall<bool, int, FTribeData *>((DWORD64)this, "AShooterGameMode", "GetOrLoadTribeData", TribeID, LoadedTribeData); }
+	bool LoadTribeData(int TribeID, FTribeData* LoadedTribeData, bool bIsLoadingBackup, bool bDontCheckDirtyTribeWar) { return NativeCall<bool, int, FTribeData *, bool, bool>((DWORD64)this, "AShooterGameMode", "LoadTribeData", TribeID, LoadedTribeData, bIsLoadingBackup, bDontCheckDirtyTribeWar); }
+	UPrimalPlayerData* GetPlayerDataFor(AShooterPlayerController* PC, bool* bCreatedNewPlayerData, bool bForceCreateNewPlayerData, FPrimalPlayerCharacterConfigStruct* charConfig, bool bAutoCreateNewData, bool bDontSaveNewData) { return NativeCall<UPrimalPlayerData *, AShooterPlayerController *, bool *, bool, FPrimalPlayerCharacterConfigStruct *, bool, bool>((DWORD64)this, "AShooterGameMode", "GetPlayerDataFor", PC, bCreatedNewPlayerData, bForceCreateNewPlayerData, charConfig, bAutoCreateNewData, bDontSaveNewData); }
+	void CheckForRepopulation() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "CheckForRepopulation"); }
+	void ForceRepopulateFoliageAtPoint() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "ForceRepopulateFoliageAtPoint"); }
+	void Tick(float DeltaSeconds) { NativeCall<void, float>((DWORD64)this, "AShooterGameMode", "Tick", DeltaSeconds); }
+	bool StartSaveBackup() { return NativeCall<bool>((DWORD64)this, "AShooterGameMode", "StartSaveBackup"); }
+	void SendDatadogMetricEvent(FString* Title, FString* Message) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterGameMode", "SendDatadogMetricEvent", Title, Message); }
+	void TickSaveBackup() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "TickSaveBackup"); }
+	unsigned __int64 AddNewTribe(AShooterPlayerState* PlayerOwner, FString* TribeName, FTribeGovernment* TribeGovernment) { return NativeCall<unsigned __int64, AShooterPlayerState *, FString *, FTribeGovernment *>((DWORD64)this, "AShooterGameMode", "AddNewTribe", PlayerOwner, TribeName, TribeGovernment); }
+	void RemoveTribe(unsigned __int64 TribeID) { NativeCall<void, unsigned __int64>((DWORD64)this, "AShooterGameMode", "RemoveTribe", TribeID); }
+	void UpdateTribeData() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "UpdateTribeData"); }
+	void RemovePlayerFromTribe(unsigned __int64 TribeID, unsigned __int64 PlayerDataID, bool bDontUpdatePlayerState) { NativeCall<void, unsigned __int64, unsigned __int64, bool>((DWORD64)this, "AShooterGameMode", "RemovePlayerFromTribe", TribeID, PlayerDataID, bDontUpdatePlayerState); }
+	int GetTribeIDOfPlayerID(unsigned __int64 PlayerDataID) { return NativeCall<int, unsigned __int64>((DWORD64)this, "AShooterGameMode", "GetTribeIDOfPlayerID", PlayerDataID); }
+	FTribeData* GetTribeData(FTribeData* result, unsigned __int64 TribeID) { return NativeCall<FTribeData *, FTribeData *, unsigned __int64>((DWORD64)this, "AShooterGameMode", "GetTribeData", result, TribeID); }
+	void BeginPlay() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "BeginPlay"); }
+	void Serialize(FArchive* Ar) { NativeCall<void, FArchive *>((DWORD64)this, "AShooterGameMode", "Serialize", Ar); }
+	void GetActorSaveGameTypes(TArray<TSubclassOf<AActor>, FDefaultAllocator>* saveGameTypes) { NativeCall<void, TArray<TSubclassOf<AActor>, FDefaultAllocator> *>((DWORD64)this, "AShooterGameMode", "GetActorSaveGameTypes", saveGameTypes); }
+	void SendServerDirectMessage() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "SendServerDirectMessage"); }
+	void SendServerChatMessage() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "SendServerChatMessage"); }
+	void SendServerNotification() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "SendServerNotification"); }
+	void RemovePlayerData(AShooterPlayerState* PlayerState) { NativeCall<void, AShooterPlayerState *>((DWORD64)this, "AShooterGameMode", "RemovePlayerData", PlayerState); }
+	void InitGameState() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "InitGameState"); }
+	void PreInitializeComponents() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "PreInitializeComponents"); }
+	void CheckIsOfficialServer() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "CheckIsOfficialServer"); }
+	void BeginUnloadingWorld() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "BeginUnloadingWorld"); }
+	void HttpServerNotificationRequestComplete() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "HttpServerNotificationRequestComplete"); }
+	void HttpGetDynamicConfigComplete() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "HttpGetDynamicConfigComplete"); }
+	void PostAlarmNotification(FUniqueNetId* SteamID, FString* Title, FString* Message) { NativeCall<void, FUniqueNetId *, FString *, FString *>((DWORD64)this, "AShooterGameMode", "PostAlarmNotification", SteamID, Title, Message); }
+	void PostAlarmNotification() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "PostAlarmNotification"); }
+	void SavePlayersJoinNoCheckList() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "SavePlayersJoinNoCheckList"); }
+	void LoadPlayersJoinNoCheckList() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "LoadPlayersJoinNoCheckList"); }
+	//bool IsPlayerAllowedToJoinNoCheck(FUniqueNetIdUInt64 * PlayerId) { return NativeCall<bool, FUniqueNetIdUInt64 *>((DWORD64)this, "AShooterGameMode", "IsPlayerAllowedToJoinNoCheck", PlayerId); }
+	bool IsPlayerControllerAllowedToJoinNoCheck(AShooterPlayerController* ForPlayer) { return NativeCall<bool, AShooterPlayerController *>((DWORD64)this, "AShooterGameMode", "IsPlayerControllerAllowedToJoinNoCheck", ForPlayer); }
+	bool IsPlayerControllerAllowedToExclusiveJoin(AShooterPlayerController* ForPlayer) { return NativeCall<bool, AShooterPlayerController *>((DWORD64)this, "AShooterGameMode", "IsPlayerControllerAllowedToExclusiveJoin", ForPlayer); }
+	bool KickPlayer() { return NativeCall<bool>((DWORD64)this, "AShooterGameMode", "KickPlayer"); }
+	void KickPlayerController(APlayerController* thePC, FString* KickMessage) { NativeCall<void, APlayerController *, FString *>((DWORD64)this, "AShooterGameMode", "KickPlayerController", thePC, KickMessage); }
+	bool BanPlayer() { return NativeCall<bool>((DWORD64)this, "AShooterGameMode", "BanPlayer"); }
+	bool UnbanPlayer() { return NativeCall<bool>((DWORD64)this, "AShooterGameMode", "UnbanPlayer"); }
+	void SaveBannedList() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "SaveBannedList"); }
+	void LoadBannedList() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "LoadBannedList"); }
+	FString* GeneratePGMapFolderName() { return NativeCall<FString *>((DWORD64)this, "AShooterGameMode", "GeneratePGMapFolderName"); }
+	FString* GetMapName(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "AShooterGameMode", "GetMapName", result); }
+	void UpdateSaveBackupFiles() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "UpdateSaveBackupFiles"); }
+	void LoadTribeIds() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "LoadTribeIds"); }
+	void LoadPlayerDataIds() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "LoadPlayerDataIds"); }
+	void AddPlayerID(int playerDataID, unsigned __int64 netUniqueID) { NativeCall<void, int, unsigned __int64>((DWORD64)this, "AShooterGameMode", "AddPlayerID", playerDataID, netUniqueID); }
+	unsigned __int64 GetSteamIDForPlayerID(int playerDataID) { return NativeCall<unsigned __int64, int>((DWORD64)this, "AShooterGameMode", "GetSteamIDForPlayerID", playerDataID); }
+	unsigned int GenerateTribeId() { return NativeCall<unsigned int>((DWORD64)this, "AShooterGameMode", "GenerateTribeId"); }
+	unsigned int GeneratePlayerDataId(unsigned __int64 NetUniqueID) { return NativeCall<unsigned int, unsigned __int64>((DWORD64)this, "AShooterGameMode", "GeneratePlayerDataId", NetUniqueID); }
+	float GetHarvestResourceItemAmountMultiplier(TSubclassOf<UPrimalItem> HarvestItemClass) { return NativeCall<float, TSubclassOf<UPrimalItem>>((DWORD64)this, "AShooterGameMode", "GetHarvestResourceItemAmountMultiplier", HarvestItemClass); }
+	float GetDinoDamageMultiplier(APrimalDinoCharacter* ForDino) { return NativeCall<float, APrimalDinoCharacter *>((DWORD64)this, "AShooterGameMode", "GetDinoDamageMultiplier", ForDino); }
+	float GetDinoResistanceMultiplier(APrimalDinoCharacter* ForDino) { return NativeCall<float, APrimalDinoCharacter *>((DWORD64)this, "AShooterGameMode", "GetDinoResistanceMultiplier", ForDino); }
+	bool IsEngramClassHidden(TSubclassOf<UPrimalItem> ForItemClass) { return NativeCall<bool, TSubclassOf<UPrimalItem>>((DWORD64)this, "AShooterGameMode", "IsEngramClassHidden", ForItemClass); }
+	bool IsEngramClassGiveToPlayer(TSubclassOf<UPrimalItem> ForItemClass) { return NativeCall<bool, TSubclassOf<UPrimalItem>>((DWORD64)this, "AShooterGameMode", "IsEngramClassGiveToPlayer", ForItemClass); }
+	void ListenServerClampPlayerLocations() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "ListenServerClampPlayerLocations"); }
+	FString* ValidateTribeName() { return NativeCall<FString *>((DWORD64)this, "AShooterGameMode", "ValidateTribeName"); }
+	void AdjustDamage(AActor* Victim, float* Damage, FDamageEvent* DamageEvent, AController* EventInstigator, AActor* DamageCauser) { NativeCall<void, AActor *, float *, FDamageEvent *, AController *, AActor *>((DWORD64)this, "AShooterGameMode", "AdjustDamage", Victim, Damage, DamageEvent, EventInstigator, DamageCauser); }
+	void SetTimeOfDay(FString* timeString) { NativeCall<void, FString *>((DWORD64)this, "AShooterGameMode", "SetTimeOfDay", timeString); }
+	void KickAllPlayersAndReload() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "KickAllPlayersAndReload"); }
+	bool PlayerCanRestart(APlayerController* Player) { return NativeCall<bool, APlayerController *>((DWORD64)this, "AShooterGameMode", "PlayerCanRestart", Player); }
+	bool HandleNewPlayer_Implementation(AShooterPlayerController* NewPlayer, UPrimalPlayerData* PlayerData, AShooterCharacter* PlayerCharacter, bool bIsFromLogin) { return NativeCall<bool, AShooterPlayerController *, UPrimalPlayerData *, AShooterCharacter *, bool>((DWORD64)this, "AShooterGameMode", "HandleNewPlayer_Implementation", NewPlayer, PlayerData, PlayerCharacter, bIsFromLogin); }
+	bool IsPlayerAllowedToCheat(AShooterPlayerController* ForPlayer) { return NativeCall<bool, AShooterPlayerController *>((DWORD64)this, "AShooterGameMode", "IsPlayerAllowedToCheat", ForPlayer); }
+	void PrintToGameplayLog(FString* InString) { NativeCall<void, FString *>((DWORD64)this, "AShooterGameMode", "PrintToGameplayLog", InString); }
+	void PrintToServerGameLog(FString* InString) { NativeCall<void, FString *>((DWORD64)this, "AShooterGameMode", "PrintToServerGameLog", InString); }
+	void LoadedFromSaveGame() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "LoadedFromSaveGame"); }
+	void RemoveInactivePlayersAndTribes() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "RemoveInactivePlayersAndTribes"); }
+	void DDoSDetected() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "DDoSDetected"); }
+	FString* GetSessionTimeString_Implementation(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "AShooterGameMode", "GetSessionTimeString_Implementation", result); }
+	bool IsTribeWar(int TribeID1, int TribeID2) { return NativeCall<bool, int, int>((DWORD64)this, "AShooterGameMode", "IsTribeWar", TribeID1, TribeID2); }
+	void UpdateTribeWars() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "UpdateTribeWars"); }
+	void AddToTribeLog(int TribeId, FString* NewLog) { NativeCall<void, int, FString *>((DWORD64)this, "AShooterGameMode", "AddToTribeLog", TribeId, NewLog); }
+	TArray<APrimalDinoCharacter *, FDefaultAllocator>* GetOverlappingDinoCharactersOfTeamAndClass(TArray<APrimalDinoCharacter *, FDefaultAllocator>* result, FVector* AtLocation, float OverlapRange, TSubclassOf<APrimalDinoCharacter> DinoClass, int DinoTeam, bool bExactClassMatch, bool bIgnoreClass) { return NativeCall<TArray<APrimalDinoCharacter *, FDefaultAllocator> *, TArray<APrimalDinoCharacter *, FDefaultAllocator> *, FVector *, float, TSubclassOf<APrimalDinoCharacter>, int, bool, bool>((DWORD64)this, "AShooterGameMode", "GetOverlappingDinoCharactersOfTeamAndClass", result, AtLocation, OverlapRange, DinoClass, DinoTeam, bExactClassMatch, bIgnoreClass); }
+	int CountOverlappingDinoCharactersOfTeamAndClass(FVector* AtLocation, float OverlapRange, TSubclassOf<APrimalDinoCharacter> DinoClass, int DinoTeam, bool bExactClassMatch, bool bIgnoreClass) { return NativeCall<int, FVector *, float, TSubclassOf<APrimalDinoCharacter>, int, bool, bool>((DWORD64)this, "AShooterGameMode", "CountOverlappingDinoCharactersOfTeamAndClass", AtLocation, OverlapRange, DinoClass, DinoTeam, bExactClassMatch, bIgnoreClass); }
+	int ForceAddPlayerToTribe(AShooterPlayerState* ForPlayerState, FString* TribeName) { return NativeCall<int, AShooterPlayerState *, FString *>((DWORD64)this, "AShooterGameMode", "ForceAddPlayerToTribe", ForPlayerState, TribeName); }
+	int ForceCreateTribe(FString* TribeName, int TeamOverride) { return NativeCall<int, FString *, int>((DWORD64)this, "AShooterGameMode", "ForceCreateTribe", TribeName, TeamOverride); }
+	int GetNumberOfLivePlayersOnTribe(FString* TribeName) { return NativeCall<int, FString *>((DWORD64)this, "AShooterGameMode", "GetNumberOfLivePlayersOnTribe", TribeName); }
+	void UpdateTribeAllianceData(FTribeAlliance* TribeAllianceData, TArray<unsigned int, FDefaultAllocator>* OldMembersArray, bool bIsAdd) { NativeCall<void, FTribeAlliance *, TArray<unsigned int, FDefaultAllocator> *, bool>((DWORD64)this, "AShooterGameMode", "UpdateTribeAllianceData", TribeAllianceData, OldMembersArray, bIsAdd); }
+	bool AreTribesAllied(int TribeID1, int TribeID2) { return NativeCall<bool, int, int>((DWORD64)this, "AShooterGameMode", "AreTribesAllied", TribeID1, TribeID2); }
+	void AddTribeWar(int MyTribeID, int EnemyTeamID, int StartDayNum, int EndDayNumber, float WarStartTime, float WarEndTime, bool bForceApprove) { NativeCall<void, int, int, int, int, float, float, bool>((DWORD64)this, "AShooterGameMode", "AddTribeWar", MyTribeID, EnemyTeamID, StartDayNum, EndDayNumber, WarStartTime, WarEndTime, bForceApprove); }
+	void PostAlarmNotificationTribe() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "PostAlarmNotificationTribe"); }
+	void SpawnedPawnFor(AController* PC, APawn* SpawnedPawn) { NativeCall<void, AController *, APawn *>((DWORD64)this, "AShooterGameMode", "SpawnedPawnFor", PC, SpawnedPawn); }
+	void SaveTributePlayerDatas() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "SaveTributePlayerDatas"); }
+	void LoadTributePlayerDatas() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "LoadTributePlayerDatas"); }
+	void DownloadTransferredPlayer(AShooterPlayerController* NewPlayer) { NativeCall<void, AShooterPlayerController *>((DWORD64)this, "AShooterGameMode", "DownloadTransferredPlayer", NewPlayer); }
+	void CheckForDupedDinos() { NativeCall<void>((DWORD64)this, "AShooterGameMode", "CheckForDupedDinos"); }
+	bool HandleNewPlayer(AShooterPlayerController* NewPlayer, UPrimalPlayerData* PlayerData, AShooterCharacter* PlayerCharacter, bool bIsFromLogin) { return NativeCall<bool, AShooterPlayerController *, UPrimalPlayerData *, AShooterCharacter *, bool>((DWORD64)this, "AShooterGameMode", "HandleNewPlayer", NewPlayer, PlayerData, PlayerCharacter, bIsFromLogin); }
 };
 
 struct ACustomGameMode : AShooterGameMode
