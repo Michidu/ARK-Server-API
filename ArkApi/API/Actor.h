@@ -2,6 +2,29 @@
 
 #include "Base.h"
 
+struct FChatMessage
+{
+	FString SenderName;
+	FString SenderSteamName;
+	FString SenderTribeName;
+	unsigned int SenderId;
+	FString Message;
+	FString Receiver;
+	int SenderTeamIndex;
+	long double ReceivedTime;
+	EChatSendMode::Type SendMode;
+	unsigned int RadioFrequency;
+	EChatType::Type ChatType;
+	DWORD64 SenderIcon;
+
+	FChatMessage(): SenderId(0), SenderTeamIndex(0), ReceivedTime(0), SendMode(), RadioFrequency(0), ChatType(), SenderIcon(0)
+	{
+	}
+
+	FChatMessage(FChatMessage* __that) { NativeCall<void, FChatMessage *>((DWORD64)this, "FChatMessage", "FChatMessage", __that); }
+	FChatMessage* operator=(FChatMessage* __that) { return NativeCall<FChatMessage *, FChatMessage *>((DWORD64)this, "FChatMessage", "operator=", __that); }
+};
+
 struct USceneComponent
 {
 public:
@@ -1481,7 +1504,7 @@ struct AShooterPlayerController : public APlayerController
 	void GetPlayerViewPoint(FVector* out_Location, FRotator* out_Rotation, bool ForAiming) { NativeCall<void, FVector *, FRotator *, bool>((DWORD64)this, "AShooterPlayerController", "GetPlayerViewPoint", out_Location, out_Rotation, ForAiming); }
 	void GetPlayerViewPointNoModifiers(FVector* out_Location, FRotator* out_Rotation, bool ForAiming, bool bNoTPVAim) { NativeCall<void, FVector *, FRotator *, bool, bool>((DWORD64)this, "AShooterPlayerController", "GetPlayerViewPointNoModifiers", out_Location, out_Rotation, ForAiming, bNoTPVAim); }
 	void ServerSendChatMessage_Implementation(FString* ChatMessage, int SendMode) { NativeCall<void, FString *, int>((DWORD64)this, "AShooterPlayerController", "ServerSendChatMessage_Implementation", ChatMessage, SendMode); }
-	void ClientChatMessage_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientChatMessage_Implementation"); }
+	void ClientChatMessage_Implementation(FChatMessage* Chat) { NativeCall<void, FChatMessage*>((DWORD64)this, "AShooterPlayerController", "ClientChatMessage_Implementation", Chat); }
 	void ClientServerChatMessage_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientServerChatMessage_Implementation"); }
 	void ClientServerNotification_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientServerNotification_Implementation"); }
 	void ClientServerNotificationSingle_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientServerNotificationSingle_Implementation"); }
@@ -1656,7 +1679,7 @@ struct AShooterPlayerController : public APlayerController
 	void CheckRequestSpectator(FString* InSpectatorPass) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerController", "CheckRequestSpectator", InSpectatorPass); }
 	void ClientAddActorItem() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientAddActorItem"); }
 	void ClientAddItemToArk() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientAddItemToArk"); }
-	void ClientChatMessage() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientChatMessage"); }
+	void ClientChatMessage(FChatMessage* Chat) { NativeCall<void, FChatMessage*>((DWORD64)this, "AShooterPlayerController", "ClientChatMessage", Chat); }
 	void ClientDoMultiUse(UObject* ForObject, int useIndex) { NativeCall<void, UObject *, int>((DWORD64)this, "AShooterPlayerController", "ClientDoMultiUse", ForObject, useIndex); }
 	void ClientFailedRemoveSaddle() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientFailedRemoveSaddle"); }
 	void ClientFailedToAddItemFromArkInventory() { NativeCall<void>((DWORD64)this, "AShooterPlayerController", "ClientFailedToAddItemFromArkInventory"); }

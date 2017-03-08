@@ -7,7 +7,7 @@
 #ifdef ARK_EXPORTS
 #define ARK_API __declspec(dllexport) 
 #else
-#define ARK_API __declspec(dllimport) 
+#define ARK_API __declspec(dllimport)
 #endif
 
 // Structs forward declaration
@@ -73,6 +73,9 @@ struct UObjectBaseUtility;
 struct UClass;
 struct UObject;
 struct AActor;
+struct UBlueprintCore;
+struct Globals;
+struct ADroppedItem;
 
 // Address helpers
 

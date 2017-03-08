@@ -104,3 +104,16 @@ namespace EChatSendMode
 		MAX
 	};
 }
+
+namespace EChatType
+{
+	enum Type
+	{
+		GlobalChat,
+		ProximityChat,
+		RadioChat,
+		GlobalTribeChat,
+		AllianceChat,
+		MAX
+	};
+}

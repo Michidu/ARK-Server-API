@@ -423,3 +423,48 @@ public:
 	bool IsDefaultSubobject() { return NativeCall<bool>((DWORD64)this, "UObjectBaseUtility", "IsDefaultSubobject"); }
 	int GetLinkerIndex() { return NativeCall<int>((DWORD64)this, "UObjectBaseUtility", "GetLinkerIndex"); }
 };
+
+struct UObject : UObjectBaseUtility
+{
+	static UClass* StaticClass() { return NativeCall<UClass *>(nullptr, "UObject", "StaticClass"); }
+	void ExecuteUbergraph(int EntryPoint) { NativeCall<void, int>((DWORD64)this, "UObject", "ExecuteUbergraph", EntryPoint); }
+	bool AreAllOuterObjectsValid() { return NativeCall<bool>((DWORD64)this, "UObject", "AreAllOuterObjectsValid"); }
+	FName* GetExporterName(FName* result) { return NativeCall<FName *, FName *>((DWORD64)this, "UObject", "GetExporterName", result); }
+	FString* GetDetailedInfoInternal(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UObject", "GetDetailedInfoInternal", result); }
+	UObject* GetArchetype() { return NativeCall<UObject *>((DWORD64)this, "UObject", "GetArchetype"); }
+	bool IsBasedOnArchetype(UObject*const SomeObject) { return NativeCall<bool, UObject *const>((DWORD64)this, "UObject", "IsBasedOnArchetype", SomeObject); }
+	bool IsInBlueprint() { return NativeCall<bool>((DWORD64)this, "UObject", "IsInBlueprint"); }
+	bool Rename(const wchar_t* InName, UObject* NewOuter, unsigned int Flags) { return NativeCall<bool, const wchar_t *, UObject *, unsigned int>((DWORD64)this, "UObject", "Rename", InName, NewOuter, Flags); }
+	void LoadLocalized(UObject* LocBase, bool bLoadHierachecally) { NativeCall<void, UObject *, bool>((DWORD64)this, "UObject", "LoadLocalized", LocBase, bLoadHierachecally); }
+	void BeginDestroy() { NativeCall<void>((DWORD64)this, "UObject", "BeginDestroy"); }
+	void FinishDestroy() { NativeCall<void>((DWORD64)this, "UObject", "FinishDestroy"); }
+	FString* GetDetailedInfo(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "UObject", "GetDetailedInfo", result); }
+	void ConditionalPostLoad() { NativeCall<void>((DWORD64)this, "UObject", "ConditionalPostLoad"); }
+	bool Modify(bool bAlwaysMarkDirty) { return NativeCall<bool, bool>((DWORD64)this, "UObject", "Modify", bAlwaysMarkDirty); }
+	bool IsSelected() { return NativeCall<bool>((DWORD64)this, "UObject", "IsSelected"); }
+	bool CheckDefaultSubobjectsInternal() { return NativeCall<bool>((DWORD64)this, "UObject", "CheckDefaultSubobjectsInternal"); }
+	bool IsAsset() { return NativeCall<bool>((DWORD64)this, "UObject", "IsAsset"); }
+	bool IsSafeForRootSet() { return NativeCall<bool>((DWORD64)this, "UObject", "IsSafeForRootSet"); }
+	void ConditionalShutdownAfterError() { NativeCall<void>((DWORD64)this, "UObject", "ConditionalShutdownAfterError"); }
+	bool IsNameStableForNetworking() { return NativeCall<bool>((DWORD64)this, "UObject", "IsNameStableForNetworking"); }
+	bool IsFullNameStableForNetworking() { return NativeCall<bool>((DWORD64)this, "UObject", "IsFullNameStableForNetworking"); }
+	bool IsSupportedForNetworking() { return NativeCall<bool>((DWORD64)this, "UObject", "IsSupportedForNetworking"); }
+	//void CallFunction(FFrame * Stack, void *const  Result, UFunction * Function) { NativeCall<void, FFrame *, void *const, UFunction *>((DWORD64)this, "UObject", "CallFunction", Stack, Result, Function); }
+	//bool CallFunctionByNameWithArguments(const wchar_t * Str, FOutputDevice * Ar, UObject * Executor, bool bForceCallWithNonExec) { return NativeCall<bool, const wchar_t *, FOutputDevice *, UObject *, bool>((DWORD64)this, "UObject", "CallFunctionByNameWithArguments", Str, Ar, Executor, bForceCallWithNonExec); }
+	UFunction* FindFunctionChecked(FName InName) { return NativeCall<UFunction *, FName>((DWORD64)this, "UObject", "FindFunctionChecked", InName); }
+	void ProcessEvent(UFunction* Function, void* Parms) { NativeCall<void, UFunction *, void *>((DWORD64)this, "UObject", "ProcessEvent", Function, Parms); }
+};
+
+struct UBlueprintCore : UObject
+{
+	TSubclassOf<UObject> GetSkeletonGeneratedClassField() const { return GetNativeField<TSubclassOf<UObject>>(this, "UBlueprintCore", "SkeletonGeneratedClass"); }
+	TSubclassOf<UObject> GetGeneratedClassField() const { return GetNativeField<TSubclassOf<UObject>>(this, "UBlueprintCore", "GeneratedClass"); }
+	bool GetbLegacyNeedToPurgeSkelRefsField() const { return GetNativeField<bool>(this, "UBlueprintCore", "bLegacyNeedToPurgeSkelRefs"); }
+	bool GetbLegacyGeneratedClassIsAuthoritativeField() const { return GetNativeField<bool>(this, "UBlueprintCore", "bLegacyGeneratedClassIsAuthoritative"); }
+	FGuid GetBlueprintGuidField() const { return GetNativeField<FGuid>(this, "UBlueprintCore", "BlueprintGuid"); }
+};
+
+struct Globals
+{
+	static UObject* StaticLoadObject(UClass* ObjectClass, UObject* InOuter, const wchar_t* InName, const wchar_t* Filename, unsigned int LoadFlags, DWORD64 Sandbox, bool bAllowObjectReconciliation) { return NativeCall<UObject*, UClass *, UObject *, const wchar_t *, const wchar_t *, unsigned int, DWORD64, bool>(nullptr, "Global", "StaticLoadObject", ObjectClass, InOuter, InName, Filename, LoadFlags, Sandbox, bAllowObjectReconciliation); }
+};
