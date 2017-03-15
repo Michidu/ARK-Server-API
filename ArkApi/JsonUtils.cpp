@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "JsonUtils.h"
 #include <fstream>
-#include <Pathcch.h>
 
 namespace JsonUtils
 {
@@ -9,9 +8,9 @@ namespace JsonUtils
 
 	void Init()
 	{
-		std::wstring dirPath = GetCurrentDir();
+		std::string dirPath = GetCurrentDir();
 
-		std::wstring fullPath = dirPath + L"/dump.json";
+		std::string fullPath = dirPath + "/dump.json";
 		std::ifstream file(fullPath);
 		if (!file.is_open())
 		{
@@ -23,16 +22,13 @@ namespace JsonUtils
 		file.close();
 	}
 
-	std::wstring GetCurrentDir()
+	std::string GetCurrentDir()
 	{
-		wchar_t buffer[MAX_PATH];
-		GetModuleFileNameW(nullptr, buffer, sizeof(buffer));
+		char buffer[MAX_PATH];
+		GetModuleFileNameA(nullptr, buffer, MAX_PATH);
+		std::string::size_type pos = std::string(buffer).find_last_of("\\/");
 
-		PathCchRemoveFileSpec(buffer, sizeof(buffer));
-
-		std::wstring dirPath(buffer);
-
-		return dirPath;
+		return std::string(buffer).substr(0, pos);
 	}
 
 	nlohmann::json GetJson()

@@ -6,7 +6,6 @@
 #include "Hooks.h"
 #include "UpdateManager.h"
 
-#pragma comment(lib, "Pathcch.lib")
 #pragma comment(lib, "libMinHook-x64-v140-md.lib")
 
 namespace fs = std::experimental::filesystem;
@@ -30,9 +29,9 @@ void Init()
 
 void LoadAllPlugins()
 {
-	std::wstring dirPath = JsonUtils::GetCurrentDir();
+	std::string dirPath = JsonUtils::GetCurrentDir();
 
-	for (auto& dirName : fs::directory_iterator(dirPath + L"/BeyondApi/Plugins"))
+	for (auto& dirName : fs::directory_iterator(dirPath + "/BeyondApi/Plugins"))
 	{
 		auto path = dirName.path();
 		auto fileName = path.filename();
