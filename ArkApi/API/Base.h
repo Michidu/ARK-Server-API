@@ -76,6 +76,12 @@ struct AActor;
 struct UBlueprintCore;
 struct Globals;
 struct ADroppedItem;
+struct UProperty;
+struct UStruct;
+struct UField;
+struct FAssetRegistry;
+struct FAssetData;
+struct FModuleManager;
 
 // Address helpers
 
