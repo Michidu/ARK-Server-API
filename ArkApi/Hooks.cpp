@@ -135,7 +135,7 @@ namespace Hooks
 
 	void _cdecl Hook_AShooterPlayerController_ServerSendChatMessage_Impl(AShooterPlayerController* _AShooterPlayerController, FString* Message, EChatSendMode::Type Mode)
 	{
-		if (Commands::CheckChatCommands(*Message, _AShooterPlayerController, Message, Mode))
+		if (Commands::CheckChatCommands(_AShooterPlayerController, Message, Mode))
 			return;
 
 		AShooterPlayerController_ServerSendChatMessage_Impl_original(_AShooterPlayerController, Message, Mode);
@@ -143,14 +143,14 @@ namespace Hooks
 
 	FString* _cdecl Hook_APlayerController_ConsoleCommand(APlayerController* _APlayerController, FString* result, FString* Cmd, bool bWriteToLog)
 	{
-		Commands::CheckConsoleCommands(*Cmd, _APlayerController, Cmd, bWriteToLog);
+		Commands::CheckConsoleCommands(_APlayerController, Cmd, bWriteToLog);
 
 		return APlayerController_ConsoleCommand_original(_APlayerController, result, Cmd, bWriteToLog);
 	}
 
 	void _cdecl Hook_RCONClientConnection_ProcessRCONPacket(RCONClientConnection* _this, RCONPacket* Packet, UWorld* InWorld)
 	{
-		Commands::CheckRconCommands(Packet->Body, _this, Packet, InWorld);
+		Commands::CheckRconCommands(_this, Packet, InWorld);
 
 		RCONClientConnection_ProcessRCONPacket_original(_this, Packet, InWorld);
 	}

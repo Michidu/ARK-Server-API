@@ -58,13 +58,21 @@ namespace Commands
 
 	// Callbacks
 
-	bool CheckChatCommands(const FString& commandName, AShooterPlayerController* _AShooterPlayerController, FString* Message, EChatSendMode::Type Mode)
+	bool CheckChatCommands(AShooterPlayerController* _AShooterPlayerController, FString* Message, EChatSendMode::Type Mode)
 	{
 		bool result = false;
 
+		TArray<FString> Parsed;
+		Message->ParseIntoArray(&Parsed, L" ", true);
+
+		if (!Parsed.IsValidIndex(0))
+			return false;
+
+		FString chatCommand = Parsed[0];
+
 		for (auto command : chatCommands)
 		{
-			if (commandName.StartsWith(command->command, ESearchCase::IgnoreCase))
+			if (chatCommand.EndsWith(&command->command, ESearchCase::IgnoreCase))
 			{
 				command->callback(_AShooterPlayerController, Message, Mode);
 
@@ -75,13 +83,13 @@ namespace Commands
 		return result;
 	}
 
-	bool CheckConsoleCommands(const FString& commandName, APlayerController* _APlayerController, FString* Cmd, bool bWriteToLog)
+	bool CheckConsoleCommands(APlayerController* _APlayerController, FString* Cmd, bool bWriteToLog)
 	{
 		bool result = false;
 
 		for (auto command : consoleCommands)
 		{
-			if (commandName.StartsWith(command->command, ESearchCase::IgnoreCase))
+			if (Cmd->StartsWith(command->command, ESearchCase::IgnoreCase))
 			{
 				command->callback(_APlayerController, Cmd, bWriteToLog);
 
@@ -92,9 +100,11 @@ namespace Commands
 		return result;
 	}
 
-	bool CheckRconCommands(const FString& commandName, RCONClientConnection* rconClientConnection, RCONPacket* rconPacket, UWorld* uWorld)
+	bool CheckRconCommands(RCONClientConnection* rconClientConnection, RCONPacket* rconPacket, UWorld* uWorld)
 	{
 		bool result = false;
+
+		FString commandName = rconPacket->Body;
 
 		for (auto command : rconCommands)
 		{

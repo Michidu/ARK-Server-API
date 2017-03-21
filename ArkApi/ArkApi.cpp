@@ -20,7 +20,7 @@ void Init()
 		throw std::runtime_error("Can't initialize MinHook");
 	}
 
-	UpdateManager::CheckUpdate();
+	UpdateManager::Update();
 	JsonUtils::Init();
 	Hooks::Init();
 

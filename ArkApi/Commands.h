@@ -54,9 +54,9 @@ namespace Commands
 
 	// Check callbacks
 
-	bool CheckChatCommands(const FString& commandName, AShooterPlayerController* _AShooterPlayerController, FString* Message, EChatSendMode::Type Mode);
-	bool CheckConsoleCommands(const FString& commandName, APlayerController* _APlayerController, FString* Cmd, bool bWriteToLog);
-	bool CheckRconCommands(const FString& commandName, RCONClientConnection* rconClientConnection, RCONPacket* rconPacket, UWorld* uWorld);
+	bool CheckChatCommands(AShooterPlayerController* _AShooterPlayerController, FString* Message, EChatSendMode::Type Mode);
+	bool CheckConsoleCommands(APlayerController* _APlayerController, FString* Cmd, bool bWriteToLog);
+	bool CheckRconCommands(RCONClientConnection* rconClientConnection, RCONPacket* rconPacket, UWorld* uWorld);
 	void CheckOnTickCallbacks(float DeltaSeconds);
 	void CheckOnTimerCallbacks();
 }
