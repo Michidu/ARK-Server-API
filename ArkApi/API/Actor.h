@@ -681,102 +681,107 @@ struct AShooterPlayerState : APlayerState
 
 	// Functions
 
+	void Reset() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "Reset"); }
 	void UnregisterPlayerWithSession() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "UnregisterPlayerWithSession"); }
-	void ClientInitialize(AController* InController) { NativeCall<void, AController *>((DWORD64)this, "AShooterPlayerState", "ClientInitialize", InController); }
-	void CopyProperties(APlayerState* PlayerState) { NativeCall<void, APlayerState *>((DWORD64)this, "AShooterPlayerState", "CopyProperties", PlayerState); }
+	void ClientInitialize(AController * InController) { NativeCall<void, AController *>((DWORD64)this, "AShooterPlayerState", "ClientInitialize", InController); }
+	void CopyProperties(APlayerState * PlayerState) { NativeCall<void, APlayerState *>((DWORD64)this, "AShooterPlayerState", "CopyProperties", PlayerState); }
 	void ServerGetAllPlayerNamesAndLocations_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerGetAllPlayerNamesAndLocations_Implementation"); }
 	void ServerGetAlivePlayerConnectedData_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerGetAlivePlayerConnectedData_Implementation"); }
 	void ServerGetPlayerConnectedData_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerGetPlayerConnectedData_Implementation"); }
 	void ServerGetServerOptions_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerGetServerOptions_Implementation"); }
 	void ServerGetPlayerBannedData_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerGetPlayerBannedData_Implementation"); }
 	void ServerGetPlayerWhiteListedData_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerGetPlayerWhiteListedData_Implementation"); }
-	void BroadcastDeath_Implementation(AShooterPlayerState* KillerPlayerState, UDamageType* KillerDamageType, AShooterPlayerState* KilledPlayerState) { NativeCall<void, AShooterPlayerState *, UDamageType *, AShooterPlayerState *>((DWORD64)this, "AShooterPlayerState", "BroadcastDeath_Implementation", KillerPlayerState, KillerDamageType, KilledPlayerState); }
+	void BroadcastDeath_Implementation(AShooterPlayerState * KillerPlayerState, UDamageType * KillerDamageType, AShooterPlayerState * KilledPlayerState) { NativeCall<void, AShooterPlayerState *, UDamageType *, AShooterPlayerState *>((DWORD64)this, "AShooterPlayerState", "BroadcastDeath_Implementation", KillerPlayerState, KillerDamageType, KilledPlayerState); }
+	void Destroyed() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "Destroyed"); }
+	void BeginPlay() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "BeginPlay"); }
 	void PromoteToTribeAdmin() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "PromoteToTribeAdmin"); }
-	bool AddToTribe(FTribeData* MyNewTribe, bool bMergeTribe, bool bForce, bool bIsFromInvite) { return NativeCall<bool, FTribeData *, bool, bool, bool>((DWORD64)this, "AShooterPlayerState", "AddToTribe", MyNewTribe, bMergeTribe, bForce, bIsFromInvite); }
+	bool AddToTribe(FTribeData * MyNewTribe, bool bMergeTribe, bool bForce, bool bIsFromInvite) { return NativeCall<bool, FTribeData *, bool, bool, bool>((DWORD64)this, "AShooterPlayerState", "AddToTribe", MyNewTribe, bMergeTribe, bForce, bIsFromInvite); }
 	void ClearTribe(bool bDontRemoveFromTribe, bool bForce) { NativeCall<void, bool, bool>((DWORD64)this, "AShooterPlayerState", "ClearTribe", bDontRemoveFromTribe, bForce); }
-	void TransferTribalObjects(FTribeData* TribeData, bool bTransferToTribe, bool bDontIncludePlayers) { NativeCall<void, FTribeData *, bool, bool>((DWORD64)this, "AShooterPlayerState", "TransferTribalObjects", TribeData, bTransferToTribe, bDontIncludePlayers); }
+	void TransferTribalObjects(FTribeData * TribeData, bool bTransferToTribe, bool bDontIncludePlayers) { NativeCall<void, FTribeData *, bool, bool>((DWORD64)this, "AShooterPlayerState", "TransferTribalObjects", TribeData, bTransferToTribe, bDontIncludePlayers); }
 	bool IsTribeOwner(unsigned int CheckPlayerDataID) { return NativeCall<bool, unsigned int>((DWORD64)this, "AShooterPlayerState", "IsTribeOwner", CheckPlayerDataID); }
 	bool IsTribeAdmin() { return NativeCall<bool>((DWORD64)this, "AShooterPlayerState", "IsTribeAdmin"); }
 	void ServerRequestDinoOrderGroups_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerRequestDinoOrderGroups_Implementation"); }
 	void ClientRefreshDinoOrderGroup_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ClientRefreshDinoOrderGroup_Implementation"); }
-	bool AllowDinoOrderByGroup(APrimalDinoCharacter* orderDino) { return NativeCall<bool, APrimalDinoCharacter *>((DWORD64)this, "AShooterPlayerState", "AllowDinoOrderByGroup", orderDino); }
-	void ServerSetDinoGroupName_Implementation(int groupIndex, FString* GroupName) { NativeCall<void, int, FString *>((DWORD64)this, "AShooterPlayerState", "ServerSetDinoGroupName_Implementation", groupIndex, GroupName); }
-	FString* GetDinoOrderGroupName(FString* result, int groupIndex) { return NativeCall<FString *, FString *, int>((DWORD64)this, "AShooterPlayerState", "GetDinoOrderGroupName", result, groupIndex); }
-	bool IsDinoInOrderGroup(int groupIndex, APrimalDinoCharacter* dinoChar) { return NativeCall<bool, int, APrimalDinoCharacter *>((DWORD64)this, "AShooterPlayerState", "IsDinoInOrderGroup", groupIndex, dinoChar); }
-	bool IsDinoClassInOrderGroup(int groupIndex, UClass* dinoClass) { return NativeCall<bool, int, UClass*>((DWORD64)this, "AShooterPlayerState", "IsDinoClassInOrderGroup", groupIndex, dinoClass); }
-	void ServerDinoOrderGroup_AddOrRemoveDinoCharacter_Implementation(int groupIndex, APrimalDinoCharacter* DinoCharacter, bool bAdd) { NativeCall<void, int, APrimalDinoCharacter *, bool>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_AddOrRemoveDinoCharacter_Implementation", groupIndex, DinoCharacter, bAdd); }
+	bool AllowDinoOrderByGroup(APrimalDinoCharacter * orderDino) { return NativeCall<bool, APrimalDinoCharacter *>((DWORD64)this, "AShooterPlayerState", "AllowDinoOrderByGroup", orderDino); }
+	void ServerDinoOrderGroup_AddOrRemoveDinoClass_Implementation(int groupIndex, TSubclassOf<APrimalDinoCharacter> DinoClass, bool bAdd) { NativeCall<void, int, TSubclassOf<APrimalDinoCharacter>, bool>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_AddOrRemoveDinoClass_Implementation", groupIndex, DinoClass, bAdd); }
+	void ServerSetDinoGroupName_Implementation(int groupIndex, FString * GroupName) { NativeCall<void, int, FString *>((DWORD64)this, "AShooterPlayerState", "ServerSetDinoGroupName_Implementation", groupIndex, GroupName); }
+	FString * GetDinoOrderGroupName(FString * result, int groupIndex) { return NativeCall<FString *, FString *, int>((DWORD64)this, "AShooterPlayerState", "GetDinoOrderGroupName", result, groupIndex); }
+	bool IsDinoInOrderGroup(int groupIndex, APrimalDinoCharacter * dinoChar) { return NativeCall<bool, int, APrimalDinoCharacter *>((DWORD64)this, "AShooterPlayerState", "IsDinoInOrderGroup", groupIndex, dinoChar); }
+	bool IsDinoClassInOrderGroup(int groupIndex, TSubclassOf<APrimalDinoCharacter> dinoClass) { return NativeCall<bool, int, TSubclassOf<APrimalDinoCharacter>>((DWORD64)this, "AShooterPlayerState", "IsDinoClassInOrderGroup", groupIndex, dinoClass); }
+	void ServerDinoOrderGroup_AddOrRemoveDinoCharacter_Implementation(int groupIndex, APrimalDinoCharacter * DinoCharacter, bool bAdd) { NativeCall<void, int, APrimalDinoCharacter *, bool>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_AddOrRemoveDinoCharacter_Implementation", groupIndex, DinoCharacter, bAdd); }
 	void ServerDinoOrderGroup_Clear_Implementation(int groupIndex, bool bClearClasses, bool bClearChars) { NativeCall<void, int, bool, bool>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_Clear_Implementation", groupIndex, bClearClasses, bClearChars); }
 	void ServerDinoOrderGroup_RemoveEntryByIndex_Implementation(int groupIndex, bool bIsClass, int entryIndex) { NativeCall<void, int, bool, int>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_RemoveEntryByIndex_Implementation", groupIndex, bIsClass, entryIndex); }
 	void ServerSetSelectedDinoOrderGroup_Implementation(int newGroup) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerSetSelectedDinoOrderGroup_Implementation", newGroup); }
-	void ServerRequestRenameTribe_Implementation(FString* TribeName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerRequestRenameTribe_Implementation", TribeName); }
+	void ServerRequestRenameTribe_Implementation(FString * TribeName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerRequestRenameTribe_Implementation", TribeName); }
 	void ServerRequestSetTribeGovernment_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerRequestSetTribeGovernment_Implementation"); }
 	void ServerRequestCreateNewTribe_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerRequestCreateNewTribe_Implementation"); }
 	void ServerRequestLeaveTribe_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerRequestLeaveTribe_Implementation"); }
 	void ServerRequestRemovePlayerIndexFromMyTribe_Implementation(int PlayerIndexInTribe) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestRemovePlayerIndexFromMyTribe_Implementation", PlayerIndexInTribe); }
 	void ServerRequestPromotePlayerInMyTribe_Implementation(int PlayerIndexInTribe) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestPromotePlayerInMyTribe_Implementation", PlayerIndexInTribe); }
 	void ServerRequestDemotePlayerInMyTribe_Implementation(int PlayerIndexInTribe) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestDemotePlayerInMyTribe_Implementation", PlayerIndexInTribe); }
-	void InvitedRankGroupPlayerIntoTribe(AShooterPlayerState* OtherPlayer) { NativeCall<void, AShooterPlayerState *>((DWORD64)this, "AShooterPlayerState", "InvitedRankGroupPlayerIntoTribe", OtherPlayer); }
+	void InvitedRankGroupPlayerIntoTribe(AShooterPlayerState * OtherPlayer) { NativeCall<void, AShooterPlayerState *>((DWORD64)this, "AShooterPlayerState", "InvitedRankGroupPlayerIntoTribe", OtherPlayer); }
 	void ServerRequestSetTribeMemberGroupRank_Implementation(int PlayerIndexInTribe, int RankGroupIndex) { NativeCall<void, int, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestSetTribeMemberGroupRank_Implementation", PlayerIndexInTribe, RankGroupIndex); }
 	void ServerTribeRequestAddRankGroup_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestAddRankGroup_Implementation"); }
 	void ServerTribeRequestRemoveRankGroup_Implementation(int RankGroupIndex) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestRemoveRankGroup_Implementation", RankGroupIndex); }
 	void ServerTribeRequestApplyRankGroupSettings_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestApplyRankGroupSettings_Implementation"); }
 	void ServerRequestTransferOwnershipInMyTribe_Implementation(int PlayerIndexInTribe) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestTransferOwnershipInMyTribe_Implementation", PlayerIndexInTribe); }
-	FString* GetPlayerName(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "AShooterPlayerState", "GetPlayerName", result); }
+	FString * GetPlayerName(FString * result) { return NativeCall<FString *, FString *>((DWORD64)this, "AShooterPlayerState", "GetPlayerName", result); }
 	void ServerRequestMySpawnPoints_Implementation(int IgnoreBedID) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestMySpawnPoints_Implementation", IgnoreBedID); }
 	void ServerRequestCreateNewPlayer_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerRequestCreateNewPlayer_Implementation"); }
-	void RequestCreateNewPlayerWithArkData(UPrimalPlayerData* PlayerArkData) { NativeCall<void, UPrimalPlayerData *>((DWORD64)this, "AShooterPlayerState", "RequestCreateNewPlayerWithArkData", PlayerArkData); }
-	void ServerRequestApplyEngramPoints_Implementation(UClass* forItemEntry) { NativeCall<void, UClass*>((DWORD64)this, "AShooterPlayerState", "ServerRequestApplyEngramPoints_Implementation", forItemEntry); }
-	void AddEngramBlueprintToPlayerInventory(UPrimalInventoryComponent* invComp, UClass* engramItemBlueprint) { NativeCall<void, UPrimalInventoryComponent *, UClass*>((DWORD64)this, "AShooterPlayerState", "AddEngramBlueprintToPlayerInventory", invComp, engramItemBlueprint); }
-	UObject* GetObjectW() { return NativeCall<UObject *>((DWORD64)this, "AShooterPlayerState", "GetObjectW"); }
-	bool HasEngram(UClass* ItemClass) { return NativeCall<bool, UClass*>((DWORD64)this, "AShooterPlayerState", "HasEngram", ItemClass); }
-	void NotifyPlayerJoinedTribe_Implementation(FString* ThePlayerName, FString* TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoinedTribe_Implementation", ThePlayerName, TribeName); }
-	void NotifyPlayerLeftTribe_Implementation(FString* ThePlayerName, FString* TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeftTribe_Implementation", ThePlayerName, TribeName); }
-	void NotifyPlayerJoined_Implementation(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoined_Implementation", ThePlayerName); }
-	void NotifyTribememberJoined_Implementation(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberJoined_Implementation", ThePlayerName); }
-	void NotifyPlayerLeft_Implementation(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeft_Implementation", ThePlayerName); }
-	void NotifyTribememberLeft_Implementation(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberLeft_Implementation", ThePlayerName); }
-	void ServerSetDefaultItemSlotClass_Implementation(int slotNum, UClass* ItemClass, bool bIsEngram) { NativeCall<void, int, UClass*, bool>((DWORD64)this, "AShooterPlayerState", "ServerSetDefaultItemSlotClass_Implementation", slotNum, ItemClass, bIsEngram); }
+	void RequestCreateNewPlayerWithArkData(UPrimalPlayerData * PlayerArkData) { NativeCall<void, UPrimalPlayerData *>((DWORD64)this, "AShooterPlayerState", "RequestCreateNewPlayerWithArkData", PlayerArkData); }
+	void ServerRequestApplyEngramPoints_Implementation(TSubclassOf<UPrimalItem> forItemEntry) { NativeCall<void, TSubclassOf<UPrimalItem>>((DWORD64)this, "AShooterPlayerState", "ServerRequestApplyEngramPoints_Implementation", forItemEntry); }
+	void ServerUnlockEngram(TSubclassOf<UPrimalItem> forItemEntry, bool bNotifyPlayerHUD) { NativeCall<void, TSubclassOf<UPrimalItem>, bool>((DWORD64)this, "AShooterPlayerState", "ServerUnlockEngram", forItemEntry, bNotifyPlayerHUD); }
+	void AddEngramBlueprintToPlayerInventory(UPrimalInventoryComponent * invComp, TSubclassOf<UPrimalItem> engramItemBlueprint) { NativeCall<void, UPrimalInventoryComponent *, TSubclassOf<UPrimalItem>>((DWORD64)this, "AShooterPlayerState", "AddEngramBlueprintToPlayerInventory", invComp, engramItemBlueprint); }
+	UObject * GetObjectW() { return NativeCall<UObject *>((DWORD64)this, "AShooterPlayerState", "GetObjectW"); }
+	bool HasEngram(TSubclassOf<UPrimalItem> ItemClass) { return NativeCall<bool, TSubclassOf<UPrimalItem>>((DWORD64)this, "AShooterPlayerState", "HasEngram", ItemClass); }
+	void NotifyPlayerJoinedTribe_Implementation(FString * ThePlayerName, FString * TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoinedTribe_Implementation", ThePlayerName, TribeName); }
+	void NotifyPlayerLeftTribe_Implementation(FString * ThePlayerName, FString * TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeftTribe_Implementation", ThePlayerName, TribeName); }
+	void NotifyPlayerJoined_Implementation(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoined_Implementation", ThePlayerName); }
+	void NotifyTribememberJoined_Implementation(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberJoined_Implementation", ThePlayerName); }
+	void NotifyPlayerLeft_Implementation(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeft_Implementation", ThePlayerName); }
+	void NotifyTribememberLeft_Implementation(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberLeft_Implementation", ThePlayerName); }
+	void ServerSetDefaultItemSlotClass_Implementation(int slotNum, TSubclassOf<UPrimalItem> ItemClass, bool bIsEngram) { NativeCall<void, int, TSubclassOf<UPrimalItem>, bool>((DWORD64)this, "AShooterPlayerState", "ServerSetDefaultItemSlotClass_Implementation", slotNum, ItemClass, bIsEngram); }
 	void ClientNotifyLevelUpAvailable_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ClientNotifyLevelUpAvailable_Implementation"); }
-	void SetTribeTamingDinoSettings(APrimalDinoCharacter* aDinoChar) { NativeCall<void, APrimalDinoCharacter *>((DWORD64)this, "AShooterPlayerState", "SetTribeTamingDinoSettings", aDinoChar); }
+	void SetTribeTamingDinoSettings(APrimalDinoCharacter * aDinoChar) { NativeCall<void, APrimalDinoCharacter *>((DWORD64)this, "AShooterPlayerState", "SetTribeTamingDinoSettings", aDinoChar); }
 	void SendTribeInviteData_Implementation() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "SendTribeInviteData_Implementation"); }
 	void DoRespec() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "DoRespec"); }
-	FString* GetUniqueIdString(FString* result) { return NativeCall<FString *, FString *>((DWORD64)this, "AShooterPlayerState", "GetUniqueIdString", result); }
+	FString * GetUniqueIdString(FString * result) { return NativeCall<FString *, FString *>((DWORD64)this, "AShooterPlayerState", "GetUniqueIdString", result); }
 	bool IsInTribeWar(int EnemyTeam) { return NativeCall<bool, int>((DWORD64)this, "AShooterPlayerState", "IsInTribeWar", EnemyTeam); }
 	void ServerDeclareTribeWar_Implementation(int EnemyTeamID, int StartDayNum, int EndDayNumber, float WarStartTime, float WarEndTime) { NativeCall<void, int, int, int, float, float>((DWORD64)this, "AShooterPlayerState", "ServerDeclareTribeWar_Implementation", EnemyTeamID, StartDayNum, EndDayNumber, WarStartTime, WarEndTime); }
 	void ServerAcceptTribeWar_Implementation(int EnemyTeamID) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerAcceptTribeWar_Implementation", EnemyTeamID); }
 	void ServerRejectTribeWar_Implementation(int EnemyTeamID) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerRejectTribeWar_Implementation", EnemyTeamID); }
-	FTribeWar* GetTribeWar(FTribeWar* result, int EnemyTeam) { return NativeCall<FTribeWar *, FTribeWar *, int>((DWORD64)this, "AShooterPlayerState", "GetTribeWar", result, EnemyTeam); }
+	FTribeWar * GetTribeWar(FTribeWar * result, int EnemyTeam) { return NativeCall<FTribeWar *, FTribeWar *, int>((DWORD64)this, "AShooterPlayerState", "GetTribeWar", result, EnemyTeam); }
 	void ServerRequestRemoveAllianceMember_Implementation(unsigned int AllianceID, unsigned int MemberID) { NativeCall<void, unsigned int, unsigned int>((DWORD64)this, "AShooterPlayerState", "ServerRequestRemoveAllianceMember_Implementation", AllianceID, MemberID); }
 	void ServerRequestPromoteAllianceMember_Implementation(unsigned int AllianceID, unsigned int MemberID) { NativeCall<void, unsigned int, unsigned int>((DWORD64)this, "AShooterPlayerState", "ServerRequestPromoteAllianceMember_Implementation", AllianceID, MemberID); }
-	void ServerTribeRequestNewAlliance_Implementation(FString* AllianceName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestNewAlliance_Implementation", AllianceName); }
+	void ServerTribeRequestNewAlliance_Implementation(FString * AllianceName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestNewAlliance_Implementation", AllianceName); }
 	void ServerRequestLeaveAlliance_Implementation(unsigned int AllianceID) { NativeCall<void, unsigned int>((DWORD64)this, "AShooterPlayerState", "ServerRequestLeaveAlliance_Implementation", AllianceID); }
 	void AcceptJoinAlliance() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "AcceptJoinAlliance"); }
-	//bool AllowTribeGroupPermission(ETribeGroupPermission::Type TribeGroupPermission, UObject * OnObject) { return NativeCall<bool, ETribeGroupPermission::Type, UObject *>((DWORD64)this, "AShooterPlayerState", "AllowTribeGroupPermission", TribeGroupPermission, OnObject); }
 	void ServerRequestSpawnPointsForDownloadedCharacters_Implementation(unsigned __int64 PlayerDataID, int IgnoreBedID) { NativeCall<void, unsigned __int64, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestSpawnPointsForDownloadedCharacters_Implementation", PlayerDataID, IgnoreBedID); }
-	static UField* GetPrivateStaticClass() { return NativeCall<UField *>(nullptr, "AShooterPlayerState", "GetPrivateStaticClass"); }
+	void StaticRegisterNativesAShooterPlayerState() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "StaticRegisterNativesAShooterPlayerState"); }
+	static UField * GetPrivateStaticClass() { return NativeCall<UField *>(nullptr, "AShooterPlayerState", "GetPrivateStaticClass"); }
 	void ClientGetServerOptions() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ClientGetServerOptions"); }
 	void ClientRefreshDinoOrderGroup() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ClientRefreshDinoOrderGroup"); }
-	void NotifyPlayerJoined(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoined", ThePlayerName); }
-	void NotifyPlayerJoinedTribe(FString* ThePlayerName, FString* TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoinedTribe", ThePlayerName, TribeName); }
-	void NotifyPlayerLeft(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeft", ThePlayerName); }
-	void NotifyPlayerLeftTribe(FString* ThePlayerName, FString* TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeftTribe", ThePlayerName, TribeName); }
-	void NotifyTribememberJoined(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberJoined", ThePlayerName); }
-	void NotifyTribememberLeft(FString* ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberLeft", ThePlayerName); }
+	void NotifyPlayerJoined(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoined", ThePlayerName); }
+	void NotifyPlayerJoinedTribe(FString * ThePlayerName, FString * TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerJoinedTribe", ThePlayerName, TribeName); }
+	void NotifyPlayerLeft(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeft", ThePlayerName); }
+	void NotifyPlayerLeftTribe(FString * ThePlayerName, FString * TribeName) { NativeCall<void, FString *, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyPlayerLeftTribe", ThePlayerName, TribeName); }
+	void NotifyTribememberJoined(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberJoined", ThePlayerName); }
+	void NotifyTribememberLeft(FString * ThePlayerName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "NotifyTribememberLeft", ThePlayerName); }
 	void SendTribeInviteData() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "SendTribeInviteData"); }
 	void ServerAcceptTribeWar(int EnemyTeamID) { NativeCall<void, int>((DWORD64)this, "AShooterPlayerState", "ServerAcceptTribeWar", EnemyTeamID); }
-	void ServerDinoOrderGroup_AddOrRemoveDinoCharacter(int groupIndex, APrimalDinoCharacter* DinoCharacter, bool bAdd) { NativeCall<void, int, APrimalDinoCharacter *, bool>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_AddOrRemoveDinoCharacter", groupIndex, DinoCharacter, bAdd); }
+	void ServerDinoOrderGroup_AddOrRemoveDinoCharacter(int groupIndex, APrimalDinoCharacter * DinoCharacter, bool bAdd) { NativeCall<void, int, APrimalDinoCharacter *, bool>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_AddOrRemoveDinoCharacter", groupIndex, DinoCharacter, bAdd); }
 	void ServerDinoOrderGroup_RemoveEntryByIndex(int groupIndex, bool bIsClass, int entryIndex) { NativeCall<void, int, bool, int>((DWORD64)this, "AShooterPlayerState", "ServerDinoOrderGroup_RemoveEntryByIndex", groupIndex, bIsClass, entryIndex); }
 	void ServerGetAllPlayerNamesAndLocations() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerGetAllPlayerNamesAndLocations"); }
-	void ServerRequestApplyEngramPoints(UClass* forItemEntry) { NativeCall<void, UClass*>((DWORD64)this, "AShooterPlayerState", "ServerRequestApplyEngramPoints", forItemEntry); }
+	void ServerRequestApplyEngramPoints(TSubclassOf<UPrimalItem> forItemEntry) { NativeCall<void, TSubclassOf<UPrimalItem>>((DWORD64)this, "AShooterPlayerState", "ServerRequestApplyEngramPoints", forItemEntry); }
 	void ServerRequestCreateNewPlayer() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerRequestCreateNewPlayer"); }
 	void ServerRequestCreateNewTribe() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerRequestCreateNewTribe"); }
-	void ServerRequestRenameTribe(FString* ServerRequestRenameTribe) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerRequestRenameTribe", ServerRequestRenameTribe); }
+	void ServerRequestRenameTribe(FString * ServerRequestRenameTribe) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerRequestRenameTribe", ServerRequestRenameTribe); }
 	void ServerRequestSetTribeMemberGroupRank(int PlayerIndexInTribe, int RankGroupIndex) { NativeCall<void, int, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestSetTribeMemberGroupRank", PlayerIndexInTribe, RankGroupIndex); }
 	void ServerRequestSpawnPointsForDownloadedCharacters(unsigned __int64 PlayerDataID, int IgnoreBedID) { NativeCall<void, unsigned __int64, int>((DWORD64)this, "AShooterPlayerState", "ServerRequestSpawnPointsForDownloadedCharacters", PlayerDataID, IgnoreBedID); }
-	void ServerSetDefaultItemSlotClass(int slotNum, UClass* ItemClass, bool bIsEngram) { NativeCall<void, int, UClass*, bool>((DWORD64)this, "AShooterPlayerState", "ServerSetDefaultItemSlotClass", slotNum, ItemClass, bIsEngram); }
-	void ServerSetDinoGroupName(int groupIndex, FString* GroupName) { NativeCall<void, int, FString *>((DWORD64)this, "AShooterPlayerState", "ServerSetDinoGroupName", groupIndex, GroupName); }
+	void ServerSetDefaultItemSlotClass(int slotNum, TSubclassOf<UPrimalItem> ItemClass, bool bIsEngram) { NativeCall<void, int, TSubclassOf<UPrimalItem>, bool>((DWORD64)this, "AShooterPlayerState", "ServerSetDefaultItemSlotClass", slotNum, ItemClass, bIsEngram); }
+	void ServerSetDinoGroupName(int groupIndex, FString * GroupName) { NativeCall<void, int, FString *>((DWORD64)this, "AShooterPlayerState", "ServerSetDinoGroupName", groupIndex, GroupName); }
 	void ServerTribeRequestApplyRankGroupSettings() { NativeCall<void>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestApplyRankGroupSettings"); }
-	void ServerTribeRequestNewAlliance(FString* AllianceName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestNewAlliance", AllianceName); }
+	void ServerTribeRequestNewAlliance(FString * AllianceName) { NativeCall<void, FString *>((DWORD64)this, "AShooterPlayerState", "ServerTribeRequestNewAlliance", AllianceName); }
 };
 
 // Controller
