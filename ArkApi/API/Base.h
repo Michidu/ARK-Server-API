@@ -82,6 +82,9 @@ struct UField;
 struct FAssetRegistry;
 struct FAssetData;
 struct FModuleManager;
+struct UTexture2D;
+struct USoundBase;
+struct USoundCue;
 
 // Address helpers
 

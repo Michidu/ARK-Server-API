@@ -704,3 +704,8 @@ struct FAssetRegistry
 	void OnContentPathMounted(FString* InAssetPath, FString* FileSystemPath) { NativeCall<void, FString *, FString *>((DWORD64)this, "FAssetRegistry", "OnContentPathMounted", InAssetPath, FileSystemPath); }
 	void OnContentPathDismounted(FString* InAssetPath, FString* FileSystemPath) { NativeCall<void, FString *, FString *>((DWORD64)this, "FAssetRegistry", "OnContentPathDismounted", InAssetPath, FileSystemPath); }
 };
+
+struct UTexture2D
+{
+	static UClass* StaticClass() { return NativeCall<UClass *>(nullptr, "UTexture2D", "StaticClass"); }
+};
