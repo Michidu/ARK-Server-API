@@ -31,6 +31,7 @@ struct AShooterGameMode;
 struct AGameMode;
 struct AGameState;
 struct AGameSession;
+struct AShooterGameSession;
 struct APlayerStart;
 struct APlayerState;
 struct AController;

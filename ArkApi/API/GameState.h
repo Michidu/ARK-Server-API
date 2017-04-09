@@ -293,3 +293,62 @@ struct AShooterGameState : AGameState
 	void NetUpdateOfflinePvPExpiringTeams(TArray<int>* NewPreventOfflinePvPExpiringTeams, TArray<double>* NewPreventOfflinePvPExpiringTimes) { NativeCall<void, TArray<int> *, TArray<double> *>((DWORD64)this, "AShooterGameState", "NetUpdateOfflinePvPExpiringTeams", NewPreventOfflinePvPExpiringTeams, NewPreventOfflinePvPExpiringTimes); }
 	void NetUpdateOfflinePvPLiveTeams(TArray<int>* NewPreventOfflinePvPLiveTeams) { NativeCall<void, TArray<int> *>((DWORD64)this, "AShooterGameState", "NetUpdateOfflinePvPLiveTeams", NewPreventOfflinePvPLiveTeams); }
 };
+
+struct AGameSession
+{
+	int GetMaxSpectatorsField() const { return GetNativeField<int>(this, "AGameSession", "MaxSpectators"); }
+	void SetMaxSpectatorsField(int newValue) { SetNativeField(this, "AGameSession", "MaxSpectators", newValue); }
+	int GetMaxPlayersField() const { return GetNativeField<int>(this, "AGameSession", "MaxPlayers"); }
+	void SetMaxPlayersField(int newValue) { SetNativeField(this, "AGameSession", "MaxPlayers", newValue); }
+	char GetMaxSplitscreensPerConnectionField() const { return GetNativeField<char>(this, "AGameSession", "MaxSplitscreensPerConnection"); }
+	void SetMaxSplitscreensPerConnectionField(char newValue) { SetNativeField(this, "AGameSession", "MaxSplitscreensPerConnection", newValue); }
+	bool GetbRequiresPushToTalkField() const { return GetNativeField<bool>(this, "AGameSession", "bRequiresPushToTalk"); }
+	void SetbRequiresPushToTalkField(bool newValue) { SetNativeField(this, "AGameSession", "bRequiresPushToTalk", newValue); }
+	FName GetSessionNameField() const { return GetNativeField<FName>(this, "AGameSession", "SessionName"); }
+	void SetSessionNameField(FName newValue) { SetNativeField(this, "AGameSession", "SessionName", newValue); }
+
+
+	// Functions
+
+	bool RequiresPushToTalk() { return NativeCall<bool>((DWORD64)this, "AGameSession", "RequiresPushToTalk"); }
+	void InitOptions(FString* Options) { NativeCall<void, FString *>((DWORD64)this, "AGameSession", "InitOptions", Options); }
+	bool ProcessAutoLogin() { return NativeCall<bool>((DWORD64)this, "AGameSession", "ProcessAutoLogin"); }
+	void OnLoginComplete(int LocalUserNum, bool bWasSuccessful, FUniqueNetId* UserId, FString* Error) { NativeCall<void, int, bool, FUniqueNetId *, FString *>((DWORD64)this, "AGameSession", "OnLoginComplete", LocalUserNum, bWasSuccessful, UserId, Error); }
+	FString* ApproveLogin(FString* result, FString* Options, FString* authToken) { return NativeCall<FString *, FString *, FString *, FString *>((DWORD64)this, "AGameSession", "ApproveLogin", result, Options, authToken); }
+	void RegisterPlayer(APlayerController* NewPlayer, TSharedPtr<FUniqueNetId>* UniqueId, bool bWasFromInvite) { NativeCall<void, APlayerController *, TSharedPtr<FUniqueNetId> *, bool>((DWORD64)this, "AGameSession", "RegisterPlayer", NewPlayer, UniqueId, bWasFromInvite); }
+	void UnregisterPlayer(APlayerController* ExitingPlayer) { NativeCall<void, APlayerController *>((DWORD64)this, "AGameSession", "UnregisterPlayer", ExitingPlayer); }
+	bool AtCapacity(bool bSpectator, FString* AuthToken) { return NativeCall<bool, bool, FString *>((DWORD64)this, "AGameSession", "AtCapacity", bSpectator, AuthToken); }
+	void NotifyLogout(APlayerController* PC) { NativeCall<void, APlayerController *>((DWORD64)this, "AGameSession", "NotifyLogout", PC); }
+	bool KickPlayer(APlayerController* KickedPlayer, FText* KickReason) { return NativeCall<bool, APlayerController *, FText *>((DWORD64)this, "AGameSession", "KickPlayer", KickedPlayer, KickReason); }
+	bool BanPlayer(APlayerController* BannedPlayer, FText* BanReason) { return NativeCall<bool, APlayerController *, FText *>((DWORD64)this, "AGameSession", "BanPlayer", BannedPlayer, BanReason); }
+	void ReturnToMainMenuHost() { NativeCall<void>((DWORD64)this, "AGameSession", "ReturnToMainMenuHost"); }
+	bool TravelToSession(int ControllerId, FName InSessionName) { return NativeCall<bool, int, FName>((DWORD64)this, "AGameSession", "TravelToSession", ControllerId, InSessionName); }
+	void UpdateSessionJoinability(FName InSessionName, bool bPublicSearchable, bool bAllowInvites, bool bJoinViaPresence, bool bJoinViaPresenceFriendsOnly) { NativeCall<void, FName, bool, bool, bool, bool>((DWORD64)this, "AGameSession", "UpdateSessionJoinability", InSessionName, bPublicSearchable, bAllowInvites, bJoinViaPresence, bJoinViaPresenceFriendsOnly); }
+};
+
+struct AShooterGameSession : AGameSession
+{
+	bool GetbFoundSessionField() const { return GetNativeField<bool>(this, "AShooterGameSession", "bFoundSession"); }
+	void SetbFoundSessionField(bool newValue) { SetNativeField(this, "AShooterGameSession", "bFoundSession", newValue); }
+
+	// Functions
+
+	void OnStartOnlineGameComplete(FName SessionName, bool bWasSuccessful) { NativeCall<void, FName, bool>((DWORD64)this, "AShooterGameSession", "OnStartOnlineGameComplete", SessionName, bWasSuccessful); }
+	void HandleMatchHasStarted() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "HandleMatchHasStarted"); }
+	void HandleMatchHasEnded() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "HandleMatchHasEnded"); }
+	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful) { NativeCall<void, FName, bool>((DWORD64)this, "AShooterGameSession", "OnCreateSessionComplete", SessionName, bWasSuccessful); }
+	void OnDestroySessionComplete(FName SessionName, bool bWasSuccessful) { NativeCall<void, FName, bool>((DWORD64)this, "AShooterGameSession", "OnDestroySessionComplete", SessionName, bWasSuccessful); }
+	void DelayedSessionDelete() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "DelayedSessionDelete"); }
+	void InitOptions(FString* Options) { NativeCall<void, FString *>((DWORD64)this, "AShooterGameSession", "InitOptions", Options); }
+	void RegisterServer() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "RegisterServer"); }
+	void UpdatePublishedSession() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "UpdatePublishedSession"); }
+	FString* ApproveLogin(FString* result, FString* Options, FString* authToken) { return NativeCall<FString *, FString *, FString *, FString *>((DWORD64)this, "AShooterGameSession", "ApproveLogin", result, Options, authToken); }
+	void OnCheckAuthTokenComplete(bool bWasSuccessful, FUniqueNetId* UserId) { NativeCall<void, bool, FUniqueNetId *>((DWORD64)this, "AShooterGameSession", "OnCheckAuthTokenComplete", bWasSuccessful, UserId); }
+	void OnNumConnectedPlayersChanged(int NewPlayersCount) { NativeCall<void, int>((DWORD64)this, "AShooterGameSession", "OnNumConnectedPlayersChanged", NewPlayersCount); }
+	void Tick(float __formal) { NativeCall<void, float>((DWORD64)this, "AShooterGameSession", "Tick", __formal); }
+	void OnFindSessionsComplete(bool bWasSuccessful) { NativeCall<void, bool>((DWORD64)this, "AShooterGameSession", "OnFindSessionsComplete", bWasSuccessful); }
+	void OnFoundSession() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "OnFoundSession"); }
+	void CancelFindSessions() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "CancelFindSessions"); }
+	bool TravelToSession(int ControllerId, FName SessionName) { return NativeCall<bool, int, FName>((DWORD64)this, "AShooterGameSession", "TravelToSession", ControllerId, SessionName); }
+	void Restart() { NativeCall<void>((DWORD64)this, "AShooterGameSession", "Restart"); }
+};

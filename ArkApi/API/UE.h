@@ -47,10 +47,12 @@ void SetNativeField(LPVOID _this, const std::string& structure, const std::strin
 template <class T>
 struct TArray
 {
+protected:
 	T* Data;
 	uint32_t Count;
 	uint32_t Max;
 
+public:
 	TArray()
 	{
 		Data = nullptr;
@@ -122,11 +124,6 @@ struct FString : TArray<wchar_t>
 			this->Data = Other;
 	}
 
-	/*FString(const std::string& Other)
-	{
-		
-	}*/
-
 	~FString()
 	{
 	}
@@ -151,6 +148,9 @@ struct FString : TArray<wchar_t>
 
 	std::string ToString() const
 	{
+		if (!Data)
+			return "";
+
 		auto length = std::wcslen(Data);
 		std::string str(length, '\0');
 		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(Data, Data + length, '?', &str[0]);
