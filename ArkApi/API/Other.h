@@ -15,7 +15,7 @@ struct FDamageEvent
 
 	// Functions
 
-	void GetBestHitInfo(AActor * HitActor, AActor * HitInstigator, FHitResult * OutHitInfo, FVector * OutImpulseDir) { NativeCall<void, AActor *, AActor *, FHitResult *, FVector *>((DWORD64)this, "FDamageEvent", "GetBestHitInfo", HitActor, HitInstigator, OutHitInfo, OutImpulseDir); }
+	void GetBestHitInfo(AActor* HitActor, AActor* HitInstigator, FHitResult* OutHitInfo, FVector* OutImpulseDir) { NativeCall<void, AActor *, AActor *, FHitResult *, FVector *>((DWORD64)this, "FDamageEvent", "GetBestHitInfo", HitActor, HitInstigator, OutHitInfo, OutImpulseDir); }
 };
 
 struct FHitResult
@@ -49,13 +49,13 @@ struct FHitResult
 
 	// Functions
 
-	AActor * GetActor() { return NativeCall<AActor *>((DWORD64)this, "FHitResult", "GetActor"); }
+	AActor* GetActor() { return NativeCall<AActor *>((DWORD64)this, "FHitResult", "GetActor"); }
 };
 
 struct RCONClientConnection
 {
 	//FSocket * GetSocketField() const { return GetNativeField<FSocket *>(this, "RCONClientConnection", "Socket"); }
-	UShooterCheatManager * GetCheatManagerField() const { return GetNativeField<UShooterCheatManager *>(this, "RCONClientConnection", "CheatManager"); }
+	UShooterCheatManager* GetCheatManagerField() const { return GetNativeField<UShooterCheatManager *>(this, "RCONClientConnection", "CheatManager"); }
 	bool GetIsAuthenticatedField() const { return GetNativeField<bool>(this, "RCONClientConnection", "IsAuthenticated"); }
 	void SetIsAuthenticatedField(bool newValue) { SetNativeField(this, "RCONClientConnection", "IsAuthenticated", newValue); }
 	bool GetIsClosedField() const { return GetNativeField<bool>(this, "RCONClientConnection", "IsClosed"); }
@@ -73,8 +73,8 @@ struct RCONClientConnection
 
 	// Functions
 
-	void ProcessRCONPacket(RCONPacket * Packet, UWorld * InWorld) { NativeCall<void, RCONPacket *, UWorld *>((DWORD64)this, "RCONClientConnection", "ProcessRCONPacket", Packet, InWorld); }
-	void SendMessageW(int Id, int Type, FString * OutGoingMessage) { NativeCall<void, int, int, FString *>((DWORD64)this, "RCONClientConnection", "SendMessageW", Id, Type, OutGoingMessage); }
+	void ProcessRCONPacket(RCONPacket* Packet, UWorld* InWorld) { NativeCall<void, RCONPacket *, UWorld *>((DWORD64)this, "RCONClientConnection", "ProcessRCONPacket", Packet, InWorld); }
+	void SendMessageW(int Id, int Type, FString* OutGoingMessage) { NativeCall<void, int, int, FString *>((DWORD64)this, "RCONClientConnection", "SendMessageW", Id, Type, OutGoingMessage); }
 	void Close() { NativeCall<void>((DWORD64)this, "RCONClientConnection", "Close"); }
 };
 
@@ -95,4 +95,20 @@ struct UGameplayStatics
 	static void GetActorArrayBounds(TArray<AActor *>* Actors, bool bOnlyCollidingComponents, FVector* Center, FVector* BoxExtent) { NativeCall<void, TArray<AActor *> *, bool, FVector *, FVector *>(nullptr, "UGameplayStatics", "GetActorArrayBounds", Actors, bOnlyCollidingComponents, Center, BoxExtent); }
 	static void GetAccurateRealTime(UObject* WorldContextObject, int* Seconds, float* PartialSeconds) { NativeCall<void, UObject *, int *, float *>(nullptr, "UGameplayStatics", "GetAccurateRealTime", WorldContextObject, Seconds, PartialSeconds); }
 	static void GetAllActorsOfClass(UWorld* WorldContextObject, UClass* ActorClass, TArray<AActor *>* OutActors) { NativeCall<void, UWorld *, UClass*, TArray<AActor *> *>(nullptr, "UGameplayStatics", "GetAllActorsOfClass", WorldContextObject, ActorClass, OutActors); }
+};
+
+struct FItemMultiplier
+{
+};
+
+struct APrimalBuff
+{
+};
+
+struct FDinoAncestorsEntry
+{
+};
+
+struct FCraftingResourceRequirement
+{
 };

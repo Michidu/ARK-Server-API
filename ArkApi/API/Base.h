@@ -86,6 +86,11 @@ struct FModuleManager;
 struct UTexture2D;
 struct USoundBase;
 struct USoundCue;
+struct FItemMultiplier;
+struct UAnimMontage;
+struct APrimalBuff;
+struct FDinoAncestorsEntry;
+struct FCraftingResourceRequirement;
 
 // Address helpers
 

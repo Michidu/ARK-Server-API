@@ -2,19 +2,109 @@
 
 #include "Base.h"
 
-enum EPrimalEquipmentType
+namespace EPrimalEquipmentType
 {
-	Hat = 0x0,
-	Shirt = 0x1,
-	Pants = 0x2,
-	Boots = 0x3,
-	Gloves = 0x4,
-	DinoSaddle = 0x5,
-	Trophy = 0x6,
-	Costume = 0x7,
-	Shield = 0x8,
-	MAX = 0x9,
-};
+	enum Type
+	{
+		Hat = 0x0,
+		Shirt = 0x1,
+		Pants = 0x2,
+		Boots = 0x3,
+		Gloves = 0x4,
+		DinoSaddle = 0x5,
+		Trophy = 0x6,
+		Costume = 0x7,
+		Shield = 0x8,
+		MAX = 0x9
+	};
+}
+
+namespace EPrimalItemStat
+{
+	enum Type
+	{
+		GenericQuality,
+		Armor,
+		MaxDurability,
+		WeaponDamagePercent,
+		WeaponClipAmmo,
+		HypothermalInsulation,
+		Weight,
+		HyperthermalInsulation,
+		MAX
+	};
+}
+
+namespace EPrimalCharacterStatusValue
+{
+	enum Type
+	{
+		Health,
+		Stamina,
+		Torpidity,
+		Oxygen,
+		Food,
+		Water,
+		Temperature,
+		Weight,
+		MeleeDamageMultiplier,
+		SpeedMultiplier,
+		TemperatureFortitude,
+		CraftingSpeedMultiplier,
+		MAX
+	};
+}
+
+namespace EPrimalCharacterStatusState
+{
+	enum Type
+	{
+		Dead,
+		Winded,
+		Starvation,
+		Dehydration,
+		Suffocation,
+		Encumbered,
+		Hypothermia,
+		Hyperthermia,
+		Injured,
+		KnockedOut,
+		Sleeping,
+		Cold,
+		Hot,
+		Crafting,
+		MAX
+	};
+}
+
+namespace EPrimalItemType
+{
+	enum Type
+	{
+		MiscConsumable,
+		Equipment,
+		Weapon,
+		Ammo,
+		Structure,
+		Resource,
+		Skin,
+		WeaponAttachment,
+		Artifact,
+		MAX
+	};
+}
+
+namespace EPrimalConsumableType
+{
+	enum Type
+	{
+		Food,
+		Water,
+		Medicine,
+		Other,
+		MAX
+	};
+}
 
 enum ECollisionChannel
 {
@@ -122,12 +212,12 @@ namespace ETextComparisonLevel
 {
 	enum Type
 	{
-		Default,	// Locale-specific Default
-		Primary,	// Base
-		Secondary,	// Accent
-		Tertiary,	// Case
-		Quaternary,	// Punctuation
-		Quinary		// Identical
+		Default, // Locale-specific Default
+		Primary, // Base
+		Secondary, // Accent
+		Tertiary, // Case
+		Quaternary, // Punctuation
+		Quinary // Identical
 	};
 }
 
