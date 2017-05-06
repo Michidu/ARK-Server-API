@@ -16,7 +16,8 @@ struct FChatMessage
 	unsigned int RadioFrequency;
 	EChatType::Type ChatType;
 	DWORD64 SenderIcon;
-
+	FString UserId;
+	
 	FChatMessage(): SenderId(0), SenderTeamIndex(0), ReceivedTime(0), SendMode(), RadioFrequency(0), ChatType(), SenderIcon(0)
 	{
 	}
