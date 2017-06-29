@@ -1,10 +1,10 @@
 #include "stdafx.h"
-#include <experimental/filesystem>
-
 #include "MinHook.h"
 #include "JsonUtils.h"
 #include "Hooks.h"
 #include "UpdateManager.h"
+
+#include <experimental/filesystem>
 
 #pragma comment(lib, "libMinHook-x64-v140-md.lib")
 

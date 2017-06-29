@@ -7,6 +7,12 @@
 
 namespace Hooks
 {
+	struct Hook
+	{
+		LPVOID pTarget;
+		LPVOID pDetour;
+	};
+
 	// Init
 	void Init();
 	void InitBaseAddress();

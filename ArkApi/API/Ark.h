@@ -13,6 +13,7 @@ namespace Ark
 	ARK_API AShooterGameMode* GetGameMode();
 
 	ARK_API void SetHook(const std::string& structure, const std::string& funcName, LPVOID pDetour, LPVOID* ppOriginal);
+	// Will disable all hooks placed on this function
 	ARK_API void DisableHook(const std::string& structure, const std::string& funcName);
 
 	ARK_API void AddChatCommand(const FString& command, const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>& callback);

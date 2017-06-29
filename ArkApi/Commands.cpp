@@ -21,16 +21,18 @@ namespace Commands
 		ChatCommand* chatCommand = new ChatCommand(command, callback);
 		chatCommands.push_back(chatCommand);
 	}
-	
+
 	void RemoveChatCommand(const FString& command)
 	{
 		auto& v = chatCommands;
 
-		auto iter = std::find_if(v.begin(), v.end(), [command](ChatCommand* data) -> bool { return data->command == command; });
+		std::vector<ChatCommand*>::iterator iter = std::find_if(v.begin(), v.end(), [command](ChatCommand* data) -> bool { return data->command == command; });
 
 		if (iter != v.end())
 		{
-			v.erase(std::remove(v.begin(), v.end(), *iter), v.end());
+			v.erase(remove(v.begin(), v.end(), *iter), v.end());
+
+			delete *iter;
 		}
 	}
 
@@ -50,7 +52,7 @@ namespace Commands
 	{
 		onTickCallbacks.push_back(callback);
 	}
-	
+
 	void AddOnTimerCallback(const std::function<void()>& callback)
 	{
 		onTimerCallbacks.push_back(callback);
@@ -126,7 +128,7 @@ namespace Commands
 			callback(DeltaSeconds);
 		}
 	}
-	
+
 	void CheckOnTimerCallbacks()
 	{
 		for (auto callback : onTimerCallbacks)

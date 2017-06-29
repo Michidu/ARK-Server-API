@@ -2,6 +2,7 @@
 
 #include "Base.h"
 #include <comdef.h>
+#include <xmmintrin.h>
 
 template <typename RT>
 RT NativeCall(DWORD64 _this, const std::string& structure, const std::string& funcName)
@@ -122,6 +123,14 @@ struct FString : TArray<wchar_t>
 
 		if (this->Count)
 			this->Data = Other;
+	}
+	
+	FString(std::wstring& Other)
+	{
+		this->Max = this->Count = Other.size() > 0 ? (Other.size() + 1) : 0;
+
+		if (this->Count)
+			this->Data = &Other[0];
 	}
 
 	~FString()

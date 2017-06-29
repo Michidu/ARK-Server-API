@@ -19,6 +19,8 @@ namespace Hooks
 	// Module base address
 	DWORD64 dwModuleBase;
 
+	std::vector<Hook> allHooks;
+
 	// Json
 	nlohmann::json json;
 
@@ -62,6 +64,18 @@ namespace Hooks
 
 		LPVOID pTarget = reinterpret_cast<LPVOID>(dwModuleBase + offset);
 
+		std::vector<Hook>::iterator iter = std::find_if(allHooks.begin(), allHooks.end(), [pTarget](Hook data) -> bool { return data.pTarget == pTarget; });
+		if (iter == allHooks.end())
+		{
+			allHooks.push_back({pTarget , pDetour});
+		}
+		else
+		{
+			pTarget = iter->pDetour;
+
+			iter->pDetour = pDetour;
+		}
+
 		if (MH_CreateHook(pTarget, pDetour, ppOriginal) != MH_OK)
 		{
 			std::cerr << "Failed to create hook for " << structure << "::" << funcName << std::endl;
@@ -73,7 +87,8 @@ namespace Hooks
 			std::cerr << "Failed to enable hook for " << structure << "::" << funcName << std::endl;
 		}
 	}
-	
+
+	// Will disable all hooks placed on this function
 	void DisableHook(const std::string& structure, const std::string& funcName)
 	{
 		DWORD64 offset = json["structures"][structure].value(funcName, 0);
