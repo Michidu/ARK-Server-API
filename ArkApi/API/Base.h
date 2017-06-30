@@ -91,6 +91,21 @@ struct UAnimMontage;
 struct APrimalBuff;
 struct FDinoAncestorsEntry;
 struct FCraftingResourceRequirement;
+struct APrimalStructureItemContainer;
+struct AShooterHUD;
+struct UPrimitiveComponent;
+struct USkeletalMeshComponent;
+struct UActorComponent;
+struct UMaterialInterface;
+struct FItemCraftQueueEntry;
+struct FItemSpawnActorClassOverride;
+struct FItemCraftingConsumptionReplenishment;
+struct FActorClassAttachmentInfo;
+struct FSupplyCrateItemSet;
+struct UPrimalSupplyCrateItemSets;
+struct FItemAttachmentInfo;
+struct FItemStatInfo;
+struct FSaddlePassengerSeatDefinition;
 
 // Address helpers
 

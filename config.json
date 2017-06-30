@@ -68,7 +68,8 @@
 	"FAssetData",
 	"UBlueprint",
 	"UTexture2D",
-	"AGameSession"
+	"AGameSession",
+	"FItemStatInfo"
   ],
   "functions": [
     "StaticLoadObject"

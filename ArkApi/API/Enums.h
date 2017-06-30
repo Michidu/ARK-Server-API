@@ -106,6 +106,16 @@ namespace EPrimalConsumableType
 	};
 }
 
+namespace EPrimalItemMessage
+{
+	enum Type
+	{
+		Broken,
+		Repaired,
+		MAX
+	};
+}
+
 enum ECollisionChannel
 {
 	ECC_WorldStatic = 0x0,
