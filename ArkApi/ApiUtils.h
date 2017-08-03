@@ -2,7 +2,6 @@
 #define H_ApiUtils
 
 #include "API/Base.h"
-#include <vector>
 
 namespace ApiUtils
 {

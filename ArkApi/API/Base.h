@@ -106,6 +106,7 @@ struct UPrimalSupplyCrateItemSets;
 struct FItemAttachmentInfo;
 struct FItemStatInfo;
 struct FSaddlePassengerSeatDefinition;
+struct APrimalStructureTurret;
 
 // Address helpers
 

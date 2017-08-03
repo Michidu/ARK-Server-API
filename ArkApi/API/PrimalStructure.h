@@ -292,6 +292,7 @@ struct APrimalStructure : APrimalTargetableActor
 
 	// Functions
 
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "APrimalStructure", "GetPrivateStaticClass"); }
 	int GetHitPawnCollisionGroup() { return NativeCall<int>((DWORD64)this, "APrimalStructure", "GetHitPawnCollisionGroup"); }
 	void PreInitializeComponents() { NativeCall<void>((DWORD64)this, "APrimalStructure", "PreInitializeComponents"); }
 	void BeginPlay() { NativeCall<void>((DWORD64)this, "APrimalStructure", "BeginPlay"); }
@@ -429,4 +430,96 @@ struct APrimalStructureDoor : APrimalStructure
 	//bool PreventCharacterBasing(AActor * OtherActor, UPrimitiveComponent * BasedOnComponent) { return NativeCall<bool, AActor *, UPrimitiveComponent *>((DWORD64)this, "APrimalStructureDoor", "PreventCharacterBasing", OtherActor, BasedOnComponent); }
 	bool AllowPickupForItem(AShooterPlayerController* ForPC) { return NativeCall<bool, AShooterPlayerController *>((DWORD64)this, "APrimalStructureDoor", "AllowPickupForItem", ForPC); }
 	void StaticRegisterNativesAPrimalStructureDoor() { NativeCall<void>((DWORD64)this, "APrimalStructureDoor", "StaticRegisterNativesAPrimalStructureDoor"); }
+};
+
+struct APrimalStructureTurret
+{
+	TWeakObjectPtr<AActor> GetTargetField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "APrimalStructureTurret", "Target"); }
+	void SetTargetField(TWeakObjectPtr<AActor> newValue) { SetNativeField(this, "APrimalStructureTurret", "Target", newValue); }
+	TSubclassOf<UPrimalItem> GetAmmoItemTemplateField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "APrimalStructureTurret", "AmmoItemTemplate"); }
+	void SetAmmoItemTemplateField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "APrimalStructureTurret", "AmmoItemTemplate", newValue); }
+	float GetFireIntervalField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "FireInterval"); }
+	void SetFireIntervalField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "FireInterval", newValue); }
+	long double GetLastFireTimeField() const { return GetNativeField<long double>(this, "APrimalStructureTurret", "LastFireTime"); }
+	void SetLastFireTimeField(long double newValue) { SetNativeField(this, "APrimalStructureTurret", "LastFireTime", newValue); }
+	float GetMaxFireYawDeltaField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "MaxFireYawDelta"); }
+	void SetMaxFireYawDeltaField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "MaxFireYawDelta", newValue); }
+	float GetMaxFirePitchDeltaField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "MaxFirePitchDelta"); }
+	void SetMaxFirePitchDeltaField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "MaxFirePitchDelta", newValue); }
+	FVector GetTargetingLocOffsetField() const { return GetNativeField<FVector>(this, "APrimalStructureTurret", "TargetingLocOffset"); }
+	void SetTargetingLocOffsetField(FVector newValue) { SetNativeField(this, "APrimalStructureTurret", "TargetingLocOffset", newValue); }
+	float GetTargetingRotationInterpSpeedField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "TargetingRotationInterpSpeed"); }
+	void SetTargetingRotationInterpSpeedField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "TargetingRotationInterpSpeed", newValue); }
+	FVector GetTargetingTraceOffsetField() const { return GetNativeField<FVector>(this, "APrimalStructureTurret", "TargetingTraceOffset"); }
+	void SetTargetingTraceOffsetField(FVector newValue) { SetNativeField(this, "APrimalStructureTurret", "TargetingTraceOffset", newValue); }
+	TSubclassOf<UDamageType> GetFireDamageTypeField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "APrimalStructureTurret", "FireDamageType"); }
+	void SetFireDamageTypeField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "APrimalStructureTurret", "FireDamageType", newValue); }
+	float GetFireDamageAmountField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "FireDamageAmount"); }
+	void SetFireDamageAmountField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "FireDamageAmount", newValue); }
+	float GetFireDamageImpulseField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "FireDamageImpulse"); }
+	void SetFireDamageImpulseField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "FireDamageImpulse", newValue); }
+	FRotator GetTurretAimRotOffsetField() const { return GetNativeField<FRotator>(this, "APrimalStructureTurret", "TurretAimRotOffset"); }
+	void SetTurretAimRotOffsetField(FRotator newValue) { SetNativeField(this, "APrimalStructureTurret", "TurretAimRotOffset", newValue); }
+	FVector GetAimTargetLocOffsetField() const { return GetNativeField<FVector>(this, "APrimalStructureTurret", "AimTargetLocOffset"); }
+	void SetAimTargetLocOffsetField(FVector newValue) { SetNativeField(this, "APrimalStructureTurret", "AimTargetLocOffset", newValue); }
+	FVector GetPlayerProneTargetOffsetField() const { return GetNativeField<FVector>(this, "APrimalStructureTurret", "PlayerProneTargetOffset"); }
+	void SetPlayerProneTargetOffsetField(FVector newValue) { SetNativeField(this, "APrimalStructureTurret", "PlayerProneTargetOffset", newValue); }
+	float GetAimSpreadField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "AimSpread"); }
+	void SetAimSpreadField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "AimSpread", newValue); }
+	char GetRangeSettingField() const { return GetNativeField<char>(this, "APrimalStructureTurret", "RangeSetting"); }
+	void SetRangeSettingField(char newValue) { SetNativeField(this, "APrimalStructureTurret", "RangeSetting", newValue); }
+	char GetAISettingField() const { return GetNativeField<char>(this, "APrimalStructureTurret", "AISetting"); }
+	void SetAISettingField(char newValue) { SetNativeField(this, "APrimalStructureTurret", "AISetting", newValue); }
+	char GetWarningSettingField() const { return GetNativeField<char>(this, "APrimalStructureTurret", "WarningSetting"); }
+	void SetWarningSettingField(char newValue) { SetNativeField(this, "APrimalStructureTurret", "WarningSetting", newValue); }
+	int GetNumBulletsField() const { return GetNativeField<int>(this, "APrimalStructureTurret", "NumBullets"); }
+	void SetNumBulletsField(int newValue) { SetNativeField(this, "APrimalStructureTurret", "NumBullets", newValue); }
+	float GetWarningExpirationTimeField() const { return GetNativeField<float>(this, "APrimalStructureTurret", "WarningExpirationTime"); }
+	void SetWarningExpirationTimeField(float newValue) { SetNativeField(this, "APrimalStructureTurret", "WarningExpirationTime", newValue); }
+	USkeletalMeshComponent* GetMySkeletalMeshCompField() const { return GetNativeField<USkeletalMeshComponent *>(this, "APrimalStructureTurret", "MySkeletalMeshComp"); }
+	void SetMySkeletalMeshCompField(USkeletalMeshComponent* newValue) { SetNativeField(this, "APrimalStructureTurret", "MySkeletalMeshComp", newValue); }
+	bool GetbWarnedField() const { return GetNativeField<bool>(this, "APrimalStructureTurret", "bWarned"); }
+	void SetbWarnedField(bool newValue) { SetNativeField(this, "APrimalStructureTurret", "bWarned", newValue); }
+	FRotator GetDefaultTurretAimRotOffsetField() const { return GetNativeField<FRotator>(this, "APrimalStructureTurret", "DefaultTurretAimRotOffset"); }
+	void SetDefaultTurretAimRotOffsetField(FRotator newValue) { SetNativeField(this, "APrimalStructureTurret", "DefaultTurretAimRotOffset", newValue); }
+	FVector GetMuzzleLocOffsetField() const { return GetNativeField<FVector>(this, "APrimalStructureTurret", "MuzzleLocOffset"); }
+	void SetMuzzleLocOffsetField(FVector newValue) { SetNativeField(this, "APrimalStructureTurret", "MuzzleLocOffset", newValue); }
+	long double GetLastWarningTimeField() const { return GetNativeField<long double>(this, "APrimalStructureTurret", "LastWarningTime"); }
+	void SetLastWarningTimeField(long double newValue) { SetNativeField(this, "APrimalStructureTurret", "LastWarningTime", newValue); }
+
+	// Functions
+
+	void BeginPlay() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "BeginPlay"); }
+	AActor* FindTarget() { return NativeCall<AActor *>((DWORD64)this, "APrimalStructureTurret", "FindTarget"); }
+	void SetTarget(AActor* aTarget) { NativeCall<void, AActor *>((DWORD64)this, "APrimalStructureTurret", "SetTarget", aTarget); }
+	void DoFire(int RandomSeed) { NativeCall<void, int>((DWORD64)this, "APrimalStructureTurret", "DoFire", RandomSeed); }
+	void DoFireProjectile(FVector Origin, FVector ShootDir) { NativeCall<void, FVector, FVector>((DWORD64)this, "APrimalStructureTurret", "DoFireProjectile", Origin, ShootDir); }
+	void SpawnImpactEffects(FHitResult* Impact, FVector* ShootDir) { NativeCall<void, FHitResult *, FVector *>((DWORD64)this, "APrimalStructureTurret", "SpawnImpactEffects", Impact, ShootDir); }
+	void SpawnTrailEffect(FVector* EndPoint) { NativeCall<void, FVector *>((DWORD64)this, "APrimalStructureTurret", "SpawnTrailEffect", EndPoint); }
+	bool ShouldDealDamage(AActor* TestActor) { return NativeCall<bool, AActor *>((DWORD64)this, "APrimalStructureTurret", "ShouldDealDamage", TestActor); }
+	void DealDamage(FHitResult* Impact, FVector* ShootDir, int DamageAmount, TSubclassOf<UDamageType> DamageType, float Impulse) { NativeCall<void, FHitResult *, FVector *, int, TSubclassOf<UDamageType>, float>((DWORD64)this, "APrimalStructureTurret", "DealDamage", Impact, ShootDir, DamageAmount, DamageType, Impulse); }
+	void StartWarning() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "StartWarning"); }
+	void FinishWarning() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "FinishWarning"); }
+	void Tick(float DeltaSeconds) { NativeCall<void, float>((DWORD64)this, "APrimalStructureTurret", "Tick", DeltaSeconds); }
+	void DrawHUD(AShooterHUD* HUD) { NativeCall<void, AShooterHUD *>((DWORD64)this, "APrimalStructureTurret", "DrawHUD", HUD); }
+	bool IsValidToFire() { return NativeCall<bool>((DWORD64)this, "APrimalStructureTurret", "IsValidToFire"); }
+	FRotator* GetMuzzleRotation(FRotator* result) { return NativeCall<FRotator *, FRotator *>((DWORD64)this, "APrimalStructureTurret", "GetMuzzleRotation", result); }
+	FVector* GetMuzzleLocation(FVector* result) { return NativeCall<FVector *, FVector *>((DWORD64)this, "APrimalStructureTurret", "GetMuzzleLocation", result); }
+	FVector* GetAttackingFromLocation(FVector* result) { return NativeCall<FVector *, FVector *>((DWORD64)this, "APrimalStructureTurret", "GetAttackingFromLocation", result); }
+	FVector* GetAimPivotLocation(FVector* result) { return NativeCall<FVector *, FVector *>((DWORD64)this, "APrimalStructureTurret", "GetAimPivotLocation", result); }
+	FName* GetMuzzleFlashSocketName(FName* result) { return NativeCall<FName *, FName *>((DWORD64)this, "APrimalStructureTurret", "GetMuzzleFlashSocketName", result); }
+	bool TryMultiUse(APlayerController* ForPC, int UseIndex) { return NativeCall<bool, APlayerController *, int>((DWORD64)this, "APrimalStructureTurret", "TryMultiUse", ForPC, UseIndex); }
+	void ClientMultiUse(APlayerController* ForPC, int UseIndex) { NativeCall<void, APlayerController *, int>((DWORD64)this, "APrimalStructureTurret", "ClientMultiUse", ForPC, UseIndex); }
+	void NotifyItemRemoved(UPrimalItem* anItem) { NativeCall<void, UPrimalItem *>((DWORD64)this, "APrimalStructureTurret", "NotifyItemRemoved", anItem); }
+	void UpdateNumBullets() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "UpdateNumBullets"); }
+	void PreInitializeComponents() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "PreInitializeComponents"); }
+	void Stasis() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "Stasis"); }
+	void Unstasis() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "Unstasis"); }
+	void UpdatedTargeting() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "UpdatedTargeting"); }
+	FVector* GetTargetAimAtLocation(FVector* result) { return NativeCall<FVector *, FVector *>((DWORD64)this, "APrimalStructureTurret", "GetTargetAimAtLocation", result); }
+	FVector* GetTargetFireAtLocation(FVector* result, APrimalCharacter* ForTarget) { return NativeCall<FVector *, FVector *, APrimalCharacter *>((DWORD64)this, "APrimalStructureTurret", "GetTargetFireAtLocation", result, ForTarget); }
+	bool CanFire() { return NativeCall<bool>((DWORD64)this, "APrimalStructureTurret", "CanFire"); }
+	FName* GetTargetAltAimSocket(FName* result, APrimalCharacter* ForTarget) { return NativeCall<FName *, FName *, APrimalCharacter *>((DWORD64)this, "APrimalStructureTurret", "GetTargetAltAimSocket", result, ForTarget); }
+	USkeletalMeshComponent* GetSkeletalMeshComponent() { return NativeCall<USkeletalMeshComponent *>((DWORD64)this, "APrimalStructureTurret", "GetSkeletalMeshComponent"); }
+	void StaticRegisterNativesAPrimalStructureTurret() { NativeCall<void>((DWORD64)this, "APrimalStructureTurret", "StaticRegisterNativesAPrimalStructureTurret"); }
 };

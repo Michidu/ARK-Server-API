@@ -7,7 +7,7 @@ namespace JsonUtils
 {
 	void Init();
 	std::string GetCurrentDir();
-	nlohmann::json GetJson();
+	const nlohmann::json& GetJson();
 }
 
 #endif

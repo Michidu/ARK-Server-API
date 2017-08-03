@@ -4,10 +4,13 @@
 
 namespace ApiUtils
 {
-	// Game objects
+	namespace
+	{
+		// Game objects
 
-	UWorld* uWorld;
-	AShooterGameMode* aShooterGameMode;
+		UWorld* uWorld;
+		AShooterGameMode* aShooterGameMode;
+	}
 
 	// UWorld
 

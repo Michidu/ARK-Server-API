@@ -4,7 +4,10 @@
 
 namespace JsonUtils
 {
-	nlohmann::json json;
+	namespace
+	{
+		nlohmann::json json;
+	}
 
 	void Init()
 	{
@@ -31,7 +34,7 @@ namespace JsonUtils
 		return std::string(buffer).substr(0, pos);
 	}
 
-	nlohmann::json GetJson()
+	const nlohmann::json& GetJson()
 	{
 		return json;
 	}

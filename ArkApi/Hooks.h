@@ -1,8 +1,6 @@
 #ifndef H_Hooks
 #define H_Hooks
 
-#include <string>
-#include "json.hpp"
 #include "API/Ark.h"
 
 namespace Hooks
@@ -15,8 +13,6 @@ namespace Hooks
 
 	// Init
 	void Init();
-	void InitBaseAddress();
-	void InitHooks();
 
 	// Hook
 	void SetHook(const std::string& structure, const std::string& funcName, LPVOID pDetour, LPVOID* ppOriginal);

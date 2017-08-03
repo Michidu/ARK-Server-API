@@ -6,13 +6,16 @@
 
 namespace Commands
 {
-	// Commands containers
+	namespace
+	{
+		// Commands containers
 
-	std::vector<ChatCommand*> chatCommands;
-	std::vector<ConsoleCommand*> consoleCommands;
-	std::vector<RconCommand*> rconCommands;
-	std::vector<std::function<void(float)>> onTickCallbacks;
-	std::vector<std::function<void()>> onTimerCallbacks;
+		std::vector<ChatCommand*> chatCommands;
+		std::vector<ConsoleCommand*> consoleCommands;
+		std::vector<RconCommand*> rconCommands;
+		std::vector<std::function<void(float)>> onTickCallbacks;
+		std::vector<std::function<void()>> onTimerCallbacks;
+	}
 
 	// Add commands
 
@@ -26,7 +29,7 @@ namespace Commands
 	{
 		auto& v = chatCommands;
 
-		std::vector<ChatCommand*>::iterator iter = std::find_if(v.begin(), v.end(), [command](ChatCommand* data) -> bool { return data->command == command; });
+		std::vector<ChatCommand*>::const_iterator iter = std::find_if(v.begin(), v.end(), [command](const ChatCommand* data) -> bool { return data->command == command; });
 
 		if (iter != v.end())
 		{
@@ -72,7 +75,7 @@ namespace Commands
 
 		FString chatCommand = Parsed[0];
 
-		for (auto command : chatCommands)
+		for (const auto& command : chatCommands)
 		{
 			if (chatCommand.EndsWith(&command->command, ESearchCase::IgnoreCase))
 			{
@@ -89,7 +92,7 @@ namespace Commands
 	{
 		bool result = false;
 
-		for (auto command : consoleCommands)
+		for (const auto& command : consoleCommands)
 		{
 			if (Cmd->StartsWith(command->command, ESearchCase::IgnoreCase))
 			{
@@ -108,7 +111,7 @@ namespace Commands
 
 		FString commandName = rconPacket->Body;
 
-		for (auto command : rconCommands)
+		for (const auto& command : rconCommands)
 		{
 			if (commandName.StartsWith(command->command, ESearchCase::IgnoreCase))
 			{
@@ -123,7 +126,7 @@ namespace Commands
 
 	void CheckOnTickCallbacks(float DeltaSeconds)
 	{
-		for (auto callback : onTickCallbacks)
+		for (const auto& callback : onTickCallbacks)
 		{
 			callback(DeltaSeconds);
 		}
@@ -131,7 +134,7 @@ namespace Commands
 
 	void CheckOnTimerCallbacks()
 	{
-		for (auto callback : onTimerCallbacks)
+		for (const auto& callback : onTimerCallbacks)
 		{
 			callback();
 		}
