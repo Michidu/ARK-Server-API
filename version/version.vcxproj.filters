@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{8459530a-8c34-4442-9c72-41d1f2b4ed4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Private">
+      <UniqueIdentifier>{58ecb7c7-5963-411e-8af4-bfde7a5c0466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public">
+      <UniqueIdentifier>{4729f632-a6ea-4679-9628-06a96a09ceec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Private\PDBReader">
+      <UniqueIdentifier>{3af78517-b4a1-423a-b8bf-82de3c526ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\API">
+      <UniqueIdentifier>{5a6460f4-583c-4223-b1d3-84dab2aa2a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\API\ARK">
+      <UniqueIdentifier>{1980c993-18a4-4f4c-8a15-4c4dc2a3aeee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\API\UE">
+      <UniqueIdentifier>{51e7b043-f4d4-4c19-81d2-aa2dc3d69f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\API\UE\Templates">
+      <UniqueIdentifier>{48905ed3-7f75-4ad8-8cf9-01b6a5f69fea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="version_asm.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="MinHook.h" />
+    <ClInclude Include="Core\Private\PDBReader\PDBReader.h">
+      <Filter>Core\Private\PDBReader</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\Hooks.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\Offsets.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\ApiUtils.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Base.h">
+      <Filter>Core\Public\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Enums.h">
+      <Filter>Core\Public\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\UE.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\Actor.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\Ark.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\GameMode.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\GameState.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\Inventory.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\Other.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\PrimalStructure.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\Tribe.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\HooksImpl.h">
+      <Filter>Core\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\Tools.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\Commands.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\FString.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\MicrosoftPlatformString.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\GenericPlatformString.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\AndOrNot.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\EnableIf.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\IsArithmetic.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\IsPODType.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\IsTriviallyCopyAssignable.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\IsPointer.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\UnrealTypeTraits.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\UnrealMathUtility.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\GenericPlatformMath.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Char.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\CString.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\BasicTypes.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\TArray.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Vectors.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Malloc.h">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="version.cpp" />
+    <ClCompile Include="Core\Private\PDBReader\PDBReader.cpp">
+      <Filter>Core\Private\PDBReader</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Hooks.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Offsets.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\ApiUtils.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Public\API\Base.cpp">
+      <Filter>Core\Public\API</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\HooksImpl.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Tools.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Commands.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Public\API\UE\Malloc.cpp">
+      <Filter>Core\Public\API\UE</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="version.def" />
+  </ItemGroup>
+</Project>
