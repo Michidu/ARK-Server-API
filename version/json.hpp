@@ -241,9 +241,9 @@ name / id                      | example message | description
 json.exception.parse_error.101 | parse error at 2: unexpected end of input; expected string literal | This error indicates a syntax error while deserializing a JSON text. The error message describes that an unexpected token (character) was encountered, and the member @a byte indicates the error position.
 json.exception.parse_error.102 | parse error at 14: missing or wrong low surrogate | JSON uses the `\uxxxx` format to describe Unicode characters. Code points above above 0xFFFF are split into two `\uxxxx` entries ("surrogate pairs"). This error indicates that the surrogate pair is incomplete or contains an invalid code point.
 json.exception.parse_error.103 | parse error: code points above 0x10FFFF are invalid | Unicode supports code points up to 0x10FFFF. Code points above 0x10FFFF are invalid.
-json.exception.parse_error.104 | parse error: JSON patch must be an array of objects | [RFC 6902](https://tools.ietf.org/html/rfc6902) requires a JSON Patch document to be a JSON document that represents an array of objects.
+json.exception.parse_error.104 | parse error: JSON patch must be an array of objects | [RFC 6902](https://Tools.ietf.org/html/rfc6902) requires a JSON Patch document to be a JSON document that represents an array of objects.
 json.exception.parse_error.105 | parse error: operation must have string member 'op' | An operation of a JSON Patch document must contain exactly one "op" member, whose value indicates the operation to perform. Its value must be one of "add", "remove", "replace", "move", "copy", or "test"; other values are errors.
-json.exception.parse_error.106 | parse error: array index '01' must not begin with '0' | An array index in a JSON Pointer ([RFC 6901](https://tools.ietf.org/html/rfc6901)) may be `0` or any number wihtout a leading `0`.
+json.exception.parse_error.106 | parse error: array index '01' must not begin with '0' | An array index in a JSON Pointer ([RFC 6901](https://Tools.ietf.org/html/rfc6901)) may be `0` or any number wihtout a leading `0`.
 json.exception.parse_error.107 | parse error: JSON pointer must be empty or begin with '/' - was: 'foo' | A JSON Pointer must be a Unicode string containing a sequence of zero or more reference tokens, each prefixed by a `/` character.
 json.exception.parse_error.108 | parse error: escape character '~' must be followed with '0' or '1' | In a JSON Pointer, only `~0` and `~1` are valid escape sequences.
 json.exception.parse_error.109 | parse error: array index 'one' is not a number | A JSON Pointer array index must be a number.
@@ -6905,7 +6905,7 @@ A JSON pointer defines a string syntax for identifying a specific value
 within a JSON document. It can be used with functions `at` and
 `operator[]`. Furthermore, JSON pointers are the base for JSON patches.
 
-@sa [RFC 6901](https://tools.ietf.org/html/rfc6901)
+@sa [RFC 6901](https://Tools.ietf.org/html/rfc6901)
 
 @since version 2.0.0
 */
@@ -6920,7 +6920,7 @@ class json_pointer
     @brief create JSON pointer
 
     Create a JSON pointer according to the syntax described in
-    [Section 3 of RFC6901](https://tools.ietf.org/html/rfc6901#section-3).
+    [Section 3 of RFC6901](https://Tools.ietf.org/html/rfc6901#section-3).
 
     @param[in] s  string representing the JSON pointer; if omitted, the empty
                   string is assumed which references the whole JSON value
@@ -13686,7 +13686,7 @@ class basic_json
     @brief return flattened JSON value
 
     The function creates a JSON object whose keys are JSON pointers (see [RFC
-    6901](https://tools.ietf.org/html/rfc6901)) and whose values are all
+    6901](https://Tools.ietf.org/html/rfc6901)) and whose values are all
     primitive. The original JSON value can be restored using the @ref
     unflatten() function.
 
@@ -13719,7 +13719,7 @@ class basic_json
     meet certain constraints:
     1. The value must be an object.
     2. The keys must be JSON pointers (see
-       [RFC 6901](https://tools.ietf.org/html/rfc6901))
+       [RFC 6901](https://Tools.ietf.org/html/rfc6901))
     3. The mapped values must be primitive JSON types.
 
     @return the original JSON from a flattened version
@@ -13797,8 +13797,8 @@ class basic_json
 
     @sa @ref diff -- create a JSON patch by comparing two JSON values
 
-    @sa [RFC 6902 (JSON Patch)](https://tools.ietf.org/html/rfc6902)
-    @sa [RFC 6901 (JSON Pointer)](https://tools.ietf.org/html/rfc6901)
+    @sa [RFC 6902 (JSON Patch)](https://Tools.ietf.org/html/rfc6902)
+    @sa [RFC 6901 (JSON Pointer)](https://Tools.ietf.org/html/rfc6901)
 
     @since version 2.0.0
     */
@@ -14090,7 +14090,7 @@ class basic_json
 
     @sa @ref patch -- apply a JSON patch
 
-    @sa [RFC 6902 (JSON Patch)](https://tools.ietf.org/html/rfc6902)
+    @sa [RFC 6902 (JSON Patch)](https://Tools.ietf.org/html/rfc6902)
 
     @since version 2.0.0
     */

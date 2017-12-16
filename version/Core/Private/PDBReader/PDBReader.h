@@ -1,26 +1,26 @@
-#ifndef PDBREADER_H
-#define PDBREADER_H
-
-#include <string>
+#pragma once
 
 #include <dia2.h>
-
 #include "../../json.hpp"
+
+#include "API/Base.h"
 
 namespace ArkApi
 {
 	class PdbReader
 	{
 	public:
-		explicit PdbReader(const std::wstring& path)
+		PdbReader()
 			: offsets_dump_(nullptr),
-			  path_(path)
+			  bitfields_dump_(nullptr)
 		{
 		}
 
-		bool Read(std::unordered_map<std::string, intptr_t>* offsets_dump);
+		void Read(std::wstring path, std::unordered_map<std::string, intptr_t>* offsets_dump,
+		          std::unordered_map<std::string, BitField>* bitfields_dump);
+
 	private:
-		bool LoadDataFromPdb(IDiaDataSource**, IDiaSession**, IDiaSymbol**) const;
+		static void LoadDataFromPdb(std::wstring, IDiaDataSource**, IDiaSession**, IDiaSymbol**);
 		bool ReadConfig();
 		void DumpStructs(IDiaSymbol*);
 		void DumpFreeFunctions(IDiaSymbol*);
@@ -31,9 +31,8 @@ namespace ArkApi
 		static void Cleanup(IDiaSymbol*, IDiaSession*);
 
 		std::unordered_map<std::string, intptr_t>* offsets_dump_;
-		std::wstring path_;
+		std::unordered_map<std::string, BitField>* bitfields_dump_;
+
 		nlohmann::json config_;
 	};
 }
-
-#endif // PDBREADER_H

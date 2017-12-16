@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-namespace ArkApi::tools
+namespace ArkApi::Tools
 {
 	std::string GetCurrentDir()
 	{

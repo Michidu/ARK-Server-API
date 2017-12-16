@@ -31,4 +31,10 @@ namespace ArkApi
 	{
 		return shooter_game_mode_;
 	}
+
+	// Free function
+	IApiUtils& GetApiUtils()
+	{
+		return ApiUtils::Get();
+	}
 }

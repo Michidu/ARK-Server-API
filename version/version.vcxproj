@@ -22,9 +22,14 @@
     <MASM Include="version_asm.asm" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Core\Private\ApiUtils.h" />
+    <ClInclude Include="Core\Private\Commands.h" />
+    <ClInclude Include="Core\Private\Hooks.h" />
     <ClInclude Include="Core\Private\HooksImpl.h" />
+    <ClInclude Include="Core\Private\Logger\easylogging++.h" />
+    <ClInclude Include="Core\Private\Offsets.h" />
     <ClInclude Include="Core\Private\PDBReader\PDBReader.h" />
-    <ClInclude Include="Core\Public\ApiUtils.h" />
+    <ClInclude Include="Core\Private\PluginManager\PluginManager.h" />
     <ClInclude Include="Core\Public\API\ARK\Actor.h" />
     <ClInclude Include="Core\Public\API\ARK\Ark.h" />
     <ClInclude Include="Core\Public\API\ARK\GameMode.h" />
@@ -54,9 +59,10 @@
     <ClInclude Include="Core\Public\API\UE\UE.h" />
     <ClInclude Include="Core\Public\API\UE\UnrealMathUtility.h" />
     <ClInclude Include="Core\Public\API\UE\Vectors.h" />
-    <ClInclude Include="Core\Public\Commands.h" />
-    <ClInclude Include="Core\Public\Hooks.h" />
-    <ClInclude Include="Core\Public\Offsets.h" />
+    <ClInclude Include="Core\Public\IApiUtils.h" />
+    <ClInclude Include="Core\Public\ICommands.h" />
+    <ClInclude Include="Core\Public\IHooks.h" />
+    <ClInclude Include="Core\Public\IOffsets.h" />
     <ClInclude Include="Core\Public\Tools.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MinHook.h" />
@@ -66,11 +72,12 @@
     <ClCompile Include="Core\Private\Commands.cpp" />
     <ClCompile Include="Core\Private\Hooks.cpp" />
     <ClCompile Include="Core\Private\HooksImpl.cpp" />
+    <ClCompile Include="Core\Private\Logger\easylogging++.cc" />
     <ClCompile Include="Core\Private\Offsets.cpp" />
     <ClCompile Include="Core\Private\PDBReader\PDBReader.cpp" />
+    <ClCompile Include="Core\Private\PluginManager\PluginManager.cpp" />
     <ClCompile Include="Core\Private\Tools.cpp" />
     <ClCompile Include="Core\Public\API\Base.cpp" />
-    <ClCompile Include="Core\Public\API\UE\Malloc.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>

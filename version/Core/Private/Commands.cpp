@@ -1,7 +1,5 @@
 #include "Commands.h"
 
-#include <algorithm>
-
 namespace ArkApi
 {
 	Commands& Commands::Get()
@@ -14,139 +12,92 @@ namespace ArkApi
 	                              const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
 	                              callback)
 	{
-		ChatCommand* chat_command = new ChatCommand{command, callback};
-		chat_commands_.push_back(chat_command);
-	}
-
-	void Commands::RemoveChatCommand(const FString& command)
-	{
-		auto& v = chat_commands_;
-
-		auto iter = std::find_if(v.begin(), v.end(), [command](const ChatCommand* data) -> bool
-		{
-			return data->command == command;
-		});
-
-		if (iter != v.end())
-		{
-			v.erase(std::remove(v.begin(), v.end(), *iter), v.end());
-		}
+		chat_commands_.push_back(std::make_shared<ChatCommand>(command, callback));
 	}
 
 	void Commands::AddConsoleCommand(const FString& command,
 	                                 const std::function<void(APlayerController*, FString*, bool)>& callback)
 	{
-		ConsoleCommand* console_command = new ConsoleCommand{command, callback};
-		console_commands_.push_back(console_command);
+		console_commands_.push_back(std::make_shared<ConsoleCommand>(command, callback));
 	}
 
 	void Commands::AddRconCommand(const FString& command,
 	                              const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback)
 	{
-		RconCommand* rcon_command = new RconCommand{command, callback};
-		rcon_commands_.push_back(rcon_command);
+		rcon_commands_.push_back(std::make_shared<RconCommand>(command, callback));
 	}
 
-	void Commands::AddOnTickCallback(const std::function<void(float)>& callback)
+	void Commands::AddOnTickCallback(const FString& id, const std::function<void(float)>& callback)
 	{
-		on_tick_callbacks_.push_back(callback);
+		on_tick_callbacks_.push_back(std::make_shared<OnTickCallback>(id, callback));
 	}
 
-	void Commands::AddOnTimerCallback(const std::function<void()>& callback)
+	void Commands::AddOnTimerCallback(const FString& id, const std::function<void()>& callback)
 	{
-		on_timer_callbacks_.push_back(callback);
+		on_timer_callbacks_.push_back(std::make_shared<OnTimerCallback>(id, callback));
 	}
 
-	bool Commands::CheckChatCommands(AShooterPlayerController* a_shooter_player_controller, FString* message,
+	bool Commands::RemoveChatCommand(const FString& command)
+	{
+		return RemoveCommand<ChatCommand>(command, chat_commands_);
+	}
+
+	bool Commands::RemoveConsoleCommand(const FString& command)
+	{
+		return RemoveCommand<ConsoleCommand>(command, console_commands_);
+	}
+
+	bool Commands::RemoveRconCommand(const FString& command)
+	{
+		return RemoveCommand<RconCommand>(command, rcon_commands_);
+	}
+
+	bool Commands::RemoveOnTickCallback(const FString& id)
+	{
+		return RemoveCommand<OnTickCallback>(id, on_tick_callbacks_);
+	}
+
+	bool Commands::RemoveOnTimerCallback(const FString& id)
+	{
+		return RemoveCommand<OnTimerCallback>(id, on_timer_callbacks_);
+	}
+
+	bool Commands::CheckChatCommands(AShooterPlayerController* shooter_player_controller, FString* message,
 	                                 EChatSendMode::Type mode)
 	{
-		bool result = false;
-
-		TArray<FString> parsed;
-		message->ParseIntoArray(parsed, L" ", true);
-
-		if (!parsed.IsValidIndex(0))
-			return false;
-
-		const FString chat_command = parsed[0];
-
-		for (const auto& command : chat_commands_)
-		{
-			if (chat_command.EndsWith(command->command, ESearchCase::IgnoreCase))
-			{
-				command->callback(a_shooter_player_controller, message, mode);
-
-				result = true;
-			}
-		}
-
-		return result;
+		return CheckCommands<ChatCommand>(*message, chat_commands_, shooter_player_controller, message, mode);
 	}
 
 	bool Commands::CheckConsoleCommands(APlayerController* a_player_controller, FString* cmd, bool write_to_log)
 	{
-		bool result = false;
-
-		TArray<FString> parsed;
-		cmd->ParseIntoArray(parsed, L" ", true);
-
-		if (!parsed.IsValidIndex(0))
-			return false;
-
-		FString console_command = parsed[0];
-
-		for (const auto& command : console_commands_)
-		{
-			if (console_command.Compare(command->command, ESearchCase::IgnoreCase) == 0)
-			{
-				command->callback(a_player_controller, cmd, write_to_log);
-
-				result = true;
-			}
-		}
-
-		return result;
+		return CheckCommands<ConsoleCommand>(*cmd, console_commands_, a_player_controller, cmd, write_to_log);
 	}
 
 	bool Commands::CheckRconCommands(RCONClientConnection* rcon_client_connection, RCONPacket* rcon_packet,
 	                                 UWorld* u_world)
 	{
-		bool result = false;
-
-		TArray<FString> parsed;
-		rcon_packet->Body.ParseIntoArray(parsed, L" ", true);
-
-		if (!parsed.IsValidIndex(0))
-			return false;
-
-		FString rcon_command = parsed[0];
-
-		for (const auto& command : rcon_commands_)
-		{
-			if (rcon_command.Compare(command->command, ESearchCase::IgnoreCase) == 0)
-			{
-				command->callback(rcon_client_connection, rcon_packet, u_world);
-
-				result = true;
-			}
-		}
-
-		return result;
+		return CheckCommands<RconCommand>(rcon_packet->Body, rcon_commands_, rcon_client_connection, rcon_packet, u_world);
 	}
 
 	void Commands::CheckOnTickCallbacks(float delta_seconds)
 	{
-		for (const auto& callback : on_tick_callbacks_)
+		for (const auto& data : on_tick_callbacks_)
 		{
-			callback(delta_seconds);
+			data->callback(delta_seconds);
 		}
 	}
 
 	void Commands::CheckOnTimerCallbacks()
 	{
-		for (const auto& callback : on_timer_callbacks_)
+		for (const auto& data : on_timer_callbacks_)
 		{
-			callback();
+			data->callback();
 		}
+	}
+
+	// Free function
+	ICommands& GetCommands()
+	{
+		return Commands::Get();
 	}
 }

@@ -1,93 +1,82 @@
 #include "PDBReader.h"
 
-#include <iostream>
 #include <fstream>
 #include <comdef.h>
 
+#include "../Logger/easylogging++.h"
+#include "../Private/Offsets.h"
 #include "Tools.h"
-#include "../Public/Offsets.h"
 
 namespace ArkApi
 {
-	bool PdbReader::Read(std::unordered_map<std::string, intptr_t>* offsets_dump)
+	void PdbReader::Read(std::wstring path, std::unordered_map<std::string, intptr_t>* offsets_dump,
+	                     std::unordered_map<std::string, BitField>* bitfields_dump)
 	{
 		offsets_dump_ = offsets_dump;
+		bitfields_dump_ = bitfields_dump;
 
-		std::ifstream f{path_};
+		std::ifstream f{path};
 		if (!f.good())
-		{
-			std::cout << "Failed to open pdb file";
-			return false;
-		}
+			throw std::runtime_error("Failed to open pdb file");
 
 		IDiaDataSource* data_source;
 		IDiaSession* dia_session;
 		IDiaSymbol* symbol;
 
-		if (!LoadDataFromPdb(&data_source, &dia_session, &symbol))
+		try
 		{
-			std::cout << "Failed to load data from pdb file";
-			return false;
+			LoadDataFromPdb(path, &data_source, &dia_session, &symbol);
+		}
+		catch (const std::runtime_error&)
+		{
+			LOG(ERROR) << "Failed to load data from pdb file ";
+			throw;
 		}
 
 		if (!ReadConfig())
-			return false;
+			throw std::runtime_error("Failed to open config.json");
 
-		std::cout << "Dumping structures.." << std::endl;
+		LOG(INFO) << "Dumping structures..";
 		DumpStructs(symbol);
 
-		std::cout << "Dumping functions.." << std::endl;
+		LOG(INFO) << "Dumping functions.." << std::endl;
 		DumpFreeFunctions(symbol);
 
 		Cleanup(symbol, dia_session);
-
-		return false;
 	}
 
-	bool PdbReader::LoadDataFromPdb(IDiaDataSource** dia_source, IDiaSession** session, IDiaSymbol** symbol) const
+	void PdbReader::LoadDataFromPdb(std::wstring path, IDiaDataSource** dia_source, IDiaSession** session,
+	                                IDiaSymbol** symbol)
 	{
-		const std::string current_dir = tools::GetCurrentDir();
+		const std::string current_dir = Tools::GetCurrentDir();
 
 		std::string lib_path = current_dir + "\\msdia140.dll";
 		const HMODULE h_module = LoadLibraryA(lib_path.c_str());
 		if (!h_module)
-		{
-			std::cout << "Failed to load msdia140.dll - " << GetLastError() << std::endl;
-			return false;
-		}
+			throw std::runtime_error("Failed to load msdia140.dll. Error code - " + std::to_string(GetLastError()));
 
 		HRESULT (WINAPI* DllGetClassObject)(REFCLSID, REFIID, LPVOID) =
 			reinterpret_cast<HRESULT(WINAPI*)(REFCLSID, REFIID, LPVOID)>(GetProcAddress(h_module, "DllGetClassObject"));
 		if (!DllGetClassObject)
-		{
-			std::cout << "Can't find DllGetClassObject - " << GetLastError() << std::endl;
-			return false;
-		}
+			throw std::runtime_error("Can't find DllGetClassObject. Error code - " + std::to_string(GetLastError()));
 
 		IClassFactory* class_factory;
 		HRESULT hr = DllGetClassObject(__uuidof(DiaSource), IID_IClassFactory, &class_factory);
 		if (FAILED(hr))
-		{
-			std::cout << "DllGetClassObject failed - " << GetLastError() << std::endl;
-			return false;
-		}
+			throw std::runtime_error("DllGetClassObject has failed. Error code - " + std::to_string(GetLastError()));
 
 		hr = class_factory->CreateInstance(nullptr, __uuidof(IDiaDataSource), reinterpret_cast<void **>(dia_source));
 		if (FAILED(hr))
 		{
 			class_factory->Release();
-
-			std::cout << "CreateInstance failed - " << GetLastError() << std::endl;
-			return false;
+			throw std::runtime_error("CreateInstance has failed. Error code - " + std::to_string(GetLastError()));
 		}
 
-		hr = (*dia_source)->loadDataFromPdb(path_.c_str());
+		hr = (*dia_source)->loadDataFromPdb(path.c_str());
 		if (FAILED(hr))
 		{
 			class_factory->Release();
-
-			std::cout << "loadDataFromPdb failed - HRESULT = " << std::hex << hr << std::endl;
-			return false;
+			throw std::runtime_error("loadDataFromPdb has failed. HRESULT - " + std::to_string(hr));
 		}
 
 		// Open a session for querying symbols
@@ -96,9 +85,7 @@ namespace ArkApi
 		if (FAILED(hr))
 		{
 			class_factory->Release();
-
-			std::cout << "openSession failed - HRESULT = " << std::hex << hr << std::endl;
-			return false;
+			throw std::runtime_error("openSession has failed. HRESULT - " + std::to_string(hr));
 		}
 
 		// Retrieve a reference to the global scope
@@ -107,25 +94,18 @@ namespace ArkApi
 		if (hr != S_OK)
 		{
 			class_factory->Release();
-
-			std::cout << "get_globalScope failed" << std::endl;
-			return false;
+			throw std::runtime_error("get_globalScope has failed. HRESULT - " + std::to_string(hr));
 		}
 
 		class_factory->Release();
-
-		return true;
 	}
 
 	bool PdbReader::ReadConfig()
 	{
-		const std::string config_path = tools::GetCurrentDir() + "/config.json";
+		const std::string config_path = Tools::GetCurrentDir() + "/config.json";
 		std::ifstream file{config_path};
 		if (!file.is_open())
-		{
-			std::cerr << "Failed to open config.json" << std::endl;
 			return false;
-		}
 
 		file >> config_;
 		file.close();
@@ -140,9 +120,8 @@ namespace ArkApi
 		auto structs_array = config_["structures"].get<std::vector<std::string>>();
 
 		IDiaEnumSymbols* enum_symbols;
-
 		if (FAILED(g_symbol->findChildren(SymTagUDT, nullptr, nsNone, &enum_symbols)))
-			return;
+			throw std::runtime_error("Failed to find symbols");
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
@@ -175,7 +154,7 @@ namespace ArkApi
 
 		IDiaEnumSymbols* enum_symbols;
 		if (FAILED(g_symbol->findChildren(SymTagFunction, nullptr, nsNone, &enum_symbols)))
-			return;
+			throw std::runtime_error("Failed to find symbols");
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
@@ -225,14 +204,14 @@ namespace ArkApi
 		case SymTagData:
 			DumpData(symbol, structure);
 
-			if (symbol->get_type(&symbol_type) == S_OK &&
+			/*if (symbol->get_type(&symbol_type) == S_OK &&
 				symbol_type->get_symTag(&sym_tag_type) == S_OK &&
 				sym_tag_type == SymTagUDT)
 			{
 				DumpType(symbol_type, structure, indent + 2);
-			}
+			}*/
 
-			symbol_type->Release();
+			//symbol_type->Release();
 			break;
 		case SymTagEnum:
 		case SymTagUDT:
@@ -271,36 +250,9 @@ namespace ArkApi
 
 		if (type)
 		{
-			//auto field = nlohmann::json({
-			//	{"kind", loc_type == LocIsThisRel ? "field" : loc_type == LocIsBitField ? "bitfield" : ""}
-			//});
-
 			LONG offset;
 			if (symbol->get_offset(&offset) != S_OK)
 				return;
-
-			//field["offset"] = offset;
-
-			if (loc_type == LocIsBitField)
-			{
-				/*DWORD bitPosition;
-				if (symbol->get_bitPosition(&bitPosition) != S_OK)
-				return;
-
-				ULONGLONG numbits;
-				if (symbol->get_length(&numbits) != S_OK)
-				return;
-
-				field["numbits"] = numbits;
-				field["bitposition"] = bitPosition;
-
-
-				ULONGLONG length;
-				if (type->get_length(&length) != S_OK)
-				return;
-
-				field["length"] = length;*/
-			}
 
 			BSTR bstr_name;
 			if (symbol->get_name(&bstr_name) != S_OK)
@@ -308,7 +260,28 @@ namespace ArkApi
 
 			const _bstr_t bbstr_name(bstr_name);
 
-			(*offsets_dump_)[structure + "." + std::string(bbstr_name)] = offset;
+			if (loc_type == LocIsBitField)
+			{
+				DWORD bit_position;
+				if (symbol->get_bitPosition(&bit_position) != S_OK)
+					return;
+
+				ULONGLONG num_bits;
+				if (symbol->get_length(&num_bits) != S_OK)
+					return;
+
+				ULONGLONG length;
+				if (type->get_length(&length) != S_OK)
+					return;
+
+				const BitField bit_field{offset, bit_position, num_bits, length};
+
+				(*bitfields_dump_)[structure + "." + std::string(bbstr_name)] = bit_field;
+			}
+			else if (loc_type == LocIsThisRel)
+			{
+				(*offsets_dump_)[structure + "." + std::string(bbstr_name)] = offset;
+			}
 
 			SysFreeString(bstr_name);
 		}

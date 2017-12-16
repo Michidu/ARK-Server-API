@@ -3,17 +3,16 @@
 #include <tchar.h>
 
 #include "GenericPlatformString.h"
-#include "Char.h"
 
 /**
 * Microsoft specific implementation 
 **/
 
-#if !USE_SECURE_CRT
 #pragma warning(push)
 #pragma warning(disable : 4996) // 'function' was declared deprecated  (needed for the secure string functions)
 #pragma warning(disable : 4995) // 'function' was declared deprecated  (needed for the secure string functions)
-#endif
+#pragma warning(disable : 4267)
+#pragma warning(disable : 4244)
 
 struct FMicrosoftPlatformString : public FGenericPlatformString
 {
@@ -176,7 +175,7 @@ struct FMicrosoftPlatformString : public FGenericPlatformString
 	{
 		return _stricmp(String1, String2);
 	}
-	
+
 	static FORCEINLINE int32 Stricmp(const WIDECHAR* String1, const WIDECHAR* String2)
 	{
 		return _wcsicmp(String1, String2);
@@ -262,3 +261,5 @@ struct FMicrosoftPlatformString : public FGenericPlatformString
 };
 
 typedef FMicrosoftPlatformString FPlatformString;
+
+#pragma warning(pop)

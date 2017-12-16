@@ -3,11 +3,11 @@
 #include <windows.h>
 #include <iostream>
 
+#include "Logger/easylogging++.h"
+
 #include "Hooks.h"
 #include "ApiUtils.h"
 #include "Commands.h"
-
-#include "API/ARK/Ark.h"
 
 namespace ArkApi
 {
@@ -46,10 +46,10 @@ namespace ArkApi
 
 	void _cdecl Hook_UWorld_InitWorld(UWorld* world, DWORD64 ivs)
 	{
-		std::cout << "[API] UWorld::InitWorld was called" << std::endl;
+		LOG(INFO) << "[API] UWorld::InitWorld was called";
 
 		ApiUtils::Get().SetWorld(world);
-		
+
 		UWorld_InitWorld_original(world, ivs);
 	}
 

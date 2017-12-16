@@ -4,7 +4,6 @@
 #include <xmmintrin.h>
 
 #include "TArray.h"
-#include "Vectors.h"
 #include "FString.h"
 
 template <typename RT>
@@ -42,8 +41,8 @@ template <typename RT, typename T>
 RT GetNativeBitField(const void* _this, const std::string& structure, const std::string& fieldName)
 {
 	const auto bf = GetBitField(_this, structure, fieldName);
-	T result = ((*reinterpret_cast<T*>(bf.offset)) >> bf.bitPosition) & ~0ULL >> sizeof(unsigned long long) * 8 - bf.
-		numBits;
+	T result = ((*reinterpret_cast<T*>(bf.offset)) >> bf.bit_position) & ~0ULL >> sizeof(unsigned long long) * 8 - bf.
+		num_bits;
 
 	return static_cast<RT>(result);
 }
@@ -58,8 +57,8 @@ template <typename T>
 void SetNativeBitField(LPVOID _this, const std::string& structure, const std::string& fieldName, T newValue)
 {
 	const auto bf = GetBitField(_this, structure, fieldName);
-	const auto mask = ~0ULL >> sizeof(unsigned long long) * 8 - bf.numBits << bf.bitPosition;
-	*reinterpret_cast<T*>(bf.offset) = (*reinterpret_cast<T*>(bf.offset) & ~mask) | ((newValue << bf.bitPosition) & mask);
+	const auto mask = ~0ULL >> sizeof(unsigned long long) * 8 - bf.num_bits << bf.bit_position;
+	*reinterpret_cast<T*>(bf.offset) = (*reinterpret_cast<T*>(bf.offset) & ~mask) | ((newValue << bf.bit_position) & mask);
 }
 
 // Base types
@@ -180,11 +179,32 @@ struct FBox
 
 struct FLinearColor
 {
+	constexpr FLinearColor()
+		: R(0), G(0), B(0), A(0)
+	{
+	}
+
+	constexpr FLinearColor(float InR, float InG, float InB, float InA = 1.0f) : R(InR), G(InG), B(InB), A(InA)
+	{
+	}
+
 	float R,
 	      G,
 	      B,
 	      A;
 };
+
+namespace Colors
+{
+	constexpr FLinearColor White(1.f, 1.f, 1.f);
+	constexpr FLinearColor Gray(0.5f, 0.5f, 0.5f);
+	constexpr FLinearColor Black(0, 0, 0);
+	constexpr FLinearColor Transparent(0, 0, 0, 0);
+	constexpr FLinearColor Red(1.f, 0, 0);
+	constexpr FLinearColor Green(0, 1.f, 0);
+	constexpr FLinearColor Blue(0, 0, 1.f);
+	constexpr FLinearColor Yellow(1.f, 1.f, 0);
+}
 
 template <typename ObjectType>
 struct TSharedPtr

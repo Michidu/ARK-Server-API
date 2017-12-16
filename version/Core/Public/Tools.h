@@ -1,12 +1,11 @@
-#ifndef TOOLS_H
-#define TOOLS_H
+#pragma once
+
+#include "API/Base.h"
 
 #include <string>
 
-namespace ArkApi::tools
+namespace ArkApi::Tools
 {
-	std::string GetCurrentDir();
-	std::wstring ConvertToWideStr(const std::string& text);
+	ARK_API std::string GetCurrentDir();
+	ARK_API std::wstring ConvertToWideStr(const std::string& text);
 }
-
-#endif // TOOLS_H

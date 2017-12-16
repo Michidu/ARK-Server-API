@@ -1,17 +1,13 @@
-#ifndef __TARRAY_H__
-#define __TARRAY_H__
+#pragma once
 
 #include <assert.h>
 #include <string.h>
 
-#if !defined(_WIN32)
-#include <inttypes.h>		// for intptr_t
-#elif !defined(_MSC_VER)
-#include <stdint.h>			// for mingw
-#endif
-
 #include "BasicTypes.h"
 #include "MAlloc.h"
+
+#pragma warning(push)
+#pragma warning(disable : 4244)
 
 // TArray -------------------------------------------------------------------
 
@@ -415,4 +411,4 @@ public:
 	}
 };
 
-#endif //__TARRAY_H__
+#pragma warning(pop)

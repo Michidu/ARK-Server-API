@@ -1,5 +1,5 @@
 #include "Base.h"
-#include "Offsets.h"
+#include "../../Private/Offsets.h"
 
 DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset)
 {

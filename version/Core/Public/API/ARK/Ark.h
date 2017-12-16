@@ -1,8 +1,8 @@
 #pragma once
 
 #include "../Base.h"
-#include <functional>
 
+#include "../UE/Vectors.h"
 #include "../Enums.h"
 #include "../UE/UE.h"
 #include "GameMode.h"

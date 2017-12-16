@@ -1,11 +1,11 @@
 #ifndef H_BaseSdk
 #define H_BaseSdk
 
-#include <windows.h>
+#include <Windows.h>
 #include <string>
 
 #ifdef ARK_EXPORTS
-#define ARK_API __declspec(dllexport) 
+#define ARK_API __declspec(dllexport)
 #else
 #define ARK_API __declspec(dllimport)
 #endif
@@ -99,20 +99,38 @@ struct UActorComponent;
 struct UMaterialInterface;
 struct FItemCraftQueueEntry;
 struct FItemSpawnActorClassOverride;
-struct FItemCraftingConsumptionReplenishment{};
-struct FActorClassAttachmentInfo{};
-struct FSupplyCrateItemSet{};
+
+struct FItemCraftingConsumptionReplenishment
+{
+};
+
+struct FActorClassAttachmentInfo
+{
+};
+
+struct FSupplyCrateItemSet
+{
+};
+
 struct UPrimalSupplyCrateItemSets;
-struct FItemAttachmentInfo{};
+
+struct FItemAttachmentInfo
+{
+};
+
 struct FItemStatInfo;
-struct FSaddlePassengerSeatDefinition{};
+
+struct FSaddlePassengerSeatDefinition
+{
+};
+
 struct APrimalStructureTurret;
 
 struct BitField
 {
 	DWORD64 offset;
-	unsigned int bitPosition;
-	unsigned int numBits;
+	unsigned int bit_position;
+	unsigned int num_bits;
 	unsigned int length; //in bytes
 };
 

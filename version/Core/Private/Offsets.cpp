@@ -37,4 +37,10 @@ namespace ArkApi
 	{
 		return reinterpret_cast<LPVOID>(module_base_ + static_cast<DWORD64>(offsets_dump_[structure + "." + offset]));
 	}
+
+	// Free function
+	IOffsets& GetOffsets()
+	{
+		return Offsets::Get();
+	}
 }

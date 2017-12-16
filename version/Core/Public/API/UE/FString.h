@@ -7,6 +7,9 @@
 #include "Char.h"
 #include "CString.h"
 
+#pragma warning(push)
+#pragma warning(disable : 4244)
+
 class FString
 {
 private:
@@ -680,3 +683,5 @@ public:
 		return Data.Num() <= 1;
 	}
 };
+
+#pragma warning(pop)
