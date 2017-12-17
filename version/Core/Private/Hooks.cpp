@@ -21,18 +21,31 @@ namespace ArkApi
 		return instance;
 	}
 
-	bool Hooks::SetHook(const std::string& structure, const std::string& func_name, const LPVOID p_detour,
-	                    LPVOID* pp_original)
+	bool Hooks::SetHookInternal(const std::string& structure, const std::string& func_name, const LPVOID detour,
+	                            LPVOID* original)
 	{
 		const LPVOID target = Offsets::Get().GetAddress(structure, func_name);
+		if (target == nullptr)
+		{
+			LOG(ERROR) << func_name << " does not exist in " << structure;
+			return false;
+		}
 
-		if (MH_CreateHook(target, p_detour, pp_original) != MH_OK)
+		auto& hook_vector = all_hooks_[structure + "." + func_name];
+
+		const LPVOID new_target = hook_vector.empty()
+			                          ? target
+			                          : hook_vector.back()->detour;
+
+		hook_vector.push_back(std::make_shared<Hook>(new_target, detour, original));
+
+		if (MH_CreateHook(new_target, detour, original) != MH_OK)
 		{
 			LOG(ERROR) << "Failed to create hook for " << structure << "::" << func_name;
 			return false;
 		}
 
-		if (MH_EnableHook(target) != MH_OK)
+		if (MH_EnableHook(new_target) != MH_OK)
 		{
 			LOG(ERROR) << "Failed to enable hook for " << structure << "::" << func_name;
 			return false;
@@ -41,14 +54,52 @@ namespace ArkApi
 		return true;
 	}
 
-	void Hooks::DisableHook(const std::string& structure, const std::string& func_name)
+	bool Hooks::DisableHook(const std::string& structure, const std::string& func_name, const LPVOID detour)
 	{
 		const LPVOID target = Offsets::Get().GetAddress(structure, func_name);
-
-		if (MH_RemoveHook(target) != MH_OK)
+		if (target == nullptr)
 		{
-			LOG(ERROR) << "Failed to disable hook for " << structure << "::" << func_name;
+			LOG(ERROR) << func_name << " does not exist in " << structure;
+			return false;
 		}
+
+		auto& hook_vector = all_hooks_[structure + "." + func_name];
+
+		auto iter = std::find_if(hook_vector.begin(), hook_vector.end(),
+		                         [detour](const std::shared_ptr<Hook>& hook) -> bool
+		                         {
+			                         return hook->detour == detour;
+		                         });
+
+		if (iter == hook_vector.end())
+		{
+			LOG(ERROR) << "Failed to find hook";
+			return false;
+		}
+
+		// Remove all hooks placed on this function
+		for (const auto& hook : hook_vector)
+		{
+			if (MH_RemoveHook(hook->target) != MH_OK)
+			{
+				LOG(ERROR) << "Failed to disable hook for " << structure << "::" << func_name;
+				return false;
+			}
+		}
+
+		// Remove hook from all_hooks vector
+		hook_vector.erase(std::remove(hook_vector.begin(), hook_vector.end(), *iter), hook_vector.end());
+
+		auto hook_vec(move(hook_vector));
+		hook_vector.clear();
+
+		// Enable all hooks again
+		for (const auto& hook : hook_vec)
+		{
+			SetHook(structure, func_name, hook->detour, hook->original);
+		}
+
+		return true;
 	}
 
 	// Free function

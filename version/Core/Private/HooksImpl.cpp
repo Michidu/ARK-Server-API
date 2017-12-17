@@ -25,20 +25,17 @@ namespace ArkApi
 	{
 		auto& hooks = Hooks::Get();
 
-		hooks.SetHook("UWorld", "InitWorld", &Hook_UWorld_InitWorld,
-		              reinterpret_cast<LPVOID*>(&UWorld_InitWorld_original));
-		hooks.SetHook("UWorld", "Tick", &Hook_UWorld_Tick, reinterpret_cast<LPVOID*>(&UWorld_Tick_original));
-		hooks.SetHook("AShooterGameMode", "InitGame", &Hook_AShooterGameMode_InitGame,
-		              reinterpret_cast<LPVOID*>(&AShooterGameMode_InitGame_original));
+		hooks.SetHook("UWorld", "InitWorld", &Hook_UWorld_InitWorld, &UWorld_InitWorld_original);
+		hooks.SetHook("UWorld", "Tick", &Hook_UWorld_Tick, &UWorld_Tick_original);
+		hooks.SetHook("AShooterGameMode", "InitGame", &Hook_AShooterGameMode_InitGame, &AShooterGameMode_InitGame_original);
 		hooks.SetHook("AShooterPlayerController", "ServerSendChatMessage_Implementation",
 		              &Hook_AShooterPlayerController_ServerSendChatMessage_Impl,
-		              reinterpret_cast<LPVOID*>(&AShooterPlayerController_ServerSendChatMessage_Impl_original));
+		              &AShooterPlayerController_ServerSendChatMessage_Impl_original);
 		hooks.SetHook("APlayerController", "ConsoleCommand", &Hook_APlayerController_ConsoleCommand,
-		              reinterpret_cast<LPVOID*>(&APlayerController_ConsoleCommand_original));
+		              &APlayerController_ConsoleCommand_original);
 		hooks.SetHook("RCONClientConnection", "ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
-		              reinterpret_cast<LPVOID*>(&RCONClientConnection_ProcessRCONPacket_original));
-		hooks.SetHook("AGameState", "DefaultTimer", &Hook_AGameState_DefaultTimer,
-		              reinterpret_cast<LPVOID*>(&AGameState_DefaultTimer_original));
+		              &RCONClientConnection_ProcessRCONPacket_original);
+		hooks.SetHook("AGameState", "DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
 	}
 
 
