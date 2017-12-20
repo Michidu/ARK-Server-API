@@ -162,9 +162,6 @@
     <ClInclude Include="Core\Private\Offsets.h">
       <Filter>Core\Private</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Public\IOffsets.h">
-      <Filter>Core\Public</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Private\Logger\easylogging++.h">
       <Filter>Core\Private\Logger</Filter>
     </ClInclude>
@@ -179,9 +176,6 @@
     </ClCompile>
     <ClCompile Include="Core\Private\ApiUtils.cpp">
       <Filter>Core\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Public\API\Base.cpp">
-      <Filter>Core\Public\API</Filter>
     </ClCompile>
     <ClCompile Include="Core\Private\HooksImpl.cpp">
       <Filter>Core\Private</Filter>
@@ -200,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="Core\Private\Logger\easylogging++.cc">
       <Filter>Core\Private\Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Base.cpp">
+      <Filter>Core\Private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

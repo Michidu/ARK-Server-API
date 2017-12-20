@@ -220,11 +220,16 @@ namespace ETextComparisonLevel
 {
 	enum Type
 	{
-		Default, // Locale-specific Default
-		Primary, // Base
-		Secondary, // Accent
-		Tertiary, // Case
-		Quaternary, // Punctuation
+		Default,
+		// Locale-specific Default
+		Primary,
+		// Base
+		Secondary,
+		// Accent
+		Tertiary,
+		// Case
+		Quaternary,
+		// Punctuation
 		Quinary // Identical
 	};
 }
@@ -251,5 +256,379 @@ namespace EBabyCuddleType
 		Food,
 		Walk,
 		MAX
+	};
+}
+
+namespace EAttachLocation
+{
+	enum Type
+	{
+		KeepRelativeOffset,
+		KeepWorldPosition,
+		SnapToTarget
+	};
+}
+
+
+namespace EEndPlayReason
+{
+	enum Type
+	{
+		ActorDestroyed,
+		LevelTransition,
+		EndPlayInEditor,
+		RemovedFromWorld,
+		Quit
+	};
+}
+
+enum ECollisionResponse
+{
+	ECR_Ignore,
+	ECR_Overlap,
+	ECR_Block,
+	ECR_MAX
+};
+
+enum ENetMode
+{
+	NM_Standalone,
+	NM_DedicatedServer,
+	NM_ListenServer,
+	NM_Client,
+	NM_MAX
+};
+
+namespace ETouchIndex
+{
+	enum Type
+	{
+		Touch1,
+		Touch2,
+		Touch3,
+		Touch4,
+		Touch5,
+		Touch6,
+		Touch7,
+		Touch8,
+		Touch9,
+		Touch10
+	};
+}
+
+namespace EPrimalARKTributeDataType
+{
+	enum Type
+	{
+		Items,
+		TamedDinos,
+		CharacterData,
+		MAX
+	};
+}
+
+namespace ESTOFNotificationType
+{
+	enum Type
+	{
+		Death,
+		TribeEliminated,
+		MatchVictory,
+		MatchDraw,
+		MAX
+	};
+}
+
+enum EMovementMode
+{
+	MOVE_None,
+	MOVE_Walking,
+	MOVE_Falling,
+	MOVE_Swimming,
+	MOVE_Flying,
+	MOVE_Custom,
+	MOVE_MAX
+};
+
+namespace EDinoTamedOrder
+{
+	enum Type
+	{
+		SetAggressionPassive,
+		SetAggressionNeutral,
+		SetAggressionAggressive,
+		SetAggressionAttackTarget,
+		ToggleFollowMe,
+		FollowMe,
+		StopFollowing,
+		CycleFollowDistance,
+		MAX
+	};
+}
+
+namespace EPrimalCharacterInputType
+{
+	enum Type
+	{
+		PrimaryFire,
+		Targeting,
+		AltFire,
+		SwitchWeapon,
+		Reload,
+		Crouch,
+		Prone,
+		CrouchProneToggle,
+		SwitchMap,
+		DinoAttack
+	};
+}
+
+namespace EShooterPhysMaterialType
+{
+	enum Type
+	{
+		Unknown,
+		Concrete,
+		Dirt,
+		Water,
+		Metal,
+		Wood,
+		Grass,
+		Glass,
+		Flesh,
+		Leaves,
+		Rock,
+		Sand,
+		Snow,
+		MAX
+	};
+}
+
+enum EPhysicalSurface
+{
+	SurfaceType_Default,
+	SurfaceType1,
+	SurfaceType2,
+	SurfaceType3,
+	SurfaceType4,
+	SurfaceType5,
+	SurfaceType6,
+	SurfaceType7,
+	SurfaceType8,
+	SurfaceType9,
+	SurfaceType10,
+	SurfaceType11,
+	SurfaceType12,
+	SurfaceType13,
+	SurfaceType14,
+	SurfaceType15,
+	SurfaceType16,
+	SurfaceType17,
+	SurfaceType18,
+	SurfaceType19,
+	SurfaceType20,
+	SurfaceType21,
+	SurfaceType22,
+	SurfaceType23,
+	SurfaceType24,
+	SurfaceType25,
+	SurfaceType26,
+	SurfaceType27,
+	SurfaceType28,
+	SurfaceType29,
+	SurfaceType30,
+	SurfaceType31,
+	SurfaceType32,
+	SurfaceType33,
+	SurfaceType34,
+	SurfaceType35,
+	SurfaceType36,
+	SurfaceType37,
+	SurfaceType38,
+	SurfaceType39,
+	SurfaceType40,
+	SurfaceType41,
+	SurfaceType42,
+	SurfaceType43,
+	SurfaceType44,
+	SurfaceType45,
+	SurfaceType46,
+	SurfaceType47,
+	SurfaceType48,
+	SurfaceType49,
+	SurfaceType50,
+	SurfaceType51,
+	SurfaceType52,
+	SurfaceType53,
+	SurfaceType54,
+	SurfaceType55,
+	SurfaceType56,
+	SurfaceType57,
+	SurfaceType58,
+	SurfaceType59,
+	SurfaceType60,
+	SurfaceType61,
+	SurfaceType62,
+	SurfaceType_Max
+};
+
+namespace EWeaponState
+{
+	enum Type
+	{
+		Idle,
+		Firing,
+		Reloading,
+		Equipping,
+		UnEquipping
+	};
+}
+
+namespace EPathFollowingRequestResult
+{
+	enum Type
+	{
+		Failed,
+		AlreadyAtGoal,
+		RequestSuccessful
+	};
+}
+
+namespace EPathFollowingResult
+{
+	enum Type
+	{
+		Success,
+		Blocked,
+		OffPath,
+		Aborted,
+		Skipped,
+		Invalid
+	};
+}
+
+namespace EComponentMobility
+{
+	enum Type
+	{
+		Static,
+		Stationary,
+		Movable
+	};
+}
+
+enum ERelativeTransformSpace
+{
+	RTS_World,
+	RTS_Actor,
+	RTS_Component
+};
+
+enum EMoveComponentFlags
+{
+	MOVECOMP_NoFlags,
+	MOVECOMP_IgnoreBases,
+	MOVECOMP_SkipPhysicsMove,
+	MOVECOMP_NeverIgnoreBlockingOverlaps,
+	MOVECOMP_DoCenterOfMassCheck
+};
+
+namespace ETribeGroupPermission
+{
+	enum Type
+	{
+		STRUCTUREACTIVATE,
+		INVENTORYACCESS,
+		PET_ORDER,
+		PET_RIDE,
+		GENERAL_STRUCTUREDEMOLISH,
+		GENERAL_STRUCTUREATTACHMENT,
+		GENERAL_BUILDSTRUCTUREINRANGE,
+		INVITEMEMBER,
+		PROMOTEMEMBER,
+		DEMOTEMEMBER,
+		BANISHMEMBER,
+		PET_UNCLAIM
+	};
+}
+
+enum ETraceTypeQuery
+{
+	TraceTypeQuery1,
+	TraceTypeQuery2,
+	TraceTypeQuery3,
+	TraceTypeQuery4,
+	TraceTypeQuery5,
+	TraceTypeQuery6,
+	TraceTypeQuery7,
+	TraceTypeQuery8,
+	TraceTypeQuery9,
+	TraceTypeQuery10,
+	TraceTypeQuery11,
+	TraceTypeQuery12,
+	TraceTypeQuery13,
+	TraceTypeQuery14,
+	TraceTypeQuery15,
+	TraceTypeQuery16,
+	TraceTypeQuery17,
+	TraceTypeQuery18,
+	TraceTypeQuery19,
+	TraceTypeQuery20,
+	TraceTypeQuery21,
+	TraceTypeQuery22,
+	TraceTypeQuery23,
+	TraceTypeQuery24,
+	TraceTypeQuery25,
+	TraceTypeQuery26,
+	TraceTypeQuery27,
+	TraceTypeQuery28,
+	TraceTypeQuery29,
+	TraceTypeQuery30,
+	TraceTypeQuery31,
+	TraceTypeQuery32,
+	TraceTypeQuery_MAX
+};
+
+enum EInputEvent
+{
+	IE_Pressed,
+	IE_Released,
+	IE_Repeat,
+	IE_DoubleClick,
+	IE_Axis,
+	IE_MAX
+};
+
+namespace ETouchType
+{
+	enum Type
+	{
+		Began,
+		Moved,
+		Stationary,
+		Ended,
+		NumTypes
+	};
+}
+
+namespace EMouseCursor
+{
+	enum Type
+	{
+		None,
+		Default,
+		TextEditBeam,
+		ResizeLeftRight,
+		ResizeUpDown,
+		ResizeSouthEast,
+		ResizeSouthWest,
+		CardinalCross,
+		Crosshairs,
+		Hand,
+		GrabHand,
+		GrabHandClosed,
+		SlashedCircle,
+		EyeDropper,
+		TotalCursorCount
 	};
 }

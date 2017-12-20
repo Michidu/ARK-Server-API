@@ -28,19 +28,8 @@ namespace ArkApi
 		return reinterpret_cast<DWORD64>(base) + static_cast<DWORD64>(offsets_dump_[structure + "." + offset]);
 	}
 
-	DWORD64 Offsets::GetAddress(const LPVOID base, const std::string& structure, const std::string& offset)
-	{
-		return reinterpret_cast<DWORD64>(base) + static_cast<DWORD64>(offsets_dump_[structure + "." + offset]);
-	}
-
 	LPVOID Offsets::GetAddress(const std::string& structure, const std::string& offset)
 	{
 		return reinterpret_cast<LPVOID>(module_base_ + static_cast<DWORD64>(offsets_dump_[structure + "." + offset]));
-	}
-
-	// Free function
-	IOffsets& GetOffsets()
-	{
-		return Offsets::Get();
 	}
 }

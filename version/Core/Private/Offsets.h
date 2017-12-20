@@ -3,11 +3,9 @@
 #include <windows.h>
 #include <unordered_map>
 
-#include "IOffsets.h"
-
 namespace ArkApi
 {
-	class Offsets : public IOffsets
+	class Offsets
 	{
 	public:
 		static Offsets& Get();
@@ -19,9 +17,8 @@ namespace ArkApi
 
 		void Init(std::unordered_map<std::string, intptr_t>&& offsets_dump);
 
-		DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset) override;
-		DWORD64 GetAddress(const LPVOID base, const std::string& structure, const std::string& offset) override;
-		LPVOID GetAddress(const std::string& structure, const std::string& offset) override;
+		DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset);
+		LPVOID GetAddress(const std::string& structure, const std::string& offset);
 	private:
 		Offsets();
 

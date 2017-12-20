@@ -6,23 +6,37 @@
 #include "TArray.h"
 #include "FString.h"
 
-template <typename RT>
+/*template <typename RT>
 RT NativeCall(DWORD64 _this, const std::string& structure, const std::string& funcName)
 {
-	return static_cast<RT(_cdecl*)(DWORD64)>(GetAddress(structure, funcName))(_this);
-}
+	return static_cast<RT(__fastcall*)(DWORD64)>(GetAddress(structure, funcName))(_this);
+}*/
 
 template <typename RT, typename... ArgsTypes, typename... Args>
 RT NativeCall(DWORD64 _this, const std::string& structure, const std::string& funcName, Args&&... args)
 {
-	return static_cast<RT(_cdecl*)(DWORD64, ArgsTypes ...)>(GetAddress(structure, funcName))(
-		_this, std::forward<Args>(args)...);
+	return static_cast<RT(__fastcall*)(DWORD64, ArgsTypes ...)>(GetAddress(structure, funcName))(
+		(_this), std::forward<Args>(args)...);
 }
+
+template <typename RT, typename... ArgsTypes, typename... Args>
+RT NativeCall(void* _this, const std::string& structure, const std::string& func_name, Args&&... args)
+{
+	return static_cast<RT(__fastcall*)(DWORD64, ArgsTypes ...)>(GetAddress(structure, func_name))(
+		reinterpret_cast<DWORD64>(_this), std::forward<Args>(args)...);
+}
+
+/*template <typename RT, typename... ArgsTypes, typename... Args, typename T>
+RT NativeCall(const void* _this, const std::string& structure, const std::string& func_name, Args&&... args)
+{
+	return static_cast<RT(__fastcall*)(DWORD64, ArgsTypes ...)>(GetAddress(structure, func_name))(
+		reinterpret_cast<DWORD64>(_this), std::forward<Args>(args)...);
+}*/
 
 template <typename RT, typename... ArgsTypes, typename... Args>
 RT NativeCall(nullptr_t, const std::string& structure, const std::string& funcName, Args&&... args)
 {
-	return static_cast<RT(_cdecl*)(ArgsTypes ...)>(GetAddress(structure, funcName))(std::forward<Args>(args)...);
+	return static_cast<RT(__fastcall*)(ArgsTypes ...)>(GetAddress(structure, funcName))(std::forward<Args>(args)...);
 }
 
 template <typename RT>

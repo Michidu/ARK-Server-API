@@ -1,5 +1,4 @@
-#ifndef H_BaseSdk
-#define H_BaseSdk
+#pragma once
 
 #include <Windows.h>
 #include <string>
@@ -99,32 +98,37 @@ struct UActorComponent;
 struct UMaterialInterface;
 struct FItemCraftQueueEntry;
 struct FItemSpawnActorClassOverride;
-
-struct FItemCraftingConsumptionReplenishment
-{
-};
-
-struct FActorClassAttachmentInfo
-{
-};
-
-struct FSupplyCrateItemSet
-{
-};
-
+struct UNetConnection;
+struct FRadialDamageEvent{};
+struct FMinimalViewInfo;
+struct FItemCraftingConsumptionReplenishment{};
+struct FActorClassAttachmentInfo{};
+struct FSupplyCrateItemSet{};
 struct UPrimalSupplyCrateItemSets;
-
-struct FItemAttachmentInfo
-{
-};
-
+struct FItemAttachmentInfo{};
 struct FItemStatInfo;
-
-struct FSaddlePassengerSeatDefinition
-{
-};
-
+struct FSaddlePassengerSeatDefinition{};
 struct APrimalStructureTurret;
+struct FKey{};
+struct AWorldSettings;
+struct UNetDriver;
+struct FNetExecParams{};
+struct FLifetimeProperty{};
+struct AHUD;
+struct FPointDamageEvent{};
+struct APrimalStructureExplosive;
+struct UPaintingTexture;
+struct APrimalStructureExplosiveTransGPS;
+struct ITargetableInterface;
+struct UAnimSequence;
+struct APrimalStructureSeating;
+struct UScriptStruct;
+struct FTransponderInfo{};
+struct APrimalStructureItemContainer_SupplyCrate;
+struct UAudioComponent;
+struct FQuat;
+struct FDinoOrderGroup{};
+struct FServerOptions{};
 
 struct BitField
 {
@@ -137,9 +141,6 @@ struct BitField
 // Address helpers
 
 ARK_API DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset);
-ARK_API DWORD64 GetAddress(const LPVOID base, const std::string& structure, const std::string& offset);
 ARK_API LPVOID GetAddress(const std::string& structure, const std::string& offset);
-ARK_API BitField GetBitField(const void* base, const std::string& structure, const std::string& offset);
-ARK_API BitField GetBitField(LPVOID base, const std::string& structure, const std::string& offset);
-
-#endif
+//ARK_API BitField GetBitField(const void* base, const std::string& structure, const std::string& offset);
+//ARK_API BitField GetBitField(LPVOID base, const std::string& structure, const std::string& offset);

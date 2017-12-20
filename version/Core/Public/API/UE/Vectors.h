@@ -1,5 +1,4 @@
-#ifndef VECTORS_H
-#define VECTORS_H
+#pragma once
 
 #include <math.h>
 #include <string.h>
@@ -1199,6 +1198,13 @@ TMatrix3x3<T>::TMatrix3x3(const TVector3<T>& axis, TAngle<T> degrees)
 	Cells[2][2] = T(t - txx - tyy + c);
 }
 
+struct FQuat
+{
+	float X;
+	float Y;
+	float Z;
+	float W;
+};
 
 typedef TVector2<float> FVector2D;
 typedef TVector3<float> FVector;
@@ -1206,4 +1212,6 @@ typedef TRotator<float> FRotator;
 typedef TMatrix3x3<float> FMatrix3x3;
 typedef TAngle<float> FAngle;
 
-#endif
+typedef FVector FVector_NetQuantize;
+typedef FVector FVector_NetQuantizeNormal;
+typedef FRotator FRotator_NetQuantize;

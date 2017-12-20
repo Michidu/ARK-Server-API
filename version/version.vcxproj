@@ -62,13 +62,13 @@
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
-    <ClInclude Include="Core\Public\IOffsets.h" />
     <ClInclude Include="Core\Public\Tools.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MinHook.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\Private\ApiUtils.cpp" />
+    <ClCompile Include="Core\Private\Base.cpp" />
     <ClCompile Include="Core\Private\Commands.cpp" />
     <ClCompile Include="Core\Private\Hooks.cpp" />
     <ClCompile Include="Core\Private\HooksImpl.cpp" />
@@ -77,7 +77,6 @@
     <ClCompile Include="Core\Private\PDBReader\PDBReader.cpp" />
     <ClCompile Include="Core\Private\PluginManager\PluginManager.cpp" />
     <ClCompile Include="Core\Private\Tools.cpp" />
-    <ClCompile Include="Core\Public\API\Base.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
