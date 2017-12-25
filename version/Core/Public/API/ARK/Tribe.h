@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Ark.h"
-
 struct FTribeGovernment
 {
 	int TribeGovern_PINCode;
@@ -44,7 +42,6 @@ struct FTribeData
 	int GetDefaultRankGroupIndex() { return NativeCall<int>(this, "FTribeData", "GetDefaultRankGroupIndex"); }
 	FTribeData * operator=(FTribeData * __that) { return NativeCall<FTribeData *, FTribeData *>(this, "FTribeData", "operator=", __that); }
 	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeData", "StaticStruct"); }
-
 };
 
 struct FTribeWar
@@ -60,11 +57,12 @@ struct FTribeWar
 
 	// Functions
 
-	bool CanBeRejected(UWorld * ForWorld) { return NativeCall<bool, UWorld *>((DWORD64)this, "FTribeWar", "CanBeRejected", ForWorld); }
-	bool IsCurrentlyActive(UWorld * ForWorld) { return NativeCall<bool, UWorld *>((DWORD64)this, "FTribeWar", "IsCurrentlyActive", ForWorld); }
-	bool IsTribeWarOn(UWorld * ForWorld) { return NativeCall<bool, UWorld *>((DWORD64)this, "FTribeWar", "IsTribeWarOn", ForWorld); }
-	FString * GetDescriptiveString(FString * result, UWorld * ForWorld) { return NativeCall<FString *, FString *, UWorld *>((DWORD64)this, "FTribeWar", "GetDescriptiveString", result, ForWorld); }
-	FString * GetWarTimeString(FString * result, int DayNumber, float DayTime) { return NativeCall<FString *, FString *, int, float>((DWORD64)this, "FTribeWar", "GetWarTimeString", result, DayNumber, DayTime); }
+	bool CanBeRejected(UWorld * ForWorld) { return NativeCall<bool, UWorld *>(this, "FTribeWar", "CanBeRejected", ForWorld); }
+	bool IsCurrentlyActive(UWorld * ForWorld) { return NativeCall<bool, UWorld *>(this, "FTribeWar", "IsCurrentlyActive", ForWorld); }
+	bool IsTribeWarOn(UWorld * ForWorld) { return NativeCall<bool, UWorld *>(this, "FTribeWar", "IsTribeWarOn", ForWorld); }
+	FString * GetWarTimeString(FString * result, int DayNumber, float DayTime) { return NativeCall<FString *, FString *, int, float>(this, "FTribeWar", "GetWarTimeString", result, DayNumber, DayTime); }
+	bool operator==(FTribeWar * Other) { return NativeCall<bool, FTribeWar *>(this, "FTribeWar", "operator==", Other); }
+	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeWar", "StaticStruct"); }
 };
 
 struct FTribeRankGroup
@@ -95,7 +93,12 @@ struct FTribeRankGroup
 
 	// Functions
 
-	void ValidateSettings() { NativeCall<void>((DWORD64)this, "FTribeRankGroup", "ValidateSettings"); }
+	FTribeRankGroup(FTribeRankGroup * __that) { NativeCall<void, FTribeRankGroup *>(this, "FTribeRankGroup", "FTribeRankGroup", __that); }
+	FTribeRankGroup * operator=(FTribeRankGroup * __that) { return NativeCall<FTribeRankGroup *, FTribeRankGroup *>(this, "FTribeRankGroup", "operator=", __that); }
+	void ValidateSettings() { NativeCall<void>(this, "FTribeRankGroup", "ValidateSettings"); }
+	bool operator==(FTribeRankGroup * Other) { return NativeCall<bool, FTribeRankGroup *>(this, "FTribeRankGroup", "operator==", Other); }
+	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeRankGroup", "StaticStruct"); }
+
 };
 
 struct FTribeAlliance

@@ -12,13 +12,26 @@ struct FChatMessage
 	FString Receiver;
 	int SenderTeamIndex;
 	long double ReceivedTime;
-	EChatSendMode::Type SendMode;
+	TEnumAsByte<EChatSendMode::Type> SendMode;
 	unsigned int RadioFrequency;
-	EChatType::Type ChatType;
-	DWORD64 SenderIcon;
+	TEnumAsByte<enum EChatType::Type> ChatType;
+	UTexture2D* SenderIcon;
 	FString UserId;
 
-	FChatMessage(): SenderId(0), SenderTeamIndex(0), ReceivedTime(0), SendMode(), RadioFrequency(0), ChatType(), SenderIcon(0)
+	FChatMessage()
+		: SenderName(""),
+		SenderSteamName(""),
+		SenderTribeName(""),
+		SenderId(0),
+		Message(""),
+		Receiver(""),
+		SenderTeamIndex(0),
+		ReceivedTime(-1),
+		SendMode(EChatSendMode::GlobalChat),
+		RadioFrequency(0),
+		ChatType(EChatType::GlobalChat),
+		SenderIcon(nullptr),
+		UserId("")
 	{
 	}
 
@@ -33,35 +46,21 @@ struct FUniqueNetIdRepl
 
 struct USceneComponent
 {
-public:
-	FTransform GetComponentToWorldField() const { return GetNativeField<FTransform>(this, "USceneComponent", "ComponentToWorld"); }
-	void SetComponentToWorldField(FTransform newValue) { SetNativeField(this, "USceneComponent", "ComponentToWorld", newValue); }
-	USceneComponent* GetAttachParentField() const { return GetNativeField<USceneComponent *>(this, "USceneComponent", "AttachParent"); }
-	void SetAttachParentField(USceneComponent* newValue) { SetNativeField(this, "USceneComponent", "AttachParent", newValue); }
-	FName GetAttachSocketNameField() const { return GetNativeField<FName>(this, "USceneComponent", "AttachSocketName"); }
-	void SetAttachSocketNameField(FName newValue) { SetNativeField(this, "USceneComponent", "AttachSocketName", newValue); }
-	TArray<USceneComponent *> GetAttachChildrenField() const { return GetNativeField<TArray<USceneComponent *>>(this, "USceneComponent", "AttachChildren"); }
-	void SetAttachChildrenField(TArray<USceneComponent *> newValue) { SetNativeField(this, "USceneComponent", "AttachChildren", newValue); }
-	FVector GetRelativeLocationField() const { return GetNativeField<FVector>(this, "USceneComponent", "RelativeLocation"); }
-	void SetRelativeLocationField(FVector newValue) { SetNativeField(this, "USceneComponent", "RelativeLocation", newValue); }
-	FRotator GetRelativeRotationField() const { return GetNativeField<FRotator>(this, "USceneComponent", "RelativeRotation"); }
-	void SetRelativeRotationField(FRotator newValue) { SetNativeField(this, "USceneComponent", "RelativeRotation", newValue); }
-	FVector GetRelativeTranslation_DEPRECATEDField() const { return GetNativeField<FVector>(this, "USceneComponent", "RelativeTranslation_DEPRECATED"); }
-	void SetRelativeTranslation_DEPRECATEDField(FVector newValue) { SetNativeField(this, "USceneComponent", "RelativeTranslation_DEPRECATED", newValue); }
-	TEnumAsByte<enum EDetailMode> GetDetailModeField() const { return GetNativeField<TEnumAsByte<enum EDetailMode>>(this, "USceneComponent", "DetailMode"); }
-	void SetDetailModeField(TEnumAsByte<enum EDetailMode> newValue) { SetNativeField(this, "USceneComponent", "DetailMode", newValue); }
-	float GetRelativeScale_DEPRECATEDField() const { return GetNativeField<float>(this, "USceneComponent", "RelativeScale_DEPRECATED"); }
-	void SetRelativeScale_DEPRECATEDField(float newValue) { SetNativeField(this, "USceneComponent", "RelativeScale_DEPRECATED", newValue); }
-	bool GetNetUpdateTransformField() const { return GetNativeField<bool>(this, "USceneComponent", "NetUpdateTransform"); }
-	void SetNetUpdateTransformField(bool newValue) { SetNativeField(this, "USceneComponent", "NetUpdateTransform", newValue); }
-	USceneComponent* GetNetOldAttachParentField() const { return GetNativeField<USceneComponent *>(this, "USceneComponent", "NetOldAttachParent"); }
-	void SetNetOldAttachParentField(USceneComponent* newValue) { SetNativeField(this, "USceneComponent", "NetOldAttachParent", newValue); }
-	FName GetNetOldAttachSocketNameField() const { return GetNativeField<FName>(this, "USceneComponent", "NetOldAttachSocketName"); }
-	void SetNetOldAttachSocketNameField(FName newValue) { SetNativeField(this, "USceneComponent", "NetOldAttachSocketName", newValue); }
-	FVector GetRelativeScale3DField() const { return GetNativeField<FVector>(this, "USceneComponent", "RelativeScale3D"); }
-	void SetRelativeScale3DField(FVector newValue) { SetNativeField(this, "USceneComponent", "RelativeScale3D", newValue); }
-	FVector GetComponentVelocityField() const { return GetNativeField<FVector>(this, "USceneComponent", "ComponentVelocity"); }
-	void SetComponentVelocityField(FVector newValue) { SetNativeField(this, "USceneComponent", "ComponentVelocity", newValue); }
+	FieldValue<FTransform> ComponentToWorldField() { return { this, "USceneComponent", "ComponentToWorld" }; }
+	FieldValue<TEnumAsByte<enum EComponentMobility::Type>> MobilityField() { return { this, "USceneComponent", "Mobility" }; }
+	FieldValue<FBoxSphereBounds> BoundsField() { return { this, "USceneComponent", "Bounds" }; }
+	FieldValue<USceneComponent *> AttachParentField() { return { this, "USceneComponent", "AttachParent" }; }
+	FieldValue<FName> AttachSocketNameField() { return { this, "USceneComponent", "AttachSocketName" }; }
+	FieldValue<TArray<USceneComponent *>> AttachChildrenField() { return { this, "USceneComponent", "AttachChildren" }; }
+	FieldValue<FVector> RelativeLocationField() { return { this, "USceneComponent", "RelativeLocation" }; }
+	FieldValue<FRotator> RelativeRotationField() { return { this, "USceneComponent", "RelativeRotation" }; }
+	FieldValue<TEnumAsByte<enum EDetailMode>> DetailModeField() { return { this, "USceneComponent", "DetailMode" }; }
+	FieldValue<int> AttachmentChangedIncrementerField() { return { this, "USceneComponent", "AttachmentChangedIncrementer" }; }
+	FieldValue<bool> NetUpdateTransformField() { return { this, "USceneComponent", "NetUpdateTransform" }; }
+	FieldValue<USceneComponent *> NetOldAttachParentField() { return { this, "USceneComponent", "NetOldAttachParent" }; }
+	FieldValue<FName> NetOldAttachSocketNameField() { return { this, "USceneComponent", "NetOldAttachSocketName" }; }
+	FieldValue<FVector> RelativeScale3DField() { return { this, "USceneComponent", "RelativeScale3D" }; }
+	FieldValue<FVector> ComponentVelocityField() { return { this, "USceneComponent", "ComponentVelocity" }; }
 
 	// Functions
 
@@ -137,101 +136,65 @@ public:
 
 struct AActor : public UObject
 {
-	float GetCustomTimeDilationField() const { return GetNativeField<float>(this, "AActor", "CustomTimeDilation"); }
-	void SetCustomTimeDilationField(float newValue) { SetNativeField(this, "AActor", "CustomTimeDilation", newValue); }
-	float GetClientReplicationSendNowThresholdField() const { return GetNativeField<float>(this, "AActor", "ClientReplicationSendNowThreshold"); }
-	void SetClientReplicationSendNowThresholdField(float newValue) { SetNativeField(this, "AActor", "ClientReplicationSendNowThreshold", newValue); }
-	TEnumAsByte<enum ENetRole> GetRemoteRoleField() const { return GetNativeField<TEnumAsByte<enum ENetRole>>(this, "AActor", "RemoteRole"); }
-	void SetRemoteRoleField(TEnumAsByte<enum ENetRole> newValue) { SetNativeField(this, "AActor", "RemoteRole", newValue); }
-	AActor* GetOwnerField() const { return GetNativeField<AActor *>(this, "AActor", "Owner"); }
-	long double GetLastReplicatedMovementField() const { return GetNativeField<long double>(this, "AActor", "LastReplicatedMovement"); }
-	void SetLastReplicatedMovementField(long double newValue) { SetNativeField(this, "AActor", "LastReplicatedMovement", newValue); }
-	TEnumAsByte<enum ENetRole> GetRoleField() const { return GetNativeField<TEnumAsByte<enum ENetRole>>(this, "AActor", "Role"); }
-	TEnumAsByte<enum ENetDormancy> GetNetDormancyField() const { return GetNativeField<TEnumAsByte<enum ENetDormancy>>(this, "AActor", "NetDormancy"); }
-	int GetDefaultStasisComponentOctreeFlagsField() const { return GetNativeField<int>(this, "AActor", "DefaultStasisComponentOctreeFlags"); }
-	void SetDefaultStasisComponentOctreeFlagsField(int newValue) { SetNativeField(this, "AActor", "DefaultStasisComponentOctreeFlags", newValue); }
-	TArray<AActor *> GetNetworkSpatializationChildrenField() const { return GetNativeField<TArray<AActor *>>(this, "AActor", "NetworkSpatializationChildren"); }
-	void SetNetworkSpatializationChildrenField(TArray<AActor *> newValue) { SetNativeField(this, "AActor", "NetworkSpatializationChildren", newValue); }
-	AActor* GetNetworkSpatializationParentField() const { return GetNativeField<AActor *>(this, "AActor", "NetworkSpatializationParent"); }
-	void SetNetworkSpatializationParentField(AActor* newValue) { SetNativeField(this, "AActor", "NetworkSpatializationParent", newValue); }
-	float GetNetworkAndStasisRangeMultiplierField() const { return GetNativeField<float>(this, "AActor", "NetworkAndStasisRangeMultiplier"); }
-	void SetNetworkAndStasisRangeMultiplierField(float newValue) { SetNativeField(this, "AActor", "NetworkAndStasisRangeMultiplier", newValue); }
-	float GetUnstasisLastInRangeTimeField() const { return GetNativeField<float>(this, "AActor", "UnstasisLastInRangeTime"); }
-	void SetUnstasisLastInRangeTimeField(float newValue) { SetNativeField(this, "AActor", "UnstasisLastInRangeTime", newValue); }
-	long double GetLastPreReplicationTimeField() const { return GetNativeField<long double>(this, "AActor", "LastPreReplicationTime"); }
-	void SetLastPreReplicationTimeField(long double newValue) { SetNativeField(this, "AActor", "LastPreReplicationTime", newValue); }
-	long double GetLastEnterStasisTimeField() const { return GetNativeField<long double>(this, "AActor", "LastEnterStasisTime"); }
-	void SetLastEnterStasisTimeField(long double newValue) { SetNativeField(this, "AActor", "LastEnterStasisTime", newValue); }
-	long double GetLastExitStasisTimeField() const { return GetNativeField<long double>(this, "AActor", "LastExitStasisTime"); }
-	void SetLastExitStasisTimeField(long double newValue) { SetNativeField(this, "AActor", "LastExitStasisTime", newValue); }
-	FName GetCustomTagField() const { return GetNativeField<FName>(this, "AActor", "CustomTag"); }
-	void SetCustomTagField(FName newValue) { SetNativeField(this, "AActor", "CustomTag", newValue); }
-	int GetCustomDataField() const { return GetNativeField<int>(this, "AActor", "CustomData"); }
-	void SetCustomDataField(int newValue) { SetNativeField(this, "AActor", "CustomData", newValue); }
-	float GetReplicationIntervalMultiplierField() const { return GetNativeField<float>(this, "AActor", "ReplicationIntervalMultiplier"); }
-	void SetReplicationIntervalMultiplierField(float newValue) { SetNativeField(this, "AActor", "ReplicationIntervalMultiplier", newValue); }
-	int GetForceImmediateReplicationFrameField() const { return GetNativeField<int>(this, "AActor", "ForceImmediateReplicationFrame"); }
-	void SetForceImmediateReplicationFrameField(int newValue) { SetNativeField(this, "AActor", "ForceImmediateReplicationFrame", newValue); }
-	char GetStasisSetIndexField() const { return GetNativeField<char>(this, "AActor", "StasisSetIndex"); }
-	void SetStasisSetIndexField(char newValue) { SetNativeField(this, "AActor", "StasisSetIndex", newValue); }
-	char GetRandomStartByteField() const { return GetNativeField<char>(this, "AActor", "RandomStartByte"); }
-	void SetRandomStartByteField(char newValue) { SetNativeField(this, "AActor", "RandomStartByte", newValue); }
-	unsigned __int64 GetLastFrameUnStasisField() const { return GetNativeField<unsigned __int64>(this, "AActor", "LastFrameUnStasis"); }
-	void SetLastFrameUnStasisField(unsigned __int64 newValue) { SetNativeField(this, "AActor", "LastFrameUnStasis", newValue); }
-	volatile int GetLastUnstasisFrameCounterField() const { return GetNativeField<volatile int>(this, "AActor", "LastUnstasisFrameCounter"); }
-	void SetLastUnstasisFrameCounterField(volatile int newValue) { SetNativeField(this, "AActor", "LastUnstasisFrameCounter", newValue); }
-	TEnumAsByte<enum EInputConsumeOptions> GetInputConsumeOption_DEPRECATEDField() const { return GetNativeField<TEnumAsByte<enum EInputConsumeOptions>>(this, "AActor", "InputConsumeOption_DEPRECATED"); }
-	void SetInputConsumeOption_DEPRECATEDField(TEnumAsByte<enum EInputConsumeOptions> newValue) { SetNativeField(this, "AActor", "InputConsumeOption_DEPRECATED", newValue); }
-	float GetNetCullDistanceSquaredField() const { return GetNativeField<float>(this, "AActor", "NetCullDistanceSquared"); }
-	void SetNetCullDistanceSquaredField(float newValue) { SetNativeField(this, "AActor", "NetCullDistanceSquared", newValue); }
-	float GetNetCullDistanceSquaredDormantField() const { return GetNativeField<float>(this, "AActor", "NetCullDistanceSquaredDormant"); }
-	void SetNetCullDistanceSquaredDormantField(float newValue) { SetNativeField(this, "AActor", "NetCullDistanceSquaredDormant", newValue); }
-	int GetNetTagField() const { return GetNativeField<int>(this, "AActor", "NetTag"); }
-	void SetNetTagField(int newValue) { SetNativeField(this, "AActor", "NetTag", newValue); }
-	long double GetNetUpdateTimeField() const { return GetNativeField<long double>(this, "AActor", "NetUpdateTime"); }
-	void SetNetUpdateTimeField(long double newValue) { SetNativeField(this, "AActor", "NetUpdateTime", newValue); }
-	float GetNetUpdateFrequencyField() const { return GetNativeField<float>(this, "AActor", "NetUpdateFrequency"); }
-	void SetNetUpdateFrequencyField(float newValue) { SetNativeField(this, "AActor", "NetUpdateFrequency", newValue); }
-	float GetNetPriorityField() const { return GetNativeField<float>(this, "AActor", "NetPriority"); }
-	void SetNetPriorityField(float newValue) { SetNativeField(this, "AActor", "NetPriority", newValue); }
-	long double GetLastNetUpdateTimeField() const { return GetNativeField<long double>(this, "AActor", "LastNetUpdateTime"); }
-	void SetLastNetUpdateTimeField(long double newValue) { SetNativeField(this, "AActor", "LastNetUpdateTime", newValue); }
-	FName GetNetDriverNameField() const { return GetNativeField<FName>(this, "AActor", "NetDriverName"); }
-	void SetNetDriverNameField(FName newValue) { SetNativeField(this, "AActor", "NetDriverName", newValue); }
-	int GetTargetingTeamField() const { return GetNativeField<int>(this, "AActor", "TargetingTeam"); }
-	void SetTargetingTeamField(int newValue) { SetNativeField(this, "AActor", "TargetingTeam", newValue); }
-	float GetOverrideStasisComponentRadiusField() const { return GetNativeField<float>(this, "AActor", "OverrideStasisComponentRadius"); }
-	void SetOverrideStasisComponentRadiusField(float newValue) { SetNativeField(this, "AActor", "OverrideStasisComponentRadius", newValue); }
-	APawn* GetInstigatorField() const { return GetNativeField<APawn *>(this, "AActor", "Instigator"); }
-	void SetInstigatorField(APawn* newValue) { SetNativeField(this, "AActor", "Instigator", newValue); }
-	long double GetCreationTimeField() const { return GetNativeField<long double>(this, "AActor", "CreationTime"); }
-	void SetCreationTimeField(long double newValue) { SetNativeField(this, "AActor", "CreationTime", newValue); }
-	long double GetOriginalCreationTimeField() const { return GetNativeField<long double>(this, "AActor", "OriginalCreationTime"); }
-	void SetOriginalCreationTimeField(long double newValue) { SetNativeField(this, "AActor", "OriginalCreationTime", newValue); }
-	TArray<AActor *> GetChildrenField() const { return GetNativeField<TArray<AActor *>>(this, "AActor", "Children"); }
-	void SetChildrenField(TArray<AActor *> newValue) { SetNativeField(this, "AActor", "Children", newValue); }
-	unsigned int GetAnimUpdateRateShiftTagField() const { return GetNativeField<unsigned int>(this, "AActor", "AnimUpdateRateShiftTag"); }
-	void SetAnimUpdateRateShiftTagField(unsigned int newValue) { SetNativeField(this, "AActor", "AnimUpdateRateShiftTag", newValue); }
-	unsigned int GetAnimUpdateRateFrameCountField() const { return GetNativeField<unsigned int>(this, "AActor", "AnimUpdateRateFrameCount"); }
-	void SetAnimUpdateRateFrameCountField(unsigned int newValue) { SetNativeField(this, "AActor", "AnimUpdateRateFrameCount", newValue); }
-	USceneComponent* GetRootComponentField() const { return GetNativeField<USceneComponent *>(this, "AActor", "RootComponent"); }
-	void SetRootComponentField(USceneComponent* newValue) { SetNativeField(this, "AActor", "RootComponent", newValue); }
-	float GetInitialLifeSpanField() const { return GetNativeField<float>(this, "AActor", "InitialLifeSpan"); }
-	void SetInitialLifeSpanField(float newValue) { SetNativeField(this, "AActor", "InitialLifeSpan", newValue); }
-	TArray<FName> GetLayersField() const { return GetNativeField<TArray<FName>>(this, "AActor", "Layers"); }
-	void SetLayersField(TArray<FName> newValue) { SetNativeField(this, "AActor", "Layers", newValue); }
-	long double GetLastRenderTimeField() const { return GetNativeField<long double>(this, "AActor", "LastRenderTime"); }
-	void SetLastRenderTimeField(long double newValue) { SetNativeField(this, "AActor", "LastRenderTime", newValue); }
-	long double GetLastRenderTimeIgnoreShadowField() const { return GetNativeField<long double>(this, "AActor", "LastRenderTimeIgnoreShadow"); }
-	void SetLastRenderTimeIgnoreShadowField(long double newValue) { SetNativeField(this, "AActor", "LastRenderTimeIgnoreShadow", newValue); }
-	TArray<FName> GetTagsField() const { return GetNativeField<TArray<FName>>(this, "AActor", "Tags"); }
-	void SetTagsField(TArray<FName> newValue) { SetNativeField(this, "AActor", "Tags", newValue); }
-	FVector GetDefaultActorLocationField() const { return GetNativeField<FVector>(this, "AActor", "DefaultActorLocation"); }
-	FGuid GetUniqueGuidIdField() const { return GetNativeField<FGuid>(this, "AActor", "UniqueGuidId"); }
-	float GetForceMaximumReplicationRateUntilTimeField() const { return GetNativeField<float>(this, "AActor", "ForceMaximumReplicationRateUntilTime"); }
-	void SetForceMaximumReplicationRateUntilTimeField(float newValue) { SetNativeField(this, "AActor", "ForceMaximumReplicationRateUntilTime", newValue); }
-	long double GetLastActorForceReplicationTimeField() const { return GetNativeField<long double>(this, "AActor", "LastActorForceReplicationTime"); }
-	void SetLastActorForceReplicationTimeField(long double newValue) { SetNativeField(this, "AActor", "LastActorForceReplicationTime", newValue); }
+	FieldValue<float> CustomTimeDilationField() { return { this, "AActor", "CustomTimeDilation" }; }
+	FieldValue<float> ClientReplicationSendNowThresholdField() { return { this, "AActor", "ClientReplicationSendNowThreshold" }; }
+	FieldValue<TEnumAsByte<enum ENetRole>> RemoteRoleField() { return { this, "AActor", "RemoteRole" }; }
+	FieldValue<AActor *> OwnerField() { return { this, "AActor", "Owner" }; }
+	FieldValue<long double> LastReplicatedMovementField() { return { this, "AActor", "LastReplicatedMovement" }; }
+	FieldValue<TEnumAsByte<enum ENetRole>> RoleField() { return { this, "AActor", "Role" }; }
+	FieldValue<TEnumAsByte<enum ENetDormancy>> NetDormancyField() { return { this, "AActor", "NetDormancy" }; }
+	FieldValue<TArray<TWeakObjectPtr<UActorComponent>>> ReplicatedComponentsField() { return { this, "AActor", "ReplicatedComponents" }; }
+	FieldValue<TWeakObjectPtr<USoundBase>> LastPostProcessVolumeSoundField() { return { this, "AActor", "LastPostProcessVolumeSound" }; }
+	FieldValue<int> DefaultStasisComponentOctreeFlagsField() { return { this, "AActor", "DefaultStasisComponentOctreeFlags" }; }
+	FieldValue<UPrimitiveComponent *> StasisCheckComponentField() { return { this, "AActor", "StasisCheckComponent" }; }
+	FieldValue<TArray<AActor *>> NetworkSpatializationChildrenField() { return { this, "AActor", "NetworkSpatializationChildren" }; }
+	FieldValue<AActor *> NetworkSpatializationParentField() { return { this, "AActor", "NetworkSpatializationParent" }; }
+	FieldValue<float> NetworkAndStasisRangeMultiplierField() { return { this, "AActor", "NetworkAndStasisRangeMultiplier" }; }
+	FieldValue<long double> UnstasisLastInRangeTimeField() { return { this, "AActor", "UnstasisLastInRangeTime" }; }
+	FieldValue<long double> LastPreReplicationTimeField() { return { this, "AActor", "LastPreReplicationTime" }; }
+	FieldValue<long double> LastEnterStasisTimeField() { return { this, "AActor", "LastEnterStasisTime" }; }
+	FieldValue<long double> LastExitStasisTimeField() { return { this, "AActor", "LastExitStasisTime" }; }
+	FieldValue<FName> CustomTagField() { return { this, "AActor", "CustomTag" }; }
+	FieldValue<int> CustomDataField() { return { this, "AActor", "CustomData" }; }
+	FieldValue<float> ReplicationIntervalMultiplierField() { return { this, "AActor", "ReplicationIntervalMultiplier" }; }
+	FieldValue<int> ForceImmediateReplicationFrameField() { return { this, "AActor", "ForceImmediateReplicationFrame" }; }
+	FieldValue<char> StasisSetIndexField() { return { this, "AActor", "StasisSetIndex" }; }
+	FieldValue<char> RandomStartByteField() { return { this, "AActor", "RandomStartByte" }; }
+	FieldValue<unsigned __int64> LastFrameUnStasisField() { return { this, "AActor", "LastFrameUnStasis" }; }
+	FieldValue<volatile int> LastUnstasisFrameCounterField() { return { this, "AActor", "LastUnstasisFrameCounter" }; }
+	FieldValue<TArray<TWeakObjectPtr<UActorComponent>>> StasisUnRegisteredComponentsField() { return { this, "AActor", "StasisUnRegisteredComponents" }; }
+	FieldValue<float> NetCullDistanceSquaredField() { return { this, "AActor", "NetCullDistanceSquared" }; }
+	FieldValue<float> NetCullDistanceSquaredDormantField() { return { this, "AActor", "NetCullDistanceSquaredDormant" }; }
+	FieldValue<int> NetTagField() { return { this, "AActor", "NetTag" }; }
+	FieldValue<long double> NetUpdateTimeField() { return { this, "AActor", "NetUpdateTime" }; }
+	FieldValue<float> NetUpdateFrequencyField() { return { this, "AActor", "NetUpdateFrequency" }; }
+	FieldValue<float> NetPriorityField() { return { this, "AActor", "NetPriority" }; }
+	FieldValue<long double> LastNetUpdateTimeField() { return { this, "AActor", "LastNetUpdateTime" }; }
+	FieldValue<FName> NetDriverNameField() { return { this, "AActor", "NetDriverName" }; }
+	FieldValue<int> TargetingTeamField() { return { this, "AActor", "TargetingTeam" }; }
+	FieldValue<float> OverrideStasisComponentRadiusField() { return { this, "AActor", "OverrideStasisComponentRadius" }; }
+	FieldValue<APawn *> InstigatorField() { return { this, "AActor", "Instigator" }; }
+	FieldValue<long double> CreationTimeField() { return { this, "AActor", "CreationTime" }; }
+	FieldValue<long double> OriginalCreationTimeField() { return { this, "AActor", "OriginalCreationTime" }; }
+	FieldValue<TArray<AActor *>> ChildrenField() { return { this, "AActor", "Children" }; }
+	FieldValue<unsigned int> AnimUpdateRateShiftTagField() { return { this, "AActor", "AnimUpdateRateShiftTag" }; }
+	FieldValue<unsigned int> AnimUpdateRateFrameCountField() { return { this, "AActor", "AnimUpdateRateFrameCount" }; }
+	FieldValue<USceneComponent *> RootComponentField() { return { this, "AActor", "RootComponent" }; }
+	FieldValue<TArray<AMatineeActor *>> ControllingMatineeActorsField() { return { this, "AActor", "ControllingMatineeActors" }; }
+	FieldValue<float> InitialLifeSpanField() { return { this, "AActor", "InitialLifeSpan" }; }
+	FieldValue<TArray<FName>> LayersField() { return { this, "AActor", "Layers" }; }
+	FieldValue<TWeakObjectPtr<AActor>> ParentComponentActorField() { return { this, "AActor", "ParentComponentActor" }; }
+	FieldValue<long double> LastRenderTimeField() { return { this, "AActor", "LastRenderTime" }; }
+	FieldValue<long double> LastRenderTimeIgnoreShadowField() { return { this, "AActor", "LastRenderTimeIgnoreShadow" }; }
+	FieldValue<TArray<FName>> TagsField() { return { this, "AActor", "Tags" }; }
+	FieldValue<unsigned __int64> HiddenEditorViewsField() { return { this, "AActor", "HiddenEditorViews" }; }
+	FieldValue<FVector> DefaultActorLocationField() { return { this, "AActor", "DefaultActorLocation" }; }
+	FieldValue<FGuid> UniqueGuidIdField() { return { this, "AActor", "UniqueGuidId" }; }
+	FieldValue<float> ForceMaximumReplicationRateUntilTimeField() { return { this, "AActor", "ForceMaximumReplicationRateUntilTime" }; }
+	FieldValue<long double> LastActorForceReplicationTimeField() { return { this, "AActor", "LastActorForceReplicationTime" }; }
+	FieldValue<TArray<UActorComponent *>> OwnedComponentsField() { return { this, "AActor", "OwnedComponents" }; }
+	FieldValue<TArray<UActorComponent *>> SerializedComponentsField() { return { this, "AActor", "SerializedComponents" }; }
+	FieldValue<int> LastFrameCalculcatedNetworkRangeMultiplierField() { return { this, "AActor", "LastFrameCalculcatedNetworkRangeMultiplier" }; }
 
 	// Functions
 
@@ -448,24 +411,17 @@ struct AActor : public UObject
 struct APawn : public AActor
 {
 public:
-	float GetBaseEyeHeightField() const { return GetNativeField<float>(this, "APawn", "BaseEyeHeight"); }
-	void SetBaseEyeHeightField(float newValue) { SetNativeField(this, "APawn", "BaseEyeHeight", newValue); }
-	TSubclassOf<AController> GetAIControllerClassField() const { return GetNativeField<TSubclassOf<AController>>(this, "APawn", "AIControllerClass"); }
-	void SetAIControllerClassField(TSubclassOf<AController> newValue) { SetNativeField(this, "APawn", "AIControllerClass", newValue); }
-	APlayerState* GetPlayerStateField() const { return GetNativeField<APlayerState *>(this, "APawn", "PlayerState"); }
-	void SetPlayerStateField(APlayerState* newValue) { SetNativeField(this, "APawn", "PlayerState", newValue); }
-	char GetRemoteViewPitchField() const { return GetNativeField<char>(this, "APawn", "RemoteViewPitch"); }
-	void SetRemoteViewPitchField(char newValue) { SetNativeField(this, "APawn", "RemoteViewPitch", newValue); }
-	AController* GetLastHitByField() const { return GetNativeField<AController *>(this, "APawn", "LastHitBy"); }
-	void SetLastHitByField(AController* newValue) { SetNativeField(this, "APawn", "LastHitBy", newValue); }
-	AController* GetControllerField() const { return GetNativeField<AController *>(this, "APawn", "Controller"); }
-	void SetControllerField(AController* newValue) { SetNativeField(this, "APawn", "Controller", newValue); }
-	bool GetbClearOnConsumeField() const { return GetNativeField<bool>(this, "APawn", "bClearOnConsume"); }
-	void SetbClearOnConsumeField(bool newValue) { SetNativeField(this, "APawn", "bClearOnConsume", newValue); }
-	FVector GetControlInputVectorField() const { return GetNativeField<FVector>(this, "APawn", "ControlInputVector"); }
-	void SetControlInputVectorField(FVector newValue) { SetNativeField(this, "APawn", "ControlInputVector", newValue); }
-	FVector GetLastControlInputVectorField() const { return GetNativeField<FVector>(this, "APawn", "LastControlInputVector"); }
-	void SetLastControlInputVectorField(FVector newValue) { SetNativeField(this, "APawn", "LastControlInputVector", newValue); }
+	FieldValue<float> BaseEyeHeightField() { return { this, "APawn", "BaseEyeHeight" }; }
+	FieldValue<TSubclassOf<AController>> AIControllerClassField() { return { this, "APawn", "AIControllerClass" }; }
+	FieldValue<APlayerState *> PlayerStateField() { return { this, "APawn", "PlayerState" }; }
+	FieldValue<char> RemoteViewPitchField() { return { this, "APawn", "RemoteViewPitch" }; }
+	FieldValue<AController *> LastHitByField() { return { this, "APawn", "LastHitBy" }; }
+	FieldValue<AController *> ControllerField() { return { this, "APawn", "Controller" }; }
+	FieldValue<float> AllowedYawErrorField() { return { this, "APawn", "AllowedYawError" }; }
+	FieldValue<bool> bClearOnConsumeField() { return { this, "APawn", "bClearOnConsume" }; }
+	FieldValue<FVector> ControlInputVectorField() { return { this, "APawn", "ControlInputVector" }; }
+	FieldValue<FVector> LastControlInputVectorField() { return { this, "APawn", "LastControlInputVector" }; }
+	FieldValue<TWeakObjectPtr<AController>> SpawnedForControllerField() { return { this, "APawn", "SpawnedForController" }; }
 
 	// Functions
 
@@ -589,9 +545,8 @@ struct UCheatManager
 
 struct UShooterCheatManager : UCheatManager
 {
-	bool GetbIsRCONCheatManagerField() const { return GetNativeField<bool>(this, "UShooterCheatManager", "bIsRCONCheatManager"); }
-	void SetbIsRCONCheatManagerField(bool newValue) { SetNativeField(this, "UShooterCheatManager", "bIsRCONCheatManager", newValue); }
-	AShooterPlayerController* GetMyPCField() const { return GetNativeField<AShooterPlayerController *>(this, "UShooterCheatManager", "MyPC"); }
+	FieldValue<bool> bIsRCONCheatManagerField() { return { this, "UShooterCheatManager", "bIsRCONCheatManager" }; }
+	FieldValue<AShooterPlayerController *> MyPCField() { return { this, "UShooterCheatManager", "MyPC" }; }
 
 	// Functions
 
@@ -678,45 +633,27 @@ struct UShooterCheatManager : UCheatManager
 
 struct UPlayer
 {
-	APlayerController* GetPlayerControllerField() const { return GetNativeField<APlayerController *>(this, "UPlayer", "PlayerController"); }
-	int GetCurrentNetSpeedField() const { return GetNativeField<int>(this, "UPlayer", "CurrentNetSpeed"); }
-	void SetCurrentNetSpeedField(int newValue) { SetNativeField(this, "UPlayer", "CurrentNetSpeed", newValue); }
-	int GetConfiguredInternetSpeedField() const { return GetNativeField<int>(this, "UPlayer", "ConfiguredInternetSpeed"); }
-	void SetConfiguredInternetSpeedField(int newValue) { SetNativeField(this, "UPlayer", "ConfiguredInternetSpeed", newValue); }
-	int GetConfiguredLanSpeedField() const { return GetNativeField<int>(this, "UPlayer", "ConfiguredLanSpeed"); }
-	void SetConfiguredLanSpeedField(int newValue) { SetNativeField(this, "UPlayer", "ConfiguredLanSpeed", newValue); }
-	unsigned __int64 GetTransferringPlayerDataIdField() const { return GetNativeField<unsigned __int64>(this, "UPlayer", "TransferringPlayerDataId"); }
-	void SetTransferringPlayerDataIdField(unsigned __int64 newValue) { SetNativeField(this, "UPlayer", "TransferringPlayerDataId", newValue); }
+	FieldValue<APlayerController *> PlayerControllerField() { return { this, "UPlayer", "PlayerController" }; }
+	FieldValue<int> CurrentNetSpeedField() { return { this, "UPlayer", "CurrentNetSpeed" }; }
+	FieldValue<int> ConfiguredInternetSpeedField() { return { this, "UPlayer", "ConfiguredInternetSpeed" }; }
+	FieldValue<int> ConfiguredLanSpeedField() { return { this, "UPlayer", "ConfiguredLanSpeed" }; }
+	FieldValue<unsigned __int64> TransferringPlayerDataIdField() { return { this, "UPlayer", "TransferringPlayerDataId" }; }
 };
 
 struct APlayerState : public AActor
 {
-	float GetScoreField() const { return GetNativeField<float>(this, "APlayerState", "Score"); }
-	void SetScoreField(float newValue) { SetNativeField(this, "APlayerState", "Score", newValue); }
-	char GetPingField() const { return GetNativeField<char>(this, "APlayerState", "Ping"); }
-	void SetPingField(char newValue) { SetNativeField(this, "APlayerState", "Ping", newValue); }
-	FString GetPlayerNameField() const { return GetNativeField<FString>(this, "APlayerState", "PlayerName"); }
-	void SetPlayerNameField(FString newValue) { SetNativeField(this, "APlayerState", "PlayerName", newValue); }
-	FString GetOldNameField() const { return GetNativeField<FString>(this, "APlayerState", "OldName"); }
-	void SetOldNameField(FString newValue) { SetNativeField(this, "APlayerState", "OldName", newValue); }
-	int GetPlayerIdField() const { return GetNativeField<int>(this, "APlayerState", "PlayerId"); }
-	void SetPlayerIdField(int newValue) { SetNativeField(this, "APlayerState", "PlayerId", newValue); }
-	__int32 Get_bf46cField() const { return GetNativeField<__int32>(this, "APlayerState", "_bf46c"); }
-	void Set_bf46cField(__int32 newValue) { SetNativeField(this, "APlayerState", "_bf46c", newValue); }
-	int GetStartTimeField() const { return GetNativeField<int>(this, "APlayerState", "StartTime"); }
-	void SetStartTimeField(int newValue) { SetNativeField(this, "APlayerState", "StartTime", newValue); }
-	float GetExactPingField() const { return GetNativeField<float>(this, "APlayerState", "ExactPing"); }
-	void SetExactPingField(float newValue) { SetNativeField(this, "APlayerState", "ExactPing", newValue); }
-	FString GetSavedNetworkAddressField() const { return GetNativeField<FString>(this, "APlayerState", "SavedNetworkAddress"); }
-	void SetSavedNetworkAddressField(FString newValue) { SetNativeField(this, "APlayerState", "SavedNetworkAddress", newValue); }
-	FUniqueNetIdRepl* GetUniqueIdField() const { return GetNativePointerField<FUniqueNetIdRepl*>(this, "APlayerState", "UniqueId"); }
-	FName GetSessionNameField() const { return GetNativeField<FName>(this, "APlayerState", "SessionName"); }
-	void SetSessionNameField(FName newValue) { SetNativeField(this, "APlayerState", "SessionName", newValue); }
-	char GetCurPingBucketField() const { return GetNativeField<char>(this, "APlayerState", "CurPingBucket"); }
-	void SetCurPingBucketField(char newValue) { SetNativeField(this, "APlayerState", "CurPingBucket", newValue); }
-	float GetCurPingBucketTimestampField() const { return GetNativeField<float>(this, "APlayerState", "CurPingBucketTimestamp"); }
-	void SetCurPingBucketTimestampField(float newValue) { SetNativeField(this, "APlayerState", "CurPingBucketTimestamp", newValue); }
-
+	FieldValue<float> ScoreField() { return { this, "APlayerState", "Score" }; }
+	FieldValue<char> PingField() { return { this, "APlayerState", "Ping" }; }
+	FieldValue<FString> PlayerNameField() { return { this, "APlayerState", "PlayerName" }; }
+	FieldValue<FString> OldNameField() { return { this, "APlayerState", "OldName" }; }
+	FieldValue<int> PlayerIdField() { return { this, "APlayerState", "PlayerId" }; }
+	FieldValue<int> StartTimeField() { return { this, "APlayerState", "StartTime" }; }
+	FieldValue<float> ExactPingField() { return { this, "APlayerState", "ExactPing" }; }
+	FieldValue<FString> SavedNetworkAddressField() { return { this, "APlayerState", "SavedNetworkAddress" }; }
+	FieldValue<FUniqueNetIdRepl> UniqueIdField() { return { this, "APlayerState", "UniqueId" }; }
+	FieldValue<FName> SessionNameField() { return { this, "APlayerState", "SessionName" }; }
+	FieldValue<char> CurPingBucketField() { return { this, "APlayerState", "CurPingBucket" }; }
+	FieldValue<float> CurPingBucketTimestampField() { return { this, "APlayerState", "CurPingBucketTimestamp" }; }
 
 	// Functions
 
@@ -743,25 +680,21 @@ struct APlayerState : public AActor
 
 struct AShooterPlayerState : APlayerState
 {
-	UPrimalPlayerData* GetMyPlayerDataField() const { return GetNativeField<UPrimalPlayerData *>(this, "AShooterPlayerState", "MyPlayerData"); }
-	FPrimalPlayerDataStruct* GetMyPlayerDataStructField() const { return GetNativePointerField<FPrimalPlayerDataStruct*>(this, "AShooterPlayerState", "MyPlayerDataStruct"); }
-	FTribeData* GetMyTribeDataField() const { return GetNativePointerField<FTribeData*>(this, "AShooterPlayerState", "MyTribeData"); }
-	FTribeData* GetLastTribeInviteDataField() const { return GetNativePointerField<FTribeData*>(this, "AShooterPlayerState", "LastTribeInviteData"); }
-	int GetTotalEngramPointsField() const { return GetNativeField<int>(this, "AShooterPlayerState", "TotalEngramPoints"); }
-	void SetTotalEngramPointsField(int newValue) { SetNativeField(this, "AShooterPlayerState", "TotalEngramPoints", newValue); }
-	int GetFreeEngramPointsField() const { return GetNativeField<int>(this, "AShooterPlayerState", "FreeEngramPoints"); }
-	void SetFreeEngramPointsField(int newValue) { SetNativeField(this, "AShooterPlayerState", "FreeEngramPoints", newValue); }
-	TArray<TSubclassOf<UPrimalItem>> GetEngramItemBlueprintsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>>>(this, "AShooterPlayerState", "EngramItemBlueprints"); }
-	long double GetNextAllowedRespawnTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerState", "NextAllowedRespawnTime"); }
-	void SetNextAllowedRespawnTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerState", "NextAllowedRespawnTime", newValue); }
-	float GetAllowedRespawnIntervalField() const { return GetNativeField<float>(this, "AShooterPlayerState", "AllowedRespawnInterval"); }
-	void SetAllowedRespawnIntervalField(float newValue) { SetNativeField(this, "AShooterPlayerState", "AllowedRespawnInterval", newValue); }
-	long double GetLastTimeDiedToEnemyTeamField() const { return GetNativeField<long double>(this, "AShooterPlayerState", "LastTimeDiedToEnemyTeam"); }
-	void SetLastTimeDiedToEnemyTeamField(long double newValue) { SetNativeField(this, "AShooterPlayerState", "LastTimeDiedToEnemyTeam", newValue); }
-	int GetCurrentlySelectedDinoOrderGroupField() const { return GetNativeField<int>(this, "AShooterPlayerState", "CurrentlySelectedDinoOrderGroup"); }
-	void SetCurrentlySelectedDinoOrderGroupField(int newValue) { SetNativeField(this, "AShooterPlayerState", "CurrentlySelectedDinoOrderGroup", newValue); }
-	long double GetLastTribeRequestTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerState", "LastTribeRequestTime"); }
-	void SetLastTribeRequestTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerState", "LastTribeRequestTime", newValue); }
+	FieldValue<UPrimalPlayerData *> MyPlayerDataField() { return { this, "AShooterPlayerState", "MyPlayerData" }; }
+	FieldPointer<FPrimalPlayerDataStruct *> MyPlayerDataStructField() { return { this, "AShooterPlayerState", "MyPlayerDataStruct" }; }
+	FieldArray<TSubclassOf<UPrimalItem>, 10> DefaultItemSlotClassesField() { return { this, "AShooterPlayerState", "DefaultItemSlotClasses" }; }
+	FieldArray<char, 10> DefaultItemSlotEngramsField() { return { this, "AShooterPlayerState", "DefaultItemSlotEngrams" }; }
+	FieldValue<FTribeData> MyTribeDataField() { return { this, "AShooterPlayerState", "MyTribeData" }; }
+	FieldValue<FTribeData> LastTribeInviteDataField() { return { this, "AShooterPlayerState", "LastTribeInviteData" }; }
+	FieldValue<int> TotalEngramPointsField() { return { this, "AShooterPlayerState", "TotalEngramPoints" }; }
+	FieldValue<int> FreeEngramPointsField() { return { this, "AShooterPlayerState", "FreeEngramPoints" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalItem>>> EngramItemBlueprintsField() { return { this, "AShooterPlayerState", "EngramItemBlueprints" }; }
+	FieldValue<long double> NextAllowedRespawnTimeField() { return { this, "AShooterPlayerState", "NextAllowedRespawnTime" }; }
+	FieldValue<float> AllowedRespawnIntervalField() { return { this, "AShooterPlayerState", "AllowedRespawnInterval" }; }
+	FieldValue<long double> LastTimeDiedToEnemyTeamField() { return { this, "AShooterPlayerState", "LastTimeDiedToEnemyTeam" }; }
+	FieldValue<int> CurrentlySelectedDinoOrderGroupField() { return { this, "AShooterPlayerState", "CurrentlySelectedDinoOrderGroup" }; }
+	FieldArray<FDinoOrderGroup, 10> DinoOrderGroupsField() { return { this, "AShooterPlayerState", "DinoOrderGroups" }; }
+	FieldValue<long double> LastTribeRequestTimeField() { return { this, "AShooterPlayerState", "LastTribeRequestTime" }; }
 
 	// Functions
 
@@ -870,14 +803,13 @@ struct AShooterPlayerState : APlayerState
 
 struct AController : public AActor
 {
-	TWeakObjectPtr<APawn> GetOldPawnField() const { return GetNativeField<TWeakObjectPtr<APawn>>(this, "AController", "OldPawn"); }
-	ACharacter* GetCharacterField() const { return GetNativeField<ACharacter *>(this, "AController", "Character"); }
-	APlayerState* GetPlayerStateField() const { return GetNativeField<APlayerState *>(this, "AController", "PlayerState"); }
-	APawn* GetPawnField() const { return GetNativeField<APawn *>(this, "AController", "Pawn"); }
-	FRotator GetControlRotationField() const { return GetNativeField<FRotator>(this, "AController", "ControlRotation"); }
-	TWeakObjectPtr<AActor> GetStartSpotField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "AController", "StartSpot"); }
-	FName GetStateNameField() const { return GetNativeField<FName>(this, "AController", "StateName"); }
-	void SetStateNameField(FName newValue) { SetNativeField(this, "AController", "StateName", newValue); }
+	FieldValue<TWeakObjectPtr<APawn>> OldPawnField() { return { this, "AController", "OldPawn" }; }
+	FieldValue<ACharacter *> CharacterField() { return { this, "AController", "Character" }; }
+	FieldValue<APlayerState *> PlayerStateField() { return { this, "AController", "PlayerState" }; }
+	FieldValue<APawn *> PawnField() { return { this, "AController", "Pawn" }; }
+	FieldValue<FRotator> ControlRotationField() { return { this, "AController", "ControlRotation" }; }
+	FieldValue<TWeakObjectPtr<AActor>> StartSpotField() { return { this, "AController", "StartSpot" }; }
+	FieldValue<FName> StateNameField() { return { this, "AController", "StateName" }; }
 
 	// Functions
 
@@ -921,54 +853,50 @@ struct AController : public AActor
 
 struct APlayerController : public AController
 {
-public:
-	UPlayer* GetPlayerField() const { return GetNativeField<UPlayer *>(this, "APlayerController", "Player"); }
-	APawn* GetAcknowledgedPawnField() const { return GetNativeField<APawn *>(this, "APlayerController", "AcknowledgedPawn"); }
-	bool GetbAutoManageActiveCameraTargetField() const { return GetNativeField<bool>(this, "APlayerController", "bAutoManageActiveCameraTarget"); }
-	void SetbAutoManageActiveCameraTargetField(bool newValue) { SetNativeField(this, "APlayerController", "bAutoManageActiveCameraTarget", newValue); }
-	FRotator GetTargetViewRotationField() const { return GetNativeField<FRotator>(this, "APlayerController", "TargetViewRotation"); }
-	void SetTargetViewRotationField(FRotator newValue) { SetNativeField(this, "APlayerController", "TargetViewRotation", newValue); }
-	FRotator GetBlendedTargetViewRotationField() const { return GetNativeField<FRotator>(this, "APlayerController", "BlendedTargetViewRotation"); }
-	void SetBlendedTargetViewRotationField(FRotator newValue) { SetNativeField(this, "APlayerController", "BlendedTargetViewRotation", newValue); }
-	float GetLastSpectatorStateSynchTimeField() const { return GetNativeField<float>(this, "APlayerController", "LastSpectatorStateSynchTime"); }
-	void SetLastSpectatorStateSynchTimeField(float newValue) { SetNativeField(this, "APlayerController", "LastSpectatorStateSynchTime", newValue); }
-	int GetClientCapField() const { return GetNativeField<int>(this, "APlayerController", "ClientCap"); }
-	void SetClientCapField(int newValue) { SetNativeField(this, "APlayerController", "ClientCap", newValue); }
-	long double GetServerLastReceivedSpectatorLocTimeField() const { return GetNativeField<long double>(this, "APlayerController", "ServerLastReceivedSpectatorLocTime"); }
-	void SetServerLastReceivedSpectatorLocTimeField(long double newValue) { SetNativeField(this, "APlayerController", "ServerLastReceivedSpectatorLocTime", newValue); }
-	UCheatManager* GetCheatManagerField() const { return GetNativeField<UCheatManager *>(this, "APlayerController", "CheatManager"); }
-	TSubclassOf<UCheatManager> GetCheatClassField() const { return GetNativeField<TSubclassOf<UCheatManager>>(this, "APlayerController", "CheatClass"); }
-	void SetCheatClassField(TSubclassOf<UCheatManager> newValue) { SetNativeField(this, "APlayerController", "CheatClass", newValue); }
-	TArray<FName> GetPendingMapChangeLevelNamesField() const { return GetNativeField<TArray<FName>>(this, "APlayerController", "PendingMapChangeLevelNames"); }
-	char GetNetPlayerIndexField() const { return GetNativeField<char>(this, "APlayerController", "NetPlayerIndex"); }
-	//FPlayerMuteList GetMuteListField() const { return GetNativeField<FPlayerMuteList>(this, "APlayerController", "MuteList"); }
-	//void SetMuteListField(FPlayerMuteList newValue) { SetNativeField(this, "APlayerController", "MuteList", newValue); }
-	//UNetConnection * GetNetConnectionField() const { return GetNativeField<UNetConnection *>(this, "APlayerController", "NetConnection"); }
-	FRotator GetRotationInputField() const { return GetNativeField<FRotator>(this, "APlayerController", "RotationInput"); }
-	void SetRotationInputField(FRotator newValue) { SetNativeField(this, "APlayerController", "RotationInput", newValue); }
-	float GetInputYawScaleField() const { return GetNativeField<float>(this, "APlayerController", "InputYawScale"); }
-	void SetInputYawScaleField(float newValue) { SetNativeField(this, "APlayerController", "InputYawScale", newValue); }
-	float GetInputPitchScaleField() const { return GetNativeField<float>(this, "APlayerController", "InputPitchScale"); }
-	void SetInputPitchScaleField(float newValue) { SetNativeField(this, "APlayerController", "InputPitchScale", newValue); }
-	float GetInputRollScaleField() const { return GetNativeField<float>(this, "APlayerController", "InputRollScale"); }
-	void SetInputRollScaleField(float newValue) { SetNativeField(this, "APlayerController", "InputRollScale", newValue); }
-	bool GetbLockedInputUIField() const { return GetNativeField<bool>(this, "APlayerController", "bLockedInputUI"); }
-	void SetbLockedInputUIField(bool newValue) { SetNativeField(this, "APlayerController", "bLockedInputUI", newValue); }
-	FVector GetAudioListenerLocationOverrideField() const { return GetNativeField<FVector>(this, "APlayerController", "AudioListenerLocationOverride"); }
-	void SetAudioListenerLocationOverrideField(FVector newValue) { SetNativeField(this, "APlayerController", "AudioListenerLocationOverride", newValue); }
-	FRotator GetAudioListenerRotationOverrideField() const { return GetNativeField<FRotator>(this, "APlayerController", "AudioListenerRotationOverride"); }
-	void SetAudioListenerRotationOverrideField(FRotator newValue) { SetNativeField(this, "APlayerController", "AudioListenerRotationOverride", newValue); }
-	//ASpectatorPawn * GetSpectatorPawnField() const { return GetNativeField<ASpectatorPawn *>(this, "APlayerController", "SpectatorPawn"); }
-	FVector GetSpawnLocationField() const { return GetNativeField<FVector>(this, "APlayerController", "SpawnLocation"); }
-	void SetSpawnLocationField(FVector newValue) { SetNativeField(this, "APlayerController", "SpawnLocation", newValue); }
-	float GetLastRetryPlayerTimeField() const { return GetNativeField<float>(this, "APlayerController", "LastRetryPlayerTime"); }
-	void SetLastRetryPlayerTimeField(float newValue) { SetNativeField(this, "APlayerController", "LastRetryPlayerTime", newValue); }
-	unsigned __int16 GetSeamlessTravelCountField() const { return GetNativeField<unsigned __int16>(this, "APlayerController", "SeamlessTravelCount"); }
-	void SetSeamlessTravelCountField(unsigned __int16 newValue) { SetNativeField(this, "APlayerController", "SeamlessTravelCount", newValue); }
-	unsigned __int16 GetLastCompletedSeamlessTravelCountField() const { return GetNativeField<unsigned __int16>(this, "APlayerController", "LastCompletedSeamlessTravelCount"); }
-	void SetLastCompletedSeamlessTravelCountField(unsigned __int16 newValue) { SetNativeField(this, "APlayerController", "LastCompletedSeamlessTravelCount", newValue); }
-	FVector GetLastReplicatedFocalLocField() const { return GetNativeField<FVector>(this, "APlayerController", "LastReplicatedFocalLoc"); }
-	void SetLastReplicatedFocalLocField(FVector newValue) { SetNativeField(this, "APlayerController", "LastReplicatedFocalLoc", newValue); }
+	FieldValue<UPlayer *> PlayerField() { return { this, "APlayerController", "Player" }; }
+	FieldValue<APawn *> AcknowledgedPawnField() { return { this, "APlayerController", "AcknowledgedPawn" }; }
+	FieldValue<float> LocalPlayerCachedLODDistanceFactorField() { return { this, "APlayerController", "LocalPlayerCachedLODDistanceFactor" }; }
+	FieldValue<AHUD *> MyHUDField() { return { this, "APlayerController", "MyHUD" }; }
+	FieldValue<APlayerCameraManager *> PlayerCameraManagerField() { return { this, "APlayerController", "PlayerCameraManager" }; }
+	FieldValue<TSubclassOf<APlayerCameraManager>> PlayerCameraManagerClassField() { return { this, "APlayerController", "PlayerCameraManagerClass" }; }
+	FieldValue<bool> bAutoManageActiveCameraTargetField() { return { this, "APlayerController", "bAutoManageActiveCameraTarget" }; }
+	FieldValue<FRotator> TargetViewRotationField() { return { this, "APlayerController", "TargetViewRotation" }; }
+	FieldValue<FRotator> BlendedTargetViewRotationField() { return { this, "APlayerController", "BlendedTargetViewRotation" }; }
+	FieldValue<TArray<AActor *>> HiddenActorsField() { return { this, "APlayerController", "HiddenActors" }; }
+	FieldValue<float> LastSpectatorStateSynchTimeField() { return { this, "APlayerController", "LastSpectatorStateSynchTime" }; }
+	FieldValue<int> ClientCapField() { return { this, "APlayerController", "ClientCap" }; }
+	FieldValue<long double> ServerLastReceivedSpectatorLocTimeField() { return { this, "APlayerController", "ServerLastReceivedSpectatorLocTime" }; }
+	FieldValue<UCheatManager *> CheatManagerField() { return { this, "APlayerController", "CheatManager" }; }
+	FieldValue<TSubclassOf<UCheatManager>> CheatClassField() { return { this, "APlayerController", "CheatClass" }; }
+	FieldValue<TArray<FName>> PendingMapChangeLevelNamesField() { return { this, "APlayerController", "PendingMapChangeLevelNames" }; }
+	FieldValue<char> NetPlayerIndexField() { return { this, "APlayerController", "NetPlayerIndex" }; }
+	FieldValue<UNetConnection *> PendingSwapConnectionField() { return { this, "APlayerController", "PendingSwapConnection" }; }
+	FieldValue<UNetConnection *> NetConnectionField() { return { this, "APlayerController", "NetConnection" }; }
+	FieldValue<FRotator> RotationInputField() { return { this, "APlayerController", "RotationInput" }; }
+	FieldValue<float> InputYawScaleField() { return { this, "APlayerController", "InputYawScale" }; }
+	FieldValue<float> InputPitchScaleField() { return { this, "APlayerController", "InputPitchScale" }; }
+	FieldValue<float> InputRollScaleField() { return { this, "APlayerController", "InputRollScale" }; }
+	FieldValue<TEnumAsByte<enum EMouseCursor::Type>> DefaultMouseCursorField() { return { this, "APlayerController", "DefaultMouseCursor" }; }
+	FieldValue<TEnumAsByte<enum EMouseCursor::Type>> CurrentMouseCursorField() { return { this, "APlayerController", "CurrentMouseCursor" }; }
+	FieldValue<TEnumAsByte<enum ECollisionChannel>> DefaultClickTraceChannelField() { return { this, "APlayerController", "DefaultClickTraceChannel" }; }
+	FieldValue<TEnumAsByte<enum ECollisionChannel>> CurrentClickTraceChannelField() { return { this, "APlayerController", "CurrentClickTraceChannel" }; }
+	FieldValue<bool> bLockedInputUIField() { return { this, "APlayerController", "bLockedInputUI" }; }
+	FieldValue<TSubobjectPtr<USceneComponent>> TransformComponentField() { return { this, "APlayerController", "TransformComponent" }; }
+	FieldValue<TWeakObjectPtr<UPrimitiveComponent>> CurrentClickablePrimitiveField() { return { this, "APlayerController", "CurrentClickablePrimitive" }; }
+	FieldArray<TWeakObjectPtr<UPrimitiveComponent>, 11> CurrentTouchablePrimitivesField() { return { this, "APlayerController", "CurrentTouchablePrimitives" }; }
+	FieldValue<char> IgnoreMoveInputField() { return { this, "APlayerController", "IgnoreMoveInput" }; }
+	FieldValue<char> IgnoreLookInputField() { return { this, "APlayerController", "IgnoreLookInput" }; }
+	FieldValue<TWeakObjectPtr<USceneComponent>> AudioListenerComponentField() { return { this, "APlayerController", "AudioListenerComponent" }; }
+	FieldValue<FVector> AudioListenerLocationOverrideField() { return { this, "APlayerController", "AudioListenerLocationOverride" }; }
+	FieldValue<FRotator> AudioListenerRotationOverrideField() { return { this, "APlayerController", "AudioListenerRotationOverride" }; }
+	FieldValue<ASpectatorPawn *> SpectatorPawnField() { return { this, "APlayerController", "SpectatorPawn" }; }
+	FieldValue<FVector> SpawnLocationField() { return { this, "APlayerController", "SpawnLocation" }; }
+	FieldValue<float> LastRetryPlayerTimeField() { return { this, "APlayerController", "LastRetryPlayerTime" }; }
+	FieldValue<unsigned __int16> SeamlessTravelCountField() { return { this, "APlayerController", "SeamlessTravelCount" }; }
+	FieldValue<unsigned __int16> LastCompletedSeamlessTravelCountField() { return { this, "APlayerController", "LastCompletedSeamlessTravelCount" }; }
+	FieldValue<FVector> LastReplicatedFocalLocField() { return { this, "APlayerController", "LastReplicatedFocalLoc" }; }
+	FieldValue<bool> bIsDelayedNetCleanupField() { return { this, "APlayerController", "bIsDelayedNetCleanup" }; }
+	FieldValue<float> LastTeleportDistanceField() { return { this, "APlayerController", "LastTeleportDistance" }; }
 
 	// Functions
 
@@ -1187,211 +1115,139 @@ public:
 
 struct AShooterPlayerController : APlayerController
 {
-	char* GetHeldItemSlotField() const { return GetNativeField<char*>(this, "AShooterPlayerController", "HeldItemSlot"); } //char[10]
-	char* GetUsedItemSlotField() const { return GetNativeField<char*>(this, "AShooterPlayerController", "UsedItemSlot"); } //char[10]
-	FVector GetCurrentPlayerCharacterLocationField() const { return GetNativeField<FVector>(this, "AShooterPlayerController", "CurrentPlayerCharacterLocation"); }
-	void SetCurrentPlayerCharacterLocationField(FVector newValue) { SetNativeField(this, "AShooterPlayerController", "CurrentPlayerCharacterLocation", newValue); }
-	//APrimalStructurePlacer * GetStructurePlacerField() const { return GetNativeField<APrimalStructurePlacer *>(this, "AShooterPlayerController", "StructurePlacer"); }
-	FVector GetLastDeathLocationField() const { return GetNativeField<FVector>(this, "AShooterPlayerController", "LastDeathLocation"); }
-	void SetLastDeathLocationField(FVector newValue) { SetNativeField(this, "AShooterPlayerController", "LastDeathLocation", newValue); }
-	long double GetLastDeathTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastDeathTime"); }
-	void SetLastDeathTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastDeathTime", newValue); }
-	TWeakObjectPtr<APrimalCharacter> GetLastDeathPrimalCharacterField() const { return GetNativeField<TWeakObjectPtr<APrimalCharacter>>(this, "AShooterPlayerController", "LastDeathPrimalCharacter"); }
-	void SetLastDeathPrimalCharacterField(TWeakObjectPtr<APrimalCharacter> newValue) { SetNativeField(this, "AShooterPlayerController", "LastDeathPrimalCharacter", newValue); }
-	bool GetbWasDeadField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bWasDead"); }
-	void SetbWasDeadField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bWasDead", newValue); }
-	long double GetLastDeadCharacterDestructionTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastDeadCharacterDestructionTime"); }
-	void SetLastDeadCharacterDestructionTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastDeadCharacterDestructionTime", newValue); }
-	bool GetbShowGameModeHUDField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bShowGameModeHUD"); }
-	void SetbShowGameModeHUDField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bShowGameModeHUD", newValue); }
-	FVector2D GetCurrentRadialDirection1Field() const { return GetNativeField<FVector2D>(this, "AShooterPlayerController", "CurrentRadialDirection1"); }
-	void SetCurrentRadialDirection1Field(FVector2D newValue) { SetNativeField(this, "AShooterPlayerController", "CurrentRadialDirection1", newValue); }
-	FVector2D GetCurrentRadialDirection2Field() const { return GetNativeField<FVector2D>(this, "AShooterPlayerController", "CurrentRadialDirection2"); }
-	void SetCurrentRadialDirection2Field(FVector2D newValue) { SetNativeField(this, "AShooterPlayerController", "CurrentRadialDirection2", newValue); }
-	TWeakObjectPtr<UPrimalItem> GetSelectedSlotItemField() const { return GetNativeField<TWeakObjectPtr<UPrimalItem>>(this, "AShooterPlayerController", "SelectedSlotItem"); }
-	void SetSelectedSlotItemField(TWeakObjectPtr<UPrimalItem> newValue) { SetNativeField(this, "AShooterPlayerController", "SelectedSlotItem", newValue); }
-	USoundCue* GetSelectSlotSoundField() const { return GetNativeField<USoundCue *>(this, "AShooterPlayerController", "SelectSlotSound"); }
-	void SetSelectSlotSoundField(USoundCue* newValue) { SetNativeField(this, "AShooterPlayerController", "SelectSlotSound", newValue); }
-	bool GetbPlayerSpeakingField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bPlayerSpeaking"); }
-	void SetbPlayerSpeakingField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bPlayerSpeaking", newValue); }
-	int GetCurrentGameModeMaxNumOfRespawnsField() const { return GetNativeField<int>(this, "AShooterPlayerController", "CurrentGameModeMaxNumOfRespawns"); }
-	void SetCurrentGameModeMaxNumOfRespawnsField(int newValue) { SetNativeField(this, "AShooterPlayerController", "CurrentGameModeMaxNumOfRespawns", newValue); }
-	unsigned __int64 GetTargetOrbitedPlayerIdField() const { return GetNativeField<unsigned __int64>(this, "AShooterPlayerController", "TargetOrbitedPlayerId"); }
-	void SetTargetOrbitedPlayerIdField(unsigned __int64 newValue) { SetNativeField(this, "AShooterPlayerController", "TargetOrbitedPlayerId", newValue); }
-	char GetTargetOrbitedTrialCountField() const { return GetNativeField<char>(this, "AShooterPlayerController", "TargetOrbitedTrialCount"); }
-	void SetTargetOrbitedTrialCountField(char newValue) { SetNativeField(this, "AShooterPlayerController", "TargetOrbitedTrialCount", newValue); }
-	TWeakObjectPtr<AShooterCharacter> GetLastControlledPlayerCharacterField() const { return GetNativeField<TWeakObjectPtr<AShooterCharacter>>(this, "AShooterPlayerController", "LastControlledPlayerCharacter"); }
-	void SetLastControlledPlayerCharacterField(TWeakObjectPtr<AShooterCharacter> newValue) { SetNativeField(this, "AShooterPlayerController", "LastControlledPlayerCharacter", newValue); }
-	float GetMaxUseDistanceField() const { return GetNativeField<float>(this, "AShooterPlayerController", "MaxUseDistance"); }
-	void SetMaxUseDistanceField(float newValue) { SetNativeField(this, "AShooterPlayerController", "MaxUseDistance", newValue); }
-	float GetMaxUseCheckRadiusField() const { return GetNativeField<float>(this, "AShooterPlayerController", "MaxUseCheckRadius"); }
-	void SetMaxUseCheckRadiusField(float newValue) { SetNativeField(this, "AShooterPlayerController", "MaxUseCheckRadius", newValue); }
-	TArray<TWeakObjectPtr<UPrimalInventoryComponent>> GetRemoteViewingInventoriesField() const { return GetNativeField<TArray<TWeakObjectPtr<UPrimalInventoryComponent>>>(this, "AShooterPlayerController", "RemoteViewingInventories"); }
-	void SetRemoteViewingInventoriesField(TArray<TWeakObjectPtr<UPrimalInventoryComponent>> newValue) { SetNativeField(this, "AShooterPlayerController", "RemoteViewingInventories", newValue); }
-	TWeakObjectPtr<AActor> GetLastHeldUseActorField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "AShooterPlayerController", "LastHeldUseActor"); }
-	void SetLastHeldUseActorField(TWeakObjectPtr<AActor> newValue) { SetNativeField(this, "AShooterPlayerController", "LastHeldUseActor", newValue); }
-	int GetLastHeldUseHitBodyIndexField() const { return GetNativeField<int>(this, "AShooterPlayerController", "LastHeldUseHitBodyIndex"); }
-	void SetLastHeldUseHitBodyIndexField(int newValue) { SetNativeField(this, "AShooterPlayerController", "LastHeldUseHitBodyIndex", newValue); }
-	bool GetbUsePressedFromGamepadField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bUsePressedFromGamepad"); }
-	void SetbUsePressedFromGamepadField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bUsePressedFromGamepad", newValue); }
-	TWeakObjectPtr<APrimalStructure> GetSpawnAtBedField() const { return GetNativeField<TWeakObjectPtr<APrimalStructure>>(this, "AShooterPlayerController", "SpawnAtBed"); }
-	void SetSpawnAtBedField(TWeakObjectPtr<APrimalStructure> newValue) { SetNativeField(this, "AShooterPlayerController", "SpawnAtBed", newValue); }
-	APawn* GetTempLastLostPawnField() const { return GetNativeField<APawn *>(this, "AShooterPlayerController", "TempLastLostPawn"); }
-	void SetTempLastLostPawnField(APawn* newValue) { SetNativeField(this, "AShooterPlayerController", "TempLastLostPawn", newValue); }
-	bool GetbLockedInputDontRecenterMouseField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bLockedInputDontRecenterMouse"); }
-	void SetbLockedInputDontRecenterMouseField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bLockedInputDontRecenterMouse", newValue); }
-	long double GetLastRespawnTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastRespawnTime"); }
-	void SetLastRespawnTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastRespawnTime", newValue); }
-	bool GetbIsFirstSpawnField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bIsFirstSpawn"); }
-	void SetbIsFirstSpawnField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bIsFirstSpawn", newValue); }
-	bool GetbIsRespawningField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bIsRespawning"); }
-	void SetbIsRespawningField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bIsRespawning", newValue); }
-	bool GetbIsVRPlayerField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bIsVRPlayer"); }
-	void SetbIsVRPlayerField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bIsVRPlayer", newValue); }
-	FItemNetID GetLastEquipedItemNetIDField() const { return GetNativeField<FItemNetID>(this, "AShooterPlayerController", "LastEquipedItemNetID"); }
-	void SetLastEquipedItemNetIDField(FItemNetID newValue) { SetNativeField(this, "AShooterPlayerController", "LastEquipedItemNetID", newValue); }
-	FItemNetID GetLastUnequippedItemNetIDField() const { return GetNativeField<FItemNetID>(this, "AShooterPlayerController", "LastUnequippedItemNetID"); }
-	void SetLastUnequippedItemNetIDField(FItemNetID newValue) { SetNativeField(this, "AShooterPlayerController", "LastUnequippedItemNetID", newValue); }
-	__int64 GetLinkedPlayerIDField() const { return GetNativeField<__int64>(this, "AShooterPlayerController", "LinkedPlayerID"); }
-	void SetLinkedPlayerIDField(__int64 newValue) { SetNativeField(this, "AShooterPlayerController", "LinkedPlayerID", newValue); }
-	bool GetbDrawLocationField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bDrawLocation"); }
-	void SetbDrawLocationField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bDrawLocation", newValue); }
-	int GetPlayerControllerNumField() const { return GetNativeField<int>(this, "AShooterPlayerController", "PlayerControllerNum"); }
-	void SetPlayerControllerNumField(int newValue) { SetNativeField(this, "AShooterPlayerController", "PlayerControllerNum", newValue); }
-	FVector GetLastTurnSpeedField() const { return GetNativeField<FVector>(this, "AShooterPlayerController", "LastTurnSpeed"); }
-	void SetLastTurnSpeedField(FVector newValue) { SetNativeField(this, "AShooterPlayerController", "LastTurnSpeed", newValue); }
-	long double GetLastMultiUseInteractionTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastMultiUseInteractionTime"); }
-	void SetLastMultiUseInteractionTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastMultiUseInteractionTime", newValue); }
-	float GetLastTimeSentCarriedRotationField() const { return GetNativeField<float>(this, "AShooterPlayerController", "LastTimeSentCarriedRotation"); }
-	void SetLastTimeSentCarriedRotationField(float newValue) { SetNativeField(this, "AShooterPlayerController", "LastTimeSentCarriedRotation", newValue); }
-	FItemNetID GetLastSteamItemIDToRemoveField() const { return GetNativeField<FItemNetID>(this, "AShooterPlayerController", "LastSteamItemIDToRemove"); }
-	void SetLastSteamItemIDToRemoveField(FItemNetID newValue) { SetNativeField(this, "AShooterPlayerController", "LastSteamItemIDToRemove", newValue); }
-	FItemNetID GetLastSteamItemIDToAddField() const { return GetNativeField<FItemNetID>(this, "AShooterPlayerController", "LastSteamItemIDToAdd"); }
-	void SetLastSteamItemIDToAddField(FItemNetID newValue) { SetNativeField(this, "AShooterPlayerController", "LastSteamItemIDToAdd", newValue); }
-	bool GetbConsumeItemSucceededField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bConsumeItemSucceeded"); }
-	void SetbConsumeItemSucceededField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bConsumeItemSucceeded", newValue); }
-	bool GetbRefreshedInvetoryForRemoveField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bRefreshedInvetoryForRemove"); }
-	void SetbRefreshedInvetoryForRemoveField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bRefreshedInvetoryForRemove", newValue); }
-	bool GetbServerRefreshedSteamInventoryField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bServerRefreshedSteamInventory"); }
-	void SetbServerRefreshedSteamInventoryField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bServerRefreshedSteamInventory", newValue); }
-	bool GetbServerRefreshStatusField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bServerRefreshStatus"); }
-	void SetbServerRefreshStatusField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bServerRefreshStatus", newValue); }
-	bool GetbCloseSteamStatusSceneField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bCloseSteamStatusScene"); }
-	void SetbCloseSteamStatusSceneField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bCloseSteamStatusScene", newValue); }
-	long double GetLastSteamInventoryRefreshTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastSteamInventoryRefreshTime"); }
-	void SetLastSteamInventoryRefreshTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastSteamInventoryRefreshTime", newValue); }
-	long double GetLastRequesteDinoAncestorsTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastRequesteDinoAncestorsTime"); }
-	void SetLastRequesteDinoAncestorsTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastRequesteDinoAncestorsTime", newValue); }
-	long double GetLastDiedMessageTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastDiedMessageTime"); }
-	void SetLastDiedMessageTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastDiedMessageTime", newValue); }
-	long double GetLastNotifiedTorpidityIncreaseTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastNotifiedTorpidityIncreaseTime"); }
-	void SetLastNotifiedTorpidityIncreaseTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastNotifiedTorpidityIncreaseTime", newValue); }
-	long double GetLastInvDropRequestTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastInvDropRequestTime"); }
-	void SetLastInvDropRequestTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastInvDropRequestTime", newValue); }
-	long double GetLastHadPawnTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastHadPawnTime"); }
-	void SetLastHadPawnTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastHadPawnTime", newValue); }
-	long double GetLastChatMessageTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastChatMessageTime"); }
-	void SetLastChatMessageTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastChatMessageTime", newValue); }
-	FItemNetInfo GetARKTributeItemNetInfoField() const { return GetNativeField<FItemNetInfo>(this, "AShooterPlayerController", "ARKTributeItemNetInfo"); }
-	void SetARKTributeItemNetInfoField(FItemNetInfo newValue) { SetNativeField(this, "AShooterPlayerController", "ARKTributeItemNetInfo", newValue); }
-	bool GetbServerIsPaintingField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bServerIsPainting"); }
-	void SetbServerIsPaintingField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bServerIsPainting", newValue); }
-	bool GetbServerPaintingSuccessField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bServerPaintingSuccess"); }
-	void SetbServerPaintingSuccessField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bServerPaintingSuccess", newValue); }
-	long double GetLastListenServerNotifyOutOfRangeTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastListenServerNotifyOutOfRangeTime"); }
-	void SetLastListenServerNotifyOutOfRangeTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastListenServerNotifyOutOfRangeTime", newValue); }
-	int GetSpectatorCycleIndexField() const { return GetNativeField<int>(this, "AShooterPlayerController", "SpectatorCycleIndex"); }
-	void SetSpectatorCycleIndexField(int newValue) { SetNativeField(this, "AShooterPlayerController", "SpectatorCycleIndex", newValue); }
-	bool GetbPossessedAnyPawnField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bPossessedAnyPawn"); }
-	void SetbPossessedAnyPawnField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bPossessedAnyPawn", newValue); }
-	bool GetbIsFastTravellingField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bIsFastTravelling"); }
-	void SetbIsFastTravellingField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bIsFastTravelling", newValue); }
-	bool GetbSuppressAdminIconField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bSuppressAdminIcon"); }
-	void SetbSuppressAdminIconField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bSuppressAdminIcon", newValue); }
-	long double GetWaitingForSpawnUITimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "WaitingForSpawnUITime"); }
-	void SetWaitingForSpawnUITimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "WaitingForSpawnUITime", newValue); }
-	float GetChatSpamWeightField() const { return GetNativeField<float>(this, "AShooterPlayerController", "ChatSpamWeight"); }
-	void SetChatSpamWeightField(float newValue) { SetNativeField(this, "AShooterPlayerController", "ChatSpamWeight", newValue); }
-	bool GetbChatSpammedField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bChatSpammed"); }
-	void SetbChatSpammedField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bChatSpammed", newValue); }
-	long double GetEnteredSpectatingStateTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "EnteredSpectatingStateTime"); }
-	void SetEnteredSpectatingStateTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "EnteredSpectatingStateTime", newValue); }
-	bool GetbPreventPaintingStreamingField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bPreventPaintingStreaming"); }
-	void SetbPreventPaintingStreamingField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bPreventPaintingStreaming", newValue); }
-	long double GetLastUsePressTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastUsePressTime"); }
-	void SetLastUsePressTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastUsePressTime", newValue); }
-	TArray<int> GetPlayerAppIDsField() const { return GetNativeField<TArray<int>>(this, "AShooterPlayerController", "PlayerAppIDs"); }
-	void SetPlayerAppIDsField(TArray<int> newValue) { SetNativeField(this, "AShooterPlayerController", "PlayerAppIDs", newValue); }
-	TArray<int> GetNotifiedTribeWarIDsField() const { return GetNativeField<TArray<int>>(this, "AShooterPlayerController", "NotifiedTribeWarIDs"); }
-	void SetNotifiedTribeWarIDsField(TArray<int> newValue) { SetNativeField(this, "AShooterPlayerController", "NotifiedTribeWarIDs", newValue); }
-	TArray<FString> GetNotifiedTribeWarNamesField() const { return GetNativeField<TArray<FString>>(this, "AShooterPlayerController", "NotifiedTribeWarNames"); }
-	void SetNotifiedTribeWarNamesField(TArray<FString> newValue) { SetNativeField(this, "AShooterPlayerController", "NotifiedTribeWarNames", newValue); }
-	int GetServerTribeLogLastLogIndexField() const { return GetNativeField<int>(this, "AShooterPlayerController", "ServerTribeLogLastLogIndex"); }
-	void SetServerTribeLogLastLogIndexField(int newValue) { SetNativeField(this, "AShooterPlayerController", "ServerTribeLogLastLogIndex", newValue); }
-	int GetServerTribeLogLastTribeIDField() const { return GetNativeField<int>(this, "AShooterPlayerController", "ServerTribeLogLastTribeID"); }
-	void SetServerTribeLogLastTribeIDField(int newValue) { SetNativeField(this, "AShooterPlayerController", "ServerTribeLogLastTribeID", newValue); }
-	FVector GetLastViewLocationField() const { return GetNativeField<FVector>(this, "AShooterPlayerController", "LastViewLocation"); }
-	void SetLastViewLocationField(FVector newValue) { SetNativeField(this, "AShooterPlayerController", "LastViewLocation", newValue); }
-	bool GetbHasGottenInitialSpawnLocationField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bHasGottenInitialSpawnLocation"); }
-	void SetbHasGottenInitialSpawnLocationField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bHasGottenInitialSpawnLocation", newValue); }
-	bool GetbClientReceivedTribeLogField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bClientReceivedTribeLog"); }
-	void SetbClientReceivedTribeLogField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bClientReceivedTribeLog", newValue); }
-	TArray<FString> GetCurrentTribeLogField() const { return GetNativeField<TArray<FString>>(this, "AShooterPlayerController", "CurrentTribeLog"); }
-	void SetCurrentTribeLogField(TArray<FString> newValue) { SetNativeField(this, "AShooterPlayerController", "CurrentTribeLog", newValue); }
-	long double GetLastTribeLogRequestTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastTribeLogRequestTime"); }
-	void SetLastTribeLogRequestTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastTribeLogRequestTime", newValue); }
-	long double GetLastRPCStayAliveTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastRPCStayAliveTime"); }
-	void SetLastRPCStayAliveTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastRPCStayAliveTime", newValue); }
-	int GetPlayerBadgeGroupField() const { return GetNativeField<int>(this, "AShooterPlayerController", "PlayerBadgeGroup"); }
-	void SetPlayerBadgeGroupField(int newValue) { SetNativeField(this, "AShooterPlayerController", "PlayerBadgeGroup", newValue); }
-	long double GetLastMultiUseTraceTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastMultiUseTraceTime"); }
-	void SetLastMultiUseTraceTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastMultiUseTraceTime", newValue); }
-	FVector GetLastLargeMoveLocationField() const { return GetNativeField<FVector>(this, "AShooterPlayerController", "LastLargeMoveLocation"); }
-	void SetLastLargeMoveLocationField(FVector newValue) { SetNativeField(this, "AShooterPlayerController", "LastLargeMoveLocation", newValue); }
-	long double GetLastLargeMoveTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastLargeMoveTime"); }
-	void SetLastLargeMoveTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastLargeMoveTime", newValue); }
-	long double GetLastNotOnUnriddenDinoTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastNotOnUnriddenDinoTime"); }
-	void SetLastNotOnUnriddenDinoTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastNotOnUnriddenDinoTime", newValue); }
-	long double GetLastHitMarkerCharacterTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastHitMarkerCharacterTime"); }
-	void SetLastHitMarkerCharacterTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastHitMarkerCharacterTime", newValue); }
-	bool GetbLastHitMarkerCharacterAllyField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bLastHitMarkerCharacterAlly"); }
-	void SetbLastHitMarkerCharacterAllyField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bLastHitMarkerCharacterAlly", newValue); }
-	long double GetLastHitMarkerStructureTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastHitMarkerStructureTime"); }
-	void SetLastHitMarkerStructureTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastHitMarkerStructureTime", newValue); }
-	bool GetbLastHitMarkerStructureAllyField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bLastHitMarkerStructureAlly"); }
-	void SetbLastHitMarkerStructureAllyField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bLastHitMarkerStructureAlly", newValue); }
-	float GetDoFSettingCurrentTimerField() const { return GetNativeField<float>(this, "AShooterPlayerController", "DoFSettingCurrentTimer"); }
-	void SetDoFSettingCurrentTimerField(float newValue) { SetNativeField(this, "AShooterPlayerController", "DoFSettingCurrentTimer", newValue); }
-	float GetDoFSettingTargetTimerField() const { return GetNativeField<float>(this, "AShooterPlayerController", "DoFSettingTargetTimer"); }
-	void SetDoFSettingTargetTimerField(float newValue) { SetNativeField(this, "AShooterPlayerController", "DoFSettingTargetTimer", newValue); }
-	//TArray<FSteamInventoryItemInfo> GetPlayerInventoryItemsField() const { return GetNativeField<TArray<FSteamInventoryItemInfo>>(this, "AShooterPlayerController", "PlayerInventoryItems"); }
-	int GetLastSpawnPointIDField() const { return GetNativeField<int>(this, "AShooterPlayerController", "LastSpawnPointID"); }
-	void SetLastSpawnPointIDField(int newValue) { SetNativeField(this, "AShooterPlayerController", "LastSpawnPointID", newValue); }
-	int GetLastSpawnRegionIndexField() const { return GetNativeField<int>(this, "AShooterPlayerController", "LastSpawnRegionIndex"); }
-	void SetLastSpawnRegionIndexField(int newValue) { SetNativeField(this, "AShooterPlayerController", "LastSpawnRegionIndex", newValue); }
-	unsigned __int64 GetLastTransferredPlayerIDField() const { return GetNativeField<unsigned __int64>(this, "AShooterPlayerController", "LastTransferredPlayerID"); }
-	void SetLastTransferredPlayerIDField(unsigned __int64 newValue) { SetNativeField(this, "AShooterPlayerController", "LastTransferredPlayerID", newValue); }
-	bool GetbReceivedSubscribedAppsField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bReceivedSubscribedApps"); }
-	void SetbReceivedSubscribedAppsField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bReceivedSubscribedApps", newValue); }
-	bool GetbIsTransferringCharacterField() const { return GetNativeField<bool>(this, "AShooterPlayerController", "bIsTransferringCharacter"); }
-	void SetbIsTransferringCharacterField(bool newValue) { SetNativeField(this, "AShooterPlayerController", "bIsTransferringCharacter", newValue); }
-	long double GetPossessedFirstPawnTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "PossessedFirstPawnTime"); }
-	void SetPossessedFirstPawnTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "PossessedFirstPawnTime", newValue); }
-	int GetSnapPointCycleField() const { return GetNativeField<int>(this, "AShooterPlayerController", "SnapPointCycle"); }
-	void SetSnapPointCycleField(int newValue) { SetNativeField(this, "AShooterPlayerController", "SnapPointCycle", newValue); }
-	FVector GetLastSnapPointCyclePositionField() const { return GetNativeField<FVector>(this, "AShooterPlayerController", "LastSnapPointCyclePosition"); }
-	void SetLastSnapPointCyclePositionField(FVector newValue) { SetNativeField(this, "AShooterPlayerController", "LastSnapPointCyclePosition", newValue); }
-	int GetViewingWheelCategoryField() const { return GetNativeField<int>(this, "AShooterPlayerController", "ViewingWheelCategory"); }
-	void SetViewingWheelCategoryField(int newValue) { SetNativeField(this, "AShooterPlayerController", "ViewingWheelCategory", newValue); }
-	long double GetForceDrawCurrentGroupsUntilTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "ForceDrawCurrentGroupsUntilTime"); }
-	void SetForceDrawCurrentGroupsUntilTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "ForceDrawCurrentGroupsUntilTime", newValue); }
-	long double GetLastRequestedPlaceStructureTimeField() const { return GetNativeField<long double>(this, "AShooterPlayerController", "LastRequestedPlaceStructureTime"); }
-	void SetLastRequestedPlaceStructureTimeField(long double newValue) { SetNativeField(this, "AShooterPlayerController", "LastRequestedPlaceStructureTime", newValue); }
-	int GetPersonalDinoTameCountField() const { return GetNativeField<int>(this, "AShooterPlayerController", "PersonalDinoTameCount"); }
-	void SetPersonalDinoTameCountField(int newValue) { SetNativeField(this, "AShooterPlayerController", "PersonalDinoTameCount", newValue); }
-	//bool GetbIsAdminPauseUIEnabledField() const { return GetNativeBitField<bool, unsigned __int32>(this, "AShooterPlayerController", "bIsAdminPauseUIEnabled"); }
-	//void SetbIsAdminPauseUIEnabledField(bool newValue) { SetNativeBitField<bool>(this, "AShooterPlayerController", "bIsAdminPauseUIEnabled", newValue); }
-	
+	FieldArray<char, 10> HeldItemSlotField() { return { this, "AShooterPlayerController", "HeldItemSlot" }; }
+	FieldArray<char, 10> UsedItemSlotField() { return { this, "AShooterPlayerController", "UsedItemSlot" }; }
+	FieldArray<long double, 10> LastRepeatUseConsumableTimeField() { return { this, "AShooterPlayerController", "LastRepeatUseConsumableTime" }; }
+	FieldArray<long double, 10> HeldItemSlotTimeField() { return { this, "AShooterPlayerController", "HeldItemSlotTime" }; }
+	FieldArray<long double, 10> LastUsedItemSlotTimesField() { return { this, "AShooterPlayerController", "LastUsedItemSlotTimes" }; }
+	FieldValue<FVector> CurrentPlayerCharacterLocationField() { return { this, "AShooterPlayerController", "CurrentPlayerCharacterLocation" }; }
+	FieldValue<int> ModifedButtonCountField() { return { this, "AShooterPlayerController", "ModifedButtonCount" }; }
+	FieldValue<FVector> LastDeathLocationField() { return { this, "AShooterPlayerController", "LastDeathLocation" }; }
+	FieldValue<long double> LastDeathTimeField() { return { this, "AShooterPlayerController", "LastDeathTime" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> LastDeathPrimalCharacterField() { return { this, "AShooterPlayerController", "LastDeathPrimalCharacter" }; }
+	FieldValue<bool> bWasDeadField() { return { this, "AShooterPlayerController", "bWasDead" }; }
+	FieldValue<long double> LastDeadCharacterDestructionTimeField() { return { this, "AShooterPlayerController", "LastDeadCharacterDestructionTime" }; }
+	FieldValue<bool> bShowGameModeHUDField() { return { this, "AShooterPlayerController", "bShowGameModeHUD" }; }
+	FieldValue<FVector2D> CurrentRadialDirection1Field() { return { this, "AShooterPlayerController", "CurrentRadialDirection1" }; }
+	FieldValue<FVector2D> CurrentRadialDirection2Field() { return { this, "AShooterPlayerController", "CurrentRadialDirection2" }; }
+	FieldValue<USoundCue *> SelectSlotSoundField() { return { this, "AShooterPlayerController", "SelectSlotSound" }; }
+	FieldValue<bool> bPlayerSpeakingField() { return { this, "AShooterPlayerController", "bPlayerSpeaking" }; }
+	FieldValue<int> CurrentGameModeMaxNumOfRespawnsField() { return { this, "AShooterPlayerController", "CurrentGameModeMaxNumOfRespawns" }; }
+	FieldValue<FVector> LastRawInputDirField() { return { this, "AShooterPlayerController", "LastRawInputDir" }; }
+	FieldValue<unsigned __int64> TargetOrbitedPlayerIdField() { return { this, "AShooterPlayerController", "TargetOrbitedPlayerId" }; }
+	FieldValue<char> TargetOrbitedTrialCountField() { return { this, "AShooterPlayerController", "TargetOrbitedTrialCount" }; }
+	FieldValue<TWeakObjectPtr<AShooterCharacter>> LastControlledPlayerCharacterField() { return { this, "AShooterPlayerController", "LastControlledPlayerCharacter" }; }
+	FieldValue<float> MaxUseDistanceField() { return { this, "AShooterPlayerController", "MaxUseDistance" }; }
+	FieldValue<float> MaxUseCheckRadiusField() { return { this, "AShooterPlayerController", "MaxUseCheckRadius" }; }
+	FieldValue<TArray<bool>> SavedSurvivorProfileSettingsField() { return { this, "AShooterPlayerController", "SavedSurvivorProfileSettings" }; }
+	FieldValue<bool> bCachedOnlyShowOnlineTribeMembersField() { return { this, "AShooterPlayerController", "bCachedOnlyShowOnlineTribeMembers" }; }
+	FieldValue<TArray<TWeakObjectPtr<UPrimalInventoryComponent>>> RemoteViewingInventoriesField() { return { this, "AShooterPlayerController", "RemoteViewingInventories" }; }
+	FieldValue<TWeakObjectPtr<AActor>> LastHeldUseActorField() { return { this, "AShooterPlayerController", "LastHeldUseActor" }; }
+	FieldValue<TWeakObjectPtr<UActorComponent>> LastHeldUseHitComponentField() { return { this, "AShooterPlayerController", "LastHeldUseHitComponent" }; }
+	FieldValue<int> LastHeldUseHitBodyIndexField() { return { this, "AShooterPlayerController", "LastHeldUseHitBodyIndex" }; }
+	FieldValue<bool> bUsePressedFromGamepadField() { return { this, "AShooterPlayerController", "bUsePressedFromGamepad" }; }
+	FieldValue<TWeakObjectPtr<APrimalStructure>> SpawnAtBedField() { return { this, "AShooterPlayerController", "SpawnAtBed" }; }
+	FieldValue<APawn *> TempLastLostPawnField() { return { this, "AShooterPlayerController", "TempLastLostPawn" }; }
+	FieldValue<bool> bLockedInputDontRecenterMouseField() { return { this, "AShooterPlayerController", "bLockedInputDontRecenterMouse" }; }
+	FieldValue<long double> LastRespawnTimeField() { return { this, "AShooterPlayerController", "LastRespawnTime" }; }
+	FieldValue<bool> bIsFirstSpawnField() { return { this, "AShooterPlayerController", "bIsFirstSpawn" }; }
+	FieldValue<bool> bIsRespawningField() { return { this, "AShooterPlayerController", "bIsRespawning" }; }
+	FieldValue<bool> bIsVRPlayerField() { return { this, "AShooterPlayerController", "bIsVRPlayer" }; }
+	FieldValue<TSubclassOf<AHUD>> AwaitingHUDClassField() { return { this, "AShooterPlayerController", "AwaitingHUDClass" }; }
+	FieldValue<FItemNetID> LastEquipedItemNetIDField() { return { this, "AShooterPlayerController", "LastEquipedItemNetID" }; }
+	FieldValue<FItemNetID> LastUnequippedItemNetIDField() { return { this, "AShooterPlayerController", "LastUnequippedItemNetID" }; }
+	FieldValue<__int64> LinkedPlayerIDField() { return { this, "AShooterPlayerController", "LinkedPlayerID" }; }
+	FieldValue<bool> bDrawLocationField() { return { this, "AShooterPlayerController", "bDrawLocation" }; }
+	FieldValue<int> PlayerControllerNumField() { return { this, "AShooterPlayerController", "PlayerControllerNum" }; }
+	FieldValue<FVector> LastTurnSpeedField() { return { this, "AShooterPlayerController", "LastTurnSpeed" }; }
+	FieldValue<long double> LastMultiUseInteractionTimeField() { return { this, "AShooterPlayerController", "LastMultiUseInteractionTime" }; }
+	FieldValue<float> LastTimeSentCarriedRotationField() { return { this, "AShooterPlayerController", "LastTimeSentCarriedRotation" }; }
+	FieldValue<FItemNetID> LastSteamItemIDToRemoveField() { return { this, "AShooterPlayerController", "LastSteamItemIDToRemove" }; }
+	FieldValue<FItemNetID> LastSteamItemIDToAddField() { return { this, "AShooterPlayerController", "LastSteamItemIDToAdd" }; }
+	FieldValue<bool> bConsumeItemSucceededField() { return { this, "AShooterPlayerController", "bConsumeItemSucceeded" }; }
+	FieldValue<bool> bRefreshedInvetoryForRemoveField() { return { this, "AShooterPlayerController", "bRefreshedInvetoryForRemove" }; }
+	FieldValue<bool> bServerRefreshedSteamInventoryField() { return { this, "AShooterPlayerController", "bServerRefreshedSteamInventory" }; }
+	FieldValue<bool> bServerRefreshStatusField() { return { this, "AShooterPlayerController", "bServerRefreshStatus" }; }
+	FieldValue<bool> bCloseSteamStatusSceneField() { return { this, "AShooterPlayerController", "bCloseSteamStatusScene" }; }
+	FieldValue<long double> LastSteamInventoryRefreshTimeField() { return { this, "AShooterPlayerController", "LastSteamInventoryRefreshTime" }; }
+	FieldValue<long double> LastRequesteDinoAncestorsTimeField() { return { this, "AShooterPlayerController", "LastRequesteDinoAncestorsTime" }; }
+	FieldValue<long double> LastDiedMessageTimeField() { return { this, "AShooterPlayerController", "LastDiedMessageTime" }; }
+	FieldValue<long double> LastNotifiedTorpidityIncreaseTimeField() { return { this, "AShooterPlayerController", "LastNotifiedTorpidityIncreaseTime" }; }
+	FieldValue<long double> LastInvDropRequestTimeField() { return { this, "AShooterPlayerController", "LastInvDropRequestTime" }; }
+	FieldValue<long double> LastHadPawnTimeField() { return { this, "AShooterPlayerController", "LastHadPawnTime" }; }
+	FieldValue<long double> LastChatMessageTimeField() { return { this, "AShooterPlayerController", "LastChatMessageTime" }; }
+	FieldValue<FItemNetInfo> ARKTributeItemNetInfoField() { return { this, "AShooterPlayerController", "ARKTributeItemNetInfo" }; }
+	FieldValue<bool> bServerIsPaintingField() { return { this, "AShooterPlayerController", "bServerIsPainting" }; }
+	FieldValue<bool> bServerPaintingSuccessField() { return { this, "AShooterPlayerController", "bServerPaintingSuccess" }; }
+	FieldValue<long double> LastListenServerNotifyOutOfRangeTimeField() { return { this, "AShooterPlayerController", "LastListenServerNotifyOutOfRangeTime" }; }
+	FieldValue<int> SpectatorCycleIndexField() { return { this, "AShooterPlayerController", "SpectatorCycleIndex" }; }
+	FieldValue<bool> bPossessedAnyPawnField() { return { this, "AShooterPlayerController", "bPossessedAnyPawn" }; }
+	FieldValue<bool> bIsFastTravellingField() { return { this, "AShooterPlayerController", "bIsFastTravelling" }; }
+	FieldValue<bool> bSuppressAdminIconField() { return { this, "AShooterPlayerController", "bSuppressAdminIcon" }; }
+	FieldValue<long double> WaitingForSpawnUITimeField() { return { this, "AShooterPlayerController", "WaitingForSpawnUITime" }; }
+	FieldValue<float> ChatSpamWeightField() { return { this, "AShooterPlayerController", "ChatSpamWeight" }; }
+	FieldValue<bool> bChatSpammedField() { return { this, "AShooterPlayerController", "bChatSpammed" }; }
+	FieldValue<long double> EnteredSpectatingStateTimeField() { return { this, "AShooterPlayerController", "EnteredSpectatingStateTime" }; }
+	FieldValue<bool> bPreventPaintingStreamingField() { return { this, "AShooterPlayerController", "bPreventPaintingStreaming" }; }
+	FieldValue<long double> LastUsePressTimeField() { return { this, "AShooterPlayerController", "LastUsePressTime" }; }
+	FieldValue<TArray<int>> PlayerAppIDsField() { return { this, "AShooterPlayerController", "PlayerAppIDs" }; }
+	FieldValue<TArray<int>> NotifiedTribeWarIDsField() { return { this, "AShooterPlayerController", "NotifiedTribeWarIDs" }; }
+	FieldValue<TArray<FString>> NotifiedTribeWarNamesField() { return { this, "AShooterPlayerController", "NotifiedTribeWarNames" }; }
+	FieldValue<int> ServerTribeLogLastLogIndexField() { return { this, "AShooterPlayerController", "ServerTribeLogLastLogIndex" }; }
+	FieldValue<int> ServerTribeLogLastTribeIDField() { return { this, "AShooterPlayerController", "ServerTribeLogLastTribeID" }; }
+	FieldValue<FVector> LastViewLocationField() { return { this, "AShooterPlayerController", "LastViewLocation" }; }
+	FieldValue<bool> bHasGottenInitialSpawnLocationField() { return { this, "AShooterPlayerController", "bHasGottenInitialSpawnLocation" }; }
+	FieldValue<bool> bClientReceivedTribeLogField() { return { this, "AShooterPlayerController", "bClientReceivedTribeLog" }; }
+	FieldValue<TArray<FString>> CurrentTribeLogField() { return { this, "AShooterPlayerController", "CurrentTribeLog" }; }
+	FieldValue<long double> LastTribeLogRequestTimeField() { return { this, "AShooterPlayerController", "LastTribeLogRequestTime" }; }
+	FieldValue<bool> bHasSurvivedOneDayField() { return { this, "AShooterPlayerController", "bHasSurvivedOneDay" }; }
+	FieldValue<bool> bHasReachedHighestPeakField() { return { this, "AShooterPlayerController", "bHasReachedHighestPeak" }; }
+	FieldValue<bool> bHasReachedLowestDepthField() { return { this, "AShooterPlayerController", "bHasReachedLowestDepth" }; }
+	FieldValue<bool> bZoomingOutField() { return { this, "AShooterPlayerController", "bZoomingOut" }; }
+	FieldValue<bool> bZoomingInField() { return { this, "AShooterPlayerController", "bZoomingIn" }; }
+	FieldValue<long double> LastRPCStayAliveTimeField() { return { this, "AShooterPlayerController", "LastRPCStayAliveTime" }; }
+	FieldValue<int> PlayerBadgeGroupField() { return { this, "AShooterPlayerController", "PlayerBadgeGroup" }; }
+	FieldValue<long double> LastMultiUseTraceTimeField() { return { this, "AShooterPlayerController", "LastMultiUseTraceTime" }; }
+	FieldValue<FVector> LastLargeMoveLocationField() { return { this, "AShooterPlayerController", "LastLargeMoveLocation" }; }
+	FieldValue<long double> LastLargeMoveTimeField() { return { this, "AShooterPlayerController", "LastLargeMoveTime" }; }
+	FieldValue<long double> LastNotOnUnriddenDinoTimeField() { return { this, "AShooterPlayerController", "LastNotOnUnriddenDinoTime" }; }
+	FieldValue<long double> LastHitMarkerCharacterTimeField() { return { this, "AShooterPlayerController", "LastHitMarkerCharacterTime" }; }
+	FieldValue<bool> bLastHitMarkerCharacterAllyField() { return { this, "AShooterPlayerController", "bLastHitMarkerCharacterAlly" }; }
+	FieldValue<long double> LastHitMarkerStructureTimeField() { return { this, "AShooterPlayerController", "LastHitMarkerStructureTime" }; }
+	FieldValue<bool> bLastHitMarkerStructureAllyField() { return { this, "AShooterPlayerController", "bLastHitMarkerStructureAlly" }; }
+	FieldValue<float> DoFSettingCurrentTimerField() { return { this, "AShooterPlayerController", "DoFSettingCurrentTimer" }; }
+	FieldValue<float> DoFSettingTargetTimerField() { return { this, "AShooterPlayerController", "DoFSettingTargetTimer" }; }
+	//FieldValue<TArray<FSteamInventoryItemInfo>> PlayerInventoryItemsField() { return { this, "AShooterPlayerController", "PlayerInventoryItems" }; }
+	FieldValue<int> LastSpawnPointIDField() { return { this, "AShooterPlayerController", "LastSpawnPointID" }; }
+	FieldValue<int> LastSpawnRegionIndexField() { return { this, "AShooterPlayerController", "LastSpawnRegionIndex" }; }
+	FieldValue<unsigned __int64> LastTransferredPlayerIDField() { return { this, "AShooterPlayerController", "LastTransferredPlayerID" }; }
+	FieldValue<bool> bReceivedSubscribedAppsField() { return { this, "AShooterPlayerController", "bReceivedSubscribedApps" }; }
+	FieldValue<bool> bIsTransferringCharacterField() { return { this, "AShooterPlayerController", "bIsTransferringCharacter" }; }
+	FieldValue<long double> PossessedFirstPawnTimeField() { return { this, "AShooterPlayerController", "PossessedFirstPawnTime" }; }
+	FieldValue<int> SnapPointCycleField() { return { this, "AShooterPlayerController", "SnapPointCycle" }; }
+	FieldValue<FVector> LastSnapPointCyclePositionField() { return { this, "AShooterPlayerController", "LastSnapPointCyclePosition" }; }
+	FieldValue<int> ViewingWheelCategoryField() { return { this, "AShooterPlayerController", "ViewingWheelCategory" }; }
+	FieldValue<long double> ForceDrawCurrentGroupsUntilTimeField() { return { this, "AShooterPlayerController", "ForceDrawCurrentGroupsUntilTime" }; }
+	FieldValue<long double> LastRequestedPlaceStructureTimeField() { return { this, "AShooterPlayerController", "LastRequestedPlaceStructureTime" }; }
+	FieldValue<int> PersonalDinoTameCountField() { return { this, "AShooterPlayerController", "PersonalDinoTameCount" }; }
+	FieldValue<bool> bNextShowCharacterCreationUIDownloadField() { return { this, "AShooterPlayerController", "bNextShowCharacterCreationUIDownload" }; }
+	FieldValue<bool> bForceHideGameplayUIField() { return { this, "AShooterPlayerController", "bForceHideGameplayUI" }; }
+	FieldValue<long double> LastGamepadOpenRemoteInventoryTimeField() { return { this, "AShooterPlayerController", "LastGamepadOpenRemoteInventoryTime" }; }
+	FieldValue<bool> bIsGamepadActiveField() { return { this, "AShooterPlayerController", "bIsGamepadActive" }; }
+	FieldValue<bool> bClientIsDPCField() { return { this, "AShooterPlayerController", "bClientIsDPC" }; }
+	FieldValue<long double> LastClientRequestTribeOnlineListTimeField() { return { this, "AShooterPlayerController", "LastClientRequestTribeOnlineListTime" }; }
+	FieldValue<long double> LastClientModifiedARKInventoryTimeField() { return { this, "AShooterPlayerController", "LastClientModifiedARKInventoryTime" }; }
+	FieldValue<TArray<unsigned __int64>> ClientCachedTribeOnlineListField() { return { this, "AShooterPlayerController", "ClientCachedTribeOnlineList" }; }
+	FieldValue<bool> bPreventDefaultCharacterItemsField() { return { this, "AShooterPlayerController", "bPreventDefaultCharacterItems" }; }
+	FieldValue<float> SFXVolumeMultiplierField() { return { this, "AShooterPlayerController", "SFXVolumeMultiplier" }; }
+	FieldValue<long double> LastTeleportedTimeField() { return { this, "AShooterPlayerController", "LastTeleportedTime" }; }
+	FieldValue<unsigned __int64> LastConvertedPlayerIDField() { return { this, "AShooterPlayerController", "LastConvertedPlayerID" }; }
+	FieldValue<FString> LastConvertedPlayerIDStringField() { return { this, "AShooterPlayerController", "LastConvertedPlayerIDString" }; }
+	FieldValue<long double> LastShowExtendedInfoTimeField() { return { this, "AShooterPlayerController", "LastShowExtendedInfoTime" }; }
+	FieldValue<bool> bHasDisplayedSplitScreenMessageField() { return { this, "AShooterPlayerController", "bHasDisplayedSplitScreenMessage" }; }
+	FieldValue<UPrimalItem *> LastTransferredToRemoteInventoryItemField() { return { this, "AShooterPlayerController", "LastTransferredToRemoteInventoryItem" }; }
+	FieldValue<bool> bIsViewingTributeInventoryField() { return { this, "AShooterPlayerController", "bIsViewingTributeInventory" }; }
+	FieldValue<bool> bDrawBlackBackgroundField() { return { this, "AShooterPlayerController", "bDrawBlackBackground" }; }
 
 	// Functions
 
@@ -1924,22 +1780,18 @@ struct AShooterPlayerController : APlayerController
 
 struct ACharacter : public APawn
 {
-	FVector GetBaseTranslationOffsetField() const { return GetNativeField<FVector>(this, "ACharacter", "BaseTranslationOffset"); }
-	void SetBaseTranslationOffsetField(FVector newValue) { SetNativeField(this, "ACharacter", "BaseTranslationOffset", newValue); }
-	char GetReplicatedMovementModeField() const { return GetNativeField<char>(this, "ACharacter", "ReplicatedMovementMode"); }
-	void SetReplicatedMovementModeField(char newValue) { SetNativeField(this, "ACharacter", "ReplicatedMovementMode", newValue); }
-	bool GetbInBaseReplicationField() const { return GetNativeField<bool>(this, "ACharacter", "bInBaseReplication"); }
-	void SetbInBaseReplicationField(bool newValue) { SetNativeField(this, "ACharacter", "bInBaseReplication", newValue); }
-	float GetLeftDynamicActorBaseTimeField() const { return GetNativeField<float>(this, "ACharacter", "LeftDynamicActorBaseTime"); }
-	void SetLeftDynamicActorBaseTimeField(float newValue) { SetNativeField(this, "ACharacter", "LeftDynamicActorBaseTime", newValue); }
-	float GetCrouchedEyeHeightField() const { return GetNativeField<float>(this, "ACharacter", "CrouchedEyeHeight"); }
-	void SetCrouchedEyeHeightField(float newValue) { SetNativeField(this, "ACharacter", "CrouchedEyeHeight", newValue); }
-	float GetProneEyeHeightField() const { return GetNativeField<float>(this, "ACharacter", "ProneEyeHeight"); }
-	void SetProneEyeHeightField(float newValue) { SetNativeField(this, "ACharacter", "ProneEyeHeight", newValue); }
-	float GetJumpKeyHoldTimeField() const { return GetNativeField<float>(this, "ACharacter", "JumpKeyHoldTime"); }
-	void SetJumpKeyHoldTimeField(float newValue) { SetNativeField(this, "ACharacter", "JumpKeyHoldTime", newValue); }
-	float GetJumpMaxHoldTimeField() const { return GetNativeField<float>(this, "ACharacter", "JumpMaxHoldTime"); }
-	void SetJumpMaxHoldTimeField(float newValue) { SetNativeField(this, "ACharacter", "JumpMaxHoldTime", newValue); }
+	FieldValue<FVector> BaseTranslationOffsetField() { return { this, "ACharacter", "BaseTranslationOffset" }; }
+	FieldValue<char> ReplicatedMovementModeField() { return { this, "ACharacter", "ReplicatedMovementMode" }; }
+	FieldValue<float> LeftDynamicActorBaseTimeField() { return { this, "ACharacter", "LeftDynamicActorBaseTime" }; }
+	FieldValue<float> CrouchedEyeHeightField() { return { this, "ACharacter", "CrouchedEyeHeight" }; }
+	FieldValue<float> ProneEyeHeightField() { return { this, "ACharacter", "ProneEyeHeight" }; }
+	FieldValue<TArray<USoundBase *>> CharacterOverrideSoundFromField() { return { this, "ACharacter", "CharacterOverrideSoundFrom" }; }
+	FieldValue<TArray<USoundBase *>> CharacterOverrideSoundToField() { return { this, "ACharacter", "CharacterOverrideSoundTo" }; }
+	FieldValue<bool> bInBaseReplicationField() { return { this, "ACharacter", "bInBaseReplication" }; }
+	FieldValue<float> JumpKeyHoldTimeField() { return { this, "ACharacter", "JumpKeyHoldTime" }; }
+	FieldValue<float> JumpMaxHoldTimeField() { return { this, "ACharacter", "JumpMaxHoldTime" }; }
+	FieldValue<int> LastTeleportedFrameField() { return { this, "ACharacter", "LastTeleportedFrame" }; }
+	FieldValue<long double> ForceUnfreezeSkeletalDynamicsUntilTimeField() { return { this, "ACharacter", "ForceUnfreezeSkeletalDynamicsUntilTime" }; }
 
 	// Functions
 
@@ -2022,352 +1874,228 @@ struct ACharacter : public APawn
 
 struct APrimalCharacter : public ACharacter
 {
-	TSubclassOf<APrimalStructureItemContainer> GetDeathDestructionDepositInventoryClassField() const { return GetNativeField<TSubclassOf<APrimalStructureItemContainer>>(this, "APrimalCharacter", "DeathDestructionDepositInventoryClass"); }
-	FVector GetOldLocationField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "OldLocation"); }
-	void SetOldLocationField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "OldLocation", newValue); }
-	FRotator GetOldRotationField() const { return GetNativeField<FRotator>(this, "APrimalCharacter", "OldRotation"); }
-	void SetOldRotationField(FRotator newValue) { SetNativeField(this, "APrimalCharacter", "OldRotation", newValue); }
-	float GetEffectorInterpSpeedField() const { return GetNativeField<float>(this, "APrimalCharacter", "EffectorInterpSpeed"); }
-	void SetEffectorInterpSpeedField(float newValue) { SetNativeField(this, "APrimalCharacter", "EffectorInterpSpeed", newValue); }
-	float GetHalfLegLengthField() const { return GetNativeField<float>(this, "APrimalCharacter", "HalfLegLength"); }
-	void SetHalfLegLengthField(float newValue) { SetNativeField(this, "APrimalCharacter", "HalfLegLength", newValue); }
-	float GetTwoLeggedVirtualPointDistFactorField() const { return GetNativeField<float>(this, "APrimalCharacter", "TwoLeggedVirtualPointDistFactor"); }
-	void SetTwoLeggedVirtualPointDistFactorField(float newValue) { SetNativeField(this, "APrimalCharacter", "TwoLeggedVirtualPointDistFactor", newValue); }
-	float GetFullIKDistanceField() const { return GetNativeField<float>(this, "APrimalCharacter", "FullIKDistance"); }
-	void SetFullIKDistanceField(float newValue) { SetNativeField(this, "APrimalCharacter", "FullIKDistance", newValue); }
-	float GetSimpleIkRateField() const { return GetNativeField<float>(this, "APrimalCharacter", "SimpleIkRate"); }
-	void SetSimpleIkRateField(float newValue) { SetNativeField(this, "APrimalCharacter", "SimpleIkRate", newValue); }
-	FVector GetGroundCheckExtentField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "GroundCheckExtent"); }
-	void SetGroundCheckExtentField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "GroundCheckExtent", newValue); }
-	long double GetLastForceAimedCharactersTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastForceAimedCharactersTime"); }
-	void SetLastForceAimedCharactersTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastForceAimedCharactersTime", newValue); }
-	//TArray<APrimalBuff *> GetBuffsField() const { return GetNativeField<TArray<APrimalBuff *>>(this, "APrimalCharacter", "Buffs"); }
-	//void SetBuffsField(TArray<APrimalBuff *> newValue) { SetNativeField(this, "APrimalCharacter", "Buffs", newValue); }
-	FString GetTribeNameField() const { return GetNativeField<FString>(this, "APrimalCharacter", "TribeName"); }
-	void SetTribeNameField(FString newValue) { SetNativeField(this, "APrimalCharacter", "TribeName", newValue); }
-	float GetWaterSubmergedDepthThresholdField() const { return GetNativeField<float>(this, "APrimalCharacter", "WaterSubmergedDepthThreshold"); }
-	void SetWaterSubmergedDepthThresholdField(float newValue) { SetNativeField(this, "APrimalCharacter", "WaterSubmergedDepthThreshold", newValue); }
-	float GetProneWaterSubmergedDepthThresholdField() const { return GetNativeField<float>(this, "APrimalCharacter", "ProneWaterSubmergedDepthThreshold"); }
-	void SetProneWaterSubmergedDepthThresholdField(float newValue) { SetNativeField(this, "APrimalCharacter", "ProneWaterSubmergedDepthThreshold", newValue); }
-	TEnumAsByte<enum EMovementMode> GetSubmergedWaterMovementModeField() const { return GetNativeField<TEnumAsByte<enum EMovementMode>>(this, "APrimalCharacter", "SubmergedWaterMovementMode"); }
-	void SetSubmergedWaterMovementModeField(TEnumAsByte<enum EMovementMode> newValue) { SetNativeField(this, "APrimalCharacter", "SubmergedWaterMovementMode", newValue); }
-	TEnumAsByte<enum EMovementMode> GetUnSubmergedWaterMovementModeField() const { return GetNativeField<TEnumAsByte<enum EMovementMode>>(this, "APrimalCharacter", "UnSubmergedWaterMovementMode"); }
-	void SetUnSubmergedWaterMovementModeField(TEnumAsByte<enum EMovementMode> newValue) { SetNativeField(this, "APrimalCharacter", "UnSubmergedWaterMovementMode", newValue); }
-	TSubclassOf<UPrimalItem> GetPoopItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "APrimalCharacter", "PoopItemClass"); }
-	void SetPoopItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "APrimalCharacter", "PoopItemClass", newValue); }
-	FName GetDragBoneNameField() const { return GetNativeField<FName>(this, "APrimalCharacter", "DragBoneName"); }
-	void SetDragBoneNameField(FName newValue) { SetNativeField(this, "APrimalCharacter", "DragBoneName", newValue); }
-	FName GetDragSocketNameField() const { return GetNativeField<FName>(this, "APrimalCharacter", "DragSocketName"); }
-	void SetDragSocketNameField(FName newValue) { SetNativeField(this, "APrimalCharacter", "DragSocketName", newValue); }
-	float GetMaxDragDistanceField() const { return GetNativeField<float>(this, "APrimalCharacter", "MaxDragDistance"); }
-	void SetMaxDragDistanceField(float newValue) { SetNativeField(this, "APrimalCharacter", "MaxDragDistance", newValue); }
-	float GetMaxDragDistanceTimeoutField() const { return GetNativeField<float>(this, "APrimalCharacter", "MaxDragDistanceTimeout"); }
-	void SetMaxDragDistanceTimeoutField(float newValue) { SetNativeField(this, "APrimalCharacter", "MaxDragDistanceTimeout", newValue); }
-	TArray<FName> GetBonesToIngoreWhileDraggedField() const { return GetNativeField<TArray<FName>>(this, "APrimalCharacter", "BonesToIngoreWhileDragged"); }
-	void SetBonesToIngoreWhileDraggedField(TArray<FName> newValue) { SetNativeField(this, "APrimalCharacter", "BonesToIngoreWhileDragged", newValue); }
-	float GetPreviewCameraMaxZoomMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "PreviewCameraMaxZoomMultiplier"); }
-	void SetPreviewCameraMaxZoomMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "PreviewCameraMaxZoomMultiplier", newValue); }
-	float GetPreviewCameraDefaultZoomMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "PreviewCameraDefaultZoomMultiplier"); }
-	void SetPreviewCameraDefaultZoomMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "PreviewCameraDefaultZoomMultiplier", newValue); }
-	float GetPreviewCameraDistanceScaleFactorField() const { return GetNativeField<float>(this, "APrimalCharacter", "PreviewCameraDistanceScaleFactor"); }
-	void SetPreviewCameraDistanceScaleFactorField(float newValue) { SetNativeField(this, "APrimalCharacter", "PreviewCameraDistanceScaleFactor", newValue); }
-	APrimalCharacter* GetDraggedCharacterField() const { return GetNativeField<APrimalCharacter *>(this, "APrimalCharacter", "DraggedCharacter"); }
-	void SetDraggedCharacterField(APrimalCharacter* newValue) { SetNativeField(this, "APrimalCharacter", "DraggedCharacter", newValue); }
-	APrimalCharacter* GetDraggingCharacterField() const { return GetNativeField<APrimalCharacter *>(this, "APrimalCharacter", "DraggingCharacter"); }
-	void SetDraggingCharacterField(APrimalCharacter* newValue) { SetNativeField(this, "APrimalCharacter", "DraggingCharacter", newValue); }
-	FTransform GetLocalDraggedCharacterTransformField() const { return GetNativeField<FTransform>(this, "APrimalCharacter", "LocalDraggedCharacterTransform"); }
-	void SetLocalDraggedCharacterTransformField(FTransform newValue) { SetNativeField(this, "APrimalCharacter", "LocalDraggedCharacterTransform", newValue); }
-	long double GetStartDraggingTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "StartDraggingTime"); }
-	void SetStartDraggingTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "StartDraggingTime", newValue); }
-	long double GetLastDragUpdateTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastDragUpdateTime"); }
-	void SetLastDragUpdateTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastDragUpdateTime", newValue); }
-	AActor* GetImmobilizationActorField() const { return GetNativeField<AActor *>(this, "APrimalCharacter", "ImmobilizationActor"); }
-	void SetImmobilizationActorField(AActor* newValue) { SetNativeField(this, "APrimalCharacter", "ImmobilizationActor", newValue); }
-	int GetCurrentFrameAnimPreventInputField() const { return GetNativeField<int>(this, "APrimalCharacter", "CurrentFrameAnimPreventInput"); }
-	void SetCurrentFrameAnimPreventInputField(int newValue) { SetNativeField(this, "APrimalCharacter", "CurrentFrameAnimPreventInput", newValue); }
-	float GetBPTimerServerMinField() const { return GetNativeField<float>(this, "APrimalCharacter", "BPTimerServerMin"); }
-	void SetBPTimerServerMinField(float newValue) { SetNativeField(this, "APrimalCharacter", "BPTimerServerMin", newValue); }
-	float GetBPTimerServerMaxField() const { return GetNativeField<float>(this, "APrimalCharacter", "BPTimerServerMax"); }
-	void SetBPTimerServerMaxField(float newValue) { SetNativeField(this, "APrimalCharacter", "BPTimerServerMax", newValue); }
-	float GetBPTimerNonDedicatedMinField() const { return GetNativeField<float>(this, "APrimalCharacter", "BPTimerNonDedicatedMin"); }
-	void SetBPTimerNonDedicatedMinField(float newValue) { SetNativeField(this, "APrimalCharacter", "BPTimerNonDedicatedMin", newValue); }
-	float GetBPTimerNonDedicatedMaxField() const { return GetNativeField<float>(this, "APrimalCharacter", "BPTimerNonDedicatedMax"); }
-	void SetBPTimerNonDedicatedMaxField(float newValue) { SetNativeField(this, "APrimalCharacter", "BPTimerNonDedicatedMax", newValue); }
-	long double GetNextBPTimerServerField() const { return GetNativeField<long double>(this, "APrimalCharacter", "NextBPTimerServer"); }
-	void SetNextBPTimerServerField(long double newValue) { SetNativeField(this, "APrimalCharacter", "NextBPTimerServer", newValue); }
-	long double GetNextBPTimerNonDedicatedField() const { return GetNativeField<long double>(this, "APrimalCharacter", "NextBPTimerNonDedicated"); }
-	void SetNextBPTimerNonDedicatedField(long double newValue) { SetNativeField(this, "APrimalCharacter", "NextBPTimerNonDedicated", newValue); }
-	TArray<TSubclassOf<APrimalStructure>> GetImmobilizationTrapsToIgnoreField() const { return GetNativeField<TArray<TSubclassOf<APrimalStructure>>>(this, "APrimalCharacter", "ImmobilizationTrapsToIgnore"); }
-	void SetImmobilizationTrapsToIgnoreField(TArray<TSubclassOf<APrimalStructure>> newValue) { SetNativeField(this, "APrimalCharacter", "ImmobilizationTrapsToIgnore", newValue); }
-	//TWeakObjectPtr<APrimalStructureElevatorPlatform> GetBasedElevatorField() const { return GetNativeField<TWeakObjectPtr<APrimalStructureElevatorPlatform>>(this, "APrimalCharacter", "BasedElevator"); }
-	TWeakObjectPtr<APrimalDinoCharacter> GetCarryingDinoField() const { return GetNativeField<TWeakObjectPtr<APrimalDinoCharacter>>(this, "APrimalCharacter", "CarryingDino"); }
-	FName GetDediOverrideCapsuleCollisionProfileNameField() const { return GetNativeField<FName>(this, "APrimalCharacter", "DediOverrideCapsuleCollisionProfileName"); }
-	void SetDediOverrideCapsuleCollisionProfileNameField(FName newValue) { SetNativeField(this, "APrimalCharacter", "DediOverrideCapsuleCollisionProfileName", newValue); }
-	FName GetDediOverrideMeshCollisionProfileNameField() const { return GetNativeField<FName>(this, "APrimalCharacter", "DediOverrideMeshCollisionProfileName"); }
-	void SetDediOverrideMeshCollisionProfileNameField(FName newValue) { SetNativeField(this, "APrimalCharacter", "DediOverrideMeshCollisionProfileName", newValue); }
-	FName GetSnaredFromSocketField() const { return GetNativeField<FName>(this, "APrimalCharacter", "SnaredFromSocket"); }
-	void SetSnaredFromSocketField(FName newValue) { SetNativeField(this, "APrimalCharacter", "SnaredFromSocket", newValue); }
-	float GetDamageNotifyTeamAggroMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "DamageNotifyTeamAggroMultiplier"); }
-	void SetDamageNotifyTeamAggroMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "DamageNotifyTeamAggroMultiplier", newValue); }
-	float GetDamageNotifyTeamAggroRangeField() const { return GetNativeField<float>(this, "APrimalCharacter", "DamageNotifyTeamAggroRange"); }
-	void SetDamageNotifyTeamAggroRangeField(float newValue) { SetNativeField(this, "APrimalCharacter", "DamageNotifyTeamAggroRange", newValue); }
-	float GetDamageNotifyTeamAggroRangeFalloffField() const { return GetNativeField<float>(this, "APrimalCharacter", "DamageNotifyTeamAggroRangeFalloff"); }
-	void SetDamageNotifyTeamAggroRangeFalloffField(float newValue) { SetNativeField(this, "APrimalCharacter", "DamageNotifyTeamAggroRangeFalloff", newValue); }
-	float GetReplicatedCurrentHealthField() const { return GetNativeField<float>(this, "APrimalCharacter", "ReplicatedCurrentHealth"); }
-	void SetReplicatedCurrentHealthField(float newValue) { SetNativeField(this, "APrimalCharacter", "ReplicatedCurrentHealth", newValue); }
-	float GetReplicatedMaxHealthField() const { return GetNativeField<float>(this, "APrimalCharacter", "ReplicatedMaxHealth"); }
-	void SetReplicatedMaxHealthField(float newValue) { SetNativeField(this, "APrimalCharacter", "ReplicatedMaxHealth", newValue); }
-	float GetReplicatedCurrentTorporField() const { return GetNativeField<float>(this, "APrimalCharacter", "ReplicatedCurrentTorpor"); }
-	void SetReplicatedCurrentTorporField(float newValue) { SetNativeField(this, "APrimalCharacter", "ReplicatedCurrentTorpor", newValue); }
-	float GetReplicatedMaxTorporField() const { return GetNativeField<float>(this, "APrimalCharacter", "ReplicatedMaxTorpor"); }
-	void SetReplicatedMaxTorporField(float newValue) { SetNativeField(this, "APrimalCharacter", "ReplicatedMaxTorpor", newValue); }
-	FVector GetDragOffsetField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "DragOffset"); }
-	void SetDragOffsetField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "DragOffset", newValue); }
-	AShooterCharacter* GetLastGrapHookPullingOwnerField() const { return GetNativeField<AShooterCharacter *>(this, "APrimalCharacter", "LastGrapHookPullingOwner"); }
-	void SetLastGrapHookPullingOwnerField(AShooterCharacter* newValue) { SetNativeField(this, "APrimalCharacter", "LastGrapHookPullingOwner", newValue); }
-	long double GetLastIkUpdateTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastIkUpdateTime"); }
-	void SetLastIkUpdateTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastIkUpdateTime", newValue); }
-	long double GetLastUpdatedAimOffsetsTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastUpdatedAimOffsetsTime"); }
-	void SetLastUpdatedAimOffsetsTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastUpdatedAimOffsetsTime", newValue); }
-	FVector GetMeshPreRagdollRelativeLocationField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "MeshPreRagdollRelativeLocation"); }
-	void SetMeshPreRagdollRelativeLocationField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "MeshPreRagdollRelativeLocation", newValue); }
-	FRotator GetMeshPreRagdollRelativeRotationField() const { return GetNativeField<FRotator>(this, "APrimalCharacter", "MeshPreRagdollRelativeRotation"); }
-	void SetMeshPreRagdollRelativeRotationField(FRotator newValue) { SetNativeField(this, "APrimalCharacter", "MeshPreRagdollRelativeRotation", newValue); }
-	int GetDraggingBodyIndexField() const { return GetNativeField<int>(this, "APrimalCharacter", "DraggingBodyIndex"); }
-	void SetDraggingBodyIndexField(int newValue) { SetNativeField(this, "APrimalCharacter", "DraggingBodyIndex", newValue); }
-	int GetDraggedBoneIndexField() const { return GetNativeField<int>(this, "APrimalCharacter", "DraggedBoneIndex"); }
-	void SetDraggedBoneIndexField(int newValue) { SetNativeField(this, "APrimalCharacter", "DraggedBoneIndex", newValue); }
-	float GetRunningSpeedModifierField() const { return GetNativeField<float>(this, "APrimalCharacter", "RunningSpeedModifier"); }
-	void SetRunningSpeedModifierField(float newValue) { SetNativeField(this, "APrimalCharacter", "RunningSpeedModifier", newValue); }
-	float GetLowHealthPercentageField() const { return GetNativeField<float>(this, "APrimalCharacter", "LowHealthPercentage"); }
-	void SetLowHealthPercentageField(float newValue) { SetNativeField(this, "APrimalCharacter", "LowHealthPercentage", newValue); }
-	float GetBaseTurnRateField() const { return GetNativeField<float>(this, "APrimalCharacter", "BaseTurnRate"); }
-	void SetBaseTurnRateField(float newValue) { SetNativeField(this, "APrimalCharacter", "BaseTurnRate", newValue); }
-	float GetBaseLookUpRateField() const { return GetNativeField<float>(this, "APrimalCharacter", "BaseLookUpRate"); }
-	void SetBaseLookUpRateField(float newValue) { SetNativeField(this, "APrimalCharacter", "BaseLookUpRate", newValue); }
-	float GetMaxFallSpeedField() const { return GetNativeField<float>(this, "APrimalCharacter", "MaxFallSpeed"); }
-	void SetMaxFallSpeedField(float newValue) { SetNativeField(this, "APrimalCharacter", "MaxFallSpeed", newValue); }
-	float GetFallDamageMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "FallDamageMultiplier"); }
-	void SetFallDamageMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "FallDamageMultiplier", newValue); }
-	float GetCurrentCarriedYawField() const { return GetNativeField<float>(this, "APrimalCharacter", "CurrentCarriedYaw"); }
-	void SetCurrentCarriedYawField(float newValue) { SetNativeField(this, "APrimalCharacter", "CurrentCarriedYaw", newValue); }
-	//APrimalStructureExplosiveTransGPS * GetCurrentTransponderField() const { return GetNativeField<APrimalStructureExplosiveTransGPS *>(this, "APrimalCharacter", "CurrentTransponder"); }
-	float GetTargetCarriedYawField() const { return GetNativeField<float>(this, "APrimalCharacter", "TargetCarriedYaw"); }
-	void SetTargetCarriedYawField(float newValue) { SetNativeField(this, "APrimalCharacter", "TargetCarriedYaw", newValue); }
-	float GetServerTargetCarriedYawField() const { return GetNativeField<float>(this, "APrimalCharacter", "ServerTargetCarriedYaw"); }
-	void SetServerTargetCarriedYawField(float newValue) { SetNativeField(this, "APrimalCharacter", "ServerTargetCarriedYaw", newValue); }
-	TWeakObjectPtr<APrimalDinoCharacter> GetMountedDinoField() const { return GetNativeField<TWeakObjectPtr<APrimalDinoCharacter>>(this, "APrimalCharacter", "MountedDino"); }
-	float GetMountedDinoTimeField() const { return GetNativeField<float>(this, "APrimalCharacter", "MountedDinoTime"); }
-	TWeakObjectPtr<APrimalDinoCharacter> GetPreviousMountedDinoField() const { return GetNativeField<TWeakObjectPtr<APrimalDinoCharacter>>(this, "APrimalCharacter", "PreviousMountedDino"); }
-	FVector GetLastForceFallCheckBaseLocationField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "LastForceFallCheckBaseLocation"); }
-	void SetLastForceFallCheckBaseLocationField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "LastForceFallCheckBaseLocation", newValue); }
-	FVector GetLastHitWallSweepCheckLocationField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "LastHitWallSweepCheckLocation"); }
-	void SetLastHitWallSweepCheckLocationField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "LastHitWallSweepCheckLocation", newValue); }
-	long double GetLastTimeBasedMovementHadCurrentActorField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastTimeBasedMovementHadCurrentActor"); }
-	void SetLastTimeBasedMovementHadCurrentActorField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastTimeBasedMovementHadCurrentActor", newValue); }
-	float GetGrabWeightThresholdField() const { return GetNativeField<float>(this, "APrimalCharacter", "GrabWeightThreshold"); }
-	void SetGrabWeightThresholdField(float newValue) { SetNativeField(this, "APrimalCharacter", "GrabWeightThreshold", newValue); }
-	float GetDragWeightField() const { return GetNativeField<float>(this, "APrimalCharacter", "DragWeight"); }
-	void SetDragWeightField(float newValue) { SetNativeField(this, "APrimalCharacter", "DragWeight", newValue); }
-	FString GetDescriptiveNameField() const { return GetNativeField<FString>(this, "APrimalCharacter", "DescriptiveName"); }
-	void SetDescriptiveNameField(FString newValue) { SetNativeField(this, "APrimalCharacter", "DescriptiveName", newValue); }
-	FRotator GetReplicatedRootRotationField() const { return GetNativeField<FRotator>(this, "APrimalCharacter", "ReplicatedRootRotation"); }
-	void SetReplicatedRootRotationField(FRotator newValue) { SetNativeField(this, "APrimalCharacter", "ReplicatedRootRotation", newValue); }
-	TArray<int> GetReplicatedBonesIndiciesField() const { return GetNativeField<TArray<int>>(this, "APrimalCharacter", "ReplicatedBonesIndicies"); }
-	void SetReplicatedBonesIndiciesField(TArray<int> newValue) { SetNativeField(this, "APrimalCharacter", "ReplicatedBonesIndicies", newValue); }
-	float GetKillXPBaseField() const { return GetNativeField<float>(this, "APrimalCharacter", "KillXPBase"); }
-	void SetKillXPBaseField(float newValue) { SetNativeField(this, "APrimalCharacter", "KillXPBase", newValue); }
-	TArray<FName> GetReplicatedBonesField() const { return GetNativeField<TArray<FName>>(this, "APrimalCharacter", "ReplicatedBones"); }
-	void SetReplicatedBonesField(TArray<FName> newValue) { SetNativeField(this, "APrimalCharacter", "ReplicatedBones", newValue); }
-	float GetRagdollReplicationIntervalField() const { return GetNativeField<float>(this, "APrimalCharacter", "RagdollReplicationInterval"); }
-	void SetRagdollReplicationIntervalField(float newValue) { SetNativeField(this, "APrimalCharacter", "RagdollReplicationInterval", newValue); }
-	float GetClientRotationInterpSpeedField() const { return GetNativeField<float>(this, "APrimalCharacter", "ClientRotationInterpSpeed"); }
-	void SetClientRotationInterpSpeedField(float newValue) { SetNativeField(this, "APrimalCharacter", "ClientRotationInterpSpeed", newValue); }
-	float GetClientLocationInterpSpeedField() const { return GetNativeField<float>(this, "APrimalCharacter", "ClientLocationInterpSpeed"); }
-	void SetClientLocationInterpSpeedField(float newValue) { SetNativeField(this, "APrimalCharacter", "ClientLocationInterpSpeed", newValue); }
-	float GetMaxDragMovementSpeedField() const { return GetNativeField<float>(this, "APrimalCharacter", "MaxDragMovementSpeed"); }
-	void SetMaxDragMovementSpeedField(float newValue) { SetNativeField(this, "APrimalCharacter", "MaxDragMovementSpeed", newValue); }
-	FRotator GetCurrentAimRotField() const { return GetNativeField<FRotator>(this, "APrimalCharacter", "CurrentAimRot"); }
-	void SetCurrentAimRotField(FRotator newValue) { SetNativeField(this, "APrimalCharacter", "CurrentAimRot", newValue); }
-	FVector GetCurrentRootLocField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "CurrentRootLoc"); }
-	void SetCurrentRootLocField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "CurrentRootLoc", newValue); }
-	int GetLastYawSpeedWorldFrameCounterField() const { return GetNativeField<int>(this, "APrimalCharacter", "LastYawSpeedWorldFrameCounter"); }
-	void SetLastYawSpeedWorldFrameCounterField(int newValue) { SetNativeField(this, "APrimalCharacter", "LastYawSpeedWorldFrameCounter", newValue); }
-	FName GetMeshPreRagdollCollisionProfileNameField() const { return GetNativeField<FName>(this, "APrimalCharacter", "MeshPreRagdollCollisionProfileName"); }
-	void SetMeshPreRagdollCollisionProfileNameField(FName newValue) { SetNativeField(this, "APrimalCharacter", "MeshPreRagdollCollisionProfileName", newValue); }
-	FName GetCapsulePreRagdollCollisionProfileNameField() const { return GetNativeField<FName>(this, "APrimalCharacter", "CapsulePreRagdollCollisionProfileName"); }
-	void SetCapsulePreRagdollCollisionProfileNameField(FName newValue) { SetNativeField(this, "APrimalCharacter", "CapsulePreRagdollCollisionProfileName", newValue); }
-	UPrimalCharacterStatusComponent* GetMyCharacterStatusComponentField() const { return GetNativeField<UPrimalCharacterStatusComponent *>(this, "APrimalCharacter", "MyCharacterStatusComponent"); }
-	void SetMyCharacterStatusComponentField(UPrimalCharacterStatusComponent* newValue) { SetNativeField(this, "APrimalCharacter", "MyCharacterStatusComponent", newValue); }
-	UPrimalInventoryComponent* GetMyInventoryComponentField() const { return GetNativeField<UPrimalInventoryComponent *>(this, "APrimalCharacter", "MyInventoryComponent"); }
-	void SetMyInventoryComponentField(UPrimalInventoryComponent* newValue) { SetNativeField(this, "APrimalCharacter", "MyInventoryComponent", newValue); }
-	long double GetLastRunningTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastRunningTime"); }
-	void SetLastRunningTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastRunningTime", newValue); }
-	FVector GetTPVCameraOffsetField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "TPVCameraOffset"); }
-	void SetTPVCameraOffsetField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "TPVCameraOffset", newValue); }
-	FVector GetTPVCameraOffsetMultiplierField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "TPVCameraOffsetMultiplier"); }
-	void SetTPVCameraOffsetMultiplierField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "TPVCameraOffsetMultiplier", newValue); }
-	FVector GetTPVCameraOrgOffsetField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "TPVCameraOrgOffset"); }
-	void SetTPVCameraOrgOffsetField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "TPVCameraOrgOffset", newValue); }
-	float GetLandedSoundMaxRangeField() const { return GetNativeField<float>(this, "APrimalCharacter", "LandedSoundMaxRange"); }
-	void SetLandedSoundMaxRangeField(float newValue) { SetNativeField(this, "APrimalCharacter", "LandedSoundMaxRange", newValue); }
-	float GetFallingDamageHealthScaleBaseField() const { return GetNativeField<float>(this, "APrimalCharacter", "FallingDamageHealthScaleBase"); }
-	void SetFallingDamageHealthScaleBaseField(float newValue) { SetNativeField(this, "APrimalCharacter", "FallingDamageHealthScaleBase", newValue); }
-	float GetFootstepsMaxRangeField() const { return GetNativeField<float>(this, "APrimalCharacter", "FootstepsMaxRange"); }
-	void SetFootstepsMaxRangeField(float newValue) { SetNativeField(this, "APrimalCharacter", "FootstepsMaxRange", newValue); }
-	float GetMinTimeBetweenFootstepsField() const { return GetNativeField<float>(this, "APrimalCharacter", "MinTimeBetweenFootsteps"); }
-	void SetMinTimeBetweenFootstepsField(float newValue) { SetNativeField(this, "APrimalCharacter", "MinTimeBetweenFootsteps", newValue); }
-	long double GetLastPlayedFootstepTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastPlayedFootstepTime"); }
-	void SetLastPlayedFootstepTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastPlayedFootstepTime", newValue); }
-	float GetMinTimeBetweenFootstepsRunningField() const { return GetNativeField<float>(this, "APrimalCharacter", "MinTimeBetweenFootstepsRunning"); }
-	void SetMinTimeBetweenFootstepsRunningField(float newValue) { SetNativeField(this, "APrimalCharacter", "MinTimeBetweenFootstepsRunning", newValue); }
-	long double GetLastNetDidLandField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastNetDidLand"); }
-	int GetCachedNumberOfClientRagdollCorrectionAttemptsField() const { return GetNativeField<int>(this, "APrimalCharacter", "CachedNumberOfClientRagdollCorrectionAttempts"); }
-	void SetCachedNumberOfClientRagdollCorrectionAttemptsField(int newValue) { SetNativeField(this, "APrimalCharacter", "CachedNumberOfClientRagdollCorrectionAttempts", newValue); }
-	int GetNumberOfClientRagdollCorrectionAttemptsField() const { return GetNativeField<int>(this, "APrimalCharacter", "NumberOfClientRagdollCorrectionAttempts"); }
-	void SetNumberOfClientRagdollCorrectionAttemptsField(int newValue) { SetNativeField(this, "APrimalCharacter", "NumberOfClientRagdollCorrectionAttempts", newValue); }
-	float GetServerForceSleepRagdollIntervalField() const { return GetNativeField<float>(this, "APrimalCharacter", "ServerForceSleepRagdollInterval"); }
-	void SetServerForceSleepRagdollIntervalField(float newValue) { SetNativeField(this, "APrimalCharacter", "ServerForceSleepRagdollInterval", newValue); }
-	float GetClientForceSleepRagdollIntervalField() const { return GetNativeField<float>(this, "APrimalCharacter", "ClientForceSleepRagdollInterval"); }
-	void SetClientForceSleepRagdollIntervalField(float newValue) { SetNativeField(this, "APrimalCharacter", "ClientForceSleepRagdollInterval", newValue); }
-	float GetNonRelevantServerForceSleepRagdollIntervalField() const { return GetNativeField<float>(this, "APrimalCharacter", "NonRelevantServerForceSleepRagdollInterval"); }
-	void SetNonRelevantServerForceSleepRagdollIntervalField(float newValue) { SetNativeField(this, "APrimalCharacter", "NonRelevantServerForceSleepRagdollInterval", newValue); }
-	long double GetCorpseDestructionTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "CorpseDestructionTime"); }
-	void SetCorpseDestructionTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "CorpseDestructionTime", newValue); }
-	float GetCorpseLifespanField() const { return GetNativeField<float>(this, "APrimalCharacter", "CorpseLifespan"); }
-	void SetCorpseLifespanField(float newValue) { SetNativeField(this, "APrimalCharacter", "CorpseLifespan", newValue); }
-	float GetTPVStructurePlacingHeightMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "TPVStructurePlacingHeightMultiplier"); }
-	void SetTPVStructurePlacingHeightMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "TPVStructurePlacingHeightMultiplier", newValue); }
-	float GetCorpseFadeAwayTimeField() const { return GetNativeField<float>(this, "APrimalCharacter", "CorpseFadeAwayTime"); }
-	void SetCorpseFadeAwayTimeField(float newValue) { SetNativeField(this, "APrimalCharacter", "CorpseFadeAwayTime", newValue); }
-	float GetRagdollDeathImpulseScalerField() const { return GetNativeField<float>(this, "APrimalCharacter", "RagdollDeathImpulseScaler"); }
-	void SetRagdollDeathImpulseScalerField(float newValue) { SetNativeField(this, "APrimalCharacter", "RagdollDeathImpulseScaler", newValue); }
-	float GetBaseTargetingDesirabilityField() const { return GetNativeField<float>(this, "APrimalCharacter", "BaseTargetingDesirability"); }
-	void SetBaseTargetingDesirabilityField(float newValue) { SetNativeField(this, "APrimalCharacter", "BaseTargetingDesirability", newValue); }
-	float GetDeadBaseTargetingDesirabilityField() const { return GetNativeField<float>(this, "APrimalCharacter", "DeadBaseTargetingDesirability"); }
-	void SetDeadBaseTargetingDesirabilityField(float newValue) { SetNativeField(this, "APrimalCharacter", "DeadBaseTargetingDesirability", newValue); }
-	FRotator GetOrbitCamRotField() const { return GetNativeField<FRotator>(this, "APrimalCharacter", "OrbitCamRot"); }
-	void SetOrbitCamRotField(FRotator newValue) { SetNativeField(this, "APrimalCharacter", "OrbitCamRot", newValue); }
-	float GetOrbitCamZoomField() const { return GetNativeField<float>(this, "APrimalCharacter", "OrbitCamZoom"); }
-	void SetOrbitCamZoomField(float newValue) { SetNativeField(this, "APrimalCharacter", "OrbitCamZoom", newValue); }
-	FVector GetLastSubmergedCheckLocField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "LastSubmergedCheckLoc"); }
-	void SetLastSubmergedCheckLocField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "LastSubmergedCheckLoc", newValue); }
-	long double GetLastTimeNotInFallingField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastTimeNotInFalling"); }
-	void SetLastTimeNotInFallingField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastTimeNotInFalling", newValue); }
-	float GetMaxCursorHUDDistanceField() const { return GetNativeField<float>(this, "APrimalCharacter", "MaxCursorHUDDistance"); }
-	void SetMaxCursorHUDDistanceField(float newValue) { SetNativeField(this, "APrimalCharacter", "MaxCursorHUDDistance", newValue); }
-	float GetAddForwardVelocityOnJumpField() const { return GetNativeField<float>(this, "APrimalCharacter", "AddForwardVelocityOnJump"); }
-	void SetAddForwardVelocityOnJumpField(float newValue) { SetNativeField(this, "APrimalCharacter", "AddForwardVelocityOnJump", newValue); }
-	FVector GetDeathActorTargetingOffsetField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "DeathActorTargetingOffset"); }
-	void SetDeathActorTargetingOffsetField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "DeathActorTargetingOffset", newValue); }
-	FName GetSocketOverrideTargetingLocationField() const { return GetNativeField<FName>(this, "APrimalCharacter", "SocketOverrideTargetingLocation"); }
-	void SetSocketOverrideTargetingLocationField(FName newValue) { SetNativeField(this, "APrimalCharacter", "SocketOverrideTargetingLocation", newValue); }
-	FDamageEvent* GetCurrentDamageEventField() const { return GetNativeField<FDamageEvent *>(this, "APrimalCharacter", "CurrentDamageEvent"); }
-	void SetCurrentDamageEventField(FDamageEvent* newValue) { SetNativeField(this, "APrimalCharacter", "CurrentDamageEvent", newValue); }
-	FVector GetLastApproximatePhysVolumeLocationField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "LastApproximatePhysVolumeLocation"); }
-	void SetLastApproximatePhysVolumeLocationField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "LastApproximatePhysVolumeLocation", newValue); }
-	long double GetLastTimeSubmergedField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastTimeSubmerged"); }
-	void SetLastTimeSubmergedField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastTimeSubmerged", newValue); }
-	long double GetLastFootPhysicalSurfaceCheckTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastFootPhysicalSurfaceCheckTime"); }
-	void SetLastFootPhysicalSurfaceCheckTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastFootPhysicalSurfaceCheckTime", newValue); }
-	float GetFootPhysicalSurfaceCheckIntervalField() const { return GetNativeField<float>(this, "APrimalCharacter", "FootPhysicalSurfaceCheckInterval"); }
-	void SetFootPhysicalSurfaceCheckIntervalField(float newValue) { SetNativeField(this, "APrimalCharacter", "FootPhysicalSurfaceCheckInterval", newValue); }
-	TWeakObjectPtr<APrimalCharacter> GetLastHurtByNearbyPlayerField() const { return GetNativeField<TWeakObjectPtr<APrimalCharacter>>(this, "APrimalCharacter", "LastHurtByNearbyPlayer"); }
-	float GetLastHurtByNearbyPlayerTimeField() const { return GetNativeField<float>(this, "APrimalCharacter", "LastHurtByNearbyPlayerTime"); }
-	TWeakObjectPtr<APrimalCharacter> GetLastAttackedNearbyPlayerField() const { return GetNativeField<TWeakObjectPtr<APrimalCharacter>>(this, "APrimalCharacter", "LastAttackedNearbyPlayer"); }
-	void SetLastAttackedNearbyPlayerTimeField(float newValue) { SetNativeField(this, "APrimalCharacter", "LastAttackedNearbyPlayerTime", newValue); }
-	long double GetLastStartFallingRagdollTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastStartFallingRagdollTime"); }
-	void SetLastStartFallingRagdollTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastStartFallingRagdollTime", newValue); }
-	FVector GetRagdollLastFrameLinearVelocityField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "RagdollLastFrameLinearVelocity"); }
-	void SetRagdollLastFrameLinearVelocityField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "RagdollLastFrameLinearVelocity", newValue); }
-	float GetRagdollImpactDamageVelocityScaleField() const { return GetNativeField<float>(this, "APrimalCharacter", "RagdollImpactDamageVelocityScale"); }
-	void SetRagdollImpactDamageVelocityScaleField(float newValue) { SetNativeField(this, "APrimalCharacter", "RagdollImpactDamageVelocityScale", newValue); }
-	float GetRagdollImpactDamageMinDecelerationSpeedField() const { return GetNativeField<float>(this, "APrimalCharacter", "RagdollImpactDamageMinDecelerationSpeed"); }
-	void SetRagdollImpactDamageMinDecelerationSpeedField(float newValue) { SetNativeField(this, "APrimalCharacter", "RagdollImpactDamageMinDecelerationSpeed", newValue); }
-	float GetStartFallingImpactRagdollTimeIntervalField() const { return GetNativeField<float>(this, "APrimalCharacter", "StartFallingImpactRagdollTimeInterval"); }
-	void SetStartFallingImpactRagdollTimeIntervalField(float newValue) { SetNativeField(this, "APrimalCharacter", "StartFallingImpactRagdollTimeInterval", newValue); }
-	FVector GetPreviousRagdollLocationField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "PreviousRagdollLocation"); }
-	void SetPreviousRagdollLocationField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "PreviousRagdollLocation", newValue); }
-	long double GetNextBlinkTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "NextBlinkTime"); }
-	void SetNextBlinkTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "NextBlinkTime", newValue); }
-	long double GetBlinkTimerField() const { return GetNativeField<long double>(this, "APrimalCharacter", "BlinkTimer"); }
-	void SetBlinkTimerField(long double newValue) { SetNativeField(this, "APrimalCharacter", "BlinkTimer", newValue); }
-	long double GetLastInSwimmingSoundTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastInSwimmingSoundTime"); }
-	long double GetLastRelevantToPlayerTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastRelevantToPlayerTime"); }
-	void SetLastRelevantToPlayerTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastRelevantToPlayerTime", newValue); }
-	long double GetMeshStopForceUpdatingAtTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "MeshStopForceUpdatingAtTime"); }
-	void SetMeshStopForceUpdatingAtTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "MeshStopForceUpdatingAtTime", newValue); }
-	long double GetLastWalkingTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastWalkingTime"); }
-	void SetLastWalkingTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastWalkingTime", newValue); }
-	long double GetLastSpecialDamageTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastSpecialDamageTime"); }
-	void SetLastSpecialDamageTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastSpecialDamageTime", newValue); }
-	float GetCorpseDraggedDecayRateField() const { return GetNativeField<float>(this, "APrimalCharacter", "CorpseDraggedDecayRate"); }
-	void SetCorpseDraggedDecayRateField(float newValue) { SetNativeField(this, "APrimalCharacter", "CorpseDraggedDecayRate", newValue); }
-	float GetPoopAltItemChanceField() const { return GetNativeField<float>(this, "APrimalCharacter", "PoopAltItemChance"); }
-	void SetPoopAltItemChanceField(float newValue) { SetNativeField(this, "APrimalCharacter", "PoopAltItemChance", newValue); }
-	TSubclassOf<UPrimalItem> GetPoopAltItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "APrimalCharacter", "PoopAltItemClass"); }
-	void SetPoopAltItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "APrimalCharacter", "PoopAltItemClass", newValue); }
-	//TArray<TSubclassOf<APrimalBuff>> GetDefaultBuffsField() const { return GetNativeField<TArray<TSubclassOf<APrimalBuff>>>(this, "APrimalCharacter", "DefaultBuffs"); }
-	float GetRunningMaxDesiredRotDeltaField() const { return GetNativeField<float>(this, "APrimalCharacter", "RunningMaxDesiredRotDelta"); }
-	void SetRunningMaxDesiredRotDeltaField(float newValue) { SetNativeField(this, "APrimalCharacter", "RunningMaxDesiredRotDelta", newValue); }
-	long double GetCorpseDestructionTimerField() const { return GetNativeField<long double>(this, "APrimalCharacter", "CorpseDestructionTimer"); }
-	void SetCorpseDestructionTimerField(long double newValue) { SetNativeField(this, "APrimalCharacter", "CorpseDestructionTimer", newValue); }
-	float GetOriginalCorpseLifespanField() const { return GetNativeField<float>(this, "APrimalCharacter", "OriginalCorpseLifespan"); }
-	void SetOriginalCorpseLifespanField(float newValue) { SetNativeField(this, "APrimalCharacter", "OriginalCorpseLifespan", newValue); }
-	float GetCorpseHarvestFadeTimeField() const { return GetNativeField<float>(this, "APrimalCharacter", "CorpseHarvestFadeTime"); }
-	void SetCorpseHarvestFadeTimeField(float newValue) { SetNativeField(this, "APrimalCharacter", "CorpseHarvestFadeTime", newValue); }
-	FVector GetCurrentLocalRootLocField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "CurrentLocalRootLoc"); }
-	void SetCurrentLocalRootLocField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "CurrentLocalRootLoc", newValue); }
-	float GetRootYawField() const { return GetNativeField<float>(this, "APrimalCharacter", "RootYaw"); }
-	void SetRootYawField(float newValue) { SetNativeField(this, "APrimalCharacter", "RootYaw", newValue); }
-	long double GetLastTimeInSwimmingField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastTimeInSwimming"); }
-	void SetLastTimeInSwimmingField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastTimeInSwimming", newValue); }
-	long double GetLastListenRangePushTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastListenRangePushTime"); }
-	void SetLastListenRangePushTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastListenRangePushTime", newValue); }
-	float GetLastDamageAmountMaterialValueField() const { return GetNativeField<float>(this, "APrimalCharacter", "LastDamageAmountMaterialValue"); }
-	void SetLastDamageAmountMaterialValueField(float newValue) { SetNativeField(this, "APrimalCharacter", "LastDamageAmountMaterialValue", newValue); }
-	float GetBuffedDamageMultField() const { return GetNativeField<float>(this, "APrimalCharacter", "BuffedDamageMult"); }
-	void SetBuffedDamageMultField(float newValue) { SetNativeField(this, "APrimalCharacter", "BuffedDamageMult", newValue); }
-	float GetBuffedResistanceMultField() const { return GetNativeField<float>(this, "APrimalCharacter", "BuffedResistanceMult"); }
-	float GetExtraMaxSpeedModifierField() const { return GetNativeField<float>(this, "APrimalCharacter", "ExtraMaxSpeedModifier"); }
-	void SetExtraMaxSpeedModifierField(float newValue) { SetNativeField(this, "APrimalCharacter", "ExtraMaxSpeedModifier", newValue); }
-	float GetTamedDinoCallOutRangeField() const { return GetNativeField<float>(this, "APrimalCharacter", "TamedDinoCallOutRange"); }
-	void SetTamedDinoCallOutRangeField(float newValue) { SetNativeField(this, "APrimalCharacter", "TamedDinoCallOutRange", newValue); }
-	long double GetLastBumpedDamageTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastBumpedDamageTime"); }
-	void SetLastBumpedDamageTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastBumpedDamageTime", newValue); }
-	FVector GetTargetPathfindingLocationOffsetField() const { return GetNativeField<FVector>(this, "APrimalCharacter", "TargetPathfindingLocationOffset"); }
-	void SetTargetPathfindingLocationOffsetField(FVector newValue) { SetNativeField(this, "APrimalCharacter", "TargetPathfindingLocationOffset", newValue); }
-	long double GetLastTookDamageTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastTookDamageTime"); }
-	void SetLastTookDamageTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastTookDamageTime", newValue); }
-	float GetExtraReceiveDamageMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "ExtraReceiveDamageMultiplier"); }
-	void SetExtraReceiveDamageMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "ExtraReceiveDamageMultiplier", newValue); }
-	float GetExtraMeleeDamageMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "ExtraMeleeDamageMultiplier"); }
-	void SetExtraMeleeDamageMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "ExtraMeleeDamageMultiplier", newValue); }
-	float GetLastFallingZField() const { return GetNativeField<float>(this, "APrimalCharacter", "LastFallingZ"); }
-	void SetLastFallingZField(float newValue) { SetNativeField(this, "APrimalCharacter", "LastFallingZ", newValue); }
-	int GetNumFallZFailsField() const { return GetNativeField<int>(this, "APrimalCharacter", "NumFallZFails"); }
-	void SetNumFallZFailsField(int newValue) { SetNativeField(this, "APrimalCharacter", "NumFallZFails", newValue); }
-	TArray<TWeakObjectPtr<APrimalCharacter>> GetCharactersGrappledToMeField() const { return GetNativeField<TArray<TWeakObjectPtr<APrimalCharacter>>>(this, "APrimalCharacter", "CharactersGrappledToMe"); }
-	float GetDamageTheMeleeDamageCauserPercentField() const { return GetNativeField<float>(this, "APrimalCharacter", "DamageTheMeleeDamageCauserPercent"); }
-	void SetDamageTheMeleeDamageCauserPercentField(float newValue) { SetNativeField(this, "APrimalCharacter", "DamageTheMeleeDamageCauserPercent", newValue); }
-	float GetDurabilityDegrateTheMeleeDamageCauserPercentField() const { return GetNativeField<float>(this, "APrimalCharacter", "DurabilityDegrateTheMeleeDamageCauserPercent"); }
-	void SetDurabilityDegrateTheMeleeDamageCauserPercentField(float newValue) { SetNativeField(this, "APrimalCharacter", "DurabilityDegrateTheMeleeDamageCauserPercent", newValue); }
-	TSubclassOf<UDamageType> GetDamageTheMeleeDamageCauserDamageTypeField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "APrimalCharacter", "DamageTheMeleeDamageCauserDamageType"); }
-	void SetDamageTheMeleeDamageCauserDamageTypeField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "APrimalCharacter", "DamageTheMeleeDamageCauserDamageType", newValue); }
-	char GetTribeGroupInventoryRankField() const { return GetNativeField<char>(this, "APrimalCharacter", "TribeGroupInventoryRank"); }
-	void SetTribeGroupInventoryRankField(char newValue) { SetNativeField(this, "APrimalCharacter", "TribeGroupInventoryRank", newValue); }
-	float GetCharacterDamageImpulseMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "CharacterDamageImpulseMultiplier"); }
-	void SetCharacterDamageImpulseMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "CharacterDamageImpulseMultiplier", newValue); }
-	long double GetForceCheckPushThroughWallsTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "ForceCheckPushThroughWallsTime"); }
-	void SetForceCheckPushThroughWallsTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "ForceCheckPushThroughWallsTime", newValue); }
-	long double GetLastStoppedEatAnimationTimeField() const { return GetNativeField<long double>(this, "APrimalCharacter", "LastStoppedEatAnimationTime"); }
-	void SetLastStoppedEatAnimationTimeField(long double newValue) { SetNativeField(this, "APrimalCharacter", "LastStoppedEatAnimationTime", newValue); }
-	float GetClientRotationInterpSpeedMultiplierGroundField() const { return GetNativeField<float>(this, "APrimalCharacter", "ClientRotationInterpSpeedMultiplierGround"); }
-	void SetClientRotationInterpSpeedMultiplierGroundField(float newValue) { SetNativeField(this, "APrimalCharacter", "ClientRotationInterpSpeedMultiplierGround", newValue); }
-	float GetGlideGravityScaleMultiplierField() const { return GetNativeField<float>(this, "APrimalCharacter", "GlideGravityScaleMultiplier"); }
-	void SetGlideGravityScaleMultiplierField(float newValue) { SetNativeField(this, "APrimalCharacter", "GlideGravityScaleMultiplier", newValue); }
-	float GetGlideMaxCarriedWeightField() const { return GetNativeField<float>(this, "APrimalCharacter", "GlideMaxCarriedWeight"); }
-	void SetGlideMaxCarriedWeightField(float newValue) { SetNativeField(this, "APrimalCharacter", "GlideMaxCarriedWeight", newValue); }
+	FieldValue<FVector> OldLocationField() { return { this, "APrimalCharacter", "OldLocation" }; }
+	FieldValue<FRotator> OldRotationField() { return { this, "APrimalCharacter", "OldRotation" }; }
+	FieldValue<float> EffectorInterpSpeedField() { return { this, "APrimalCharacter", "EffectorInterpSpeed" }; }
+	FieldValue<float> HalfLegLengthField() { return { this, "APrimalCharacter", "HalfLegLength" }; }
+	FieldValue<float> TwoLeggedVirtualPointDistFactorField() { return { this, "APrimalCharacter", "TwoLeggedVirtualPointDistFactor" }; }
+	FieldValue<float> FullIKDistanceField() { return { this, "APrimalCharacter", "FullIKDistance" }; }
+	FieldValue<float> SimpleIkRateField() { return { this, "APrimalCharacter", "SimpleIkRate" }; }
+	FieldValue<FVector> GroundCheckExtentField() { return { this, "APrimalCharacter", "GroundCheckExtent" }; }
+	FieldValue<long double> LastForceAimedCharactersTimeField() { return { this, "APrimalCharacter", "LastForceAimedCharactersTime" }; }
+	FieldValue<UAnimMontage *> JumpAnimField() { return { this, "APrimalCharacter", "JumpAnim" }; }
+	FieldValue<UAnimMontage *> LandedAnimField() { return { this, "APrimalCharacter", "LandedAnim" }; }
+	FieldValue<UAnimMontage *> HurtAnimField() { return { this, "APrimalCharacter", "HurtAnim" }; }
+	FieldValue<USoundCue *> HurtSoundField() { return { this, "APrimalCharacter", "HurtSound" }; }
+	FieldValue<FName> RootBodyBoneNameField() { return { this, "APrimalCharacter", "RootBodyBoneName" }; }
+	FieldValue<TArray<APrimalBuff *>> BuffsField() { return { this, "APrimalCharacter", "Buffs" }; }
+	FieldValue<FString> TribeNameField() { return { this, "APrimalCharacter", "TribeName" }; }
+	FieldValue<float> WaterSubmergedDepthThresholdField() { return { this, "APrimalCharacter", "WaterSubmergedDepthThreshold" }; }
+	FieldValue<float> ProneWaterSubmergedDepthThresholdField() { return { this, "APrimalCharacter", "ProneWaterSubmergedDepthThreshold" }; }
+	FieldValue<TEnumAsByte<enum EMovementMode>> SubmergedWaterMovementModeField() { return { this, "APrimalCharacter", "SubmergedWaterMovementMode" }; }
+	FieldValue<TEnumAsByte<enum EMovementMode>> UnSubmergedWaterMovementModeField() { return { this, "APrimalCharacter", "UnSubmergedWaterMovementMode" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> PoopItemClassField() { return { this, "APrimalCharacter", "PoopItemClass" }; }
+	FieldValue<FName> DragBoneNameField() { return { this, "APrimalCharacter", "DragBoneName" }; }
+	FieldValue<FName> DragSocketNameField() { return { this, "APrimalCharacter", "DragSocketName" }; }
+	FieldValue<float> MaxDragDistanceField() { return { this, "APrimalCharacter", "MaxDragDistance" }; }
+	FieldValue<float> MaxDragDistanceTimeoutField() { return { this, "APrimalCharacter", "MaxDragDistanceTimeout" }; }
+	FieldValue<TArray<FName>> BonesToIngoreWhileDraggedField() { return { this, "APrimalCharacter", "BonesToIngoreWhileDragged" }; }
+	FieldValue<float> PreviewCameraMaxZoomMultiplierField() { return { this, "APrimalCharacter", "PreviewCameraMaxZoomMultiplier" }; }
+	FieldValue<float> PreviewCameraDefaultZoomMultiplierField() { return { this, "APrimalCharacter", "PreviewCameraDefaultZoomMultiplier" }; }
+	FieldValue<float> PreviewCameraDistanceScaleFactorField() { return { this, "APrimalCharacter", "PreviewCameraDistanceScaleFactor" }; }
+	FieldValue<USoundBase *> StartDraggedSoundField() { return { this, "APrimalCharacter", "StartDraggedSound" }; }
+	FieldValue<USoundBase *> EndDraggedSoundField() { return { this, "APrimalCharacter", "EndDraggedSound" }; }
+	FieldValue<APrimalCharacter *> DraggedCharacterField() { return { this, "APrimalCharacter", "DraggedCharacter" }; }
+	FieldValue<APrimalCharacter *> DraggingCharacterField() { return { this, "APrimalCharacter", "DraggingCharacter" }; }
+	FieldValue<FTransform> LocalDraggedCharacterTransformField() { return { this, "APrimalCharacter", "LocalDraggedCharacterTransform" }; }
+	FieldValue<long double> StartDraggingTimeField() { return { this, "APrimalCharacter", "StartDraggingTime" }; }
+	FieldValue<long double> LastDragUpdateTimeField() { return { this, "APrimalCharacter", "LastDragUpdateTime" }; }
+	FieldValue<AActor *> ImmobilizationActorField() { return { this, "APrimalCharacter", "ImmobilizationActor" }; }
+	FieldValue<int> CurrentFrameAnimPreventInputField() { return { this, "APrimalCharacter", "CurrentFrameAnimPreventInput" }; }
+	FieldValue<float> BPTimerServerMinField() { return { this, "APrimalCharacter", "BPTimerServerMin" }; }
+	FieldValue<float> BPTimerServerMaxField() { return { this, "APrimalCharacter", "BPTimerServerMax" }; }
+	FieldValue<float> BPTimerNonDedicatedMinField() { return { this, "APrimalCharacter", "BPTimerNonDedicatedMin" }; }
+	FieldValue<float> BPTimerNonDedicatedMaxField() { return { this, "APrimalCharacter", "BPTimerNonDedicatedMax" }; }
+	FieldValue<long double> NextBPTimerServerField() { return { this, "APrimalCharacter", "NextBPTimerServer" }; }
+	FieldValue<long double> NextBPTimerNonDedicatedField() { return { this, "APrimalCharacter", "NextBPTimerNonDedicated" }; }
+	FieldValue<TArray<TSubclassOf<APrimalStructure>>> ImmobilizationTrapsToIgnoreField() { return { this, "APrimalCharacter", "ImmobilizationTrapsToIgnore" }; }
+	FieldValue<TWeakObjectPtr<APrimalDinoCharacter>> CarryingDinoField() { return { this, "APrimalCharacter", "CarryingDino" }; }
+	FieldValue<FName> DediOverrideCapsuleCollisionProfileNameField() { return { this, "APrimalCharacter", "DediOverrideCapsuleCollisionProfileName" }; }
+	FieldValue<FName> DediOverrideMeshCollisionProfileNameField() { return { this, "APrimalCharacter", "DediOverrideMeshCollisionProfileName" }; }
+	FieldValue<FName> SnaredFromSocketField() { return { this, "APrimalCharacter", "SnaredFromSocket" }; }
+	FieldValue<TSubclassOf<APrimalStructureItemContainer>> DeathDestructionDepositInventoryClassField() { return { this, "APrimalCharacter", "DeathDestructionDepositInventoryClass" }; }
+	FieldValue<float> DamageNotifyTeamAggroMultiplierField() { return { this, "APrimalCharacter", "DamageNotifyTeamAggroMultiplier" }; }
+	FieldValue<float> DamageNotifyTeamAggroRangeField() { return { this, "APrimalCharacter", "DamageNotifyTeamAggroRange" }; }
+	FieldValue<float> DamageNotifyTeamAggroRangeFalloffField() { return { this, "APrimalCharacter", "DamageNotifyTeamAggroRangeFalloff" }; }
+	FieldValue<float> ReplicatedCurrentHealthField() { return { this, "APrimalCharacter", "ReplicatedCurrentHealth" }; }
+	FieldValue<float> ReplicatedMaxHealthField() { return { this, "APrimalCharacter", "ReplicatedMaxHealth" }; }
+	FieldValue<float> ReplicatedCurrentTorporField() { return { this, "APrimalCharacter", "ReplicatedCurrentTorpor" }; }
+	FieldValue<float> ReplicatedMaxTorporField() { return { this, "APrimalCharacter", "ReplicatedMaxTorpor" }; }
+	FieldValue<FVector> DragOffsetField() { return { this, "APrimalCharacter", "DragOffset" }; }
+	FieldValue<AShooterCharacter *> LastGrapHookPullingOwnerField() { return { this, "APrimalCharacter", "LastGrapHookPullingOwner" }; }
+	FieldValue<long double> LastIkUpdateTimeField() { return { this, "APrimalCharacter", "LastIkUpdateTime" }; }
+	FieldValue<long double> LastUpdatedAimOffsetsTimeField() { return { this, "APrimalCharacter", "LastUpdatedAimOffsetsTime" }; }
+	FieldValue<FVector> MeshPreRagdollRelativeLocationField() { return { this, "APrimalCharacter", "MeshPreRagdollRelativeLocation" }; }
+	FieldValue<FRotator> MeshPreRagdollRelativeRotationField() { return { this, "APrimalCharacter", "MeshPreRagdollRelativeRotation" }; }
+	FieldValue<int> DraggingBodyIndexField() { return { this, "APrimalCharacter", "DraggingBodyIndex" }; }
+	FieldValue<int> DraggedBoneIndexField() { return { this, "APrimalCharacter", "DraggedBoneIndex" }; }
+	FieldValue<int> customBitFlagsField() { return { this, "APrimalCharacter", "customBitFlags" }; }
+	FieldValue<float> RunningSpeedModifierField() { return { this, "APrimalCharacter", "RunningSpeedModifier" }; }
+	FieldValue<float> LowHealthPercentageField() { return { this, "APrimalCharacter", "LowHealthPercentage" }; }
+	FieldValue<float> BaseTurnRateField() { return { this, "APrimalCharacter", "BaseTurnRate" }; }
+	FieldValue<float> BaseLookUpRateField() { return { this, "APrimalCharacter", "BaseLookUpRate" }; }
+	FieldValue<UAnimMontage *> DeathAnimField() { return { this, "APrimalCharacter", "DeathAnim" }; }
+	FieldValue<USoundCue *> DeathSoundField() { return { this, "APrimalCharacter", "DeathSound" }; }
+	FieldValue<USoundCue *> RunLoopSoundField() { return { this, "APrimalCharacter", "RunLoopSound" }; }
+	FieldValue<USoundCue *> RunStopSoundField() { return { this, "APrimalCharacter", "RunStopSound" }; }
+	FieldValue<TArray<USoundCue *>> FootStepSoundsPhysMatField() { return { this, "APrimalCharacter", "FootStepSoundsPhysMat" }; }
+	FieldValue<TArray<USoundCue *>> LandedSoundsPhysMatField() { return { this, "APrimalCharacter", "LandedSoundsPhysMat" }; }
+	FieldValue<FName> MeshRootSocketNameField() { return { this, "APrimalCharacter", "MeshRootSocketName" }; }
+	FieldValue<TWeakObjectPtr<UAudioComponent>> LastVoiceAudioComponentField() { return { this, "APrimalCharacter", "LastVoiceAudioComponent" }; }
+	FieldValue<float> MaxFallSpeedField() { return { this, "APrimalCharacter", "MaxFallSpeed" }; }
+	FieldValue<float> FallDamageMultiplierField() { return { this, "APrimalCharacter", "FallDamageMultiplier" }; }
+	FieldValue<UAudioComponent *> RunLoopACField() { return { this, "APrimalCharacter", "RunLoopAC" }; }
+	FieldValue<float> CurrentCarriedYawField() { return { this, "APrimalCharacter", "CurrentCarriedYaw" }; }
+	FieldValue<APrimalStructureExplosiveTransGPS *> CurrentTransponderField() { return { this, "APrimalCharacter", "CurrentTransponder" }; }
+	FieldValue<float> TargetCarriedYawField() { return { this, "APrimalCharacter", "TargetCarriedYaw" }; }
+	FieldValue<float> ServerTargetCarriedYawField() { return { this, "APrimalCharacter", "ServerTargetCarriedYaw" }; }
+	FieldValue<USoundBase *> NetDynamicMusicSoundField() { return { this, "APrimalCharacter", "NetDynamicMusicSound" }; }
+	FieldValue<TWeakObjectPtr<APrimalDinoCharacter>> MountedDinoField() { return { this, "APrimalCharacter", "MountedDino" }; }
+	FieldValue<float> MountedDinoTimeField() { return { this, "APrimalCharacter", "MountedDinoTime" }; }
+	FieldValue<TWeakObjectPtr<APrimalDinoCharacter>> PreviousMountedDinoField() { return { this, "APrimalCharacter", "PreviousMountedDino" }; }
+	FieldValue<FVector> LastForceFallCheckBaseLocationField() { return { this, "APrimalCharacter", "LastForceFallCheckBaseLocation" }; }
+	FieldValue<FVector> LastHitWallSweepCheckLocationField() { return { this, "APrimalCharacter", "LastHitWallSweepCheckLocation" }; }
+	FieldValue<long double> LastTimeBasedMovementHadCurrentActorField() { return { this, "APrimalCharacter", "LastTimeBasedMovementHadCurrentActor" }; }
+	FieldValue<TWeakObjectPtr<AActor>> LastBasedMovementActorRefField() { return { this, "APrimalCharacter", "LastBasedMovementActorRef" }; }
+	FieldValue<float> GrabWeightThresholdField() { return { this, "APrimalCharacter", "GrabWeightThreshold" }; }
+	FieldValue<float> DragWeightField() { return { this, "APrimalCharacter", "DragWeight" }; }
+	FieldValue<FString> DescriptiveNameField() { return { this, "APrimalCharacter", "DescriptiveName" }; }
+	FieldValue<TArray<FVector_NetQuantize>> ReplicatedRagdollPositionsField() { return { this, "APrimalCharacter", "ReplicatedRagdollPositions" }; }
+	FieldValue<TArray<FRotator_NetQuantize>> ReplicatedRagdollRotationsField() { return { this, "APrimalCharacter", "ReplicatedRagdollRotations" }; }
+	FieldValue<TArray<FVector_NetQuantize>> LastReplicatedRagdollPositionsField() { return { this, "APrimalCharacter", "LastReplicatedRagdollPositions" }; }
+	FieldValue<TArray<FRotator_NetQuantize>> LastReplicatedRagdollRotationsField() { return { this, "APrimalCharacter", "LastReplicatedRagdollRotations" }; }
+	FieldValue<FRotator> ReplicatedRootRotationField() { return { this, "APrimalCharacter", "ReplicatedRootRotation" }; }
+	FieldValue<TArray<int>> ReplicatedBonesIndiciesField() { return { this, "APrimalCharacter", "ReplicatedBonesIndicies" }; }
+	FieldValue<float> KillXPBaseField() { return { this, "APrimalCharacter", "KillXPBase" }; }
+	FieldValue<TArray<FName>> ReplicatedBonesField() { return { this, "APrimalCharacter", "ReplicatedBones" }; }
+	FieldValue<float> RagdollReplicationIntervalField() { return { this, "APrimalCharacter", "RagdollReplicationInterval" }; }
+	FieldValue<float> ClientRotationInterpSpeedField() { return { this, "APrimalCharacter", "ClientRotationInterpSpeed" }; }
+	FieldValue<float> ClientLocationInterpSpeedField() { return { this, "APrimalCharacter", "ClientLocationInterpSpeed" }; }
+	FieldValue<float> MaxDragMovementSpeedField() { return { this, "APrimalCharacter", "MaxDragMovementSpeed" }; }
+	FieldValue<FRotator> CurrentAimRotField() { return { this, "APrimalCharacter", "CurrentAimRot" }; }
+	FieldValue<FVector> CurrentRootLocField() { return { this, "APrimalCharacter", "CurrentRootLoc" }; }
+	FieldValue<int> LastYawSpeedWorldFrameCounterField() { return { this, "APrimalCharacter", "LastYawSpeedWorldFrameCounter" }; }
+	FieldValue<FName> MeshPreRagdollCollisionProfileNameField() { return { this, "APrimalCharacter", "MeshPreRagdollCollisionProfileName" }; }
+	FieldValue<FName> CapsulePreRagdollCollisionProfileNameField() { return { this, "APrimalCharacter", "CapsulePreRagdollCollisionProfileName" }; }
+	FieldValue<UPrimalCharacterStatusComponent *> MyCharacterStatusComponentField() { return { this, "APrimalCharacter", "MyCharacterStatusComponent" }; }
+	FieldValue<UPrimalInventoryComponent *> MyInventoryComponentField() { return { this, "APrimalCharacter", "MyInventoryComponent" }; }
+	FieldValue<long double> LastRunningTimeField() { return { this, "APrimalCharacter", "LastRunningTime" }; }
+	FieldValue<FVector> TPVCameraOffsetField() { return { this, "APrimalCharacter", "TPVCameraOffset" }; }
+	FieldValue<FVector> TPVCameraOffsetMultiplierField() { return { this, "APrimalCharacter", "TPVCameraOffsetMultiplier" }; }
+	FieldValue<FVector> TPVCameraOrgOffsetField() { return { this, "APrimalCharacter", "TPVCameraOrgOffset" }; }
+	FieldValue<float> LandedSoundMaxRangeField() { return { this, "APrimalCharacter", "LandedSoundMaxRange" }; }
+	FieldValue<float> FallingDamageHealthScaleBaseField() { return { this, "APrimalCharacter", "FallingDamageHealthScaleBase" }; }
+	FieldValue<float> FootstepsMaxRangeField() { return { this, "APrimalCharacter", "FootstepsMaxRange" }; }
+	FieldValue<float> MinTimeBetweenFootstepsField() { return { this, "APrimalCharacter", "MinTimeBetweenFootsteps" }; }
+	FieldValue<long double> LastPlayedFootstepTimeField() { return { this, "APrimalCharacter", "LastPlayedFootstepTime" }; }
+	FieldValue<float> MinTimeBetweenFootstepsRunningField() { return { this, "APrimalCharacter", "MinTimeBetweenFootstepsRunning" }; }
+	FieldValue<TArray<UAnimMontage *>> AnimationsPreventInputField() { return { this, "APrimalCharacter", "AnimationsPreventInput" }; }
+	FieldValue<long double> LastNetDidLandField() { return { this, "APrimalCharacter", "LastNetDidLand" }; }
+	FieldValue<TWeakObjectPtr<AController>> LastDamageEventInstigatorField() { return { this, "APrimalCharacter", "LastDamageEventInstigator" }; }
+	FieldValue<int> CachedNumberOfClientRagdollCorrectionAttemptsField() { return { this, "APrimalCharacter", "CachedNumberOfClientRagdollCorrectionAttempts" }; }
+	FieldValue<int> NumberOfClientRagdollCorrectionAttemptsField() { return { this, "APrimalCharacter", "NumberOfClientRagdollCorrectionAttempts" }; }
+	FieldValue<float> ServerForceSleepRagdollIntervalField() { return { this, "APrimalCharacter", "ServerForceSleepRagdollInterval" }; }
+	FieldValue<float> ClientForceSleepRagdollIntervalField() { return { this, "APrimalCharacter", "ClientForceSleepRagdollInterval" }; }
+	FieldValue<float> NonRelevantServerForceSleepRagdollIntervalField() { return { this, "APrimalCharacter", "NonRelevantServerForceSleepRagdollInterval" }; }
+	FieldValue<TEnumAsByte<enum EShooterPhysMaterialType::Type>> TargetableDamageFXDefaultPhysMaterialField() { return { this, "APrimalCharacter", "TargetableDamageFXDefaultPhysMaterial" }; }
+	FieldValue<UAnimMontage *> PoopAnimationField() { return { this, "APrimalCharacter", "PoopAnimation" }; }
+	FieldValue<long double> CorpseDestructionTimeField() { return { this, "APrimalCharacter", "CorpseDestructionTime" }; }
+	FieldValue<float> CorpseLifespanField() { return { this, "APrimalCharacter", "CorpseLifespan" }; }
+	FieldValue<float> TPVStructurePlacingHeightMultiplierField() { return { this, "APrimalCharacter", "TPVStructurePlacingHeightMultiplier" }; }
+	FieldValue<float> CorpseFadeAwayTimeField() { return { this, "APrimalCharacter", "CorpseFadeAwayTime" }; }
+	FieldValue<float> RagdollDeathImpulseScalerField() { return { this, "APrimalCharacter", "RagdollDeathImpulseScaler" }; }
+	FieldValue<USoundCue *> PoopSoundField() { return { this, "APrimalCharacter", "PoopSound" }; }
+	FieldValue<float> BaseTargetingDesirabilityField() { return { this, "APrimalCharacter", "BaseTargetingDesirability" }; }
+	FieldValue<float> DeadBaseTargetingDesirabilityField() { return { this, "APrimalCharacter", "DeadBaseTargetingDesirability" }; }
+	FieldValue<FRotator> OrbitCamRotField() { return { this, "APrimalCharacter", "OrbitCamRot" }; }
+	FieldValue<float> OrbitCamZoomField() { return { this, "APrimalCharacter", "OrbitCamZoom" }; }
+	FieldValue<FVector> LastSubmergedCheckLocField() { return { this, "APrimalCharacter", "LastSubmergedCheckLoc" }; }
+	FieldValue<long double> LastTimeNotInFallingField() { return { this, "APrimalCharacter", "LastTimeNotInFalling" }; }
+	FieldValue<float> MaxCursorHUDDistanceField() { return { this, "APrimalCharacter", "MaxCursorHUDDistance" }; }
+	FieldValue<float> AddForwardVelocityOnJumpField() { return { this, "APrimalCharacter", "AddForwardVelocityOnJump" }; }
+	FieldValue<FVector> DeathActorTargetingOffsetField() { return { this, "APrimalCharacter", "DeathActorTargetingOffset" }; }
+	FieldValue<FName> SocketOverrideTargetingLocationField() { return { this, "APrimalCharacter", "SocketOverrideTargetingLocation" }; }
+	FieldValue<FDamageEvent *> CurrentDamageEventField() { return { this, "APrimalCharacter", "CurrentDamageEvent" }; }
+	FieldValue<FVector> LastApproximatePhysVolumeLocationField() { return { this, "APrimalCharacter", "LastApproximatePhysVolumeLocation" }; }
+	FieldValue<long double> LastTimeSubmergedField() { return { this, "APrimalCharacter", "LastTimeSubmerged" }; }
+	FieldValue<EPhysicalSurface> LastFootPhysicalSurfaceTypeField() { return { this, "APrimalCharacter", "LastFootPhysicalSurfaceType" }; }
+	FieldValue<long double> LastFootPhysicalSurfaceCheckTimeField() { return { this, "APrimalCharacter", "LastFootPhysicalSurfaceCheckTime" }; }
+	FieldValue<float> FootPhysicalSurfaceCheckIntervalField() { return { this, "APrimalCharacter", "FootPhysicalSurfaceCheckInterval" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> LastHurtByNearbyPlayerField() { return { this, "APrimalCharacter", "LastHurtByNearbyPlayer" }; }
+	FieldValue<float> LastHurtByNearbyPlayerTimeField() { return { this, "APrimalCharacter", "LastHurtByNearbyPlayerTime" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> LastAttackedNearbyPlayerField() { return { this, "APrimalCharacter", "LastAttackedNearbyPlayer" }; }
+	FieldValue<float> LastAttackedNearbyPlayerTimeField() { return { this, "APrimalCharacter", "LastAttackedNearbyPlayerTime" }; }
+	FieldValue<long double> LastStartFallingRagdollTimeField() { return { this, "APrimalCharacter", "LastStartFallingRagdollTime" }; }
+	FieldValue<FVector> RagdollLastFrameLinearVelocityField() { return { this, "APrimalCharacter", "RagdollLastFrameLinearVelocity" }; }
+	FieldValue<float> RagdollImpactDamageVelocityScaleField() { return { this, "APrimalCharacter", "RagdollImpactDamageVelocityScale" }; }
+	FieldValue<float> RagdollImpactDamageMinDecelerationSpeedField() { return { this, "APrimalCharacter", "RagdollImpactDamageMinDecelerationSpeed" }; }
+	FieldValue<float> StartFallingImpactRagdollTimeIntervalField() { return { this, "APrimalCharacter", "StartFallingImpactRagdollTimeInterval" }; }
+	FieldValue<long double> LastUnstasisTimeField() { return { this, "APrimalCharacter", "LastUnstasisTime" }; }
+	FieldValue<FVector> PreviousRagdollLocationField() { return { this, "APrimalCharacter", "PreviousRagdollLocation" }; }
+	FieldValue<int> RagdollPenetrationFailuresField() { return { this, "APrimalCharacter", "RagdollPenetrationFailures" }; }
+	FieldValue<long double> NextBlinkTimeField() { return { this, "APrimalCharacter", "NextBlinkTime" }; }
+	FieldValue<long double> BlinkTimerField() { return { this, "APrimalCharacter", "BlinkTimer" }; }
+	FieldValue<long double> LastInSwimmingSoundTimeField() { return { this, "APrimalCharacter", "LastInSwimmingSoundTime" }; }
+	FieldValue<USoundCue *> EnteredSwimmingSoundField() { return { this, "APrimalCharacter", "EnteredSwimmingSound" }; }
+	FieldValue<USoundCue *> EnteredSleepingSoundField() { return { this, "APrimalCharacter", "EnteredSleepingSound" }; }
+	FieldValue<USoundCue *> LeftSleepingSoundField() { return { this, "APrimalCharacter", "LeftSleepingSound" }; }
+	FieldValue<long double> LastRelevantToPlayerTimeField() { return { this, "APrimalCharacter", "LastRelevantToPlayerTime" }; }
+	FieldValue<long double> MeshStopForceUpdatingAtTimeField() { return { this, "APrimalCharacter", "MeshStopForceUpdatingAtTime" }; }
+	FieldValue<long double> LastWalkingTimeField() { return { this, "APrimalCharacter", "LastWalkingTime" }; }
+	FieldValue<long double> LastSpecialDamageTimeField() { return { this, "APrimalCharacter", "LastSpecialDamageTime" }; }
+	FieldValue<float> CorpseDraggedDecayRateField() { return { this, "APrimalCharacter", "CorpseDraggedDecayRate" }; }
+	FieldValue<float> PoopAltItemChanceField() { return { this, "APrimalCharacter", "PoopAltItemChance" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> PoopAltItemClassField() { return { this, "APrimalCharacter", "PoopAltItemClass" }; }
+	FieldValue<TArray<TSubclassOf<APrimalBuff>>> DefaultBuffsField() { return { this, "APrimalCharacter", "DefaultBuffs" }; }
+	FieldValue<UTexture2D *> PoopIconField() { return { this, "APrimalCharacter", "PoopIcon" }; }
+	FieldValue<float> RunningMaxDesiredRotDeltaField() { return { this, "APrimalCharacter", "RunningMaxDesiredRotDelta" }; }
+	FieldValue<long double> CorpseDestructionTimerField() { return { this, "APrimalCharacter", "CorpseDestructionTimer" }; }
+	FieldValue<float> OriginalCorpseLifespanField() { return { this, "APrimalCharacter", "OriginalCorpseLifespan" }; }
+	FieldValue<float> CorpseHarvestFadeTimeField() { return { this, "APrimalCharacter", "CorpseHarvestFadeTime" }; }
+	FieldValue<FVector> CurrentLocalRootLocField() { return { this, "APrimalCharacter", "CurrentLocalRootLoc" }; }
+	FieldValue<float> RootYawField() { return { this, "APrimalCharacter", "RootYaw" }; }
+	FieldValue<long double> LastTimeInSwimmingField() { return { this, "APrimalCharacter", "LastTimeInSwimming" }; }
+	FieldValue<long double> LastListenRangePushTimeField() { return { this, "APrimalCharacter", "LastListenRangePushTime" }; }
+	FieldValue<float> LastDamageAmountMaterialValueField() { return { this, "APrimalCharacter", "LastDamageAmountMaterialValue" }; }
+	FieldValue<float> BuffedDamageMultField() { return { this, "APrimalCharacter", "BuffedDamageMult" }; }
+	FieldValue<float> BuffedResistanceMultField() { return { this, "APrimalCharacter", "BuffedResistanceMult" }; }
+	FieldValue<float> ExtraMaxSpeedModifierField() { return { this, "APrimalCharacter", "ExtraMaxSpeedModifier" }; }
+	FieldValue<float> TamedDinoCallOutRangeField() { return { this, "APrimalCharacter", "TamedDinoCallOutRange" }; }
+	FieldValue<long double> LastBumpedDamageTimeField() { return { this, "APrimalCharacter", "LastBumpedDamageTime" }; }
+	FieldValue<FVector> TargetPathfindingLocationOffsetField() { return { this, "APrimalCharacter", "TargetPathfindingLocationOffset" }; }
+	FieldValue<long double> LastTookDamageTimeField() { return { this, "APrimalCharacter", "LastTookDamageTime" }; }
+	FieldValue<float> ExtraReceiveDamageMultiplierField() { return { this, "APrimalCharacter", "ExtraReceiveDamageMultiplier" }; }
+	FieldValue<float> ExtraMeleeDamageMultiplierField() { return { this, "APrimalCharacter", "ExtraMeleeDamageMultiplier" }; }
+	FieldValue<float> LastFallingZField() { return { this, "APrimalCharacter", "LastFallingZ" }; }
+	FieldValue<int> NumFallZFailsField() { return { this, "APrimalCharacter", "NumFallZFails" }; }
+	FieldValue<TArray<TWeakObjectPtr<APrimalCharacter>>> CharactersGrappledToMeField() { return { this, "APrimalCharacter", "CharactersGrappledToMe" }; }
+	FieldValue<float> DamageTheMeleeDamageCauserPercentField() { return { this, "APrimalCharacter", "DamageTheMeleeDamageCauserPercent" }; }
+	FieldValue<float> DurabilityDegrateTheMeleeDamageCauserPercentField() { return { this, "APrimalCharacter", "DurabilityDegrateTheMeleeDamageCauserPercent" }; }
+	FieldValue<TSubclassOf<UDamageType>> DamageTheMeleeDamageCauserDamageTypeField() { return { this, "APrimalCharacter", "DamageTheMeleeDamageCauserDamageType" }; }
+	FieldValue<char> TribeGroupInventoryRankField() { return { this, "APrimalCharacter", "TribeGroupInventoryRank" }; }
+	FieldValue<float> CharacterDamageImpulseMultiplierField() { return { this, "APrimalCharacter", "CharacterDamageImpulseMultiplier" }; }
+	FieldValue<long double> ForceCheckPushThroughWallsTimeField() { return { this, "APrimalCharacter", "ForceCheckPushThroughWallsTime" }; }
+	FieldValue<long double> LastStoppedEatAnimationTimeField() { return { this, "APrimalCharacter", "LastStoppedEatAnimationTime" }; }
+	FieldValue<float> ClientRotationInterpSpeedMultiplierGroundField() { return { this, "APrimalCharacter", "ClientRotationInterpSpeedMultiplierGround" }; }
+	FieldValue<float> GlideGravityScaleMultiplierField() { return { this, "APrimalCharacter", "GlideGravityScaleMultiplier" }; }
+	FieldValue<float> GlideMaxCarriedWeightField() { return { this, "APrimalCharacter", "GlideMaxCarriedWeight" }; }
+	FieldValue<UAnimMontage *> lastPlayedMountAnimField() { return { this, "APrimalCharacter", "lastPlayedMountAnim" }; }
+	FieldValue<float> ScaleDeathHarvestHealthyByMaxHealthBaseField() { return { this, "APrimalCharacter", "ScaleDeathHarvestHealthyByMaxHealthBase" }; }
+	FieldValue<long double> LastForceMeshRefreshBonesTimeField() { return { this, "APrimalCharacter", "LastForceMeshRefreshBonesTime" }; }
+	FieldValue<long double> LastStartedBeingCarriedTimeField() { return { this, "APrimalCharacter", "LastStartedBeingCarriedTime" }; }
+	FieldValue<float> RunMinVelocityRotDotField() { return { this, "APrimalCharacter", "RunMinVelocityRotDot" }; }
+	FieldValue<long double> LastHitDamageTimeField() { return { this, "APrimalCharacter", "LastHitDamageTime" }; }
+	FieldValue<TArray<TSubclassOf<APrimalBuff>>> PreventBuffClassesField() { return { this, "APrimalCharacter", "PreventBuffClasses" }; }
 
 	// Functions
 
@@ -2678,261 +2406,211 @@ struct APrimalCharacter : public ACharacter
 
 struct AShooterCharacter : public APrimalCharacter
 {
-	//TArray<FTransponderInfo> GetClientTranspondersInfoField() const { return GetNativeField<TArray<FTransponderInfo>>(this, "AShooterCharacter", "ClientTranspondersInfo"); }
-	bool GetbWasProneField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bWasProne"); }
-	void SetbWasProneField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bWasProne", newValue); }
-	bool GetbIsPreviewCharacterField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bIsPreviewCharacter"); }
-	void SetbIsPreviewCharacterField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bIsPreviewCharacter", newValue); }
-	bool GetbIsVoiceTalkingField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bIsVoiceTalking"); }
-	void SetbIsVoiceTalkingField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bIsVoiceTalking", newValue); }
-	long double GetLastStartedTalkingTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastStartedTalkingTime"); }
-	void SetLastStartedTalkingTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastStartedTalkingTime", newValue); }
-	float GetOriginalCollisionHeightField() const { return GetNativeField<float>(this, "AShooterCharacter", "OriginalCollisionHeight"); }
-	void SetOriginalCollisionHeightField(float newValue) { SetNativeField(this, "AShooterCharacter", "OriginalCollisionHeight", newValue); }
-	float GetWalkBobMagnitudeField() const { return GetNativeField<float>(this, "AShooterCharacter", "WalkBobMagnitude"); }
-	void SetWalkBobMagnitudeField(float newValue) { SetNativeField(this, "AShooterCharacter", "WalkBobMagnitude", newValue); }
-	float GetWalkBobInterpSpeedField() const { return GetNativeField<float>(this, "AShooterCharacter", "WalkBobInterpSpeed"); }
-	void SetWalkBobInterpSpeedField(float newValue) { SetNativeField(this, "AShooterCharacter", "WalkBobInterpSpeed", newValue); }
-	float GetTargetingTimeField() const { return GetNativeField<float>(this, "AShooterCharacter", "TargetingTime"); }
-	void SetTargetingTimeField(float newValue) { SetNativeField(this, "AShooterCharacter", "TargetingTime", newValue); }
-	float GetBobMaxMovementSpeedField() const { return GetNativeField<float>(this, "AShooterCharacter", "BobMaxMovementSpeed"); }
-	void SetBobMaxMovementSpeedField(float newValue) { SetNativeField(this, "AShooterCharacter", "BobMaxMovementSpeed", newValue); }
-	float GetWeaponBobMaxMovementSpeedField() const { return GetNativeField<float>(this, "AShooterCharacter", "WeaponBobMaxMovementSpeed"); }
-	void SetWeaponBobMaxMovementSpeedField(float newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobMaxMovementSpeed", newValue); }
-	TSubclassOf<AShooterWeapon> GetDefaultWeaponField() const { return GetNativeField<TSubclassOf<AShooterWeapon>>(this, "AShooterCharacter", "DefaultWeapon"); }
-	TSubclassOf<AShooterWeapon> GetMapWeaponField() const { return GetNativeField<TSubclassOf<AShooterWeapon>>(this, "AShooterCharacter", "MapWeapon"); }
-	TSubclassOf<AShooterWeapon> GetGPSWeaponField() const { return GetNativeField<TSubclassOf<AShooterWeapon>>(this, "AShooterCharacter", "GPSWeapon"); }
-	TSubclassOf<AShooterWeapon> GetCompassWeaponField() const { return GetNativeField<TSubclassOf<AShooterWeapon>>(this, "AShooterCharacter", "CompassWeapon"); }
-	//TWeakObjectPtr<APrimalStructureLadder> GetClimbingLadderField() const { return GetNativeField<TWeakObjectPtr<APrimalStructureLadder>>(this, "AShooterCharacter", "ClimbingLadder"); }
-	FString GetPlayerNameField() const { return GetNativeField<FString>(this, "AShooterCharacter", "PlayerName"); }
-	void SetPlayerNameField(FString newValue) { SetNativeField(this, "AShooterCharacter", "PlayerName", newValue); }
-	TWeakObjectPtr<APrimalDinoCharacter> GetRidingDinoField() const { return GetNativeField<TWeakObjectPtr<APrimalDinoCharacter>>(this, "AShooterCharacter", "RidingDino"); }
-	TArray<FName> GetLowerBodyPartRootBonesField() const { return GetNativeField<TArray<FName>>(this, "AShooterCharacter", "LowerBodyPartRootBones"); }
-	void SetLowerBodyPartRootBonesField(TArray<FName> newValue) { SetNativeField(this, "AShooterCharacter", "LowerBodyPartRootBones", newValue); }
-	FRotator GetLastDinoAimRotationOffsetField() const { return GetNativeField<FRotator>(this, "AShooterCharacter", "LastDinoAimRotationOffset"); }
-	void SetLastDinoAimRotationOffsetField(FRotator newValue) { SetNativeField(this, "AShooterCharacter", "LastDinoAimRotationOffset", newValue); }
-	FRotator GetLastAimRotOffsetField() const { return GetNativeField<FRotator>(this, "AShooterCharacter", "LastAimRotOffset"); }
-	void SetLastAimRotOffsetField(FRotator newValue) { SetNativeField(this, "AShooterCharacter", "LastAimRotOffset", newValue); }
-	int Get_GrapHookCableObjectCountField() const { return GetNativeField<int>(this, "AShooterCharacter", "_GrapHookCableObjectCount"); }
-	void Set_GrapHookCableObjectCountField(int newValue) { SetNativeField(this, "AShooterCharacter", "_GrapHookCableObjectCount", newValue); }
-	FVector GetGrapHookDefaultOffsetField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "GrapHookDefaultOffset"); }
-	void SetGrapHookDefaultOffsetField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "GrapHookDefaultOffset", newValue); }
-	float GetGrapHookCableWidthField() const { return GetNativeField<float>(this, "AShooterCharacter", "GrapHookCableWidth"); }
-	void SetGrapHookCableWidthField(float newValue) { SetNativeField(this, "AShooterCharacter", "GrapHookCableWidth", newValue); }
-	float GetGrapHookPulledRopeDistanceField() const { return GetNativeField<float>(this, "AShooterCharacter", "GrapHookPulledRopeDistance"); }
-	void SetGrapHookPulledRopeDistanceField(float newValue) { SetNativeField(this, "AShooterCharacter", "GrapHookPulledRopeDistance", newValue); }
-	float GetGrapHookSyncTimeField() const { return GetNativeField<float>(this, "AShooterCharacter", "GrapHookSyncTime"); }
-	void SetGrapHookSyncTimeField(float newValue) { SetNativeField(this, "AShooterCharacter", "GrapHookSyncTime", newValue); }
-	bool GetbReleasingGrapHookField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bReleasingGrapHook"); }
-	void SetbReleasingGrapHookField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bReleasingGrapHook", newValue); }
-	FString GetPlatformProfileNameField() const { return GetNativeField<FString>(this, "AShooterCharacter", "PlatformProfileName"); }
-	long double GetLastUncrouchTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastUncrouchTime"); }
-	void SetLastUncrouchTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastUncrouchTime", newValue); }
-	long double GetLastUnproneTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastUnproneTime"); }
-	void SetLastUnproneTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastUnproneTime", newValue); }
-	float GetCurrentWeaponBobSpeedField() const { return GetNativeField<float>(this, "AShooterCharacter", "CurrentWeaponBobSpeed"); }
-	void SetCurrentWeaponBobSpeedField(float newValue) { SetNativeField(this, "AShooterCharacter", "CurrentWeaponBobSpeed", newValue); }
-	float GetWalkBobOldSpeedField() const { return GetNativeField<float>(this, "AShooterCharacter", "WalkBobOldSpeed"); }
-	void SetWalkBobOldSpeedField(float newValue) { SetNativeField(this, "AShooterCharacter", "WalkBobOldSpeed", newValue); }
-	float GetAppliedBobField() const { return GetNativeField<float>(this, "AShooterCharacter", "AppliedBob"); }
-	void SetAppliedBobField(float newValue) { SetNativeField(this, "AShooterCharacter", "AppliedBob", newValue); }
-	float GetBobTimeField() const { return GetNativeField<float>(this, "AShooterCharacter", "BobTime"); }
-	void SetBobTimeField(float newValue) { SetNativeField(this, "AShooterCharacter", "BobTime", newValue); }
-	long double GetLastPressReloadTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastPressReloadTime"); }
-	void SetLastPressReloadTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastPressReloadTime", newValue); }
-	FName GetWeaponAttachPointField() const { return GetNativeField<FName>(this, "AShooterCharacter", "WeaponAttachPoint"); }
-	void SetWeaponAttachPointField(FName newValue) { SetNativeField(this, "AShooterCharacter", "WeaponAttachPoint", newValue); }
-	float GetTargetingSpeedModifierField() const { return GetNativeField<float>(this, "AShooterCharacter", "TargetingSpeedModifier"); }
-	void SetTargetingSpeedModifierField(float newValue) { SetNativeField(this, "AShooterCharacter", "TargetingSpeedModifier", newValue); }
-	float GetWeaponBobTimeField() const { return GetNativeField<float>(this, "AShooterCharacter", "WeaponBobTime"); }
-	void SetWeaponBobTimeField(float newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobTime", newValue); }
-	float GetCurrentAimBlendingField() const { return GetNativeField<float>(this, "AShooterCharacter", "CurrentAimBlending"); }
-	void SetCurrentAimBlendingField(float newValue) { SetNativeField(this, "AShooterCharacter", "CurrentAimBlending", newValue); }
-	bool GetbWasFirstPersonField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bWasFirstPerson"); }
-	void SetbWasFirstPersonField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bWasFirstPerson", newValue); }
-	bool GetbWasOverrideHiddenShadowValueField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bWasOverrideHiddenShadowValue"); }
-	void SetbWasOverrideHiddenShadowValueField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bWasOverrideHiddenShadowValue", newValue); }
-	bool GetbLastLocInterpProneField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bLastLocInterpProne"); }
-	void SetbLastLocInterpProneField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bLastLocInterpProne", newValue); }
-	bool GetbLastLocInterpCrouchedField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bLastLocInterpCrouched"); }
-	void SetbLastLocInterpCrouchedField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bLastLocInterpCrouched", newValue); }
-	long double GetInterpLastCrouchProneStateChangeTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "InterpLastCrouchProneStateChangeTime"); }
-	void SetInterpLastCrouchProneStateChangeTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "InterpLastCrouchProneStateChangeTime", newValue); }
-	long double GetPressCrouchProneToggleTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "PressCrouchProneToggleTime"); }
-	void SetPressCrouchProneToggleTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "PressCrouchProneToggleTime", newValue); }
-	float GetCraftingMovementSpeedModifierField() const { return GetNativeField<float>(this, "AShooterCharacter", "CraftingMovementSpeedModifier"); }
-	void SetCraftingMovementSpeedModifierField(float newValue) { SetNativeField(this, "AShooterCharacter", "CraftingMovementSpeedModifier", newValue); }
-	FVector GetWeaponBobMagnitudesField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "WeaponBobMagnitudes"); }
-	void SetWeaponBobMagnitudesField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobMagnitudes", newValue); }
-	FVector GetWeaponBobPeriodsField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "WeaponBobPeriods"); }
-	void SetWeaponBobPeriodsField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobPeriods", newValue); }
-	FVector GetWeaponBobOffsetsField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "WeaponBobOffsets"); }
-	void SetWeaponBobOffsetsField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobOffsets", newValue); }
-	FVector GetWeaponBobMagnitudes_TargetingField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "WeaponBobMagnitudes_Targeting"); }
-	void SetWeaponBobMagnitudes_TargetingField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobMagnitudes_Targeting", newValue); }
-	FVector GetWeaponBobPeriods_TargetingField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "WeaponBobPeriods_Targeting"); }
-	void SetWeaponBobPeriods_TargetingField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobPeriods_Targeting", newValue); }
-	FVector GetWeaponBobOffsets_TargetingField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "WeaponBobOffsets_Targeting"); }
-	void SetWeaponBobOffsets_TargetingField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobOffsets_Targeting", newValue); }
-	float GetWeaponBobMinimumSpeedField() const { return GetNativeField<float>(this, "AShooterCharacter", "WeaponBobMinimumSpeed"); }
-	void SetWeaponBobMinimumSpeedField(float newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobMinimumSpeed", newValue); }
-	float GetWeaponBobSpeedBaseField() const { return GetNativeField<float>(this, "AShooterCharacter", "WeaponBobSpeedBase"); }
-	void SetWeaponBobSpeedBaseField(float newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobSpeedBase", newValue); }
-	float GetWeaponBobSpeedBaseFallingField() const { return GetNativeField<float>(this, "AShooterCharacter", "WeaponBobSpeedBaseFalling"); }
-	void SetWeaponBobSpeedBaseFallingField(float newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobSpeedBaseFalling", newValue); }
-	float GetWeaponBobTargetingBlendField() const { return GetNativeField<float>(this, "AShooterCharacter", "WeaponBobTargetingBlend"); }
-	void SetWeaponBobTargetingBlendField(float newValue) { SetNativeField(this, "AShooterCharacter", "WeaponBobTargetingBlend", newValue); }
-	//TArray<FItemAttachmentInfo> GetDefaultAttachmentInfosField() const { return GetNativeField<TArray<FItemAttachmentInfo>>(this, "AShooterCharacter", "DefaultAttachmentInfos"); }
-	FItemNetID GetNextWeaponItemIDField() const { return GetNativeField<FItemNetID>(this, "AShooterCharacter", "NextWeaponItemID"); }
-	TSubclassOf<AShooterWeapon> GetNextInventoryWeaponField() const { return GetNativeField<TSubclassOf<AShooterWeapon>>(this, "AShooterCharacter", "NextInventoryWeapon"); }
-	void SetNextInventoryWeaponField(TSubclassOf<AShooterWeapon> newValue) { SetNativeField(this, "AShooterCharacter", "NextInventoryWeapon", newValue); }
-	FItemNetID GetPreMapWeaponItemNetIDField() const { return GetNativeField<FItemNetID>(this, "AShooterCharacter", "PreMapWeaponItemNetID"); }
-	void SetPreMapWeaponItemNetIDField(FItemNetID newValue) { SetNativeField(this, "AShooterCharacter", "PreMapWeaponItemNetID", newValue); }
-	float GetServerSeatedViewRotationYawField() const { return GetNativeField<float>(this, "AShooterCharacter", "ServerSeatedViewRotationYaw"); }
-	void SetServerSeatedViewRotationYawField(float newValue) { SetNativeField(this, "AShooterCharacter", "ServerSeatedViewRotationYaw", newValue); }
-	float GetServerSeatedViewRotationPitchField() const { return GetNativeField<float>(this, "AShooterCharacter", "ServerSeatedViewRotationPitch"); }
-	void SetServerSeatedViewRotationPitchField(float newValue) { SetNativeField(this, "AShooterCharacter", "ServerSeatedViewRotationPitch", newValue); }
-	AShooterWeapon* GetCurrentWeaponField() const { return GetNativeField<AShooterWeapon *>(this, "AShooterCharacter", "CurrentWeapon"); }
-	void SetCurrentWeaponField(AShooterWeapon* newValue) { SetNativeField(this, "AShooterCharacter", "CurrentWeapon", newValue); }
-	unsigned __int64 GetLinkedPlayerDataIDField() const { return GetNativeField<unsigned __int64>(this, "AShooterCharacter", "LinkedPlayerDataID"); }
-	void SetLinkedPlayerDataIDField(unsigned __int64 newValue) { SetNativeField(this, "AShooterCharacter", "LinkedPlayerDataID", newValue); }
-	long double GetLastTimeInFallingField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastTimeInFalling"); }
-	void SetLastTimeInFallingField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastTimeInFalling", newValue); }
-	long double GetStartedRidingTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "StartedRidingTime"); }
-	void SetStartedRidingTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "StartedRidingTime", newValue); }
-	long double GetTimeSinceLastControllerField() const { return GetNativeField<long double>(this, "AShooterCharacter", "TimeSinceLastController"); }
-	void SetTimeSinceLastControllerField(long double newValue) { SetNativeField(this, "AShooterCharacter", "TimeSinceLastController", newValue); }
-	TWeakObjectPtr<AController> GetLastControllerField() const { return GetNativeField<TWeakObjectPtr<AController>>(this, "AShooterCharacter", "LastController"); }
-	long double GetLastRequestedTribeTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastRequestedTribeTime"); }
-	void SetLastRequestedTribeTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastRequestedTribeTime", newValue); }
-	unsigned __int64 GetLastRequestedTribeIDField() const { return GetNativeField<unsigned __int64>(this, "AShooterCharacter", "LastRequestedTribeID"); }
-	void SetLastRequestedTribeIDField(unsigned __int64 newValue) { SetNativeField(this, "AShooterCharacter", "LastRequestedTribeID", newValue); }
-	FString GetLastRequestedTribeNameField() const { return GetNativeField<FString>(this, "AShooterCharacter", "LastRequestedTribeName"); }
-	void SetLastRequestedTribeNameField(FString newValue) { SetNativeField(this, "AShooterCharacter", "LastRequestedTribeName", newValue); }
-	TWeakObjectPtr<AShooterCharacter> GetLastRequestedTribePlayerCharacterField() const { return GetNativeField<TWeakObjectPtr<AShooterCharacter>>(this, "AShooterCharacter", "LastRequestedTribePlayerCharacter"); }
-	float GetIndoorsHyperthermiaInsulationField() const { return GetNativeField<float>(this, "AShooterCharacter", "IndoorsHyperthermiaInsulation"); }
-	void SetIndoorsHyperthermiaInsulationField(float newValue) { SetNativeField(this, "AShooterCharacter", "IndoorsHyperthermiaInsulation", newValue); }
-	float GetIndoorsHypothermiaInsulationField() const { return GetNativeField<float>(this, "AShooterCharacter", "IndoorsHypothermiaInsulation"); }
-	void SetIndoorsHypothermiaInsulationField(float newValue) { SetNativeField(this, "AShooterCharacter", "IndoorsHypothermiaInsulation", newValue); }
-	float GetIndoorCheckIntervalField() const { return GetNativeField<float>(this, "AShooterCharacter", "IndoorCheckInterval"); }
-	void SetIndoorCheckIntervalField(float newValue) { SetNativeField(this, "AShooterCharacter", "IndoorCheckInterval", newValue); }
-	long double GetLastIndoorCheckTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastIndoorCheckTime"); }
-	void SetLastIndoorCheckTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastIndoorCheckTime", newValue); }
-	FItemNetID GetPreRidingWeaponItemNetIDField() const { return GetNativeField<FItemNetID>(this, "AShooterCharacter", "PreRidingWeaponItemNetID"); }
-	void SetPreRidingWeaponItemNetIDField(FItemNetID newValue) { SetNativeField(this, "AShooterCharacter", "PreRidingWeaponItemNetID", newValue); }
-	FItemNetID GetPreInventoryWeaponItemNetIDField() const { return GetNativeField<FItemNetID>(this, "AShooterCharacter", "PreInventoryWeaponItemNetID"); }
-	void SetPreInventoryWeaponItemNetIDField(FItemNetID newValue) { SetNativeField(this, "AShooterCharacter", "PreInventoryWeaponItemNetID", newValue); }
-	//TArray<FOverrideAnimBlueprintEntry> GetOverrideAnimBlueprintsField() const { return GetNativeField<TArray<FOverrideAnimBlueprintEntry>>(this, "AShooterCharacter", "OverrideAnimBlueprints"); }
-	bool GetbPlayingShieldCoverAnimationField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bPlayingShieldCoverAnimation"); }
-	void SetbPlayingShieldCoverAnimationField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bPlayingShieldCoverAnimation", newValue); }
-	bool GetbPlayingShieldCoverAnimationForCrouchField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bPlayingShieldCoverAnimationForCrouch"); }
-	void SetbPlayingShieldCoverAnimationForCrouchField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bPlayingShieldCoverAnimationForCrouch", newValue); }
-	float GetEnemyPlayerMaxCursorHUDDistanceProneField() const { return GetNativeField<float>(this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceProne"); }
-	void SetEnemyPlayerMaxCursorHUDDistanceProneField(float newValue) { SetNativeField(this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceProne", newValue); }
-	float GetEnemyPlayerMaxCursorHUDDistanceCrouchedField() const { return GetNativeField<float>(this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceCrouched"); }
-	void SetEnemyPlayerMaxCursorHUDDistanceCrouchedField(float newValue) { SetNativeField(this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceCrouched", newValue); }
-	float GetEnemyPlayerMaxCursorHUDDistanceStandingField() const { return GetNativeField<float>(this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceStanding"); }
-	void SetEnemyPlayerMaxCursorHUDDistanceStandingField(float newValue) { SetNativeField(this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceStanding", newValue); }
-	//FSaddlePassengerSeatDefinition GetCurrentPassengerSeatDefinitionField() const { return GetNativeField<FSaddlePassengerSeatDefinition>(this, "AShooterCharacter", "CurrentPassengerSeatDefinition"); }
-	float GetPreviousRootYawSpeedField() const { return GetNativeField<float>(this, "AShooterCharacter", "PreviousRootYawSpeed"); }
-	void SetPreviousRootYawSpeedField(float newValue) { SetNativeField(this, "AShooterCharacter", "PreviousRootYawSpeed", newValue); }
-	//FLinearColor[3] GetBodyColorsField() const { return GetNativeField<FLinearColor[3]>(this, "AShooterCharacter", "BodyColors"); }
-	//void SetBodyColorsField(FLinearColor[3] newValue) { SetNativeField(this, "AShooterCharacter", "BodyColors", newValue); }
-	float GetLoggedOutTargetingDesirabilityField() const { return GetNativeField<float>(this, "AShooterCharacter", "LoggedOutTargetingDesirability"); }
-	void SetLoggedOutTargetingDesirabilityField(float newValue) { SetNativeField(this, "AShooterCharacter", "LoggedOutTargetingDesirability", newValue); }
-	bool GetbIsRainWateredField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bIsRainWatered"); }
-	void SetbIsRainWateredField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bIsRainWatered", newValue); }
-	long double GetLastAttackTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastAttackTime"); }
-	void SetLastAttackTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastAttackTime", newValue); }
-	bool GetbCacheRidingDinoWeaponField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bCacheRidingDinoWeapon"); }
-	void SetbCacheRidingDinoWeaponField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bCacheRidingDinoWeapon", newValue); }
-	bool GetbWasLocallyControlledField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bWasLocallyControlled"); }
-	void SetbWasLocallyControlledField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bWasLocallyControlled", newValue); }
-	unsigned int GetUniqueNetIdTypeHashField() const { return GetNativeField<unsigned int>(this, "AShooterCharacter", "UniqueNetIdTypeHash"); }
-	void SetUniqueNetIdTypeHashField(unsigned int newValue) { SetNativeField(this, "AShooterCharacter", "UniqueNetIdTypeHash", newValue); }
-	long double GetLastUseHarvestTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastUseHarvestTime"); }
-	void SetLastUseHarvestTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastUseHarvestTime", newValue); }
-	long double GetStopRidingTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "StopRidingTime"); }
-	void SetStopRidingTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "StopRidingTime", newValue); }
-	long double GetLocalLastViewingInventoryTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LocalLastViewingInventoryTime"); }
-	void SetLocalLastViewingInventoryTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LocalLastViewingInventoryTime", newValue); }
-	FVector GetLastStasisCastPositionField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "LastStasisCastPosition"); }
-	void SetLastStasisCastPositionField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "LastStasisCastPosition", newValue); }
-	bool GetbWasHostPlayerField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bWasHostPlayer"); }
-	void SetbWasHostPlayerField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bWasHostPlayer", newValue); }
-	long double GetLastTimeHadControllerField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastTimeHadController"); }
-	void SetLastTimeHadControllerField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastTimeHadController", newValue); }
-	long double GetLastTaggedTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastTaggedTime"); }
-	void SetLastTaggedTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastTaggedTime", newValue); }
-	long double GetLastTaggedTimeExtraField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastTaggedTimeExtra"); }
-	void SetLastTaggedTimeExtraField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastTaggedTimeExtra", newValue); }
-	long double GetLastTaggedTimeThirdField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastTaggedTimeThird"); }
-	void SetLastTaggedTimeThirdField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastTaggedTimeThird", newValue); }
-	float GetExtraFloatVarField() const { return GetNativeField<float>(this, "AShooterCharacter", "ExtraFloatVar"); }
-	void SetExtraFloatVarField(float newValue) { SetNativeField(this, "AShooterCharacter", "ExtraFloatVar", newValue); }
-	FVector GetExtraVectorVarField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "ExtraVectorVar"); }
-	void SetExtraVectorVarField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "ExtraVectorVar", newValue); }
-	FVector GetExtraExtraVectorVarField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "ExtraExtraVectorVar"); }
-	void SetExtraExtraVectorVarField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "ExtraExtraVectorVar", newValue); }
-	FName GetExtraNameVarField() const { return GetNativeField<FName>(this, "AShooterCharacter", "ExtraNameVar"); }
-	void SetExtraNameVarField(FName newValue) { SetNativeField(this, "AShooterCharacter", "ExtraNameVar", newValue); }
-	bool GetbIsOnSeatingStructureField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bIsOnSeatingStructure"); }
-	void SetbIsOnSeatingStructureField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bIsOnSeatingStructure", newValue); }
-	bool GetbIsControllingBallistaField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bIsControllingBallista"); }
-	void SetbIsControllingBallistaField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bIsControllingBallista", newValue); }
-	bool GetbUseBallistaAimOffsetField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bUseBallistaAimOffset"); }
-	void SetbUseBallistaAimOffsetField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bUseBallistaAimOffset", newValue); }
-	float GetCurrentControlledBallistaYawField() const { return GetNativeField<float>(this, "AShooterCharacter", "CurrentControlledBallistaYaw"); }
-	void SetCurrentControlledBallistaYawField(float newValue) { SetNativeField(this, "AShooterCharacter", "CurrentControlledBallistaYaw", newValue); }
-	bool GetbIsServerAdminField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bIsServerAdmin"); }
-	void SetbIsServerAdminField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bIsServerAdmin", newValue); }
-	//TWeakObjectPtr<APrimalStructureSeating> GetSeatingStructureField() const { return GetNativeField<TWeakObjectPtr<APrimalStructureSeating>>(this, "AShooterCharacter", "SeatingStructure"); }
-	long double GetNextPlayerUndergroundCheckField() const { return GetNativeField<long double>(this, "AShooterCharacter", "NextPlayerUndergroundCheck"); }
-	void SetNextPlayerUndergroundCheckField(long double newValue) { SetNativeField(this, "AShooterCharacter", "NextPlayerUndergroundCheck", newValue); }
-	int GetPlayerNumUnderGroundFailField() const { return GetNativeField<int>(this, "AShooterCharacter", "PlayerNumUnderGroundFail"); }
-	void SetPlayerNumUnderGroundFailField(int newValue) { SetNativeField(this, "AShooterCharacter", "PlayerNumUnderGroundFail", newValue); }
-	float GetLastSweepCapsuleHeightField() const { return GetNativeField<float>(this, "AShooterCharacter", "LastSweepCapsuleHeight"); }
-	void SetLastSweepCapsuleHeightField(float newValue) { SetNativeField(this, "AShooterCharacter", "LastSweepCapsuleHeight", newValue); }
-	float GetLastSweepCapsuleRadiusField() const { return GetNativeField<float>(this, "AShooterCharacter", "LastSweepCapsuleRadius"); }
-	void SetLastSweepCapsuleRadiusField(float newValue) { SetNativeField(this, "AShooterCharacter", "LastSweepCapsuleRadius", newValue); }
-	float GetClientSeatedViewRotationPitchField() const { return GetNativeField<float>(this, "AShooterCharacter", "ClientSeatedViewRotationPitch"); }
-	void SetClientSeatedViewRotationPitchField(float newValue) { SetNativeField(this, "AShooterCharacter", "ClientSeatedViewRotationPitch", newValue); }
-	float GetClientSeatedViewRotationYawField() const { return GetNativeField<float>(this, "AShooterCharacter", "ClientSeatedViewRotationYaw"); }
-	void SetClientSeatedViewRotationYawField(float newValue) { SetNativeField(this, "AShooterCharacter", "ClientSeatedViewRotationYaw", newValue); }
-	long double GetLastReleaseSeatingStructureTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastReleaseSeatingStructureTime"); }
-	void SetLastReleaseSeatingStructureTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastReleaseSeatingStructureTime", newValue); }
-	char GetPlayerBadgeGroupField() const { return GetNativeField<char>(this, "AShooterCharacter", "PlayerBadgeGroup"); }
-	void SetPlayerBadgeGroupField(char newValue) { SetNativeField(this, "AShooterCharacter", "PlayerBadgeGroup", newValue); }
-	bool GetbShouldInvertTurnInputField() const { return GetNativeField<bool>(this, "AShooterCharacter", "bShouldInvertTurnInput"); }
-	void SetbShouldInvertTurnInputField(bool newValue) { SetNativeField(this, "AShooterCharacter", "bShouldInvertTurnInput", newValue); }
-	int GetAllianceInviteRequestingTeamField() const { return GetNativeField<int>(this, "AShooterCharacter", "AllianceInviteRequestingTeam"); }
-	void SetAllianceInviteRequestingTeamField(int newValue) { SetNativeField(this, "AShooterCharacter", "AllianceInviteRequestingTeam", newValue); }
-	unsigned int GetAllianceInviteIDField() const { return GetNativeField<unsigned int>(this, "AShooterCharacter", "AllianceInviteID"); }
-	void SetAllianceInviteIDField(unsigned int newValue) { SetNativeField(this, "AShooterCharacter", "AllianceInviteID", newValue); }
-	FString GetAllianceInviteNameField() const { return GetNativeField<FString>(this, "AShooterCharacter", "AllianceInviteName"); }
-	void SetAllianceInviteNameField(FString newValue) { SetNativeField(this, "AShooterCharacter", "AllianceInviteName", newValue); }
-	long double GetAllianceInviteTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "AllianceInviteTime"); }
-	void SetAllianceInviteTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "AllianceInviteTime", newValue); }
-	long double GetLastUpdatedAimActorsTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastUpdatedAimActorsTime"); }
-	void SetLastUpdatedAimActorsTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastUpdatedAimActorsTime", newValue); }
-	FVector GetUpdateHyperThermalInsulationPositionField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "UpdateHyperThermalInsulationPosition"); }
-	void SetUpdateHyperThermalInsulationPositionField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "UpdateHyperThermalInsulationPosition", newValue); }
-	FVector GetUpdateHypoThermalInsulationPositionField() const { return GetNativeField<FVector>(this, "AShooterCharacter", "UpdateHypoThermalInsulationPosition"); }
-	void SetUpdateHypoThermalInsulationPositionField(FVector newValue) { SetNativeField(this, "AShooterCharacter", "UpdateHypoThermalInsulationPosition", newValue); }
-	long double GetNextUpdateHyperThermalInsulationTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "NextUpdateHyperThermalInsulationTime"); }
-	void SetNextUpdateHyperThermalInsulationTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "NextUpdateHyperThermalInsulationTime", newValue); }
-	long double GetNextUpdateHypoThermalInsulationTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "NextUpdateHypoThermalInsulationTime"); }
-	void SetNextUpdateHypoThermalInsulationTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "NextUpdateHypoThermalInsulationTime", newValue); }
-	float GetLastAdditionalHypoThermalInsulationField() const { return GetNativeField<float>(this, "AShooterCharacter", "LastAdditionalHypoThermalInsulation"); }
-	void SetLastAdditionalHypoThermalInsulationField(float newValue) { SetNativeField(this, "AShooterCharacter", "LastAdditionalHypoThermalInsulation", newValue); }
-	float GetLastAdditionalHyperThermalInsulationField() const { return GetNativeField<float>(this, "AShooterCharacter", "LastAdditionalHyperThermalInsulation"); }
-	void SetLastAdditionalHyperThermalInsulationField(float newValue) { SetNativeField(this, "AShooterCharacter", "LastAdditionalHyperThermalInsulation", newValue); }
-	float GetWaterLossRateMultiplierField() const { return GetNativeField<float>(this, "AShooterCharacter", "WaterLossRateMultiplier"); }
-	void SetWaterLossRateMultiplierField(float newValue) { SetNativeField(this, "AShooterCharacter", "WaterLossRateMultiplier", newValue); }
-	long double GetLastTryAccessInventoryFailTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastTryAccessInventoryFailTime"); }
-	void SetLastTryAccessInventoryFailTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastTryAccessInventoryFailTime", newValue); }
-	long double GetLastEmotePlayTimeField() const { return GetNativeField<long double>(this, "AShooterCharacter", "LastEmotePlayTime"); }
-	void SetLastEmotePlayTimeField(long double newValue) { SetNativeField(this, "AShooterCharacter", "LastEmotePlayTime", newValue); }
+	FieldValue<UAnimMontage *> SpawnIntroAnim1PField() { return { this, "AShooterCharacter", "SpawnIntroAnim1P" }; }
+	FieldValue<UAnimMontage *> RespawnIntroAnim1PField() { return { this, "AShooterCharacter", "RespawnIntroAnim1P" }; }
+	FieldValue<UAnimMontage *> ProneInAnimField() { return { this, "AShooterCharacter", "ProneInAnim" }; }
+	FieldValue<UAnimMontage *> ProneOutAnimField() { return { this, "AShooterCharacter", "ProneOutAnim" }; }
+	FieldValue<UAnimMontage *> StartRidingAnimField() { return { this, "AShooterCharacter", "StartRidingAnim" }; }
+	FieldValue<UAnimMontage *> StopRidingAnimField() { return { this, "AShooterCharacter", "StopRidingAnim" }; }
+	FieldValue<UAnimMontage *> TalkingAnimField() { return { this, "AShooterCharacter", "TalkingAnim" }; }
+	FieldValue<UAnimMontage *> VoiceTalkingAnimField() { return { this, "AShooterCharacter", "VoiceTalkingAnim" }; }
+	FieldValue<TArray<UAnimMontage *>> EmoteAnimsField() { return { this, "AShooterCharacter", "EmoteAnims" }; }
+	FieldValue<UAnimMontage *> FireBallistaAnimationField() { return { this, "AShooterCharacter", "FireBallistaAnimation" }; }
+	FieldValue<UAnimMontage *> ReloadBallistaAnimationField() { return { this, "AShooterCharacter", "ReloadBallistaAnimation" }; }
+	FieldValue<UAnimMontage *> DraggingCharacterAnimField() { return { this, "AShooterCharacter", "DraggingCharacterAnim" }; }
+	FieldValue<bool> bWasProneField() { return { this, "AShooterCharacter", "bWasProne" }; }
+	FieldValue<bool> bIsPreviewCharacterField() { return { this, "AShooterCharacter", "bIsPreviewCharacter" }; }
+	FieldValue<bool> bIsVoiceTalkingField() { return { this, "AShooterCharacter", "bIsVoiceTalking" }; }
+	FieldValue<long double> LastStartedTalkingTimeField() { return { this, "AShooterCharacter", "LastStartedTalkingTime" }; }
+	FieldValue<float> OriginalCollisionHeightField() { return { this, "AShooterCharacter", "OriginalCollisionHeight" }; }
+	FieldValue<float> WalkBobMagnitudeField() { return { this, "AShooterCharacter", "WalkBobMagnitude" }; }
+	FieldValue<float> WalkBobInterpSpeedField() { return { this, "AShooterCharacter", "WalkBobInterpSpeed" }; }
+	FieldValue<float> TargetingTimeField() { return { this, "AShooterCharacter", "TargetingTime" }; }
+	FieldValue<float> BobMaxMovementSpeedField() { return { this, "AShooterCharacter", "BobMaxMovementSpeed" }; }
+	FieldValue<float> WeaponBobMaxMovementSpeedField() { return { this, "AShooterCharacter", "WeaponBobMaxMovementSpeed" }; }
+	FieldValue<TSubclassOf<AShooterWeapon>> DefaultWeaponField() { return { this, "AShooterCharacter", "DefaultWeapon" }; }
+	FieldValue<TSubclassOf<AShooterWeapon>> MapWeaponField() { return { this, "AShooterCharacter", "MapWeapon" }; }
+	FieldValue<TSubclassOf<AShooterWeapon>> GPSWeaponField() { return { this, "AShooterCharacter", "GPSWeapon" }; }
+	FieldValue<TSubclassOf<AShooterWeapon>> CompassWeaponField() { return { this, "AShooterCharacter", "CompassWeapon" }; }
+	FieldValue<FString> PlayerNameField() { return { this, "AShooterCharacter", "PlayerName" }; }
+	FieldValue<TWeakObjectPtr<APrimalDinoCharacter>> RidingDinoField() { return { this, "AShooterCharacter", "RidingDino" }; }
+	FieldValue<TSubobjectPtr<USkeletalMeshComponent>> Mesh1PField() { return { this, "AShooterCharacter", "Mesh1P" }; }
+	FieldValue<TArray<FName>> LowerBodyPartRootBonesField() { return { this, "AShooterCharacter", "LowerBodyPartRootBones" }; }
+	FieldValue<UAnimMontage *> DropItemAnimationField() { return { this, "AShooterCharacter", "DropItemAnimation" }; }
+	FieldValue<UAnimMontage *> ThrowItemAnimationField() { return { this, "AShooterCharacter", "ThrowItemAnimation" }; }
+	FieldValue<UAnimMontage *> PickupItemAnimationField() { return { this, "AShooterCharacter", "PickupItemAnimation" }; }
+	FieldValue<UAnimMontage *> ActivateInventoryAnimationField() { return { this, "AShooterCharacter", "ActivateInventoryAnimation" }; }
+	FieldValue<USkeletalMeshComponent *> SurvivorProfilePreviewMeshField() { return { this, "AShooterCharacter", "SurvivorProfilePreviewMesh" }; }
+	FieldValue<FRotator> LastDinoAimRotationOffsetField() { return { this, "AShooterCharacter", "LastDinoAimRotationOffset" }; }
+	FieldValue<FRotator> LastAimRotOffsetField() { return { this, "AShooterCharacter", "LastAimRotOffset" }; }
+	FieldValue<UAudioComponent *> LastGrapHookACField() { return { this, "AShooterCharacter", "LastGrapHookAC" }; }
+	FieldValue<int> _GrapHookCableObjectCountField() { return { this, "AShooterCharacter", "_GrapHookCableObjectCount" }; }
+	FieldValue<FVector> GrapHookDefaultOffsetField() { return { this, "AShooterCharacter", "GrapHookDefaultOffset" }; }
+	FieldValue<float> GrapHookCableWidthField() { return { this, "AShooterCharacter", "GrapHookCableWidth" }; }
+	FieldValue<UMaterialInterface *> GrapHookMaterialField() { return { this, "AShooterCharacter", "GrapHookMaterial" }; }
+	FieldValue<float> LadderLateralJumpVelocityField() { return { this, "AShooterCharacter", "LadderLateralJumpVelocity" }; }
+	FieldValue<float> GrapHookPulledRopeDistanceField() { return { this, "AShooterCharacter", "GrapHookPulledRopeDistance" }; }
+	FieldValue<float> GrapHookSyncTimeField() { return { this, "AShooterCharacter", "GrapHookSyncTime" }; }
+	FieldValue<bool> bReleasingGrapHookField() { return { this, "AShooterCharacter", "bReleasingGrapHook" }; }
+	FieldValue<FString> PlatformProfileNameField() { return { this, "AShooterCharacter", "PlatformProfileName" }; }
+	FieldValue<FUniqueNetIdRepl> PlatformProfileIDField() { return { this, "AShooterCharacter", "PlatformProfileID" }; }
+	FieldValue<UAudioComponent *> CharacterStatusStateSoundComponentField() { return { this, "AShooterCharacter", "CharacterStatusStateSoundComponent" }; }
+	FieldValue<long double> LastUncrouchTimeField() { return { this, "AShooterCharacter", "LastUncrouchTime" }; }
+	FieldValue<long double> LastUnproneTimeField() { return { this, "AShooterCharacter", "LastUnproneTime" }; }
+	FieldValue<float> CurrentWeaponBobSpeedField() { return { this, "AShooterCharacter", "CurrentWeaponBobSpeed" }; }
+	FieldValue<float> WalkBobOldSpeedField() { return { this, "AShooterCharacter", "WalkBobOldSpeed" }; }
+	FieldValue<float> AppliedBobField() { return { this, "AShooterCharacter", "AppliedBob" }; }
+	FieldValue<float> BobTimeField() { return { this, "AShooterCharacter", "BobTime" }; }
+	FieldValue<long double> LastPressReloadTimeField() { return { this, "AShooterCharacter", "LastPressReloadTime" }; }
+	FieldValue<FName> WeaponAttachPointField() { return { this, "AShooterCharacter", "WeaponAttachPoint" }; }
+	FieldValue<float> TargetingSpeedModifierField() { return { this, "AShooterCharacter", "TargetingSpeedModifier" }; }
+	FieldValue<USoundCue *> LowHealthSoundField() { return { this, "AShooterCharacter", "LowHealthSound" }; }
+	FieldValue<UAnimMontage *> CallFollowAnimField() { return { this, "AShooterCharacter", "CallFollowAnim" }; }
+	FieldValue<UAnimMontage *> CallStayAnimField() { return { this, "AShooterCharacter", "CallStayAnim" }; }
+	FieldValue<UAnimMontage *> CallFollowAnimSingleField() { return { this, "AShooterCharacter", "CallFollowAnimSingle" }; }
+	FieldValue<UAnimMontage *> CallStayAnimSingleField() { return { this, "AShooterCharacter", "CallStayAnimSingle" }; }
+	FieldValue<UAnimMontage *> CallMoveToAnimField() { return { this, "AShooterCharacter", "CallMoveToAnim" }; }
+	FieldValue<UAnimMontage *> CallAttackAnimField() { return { this, "AShooterCharacter", "CallAttackAnim" }; }
+	FieldValue<UAudioComponent *> LowHealthWarningPlayerField() { return { this, "AShooterCharacter", "LowHealthWarningPlayer" }; }
+	FieldValue<FItemNetID> NextWeaponItemIDField() { return { this, "AShooterCharacter", "NextWeaponItemID" }; }
+	FieldValue<float> WeaponBobTimeField() { return { this, "AShooterCharacter", "WeaponBobTime" }; }
+	FieldValue<float> CurrentAimBlendingField() { return { this, "AShooterCharacter", "CurrentAimBlending" }; }
+	FieldValue<long double> InterpLastCrouchProneStateChangeTimeField() { return { this, "AShooterCharacter", "InterpLastCrouchProneStateChangeTime" }; }
+	FieldValue<long double> PressCrouchProneToggleTimeField() { return { this, "AShooterCharacter", "PressCrouchProneToggleTime" }; }
+	FieldValue<float> CraftingMovementSpeedModifierField() { return { this, "AShooterCharacter", "CraftingMovementSpeedModifier" }; }
+	FieldValue<FVector> WeaponBobMagnitudesField() { return { this, "AShooterCharacter", "WeaponBobMagnitudes" }; }
+	FieldValue<FVector> WeaponBobPeriodsField() { return { this, "AShooterCharacter", "WeaponBobPeriods" }; }
+	FieldValue<FVector> WeaponBobOffsetsField() { return { this, "AShooterCharacter", "WeaponBobOffsets" }; }
+	FieldValue<FVector> WeaponBobMagnitudes_TargetingField() { return { this, "AShooterCharacter", "WeaponBobMagnitudes_Targeting" }; }
+	FieldValue<FVector> WeaponBobPeriods_TargetingField() { return { this, "AShooterCharacter", "WeaponBobPeriods_Targeting" }; }
+	FieldValue<FVector> WeaponBobOffsets_TargetingField() { return { this, "AShooterCharacter", "WeaponBobOffsets_Targeting" }; }
+	FieldValue<float> WeaponBobMinimumSpeedField() { return { this, "AShooterCharacter", "WeaponBobMinimumSpeed" }; }
+	FieldValue<float> WeaponBobSpeedBaseField() { return { this, "AShooterCharacter", "WeaponBobSpeedBase" }; }
+	FieldValue<float> WeaponBobSpeedBaseFallingField() { return { this, "AShooterCharacter", "WeaponBobSpeedBaseFalling" }; }
+	FieldValue<float> WeaponBobTargetingBlendField() { return { this, "AShooterCharacter", "WeaponBobTargetingBlend" }; }
+	FieldValue<TArray<FItemAttachmentInfo>> DefaultAttachmentInfosField() { return { this, "AShooterCharacter", "DefaultAttachmentInfos" }; }
+	FieldValue<USoundCue *> StartCrouchSoundField() { return { this, "AShooterCharacter", "StartCrouchSound" }; }
+	FieldValue<USoundCue *> EndCrouchSoundField() { return { this, "AShooterCharacter", "EndCrouchSound" }; }
+	FieldValue<USoundCue *> StartProneSoundField() { return { this, "AShooterCharacter", "StartProneSound" }; }
+	FieldValue<USoundCue *> EndProneSoundField() { return { this, "AShooterCharacter", "EndProneSound" }; }
+	FieldValue<TSubclassOf<AShooterWeapon>> NextInventoryWeaponField() { return { this, "AShooterCharacter", "NextInventoryWeapon" }; }
+	FieldValue<FItemNetID> PreMapWeaponItemNetIDField() { return { this, "AShooterCharacter", "PreMapWeaponItemNetID" }; }
+	FieldValue<float> ServerSeatedViewRotationYawField() { return { this, "AShooterCharacter", "ServerSeatedViewRotationYaw" }; }
+	FieldValue<float> ServerSeatedViewRotationPitchField() { return { this, "AShooterCharacter", "ServerSeatedViewRotationPitch" }; }
+	FieldValue<AShooterWeapon *> CurrentWeaponField() { return { this, "AShooterCharacter", "CurrentWeapon" }; }
+	FieldValue<unsigned __int64> LinkedPlayerDataIDField() { return { this, "AShooterCharacter", "LinkedPlayerDataID" }; }
+	FieldValue<long double> LastTimeInFallingField() { return { this, "AShooterCharacter", "LastTimeInFalling" }; }
+	FieldValue<long double> StartedRidingTimeField() { return { this, "AShooterCharacter", "StartedRidingTime" }; }
+	FieldValue<long double> TimeSinceLastControllerField() { return { this, "AShooterCharacter", "TimeSinceLastController" }; }
+	FieldValue<TWeakObjectPtr<AController>> LastControllerField() { return { this, "AShooterCharacter", "LastController" }; }
+	FieldValue<UAnimMontage *> DrinkingAnimationField() { return { this, "AShooterCharacter", "DrinkingAnimation" }; }
+	FieldValue<long double> LastRequestedTribeTimeField() { return { this, "AShooterCharacter", "LastRequestedTribeTime" }; }
+	FieldValue<unsigned __int64> LastRequestedTribeIDField() { return { this, "AShooterCharacter", "LastRequestedTribeID" }; }
+	FieldValue<FString> LastRequestedTribeNameField() { return { this, "AShooterCharacter", "LastRequestedTribeName" }; }
+	FieldValue<TWeakObjectPtr<AShooterCharacter>> LastRequestedTribePlayerCharacterField() { return { this, "AShooterCharacter", "LastRequestedTribePlayerCharacter" }; }
+	FieldValue<float> IndoorsHyperthermiaInsulationField() { return { this, "AShooterCharacter", "IndoorsHyperthermiaInsulation" }; }
+	FieldValue<float> IndoorsHypothermiaInsulationField() { return { this, "AShooterCharacter", "IndoorsHypothermiaInsulation" }; }
+	FieldValue<float> IndoorCheckIntervalField() { return { this, "AShooterCharacter", "IndoorCheckInterval" }; }
+	FieldValue<long double> LastIndoorCheckTimeField() { return { this, "AShooterCharacter", "LastIndoorCheckTime" }; }
+	FieldValue<FItemNetID> PreRidingWeaponItemNetIDField() { return { this, "AShooterCharacter", "PreRidingWeaponItemNetID" }; }
+	FieldValue<FItemNetID> PreInventoryWeaponItemNetIDField() { return { this, "AShooterCharacter", "PreInventoryWeaponItemNetID" }; }
+	FieldValue<UAnimSequence *> ViewingInventoryAnimationField() { return { this, "AShooterCharacter", "ViewingInventoryAnimation" }; }
+	FieldValue<UAnimSequence *> DefaultDinoRidingAnimationField() { return { this, "AShooterCharacter", "DefaultDinoRidingAnimation" }; }
+	FieldValue<UAnimSequence *> DefaultDinoRidingMoveAnimationField() { return { this, "AShooterCharacter", "DefaultDinoRidingMoveAnimation" }; }
+	FieldValue<UAnimSequence *> DefaultSeatingAnimationField() { return { this, "AShooterCharacter", "DefaultSeatingAnimation" }; }
+	FieldValue<UAnimSequence *> DefaultShieldAnimationField() { return { this, "AShooterCharacter", "DefaultShieldAnimation" }; }
+	FieldValue<UAnimMontage *> ShieldCoverAnimationField() { return { this, "AShooterCharacter", "ShieldCoverAnimation" }; }
+	FieldValue<UAnimMontage *> ShieldCoverAnimationForCrouchField() { return { this, "AShooterCharacter", "ShieldCoverAnimationForCrouch" }; }
+	FieldValue<float> EnemyPlayerMaxCursorHUDDistanceProneField() { return { this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceProne" }; }
+	FieldValue<float> EnemyPlayerMaxCursorHUDDistanceCrouchedField() { return { this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceCrouched" }; }
+	FieldValue<float> EnemyPlayerMaxCursorHUDDistanceStandingField() { return { this, "AShooterCharacter", "EnemyPlayerMaxCursorHUDDistanceStanding" }; }
+	FieldValue<FSaddlePassengerSeatDefinition> CurrentPassengerSeatDefinitionField() { return { this, "AShooterCharacter", "CurrentPassengerSeatDefinition" }; }
+	FieldValue<TArray<UAnimMontage *>> AnimsOverrideFromField() { return { this, "AShooterCharacter", "AnimsOverrideFrom" }; }
+	FieldValue<TArray<UAnimMontage *>> AnimOverrideToField() { return { this, "AShooterCharacter", "AnimOverrideTo" }; }
+	FieldValue<TArray<UAnimSequence *>> AnimSequencesOverrideFromField() { return { this, "AShooterCharacter", "AnimSequencesOverrideFrom" }; }
+	FieldValue<TArray<UAnimSequence *>> AnimSequenceOverrideToField() { return { this, "AShooterCharacter", "AnimSequenceOverrideTo" }; }
+	FieldValue<float> PreviousRootYawSpeedField() { return { this, "AShooterCharacter", "PreviousRootYawSpeed" }; }
+	FieldArray<FLinearColor, 4> BodyColorsField() { return { this, "AShooterCharacter", "BodyColors" }; }
+	FieldValue<char> FacialHairIndexField() { return { this, "AShooterCharacter", "FacialHairIndex" }; }
+	FieldValue<char> HeadHairIndexField() { return { this, "AShooterCharacter", "HeadHairIndex" }; }
+	FieldArray<float, 22> RawBoneModifiersField() { return { this, "AShooterCharacter", "RawBoneModifiers" }; }
+	FieldValue<float> LoggedOutTargetingDesirabilityField() { return { this, "AShooterCharacter", "LoggedOutTargetingDesirability" }; }
+	FieldValue<bool> bIsRainWateredField() { return { this, "AShooterCharacter", "bIsRainWatered" }; }
+	FieldValue<long double> LastAttackTimeField() { return { this, "AShooterCharacter", "LastAttackTime" }; }
+	FieldValue<bool> bCacheRidingDinoWeaponField() { return { this, "AShooterCharacter", "bCacheRidingDinoWeapon" }; }
+	FieldValue<bool> bWasLocallyControlledField() { return { this, "AShooterCharacter", "bWasLocallyControlled" }; }
+	FieldValue<unsigned int> UniqueNetIdTypeHashField() { return { this, "AShooterCharacter", "UniqueNetIdTypeHash" }; }
+	FieldValue<long double> LastUseHarvestTimeField() { return { this, "AShooterCharacter", "LastUseHarvestTime" }; }
+	FieldValue<long double> StopRidingTimeField() { return { this, "AShooterCharacter", "StopRidingTime" }; }
+	FieldValue<UAnimMontage *> SpawnAnimField() { return { this, "AShooterCharacter", "SpawnAnim" }; }
+	FieldValue<UAnimMontage *> FirstSpawnAnimField() { return { this, "AShooterCharacter", "FirstSpawnAnim" }; }
+	FieldValue<long double> LocalLastViewingInventoryTimeField() { return { this, "AShooterCharacter", "LocalLastViewingInventoryTime" }; }
+	FieldValue<FVector> LastStasisCastPositionField() { return { this, "AShooterCharacter", "LastStasisCastPosition" }; }
+	FieldValue<bool> bWasHostPlayerField() { return { this, "AShooterCharacter", "bWasHostPlayer" }; }
+	FieldValue<long double> LastTimeHadControllerField() { return { this, "AShooterCharacter", "LastTimeHadController" }; }
+	FieldValue<long double> LastTaggedTimeField() { return { this, "AShooterCharacter", "LastTaggedTime" }; }
+	FieldValue<long double> LastTaggedTimeExtraField() { return { this, "AShooterCharacter", "LastTaggedTimeExtra" }; }
+	FieldValue<long double> LastTaggedTimeThirdField() { return { this, "AShooterCharacter", "LastTaggedTimeThird" }; }
+	FieldValue<float> ExtraFloatVarField() { return { this, "AShooterCharacter", "ExtraFloatVar" }; }
+	FieldValue<FVector> ExtraVectorVarField() { return { this, "AShooterCharacter", "ExtraVectorVar" }; }
+	FieldValue<FVector> ExtraExtraVectorVarField() { return { this, "AShooterCharacter", "ExtraExtraVectorVar" }; }
+	FieldValue<FName> ExtraNameVarField() { return { this, "AShooterCharacter", "ExtraNameVar" }; }
+	FieldValue<bool> bIsOnSeatingStructureField() { return { this, "AShooterCharacter", "bIsOnSeatingStructure" }; }
+	FieldValue<bool> bIsControllingBallistaField() { return { this, "AShooterCharacter", "bIsControllingBallista" }; }
+	FieldValue<bool> bUseBallistaAimOffsetField() { return { this, "AShooterCharacter", "bUseBallistaAimOffset" }; }
+	FieldValue<float> CurrentControlledBallistaYawField() { return { this, "AShooterCharacter", "CurrentControlledBallistaYaw" }; }
+	FieldValue<bool> bIsServerAdminField() { return { this, "AShooterCharacter", "bIsServerAdmin" }; }
+	FieldValue<TWeakObjectPtr<APrimalStructureSeating>> SeatingStructureField() { return { this, "AShooterCharacter", "SeatingStructure" }; }
+	FieldValue<int> SeatingStructureSeatNumberField() { return { this, "AShooterCharacter", "SeatingStructureSeatNumber" }; }
+	FieldValue<long double> NextPlayerUndergroundCheckField() { return { this, "AShooterCharacter", "NextPlayerUndergroundCheck" }; }
+	FieldValue<int> PlayerNumUnderGroundFailField() { return { this, "AShooterCharacter", "PlayerNumUnderGroundFail" }; }
+	FieldValue<float> LastSweepCapsuleHeightField() { return { this, "AShooterCharacter", "LastSweepCapsuleHeight" }; }
+	FieldValue<float> LastSweepCapsuleRadiusField() { return { this, "AShooterCharacter", "LastSweepCapsuleRadius" }; }
+	FieldValue<USoundBase *> ThrowCharacterSoundField() { return { this, "AShooterCharacter", "ThrowCharacterSound" }; }
+	FieldValue<float> ClientSeatedViewRotationPitchField() { return { this, "AShooterCharacter", "ClientSeatedViewRotationPitch" }; }
+	FieldValue<float> ClientSeatedViewRotationYawField() { return { this, "AShooterCharacter", "ClientSeatedViewRotationYaw" }; }
+	FieldValue<long double> LastReleaseSeatingStructureTimeField() { return { this, "AShooterCharacter", "LastReleaseSeatingStructureTime" }; }
+	FieldValue<char> PlayerBadgeGroupField() { return { this, "AShooterCharacter", "PlayerBadgeGroup" }; }
+	FieldValue<bool> bShouldInvertTurnInputField() { return { this, "AShooterCharacter", "bShouldInvertTurnInput" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> LastGrappledToCharacterField() { return { this, "AShooterCharacter", "LastGrappledToCharacter" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> CurrentGrappledToCharacterField() { return { this, "AShooterCharacter", "CurrentGrappledToCharacter" }; }
+	FieldValue<int> AllianceInviteRequestingTeamField() { return { this, "AShooterCharacter", "AllianceInviteRequestingTeam" }; }
+	FieldValue<unsigned int> AllianceInviteIDField() { return { this, "AShooterCharacter", "AllianceInviteID" }; }
+	FieldValue<FString> AllianceInviteNameField() { return { this, "AShooterCharacter", "AllianceInviteName" }; }
+	FieldValue<long double> AllianceInviteTimeField() { return { this, "AShooterCharacter", "AllianceInviteTime" }; }
+	FieldValue<UAnimMontage *> MountedCarryingDinoAnimationField() { return { this, "AShooterCharacter", "MountedCarryingDinoAnimation" }; }
+	FieldValue<UAnimMontage *> CuddleAnimationField() { return { this, "AShooterCharacter", "CuddleAnimation" }; }
+	FieldValue<long double> LastUpdatedAimActorsTimeField() { return { this, "AShooterCharacter", "LastUpdatedAimActorsTime" }; }
+	FieldValue<FVector> UpdateHyperThermalInsulationPositionField() { return { this, "AShooterCharacter", "UpdateHyperThermalInsulationPosition" }; }
+	FieldValue<FVector> UpdateHypoThermalInsulationPositionField() { return { this, "AShooterCharacter", "UpdateHypoThermalInsulationPosition" }; }
+	FieldValue<long double> NextUpdateHyperThermalInsulationTimeField() { return { this, "AShooterCharacter", "NextUpdateHyperThermalInsulationTime" }; }
+	FieldValue<long double> NextUpdateHypoThermalInsulationTimeField() { return { this, "AShooterCharacter", "NextUpdateHypoThermalInsulationTime" }; }
+	FieldValue<float> LastAdditionalHypoThermalInsulationField() { return { this, "AShooterCharacter", "LastAdditionalHypoThermalInsulation" }; }
+	FieldValue<float> LastAdditionalHyperThermalInsulationField() { return { this, "AShooterCharacter", "LastAdditionalHyperThermalInsulation" }; }
+	FieldValue<float> WaterLossRateMultiplierField() { return { this, "AShooterCharacter", "WaterLossRateMultiplier" }; }
+	FieldValue<UAnimSequence *> CharacterAdditiveStandingAnimField() { return { this, "AShooterCharacter", "CharacterAdditiveStandingAnim" }; }
+	FieldValue<long double> LastTryAccessInventoryFailTimeField() { return { this, "AShooterCharacter", "LastTryAccessInventoryFailTime" }; }
+	FieldValue<long double> LastEmotePlayTimeField() { return { this, "AShooterCharacter", "LastEmotePlayTime" }; }
+	FieldValue<USkeletalMeshComponent *> HeadHairComponentField() { return { this, "AShooterCharacter", "HeadHairComponent" }; }
+	FieldValue<USkeletalMeshComponent *> FacialHairComponentField() { return { this, "AShooterCharacter", "FacialHairComponent" }; }
+	FieldValue<float> IntervalForFullHeadHairGrowthField() { return { this, "AShooterCharacter", "IntervalForFullHeadHairGrowth" }; }
+	FieldValue<float> IntervalForFullFacialHairGrowthField() { return { this, "AShooterCharacter", "IntervalForFullFacialHairGrowth" }; }
+	FieldValue<float> PercentOfFullFacialHairGrowthField() { return { this, "AShooterCharacter", "PercentOfFullFacialHairGrowth" }; }
+	FieldValue<float> PercentOfFullHeadHairGrowthField() { return { this, "AShooterCharacter", "PercentOfFullHeadHairGrowth" }; }
+	FieldValue<FLinearColor> OriginalHairColorField() { return { this, "AShooterCharacter", "OriginalHairColor" }; }
+	FieldValue<long double> LastEmoteTryPlayTimeField() { return { this, "AShooterCharacter", "LastEmoteTryPlayTime" }; }
+	FieldValue<int> IgnoreCollisionSweepUntilFrameNumberField() { return { this, "AShooterCharacter", "IgnoreCollisionSweepUntilFrameNumber" }; }
+	FieldValue<float> ReplicatedWeightField() { return { this, "AShooterCharacter", "ReplicatedWeight" }; }
+	FieldValue<long double> LocalDiedAtTimeField() { return { this, "AShooterCharacter", "LocalDiedAtTime" }; }
+	FieldValue<long double> LastNotStuckTimeField() { return { this, "AShooterCharacter", "LastNotStuckTime" }; }
+	FieldValue<USoundBase *> ProneMoveSoundField() { return { this, "AShooterCharacter", "ProneMoveSound" }; }
+	FieldValue<long double> UploadEarliestValidTimeField() { return { this, "AShooterCharacter", "UploadEarliestValidTime" }; }
+	FieldValue<int> SimulatedLastFrameProcessedForceUpdateAimedActorsField() { return { this, "AShooterCharacter", "SimulatedLastFrameProcessedForceUpdateAimedActors" }; }
+	FieldValue<FVector> OriginalLastHitWallSweepCheckLocationField() { return { this, "AShooterCharacter", "OriginalLastHitWallSweepCheckLocation" }; }
+	FieldValue<int> LastCapsuleAttachmentChangedIncrementField() { return { this, "AShooterCharacter", "LastCapsuleAttachmentChangedIncrement" }; }
+	FieldValue<int> LastMeshAttachmentChangedIncrementField() { return { this, "AShooterCharacter", "LastMeshAttachmentChangedIncrement" }; }
+	FieldValue<int> LastCameraAttachmentChangedIncrementField() { return { this, "AShooterCharacter", "LastCameraAttachmentChangedIncrement" }; }
+	FieldValue<bool> bPreventWeaponMovementAnimsField() { return { this, "AShooterCharacter", "bPreventWeaponMovementAnims" }; }
 
 	// Functions
 
@@ -3217,21 +2895,23 @@ struct FPlayerDeathReason
 
 struct FPrimalPersistentCharacterStatsStruct
 {
-	unsigned __int16 GetCharacterStatusComponent_ExtraCharacterLevelField() const { return GetNativeField<unsigned __int16>(this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_ExtraCharacterLevel"); }
-	void SetCharacterStatusComponent_ExtraCharacterLevelField(unsigned __int16 newValue) { SetNativeField(this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_ExtraCharacterLevel", newValue); }
-	float GetCharacterStatusComponent_ExperiencePointsField() const { return GetNativeField<float>(this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_ExperiencePoints"); }
-	void SetCharacterStatusComponent_ExperiencePointsField(float newValue) { SetNativeField(this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_ExperiencePoints", newValue); }
-	int GetPlayerState_TotalEngramPointsField() const { return GetNativeField<int>(this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_TotalEngramPoints"); }
-	void SetPlayerState_TotalEngramPointsField(int newValue) { SetNativeField(this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_TotalEngramPoints", newValue); }
-	TArray<unsigned int> GetPerMapExplorerNoteUnlocksField() const { return GetNativeField<TArray<unsigned int>>(this, "FPrimalPersistentCharacterStatsStruct", "PerMapExplorerNoteUnlocks"); }
-	void SetPerMapExplorerNoteUnlocksField(TArray<unsigned int> newValue) { SetNativeField(this, "FPrimalPersistentCharacterStatsStruct", "PerMapExplorerNoteUnlocks", newValue); }
-	TArray<FName> GetEmoteUnlocksField() const { return GetNativeField<TArray<FName>>(this, "FPrimalPersistentCharacterStatsStruct", "EmoteUnlocks"); }
-	void SetEmoteUnlocksField(TArray<FName> newValue) { SetNativeField(this, "FPrimalPersistentCharacterStatsStruct", "EmoteUnlocks", newValue); }
-	TArray<TSubclassOf<UPrimalItem>> GetPlayerState_EngramBlueprintsField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>>>(this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_EngramBlueprints"); }
-	void SetPlayerState_EngramBlueprintsField(TArray<TSubclassOf<UPrimalItem>> newValue) { SetNativeField(this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_EngramBlueprints", newValue); }
-	//FDinoOrderGroup[10] GetDinoOrderGroupsField() const { return GetNativeField<FDinoOrderGroup[10]>(this, "FPrimalPersistentCharacterStatsStruct", "DinoOrderGroups"); }
-	int GetCurrentlySelectedDinoOrderGroupField() const { return GetNativeField<int>(this, "FPrimalPersistentCharacterStatsStruct", "CurrentlySelectedDinoOrderGroup"); }
-	void SetCurrentlySelectedDinoOrderGroupField(int newValue) { SetNativeField(this, "FPrimalPersistentCharacterStatsStruct", "CurrentlySelectedDinoOrderGroup", newValue); }
+	FieldValue<unsigned __int16> CharacterStatusComponent_ExtraCharacterLevelField() { return { this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_ExtraCharacterLevel" }; }
+	FieldValue<float> CharacterStatusComponent_ExperiencePointsField() { return { this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_ExperiencePoints" }; }
+	FieldValue<int> PlayerState_TotalEngramPointsField() { return { this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_TotalEngramPoints" }; }
+	FieldValue<int> CharacterStatusComponent_HighestExtraCharacterLevelField() { return { this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_HighestExtraCharacterLevel" }; }
+	FieldValue<int> CharacterStatusComponent_LastRespecAtExtraCharacterLevelField() { return { this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_LastRespecAtExtraCharacterLevel" }; }
+	FieldValue<TArray<unsigned int>> PerMapExplorerNoteUnlocksField() { return { this, "FPrimalPersistentCharacterStatsStruct", "PerMapExplorerNoteUnlocks" }; }
+	FieldValue<TArray<FName>> EmoteUnlocksField() { return { this, "FPrimalPersistentCharacterStatsStruct", "EmoteUnlocks" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalItem>>> PlayerState_EngramBlueprintsField() { return { this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_EngramBlueprints" }; }
+	FieldArray<char, 12> CharacterStatusComponent_NumberOfLevelUpPointsAppliedField() { return { this, "FPrimalPersistentCharacterStatsStruct", "CharacterStatusComponent_NumberOfLevelUpPointsApplied" }; }
+	FieldArray<TSubclassOf<UPrimalItem>, 10> PlayerState_DefaultItemSlotClassesField() { return { this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_DefaultItemSlotClasses" }; }
+	FieldArray<char, 10> PlayerState_DefaultItemSlotEngramsField() { return { this, "FPrimalPersistentCharacterStatsStruct", "PlayerState_DefaultItemSlotEngrams" }; }
+	FieldArray<FDinoOrderGroup, 10> DinoOrderGroupsField() { return { this, "FPrimalPersistentCharacterStatsStruct", "DinoOrderGroups" }; }
+	FieldValue<int> CurrentlySelectedDinoOrderGroupField() { return { this, "FPrimalPersistentCharacterStatsStruct", "CurrentlySelectedDinoOrderGroup" }; }
+	FieldValue<float> PercentageOfHeadHairGrowthField() { return { this, "FPrimalPersistentCharacterStatsStruct", "PercentageOfHeadHairGrowth" }; }
+	FieldValue<float> PercentageOfFacialHairGrowthField() { return { this, "FPrimalPersistentCharacterStatsStruct", "PercentageOfFacialHairGrowth" }; }
+	FieldValue<char> FacialHairIndexField() { return { this, "FPrimalPersistentCharacterStatsStruct", "FacialHairIndex" }; }
+	FieldValue<char> HeadHairIndexField() { return { this, "FPrimalPersistentCharacterStatsStruct", "HeadHairIndex" }; }
 
 	// Functions
 
@@ -3259,37 +2939,31 @@ struct __declspec(align(8)) FPrimalPlayerCharacterConfigStruct
 
 struct FPrimalPlayerDataStruct
 {
-	unsigned __int64 GetPlayerDataIDField() const { return GetNativeField<unsigned __int64>(this, "FPrimalPlayerDataStruct", "PlayerDataID"); }
-	FUniqueNetIdRepl GetUniqueIDField() const { return GetNativeField<FUniqueNetIdRepl>(this, "FPrimalPlayerDataStruct", "UniqueID"); }
-	FString GetSavedNetworkAddressField() const { return GetNativeField<FString>(this, "FPrimalPlayerDataStruct", "SavedNetworkAddress"); }
-	FString GetPlayerNameField() const { return GetNativeField<FString>(this, "FPrimalPlayerDataStruct", "PlayerName"); }
-	void SetPlayerNameField(FString newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "PlayerName", newValue); }
-	unsigned int GetLocalPlayerIndexField() const { return GetNativeField<unsigned int>(this, "FPrimalPlayerDataStruct", "LocalPlayerIndex"); }
-	void SetLocalPlayerIndexField(unsigned int newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "LocalPlayerIndex", newValue); }
-	FPrimalPlayerCharacterConfigStruct* GetMyPlayerCharacterConfigField() const { return GetNativePointerField<FPrimalPlayerCharacterConfigStruct*>(this, "FPrimalPlayerDataStruct", "MyPlayerCharacterConfig"); }
-	FPrimalPersistentCharacterStatsStruct* GetMyPersistentCharacterStatsField() const { return GetNativePointerField<FPrimalPersistentCharacterStatsStruct*>(this, "FPrimalPlayerDataStruct", "MyPersistentCharacterStats"); }
-	int GetTribeIDField() const { return GetNativeField<int>(this, "FPrimalPlayerDataStruct", "TribeID"); }
-	void SetTribeIDField(int newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "TribeID", newValue); }
-	int GetPlayerDataVersionField() const { return GetNativeField<int>(this, "FPrimalPlayerDataStruct", "PlayerDataVersion"); }
-	void SetPlayerDataVersionField(int newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "PlayerDataVersion", newValue); }
-	long double GetNextAllowedRespawnTimeField() const { return GetNativeField<long double>(this, "FPrimalPlayerDataStruct", "NextAllowedRespawnTime"); }
-	void SetNextAllowedRespawnTimeField(long double newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "NextAllowedRespawnTime", newValue); }
-	long double GetLastTimeDiedToEnemyTeamField() const { return GetNativeField<long double>(this, "FPrimalPlayerDataStruct", "LastTimeDiedToEnemyTeam"); }
-	void SetLastTimeDiedToEnemyTeamField(long double newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "LastTimeDiedToEnemyTeam", newValue); }
-	float GetAllowedRespawnIntervalField() const { return GetNativeField<float>(this, "FPrimalPlayerDataStruct", "AllowedRespawnInterval"); }
-	void SetAllowedRespawnIntervalField(float newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "AllowedRespawnInterval", newValue); }
-	float GetNumOfDeathsField() const { return GetNativeField<float>(this, "FPrimalPlayerDataStruct", "NumOfDeaths"); }
-	void SetNumOfDeathsField(float newValue) { SetNativeField(this, "FPrimalPlayerDataStruct", "NumOfDeaths", newValue); }
+	FieldValue<unsigned __int64> PlayerDataIDField() { return { this, "FPrimalPlayerDataStruct", "PlayerDataID" }; }
+	FieldValue<FUniqueNetIdRepl> UniqueIDField() { return { this, "FPrimalPlayerDataStruct", "UniqueID" }; }
+	FieldValue<FString> SavedNetworkAddressField() { return { this, "FPrimalPlayerDataStruct", "SavedNetworkAddress" }; }
+	FieldValue<FString> PlayerNameField() { return { this, "FPrimalPlayerDataStruct", "PlayerName" }; }
+	FieldValue<unsigned int> LocalPlayerIndexField() { return { this, "FPrimalPlayerDataStruct", "LocalPlayerIndex" }; }
+	FieldValue<FPrimalPlayerCharacterConfigStruct> MyPlayerCharacterConfigField() { return { this, "FPrimalPlayerDataStruct", "MyPlayerCharacterConfig" }; }
+	FieldPointer<FPrimalPersistentCharacterStatsStruct *> MyPersistentCharacterStatsField() { return { this, "FPrimalPlayerDataStruct", "MyPersistentCharacterStats" }; }
+	FieldValue<int> NumPersonalDinosField() { return { this, "FPrimalPlayerDataStruct", "NumPersonalDinos" }; }
+	FieldValue<int> TribeIDField() { return { this, "FPrimalPlayerDataStruct", "TribeID" }; }
+	FieldValue<TArray<int>> AppIDSetField() { return { this, "FPrimalPlayerDataStruct", "AppIDSet" }; }
+	FieldValue<int> PlayerDataVersionField() { return { this, "FPrimalPlayerDataStruct", "PlayerDataVersion" }; }
+	FieldValue<long double> NextAllowedRespawnTimeField() { return { this, "FPrimalPlayerDataStruct", "NextAllowedRespawnTime" }; }
+	FieldValue<long double> LastTimeDiedToEnemyTeamField() { return { this, "FPrimalPlayerDataStruct", "LastTimeDiedToEnemyTeam" }; }
+	FieldValue<float> AllowedRespawnIntervalField() { return { this, "FPrimalPlayerDataStruct", "AllowedRespawnInterval" }; }
+	FieldValue<float> NumOfDeathsField() { return { this, "FPrimalPlayerDataStruct", "NumOfDeaths" }; }
+	FieldValue<int> SpawnDayNumberField() { return { this, "FPrimalPlayerDataStruct", "SpawnDayNumber" }; }
+	FieldValue<float> SpawnDayTimeField() { return { this, "FPrimalPlayerDataStruct", "SpawnDayTime" }; }
 };
 
 struct UPrimalPlayerData
 {
-	FPrimalPlayerDataStruct* GetMyDataField() const { return GetNativePointerField<FPrimalPlayerDataStruct*>(this, "UPrimalPlayerData", "MyData"); }
-	//TArray<UPrimalBuffPersistentData *> GetMyPersistentBuffDatasField() const { return GetNativeField<TArray<UPrimalBuffPersistentData *>>(this, "UPrimalPlayerData", "MyPersistentBuffDatas"); }
-	bool GetbIsLocalPlayerField() const { return GetNativeField<bool>(this, "UPrimalPlayerData", "bIsLocalPlayer"); }
-	void SetbIsLocalPlayerField(bool newValue) { SetNativeField(this, "UPrimalPlayerData", "bIsLocalPlayer", newValue); }
-	float GetLastXPWritePercentField() const { return GetNativeField<float>(this, "UPrimalPlayerData", "LastXPWritePercent"); }
-	void SetLastXPWritePercentField(float newValue) { SetNativeField(this, "UPrimalPlayerData", "LastXPWritePercent", newValue); }
+	FieldPointer<FPrimalPlayerDataStruct *> MyDataField() { return { this, "UPrimalPlayerData", "MyData" }; }
+	//FieldValue<TArray<UPrimalBuffPersistentData *>> MyPersistentBuffDatasField() { return { this, "UPrimalPlayerData", "MyPersistentBuffDatas" }; }
+	FieldValue<bool> bIsLocalPlayerField() { return { this, "UPrimalPlayerData", "bIsLocalPlayer" }; }
+	FieldValue<float> LastXPWritePercentField() { return { this, "UPrimalPlayerData", "LastXPWritePercent" }; }
 
 	// Functions
 
@@ -3307,288 +2981,171 @@ struct UPrimalPlayerData
 	static UClass * GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "UPrimalPlayerData", "GetPrivateStaticClass"); }
 };
 
+struct FPrimalCharacterStatusValueModifier
+{
+	EPrimalCharacterStatusValue::Type ValueType;
+	EPrimalCharacterStatusValue::Type StopOnValueNearMax;
+	float AmountToAdd;
+	float BaseAmountToAdd;
+	float SpeedToAdd;
+	bool bContinueOnUnchangedValue;
+	bool bSetValue;
+	bool bSetAdditionalValue;
+	bool bMakeUntameable;
+	int StatusValueModifierDescriptionIndex;
+};
+
 struct UPrimalCharacterStatusComponent
 {
-	float* GetMaxStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "MaxStatusValues"); }
-	float* GetBaseLevelMaxStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "BaseLevelMaxStatusValues"); }
-	void SetBaseLevelMaxStatusValuesField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BaseLevelMaxStatusValues", newValue); }
-	char* GetNumberOfLevelUpPointsAppliedField() const { return GetNativePointerField<char*>(this, "UPrimalCharacterStatusComponent", "NumberOfLevelUpPointsApplied"); }
-	void SetNumberOfLevelUpPointsAppliedField(char* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "NumberOfLevelUpPointsApplied", newValue); }
-	char* GetNumberOfLevelUpPointsAppliedTamedField() const { return GetNativePointerField<char*>(this, "UPrimalCharacterStatusComponent", "NumberOfLevelUpPointsAppliedTamed"); }
-	void SetNumberOfLevelUpPointsAppliedTamedField(char* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "NumberOfLevelUpPointsAppliedTamed", newValue); }
-	float GetTamedIneffectivenessModifierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "TamedIneffectivenessModifier"); }
-	void SetTamedIneffectivenessModifierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TamedIneffectivenessModifier", newValue); }
-	float GetMovingStaminaRecoveryRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "MovingStaminaRecoveryRateMultiplier"); }
-	void SetMovingStaminaRecoveryRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "MovingStaminaRecoveryRateMultiplier", newValue); }
-	float* GetRecoveryRateStatusValueField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "RecoveryRateStatusValue"); }
-	void SetRecoveryRateStatusValueField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "RecoveryRateStatusValue", newValue); }
-	float* GetTimeToRecoverAfterDepletionStatusValueField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "TimeToRecoverAfterDepletionStatusValue"); }
-	void SetTimeToRecoverAfterDepletionStatusValueField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TimeToRecoverAfterDepletionStatusValue", newValue); }
-	float* GetTimeToRecoverAfterDecreaseStatusValueField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "TimeToRecoverAfterDecreaseStatusValue"); }
-	void SetTimeToRecoverAfterDecreaseStatusValueField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TimeToRecoverAfterDecreaseStatusValue", newValue); }
-	float* GetAmountMaxGainedPerLevelUpValueField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "AmountMaxGainedPerLevelUpValue"); }
-	void SetAmountMaxGainedPerLevelUpValueField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "AmountMaxGainedPerLevelUpValue", newValue); }
-	float* GetAmountMaxGainedPerLevelUpValueTamedField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "AmountMaxGainedPerLevelUpValueTamed"); }
-	void SetAmountMaxGainedPerLevelUpValueTamedField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "AmountMaxGainedPerLevelUpValueTamed", newValue); }
-	char* GetMaxGainedPerLevelUpValueIsPercentField() const { return GetNativePointerField<char*>(this, "UPrimalCharacterStatusComponent", "MaxGainedPerLevelUpValueIsPercent"); }
-	void SetMaxGainedPerLevelUpValueIsPercentField(char* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "MaxGainedPerLevelUpValueIsPercent", newValue); }
-	char* GetRecoveryRateIsPercentField() const { return GetNativePointerField<char*>(this, "UPrimalCharacterStatusComponent", "RecoveryRateIsPercent"); }
-	void SetRecoveryRateIsPercentField(char* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "RecoveryRateIsPercent", newValue); }
-	float* GetTamingMaxStatMultipliersField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "TamingMaxStatMultipliers"); }
-	void SetTamingMaxStatMultipliersField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TamingMaxStatMultipliers", newValue); }
-	float* GetTamingMaxStatAdditionsField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "TamingMaxStatAdditions"); }
-	void SetTamingMaxStatAdditionsField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TamingMaxStatAdditions", newValue); }
-	float* GetMaxLevelUpMultiplierField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "MaxLevelUpMultiplier"); }
-	void SetMaxLevelUpMultiplierField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "MaxLevelUpMultiplier", newValue); }
-	float GetTamingIneffectivenessMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "TamingIneffectivenessMultiplier"); }
-	void SetTamingIneffectivenessMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TamingIneffectivenessMultiplier", newValue); }
-	float GetDinoRiderWeightMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DinoRiderWeightMultiplier"); }
-	void SetDinoRiderWeightMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DinoRiderWeightMultiplier", newValue); }
-	char* GetCanLevelUpValueField() const { return GetNativePointerField<char*>(this, "UPrimalCharacterStatusComponent", "CanLevelUpValue"); }
-	void SetCanLevelUpValueField(char* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CanLevelUpValue", newValue); }
-	char* GetDontUseValueField() const { return GetNativePointerField<char*>(this, "UPrimalCharacterStatusComponent", "DontUseValue"); }
-	void SetDontUseValueField(char* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DontUseValue", newValue); }
-	float GetExperienceAutomaticConsciousIncreaseSpeedField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExperienceAutomaticConsciousIncreaseSpeed"); }
-	void SetExperienceAutomaticConsciousIncreaseSpeedField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExperienceAutomaticConsciousIncreaseSpeed", newValue); }
-	float GetCheatMaxWeightField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "CheatMaxWeight"); }
-	void SetCheatMaxWeightField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CheatMaxWeight", newValue); }
-	int GetCharacterStatusComponentPriorityField() const { return GetNativeField<int>(this, "UPrimalCharacterStatusComponent", "CharacterStatusComponentPriority"); }
-	void SetCharacterStatusComponentPriorityField(int newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CharacterStatusComponentPriority", newValue); }
-	float GetSuffocationHealthPercentDecreaseSpeedField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "SuffocationHealthPercentDecreaseSpeed"); }
-	void SetSuffocationHealthPercentDecreaseSpeedField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "SuffocationHealthPercentDecreaseSpeed", newValue); }
-	float GetUnsubmergedOxygenIncreaseSpeedField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "UnsubmergedOxygenIncreaseSpeed"); }
-	void SetUnsubmergedOxygenIncreaseSpeedField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "UnsubmergedOxygenIncreaseSpeed", newValue); }
-	float GetSubmergedOxygenDecreaseSpeedField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "SubmergedOxygenDecreaseSpeed"); }
-	void SetSubmergedOxygenDecreaseSpeedField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "SubmergedOxygenDecreaseSpeed", newValue); }
-	float GetRunningStaminaConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "RunningStaminaConsumptionRate"); }
-	void SetRunningStaminaConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "RunningStaminaConsumptionRate", newValue); }
-	float GetWalkingStaminaConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WalkingStaminaConsumptionRate"); }
-	void SetWalkingStaminaConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WalkingStaminaConsumptionRate", newValue); }
-	float GetSwimmingOrFlyingStaminaConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "SwimmingOrFlyingStaminaConsumptionRate"); }
-	void SetSwimmingOrFlyingStaminaConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "SwimmingOrFlyingStaminaConsumptionRate", newValue); }
-	float GetJumpStaminaConsumptionField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "JumpStaminaConsumption"); }
-	void SetJumpStaminaConsumptionField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "JumpStaminaConsumption", newValue); }
-	float GetWindedSpeedModifierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WindedSpeedModifier"); }
-	void SetWindedSpeedModifierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WindedSpeedModifier", newValue); }
-	float GetWindedSpeedModifierSwimmingOrFlyingField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WindedSpeedModifierSwimmingOrFlying"); }
-	void SetWindedSpeedModifierSwimmingOrFlyingField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WindedSpeedModifierSwimmingOrFlying", newValue); }
-	float GetInjuredSpeedModifierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "InjuredSpeedModifier"); }
-	void SetInjuredSpeedModifierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "InjuredSpeedModifier", newValue); }
-	float GetHypothermicHealthDecreaseRateBaseField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HypothermicHealthDecreaseRateBase"); }
-	void SetHypothermicHealthDecreaseRateBaseField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HypothermicHealthDecreaseRateBase", newValue); }
-	float GetHypothermicHealthDecreaseRatePerDegreeField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HypothermicHealthDecreaseRatePerDegree"); }
-	void SetHypothermicHealthDecreaseRatePerDegreeField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HypothermicHealthDecreaseRatePerDegree", newValue); }
-	float GetHyperthermicHealthDecreaseRateBaseField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HyperthermicHealthDecreaseRateBase"); }
-	void SetHyperthermicHealthDecreaseRateBaseField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HyperthermicHealthDecreaseRateBase", newValue); }
-	float GetHyperthermicHealthDecreaseRatePerDegreeField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HyperthermicHealthDecreaseRatePerDegree"); }
-	void SetHyperthermicHealthDecreaseRatePerDegreeField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HyperthermicHealthDecreaseRatePerDegree", newValue); }
-	float GetXPEarnedPerStaminaConsumedField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "XPEarnedPerStaminaConsumed"); }
-	void SetXPEarnedPerStaminaConsumedField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "XPEarnedPerStaminaConsumed", newValue); }
-	float GetKillXPMultiplierPerCharacterLevelField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "KillXPMultiplierPerCharacterLevel"); }
-	void SetKillXPMultiplierPerCharacterLevelField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "KillXPMultiplierPerCharacterLevel", newValue); }
-	float GetShareXPWithTribeRangeField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ShareXPWithTribeRange"); }
-	void SetShareXPWithTribeRangeField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ShareXPWithTribeRange", newValue); }
-	int GetBaseCharacterLevelField() const { return GetNativeField<int>(this, "UPrimalCharacterStatusComponent", "BaseCharacterLevel"); }
-	void SetBaseCharacterLevelField(int newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BaseCharacterLevel", newValue); }
-	unsigned __int16 GetExtraCharacterLevelField() const { return GetNativeField<unsigned __int16>(this, "UPrimalCharacterStatusComponent", "ExtraCharacterLevel"); }
-	void SetExtraCharacterLevelField(unsigned __int16 newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExtraCharacterLevel", newValue); }
-	float GetExperiencePointsField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExperiencePoints"); }
-	void SetExperiencePointsField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExperiencePoints", newValue); }
-	float GetReplicatedExperiencePointsField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ReplicatedExperiencePoints"); }
-	void SetReplicatedExperiencePointsField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ReplicatedExperiencePoints", newValue); }
-	//TEnumAsByte<enum ELevelExperienceRampType::Type> GetLevelExperienceRampTypeField() const { return GetNativeField<TEnumAsByte<enum ELevelExperienceRampType::Type>>(this, "UPrimalCharacterStatusComponent", "LevelExperienceRampType"); }
-	//void SetLevelExperienceRampTypeField(TEnumAsByte<enum ELevelExperienceRampType::Type> newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LevelExperienceRampType", newValue); }
-	float GetMaxExperiencePointsField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "MaxExperiencePoints"); }
-	void SetMaxExperiencePointsField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "MaxExperiencePoints", newValue); }
-	float GetBaseFoodConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "BaseFoodConsumptionRate"); }
-	void SetBaseFoodConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BaseFoodConsumptionRate", newValue); }
-	float GetBaseWaterConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "BaseWaterConsumptionRate"); }
-	void SetBaseWaterConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BaseWaterConsumptionRate", newValue); }
-	float GetFortitudeTorpidityDecreaseMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "FortitudeTorpidityDecreaseMultiplier"); }
-	void SetFortitudeTorpidityDecreaseMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "FortitudeTorpidityDecreaseMultiplier", newValue); }
-	float GetFortitudeTorpidityIncreaseResistanceField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "FortitudeTorpidityIncreaseResistance"); }
-	void SetFortitudeTorpidityIncreaseResistanceField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "FortitudeTorpidityIncreaseResistance", newValue); }
-	float GetSubmergedWaterIncreaseRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "SubmergedWaterIncreaseRate"); }
-	void SetSubmergedWaterIncreaseRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "SubmergedWaterIncreaseRate", newValue); }
-	float GetCrouchedWaterFoodConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "CrouchedWaterFoodConsumptionMultiplier"); }
-	void SetCrouchedWaterFoodConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CrouchedWaterFoodConsumptionMultiplier", newValue); }
-	float GetProneWaterFoodConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ProneWaterFoodConsumptionMultiplier"); }
-	void SetProneWaterFoodConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ProneWaterFoodConsumptionMultiplier", newValue); }
-	float GetStaminaRecoveryDecreaseFoodMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StaminaRecoveryDecreaseFoodMultiplier"); }
-	void SetStaminaRecoveryDecreaseFoodMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StaminaRecoveryDecreaseFoodMultiplier", newValue); }
-	float GetStaminaRecoveryDecreaseWaterMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StaminaRecoveryDecreaseWaterMultiplier"); }
-	void SetStaminaRecoveryDecreaseWaterMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StaminaRecoveryDecreaseWaterMultiplier", newValue); }
-	float GetHealthRecoveryDecreaseFoodMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HealthRecoveryDecreaseFoodMultiplier"); }
-	void SetHealthRecoveryDecreaseFoodMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HealthRecoveryDecreaseFoodMultiplier", newValue); }
-	float GetBabyDinoConsumingFoodRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "BabyDinoConsumingFoodRateMultiplier"); }
-	void SetBabyDinoConsumingFoodRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BabyDinoConsumingFoodRateMultiplier", newValue); }
-	float GetDinoTamedAdultConsumingFoodRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DinoTamedAdultConsumingFoodRateMultiplier"); }
-	void SetDinoTamedAdultConsumingFoodRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DinoTamedAdultConsumingFoodRateMultiplier", newValue); }
-	float GetBabyGestationConsumingFoodRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "BabyGestationConsumingFoodRateMultiplier"); }
-	void SetBabyGestationConsumingFoodRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BabyGestationConsumingFoodRateMultiplier", newValue); }
-	float GetBabyDinoStarvationHealthDecreaseRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "BabyDinoStarvationHealthDecreaseRateMultiplier"); }
-	void SetBabyDinoStarvationHealthDecreaseRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BabyDinoStarvationHealthDecreaseRateMultiplier", newValue); }
-	float GetBabyMaxHealthPercentField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "BabyMaxHealthPercent"); }
-	void SetBabyMaxHealthPercentField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BabyMaxHealthPercent", newValue); }
-	float GetCrouchedStaminaConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "CrouchedStaminaConsumptionMultiplier"); }
-	void SetCrouchedStaminaConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CrouchedStaminaConsumptionMultiplier", newValue); }
-	float GetProneStaminaConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ProneStaminaConsumptionMultiplier"); }
-	void SetProneStaminaConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ProneStaminaConsumptionMultiplier", newValue); }
-	float GetStarvationHealthConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StarvationHealthConsumptionRate"); }
-	void SetStarvationHealthConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StarvationHealthConsumptionRate", newValue); }
-	float GetDehyrdationHealthConsumptionRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DehyrdationHealthConsumptionRate"); }
-	void SetDehyrdationHealthConsumptionRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DehyrdationHealthConsumptionRate", newValue); }
-	float GetStaminaConsumptionDecreaseWaterMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StaminaConsumptionDecreaseWaterMultiplier"); }
-	void SetStaminaConsumptionDecreaseWaterMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StaminaConsumptionDecreaseWaterMultiplier", newValue); }
-	float GetStaminaConsumptionDecreaseFoodMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StaminaConsumptionDecreaseFoodMultiplier"); }
-	void SetStaminaConsumptionDecreaseFoodMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StaminaConsumptionDecreaseFoodMultiplier", newValue); }
-	float GetHypothermiaDecreaseFoodMultiplierBaseField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HypothermiaDecreaseFoodMultiplierBase"); }
-	void SetHypothermiaDecreaseFoodMultiplierBaseField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HypothermiaDecreaseFoodMultiplierBase", newValue); }
-	float GetHypothermiaDecreaseFoodMultiplierPerDegreeField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HypothermiaDecreaseFoodMultiplierPerDegree"); }
-	void SetHypothermiaDecreaseFoodMultiplierPerDegreeField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HypothermiaDecreaseFoodMultiplierPerDegree", newValue); }
-	float GetHyperthermiaDecreaseWaterMultiplierBaseField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HyperthermiaDecreaseWaterMultiplierBase"); }
-	void SetHyperthermiaDecreaseWaterMultiplierBaseField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HyperthermiaDecreaseWaterMultiplierBase", newValue); }
-	float GetHyperthermiaDecreaseWaterMultiplierPerDegreeField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HyperthermiaDecreaseWaterMultiplierPerDegree"); }
-	void SetHyperthermiaDecreaseWaterMultiplierPerDegreeField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HyperthermiaDecreaseWaterMultiplierPerDegree", newValue); }
-	float GetHyperthermiaTemperatureThresholdField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HyperthermiaTemperatureThreshold"); }
-	void SetHyperthermiaTemperatureThresholdField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HyperthermiaTemperatureThreshold", newValue); }
-	float GetHypothermiaTemperatureThresholdField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HypothermiaTemperatureThreshold"); }
-	void SetHypothermiaTemperatureThresholdField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HypothermiaTemperatureThreshold", newValue); }
-	float GetTorporExitPercentThresholdField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "TorporExitPercentThreshold"); }
-	void SetTorporExitPercentThresholdField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TorporExitPercentThreshold", newValue); }
-	float GetKnockedOutTorpidityRecoveryRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "KnockedOutTorpidityRecoveryRateMultiplier"); }
-	void SetKnockedOutTorpidityRecoveryRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "KnockedOutTorpidityRecoveryRateMultiplier", newValue); }
-	float GetDehydrationTorpidityMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DehydrationTorpidityMultiplier"); }
-	void SetDehydrationTorpidityMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DehydrationTorpidityMultiplier", newValue); }
-	float GetStarvationTorpidityMultuplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StarvationTorpidityMultuplier"); }
-	void SetStarvationTorpidityMultuplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StarvationTorpidityMultuplier", newValue); }
-	float GetStarvationTorpidityIncreaseRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StarvationTorpidityIncreaseRate"); }
-	void SetStarvationTorpidityIncreaseRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StarvationTorpidityIncreaseRate", newValue); }
-	float GetDehyrdationTorpidityIncreaseRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DehyrdationTorpidityIncreaseRate"); }
-	void SetDehyrdationTorpidityIncreaseRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DehyrdationTorpidityIncreaseRate", newValue); }
-	float GetInjuredTorpidityIncreaseMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "InjuredTorpidityIncreaseMultiplier"); }
-	void SetInjuredTorpidityIncreaseMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "InjuredTorpidityIncreaseMultiplier", newValue); }
-	float GetWeightSpeedDecreasePowerField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WeightSpeedDecreasePower"); }
-	void SetWeightSpeedDecreasePowerField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WeightSpeedDecreasePower", newValue); }
-	float GetWeightJumpDecreasePowerField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WeightJumpDecreasePower"); }
-	void SetWeightJumpDecreasePowerField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WeightJumpDecreasePower", newValue); }
-	float GetPoopItemMinFoodConsumptionIntervalField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "PoopItemMinFoodConsumptionInterval"); }
-	void SetPoopItemMinFoodConsumptionIntervalField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "PoopItemMinFoodConsumptionInterval", newValue); }
-	float GetPoopItemMaxFoodConsumptionIntervalField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "PoopItemMaxFoodConsumptionInterval"); }
-	void SetPoopItemMaxFoodConsumptionIntervalField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "PoopItemMaxFoodConsumptionInterval", newValue); }
-	float GetTheMaxTorporIncreasePerBaseLevelField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "TheMaxTorporIncreasePerBaseLevel"); }
-	void SetTheMaxTorporIncreasePerBaseLevelField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "TheMaxTorporIncreasePerBaseLevel", newValue); }
-	float GetCurrentStatusValuesReplicationIntervalField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "CurrentStatusValuesReplicationInterval"); }
-	void SetCurrentStatusValuesReplicationIntervalField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CurrentStatusValuesReplicationInterval", newValue); }
-	float GetInsulationHyperthermiaOffsetExponentField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "InsulationHyperthermiaOffsetExponent"); }
-	void SetInsulationHyperthermiaOffsetExponentField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "InsulationHyperthermiaOffsetExponent", newValue); }
-	float GetInsulationHyperthermiaOffsetScalerField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "InsulationHyperthermiaOffsetScaler"); }
-	void SetInsulationHyperthermiaOffsetScalerField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "InsulationHyperthermiaOffsetScaler", newValue); }
-	float GetInsulationHypothermiaOffsetExponentField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "InsulationHypothermiaOffsetExponent"); }
-	void SetInsulationHypothermiaOffsetExponentField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "InsulationHypothermiaOffsetExponent", newValue); }
-	float GetInsulationHypothermiaOffsetScalerField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "InsulationHypothermiaOffsetScaler"); }
-	void SetInsulationHypothermiaOffsetScalerField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "InsulationHypothermiaOffsetScaler", newValue); }
-	float GetHypoCharacterInsulationValueField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HypoCharacterInsulationValue"); }
-	void SetHypoCharacterInsulationValueField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HypoCharacterInsulationValue", newValue); }
-	float GetHyperCharacterInsulationValueField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HyperCharacterInsulationValue"); }
-	void SetHyperCharacterInsulationValueField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HyperCharacterInsulationValue", newValue); }
-	float GetPoopItemFoodConsumptionCacheField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "PoopItemFoodConsumptionCache"); }
-	void SetPoopItemFoodConsumptionCacheField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "PoopItemFoodConsumptionCache", newValue); }
-	float GetLastHypothermalCharacterInsulationValueField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "LastHypothermalCharacterInsulationValue"); }
-	void SetLastHypothermalCharacterInsulationValueField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LastHypothermalCharacterInsulationValue", newValue); }
-	float GetLastHyperthermalCharacterInsulationValueField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "LastHyperthermalCharacterInsulationValue"); }
-	float GetGenericXPMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "GenericXPMultiplier"); }
-	void SetGenericXPMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "GenericXPMultiplier", newValue); }
-	float GetCraftEarnXPMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "CraftEarnXPMultiplier"); }
-	void SetCraftEarnXPMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CraftEarnXPMultiplier", newValue); }
-	float GetKillEarnXPMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "KillEarnXPMultiplier"); }
-	void SetKillEarnXPMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "KillEarnXPMultiplier", newValue); }
-	float GetGenericEarnXPMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "GenericEarnXPMultiplier"); }
-	void SetGenericEarnXPMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "GenericEarnXPMultiplier", newValue); }
-	float GetSpecialEarnXPMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "SpecialEarnXPMultiplier"); }
-	void SetSpecialEarnXPMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "SpecialEarnXPMultiplier", newValue); }
-	float GetHarvestEarnXPMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "HarvestEarnXPMultiplier"); }
-	void SetHarvestEarnXPMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "HarvestEarnXPMultiplier", newValue); }
-	float GetDefaultHyperthermicInsulationField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DefaultHyperthermicInsulation"); }
-	void SetDefaultHyperthermicInsulationField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DefaultHyperthermicInsulation", newValue); }
-	float GetDefaultHypothermicInsulationField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DefaultHypothermicInsulation"); }
-	void SetDefaultHypothermicInsulationField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DefaultHypothermicInsulation", newValue); }
-	float GetMaxTamingEffectivenessBaseLevelMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "MaxTamingEffectivenessBaseLevelMultiplier"); }
-	void SetMaxTamingEffectivenessBaseLevelMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "MaxTamingEffectivenessBaseLevelMultiplier", newValue); }
-	float GetBabyUnstasisFoodConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "BabyUnstasisFoodConsumptionMultiplier"); }
-	void SetBabyUnstasisFoodConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "BabyUnstasisFoodConsumptionMultiplier", newValue); }
-	//TArray<FPrimalCharacterStatusValueModifier> GetStatusValueModifiersField() const { return GetNativeField<TArray<FPrimalCharacterStatusValueModifier>>(this, "UPrimalCharacterStatusComponent", "StatusValueModifiers"); }
-	//void SetStatusValueModifiersField(TArray<FPrimalCharacterStatusValueModifier> newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StatusValueModifiers", newValue); }
-	TArray<unsigned char> GetStatusValueModifierDescriptionIndicesField() const { return GetNativeField<TArray<unsigned char>>(this, "UPrimalCharacterStatusComponent", "StatusValueModifierDescriptionIndices"); }
-	void SetStatusValueModifierDescriptionIndicesField(TArray<unsigned char> newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StatusValueModifierDescriptionIndices", newValue); }
-	float* GetCurrentStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "CurrentStatusValues"); }
-	void SetCurrentStatusValuesField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CurrentStatusValues", newValue); }
-	float* GetAdditionalStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "AdditionalStatusValues"); }
-	void SetAdditionalStatusValuesField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "AdditionalStatusValues", newValue); }
-	float* GetReplicatedCurrentStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "ReplicatedCurrentStatusValues"); }
-	void SetReplicatedCurrentStatusValuesField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ReplicatedCurrentStatusValues", newValue); }
-	float* GetReplicatedGlobalMaxStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "ReplicatedGlobalMaxStatusValues"); }
-	void SetReplicatedGlobalMaxStatusValuesField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ReplicatedGlobalMaxStatusValues", newValue); }
-	float* GetReplicatedBaseLevelMaxStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "ReplicatedBaseLevelMaxStatusValues"); }
-	void SetReplicatedBaseLevelMaxStatusValuesField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ReplicatedBaseLevelMaxStatusValues", newValue); }
-	float* GetReplicatedGlobalCurrentStatusValuesField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "ReplicatedGlobalCurrentStatusValues"); }
-	void SetReplicatedGlobalCurrentStatusValuesField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ReplicatedGlobalCurrentStatusValues", newValue); }
-	char* GetCurrentStatusStatesField() const { return GetNativePointerField<char*>(this, "UPrimalCharacterStatusComponent", "CurrentStatusStates"); }
-	void SetCurrentStatusStatesField(char* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "CurrentStatusStates", newValue); }
-	long double* GetLastDecreasedStatusValuesTimesField() const { return GetNativePointerField<long double*>(this, "UPrimalCharacterStatusComponent", "LastDecreasedStatusValuesTimes"); }
-	void SetLastDecreasedStatusValuesTimesField(long double* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LastDecreasedStatusValuesTimes", newValue); }
-	long double* GetLastIncreasedStatusValuesTimesField() const { return GetNativePointerField<long double*>(this, "UPrimalCharacterStatusComponent", "LastIncreasedStatusValuesTimes"); }
-	void SetLastIncreasedStatusValuesTimesField(long double* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LastIncreasedStatusValuesTimes", newValue); }
-	long double* GetLastMaxedStatusValuesTimesField() const { return GetNativePointerField<long double*>(this, "UPrimalCharacterStatusComponent", "LastMaxedStatusValuesTimes"); }
-	void SetLastMaxedStatusValuesTimesField(long double* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LastMaxedStatusValuesTimes", newValue); }
-	long double* GetLastDepletedStatusValuesTimesField() const { return GetNativePointerField<long double*>(this, "UPrimalCharacterStatusComponent", "LastDepletedStatusValuesTimes"); }
-	void SetLastDepletedStatusValuesTimesField(long double* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LastDepletedStatusValuesTimes", newValue); }
-	float GetStaminaRecoveryExtraResourceDecreaseMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "StaminaRecoveryExtraResourceDecreaseMultiplier"); }
-	void SetStaminaRecoveryExtraResourceDecreaseMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "StaminaRecoveryExtraResourceDecreaseMultiplier", newValue); }
-	float GetDehydrationStaminaRecoveryRateField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DehydrationStaminaRecoveryRate"); }
-	void SetDehydrationStaminaRecoveryRateField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DehydrationStaminaRecoveryRate", newValue); }
-	float GetWaterConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WaterConsumptionMultiplier"); }
-	void SetWaterConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WaterConsumptionMultiplier", newValue); }
-	float GetFoodConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "FoodConsumptionMultiplier"); }
-	void SetFoodConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "FoodConsumptionMultiplier", newValue); }
-	float GetExtraOxygenSpeedStatMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExtraOxygenSpeedStatMultiplier"); }
-	void SetExtraOxygenSpeedStatMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExtraOxygenSpeedStatMultiplier", newValue); }
-	float GetExtraTamedHealthMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExtraTamedHealthMultiplier"); }
-	void SetExtraTamedHealthMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExtraTamedHealthMultiplier", newValue); }
-	float GetWakingTameFoodConsumptionRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WakingTameFoodConsumptionRateMultiplier"); }
-	void SetWakingTameFoodConsumptionRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WakingTameFoodConsumptionRateMultiplier", newValue); }
-	float GetSwimmingStaminaRecoveryRateMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "SwimmingStaminaRecoveryRateMultiplier"); }
-	void SetSwimmingStaminaRecoveryRateMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "SwimmingStaminaRecoveryRateMultiplier", newValue); }
-	float GetExtraWaterConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExtraWaterConsumptionMultiplier"); }
-	void SetExtraWaterConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExtraWaterConsumptionMultiplier", newValue); }
-	float GetExtraFoodConsumptionMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExtraFoodConsumptionMultiplier"); }
-	void SetExtraFoodConsumptionMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExtraFoodConsumptionMultiplier", newValue); }
-	float GetDefaultMaxOxygenField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DefaultMaxOxygen"); }
-	void SetDefaultMaxOxygenField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DefaultMaxOxygen", newValue); }
-	long double GetLastReplicatedCurrentStatusValuesTimeField() const { return GetNativeField<long double>(this, "UPrimalCharacterStatusComponent", "LastReplicatedCurrentStatusValuesTime"); }
-	void SetLastReplicatedCurrentStatusValuesTimeField(long double newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LastReplicatedCurrentStatusValuesTime", newValue); }
-	float GetOriginalMaxTorporField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "OriginalMaxTorpor"); }
-	void SetOriginalMaxTorporField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "OriginalMaxTorpor", newValue); }
-	float GetMountedDinoDinoWeightMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "MountedDinoDinoWeightMultiplier"); }
-	void SetMountedDinoDinoWeightMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "MountedDinoDinoWeightMultiplier", newValue); }
-	float GetExtraWildDinoDamageMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExtraWildDinoDamageMultiplier"); }
-	void SetExtraWildDinoDamageMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExtraWildDinoDamageMultiplier", newValue); }
-	float GetExtraTamedDinoDamageMultiplierField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "ExtraTamedDinoDamageMultiplier"); }
-	void SetExtraTamedDinoDamageMultiplierField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "ExtraTamedDinoDamageMultiplier", newValue); }
-	float GetWeightMultiplierForCarriedPassengersField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WeightMultiplierForCarriedPassengers"); }
-	void SetWeightMultiplierForCarriedPassengersField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WeightMultiplierForCarriedPassengers", newValue); }
-	float GetWeightMultiplierForPlatformPassengersInventoryField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "WeightMultiplierForPlatformPassengersInventory"); }
-	void SetWeightMultiplierForPlatformPassengersInventoryField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "WeightMultiplierForPlatformPassengersInventory", newValue); }
-	float* GetDinoMaxStatAddMultiplierImprintingField() const { return GetNativePointerField<float*>(this, "UPrimalCharacterStatusComponent", "DinoMaxStatAddMultiplierImprinting"); }
-	void SetDinoMaxStatAddMultiplierImprintingField(float* newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DinoMaxStatAddMultiplierImprinting", newValue); }
-	float GetDinoImprintingQualityField() const { return GetNativeField<float>(this, "UPrimalCharacterStatusComponent", "DinoImprintingQuality"); }
-	void SetDinoImprintingQualityField(float newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "DinoImprintingQuality", newValue); }
-	bool GetbInWeightLockField() const { return GetNativeField<bool>(this, "UPrimalCharacterStatusComponent", "bInWeightLock"); }
-	void SetbInWeightLockField(bool newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "bInWeightLock", newValue); }
-	long double GetLastReplicatedXPTimeField() const { return GetNativeField<long double>(this, "UPrimalCharacterStatusComponent", "LastReplicatedXPTime"); }
-	void SetLastReplicatedXPTimeField(long double newValue) { SetNativeField(this, "UPrimalCharacterStatusComponent", "LastReplicatedXPTime", newValue); }
-	//bool GetbInitializedBaseLevelMaxStatusValuesField() const { return GetNativeBitField<bool, unsigned __int32>(this, "UPrimalCharacterStatusComponent", "bInitializedBaseLevelMaxStatusValues"); }
-	//void SetbInitializedBaseLevelMaxStatusValuesField(bool newValue) { SetNativeBitField<unsigned __int32>(this, "UPrimalCharacterStatusComponent", "bInitializedBaseLevelMaxStatusValues", newValue); }
+	FieldArray<float, 12> MaxStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "MaxStatusValues" }; }
+	FieldArray<float, 12> BaseLevelMaxStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "BaseLevelMaxStatusValues" }; }
+	FieldArray<char, 12> NumberOfLevelUpPointsAppliedField() { return { this, "UPrimalCharacterStatusComponent", "NumberOfLevelUpPointsApplied" }; }
+	FieldArray<char, 12> NumberOfLevelUpPointsAppliedTamedField() { return { this, "UPrimalCharacterStatusComponent", "NumberOfLevelUpPointsAppliedTamed" }; }
+	FieldValue<float> TamedIneffectivenessModifierField() { return { this, "UPrimalCharacterStatusComponent", "TamedIneffectivenessModifier" }; }
+	FieldValue<float> MovingStaminaRecoveryRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "MovingStaminaRecoveryRateMultiplier" }; }
+	FieldArray<float, 12> RecoveryRateStatusValueField() { return { this, "UPrimalCharacterStatusComponent", "RecoveryRateStatusValue" }; }
+	FieldArray<float, 12> TimeToRecoverAfterDepletionStatusValueField() { return { this, "UPrimalCharacterStatusComponent", "TimeToRecoverAfterDepletionStatusValue" }; }
+	FieldArray<float, 12> TimeToRecoverAfterDecreaseStatusValueField() { return { this, "UPrimalCharacterStatusComponent", "TimeToRecoverAfterDecreaseStatusValue" }; }
+	FieldArray<float, 12> AmountMaxGainedPerLevelUpValueField() { return { this, "UPrimalCharacterStatusComponent", "AmountMaxGainedPerLevelUpValue" }; }
+	FieldArray<float, 12> AmountMaxGainedPerLevelUpValueTamedField() { return { this, "UPrimalCharacterStatusComponent", "AmountMaxGainedPerLevelUpValueTamed" }; }
+	FieldArray<char, 12> MaxGainedPerLevelUpValueIsPercentField() { return { this, "UPrimalCharacterStatusComponent", "MaxGainedPerLevelUpValueIsPercent" }; }
+	FieldArray<char, 12> RecoveryRateIsPercentField() { return { this, "UPrimalCharacterStatusComponent", "RecoveryRateIsPercent" }; }
+	FieldArray<float, 12> TamingMaxStatMultipliersField() { return { this, "UPrimalCharacterStatusComponent", "TamingMaxStatMultipliers" }; }
+	FieldArray<float, 12> TamingMaxStatAdditionsField() { return { this, "UPrimalCharacterStatusComponent", "TamingMaxStatAdditions" }; }
+	FieldArray<float, 12> MaxLevelUpMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "MaxLevelUpMultiplier" }; }
+	FieldValue<float> TamedLandDinoSwimSpeedLevelUpEffectivenessField() { return { this, "UPrimalCharacterStatusComponent", "TamedLandDinoSwimSpeedLevelUpEffectiveness" }; }
+	FieldValue<float> TamingIneffectivenessMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "TamingIneffectivenessMultiplier" }; }
+	FieldValue<float> DinoRiderWeightMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "DinoRiderWeightMultiplier" }; }
+	FieldArray<char, 12> CanLevelUpValueField() { return { this, "UPrimalCharacterStatusComponent", "CanLevelUpValue" }; }
+	FieldArray<char, 12> DontUseValueField() { return { this, "UPrimalCharacterStatusComponent", "DontUseValue" }; }
+	FieldValue<float> ExperienceAutomaticConsciousIncreaseSpeedField() { return { this, "UPrimalCharacterStatusComponent", "ExperienceAutomaticConsciousIncreaseSpeed" }; }
+	FieldValue<float> CheatMaxWeightField() { return { this, "UPrimalCharacterStatusComponent", "CheatMaxWeight" }; }
+	FieldValue<int> CharacterStatusComponentPriorityField() { return { this, "UPrimalCharacterStatusComponent", "CharacterStatusComponentPriority" }; }
+	FieldValue<float> SuffocationHealthPercentDecreaseSpeedField() { return { this, "UPrimalCharacterStatusComponent", "SuffocationHealthPercentDecreaseSpeed" }; }
+	FieldValue<float> UnsubmergedOxygenIncreaseSpeedField() { return { this, "UPrimalCharacterStatusComponent", "UnsubmergedOxygenIncreaseSpeed" }; }
+	FieldValue<float> SubmergedOxygenDecreaseSpeedField() { return { this, "UPrimalCharacterStatusComponent", "SubmergedOxygenDecreaseSpeed" }; }
+	FieldValue<float> RunningStaminaConsumptionRateField() { return { this, "UPrimalCharacterStatusComponent", "RunningStaminaConsumptionRate" }; }
+	FieldValue<float> WalkingStaminaConsumptionRateField() { return { this, "UPrimalCharacterStatusComponent", "WalkingStaminaConsumptionRate" }; }
+	FieldValue<float> SwimmingOrFlyingStaminaConsumptionRateField() { return { this, "UPrimalCharacterStatusComponent", "SwimmingOrFlyingStaminaConsumptionRate" }; }
+	FieldValue<float> JumpStaminaConsumptionField() { return { this, "UPrimalCharacterStatusComponent", "JumpStaminaConsumption" }; }
+	FieldValue<float> WindedSpeedModifierField() { return { this, "UPrimalCharacterStatusComponent", "WindedSpeedModifier" }; }
+	FieldValue<float> WindedSpeedModifierSwimmingOrFlyingField() { return { this, "UPrimalCharacterStatusComponent", "WindedSpeedModifierSwimmingOrFlying" }; }
+	FieldValue<float> InjuredSpeedModifierField() { return { this, "UPrimalCharacterStatusComponent", "InjuredSpeedModifier" }; }
+	FieldValue<float> HypothermicHealthDecreaseRateBaseField() { return { this, "UPrimalCharacterStatusComponent", "HypothermicHealthDecreaseRateBase" }; }
+	FieldValue<float> HypothermicHealthDecreaseRatePerDegreeField() { return { this, "UPrimalCharacterStatusComponent", "HypothermicHealthDecreaseRatePerDegree" }; }
+	FieldValue<float> HyperthermicHealthDecreaseRateBaseField() { return { this, "UPrimalCharacterStatusComponent", "HyperthermicHealthDecreaseRateBase" }; }
+	FieldValue<float> HyperthermicHealthDecreaseRatePerDegreeField() { return { this, "UPrimalCharacterStatusComponent", "HyperthermicHealthDecreaseRatePerDegree" }; }
+	FieldValue<float> XPEarnedPerStaminaConsumedField() { return { this, "UPrimalCharacterStatusComponent", "XPEarnedPerStaminaConsumed" }; }
+	FieldValue<float> KillXPMultiplierPerCharacterLevelField() { return { this, "UPrimalCharacterStatusComponent", "KillXPMultiplierPerCharacterLevel" }; }
+	FieldValue<float> ShareXPWithTribeRangeField() { return { this, "UPrimalCharacterStatusComponent", "ShareXPWithTribeRange" }; }
+	FieldValue<int> BaseCharacterLevelField() { return { this, "UPrimalCharacterStatusComponent", "BaseCharacterLevel" }; }
+	FieldValue<unsigned __int16> ExtraCharacterLevelField() { return { this, "UPrimalCharacterStatusComponent", "ExtraCharacterLevel" }; }
+	FieldValue<float> ExperiencePointsField() { return { this, "UPrimalCharacterStatusComponent", "ExperiencePoints" }; }
+	FieldValue<float> ReplicatedExperiencePointsField() { return { this, "UPrimalCharacterStatusComponent", "ReplicatedExperiencePoints" }; }
+	FieldValue<TEnumAsByte<enum ELevelExperienceRampType::Type>> LevelExperienceRampTypeField() { return { this, "UPrimalCharacterStatusComponent", "LevelExperienceRampType" }; }
+	FieldValue<float> MaxExperiencePointsField() { return { this, "UPrimalCharacterStatusComponent", "MaxExperiencePoints" }; }
+	FieldValue<float> BaseFoodConsumptionRateField() { return { this, "UPrimalCharacterStatusComponent", "BaseFoodConsumptionRate" }; }
+	FieldValue<float> BaseWaterConsumptionRateField() { return { this, "UPrimalCharacterStatusComponent", "BaseWaterConsumptionRate" }; }
+	FieldValue<float> FortitudeTorpidityDecreaseMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "FortitudeTorpidityDecreaseMultiplier" }; }
+	FieldValue<float> FortitudeTorpidityIncreaseResistanceField() { return { this, "UPrimalCharacterStatusComponent", "FortitudeTorpidityIncreaseResistance" }; }
+	FieldValue<float> SubmergedWaterIncreaseRateField() { return { this, "UPrimalCharacterStatusComponent", "SubmergedWaterIncreaseRate" }; }
+	FieldValue<float> CrouchedWaterFoodConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "CrouchedWaterFoodConsumptionMultiplier" }; }
+	FieldValue<float> ProneWaterFoodConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ProneWaterFoodConsumptionMultiplier" }; }
+	FieldValue<float> StaminaRecoveryDecreaseFoodMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "StaminaRecoveryDecreaseFoodMultiplier" }; }
+	FieldValue<float> StaminaRecoveryDecreaseWaterMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "StaminaRecoveryDecreaseWaterMultiplier" }; }
+	FieldValue<float> HealthRecoveryDecreaseFoodMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "HealthRecoveryDecreaseFoodMultiplier" }; }
+	FieldValue<float> BabyDinoConsumingFoodRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "BabyDinoConsumingFoodRateMultiplier" }; }
+	FieldValue<float> DinoTamedAdultConsumingFoodRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "DinoTamedAdultConsumingFoodRateMultiplier" }; }
+	FieldValue<float> BabyGestationConsumingFoodRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "BabyGestationConsumingFoodRateMultiplier" }; }
+	FieldValue<float> BabyDinoStarvationHealthDecreaseRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "BabyDinoStarvationHealthDecreaseRateMultiplier" }; }
+	FieldValue<float> BabyMaxHealthPercentField() { return { this, "UPrimalCharacterStatusComponent", "BabyMaxHealthPercent" }; }
+	FieldValue<float> CrouchedStaminaConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "CrouchedStaminaConsumptionMultiplier" }; }
+	FieldValue<float> ProneStaminaConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ProneStaminaConsumptionMultiplier" }; }
+	FieldValue<float> StarvationHealthConsumptionRateField() { return { this, "UPrimalCharacterStatusComponent", "StarvationHealthConsumptionRate" }; }
+	FieldValue<float> DehyrdationHealthConsumptionRateField() { return { this, "UPrimalCharacterStatusComponent", "DehyrdationHealthConsumptionRate" }; }
+	FieldValue<float> StaminaConsumptionDecreaseWaterMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "StaminaConsumptionDecreaseWaterMultiplier" }; }
+	FieldValue<float> StaminaConsumptionDecreaseFoodMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "StaminaConsumptionDecreaseFoodMultiplier" }; }
+	FieldValue<float> HypothermiaDecreaseFoodMultiplierBaseField() { return { this, "UPrimalCharacterStatusComponent", "HypothermiaDecreaseFoodMultiplierBase" }; }
+	FieldValue<float> HypothermiaDecreaseFoodMultiplierPerDegreeField() { return { this, "UPrimalCharacterStatusComponent", "HypothermiaDecreaseFoodMultiplierPerDegree" }; }
+	FieldValue<float> HyperthermiaDecreaseWaterMultiplierBaseField() { return { this, "UPrimalCharacterStatusComponent", "HyperthermiaDecreaseWaterMultiplierBase" }; }
+	FieldValue<float> HyperthermiaDecreaseWaterMultiplierPerDegreeField() { return { this, "UPrimalCharacterStatusComponent", "HyperthermiaDecreaseWaterMultiplierPerDegree" }; }
+	FieldValue<float> HyperthermiaTemperatureThresholdField() { return { this, "UPrimalCharacterStatusComponent", "HyperthermiaTemperatureThreshold" }; }
+	FieldValue<float> HypothermiaTemperatureThresholdField() { return { this, "UPrimalCharacterStatusComponent", "HypothermiaTemperatureThreshold" }; }
+	FieldValue<float> TorporExitPercentThresholdField() { return { this, "UPrimalCharacterStatusComponent", "TorporExitPercentThreshold" }; }
+	FieldValue<float> KnockedOutTorpidityRecoveryRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "KnockedOutTorpidityRecoveryRateMultiplier" }; }
+	FieldValue<float> DehydrationTorpidityMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "DehydrationTorpidityMultiplier" }; }
+	FieldValue<float> StarvationTorpidityMultuplierField() { return { this, "UPrimalCharacterStatusComponent", "StarvationTorpidityMultuplier" }; }
+	FieldValue<float> StarvationTorpidityIncreaseRateField() { return { this, "UPrimalCharacterStatusComponent", "StarvationTorpidityIncreaseRate" }; }
+	FieldValue<float> DehyrdationTorpidityIncreaseRateField() { return { this, "UPrimalCharacterStatusComponent", "DehyrdationTorpidityIncreaseRate" }; }
+	FieldValue<float> InjuredTorpidityIncreaseMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "InjuredTorpidityIncreaseMultiplier" }; }
+	FieldValue<float> WeightSpeedDecreasePowerField() { return { this, "UPrimalCharacterStatusComponent", "WeightSpeedDecreasePower" }; }
+	FieldValue<float> WeightJumpDecreasePowerField() { return { this, "UPrimalCharacterStatusComponent", "WeightJumpDecreasePower" }; }
+	FieldValue<float> PoopItemMinFoodConsumptionIntervalField() { return { this, "UPrimalCharacterStatusComponent", "PoopItemMinFoodConsumptionInterval" }; }
+	FieldValue<float> PoopItemMaxFoodConsumptionIntervalField() { return { this, "UPrimalCharacterStatusComponent", "PoopItemMaxFoodConsumptionInterval" }; }
+	FieldValue<float> TheMaxTorporIncreasePerBaseLevelField() { return { this, "UPrimalCharacterStatusComponent", "TheMaxTorporIncreasePerBaseLevel" }; }
+	FieldValue<float> CurrentStatusValuesReplicationIntervalField() { return { this, "UPrimalCharacterStatusComponent", "CurrentStatusValuesReplicationInterval" }; }
+	FieldValue<float> InsulationHyperthermiaOffsetExponentField() { return { this, "UPrimalCharacterStatusComponent", "InsulationHyperthermiaOffsetExponent" }; }
+	FieldValue<float> InsulationHyperthermiaOffsetScalerField() { return { this, "UPrimalCharacterStatusComponent", "InsulationHyperthermiaOffsetScaler" }; }
+	FieldValue<float> InsulationHypothermiaOffsetExponentField() { return { this, "UPrimalCharacterStatusComponent", "InsulationHypothermiaOffsetExponent" }; }
+	FieldValue<float> InsulationHypothermiaOffsetScalerField() { return { this, "UPrimalCharacterStatusComponent", "InsulationHypothermiaOffsetScaler" }; }
+	FieldValue<float> HypoCharacterInsulationValueField() { return { this, "UPrimalCharacterStatusComponent", "HypoCharacterInsulationValue" }; }
+	FieldValue<float> HyperCharacterInsulationValueField() { return { this, "UPrimalCharacterStatusComponent", "HyperCharacterInsulationValue" }; }
+	FieldValue<float> PoopItemFoodConsumptionCacheField() { return { this, "UPrimalCharacterStatusComponent", "PoopItemFoodConsumptionCache" }; }
+	FieldValue<float> LastHypothermalCharacterInsulationValueField() { return { this, "UPrimalCharacterStatusComponent", "LastHypothermalCharacterInsulationValue" }; }
+	FieldValue<float> LastHyperthermalCharacterInsulationValueField() { return { this, "UPrimalCharacterStatusComponent", "LastHyperthermalCharacterInsulationValue" }; }
+	FieldValue<TEnumAsByte<enum EPrimalCharacterStatusValue::Type>> MaxStatusValueToAutoUpdateField() { return { this, "UPrimalCharacterStatusComponent", "MaxStatusValueToAutoUpdate" }; }
+	FieldValue<float> GenericXPMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "GenericXPMultiplier" }; }
+	FieldValue<float> CraftEarnXPMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "CraftEarnXPMultiplier" }; }
+	FieldValue<float> KillEarnXPMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "KillEarnXPMultiplier" }; }
+	FieldValue<float> GenericEarnXPMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "GenericEarnXPMultiplier" }; }
+	FieldValue<float> SpecialEarnXPMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "SpecialEarnXPMultiplier" }; }
+	FieldValue<float> HarvestEarnXPMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "HarvestEarnXPMultiplier" }; }
+	FieldValue<float> DefaultHyperthermicInsulationField() { return { this, "UPrimalCharacterStatusComponent", "DefaultHyperthermicInsulation" }; }
+	FieldValue<float> DefaultHypothermicInsulationField() { return { this, "UPrimalCharacterStatusComponent", "DefaultHypothermicInsulation" }; }
+	FieldValue<float> MaxTamingEffectivenessBaseLevelMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "MaxTamingEffectivenessBaseLevelMultiplier" }; }
+	FieldValue<TArray<FPrimalCharacterStatusValueModifier>> StatusValueModifiersField() { return { this, "UPrimalCharacterStatusComponent", "StatusValueModifiers" }; }
+	FieldValue<TArray<unsigned char>> StatusValueModifierDescriptionIndicesField() { return { this, "UPrimalCharacterStatusComponent", "StatusValueModifierDescriptionIndices" }; }
+	FieldArray<float, 12> CurrentStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "CurrentStatusValues" }; }
+	FieldArray<float, 12> AdditionalStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "AdditionalStatusValues" }; }
+	FieldArray<float, 12> ReplicatedCurrentStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "ReplicatedCurrentStatusValues" }; }
+	FieldArray<float, 12> ReplicatedGlobalMaxStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "ReplicatedGlobalMaxStatusValues" }; }
+	FieldArray<float, 12> ReplicatedBaseLevelMaxStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "ReplicatedBaseLevelMaxStatusValues" }; }
+	FieldArray<float, 12> ReplicatedGlobalCurrentStatusValuesField() { return { this, "UPrimalCharacterStatusComponent", "ReplicatedGlobalCurrentStatusValues" }; }
+	FieldArray<char, 12> CurrentStatusStatesField() { return { this, "UPrimalCharacterStatusComponent", "CurrentStatusStates" }; }
+	FieldArray<long double, 12> LastDecreasedStatusValuesTimesField() { return { this, "UPrimalCharacterStatusComponent", "LastDecreasedStatusValuesTimes" }; }
+	FieldArray<long double, 12> LastIncreasedStatusValuesTimesField() { return { this, "UPrimalCharacterStatusComponent", "LastIncreasedStatusValuesTimes" }; }
+	FieldArray<long double, 12> LastMaxedStatusValuesTimesField() { return { this, "UPrimalCharacterStatusComponent", "LastMaxedStatusValuesTimes" }; }
+	FieldArray<long double, 12> LastDepletedStatusValuesTimesField() { return { this, "UPrimalCharacterStatusComponent", "LastDepletedStatusValuesTimes" }; }
+	FieldValue<float> StaminaRecoveryExtraResourceDecreaseMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "StaminaRecoveryExtraResourceDecreaseMultiplier" }; }
+	FieldValue<float> DehydrationStaminaRecoveryRateField() { return { this, "UPrimalCharacterStatusComponent", "DehydrationStaminaRecoveryRate" }; }
+	FieldValue<float> WaterConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "WaterConsumptionMultiplier" }; }
+	FieldValue<float> FoodConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "FoodConsumptionMultiplier" }; }
+	FieldValue<TArray<USoundBase *>> EnteredStatusStateSoundsField() { return { this, "UPrimalCharacterStatusComponent", "EnteredStatusStateSounds" }; }
+	FieldValue<TArray<USoundBase *>> ExitStatusStateSoundsField() { return { this, "UPrimalCharacterStatusComponent", "ExitStatusStateSounds" }; }
+	FieldValue<float> ExtraOxygenSpeedStatMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ExtraOxygenSpeedStatMultiplier" }; }
+	FieldValue<float> ExtraTamedHealthMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ExtraTamedHealthMultiplier" }; }
+	FieldValue<float> WakingTameFoodConsumptionRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "WakingTameFoodConsumptionRateMultiplier" }; }
+	FieldValue<float> SwimmingStaminaRecoveryRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "SwimmingStaminaRecoveryRateMultiplier" }; }
+	FieldValue<float> ExtraWaterConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ExtraWaterConsumptionMultiplier" }; }
+	FieldValue<float> ExtraFoodConsumptionMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ExtraFoodConsumptionMultiplier" }; }
+	FieldValue<float> DefaultMaxOxygenField() { return { this, "UPrimalCharacterStatusComponent", "DefaultMaxOxygen" }; }
+	FieldValue<long double> LastReplicatedCurrentStatusValuesTimeField() { return { this, "UPrimalCharacterStatusComponent", "LastReplicatedCurrentStatusValuesTime" }; }
+	FieldValue<float> OriginalMaxTorporField() { return { this, "UPrimalCharacterStatusComponent", "OriginalMaxTorpor" }; }
+	FieldValue<float> MountedDinoDinoWeightMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "MountedDinoDinoWeightMultiplier" }; }
+	FieldValue<float> ExtraWildDinoDamageMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ExtraWildDinoDamageMultiplier" }; }
+	FieldValue<float> ExtraTamedDinoDamageMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ExtraTamedDinoDamageMultiplier" }; }
+	FieldValue<float> WeightMultiplierForCarriedPassengersField() { return { this, "UPrimalCharacterStatusComponent", "WeightMultiplierForCarriedPassengers" }; }
+	FieldValue<float> WeightMultiplierForPlatformPassengersInventoryField() { return { this, "UPrimalCharacterStatusComponent", "WeightMultiplierForPlatformPassengersInventory" }; }
+	FieldArray<float, 12> DinoMaxStatAddMultiplierImprintingField() { return { this, "UPrimalCharacterStatusComponent", "DinoMaxStatAddMultiplierImprinting" }; }
+	FieldValue<float> DinoImprintingQualityField() { return { this, "UPrimalCharacterStatusComponent", "DinoImprintingQuality" }; }
+	FieldValue<float> TamedBaseHealthMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "TamedBaseHealthMultiplier" }; }
+	FieldValue<float> ExtraBabyDinoConsumingFoodRateMultiplierField() { return { this, "UPrimalCharacterStatusComponent", "ExtraBabyDinoConsumingFoodRateMultiplier" }; }
+	FieldValue<TArray<FString>> StatusValueNameOverridesField() { return { this, "UPrimalCharacterStatusComponent", "StatusValueNameOverrides" }; }
+	FieldValue<TSubclassOf<UDamageType>> RegainOxygenDamageTypeField() { return { this, "UPrimalCharacterStatusComponent", "RegainOxygenDamageType" }; }
+	FieldValue<bool> bInWeightLockField() { return { this, "UPrimalCharacterStatusComponent", "bInWeightLock" }; }
+	FieldValue<long double> LastReplicatedXPTimeField() { return { this, "UPrimalCharacterStatusComponent", "LastReplicatedXPTime" }; }
+	FieldValue<bool> bHasUnlockedMaxPlayerLevelAchievementThisSessionField() { return { this, "UPrimalCharacterStatusComponent", "bHasUnlockedMaxPlayerLevelAchievementThisSession" }; }
+	FieldValue<bool> bHasUnlockedMaxDinoLevelAchievementThisSessionField() { return { this, "UPrimalCharacterStatusComponent", "bHasUnlockedMaxDinoLevelAchievementThisSession" }; }
 
 	// Functions
 
@@ -3648,789 +3205,492 @@ struct FDinoBaseLevelWeightEntry
 	float BaseLevelMaxRange;
 };
 
-
 // Dino
 
 struct APrimalDinoCharacter : APrimalCharacter
 {
-	TWeakObjectPtr<AActor> GetForcedMasterTargetField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "APrimalDinoCharacter", "ForcedMasterTarget"); }
-	void SetForcedMasterTargetField(TWeakObjectPtr<AActor> newValue) { SetNativeField(this, "APrimalDinoCharacter", "ForcedMasterTarget", newValue); }
-	FName GetMountCharacterSocketNameField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "MountCharacterSocketName"); }
-	void SetMountCharacterSocketNameField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "MountCharacterSocketName", newValue); }
-	TWeakObjectPtr<APrimalCharacter> GetMountCharacterField() const { return GetNativeField<TWeakObjectPtr<APrimalCharacter>>(this, "APrimalDinoCharacter", "MountCharacter"); }
-	void SetMountCharacterField(TWeakObjectPtr<APrimalCharacter> newValue) { SetNativeField(this, "APrimalDinoCharacter", "MountCharacter", newValue); }
-	//ECollisionChannel GetMeshOriginalCollisionChannelField() const { return GetNativeField<ECollisionChannel>(this, "APrimalDinoCharacter", "MeshOriginalCollisionChannel"); }
-	float GetColorizationIntensityField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ColorizationIntensity"); }
-	void SetColorizationIntensityField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ColorizationIntensity", newValue); }
-	FVector GetRidingAttackExtraVelocityField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "RidingAttackExtraVelocity"); }
-	void SetRidingAttackExtraVelocityField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "RidingAttackExtraVelocity", newValue); }
-	float GetPaintConsumptionMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "PaintConsumptionMultiplier"); }
-	void SetPaintConsumptionMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "PaintConsumptionMultiplier", newValue); }
-	float GetChargingBlockedStopTimeThresholdField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargingBlockedStopTimeThreshold"); }
-	void SetChargingBlockedStopTimeThresholdField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargingBlockedStopTimeThreshold", newValue); }
-	TArray<FName> GetMeleeSwingSocketsField() const { return GetNativeField<TArray<FName>>(this, "APrimalDinoCharacter", "MeleeSwingSockets"); }
-	void SetMeleeSwingSocketsField(TArray<FName> newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeSwingSockets", newValue); }
-	int GetMeleeDamageAmountField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "MeleeDamageAmount"); }
-	void SetMeleeDamageAmountField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeDamageAmount", newValue); }
-	float GetMeleeDamageImpulseField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MeleeDamageImpulse"); }
-	void SetMeleeDamageImpulseField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeDamageImpulse", newValue); }
-	float GetMeleeSwingRadiusField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MeleeSwingRadius"); }
-	void SetMeleeSwingRadiusField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeSwingRadius", newValue); }
-	//TArray<FDinoAttackInfo> GetAttackInfosField() const { return GetNativeField<TArray<FDinoAttackInfo>>(this, "APrimalDinoCharacter", "AttackInfos"); }
-	char GetCurrentAttackIndexField() const { return GetNativeField<char>(this, "APrimalDinoCharacter", "CurrentAttackIndex"); }
-	void SetCurrentAttackIndexField(char newValue) { SetNativeField(this, "APrimalDinoCharacter", "CurrentAttackIndex", newValue); }
-	char GetLastAttackIndexField() const { return GetNativeField<char>(this, "APrimalDinoCharacter", "LastAttackIndex"); }
-	void SetLastAttackIndexField(char newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastAttackIndex", newValue); }
-	TSubclassOf<UDamageType> GetMeleeDamageTypeField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "APrimalDinoCharacter", "MeleeDamageType"); }
-	void SetMeleeDamageTypeField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeDamageType", newValue); }
-	TSubclassOf<UDamageType> GetStepActorDamageTypeOverrideField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "APrimalDinoCharacter", "StepActorDamageTypeOverride"); }
-	void SetStepActorDamageTypeOverrideField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepActorDamageTypeOverride", newValue); }
-	float GetAttackOffsetField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AttackOffset"); }
-	void SetAttackOffsetField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AttackOffset", newValue); }
-	float GetFleeHealthPercentageField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FleeHealthPercentage"); }
-	void SetFleeHealthPercentageField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FleeHealthPercentage", newValue); }
-	float GetBreakFleeHealthPercentageField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BreakFleeHealthPercentage"); }
-	void SetBreakFleeHealthPercentageField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BreakFleeHealthPercentage", newValue); }
-	FString GetTamerStringField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "TamerString"); }
-	void SetTamerStringField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamerString", newValue); }
-	FString GetTamedNameField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "TamedName"); }
-	void SetTamedNameField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedName", newValue); }
-	FVector2D GetOverlayTooltipPaddingField() const { return GetNativeField<FVector2D>(this, "APrimalDinoCharacter", "OverlayTooltipPadding"); }
-	void SetOverlayTooltipPaddingField(FVector2D newValue) { SetNativeField(this, "APrimalDinoCharacter", "OverlayTooltipPadding", newValue); }
-	FVector2D GetOverlayTooltipScaleField() const { return GetNativeField<FVector2D>(this, "APrimalDinoCharacter", "OverlayTooltipScale"); }
-	void SetOverlayTooltipScaleField(FVector2D newValue) { SetNativeField(this, "APrimalDinoCharacter", "OverlayTooltipScale", newValue); }
-	FVector GetRiderFPVCameraOffsetField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "RiderFPVCameraOffset"); }
-	void SetRiderFPVCameraOffsetField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderFPVCameraOffset", newValue); }
-	FVector GetLandingLocationField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "LandingLocation"); }
-	void SetLandingLocationField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "LandingLocation", newValue); }
-	long double GetStartLandingTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "StartLandingTime"); }
-	void SetStartLandingTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "StartLandingTime", newValue); }
-	long double GetLastAxisStartPressTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastAxisStartPressTime"); }
-	void SetLastAxisStartPressTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastAxisStartPressTime", newValue); }
-	long double GetLastMoveForwardTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastMoveForwardTime"); }
-	void SetLastMoveForwardTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastMoveForwardTime", newValue); }
-	float GetLandingTraceMaxDistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LandingTraceMaxDistance"); }
-	void SetLandingTraceMaxDistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LandingTraceMaxDistance", newValue); }
-	float GetFlyingWanderFixedDistanceAmountField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FlyingWanderFixedDistanceAmount"); }
-	void SetFlyingWanderFixedDistanceAmountField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyingWanderFixedDistanceAmount", newValue); }
-	float GetFlyingWanderRandomDistanceAmountField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FlyingWanderRandomDistanceAmount"); }
-	void SetFlyingWanderRandomDistanceAmountField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyingWanderRandomDistanceAmount", newValue); }
-	float GetAcceptableLandingRadiusField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AcceptableLandingRadius"); }
-	void SetAcceptableLandingRadiusField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AcceptableLandingRadius", newValue); }
-	float GetMaxLandingTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MaxLandingTime"); }
-	void SetMaxLandingTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MaxLandingTime", newValue); }
-	float* GetGenderSpeedMultipliersField() const { return GetNativePointerField<float*>(this, "APrimalDinoCharacter", "GenderSpeedMultipliers"); }
-	float GetChargeSpeedMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargeSpeedMultiplier"); }
-	void SetChargeSpeedMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargeSpeedMultiplier", newValue); }
-	float GetChargingStaminaPerSecondDrainField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargingStaminaPerSecondDrain"); }
-	void SetChargingStaminaPerSecondDrainField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargingStaminaPerSecondDrain", newValue); }
-	float GetChargingStopDotTresholdField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargingStopDotTreshold"); }
-	void SetChargingStopDotTresholdField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargingStopDotTreshold", newValue); }
-	FVector GetLastChargeLocationField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "LastChargeLocation"); }
-	void SetLastChargeLocationField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastChargeLocation", newValue); }
-	long double GetLastStartChargingTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastStartChargingTime"); }
-	void SetLastStartChargingTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastStartChargingTime", newValue); }
-	TWeakObjectPtr<AShooterCharacter> GetRiderField() const { return GetNativeField<TWeakObjectPtr<AShooterCharacter>>(this, "APrimalDinoCharacter", "Rider"); }
-	void SetRiderField(TWeakObjectPtr<AShooterCharacter> newValue) { SetNativeField(this, "APrimalDinoCharacter", "Rider", newValue); }
-	TWeakObjectPtr<AShooterCharacter> GetPreviousRiderField() const { return GetNativeField<TWeakObjectPtr<AShooterCharacter>>(this, "APrimalDinoCharacter", "PreviousRider"); }
-	void SetPreviousRiderField(TWeakObjectPtr<AShooterCharacter> newValue) { SetNativeField(this, "APrimalDinoCharacter", "PreviousRider", newValue); }
-	TSubclassOf<UPrimalItem> GetSaddleItemClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "APrimalDinoCharacter", "SaddleItemClass"); }
-	void SetSaddleItemClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "APrimalDinoCharacter", "SaddleItemClass", newValue); }
-	//TArray<FSaddlePassengerSeatDefinition> GetNoSaddlePassengerSeatsField() const { return GetNativeField<TArray<FSaddlePassengerSeatDefinition>>(this, "APrimalDinoCharacter", "NoSaddlePassengerSeats"); }
-	TWeakObjectPtr<APrimalCharacter> GetCarriedCharacterField() const { return GetNativeField<TWeakObjectPtr<APrimalCharacter>>(this, "APrimalDinoCharacter", "CarriedCharacter"); }
-	void SetCarriedCharacterField(TWeakObjectPtr<APrimalCharacter> newValue) { SetNativeField(this, "APrimalDinoCharacter", "CarriedCharacter", newValue); }
-	TWeakObjectPtr<APrimalCharacter> GetPreviousCarriedCharacterField() const { return GetNativeField<TWeakObjectPtr<APrimalCharacter>>(this, "APrimalDinoCharacter", "PreviousCarriedCharacter"); }
-	void SetPreviousCarriedCharacterField(TWeakObjectPtr<APrimalCharacter> newValue) { SetNativeField(this, "APrimalDinoCharacter", "PreviousCarriedCharacter", newValue); }
-	TArray<TWeakObjectPtr<AShooterCharacter>> GetPassengerPerSeatField() const { return GetNativeField<TArray<TWeakObjectPtr<AShooterCharacter>>>(this, "APrimalDinoCharacter", "PassengerPerSeat"); }
-	void SetPassengerPerSeatField(TArray<TWeakObjectPtr<AShooterCharacter>> newValue) { SetNativeField(this, "APrimalDinoCharacter", "PassengerPerSeat", newValue); }
-	TArray<TWeakObjectPtr<AShooterCharacter>> GetPrevPassengerPerSeatField() const { return GetNativeField<TArray<TWeakObjectPtr<AShooterCharacter>>>(this, "APrimalDinoCharacter", "PrevPassengerPerSeat"); }
-	void SetPrevPassengerPerSeatField(TArray<TWeakObjectPtr<AShooterCharacter>> newValue) { SetNativeField(this, "APrimalDinoCharacter", "PrevPassengerPerSeat", newValue); }
-	long double GetLastClientCameraRotationServerUpdateField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastClientCameraRotationServerUpdate"); }
-	void SetLastClientCameraRotationServerUpdateField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastClientCameraRotationServerUpdate", newValue); }
-	//TWeakObjectPtr<UPrimalAIState> GetActiveStateField() const { return GetNativeField<TWeakObjectPtr<UPrimalAIState>>(this, "APrimalDinoCharacter", "ActiveState"); }
-	//TWeakObjectPtr<UPrimalAIState> GetActiveWonderStateField() const { return GetNativeField<TWeakObjectPtr<UPrimalAIState>>(this, "APrimalDinoCharacter", "ActiveWonderState"); }
-	int GetLastPlayedAttackAnimationField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "LastPlayedAttackAnimation"); }
-	void SetLastPlayedAttackAnimationField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastPlayedAttackAnimation", newValue); }
-	char GetAttackIndexOfPlayedAnimationField() const { return GetNativeField<char>(this, "APrimalDinoCharacter", "AttackIndexOfPlayedAnimation"); }
-	void SetAttackIndexOfPlayedAnimationField(char newValue) { SetNativeField(this, "APrimalDinoCharacter", "AttackIndexOfPlayedAnimation", newValue); }
-	float GetOriginalCapsuleHalfHeightField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "OriginalCapsuleHalfHeight"); }
-	void SetOriginalCapsuleHalfHeightField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "OriginalCapsuleHalfHeight", newValue); }
-	TArray<FVector> GetLastSocketPositionsField() const { return GetNativeField<TArray<FVector>>(this, "APrimalDinoCharacter", "LastSocketPositions"); }
-	void SetLastSocketPositionsField(TArray<FVector> newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastSocketPositions", newValue); }
-	TArray<TWeakObjectPtr<AActor>> GetMeleeSwingHurtListField() const { return GetNativeField<TArray<TWeakObjectPtr<AActor>>>(this, "APrimalDinoCharacter", "MeleeSwingHurtList"); }
-	void SetMeleeSwingHurtListField(TArray<TWeakObjectPtr<AActor>> newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeSwingHurtList", newValue); }
-	long double GetEndAttackTargetTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "EndAttackTargetTime"); }
-	void SetEndAttackTargetTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "EndAttackTargetTime", newValue); }
-	FVector GetRidingFirstPersonViewLocationOffsetField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "RidingFirstPersonViewLocationOffset"); }
-	void SetRidingFirstPersonViewLocationOffsetField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "RidingFirstPersonViewLocationOffset", newValue); }
-	float GetBabyChanceOfTwinsField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyChanceOfTwins"); }
-	void SetBabyChanceOfTwinsField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyChanceOfTwins", newValue); }
-	float GetBabyGestationSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyGestationSpeed"); }
-	void SetBabyGestationSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyGestationSpeed", newValue); }
-	float GetExtraBabyGestationSpeedMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ExtraBabyGestationSpeedMultiplier"); }
-	void SetExtraBabyGestationSpeedMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ExtraBabyGestationSpeedMultiplier", newValue); }
-	long double GetLastEggBoostedTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastEggBoostedTime"); }
-	void SetLastEggBoostedTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastEggBoostedTime", newValue); }
-	float GetWildPercentageChanceOfBabyField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WildPercentageChanceOfBaby"); }
-	void SetWildPercentageChanceOfBabyField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WildPercentageChanceOfBaby", newValue); }
-	float GetWildBabyAgeWeightField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WildBabyAgeWeight"); }
-	void SetWildBabyAgeWeightField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WildBabyAgeWeight", newValue); }
-	float GetBabyGestationProgressField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyGestationProgress"); }
-	void SetBabyGestationProgressField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyGestationProgress", newValue); }
-	float GetLastBabyAgeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LastBabyAge"); }
-	void SetLastBabyAgeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastBabyAge", newValue); }
-	float GetLastBabyGestationProgressField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LastBabyGestationProgress"); }
-	void SetLastBabyGestationProgressField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastBabyGestationProgress", newValue); }
-	float GetBabyChanceOfTripletsField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyChanceOfTriplets"); }
-	void SetBabyChanceOfTripletsField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyChanceOfTriplets", newValue); }
-	float GetBabyAgeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyAge"); }
-	void SetBabyAgeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyAge", newValue); }
-	float GetMaxPercentOfCapsulHeightAllowedForIKField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MaxPercentOfCapsulHeightAllowedForIK"); }
-	void SetMaxPercentOfCapsulHeightAllowedForIKField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MaxPercentOfCapsulHeightAllowedForIK", newValue); }
-	float GetSlopeBiasForMaxCapsulePercentField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "SlopeBiasForMaxCapsulePercent"); }
-	void SetSlopeBiasForMaxCapsulePercentField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "SlopeBiasForMaxCapsulePercent", newValue); }
-	float GetAutoFadeOutAfterTameTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AutoFadeOutAfterTameTime"); }
-	void SetAutoFadeOutAfterTameTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AutoFadeOutAfterTameTime", newValue); }
-	float GetFlyingForceRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FlyingForceRotationRateModifier"); }
-	void SetFlyingForceRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyingForceRotationRateModifier", newValue); }
-	TArray<FName> GetHideBoneNamesField() const { return GetNativeField<TArray<FName>>(this, "APrimalDinoCharacter", "HideBoneNames"); }
-	void SetHideBoneNamesField(TArray<FName> newValue) { SetNativeField(this, "APrimalDinoCharacter", "HideBoneNames", newValue); }
-	FString GetHideBonesStringField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "HideBonesString"); }
-	void SetHideBonesStringField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "HideBonesString", newValue); }
-	FVector GetWaterSurfaceExtraJumpVectorField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "WaterSurfaceExtraJumpVector"); }
-	void SetWaterSurfaceExtraJumpVectorField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "WaterSurfaceExtraJumpVector", newValue); }
-	FVector GetFlyerTakeOffAdditionalVelocityField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "FlyerTakeOffAdditionalVelocity"); }
-	void SetFlyerTakeOffAdditionalVelocityField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyerTakeOffAdditionalVelocity", newValue); }
-	float GetOpenDoorDelayField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "OpenDoorDelay"); }
-	void SetOpenDoorDelayField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "OpenDoorDelay", newValue); }
-	float GetTamedWanderHarvestIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedWanderHarvestInterval"); }
-	void SetTamedWanderHarvestIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedWanderHarvestInterval", newValue); }
-	float GetTamedWanderHarvestSearchRangeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedWanderHarvestSearchRange"); }
-	void SetTamedWanderHarvestSearchRangeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedWanderHarvestSearchRange", newValue); }
-	float GetTamedWanderHarvestCollectRadiusField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedWanderHarvestCollectRadius"); }
-	void SetTamedWanderHarvestCollectRadiusField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedWanderHarvestCollectRadius", newValue); }
-	FVector GetTamedWanderHarvestCollectOffsetField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "TamedWanderHarvestCollectOffset"); }
-	void SetTamedWanderHarvestCollectOffsetField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedWanderHarvestCollectOffset", newValue); }
-	float GetRootLocSwimOffsetField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RootLocSwimOffset"); }
-	void SetRootLocSwimOffsetField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RootLocSwimOffset", newValue); }
-	float GetPlayAnimBelowHealthPercentField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "PlayAnimBelowHealthPercent"); }
-	void SetPlayAnimBelowHealthPercentField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "PlayAnimBelowHealthPercent", newValue); }
-	float GetLeavePlayAnimBelowHealthPercentField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LeavePlayAnimBelowHealthPercent"); }
-	void SetLeavePlayAnimBelowHealthPercentField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LeavePlayAnimBelowHealthPercent", newValue); }
-	float GetPlatformSaddleMaxStructureBuildDistance2DField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "PlatformSaddleMaxStructureBuildDistance2D"); }
-	void SetPlatformSaddleMaxStructureBuildDistance2DField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "PlatformSaddleMaxStructureBuildDistance2D", newValue); }
-	//TSubclassOf<UPrimalDinoSettings> GetLowHealthDinoSettingsField() const { return GetNativeField<TSubclassOf<UPrimalDinoSettings>>(this, "APrimalDinoCharacter", "LowHealthDinoSettings"); }
-	float GetSwimOffsetInterpSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "SwimOffsetInterpSpeed"); }
-	void SetSwimOffsetInterpSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "SwimOffsetInterpSpeed", newValue); }
-	float GetCurrentRootLocSwimOffsetField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CurrentRootLocSwimOffset"); }
-	void SetCurrentRootLocSwimOffsetField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CurrentRootLocSwimOffset", newValue); }
-	float GetAIRangeMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AIRangeMultiplier"); }
-	void SetAIRangeMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AIRangeMultiplier", newValue); }
-	char* GetPreventColorizationRegionsField() const { return GetNativePointerField<char*>(this, "APrimalDinoCharacter", "PreventColorizationRegions"); }
-	float* GetColorSetIntensityMultipliersField() const { return GetNativePointerField<float*>(this, "APrimalDinoCharacter", "ColorSetIntensityMultipliers"); }
-	float GetMeleeAttackStaminaCostField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MeleeAttackStaminaCost"); }
-	void SetMeleeAttackStaminaCostField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeAttackStaminaCost", newValue); }
-	TWeakObjectPtr<AActor> GetTargetField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "APrimalDinoCharacter", "Target"); }
-	void SetTargetField(TWeakObjectPtr<AActor> newValue) { SetNativeField(this, "APrimalDinoCharacter", "Target", newValue); }
-	TWeakObjectPtr<AActor> GetTamedFollowTargetField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "APrimalDinoCharacter", "TamedFollowTarget"); }
-	void SetTamedFollowTargetField(TWeakObjectPtr<AActor> newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedFollowTarget", newValue); }
-	float GetPercentChanceFemaleField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "PercentChanceFemale"); }
-	void SetPercentChanceFemaleField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "PercentChanceFemale", newValue); }
-	TArray<TSubclassOf<UPrimalItem>> GetDeathGiveItemClassesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>>>(this, "APrimalDinoCharacter", "DeathGiveItemClasses"); }
-	void SetDeathGiveItemClassesField(TArray<TSubclassOf<UPrimalItem>> newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathGiveItemClasses", newValue); }
-	TArray<float> GetDeathGiveItemChanceToBeBlueprintField() const { return GetNativeField<TArray<float>>(this, "APrimalDinoCharacter", "DeathGiveItemChanceToBeBlueprint"); }
-	void SetDeathGiveItemChanceToBeBlueprintField(TArray<float> newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathGiveItemChanceToBeBlueprint", newValue); }
-	float GetDeathGiveItemQualityMinField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DeathGiveItemQualityMin"); }
-	void SetDeathGiveItemQualityMinField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathGiveItemQualityMin", newValue); }
-	float GetDeathGiveItemQualityMaxField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DeathGiveItemQualityMax"); }
-	void SetDeathGiveItemQualityMaxField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathGiveItemQualityMax", newValue); }
-	float GetDeathGiveItemRangeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DeathGiveItemRange"); }
-	void SetDeathGiveItemRangeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathGiveItemRange", newValue); }
-	FString GetDeathGiveAchievementField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "DeathGiveAchievement"); }
-	void SetDeathGiveAchievementField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathGiveAchievement", newValue); }
-	FVector GetUnboardLocationOffsetField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "UnboardLocationOffset"); }
-	void SetUnboardLocationOffsetField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "UnboardLocationOffset", newValue); }
-	float GetLastTimeWhileHeadingToGoalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LastTimeWhileHeadingToGoal"); }
-	void SetLastTimeWhileHeadingToGoalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastTimeWhileHeadingToGoal", newValue); }
-	float GetRidingNetUpdateFequencyField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RidingNetUpdateFequency"); }
-	void SetRidingNetUpdateFequencyField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RidingNetUpdateFequency", newValue); }
-	float GetRiderMaxSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RiderMaxSpeedModifier"); }
-	void SetRiderMaxSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderMaxSpeedModifier", newValue); }
-	float GetRiderMaxRunSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RiderMaxRunSpeedModifier"); }
-	void SetRiderMaxRunSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderMaxRunSpeedModifier", newValue); }
-	float GetRiderRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RiderRotationRateModifier"); }
-	void SetRiderRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderRotationRateModifier", newValue); }
-	float GetSwimmingRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "SwimmingRotationRateModifier"); }
-	void SetSwimmingRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "SwimmingRotationRateModifier", newValue); }
-	float GetControlFacePitchInterpSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ControlFacePitchInterpSpeed"); }
-	void SetControlFacePitchInterpSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ControlFacePitchInterpSpeed", newValue); }
-	float GetTamedWalkableFloorZField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedWalkableFloorZ"); }
-	void SetTamedWalkableFloorZField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedWalkableFloorZ", newValue); }
-	float GetCurrentMovementAnimRateField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CurrentMovementAnimRate"); }
-	void SetCurrentMovementAnimRateField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CurrentMovementAnimRate", newValue); }
-	int GetMinPlayerLevelForWakingTameField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "MinPlayerLevelForWakingTame"); }
-	void SetMinPlayerLevelForWakingTameField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "MinPlayerLevelForWakingTame", newValue); }
-	float GetForceNextAttackIndexField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ForceNextAttackIndex"); }
-	void SetForceNextAttackIndexField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ForceNextAttackIndex", newValue); }
-	TSubclassOf<UPrimalInventoryComponent> GetTamedInventoryComponentTemplateField() const { return GetNativeField<TSubclassOf<UPrimalInventoryComponent>>(this, "APrimalDinoCharacter", "TamedInventoryComponentTemplate"); }
-	void SetTamedInventoryComponentTemplateField(TSubclassOf<UPrimalInventoryComponent> newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedInventoryComponentTemplate", newValue); }
-	float GetDeathInventoryChanceToUseField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DeathInventoryChanceToUse"); }
-	void SetDeathInventoryChanceToUseField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathInventoryChanceToUse", newValue); }
-	float GetWakingTameFeedIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WakingTameFeedInterval"); }
-	void SetWakingTameFeedIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameFeedInterval", newValue); }
-	long double GetLastWakingTameFedTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastWakingTameFedTime"); }
-	void SetLastWakingTameFedTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastWakingTameFedTime", newValue); }
-	float GetDeathInventoryQualityPerLevelMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DeathInventoryQualityPerLevelMultiplier"); }
-	void SetDeathInventoryQualityPerLevelMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathInventoryQualityPerLevelMultiplier", newValue); }
-	float GetRequiredTameAffinityField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RequiredTameAffinity"); }
-	void SetRequiredTameAffinityField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RequiredTameAffinity", newValue); }
-	float GetRequiredTameAffinityPerBaseLevelField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RequiredTameAffinityPerBaseLevel"); }
-	void SetRequiredTameAffinityPerBaseLevelField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RequiredTameAffinityPerBaseLevel", newValue); }
-	char GetTamedAITargetingRangeField() const { return GetNativeField<char>(this, "APrimalDinoCharacter", "TamedAITargetingRange"); }
-	void SetTamedAITargetingRangeField(char newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedAITargetingRange", newValue); }
-	float GetCurrentTameAffinityField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CurrentTameAffinity"); }
-	void SetCurrentTameAffinityField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CurrentTameAffinity", newValue); }
-	float GetTameIneffectivenessModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TameIneffectivenessModifier"); }
-	void SetTameIneffectivenessModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TameIneffectivenessModifier", newValue); }
-	float GetTameIneffectivenessByAffinityField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TameIneffectivenessByAffinity"); }
-	void SetTameIneffectivenessByAffinityField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TameIneffectivenessByAffinity", newValue); }
-	int GetLastFrameUseLowQualityAnimationTickField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "LastFrameUseLowQualityAnimationTick"); }
-	void SetLastFrameUseLowQualityAnimationTickField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastFrameUseLowQualityAnimationTick", newValue); }
-	//TArray<FPrimalSaddleStructure> GetSaddleStructuresField() const { return GetNativeField<TArray<FPrimalSaddleStructure>>(this, "APrimalDinoCharacter", "SaddleStructures"); }
-	int GetMaxSaddleStructuresHeightField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "MaxSaddleStructuresHeight"); }
-	void SetMaxSaddleStructuresHeightField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "MaxSaddleStructuresHeight", newValue); }
-	int GetSaddlePivotOffsetField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "SaddlePivotOffset"); }
-	void SetSaddlePivotOffsetField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "SaddlePivotOffset", newValue); }
-	int GetMaxSaddleStructuresNumField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "MaxSaddleStructuresNum"); }
-	void SetMaxSaddleStructuresNumField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "MaxSaddleStructuresNum", newValue); }
-	//TSubclassOf<UPrimalDinoSettings> GetDinoSettingsClassField() const { return GetNativeField<TSubclassOf<UPrimalDinoSettings>>(this, "APrimalDinoCharacter", "DinoSettingsClass"); }
-	float GetTamingFoodConsumeIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamingFoodConsumeInterval"); }
-	void SetTamingFoodConsumeIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamingFoodConsumeInterval", newValue); }
-	float GetDediForceAttackAnimTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DediForceAttackAnimTime"); }
-	void SetDediForceAttackAnimTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DediForceAttackAnimTime", newValue); }
-	float GetDediForceStartAttackAfterAnimTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DediForceStartAttackAfterAnimTime"); }
-	void SetDediForceStartAttackAfterAnimTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DediForceStartAttackAfterAnimTime", newValue); }
-	float GetWakingTameFoodIncreaseMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WakingTameFoodIncreaseMultiplier"); }
-	void SetWakingTameFoodIncreaseMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameFoodIncreaseMultiplier", newValue); }
-	int GetTamingTeamIDField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "TamingTeamID"); }
-	void SetTamingTeamIDField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamingTeamID", newValue); }
-	int GetOwningPlayerIDField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "OwningPlayerID"); }
-	void SetOwningPlayerIDField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "OwningPlayerID", newValue); }
-	FString GetOwningPlayerNameField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "OwningPlayerName"); }
-	void SetOwningPlayerNameField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "OwningPlayerName", newValue); }
-	long double GetTamingLastFoodConsumptionTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "TamingLastFoodConsumptionTime"); }
-	void SetTamingLastFoodConsumptionTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamingLastFoodConsumptionTime", newValue); }
-	unsigned int GetDinoID1Field() const { return GetNativeField<unsigned int>(this, "APrimalDinoCharacter", "DinoID1"); }
-	void SetDinoID1Field(unsigned int newValue) { SetNativeField(this, "APrimalDinoCharacter", "DinoID1", newValue); }
-	unsigned int GetDinoID2Field() const { return GetNativeField<unsigned int>(this, "APrimalDinoCharacter", "DinoID2"); }
-	void SetDinoID2Field(unsigned int newValue) { SetNativeField(this, "APrimalDinoCharacter", "DinoID2", newValue); }
-	FRotator GetPreviousAimRotField() const { return GetNativeField<FRotator>(this, "APrimalDinoCharacter", "PreviousAimRot"); }
-	void SetPreviousAimRotField(FRotator newValue) { SetNativeField(this, "APrimalDinoCharacter", "PreviousAimRot", newValue); }
-	int GetTamedAggressionLevelField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "TamedAggressionLevel"); }
-	void SetTamedAggressionLevelField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedAggressionLevel", newValue); }
-	float GetTamingIneffectivenessModifierIncreaseByDamagePercentField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamingIneffectivenessModifierIncreaseByDamagePercent"); }
-	void SetTamingIneffectivenessModifierIncreaseByDamagePercentField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamingIneffectivenessModifierIncreaseByDamagePercent", newValue); }
-	int GetNPCSpawnerExtraLevelOffsetField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "NPCSpawnerExtraLevelOffset"); }
-	void SetNPCSpawnerExtraLevelOffsetField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "NPCSpawnerExtraLevelOffset", newValue); }
-	float GetNPCSpawnerLevelMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "NPCSpawnerLevelMultiplier"); }
-	void SetNPCSpawnerLevelMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "NPCSpawnerLevelMultiplier", newValue); }
-	float GetUntamedPoopTimeMinIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "UntamedPoopTimeMinInterval"); }
-	void SetUntamedPoopTimeMinIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "UntamedPoopTimeMinInterval", newValue); }
-	float GetUntamedPoopTimeMaxIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "UntamedPoopTimeMaxInterval"); }
-	void SetUntamedPoopTimeMaxIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "UntamedPoopTimeMaxInterval", newValue); }
-	float GetMeleeHarvestDamageMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MeleeHarvestDamageMultiplier"); }
-	void SetMeleeHarvestDamageMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MeleeHarvestDamageMultiplier", newValue); }
-	float GetAllowRidingMaxDistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AllowRidingMaxDistance"); }
-	void SetAllowRidingMaxDistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AllowRidingMaxDistance", newValue); }
-	float GetUntamedPoopTimeCacheField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "UntamedPoopTimeCache"); }
-	void SetUntamedPoopTimeCacheField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "UntamedPoopTimeCache", newValue); }
-	TSubclassOf<UPrimalItem> GetBaseEggClassField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "APrimalDinoCharacter", "BaseEggClass"); }
-	void SetBaseEggClassField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "APrimalDinoCharacter", "BaseEggClass", newValue); }
-	TArray<TSubclassOf<UPrimalItem>> GetEggItemsToSpawnField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>>>(this, "APrimalDinoCharacter", "EggItemsToSpawn"); }
-	void SetEggItemsToSpawnField(TArray<TSubclassOf<UPrimalItem>> newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggItemsToSpawn", newValue); }
-	TArray<float> GetEggWeightsToSpawnField() const { return GetNativeField<TArray<float>>(this, "APrimalDinoCharacter", "EggWeightsToSpawn"); }
-	void SetEggWeightsToSpawnField(TArray<float> newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggWeightsToSpawn", newValue); }
-	TArray<TSubclassOf<UPrimalItem>> GetFertilizedEggItemsToSpawnField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>>>(this, "APrimalDinoCharacter", "FertilizedEggItemsToSpawn"); }
-	void SetFertilizedEggItemsToSpawnField(TArray<TSubclassOf<UPrimalItem>> newValue) { SetNativeField(this, "APrimalDinoCharacter", "FertilizedEggItemsToSpawn", newValue); }
-	TArray<float> GetFertilizedEggWeightsToSpawnField() const { return GetNativeField<TArray<float>>(this, "APrimalDinoCharacter", "FertilizedEggWeightsToSpawn"); }
-	void SetFertilizedEggWeightsToSpawnField(TArray<float> newValue) { SetNativeField(this, "APrimalDinoCharacter", "FertilizedEggWeightsToSpawn", newValue); }
-	float GetEggChanceToSpawnUnstasisField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "EggChanceToSpawnUnstasis"); }
-	void SetEggChanceToSpawnUnstasisField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggChanceToSpawnUnstasis", newValue); }
-	float GetEggIntervalBetweenUnstasisChancesField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "EggIntervalBetweenUnstasisChances"); }
-	void SetEggIntervalBetweenUnstasisChancesField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggIntervalBetweenUnstasisChances", newValue); }
-	float GetEggRangeMaximumNumberFromSameDinoTypeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "EggRangeMaximumNumberFromSameDinoType"); }
-	void SetEggRangeMaximumNumberFromSameDinoTypeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggRangeMaximumNumberFromSameDinoType", newValue); }
-	int GetEggMaximumNumberFromSameDinoTypeField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "EggMaximumNumberFromSameDinoType"); }
-	void SetEggMaximumNumberFromSameDinoTypeField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggMaximumNumberFromSameDinoType", newValue); }
-	float GetEggRangeMaximumNumberField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "EggRangeMaximumNumber"); }
-	void SetEggRangeMaximumNumberField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggRangeMaximumNumber", newValue); }
-	int GetEggMaximumNumberField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "EggMaximumNumber"); }
-	void SetEggMaximumNumberField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "EggMaximumNumber", newValue); }
-	float GetUntamedWalkingSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "UntamedWalkingSpeedModifier"); }
-	void SetUntamedWalkingSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "UntamedWalkingSpeedModifier", newValue); }
-	float GetTamedWalkingSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedWalkingSpeedModifier"); }
-	void SetTamedWalkingSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedWalkingSpeedModifier", newValue); }
-	float GetUntamedRunningSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "UntamedRunningSpeedModifier"); }
-	void SetUntamedRunningSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "UntamedRunningSpeedModifier", newValue); }
-	float GetTamedRunningSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedRunningSpeedModifier"); }
-	void SetTamedRunningSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedRunningSpeedModifier", newValue); }
-	//TSubclassOf<UPrimalColorSet> GetRandomColorSetsMaleField() const { return GetNativeField<TSubclassOf<UPrimalColorSet>>(this, "APrimalDinoCharacter", "RandomColorSetsMale"); }
-	//TSubclassOf<UPrimalColorSet> GetRandomColorSetsFemaleField() const { return GetNativeField<TSubclassOf<UPrimalColorSet>>(this, "APrimalDinoCharacter", "RandomColorSetsFemale"); }
-	FName GetTargetingTeamNameOverrideField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "TargetingTeamNameOverride"); }
-	void SetTargetingTeamNameOverrideField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "TargetingTeamNameOverride", newValue); }
-	float GetExtraTamedSpeedMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ExtraTamedSpeedMultiplier"); }
-	void SetExtraTamedSpeedMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ExtraTamedSpeedMultiplier", newValue); }
-	float GetExtraUnTamedSpeedMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ExtraUnTamedSpeedMultiplier"); }
-	void SetExtraUnTamedSpeedMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ExtraUnTamedSpeedMultiplier", newValue); }
-	long double GetLastEggSpawnChanceTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastEggSpawnChanceTime"); }
-	void SetLastEggSpawnChanceTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastEggSpawnChanceTime", newValue); }
-	FName GetOriginalNPCVolumeNameField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "OriginalNPCVolumeName"); }
-	void SetOriginalNPCVolumeNameField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "OriginalNPCVolumeName", newValue); }
-	float GetOutsideOriginalNPCVolumeStasisDestroyIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "OutsideOriginalNPCVolumeStasisDestroyInterval"); }
-	void SetOutsideOriginalNPCVolumeStasisDestroyIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "OutsideOriginalNPCVolumeStasisDestroyInterval", newValue); }
-	float GetStasisedDestroyIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StasisedDestroyInterval"); }
-	void SetStasisedDestroyIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StasisedDestroyInterval", newValue); }
-	float GetTamedAllowNamingTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedAllowNamingTime"); }
-	void SetTamedAllowNamingTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedAllowNamingTime", newValue); }
-	float GetMovementSpeedScalingRotationRatePowerField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MovementSpeedScalingRotationRatePower"); }
-	void SetMovementSpeedScalingRotationRatePowerField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MovementSpeedScalingRotationRatePower", newValue); }
-	float GetAttackNoStaminaTorpidityMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AttackNoStaminaTorpidityMultiplier"); }
-	void SetAttackNoStaminaTorpidityMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AttackNoStaminaTorpidityMultiplier", newValue); }
-	float GetDecayDestructionPeriodField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DecayDestructionPeriod"); }
-	void SetDecayDestructionPeriodField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DecayDestructionPeriod", newValue); }
-	long double GetTamedAtTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "TamedAtTime"); }
-	void SetTamedAtTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedAtTime", newValue); }
-	long double GetLastInAllyRangeTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastInAllyRangeTime"); }
-	void SetLastInAllyRangeTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastInAllyRangeTime", newValue); }
-	TArray<APrimalStructure *> GetLatchedOnStructuresField() const { return GetNativeField<TArray<APrimalStructure *>>(this, "APrimalDinoCharacter", "LatchedOnStructures"); }
-	void SetLatchedOnStructuresField(TArray<APrimalStructure *> newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatchedOnStructures", newValue); }
-	int GetOriginalTargetingTeamField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "OriginalTargetingTeam"); }
-	void SetOriginalTargetingTeamField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "OriginalTargetingTeam", newValue); }
-	float GetPreviousRootYawSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "PreviousRootYawSpeed"); }
-	void SetPreviousRootYawSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "PreviousRootYawSpeed", newValue); }
-	long double GetLastTimeFallingField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastTimeFalling"); }
-	void SetLastTimeFallingField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastTimeFalling", newValue); }
-	float GetTamedCorpseLifespanField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedCorpseLifespan"); }
-	void SetTamedCorpseLifespanField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedCorpseLifespan", newValue); }
-	float GetMateBoostDamageReceiveMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MateBoostDamageReceiveMultiplier"); }
-	void SetMateBoostDamageReceiveMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MateBoostDamageReceiveMultiplier", newValue); }
-	float GetMateBoostDamageGiveMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MateBoostDamageGiveMultiplier"); }
-	void SetMateBoostDamageGiveMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MateBoostDamageGiveMultiplier", newValue); }
-	float GetMateBoostRangeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MateBoostRange"); }
-	void SetMateBoostRangeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MateBoostRange", newValue); }
-	FName GetDinoNameTagField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "DinoNameTag"); }
-	void SetDinoNameTagField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "DinoNameTag", newValue); }
-	AShooterPlayerController* GetAttackMyTargetForPlayerControllerField() const { return GetNativeField<AShooterPlayerController *>(this, "APrimalDinoCharacter", "AttackMyTargetForPlayerController"); }
-	void SetAttackMyTargetForPlayerControllerField(AShooterPlayerController* newValue) { SetNativeField(this, "APrimalDinoCharacter", "AttackMyTargetForPlayerController", newValue); }
-	float GetRidingAttackExtraVelocityDelayField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RidingAttackExtraVelocityDelay"); }
-	void SetRidingAttackExtraVelocityDelayField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RidingAttackExtraVelocityDelay", newValue); }
-	float GetStepDamageRadialDamageIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageRadialDamageInterval"); }
-	void SetStepDamageRadialDamageIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageRadialDamageInterval", newValue); }
-	float GetStepDamageRadialDamageExtraRadiusField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageRadialDamageExtraRadius"); }
-	void SetStepDamageRadialDamageExtraRadiusField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageRadialDamageExtraRadius", newValue); }
-	float GetStepDamageRadialDamageAmountGeneralField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageRadialDamageAmountGeneral"); }
-	void SetStepDamageRadialDamageAmountGeneralField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageRadialDamageAmountGeneral", newValue); }
-	float GetStepDamageRadialDamageAmountHarvestableField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageRadialDamageAmountHarvestable"); }
-	void SetStepDamageRadialDamageAmountHarvestableField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageRadialDamageAmountHarvestable", newValue); }
-	long double GetLastRadialStepDamageTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastRadialStepDamageTime"); }
-	void SetLastRadialStepDamageTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastRadialStepDamageTime", newValue); }
-	TSubclassOf<UDamageType> GetStepHarvestableDamageTypeField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "APrimalDinoCharacter", "StepHarvestableDamageType"); }
-	void SetStepHarvestableDamageTypeField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepHarvestableDamageType", newValue); }
-	float GetStepDamageFootDamageIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageFootDamageInterval"); }
-	void SetStepDamageFootDamageIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageFootDamageInterval", newValue); }
-	float GetStepDamageFootDamageRadiusField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageFootDamageRadius"); }
-	void SetStepDamageFootDamageRadiusField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageFootDamageRadius", newValue); }
-	float GetStepDamageFootDamageAmountField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageFootDamageAmount"); }
-	void SetStepDamageFootDamageAmountField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageFootDamageAmount", newValue); }
-	TArray<FName> GetStepDamageFootDamageSocketsField() const { return GetNativeField<TArray<FName>>(this, "APrimalDinoCharacter", "StepDamageFootDamageSockets"); }
-	void SetStepDamageFootDamageSocketsField(TArray<FName> newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageFootDamageSockets", newValue); }
-	float GetDurationBeforeMovingStuckPawnField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DurationBeforeMovingStuckPawn"); }
-	void SetDurationBeforeMovingStuckPawnField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DurationBeforeMovingStuckPawn", newValue); }
-	FVector GetLastCheckedLocationField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "LastCheckedLocation"); }
-	void SetLastCheckedLocationField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastCheckedLocation", newValue); }
-	long double GetLastValidNotStuckTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastValidNotStuckTime"); }
-	void SetLastValidNotStuckTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastValidNotStuckTime", newValue); }
-	float GetDefaultActivateAttackRangeOffsetField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "DefaultActivateAttackRangeOffset"); }
-	void SetDefaultActivateAttackRangeOffsetField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "DefaultActivateAttackRangeOffset", newValue); }
-	float GetCorpseTargetingMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CorpseTargetingMultiplier"); }
-	void SetCorpseTargetingMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CorpseTargetingMultiplier", newValue); }
-	long double GetLastFootStepDamageTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastFootStepDamageTime"); }
-	void SetLastFootStepDamageTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastFootStepDamageTime", newValue); }
-	long double GetLastStartledTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastStartledTime"); }
-	void SetLastStartledTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastStartledTime", newValue); }
-	float GetCorpseLifespanNonRelevantField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CorpseLifespanNonRelevant"); }
-	void SetCorpseLifespanNonRelevantField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CorpseLifespanNonRelevant", newValue); }
-	float GetMinStaminaForRiderField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MinStaminaForRider"); }
-	void SetMinStaminaForRiderField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MinStaminaForRider", newValue); }
-	float GetLoseStaminaWithRiderRateField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LoseStaminaWithRiderRate"); }
-	void SetLoseStaminaWithRiderRateField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LoseStaminaWithRiderRate", newValue); }
-	float GetFollowingRunDistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FollowingRunDistance"); }
-	void SetFollowingRunDistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FollowingRunDistance", newValue); }
-	float GetMaxDinoKillerTransferWeightPercentField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MaxDinoKillerTransferWeightPercent"); }
-	void SetMaxDinoKillerTransferWeightPercentField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MaxDinoKillerTransferWeightPercent", newValue); }
-	float GetNPCZoneVolumeCountWeightField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "NPCZoneVolumeCountWeight"); }
-	void SetNPCZoneVolumeCountWeightField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "NPCZoneVolumeCountWeight", newValue); }
-	FVector GetFloatingHUDTextWorldOffsetField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "FloatingHUDTextWorldOffset"); }
-	void SetFloatingHUDTextWorldOffsetField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "FloatingHUDTextWorldOffset", newValue); }
-	long double GetLastAttackedTargetTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastAttackedTargetTime"); }
-	void SetLastAttackedTargetTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastAttackedTargetTime", newValue); }
-	long double GetLastForcedLandingCheckTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastForcedLandingCheckTime"); }
-	void SetLastForcedLandingCheckTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastForcedLandingCheckTime", newValue); }
-	long double GetLastAllyTargetLookTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastAllyTargetLookTime"); }
-	void SetLastAllyTargetLookTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastAllyTargetLookTime", newValue); }
-	long double GetLastAttackedTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastAttackedTime"); }
-	void SetLastAttackedTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastAttackedTime", newValue); }
-	long double GetLastPlayerDinoOverlapRelevantTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastPlayerDinoOverlapRelevantTime"); }
-	void SetLastPlayerDinoOverlapRelevantTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastPlayerDinoOverlapRelevantTime", newValue); }
-	FRotator GetDinoAimRotationOffsetField() const { return GetNativeField<FRotator>(this, "APrimalDinoCharacter", "DinoAimRotationOffset"); }
-	void SetDinoAimRotationOffsetField(FRotator newValue) { SetNativeField(this, "APrimalDinoCharacter", "DinoAimRotationOffset", newValue); }
-	long double GetLastDinoAllyLookInterpTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastDinoAllyLookInterpTime"); }
-	void SetLastDinoAllyLookInterpTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastDinoAllyLookInterpTime", newValue); }
-	FVector GetLastRiderOverlappedPositionField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "LastRiderOverlappedPosition"); }
-	void SetLastRiderOverlappedPositionField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastRiderOverlappedPosition", newValue); }
-	TWeakObjectPtr<APrimalCharacter> GetAutoDragByPawnField() const { return GetNativeField<TWeakObjectPtr<APrimalCharacter>>(this, "APrimalDinoCharacter", "AutoDragByPawn"); }
-	long double GetNextRidingFlyerUndergroundCheckField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "NextRidingFlyerUndergroundCheck"); }
-	void SetNextRidingFlyerUndergroundCheckField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "NextRidingFlyerUndergroundCheck", newValue); }
-	long double GetLastSetRiderTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastSetRiderTime"); }
-	void SetLastSetRiderTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastSetRiderTime", newValue); }
-	TSubclassOf<UPrimalItem> GetRepairRequirementsItemField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "APrimalDinoCharacter", "RepairRequirementsItem"); }
-	void SetRepairRequirementsItemField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "APrimalDinoCharacter", "RepairRequirementsItem", newValue); }
-	float GetRepairAmountRemainingField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RepairAmountRemaining"); }
-	void SetRepairAmountRemainingField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RepairAmountRemaining", newValue); }
-	float GetRepairCheckIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RepairCheckInterval"); }
-	void SetRepairCheckIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RepairCheckInterval", newValue); }
-	float GetRepairPercentPerIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RepairPercentPerInterval"); }
-	void SetRepairPercentPerIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RepairPercentPerInterval", newValue); }
-	FVector GetRiderCheckTraceOffsetField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "RiderCheckTraceOffset"); }
-	void SetRiderCheckTraceOffsetField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderCheckTraceOffset", newValue); }
-	FVector GetRiderEjectionImpulseField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "RiderEjectionImpulse"); }
-	void SetRiderEjectionImpulseField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderEjectionImpulse", newValue); }
-	float GetWakingTameAffinityDecreaseFoodPercentageField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WakingTameAffinityDecreaseFoodPercentage"); }
-	void SetWakingTameAffinityDecreaseFoodPercentageField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameAffinityDecreaseFoodPercentage", newValue); }
-	float GetWakingTameAllowFeedingFoodPercentageField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WakingTameAllowFeedingFoodPercentage"); }
-	void SetWakingTameAllowFeedingFoodPercentageField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameAllowFeedingFoodPercentage", newValue); }
-	float GetWakingTameFoodAffinityMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WakingTameFoodAffinityMultiplier"); }
-	void SetWakingTameFoodAffinityMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameFoodAffinityMultiplier", newValue); }
-	float GetCheckForWildAmbientHarvestingIntervalMinField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CheckForWildAmbientHarvestingIntervalMin"); }
-	void SetCheckForWildAmbientHarvestingIntervalMinField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CheckForWildAmbientHarvestingIntervalMin", newValue); }
-	float GetCheckForWildAmbientHarvestingIntervalMaxField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CheckForWildAmbientHarvestingIntervalMax"); }
-	void SetCheckForWildAmbientHarvestingIntervalMaxField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CheckForWildAmbientHarvestingIntervalMax", newValue); }
-	float GetWildAmbientHarvestingTimerField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WildAmbientHarvestingTimer"); }
-	void SetWildAmbientHarvestingTimerField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WildAmbientHarvestingTimer", newValue); }
-	float GetWildAmbientHarvestingRadiusField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WildAmbientHarvestingRadius"); }
-	void SetWildAmbientHarvestingRadiusField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WildAmbientHarvestingRadius", newValue); }
-	int GetFlyerNumUnderGroundFailField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "FlyerNumUnderGroundFail"); }
-	void SetFlyerNumUnderGroundFailField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyerNumUnderGroundFail", newValue); }
-	int GetAbsoluteBaseLevelField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "AbsoluteBaseLevel"); }
-	void SetAbsoluteBaseLevelField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "AbsoluteBaseLevel", newValue); }
-	TSubclassOf<UDamageType> GetTamedHarvestDamageTypeField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "APrimalDinoCharacter", "TamedHarvestDamageType"); }
-	void SetTamedHarvestDamageTypeField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedHarvestDamageType", newValue); }
-	//FDinoSaddleStruct GetSaddleStructField() const { return GetNativeField<FDinoSaddleStruct>(this, "APrimalDinoCharacter", "SaddleStruct"); }
-	TArray<APrimalCharacter *> GetDraggedRagdollsField() const { return GetNativeField<TArray<APrimalCharacter *>>(this, "APrimalDinoCharacter", "DraggedRagdolls"); }
-	void SetDraggedRagdollsField(TArray<APrimalCharacter *> newValue) { SetNativeField(this, "APrimalDinoCharacter", "DraggedRagdolls", newValue); }
-	FVector GetLastOverrodeRandomWanderLocationField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "LastOverrodeRandomWanderLocation"); }
-	void SetLastOverrodeRandomWanderLocationField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastOverrodeRandomWanderLocation", newValue); }
-	float GetChargeBumpDamageField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargeBumpDamage"); }
-	void SetChargeBumpDamageField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargeBumpDamage", newValue); }
-	TSubclassOf<UDamageType> GetChargeBumpDamageTypeField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "APrimalDinoCharacter", "ChargeBumpDamageType"); }
-	void SetChargeBumpDamageTypeField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargeBumpDamageType", newValue); }
-	float GetChargeBumpImpulseField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargeBumpImpulse"); }
-	void SetChargeBumpImpulseField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargeBumpImpulse", newValue); }
-	float GetMinChargeIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MinChargeInterval"); }
-	void SetMinChargeIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MinChargeInterval", newValue); }
-	float GetPlayerMountedLaunchFowardSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "PlayerMountedLaunchFowardSpeed"); }
-	void SetPlayerMountedLaunchFowardSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "PlayerMountedLaunchFowardSpeed", newValue); }
-	float GetPlayerMountedLaunchUpSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "PlayerMountedLaunchUpSpeed"); }
-	void SetPlayerMountedLaunchUpSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "PlayerMountedLaunchUpSpeed", newValue); }
-	float GetAttackOnLaunchMaximumTargetDistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AttackOnLaunchMaximumTargetDistance"); }
-	void SetAttackOnLaunchMaximumTargetDistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AttackOnLaunchMaximumTargetDistance", newValue); }
-	float GetKeepFlightRemainingTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "KeepFlightRemainingTime"); }
-	void SetKeepFlightRemainingTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "KeepFlightRemainingTime", newValue); }
-	float GetFlyingRunSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FlyingRunSpeedModifier"); }
-	void SetFlyingRunSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyingRunSpeedModifier", newValue); }
-	float GetChargingAnimDelayField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargingAnimDelay"); }
-	void SetChargingAnimDelayField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargingAnimDelay", newValue); }
-	FName GetRiderSocketNameField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "RiderSocketName"); }
-	void SetRiderSocketNameField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderSocketName", newValue); }
-	float GetChargingActivationRequiresStaminaField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargingActivationRequiresStamina"); }
-	void SetChargingActivationRequiresStaminaField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargingActivationRequiresStamina", newValue); }
-	float GetChargingActivationConsumesStaminaField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ChargingActivationConsumesStamina"); }
-	void SetChargingActivationConsumesStaminaField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargingActivationConsumesStamina", newValue); }
-	float GetFlyerHardBreakingOverrideField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FlyerHardBreakingOverride"); }
-	void SetFlyerHardBreakingOverrideField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyerHardBreakingOverride", newValue); }
-	float GetBabyScaleField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyScale"); }
-	void SetBabyScaleField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyScale", newValue); }
-	float GetBabySpeedMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabySpeedMultiplier"); }
-	void SetBabySpeedMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabySpeedMultiplier", newValue); }
-	float GetBabyPitchMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyPitchMultiplier"); }
-	void SetBabyPitchMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyPitchMultiplier", newValue); }
-	float GetBabyVolumeMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyVolumeMultiplier"); }
-	void SetBabyVolumeMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyVolumeMultiplier", newValue); }
-	long double GetChargingStartBlockedTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "ChargingStartBlockedTime"); }
-	void SetChargingStartBlockedTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "ChargingStartBlockedTime", newValue); }
-	long double GetLastChargeEndTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastChargeEndTime"); }
-	void SetLastChargeEndTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastChargeEndTime", newValue); }
-	TArray<APrimalStructure *> GetSaddledStructuresField() const { return GetNativeField<TArray<APrimalStructure *>>(this, "APrimalDinoCharacter", "SaddledStructures"); }
-	void SetSaddledStructuresField(TArray<APrimalStructure *> newValue) { SetNativeField(this, "APrimalDinoCharacter", "SaddledStructures", newValue); }
-	long double GetLastTamedFlyerNearbyAllyCheckTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastTamedFlyerNearbyAllyCheckTime"); }
-	void SetLastTamedFlyerNearbyAllyCheckTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastTamedFlyerNearbyAllyCheckTime", newValue); }
-	long double GetLastUpdatedBabyAgeAtTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastUpdatedBabyAgeAtTime"); }
-	void SetLastUpdatedBabyAgeAtTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastUpdatedBabyAgeAtTime", newValue); }
-	long double GetLastUpdatedGestationAtTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastUpdatedGestationAtTime"); }
-	void SetLastUpdatedGestationAtTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastUpdatedGestationAtTime", newValue); }
-	long double GetLastUpdatedMatingAtTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastUpdatedMatingAtTime"); }
-	void SetLastUpdatedMatingAtTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastUpdatedMatingAtTime", newValue); }
-	float GetBabyAgeSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyAgeSpeed"); }
-	void SetBabyAgeSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyAgeSpeed", newValue); }
-	float GetExtraBabyAgeSpeedMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ExtraBabyAgeSpeedMultiplier"); }
-	void SetExtraBabyAgeSpeedMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ExtraBabyAgeSpeedMultiplier", newValue); }
-	float GetFemaleMinTimeBetweenMatingField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FemaleMinTimeBetweenMating"); }
-	void SetFemaleMinTimeBetweenMatingField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FemaleMinTimeBetweenMating", newValue); }
-	float GetFemaleMaxTimeBetweenMatingField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FemaleMaxTimeBetweenMating"); }
-	void SetFemaleMaxTimeBetweenMatingField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FemaleMaxTimeBetweenMating", newValue); }
-	float GetFemaleMatingRangeAdditionField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FemaleMatingRangeAddition"); }
-	void SetFemaleMatingRangeAdditionField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FemaleMatingRangeAddition", newValue); }
-	float GetFemaleMatingTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FemaleMatingTime"); }
-	void SetFemaleMatingTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FemaleMatingTime", newValue); }
-	long double GetNextAllowedMatingTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "NextAllowedMatingTime"); }
-	void SetNextAllowedMatingTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "NextAllowedMatingTime", newValue); }
-	float GetMatingProgressField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "MatingProgress"); }
-	void SetMatingProgressField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "MatingProgress", newValue); }
-	long double GetLastMatingNotificationTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastMatingNotificationTime"); }
-	void SetLastMatingNotificationTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastMatingNotificationTime", newValue); }
-	APrimalDinoCharacter* GetMatingWithDinoField() const { return GetNativeField<APrimalDinoCharacter *>(this, "APrimalDinoCharacter", "MatingWithDino"); }
-	void SetMatingWithDinoField(APrimalDinoCharacter* newValue) { SetNativeField(this, "APrimalDinoCharacter", "MatingWithDino", newValue); }
-	float GetGestationEggTamedIneffectivenessModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "GestationEggTamedIneffectivenessModifier"); }
-	void SetGestationEggTamedIneffectivenessModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "GestationEggTamedIneffectivenessModifier", newValue); }
-	float GetNewFemaleMinTimeBetweenMatingField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "NewFemaleMinTimeBetweenMating"); }
-	void SetNewFemaleMinTimeBetweenMatingField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "NewFemaleMinTimeBetweenMating", newValue); }
-	float GetNewFemaleMaxTimeBetweenMatingField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "NewFemaleMaxTimeBetweenMating"); }
-	void SetNewFemaleMaxTimeBetweenMatingField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "NewFemaleMaxTimeBetweenMating", newValue); }
-	//TArray<TSubclassOf<APrimalBuff>> GetDefaultTamedBuffsField() const { return GetNativeField<TArray<TSubclassOf<APrimalBuff>>>(this, "APrimalDinoCharacter", "DefaultTamedBuffs"); }
-	FVector GetInterpolatedVelocityField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "InterpolatedVelocity"); }
-	void SetInterpolatedVelocityField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "InterpolatedVelocity", newValue); }
-	FVector GetOldInterpolatedLocationField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "OldInterpolatedLocation"); }
-	void SetOldInterpolatedLocationField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "OldInterpolatedLocation", newValue); }
-	float GetHyperThermiaInsulationField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "HyperThermiaInsulation"); }
-	void SetHyperThermiaInsulationField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "HyperThermiaInsulation", newValue); }
-	float GetHypoThermiaInsulationField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "HypoThermiaInsulation"); }
-	void SetHypoThermiaInsulationField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "HypoThermiaInsulation", newValue); }
-	float GetInsulationRangeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "InsulationRange"); }
-	void SetInsulationRangeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "InsulationRange", newValue); }
-	float GetGangOverlapRangeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "GangOverlapRange"); }
-	void SetGangOverlapRangeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "GangOverlapRange", newValue); }
-	float GetGangDamageResistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "GangDamageResistance"); }
-	void SetGangDamageResistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "GangDamageResistance", newValue); }
-	float GetGangDamageField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "GangDamage"); }
-	void SetGangDamageField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "GangDamage", newValue); }
-	int GetMaxGangCountField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "MaxGangCount"); }
-	void SetMaxGangCountField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "MaxGangCount", newValue); }
-	int GetGangCountField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "GangCount"); }
-	void SetGangCountField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "GangCount", newValue); }
-	long double GetLastGangCheckTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastGangCheckTime"); }
-	void SetLastGangCheckTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastGangCheckTime", newValue); }
-	FVector GetLastGangCheckPositionField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "LastGangCheckPosition"); }
-	void SetLastGangCheckPositionField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastGangCheckPosition", newValue); }
-	int GetLastRiderExitFrameCounterField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "LastRiderExitFrameCounter"); }
-	void SetLastRiderExitFrameCounterField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastRiderExitFrameCounter", newValue); }
-	float GetWildRandomScaleField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WildRandomScale"); }
-	void SetWildRandomScaleField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WildRandomScale", newValue); }
-	float GetHeldJumpSlowFallingGravityZScaleField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "HeldJumpSlowFallingGravityZScale"); }
-	void SetHeldJumpSlowFallingGravityZScaleField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "HeldJumpSlowFallingGravityZScale", newValue); }
-	float GetSlowFallingStaminaCostPerSecondField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "SlowFallingStaminaCostPerSecond"); }
-	void SetSlowFallingStaminaCostPerSecondField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "SlowFallingStaminaCostPerSecond", newValue); }
-	float GetNoRiderRotationModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "NoRiderRotationModifier"); }
-	void SetNoRiderRotationModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "NoRiderRotationModifier", newValue); }
-	FName GetRiderFPVCameraUseSocketNameField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "RiderFPVCameraUseSocketName"); }
-	void SetRiderFPVCameraUseSocketNameField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderFPVCameraUseSocketName", newValue); }
-	FName GetRiderLatchedFPVCameraUseSocketNameField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "RiderLatchedFPVCameraUseSocketName"); }
-	void SetRiderLatchedFPVCameraUseSocketNameField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderLatchedFPVCameraUseSocketName", newValue); }
-	FName GetPassengerFPVCameraRootSocketField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "PassengerFPVCameraRootSocket"); }
-	void SetPassengerFPVCameraRootSocketField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "PassengerFPVCameraRootSocket", newValue); }
-	TArray<FName> GetFPVRiderBoneNamesToHideField() const { return GetNativeField<TArray<FName>>(this, "APrimalDinoCharacter", "FPVRiderBoneNamesToHide"); }
-	void SetFPVRiderBoneNamesToHideField(TArray<FName> newValue) { SetNativeField(this, "APrimalDinoCharacter", "FPVRiderBoneNamesToHide", newValue); }
-	float GetExtraRunningSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ExtraRunningSpeedModifier"); }
-	void SetExtraRunningSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ExtraRunningSpeedModifier", newValue); }
-	float GetScaleExtraRunningSpeedModifierMinField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierMin"); }
-	void SetScaleExtraRunningSpeedModifierMinField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierMin", newValue); }
-	float GetScaleExtraRunningSpeedModifierMaxField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierMax"); }
-	void SetScaleExtraRunningSpeedModifierMaxField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierMax", newValue); }
-	float GetScaleExtraRunningSpeedModifierSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierSpeed"); }
-	void SetScaleExtraRunningSpeedModifierSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierSpeed", newValue); }
-	float GetLastHigherScaleExtraRunningSpeedValueField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LastHigherScaleExtraRunningSpeedValue"); }
-	void SetLastHigherScaleExtraRunningSpeedValueField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastHigherScaleExtraRunningSpeedValue", newValue); }
-	long double GetLastHigherScaleExtraRunningSpeedTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastHigherScaleExtraRunningSpeedTime"); }
-	void SetLastHigherScaleExtraRunningSpeedTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastHigherScaleExtraRunningSpeedTime", newValue); }
-	float GetRiderMovementSpeedScalingRotationRatePowerMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RiderMovementSpeedScalingRotationRatePowerMultiplier"); }
-	void SetRiderMovementSpeedScalingRotationRatePowerMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderMovementSpeedScalingRotationRatePowerMultiplier", newValue); }
-	int GetLoadDestroyWildDinosUnderVersionField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "LoadDestroyWildDinosUnderVersion"); }
-	void SetLoadDestroyWildDinosUnderVersionField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "LoadDestroyWildDinosUnderVersion", newValue); }
-	int GetSaveDestroyWildDinosUnderVersionField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "SaveDestroyWildDinosUnderVersion"); }
-	void SetSaveDestroyWildDinosUnderVersionField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "SaveDestroyWildDinosUnderVersion", newValue); }
-	float GetAllowWaterSurfaceExtraJumpStaminaCostField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AllowWaterSurfaceExtraJumpStaminaCost"); }
-	void SetAllowWaterSurfaceExtraJumpStaminaCostField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AllowWaterSurfaceExtraJumpStaminaCost", newValue); }
-	TWeakObjectPtr<AActor> GetRiderAttackTargetField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "APrimalDinoCharacter", "RiderAttackTarget"); }
-	void SetRiderAttackTargetField(TWeakObjectPtr<AActor> newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderAttackTarget", newValue); }
-	FVector GetRiderAttackLocationField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "RiderAttackLocation"); }
-	void SetRiderAttackLocationField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderAttackLocation", newValue); }
-	char GetTribeGroupPetOrderingRankField() const { return GetNativeField<char>(this, "APrimalDinoCharacter", "TribeGroupPetOrderingRank"); }
-	void SetTribeGroupPetOrderingRankField(char newValue) { SetNativeField(this, "APrimalDinoCharacter", "TribeGroupPetOrderingRank", newValue); }
-	char GetTribeGroupPetRidingRankField() const { return GetNativeField<char>(this, "APrimalDinoCharacter", "TribeGroupPetRidingRank"); }
-	void SetTribeGroupPetRidingRankField(char newValue) { SetNativeField(this, "APrimalDinoCharacter", "TribeGroupPetRidingRank", newValue); }
-	char GetFollowStoppingDistanceField() const { return GetNativeField<char>(this, "APrimalDinoCharacter", "FollowStoppingDistance"); }
-	void SetFollowStoppingDistanceField(char newValue) { SetNativeField(this, "APrimalDinoCharacter", "FollowStoppingDistance", newValue); }
-	FString GetImprinterNameField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "ImprinterName"); }
-	void SetImprinterNameField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "ImprinterName", newValue); }
-	unsigned __int64 GetImprinterPlayerDataIDField() const { return GetNativeField<unsigned __int64>(this, "APrimalDinoCharacter", "ImprinterPlayerDataID"); }
-	void SetImprinterPlayerDataIDField(unsigned __int64 newValue) { SetNativeField(this, "APrimalDinoCharacter", "ImprinterPlayerDataID", newValue); }
-	float GetBabyMinCuddleIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyMinCuddleInterval"); }
-	void SetBabyMinCuddleIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyMinCuddleInterval", newValue); }
-	float GetBabyMaxCuddleIntervalField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyMaxCuddleInterval"); }
-	void SetBabyMaxCuddleIntervalField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyMaxCuddleInterval", newValue); }
-	float GetBabyCuddleGracePeriodField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyCuddleGracePeriod"); }
-	void SetBabyCuddleGracePeriodField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyCuddleGracePeriod", newValue); }
-	float GetBabyCuddleLoseImpringQualityPerSecondField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyCuddleLoseImpringQualityPerSecond"); }
-	void SetBabyCuddleLoseImpringQualityPerSecondField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyCuddleLoseImpringQualityPerSecond", newValue); }
-	float GetBabyCuddleWalkDistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyCuddleWalkDistance"); }
-	void SetBabyCuddleWalkDistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyCuddleWalkDistance", newValue); }
-	FVector GetBabyCuddleWalkStartingLocationField() const { return GetNativeField<FVector>(this, "APrimalDinoCharacter", "BabyCuddleWalkStartingLocation"); }
-	void SetBabyCuddleWalkStartingLocationField(FVector newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyCuddleWalkStartingLocation", newValue); }
-	long double GetBabyNextCuddleTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "BabyNextCuddleTime"); }
-	void SetBabyNextCuddleTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyNextCuddleTime", newValue); }
-	TEnumAsByte<enum EBabyCuddleType::Type> GetBabyCuddleTypeField() const { return GetNativeField<TEnumAsByte<enum EBabyCuddleType::Type>>(this, "APrimalDinoCharacter", "BabyCuddleType"); }
-	void SetBabyCuddleTypeField(TEnumAsByte<enum EBabyCuddleType::Type> newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyCuddleType", newValue); }
-	TSubclassOf<UPrimalItem> GetBabyCuddleFoodField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "APrimalDinoCharacter", "BabyCuddleFood"); }
-	void SetBabyCuddleFoodField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyCuddleFood", newValue); }
-	TArray<TSubclassOf<UPrimalItem>> GetMyBabyCuddleFoodTypesField() const { return GetNativeField<TArray<TSubclassOf<UPrimalItem>>>(this, "APrimalDinoCharacter", "MyBabyCuddleFoodTypes"); }
-	void SetMyBabyCuddleFoodTypesField(TArray<TSubclassOf<UPrimalItem>> newValue) { SetNativeField(this, "APrimalDinoCharacter", "MyBabyCuddleFoodTypes", newValue); }
-	float GetRiderMaxImprintingQualityDamageReductionField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RiderMaxImprintingQualityDamageReduction"); }
-	void SetRiderMaxImprintingQualityDamageReductionField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderMaxImprintingQualityDamageReduction", newValue); }
-	float GetRiderMaxImprintingQualityDamageMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RiderMaxImprintingQualityDamageMultiplier"); }
-	void SetRiderMaxImprintingQualityDamageMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RiderMaxImprintingQualityDamageMultiplier", newValue); }
-	float GetBabyImprintingQualityTotalMaturationTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "BabyImprintingQualityTotalMaturationTime"); }
-	void SetBabyImprintingQualityTotalMaturationTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "BabyImprintingQualityTotalMaturationTime", newValue); }
-	float GetWakingTameMaxDistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WakingTameMaxDistance"); }
-	void SetWakingTameMaxDistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameMaxDistance", newValue); }
-	float GetTimeBetweenTamedWakingEatAnimationsField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TimeBetweenTamedWakingEatAnimations"); }
-	void SetTimeBetweenTamedWakingEatAnimationsField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TimeBetweenTamedWakingEatAnimations", newValue); }
-	long double GetLastEatAnimationTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastEatAnimationTime"); }
-	void SetLastEatAnimationTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastEatAnimationTime", newValue); }
-	float GetStepDamageFootDamageRunningMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepDamageFootDamageRunningMultiplier"); }
-	void SetStepDamageFootDamageRunningMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepDamageFootDamageRunningMultiplier", newValue); }
-	float GetStepRadialDamageOffsetField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "StepRadialDamageOffset"); }
-	void SetStepRadialDamageOffsetField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "StepRadialDamageOffset", newValue); }
-	float GetForcePawnBigPushingForTimeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "ForcePawnBigPushingForTime"); }
-	void SetForcePawnBigPushingForTimeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "ForcePawnBigPushingForTime", newValue); }
-	float GetAIDinoForceActiveUntasisingRangeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AIDinoForceActiveUntasisingRange"); }
-	void SetAIDinoForceActiveUntasisingRangeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AIDinoForceActiveUntasisingRange", newValue); }
-	float GetWildRunningRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WildRunningRotationRateModifier"); }
-	void SetWildRunningRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WildRunningRotationRateModifier", newValue); }
-	float GetTamedRunningRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedRunningRotationRateModifier"); }
-	void SetTamedRunningRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedRunningRotationRateModifier", newValue); }
-	float GetTamedSwimmingRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TamedSwimmingRotationRateModifier"); }
-	void SetTamedSwimmingRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedSwimmingRotationRateModifier", newValue); }
-	float GetWildSwimmingRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WildSwimmingRotationRateModifier"); }
-	void SetWildSwimmingRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WildSwimmingRotationRateModifier", newValue); }
-	float GetNoRiderFlyingRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "NoRiderFlyingRotationRateModifier"); }
-	void SetNoRiderFlyingRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "NoRiderFlyingRotationRateModifier", newValue); }
-	float GetAICombatRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AICombatRotationRateModifier"); }
-	void SetAICombatRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AICombatRotationRateModifier", newValue); }
-	float GetWalkingRotationRateModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WalkingRotationRateModifier"); }
-	void SetWalkingRotationRateModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WalkingRotationRateModifier", newValue); }
-	float GetSetAttackTargetTraceDistanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "SetAttackTargetTraceDistance"); }
-	void SetSetAttackTargetTraceDistanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "SetAttackTargetTraceDistance", newValue); }
-	float GetSetAttackTargetTraceWidthField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "SetAttackTargetTraceWidth"); }
-	void SetSetAttackTargetTraceWidthField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "SetAttackTargetTraceWidth", newValue); }
-	float GetWanderRadiusMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "WanderRadiusMultiplier"); }
-	void SetWanderRadiusMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "WanderRadiusMultiplier", newValue); }
-	long double GetRepeatPrimaryAttackLastSendTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "RepeatPrimaryAttackLastSendTime"); }
-	void SetRepeatPrimaryAttackLastSendTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "RepeatPrimaryAttackLastSendTime", newValue); }
-	long double GetNextTamedDinoCharacterStatusTickTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "NextTamedDinoCharacterStatusTickTime"); }
-	void SetNextTamedDinoCharacterStatusTickTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "NextTamedDinoCharacterStatusTickTime", newValue); }
-	long double GetLastTamedDinoCharacterStatusTickTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastTamedDinoCharacterStatusTickTime"); }
-	void SetLastTamedDinoCharacterStatusTickTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastTamedDinoCharacterStatusTickTime", newValue); }
-	float GetLimitRiderYawOnLatchedRangeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LimitRiderYawOnLatchedRange"); }
-	void SetLimitRiderYawOnLatchedRangeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LimitRiderYawOnLatchedRange", newValue); }
-	float GetLatchingDistanceLimitField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LatchingDistanceLimit"); }
-	void SetLatchingDistanceLimitField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatchingDistanceLimit", newValue); }
-	float GetLatchingInitialYawField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LatchingInitialYaw"); }
-	void SetLatchingInitialYawField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatchingInitialYaw", newValue); }
-	float GetLatchingInitialPitchField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LatchingInitialPitch"); }
-	void SetLatchingInitialPitchField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatchingInitialPitch", newValue); }
-	float GetLatchingInterpolatedPitchField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LatchingInterpolatedPitch"); }
-	void SetLatchingInterpolatedPitchField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatchingInterpolatedPitch", newValue); }
-	float GetLatchedFirstPersonViewAngleField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LatchedFirstPersonViewAngle"); }
-	void SetLatchedFirstPersonViewAngleField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatchedFirstPersonViewAngle", newValue); }
-	float GetLatchingCameraInterpolationSpeedField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "LatchingCameraInterpolationSpeed"); }
-	void SetLatchingCameraInterpolationSpeedField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatchingCameraInterpolationSpeed", newValue); }
-	float GetTargetLatchingInitialYawField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "TargetLatchingInitialYaw"); }
-	void SetTargetLatchingInitialYawField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "TargetLatchingInitialYaw", newValue); }
-	float GetCurrentStrafeMagnitudeField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "CurrentStrafeMagnitude"); }
-	void SetCurrentStrafeMagnitudeField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "CurrentStrafeMagnitude", newValue); }
-	float GetGainStaminaWhenLatchedRateField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "GainStaminaWhenLatchedRate"); }
-	void SetGainStaminaWhenLatchedRateField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "GainStaminaWhenLatchedRate", newValue); }
-	int GetLastFrameMoveRightField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "LastFrameMoveRight"); }
-	void SetLastFrameMoveRightField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastFrameMoveRight", newValue); }
-	int GetLastFrameMoveLeftField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "LastFrameMoveLeft"); }
-	void SetLastFrameMoveLeftField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastFrameMoveLeft", newValue); }
-	FRotator GetLastRiderMountedWeaponRotationField() const { return GetNativeField<FRotator>(this, "APrimalDinoCharacter", "LastRiderMountedWeaponRotation"); }
-	void SetLastRiderMountedWeaponRotationField(FRotator newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastRiderMountedWeaponRotation", newValue); }
-	long double GetLastRiderMountedWeaponRotationSentTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastRiderMountedWeaponRotationSentTime"); }
-	void SetLastRiderMountedWeaponRotationSentTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastRiderMountedWeaponRotationSentTime", newValue); }
-	int GetDeathGivesDossierIndexField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "DeathGivesDossierIndex"); }
-	void SetDeathGivesDossierIndexField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "DeathGivesDossierIndex", newValue); }
-	FName GetSaddleRiderMovementTraceThruSocketNameField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "SaddleRiderMovementTraceThruSocketName"); }
-	void SetSaddleRiderMovementTraceThruSocketNameField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "SaddleRiderMovementTraceThruSocketName", newValue); }
-	float GetSwimmingRunSpeedModifierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "SwimmingRunSpeedModifier"); }
-	void SetSwimmingRunSpeedModifierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "SwimmingRunSpeedModifier", newValue); }
-	long double GetDinoDownloadedAtTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "DinoDownloadedAtTime"); }
-	void SetDinoDownloadedAtTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "DinoDownloadedAtTime", newValue); }
-	FString GetUploadedFromServerNameField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "UploadedFromServerName"); }
-	void SetUploadedFromServerNameField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "UploadedFromServerName", newValue); }
-	FString GetLatestUploadedFromServerNameField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "LatestUploadedFromServerName"); }
-	void SetLatestUploadedFromServerNameField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "LatestUploadedFromServerName", newValue); }
-	FString GetPreviousUploadedFromServerNameField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "PreviousUploadedFromServerName"); }
-	void SetPreviousUploadedFromServerNameField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "PreviousUploadedFromServerName", newValue); }
-	FString GetTamedOnServerNameField() const { return GetNativeField<FString>(this, "APrimalDinoCharacter", "TamedOnServerName"); }
-	void SetTamedOnServerNameField(FString newValue) { SetNativeField(this, "APrimalDinoCharacter", "TamedOnServerName", newValue); }
-	//TArray<FDinoAncestorsEntry> GetDinoAncestorsField() const { return GetNativeField<TArray<FDinoAncestorsEntry>>(this, "APrimalDinoCharacter", "DinoAncestors"); }
-	//TArray<FDinoAncestorsEntry> GetDinoAncestorsMaleField() const { return GetNativeField<TArray<FDinoAncestorsEntry>>(this, "APrimalDinoCharacter", "DinoAncestorsMale"); }
-	//TArray<FDinoAncestorsEntry> GetNextBabyDinoAncestorsField() const { return GetNativeField<TArray<FDinoAncestorsEntry>>(this, "APrimalDinoCharacter", "NextBabyDinoAncestors"); }
-	//TArray<FDinoAncestorsEntry> GetNextBabyDinoAncestorsMaleField() const { return GetNativeField<TArray<FDinoAncestorsEntry>>(this, "APrimalDinoCharacter", "NextBabyDinoAncestorsMale"); }
-	int GetMaxAllowedRandomMutationsField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "MaxAllowedRandomMutations"); }
-	void SetMaxAllowedRandomMutationsField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "MaxAllowedRandomMutations", newValue); }
-	int GetRandomMutationRollsField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "RandomMutationRolls"); }
-	void SetRandomMutationRollsField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "RandomMutationRolls", newValue); }
-	float GetRandomMutationChanceField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RandomMutationChance"); }
-	void SetRandomMutationChanceField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RandomMutationChance", newValue); }
-	float GetRandomMutationGivePointsField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "RandomMutationGivePoints"); }
-	void SetRandomMutationGivePointsField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "RandomMutationGivePoints", newValue); }
-	int GetRandomMutationsMaleField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "RandomMutationsMale"); }
-	void SetRandomMutationsMaleField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "RandomMutationsMale", newValue); }
-	int GetRandomMutationsFemaleField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "RandomMutationsFemale"); }
-	void SetRandomMutationsFemaleField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "RandomMutationsFemale", newValue); }
-	int GetGestationEggRandomMutationsFemaleField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "GestationEggRandomMutationsFemale"); }
-	void SetGestationEggRandomMutationsFemaleField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "GestationEggRandomMutationsFemale", newValue); }
-	int GetGestationEggRandomMutationsMaleField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "GestationEggRandomMutationsMale"); }
-	void SetGestationEggRandomMutationsMaleField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "GestationEggRandomMutationsMale", newValue); }
-	FName GetWakingTameDistanceSocketNameField() const { return GetNativeField<FName>(this, "APrimalDinoCharacter", "WakingTameDistanceSocketName"); }
-	void SetWakingTameDistanceSocketNameField(FName newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameDistanceSocketName", newValue); }
-	int GetWakingTameConsumeEntireStackMaxQuantityField() const { return GetNativeField<int>(this, "APrimalDinoCharacter", "WakingTameConsumeEntireStackMaxQuantity"); }
-	void SetWakingTameConsumeEntireStackMaxQuantityField(int newValue) { SetNativeField(this, "APrimalDinoCharacter", "WakingTameConsumeEntireStackMaxQuantity", newValue); }
-	float GetAttackPlayerDesirabilityMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "AttackPlayerDesirabilityMultiplier"); }
-	void SetAttackPlayerDesirabilityMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "AttackPlayerDesirabilityMultiplier", newValue); }
-	long double GetLastAutoHealingItemUseField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastAutoHealingItemUse"); }
-	void SetLastAutoHealingItemUseField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastAutoHealingItemUse", newValue); }
-	long double GetLastStartedCarryingCharacterTimeField() const { return GetNativeField<long double>(this, "APrimalDinoCharacter", "LastStartedCarryingCharacterTime"); }
-	void SetLastStartedCarryingCharacterTimeField(long double newValue) { SetNativeField(this, "APrimalDinoCharacter", "LastStartedCarryingCharacterTime", newValue); }
-	float GetFlyerAttachedExplosiveSpeedMultiplierField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "FlyerAttachedExplosiveSpeedMultiplier"); }
-	void SetFlyerAttachedExplosiveSpeedMultiplierField(float newValue) { SetNativeField(this, "APrimalDinoCharacter", "FlyerAttachedExplosiveSpeedMultiplier", newValue); }
-	TArray<FDinoBaseLevelWeightEntry> GetDinoBaseLevelWeightEntriesField() const { return GetNativeField<TArray<FDinoBaseLevelWeightEntry>>(this, "APrimalDinoCharacter", "DinoBaseLevelWeightEntries"); }
-	float GetNPCLerpToMaxRandomBaseLevelField() const { return GetNativeField<float>(this, "APrimalDinoCharacter", "NPCLerpToMaxRandomBaseLevel"); }
-	//bool GetbIgnoreAllWhistlesField() const { return GetNativeBitField<bool, unsigned __int32>(this, "APrimalDinoCharacter", "bIgnoreAllWhistles"); }
-	//void SetbIgnoreAllWhistlesField(bool newValue) { SetNativeBitField<unsigned __int32>(this, "APrimalDinoCharacter", "bIgnoreAllWhistles", newValue); }
-	//bool GetbIgnoreAllyLookField() const { return GetNativeBitField<bool, unsigned __int32>(this, "APrimalDinoCharacter", "bIgnoreAllyLook"); }
-	//void SetbIgnoreAllyLookField(bool newValue) { SetNativeBitField<unsigned __int32>(this, "APrimalDinoCharacter", "bIgnoreAllyLook", newValue); }
+	FieldValue<TWeakObjectPtr<AActor>> ForcedMasterTargetField() { return { this, "APrimalDinoCharacter", "ForcedMasterTarget" }; }
+	FieldValue<FName> MountCharacterSocketNameField() { return { this, "APrimalDinoCharacter", "MountCharacterSocketName" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> MountCharacterField() { return { this, "APrimalDinoCharacter", "MountCharacter" }; }
+	FieldValue<ECollisionChannel> MeshOriginalCollisionChannelField() { return { this, "APrimalDinoCharacter", "MeshOriginalCollisionChannel" }; }
+	FieldValue<float> ColorizationIntensityField() { return { this, "APrimalDinoCharacter", "ColorizationIntensity" }; }
+	FieldValue<FVector> RidingAttackExtraVelocityField() { return { this, "APrimalDinoCharacter", "RidingAttackExtraVelocity" }; }
+	FieldValue<UAnimMontage *> StartChargeAnimationField() { return { this, "APrimalDinoCharacter", "StartChargeAnimation" }; }
+	FieldValue<TArray<UAnimMontage *>> AttackAnimationsField() { return { this, "APrimalDinoCharacter", "AttackAnimations" }; }
+	FieldValue<TArray<float>> AttackAnimationWeightsField() { return { this, "APrimalDinoCharacter", "AttackAnimationWeights" }; }
+	FieldValue<TArray<float>> AttackAnimationsTimeFromEndToConsiderFinishedField() { return { this, "APrimalDinoCharacter", "AttackAnimationsTimeFromEndToConsiderFinished" }; }
+	FieldValue<TArray<UMaterialInterface *>> FemaleMaterialOverridesField() { return { this, "APrimalDinoCharacter", "FemaleMaterialOverrides" }; }
+	FieldValue<float> PaintConsumptionMultiplierField() { return { this, "APrimalDinoCharacter", "PaintConsumptionMultiplier" }; }
+	FieldValue<float> ChargingBlockedStopTimeThresholdField() { return { this, "APrimalDinoCharacter", "ChargingBlockedStopTimeThreshold" }; }
+	FieldValue<TArray<FName>> MeleeSwingSocketsField() { return { this, "APrimalDinoCharacter", "MeleeSwingSockets" }; }
+	FieldValue<int> MeleeDamageAmountField() { return { this, "APrimalDinoCharacter", "MeleeDamageAmount" }; }
+	FieldValue<float> MeleeDamageImpulseField() { return { this, "APrimalDinoCharacter", "MeleeDamageImpulse" }; }
+	FieldValue<float> MeleeSwingRadiusField() { return { this, "APrimalDinoCharacter", "MeleeSwingRadius" }; }
+	FieldValue<char> CurrentAttackIndexField() { return { this, "APrimalDinoCharacter", "CurrentAttackIndex" }; }
+	FieldValue<char> LastAttackIndexField() { return { this, "APrimalDinoCharacter", "LastAttackIndex" }; }
+	FieldValue<TSubclassOf<UDamageType>> MeleeDamageTypeField() { return { this, "APrimalDinoCharacter", "MeleeDamageType" }; }
+	FieldValue<TSubclassOf<UDamageType>> StepActorDamageTypeOverrideField() { return { this, "APrimalDinoCharacter", "StepActorDamageTypeOverride" }; }
+	FieldValue<float> AttackOffsetField() { return { this, "APrimalDinoCharacter", "AttackOffset" }; }
+	FieldValue<float> FleeHealthPercentageField() { return { this, "APrimalDinoCharacter", "FleeHealthPercentage" }; }
+	FieldValue<float> BreakFleeHealthPercentageField() { return { this, "APrimalDinoCharacter", "BreakFleeHealthPercentage" }; }
+	FieldValue<FString> TamerStringField() { return { this, "APrimalDinoCharacter", "TamerString" }; }
+	FieldValue<FString> TamedNameField() { return { this, "APrimalDinoCharacter", "TamedName" }; }
+	FieldValue<FVector2D> OverlayTooltipPaddingField() { return { this, "APrimalDinoCharacter", "OverlayTooltipPadding" }; }
+	FieldValue<FVector2D> OverlayTooltipScaleField() { return { this, "APrimalDinoCharacter", "OverlayTooltipScale" }; }
+	FieldValue<FVector> RiderFPVCameraOffsetField() { return { this, "APrimalDinoCharacter", "RiderFPVCameraOffset" }; }
+	FieldValue<FVector> LandingLocationField() { return { this, "APrimalDinoCharacter", "LandingLocation" }; }
+	FieldValue<long double> StartLandingTimeField() { return { this, "APrimalDinoCharacter", "StartLandingTime" }; }
+	FieldValue<long double> LastAxisStartPressTimeField() { return { this, "APrimalDinoCharacter", "LastAxisStartPressTime" }; }
+	FieldValue<long double> LastMoveForwardTimeField() { return { this, "APrimalDinoCharacter", "LastMoveForwardTime" }; }
+	FieldValue<float> LandingTraceMaxDistanceField() { return { this, "APrimalDinoCharacter", "LandingTraceMaxDistance" }; }
+	FieldValue<float> FlyingWanderFixedDistanceAmountField() { return { this, "APrimalDinoCharacter", "FlyingWanderFixedDistanceAmount" }; }
+	FieldValue<float> FlyingWanderRandomDistanceAmountField() { return { this, "APrimalDinoCharacter", "FlyingWanderRandomDistanceAmount" }; }
+	FieldValue<float> AcceptableLandingRadiusField() { return { this, "APrimalDinoCharacter", "AcceptableLandingRadius" }; }
+	FieldValue<float> MaxLandingTimeField() { return { this, "APrimalDinoCharacter", "MaxLandingTime" }; }
+	FieldArray<float, 2> GenderSpeedMultipliersField() { return { this, "APrimalDinoCharacter", "GenderSpeedMultipliers" }; }
+	FieldValue<float> ChargeSpeedMultiplierField() { return { this, "APrimalDinoCharacter", "ChargeSpeedMultiplier" }; }
+	FieldValue<UAnimMontage *> ChargingAnimField() { return { this, "APrimalDinoCharacter", "ChargingAnim" }; }
+	FieldValue<float> ChargingStaminaPerSecondDrainField() { return { this, "APrimalDinoCharacter", "ChargingStaminaPerSecondDrain" }; }
+	FieldValue<float> ChargingStopDotTresholdField() { return { this, "APrimalDinoCharacter", "ChargingStopDotTreshold" }; }
+	FieldValue<FVector> LastChargeLocationField() { return { this, "APrimalDinoCharacter", "LastChargeLocation" }; }
+	FieldValue<long double> LastStartChargingTimeField() { return { this, "APrimalDinoCharacter", "LastStartChargingTime" }; }
+	FieldValue<TWeakObjectPtr<AShooterCharacter>> RiderField() { return { this, "APrimalDinoCharacter", "Rider" }; }
+	FieldValue<TWeakObjectPtr<AShooterCharacter>> PreviousRiderField() { return { this, "APrimalDinoCharacter", "PreviousRider" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> SaddleItemClassField() { return { this, "APrimalDinoCharacter", "SaddleItemClass" }; }
+	FieldValue<TArray<FSaddlePassengerSeatDefinition>> NoSaddlePassengerSeatsField() { return { this, "APrimalDinoCharacter", "NoSaddlePassengerSeats" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> CarriedCharacterField() { return { this, "APrimalDinoCharacter", "CarriedCharacter" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> PreviousCarriedCharacterField() { return { this, "APrimalDinoCharacter", "PreviousCarriedCharacter" }; }
+	FieldValue<UAnimMontage *> DinoWithPassengerAnimField() { return { this, "APrimalDinoCharacter", "DinoWithPassengerAnim" }; }
+	FieldValue<TArray<TWeakObjectPtr<APrimalCharacter>>> PassengerPerSeatField() { return { this, "APrimalDinoCharacter", "PassengerPerSeat" }; }
+	FieldValue<TArray<TWeakObjectPtr<APrimalCharacter>>> PrevPassengerPerSeatField() { return { this, "APrimalDinoCharacter", "PrevPassengerPerSeat" }; }
+	FieldValue<long double> LastClientCameraRotationServerUpdateField() { return { this, "APrimalDinoCharacter", "LastClientCameraRotationServerUpdate" }; }
+	FieldValue<int> LastPlayedAttackAnimationField() { return { this, "APrimalDinoCharacter", "LastPlayedAttackAnimation" }; }
+	FieldValue<char> AttackIndexOfPlayedAnimationField() { return { this, "APrimalDinoCharacter", "AttackIndexOfPlayedAnimation" }; }
+	FieldValue<TArray<FDinoBaseLevelWeightEntry>> DinoBaseLevelWeightEntriesField() { return { this, "APrimalDinoCharacter", "DinoBaseLevelWeightEntries" }; }
+	FieldValue<float> OriginalCapsuleHalfHeightField() { return { this, "APrimalDinoCharacter", "OriginalCapsuleHalfHeight" }; }
+	FieldValue<TArray<FVector>> LastSocketPositionsField() { return { this, "APrimalDinoCharacter", "LastSocketPositions" }; }
+	FieldValue<long double> EndAttackTargetTimeField() { return { this, "APrimalDinoCharacter", "EndAttackTargetTime" }; }
+	FieldValue<FVector> RidingFirstPersonViewLocationOffsetField() { return { this, "APrimalDinoCharacter", "RidingFirstPersonViewLocationOffset" }; }
+	FieldValue<float> BabyChanceOfTwinsField() { return { this, "APrimalDinoCharacter", "BabyChanceOfTwins" }; }
+	FieldValue<float> BabyGestationSpeedField() { return { this, "APrimalDinoCharacter", "BabyGestationSpeed" }; }
+	FieldValue<float> ExtraBabyGestationSpeedMultiplierField() { return { this, "APrimalDinoCharacter", "ExtraBabyGestationSpeedMultiplier" }; }
+	FieldValue<long double> LastEggBoostedTimeField() { return { this, "APrimalDinoCharacter", "LastEggBoostedTime" }; }
+	FieldValue<float> WildPercentageChanceOfBabyField() { return { this, "APrimalDinoCharacter", "WildPercentageChanceOfBaby" }; }
+	FieldValue<float> WildBabyAgeWeightField() { return { this, "APrimalDinoCharacter", "WildBabyAgeWeight" }; }
+	FieldValue<float> BabyGestationProgressField() { return { this, "APrimalDinoCharacter", "BabyGestationProgress" }; }
+	FieldValue<float> LastBabyAgeField() { return { this, "APrimalDinoCharacter", "LastBabyAge" }; }
+	FieldValue<float> LastBabyGestationProgressField() { return { this, "APrimalDinoCharacter", "LastBabyGestationProgress" }; }
+	FieldValue<float> BabyChanceOfTripletsField() { return { this, "APrimalDinoCharacter", "BabyChanceOfTriplets" }; }
+	FieldValue<float> BabyAgeField() { return { this, "APrimalDinoCharacter", "BabyAge" }; }
+	FieldValue<float> MaxPercentOfCapsulHeightAllowedForIKField() { return { this, "APrimalDinoCharacter", "MaxPercentOfCapsulHeightAllowedForIK" }; }
+	FieldValue<float> SlopeBiasForMaxCapsulePercentField() { return { this, "APrimalDinoCharacter", "SlopeBiasForMaxCapsulePercent" }; }
+	FieldValue<float> AutoFadeOutAfterTameTimeField() { return { this, "APrimalDinoCharacter", "AutoFadeOutAfterTameTime" }; }
+	FieldValue<float> FlyingForceRotationRateModifierField() { return { this, "APrimalDinoCharacter", "FlyingForceRotationRateModifier" }; }
+	FieldValue<TArray<FName>> HideBoneNamesField() { return { this, "APrimalDinoCharacter", "HideBoneNames" }; }
+	FieldValue<FString> HideBonesStringField() { return { this, "APrimalDinoCharacter", "HideBonesString" }; }
+	FieldValue<FVector> WaterSurfaceExtraJumpVectorField() { return { this, "APrimalDinoCharacter", "WaterSurfaceExtraJumpVector" }; }
+	FieldValue<FVector> FlyerTakeOffAdditionalVelocityField() { return { this, "APrimalDinoCharacter", "FlyerTakeOffAdditionalVelocity" }; }
+	FieldValue<float> OpenDoorDelayField() { return { this, "APrimalDinoCharacter", "OpenDoorDelay" }; }
+	FieldValue<float> TamedWanderHarvestIntervalField() { return { this, "APrimalDinoCharacter", "TamedWanderHarvestInterval" }; }
+	FieldValue<float> TamedWanderHarvestSearchRangeField() { return { this, "APrimalDinoCharacter", "TamedWanderHarvestSearchRange" }; }
+	FieldValue<float> TamedWanderHarvestCollectRadiusField() { return { this, "APrimalDinoCharacter", "TamedWanderHarvestCollectRadius" }; }
+	FieldValue<FVector> TamedWanderHarvestCollectOffsetField() { return { this, "APrimalDinoCharacter", "TamedWanderHarvestCollectOffset" }; }
+	FieldValue<float> RootLocSwimOffsetField() { return { this, "APrimalDinoCharacter", "RootLocSwimOffset" }; }
+	FieldValue<float> PlayAnimBelowHealthPercentField() { return { this, "APrimalDinoCharacter", "PlayAnimBelowHealthPercent" }; }
+	FieldValue<float> LeavePlayAnimBelowHealthPercentField() { return { this, "APrimalDinoCharacter", "LeavePlayAnimBelowHealthPercent" }; }
+	FieldValue<float> PlatformSaddleMaxStructureBuildDistance2DField() { return { this, "APrimalDinoCharacter", "PlatformSaddleMaxStructureBuildDistance2D" }; }
+	FieldValue<UAnimMontage *> PlayAnimBelowHealthField() { return { this, "APrimalDinoCharacter", "PlayAnimBelowHealth" }; }
+	FieldValue<USoundBase *> LowHealthExitSoundField() { return { this, "APrimalDinoCharacter", "LowHealthExitSound" }; }
+	FieldValue<USoundBase *> LowHealthEnterSoundField() { return { this, "APrimalDinoCharacter", "LowHealthEnterSound" }; }
+	FieldValue<float> SwimOffsetInterpSpeedField() { return { this, "APrimalDinoCharacter", "SwimOffsetInterpSpeed" }; }
+	FieldValue<float> CurrentRootLocSwimOffsetField() { return { this, "APrimalDinoCharacter", "CurrentRootLocSwimOffset" }; }
+	FieldValue<float> AIRangeMultiplierField() { return { this, "APrimalDinoCharacter", "AIRangeMultiplier" }; }
+	FieldArray<char, 6> PreventColorizationRegionsField() { return { this, "APrimalDinoCharacter", "PreventColorizationRegions" }; }
+	FieldArray<char, 6> ColorSetIndicesField() { return { this, "APrimalDinoCharacter", "ColorSetIndices" }; }
+	FieldArray<float, 6> ColorSetIntensityMultipliersField() { return { this, "APrimalDinoCharacter", "ColorSetIntensityMultipliers" }; }
+	FieldValue<float> MeleeAttackStaminaCostField() { return { this, "APrimalDinoCharacter", "MeleeAttackStaminaCost" }; }
+	FieldValue<UAnimMontage *> WakingTameAnimationField() { return { this, "APrimalDinoCharacter", "WakingTameAnimation" }; }
+	FieldValue<TWeakObjectPtr<AActor>> TargetField() { return { this, "APrimalDinoCharacter", "Target" }; }
+	FieldValue<TWeakObjectPtr<AActor>> TamedFollowTargetField() { return { this, "APrimalDinoCharacter", "TamedFollowTarget" }; }
+	FieldValue<float> PercentChanceFemaleField() { return { this, "APrimalDinoCharacter", "PercentChanceFemale" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalItem>>> DeathGiveItemClassesField() { return { this, "APrimalDinoCharacter", "DeathGiveItemClasses" }; }
+	FieldValue<TArray<float>> DeathGiveItemChanceToBeBlueprintField() { return { this, "APrimalDinoCharacter", "DeathGiveItemChanceToBeBlueprint" }; }
+	FieldValue<float> DeathGiveItemQualityMinField() { return { this, "APrimalDinoCharacter", "DeathGiveItemQualityMin" }; }
+	FieldValue<float> DeathGiveItemQualityMaxField() { return { this, "APrimalDinoCharacter", "DeathGiveItemQualityMax" }; }
+	FieldValue<float> DeathGiveItemRangeField() { return { this, "APrimalDinoCharacter", "DeathGiveItemRange" }; }
+	FieldValue<FString> DeathGiveAchievementField() { return { this, "APrimalDinoCharacter", "DeathGiveAchievement" }; }
+	FieldValue<USoundBase *> OverrideAreaMusicField() { return { this, "APrimalDinoCharacter", "OverrideAreaMusic" }; }
+	FieldValue<FVector> UnboardLocationOffsetField() { return { this, "APrimalDinoCharacter", "UnboardLocationOffset" }; }
+	FieldValue<float> LastTimeWhileHeadingToGoalField() { return { this, "APrimalDinoCharacter", "LastTimeWhileHeadingToGoal" }; }
+	FieldValue<float> RidingNetUpdateFequencyField() { return { this, "APrimalDinoCharacter", "RidingNetUpdateFequency" }; }
+	FieldValue<float> RiderMaxSpeedModifierField() { return { this, "APrimalDinoCharacter", "RiderMaxSpeedModifier" }; }
+	FieldValue<float> RiderExtraMaxSpeedModifierField() { return { this, "APrimalDinoCharacter", "RiderExtraMaxSpeedModifier" }; }
+	FieldValue<float> RiderMaxRunSpeedModifierField() { return { this, "APrimalDinoCharacter", "RiderMaxRunSpeedModifier" }; }
+	FieldValue<float> RiderRotationRateModifierField() { return { this, "APrimalDinoCharacter", "RiderRotationRateModifier" }; }
+	FieldValue<float> SwimmingRotationRateModifierField() { return { this, "APrimalDinoCharacter", "SwimmingRotationRateModifier" }; }
+	FieldValue<float> chargingRotationRateModifierField() { return { this, "APrimalDinoCharacter", "chargingRotationRateModifier" }; }
+	FieldValue<UAnimMontage *> EnterFlightAnimField() { return { this, "APrimalDinoCharacter", "EnterFlightAnim" }; }
+	FieldValue<UAnimMontage *> ExitFlightAnimField() { return { this, "APrimalDinoCharacter", "ExitFlightAnim" }; }
+	FieldValue<UAnimMontage *> SleepConsumeFoodAnimField() { return { this, "APrimalDinoCharacter", "SleepConsumeFoodAnim" }; }
+	FieldValue<UAnimMontage *> WakingConsumeFoodAnimField() { return { this, "APrimalDinoCharacter", "WakingConsumeFoodAnim" }; }
+	FieldValue<UAnimMontage *> FallAsleepAnimField() { return { this, "APrimalDinoCharacter", "FallAsleepAnim" }; }
+	FieldValue<UAnimMontage *> TamedUnsleepAnimField() { return { this, "APrimalDinoCharacter", "TamedUnsleepAnim" }; }
+	FieldValue<UAnimMontage *> WildUnsleepAnimField() { return { this, "APrimalDinoCharacter", "WildUnsleepAnim" }; }
+	FieldValue<UAnimMontage *> OpenDoorAnimField() { return { this, "APrimalDinoCharacter", "OpenDoorAnim" }; }
+	FieldValue<float> ControlFacePitchInterpSpeedField() { return { this, "APrimalDinoCharacter", "ControlFacePitchInterpSpeed" }; }
+	FieldValue<float> TamedWalkableFloorZField() { return { this, "APrimalDinoCharacter", "TamedWalkableFloorZ" }; }
+	FieldValue<float> CurrentMovementAnimRateField() { return { this, "APrimalDinoCharacter", "CurrentMovementAnimRate" }; }
+	FieldValue<int> MinPlayerLevelForWakingTameField() { return { this, "APrimalDinoCharacter", "MinPlayerLevelForWakingTame" }; }
+	FieldValue<float> ForceNextAttackIndexField() { return { this, "APrimalDinoCharacter", "ForceNextAttackIndex" }; }
+	FieldValue<TSubclassOf<UPrimalInventoryComponent>> TamedInventoryComponentTemplateField() { return { this, "APrimalDinoCharacter", "TamedInventoryComponentTemplate" }; }
+	//FieldValue<FWeightedObjectList> DeathInventoryTemplatesField() { return { this, "APrimalDinoCharacter", "DeathInventoryTemplates" }; }
+	FieldValue<float> DeathInventoryChanceToUseField() { return { this, "APrimalDinoCharacter", "DeathInventoryChanceToUse" }; }
+	FieldValue<float> WakingTameFeedIntervalField() { return { this, "APrimalDinoCharacter", "WakingTameFeedInterval" }; }
+	FieldValue<long double> LastWakingTameFedTimeField() { return { this, "APrimalDinoCharacter", "LastWakingTameFedTime" }; }
+	FieldValue<float> DeathInventoryQualityPerLevelMultiplierField() { return { this, "APrimalDinoCharacter", "DeathInventoryQualityPerLevelMultiplier" }; }
+	FieldValue<float> RequiredTameAffinityField() { return { this, "APrimalDinoCharacter", "RequiredTameAffinity" }; }
+	FieldValue<float> RequiredTameAffinityPerBaseLevelField() { return { this, "APrimalDinoCharacter", "RequiredTameAffinityPerBaseLevel" }; }
+	FieldValue<char> TamedAITargetingRangeField() { return { this, "APrimalDinoCharacter", "TamedAITargetingRange" }; }
+	FieldValue<float> CurrentTameAffinityField() { return { this, "APrimalDinoCharacter", "CurrentTameAffinity" }; }
+	FieldValue<float> TameIneffectivenessModifierField() { return { this, "APrimalDinoCharacter", "TameIneffectivenessModifier" }; }
+	FieldValue<float> TameIneffectivenessByAffinityField() { return { this, "APrimalDinoCharacter", "TameIneffectivenessByAffinity" }; }
+	FieldValue<int> LastFrameUseLowQualityAnimationTickField() { return { this, "APrimalDinoCharacter", "LastFrameUseLowQualityAnimationTick" }; }
+	//FieldValue<TArray<FPrimalSaddleStructure>> SaddleStructuresField() { return { this, "APrimalDinoCharacter", "SaddleStructures" }; }
+	FieldValue<int> MaxSaddleStructuresHeightField() { return { this, "APrimalDinoCharacter", "MaxSaddleStructuresHeight" }; }
+	FieldValue<int> SaddlePivotOffsetField() { return { this, "APrimalDinoCharacter", "SaddlePivotOffset" }; }
+	FieldValue<int> MaxSaddleStructuresNumField() { return { this, "APrimalDinoCharacter", "MaxSaddleStructuresNum" }; }
+	//FieldValue<TSubclassOf<UPrimalDinoSettings>> DinoSettingsClassField() { return { this, "APrimalDinoCharacter", "DinoSettingsClass" }; }
+	FieldValue<float> TamingFoodConsumeIntervalField() { return { this, "APrimalDinoCharacter", "TamingFoodConsumeInterval" }; }
+	FieldValue<float> DediForceAttackAnimTimeField() { return { this, "APrimalDinoCharacter", "DediForceAttackAnimTime" }; }
+	FieldValue<float> DediForceStartAttackAfterAnimTimeField() { return { this, "APrimalDinoCharacter", "DediForceStartAttackAfterAnimTime" }; }
+	FieldValue<float> WakingTameFoodIncreaseMultiplierField() { return { this, "APrimalDinoCharacter", "WakingTameFoodIncreaseMultiplier" }; }
+	FieldValue<int> TamingTeamIDField() { return { this, "APrimalDinoCharacter", "TamingTeamID" }; }
+	FieldValue<int> OwningPlayerIDField() { return { this, "APrimalDinoCharacter", "OwningPlayerID" }; }
+	FieldValue<FString> OwningPlayerNameField() { return { this, "APrimalDinoCharacter", "OwningPlayerName" }; }
+	FieldValue<long double> TamingLastFoodConsumptionTimeField() { return { this, "APrimalDinoCharacter", "TamingLastFoodConsumptionTime" }; }
+	FieldValue<unsigned int> DinoID1Field() { return { this, "APrimalDinoCharacter", "DinoID1" }; }
+	FieldValue<unsigned int> DinoID2Field() { return { this, "APrimalDinoCharacter", "DinoID2" }; }
+	FieldValue<FRotator> PreviousAimRotField() { return { this, "APrimalDinoCharacter", "PreviousAimRot" }; }
+	FieldValue<int> TamedAggressionLevelField() { return { this, "APrimalDinoCharacter", "TamedAggressionLevel" }; }
+	FieldValue<float> TamingIneffectivenessModifierIncreaseByDamagePercentField() { return { this, "APrimalDinoCharacter", "TamingIneffectivenessModifierIncreaseByDamagePercent" }; }
+	FieldValue<int> NPCSpawnerExtraLevelOffsetField() { return { this, "APrimalDinoCharacter", "NPCSpawnerExtraLevelOffset" }; }
+	FieldValue<float> NPCSpawnerLevelMultiplierField() { return { this, "APrimalDinoCharacter", "NPCSpawnerLevelMultiplier" }; }
+	FieldValue<TWeakObjectPtr<APrimalStructureItemContainer_SupplyCrate>> LinkedSupplyCrateField() { return { this, "APrimalDinoCharacter", "LinkedSupplyCrate" }; }
+	FieldValue<float> UntamedPoopTimeMinIntervalField() { return { this, "APrimalDinoCharacter", "UntamedPoopTimeMinInterval" }; }
+	FieldValue<float> UntamedPoopTimeMaxIntervalField() { return { this, "APrimalDinoCharacter", "UntamedPoopTimeMaxInterval" }; }
+	FieldValue<float> MeleeHarvestDamageMultiplierField() { return { this, "APrimalDinoCharacter", "MeleeHarvestDamageMultiplier" }; }
+	FieldValue<float> AllowRidingMaxDistanceField() { return { this, "APrimalDinoCharacter", "AllowRidingMaxDistance" }; }
+	FieldValue<float> UntamedPoopTimeCacheField() { return { this, "APrimalDinoCharacter", "UntamedPoopTimeCache" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> BaseEggClassField() { return { this, "APrimalDinoCharacter", "BaseEggClass" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalItem>>> EggItemsToSpawnField() { return { this, "APrimalDinoCharacter", "EggItemsToSpawn" }; }
+	FieldValue<TArray<float>> EggWeightsToSpawnField() { return { this, "APrimalDinoCharacter", "EggWeightsToSpawn" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalItem>>> FertilizedEggItemsToSpawnField() { return { this, "APrimalDinoCharacter", "FertilizedEggItemsToSpawn" }; }
+	FieldValue<TArray<float>> FertilizedEggWeightsToSpawnField() { return { this, "APrimalDinoCharacter", "FertilizedEggWeightsToSpawn" }; }
+	FieldValue<float> EggChanceToSpawnUnstasisField() { return { this, "APrimalDinoCharacter", "EggChanceToSpawnUnstasis" }; }
+	FieldValue<float> EggIntervalBetweenUnstasisChancesField() { return { this, "APrimalDinoCharacter", "EggIntervalBetweenUnstasisChances" }; }
+	FieldValue<float> EggRangeMaximumNumberFromSameDinoTypeField() { return { this, "APrimalDinoCharacter", "EggRangeMaximumNumberFromSameDinoType" }; }
+	FieldValue<int> EggMaximumNumberFromSameDinoTypeField() { return { this, "APrimalDinoCharacter", "EggMaximumNumberFromSameDinoType" }; }
+	FieldValue<float> EggRangeMaximumNumberField() { return { this, "APrimalDinoCharacter", "EggRangeMaximumNumber" }; }
+	FieldValue<int> EggMaximumNumberField() { return { this, "APrimalDinoCharacter", "EggMaximumNumber" }; }
+	FieldValue<float> UntamedWalkingSpeedModifierField() { return { this, "APrimalDinoCharacter", "UntamedWalkingSpeedModifier" }; }
+	FieldValue<float> TamedWalkingSpeedModifierField() { return { this, "APrimalDinoCharacter", "TamedWalkingSpeedModifier" }; }
+	FieldValue<float> UntamedRunningSpeedModifierField() { return { this, "APrimalDinoCharacter", "UntamedRunningSpeedModifier" }; }
+	FieldValue<float> TamedRunningSpeedModifierField() { return { this, "APrimalDinoCharacter", "TamedRunningSpeedModifier" }; }
+	FieldValue<UAnimSequence *> RiderAnimOverrideField() { return { this, "APrimalDinoCharacter", "RiderAnimOverride" }; }
+	FieldValue<UAnimSequence *> TurningRightRiderAnimOverrideField() { return { this, "APrimalDinoCharacter", "TurningRightRiderAnimOverride" }; }
+	FieldValue<UAnimSequence *> TurningLeftRiderAnimOverrideField() { return { this, "APrimalDinoCharacter", "TurningLeftRiderAnimOverride" }; }
+	FieldValue<UAnimSequence *> LatchedRiderAnimOverrideField() { return { this, "APrimalDinoCharacter", "LatchedRiderAnimOverride" }; }
+	FieldValue<UAnimSequence *> RiderMoveAnimOverrideField() { return { this, "APrimalDinoCharacter", "RiderMoveAnimOverride" }; }
+	FieldValue<float> RidingAnimSpeedFactorField() { return { this, "APrimalDinoCharacter", "RidingAnimSpeedFactor" }; }
+	FieldValue<UAnimMontage *> StartRidingAnimOverrideField() { return { this, "APrimalDinoCharacter", "StartRidingAnimOverride" }; }
+	FieldValue<UAnimMontage *> StopRidingAnimOverrideField() { return { this, "APrimalDinoCharacter", "StopRidingAnimOverride" }; }
+	FieldValue<FName> TargetingTeamNameOverrideField() { return { this, "APrimalDinoCharacter", "TargetingTeamNameOverride" }; }
+	FieldValue<float> ExtraTamedSpeedMultiplierField() { return { this, "APrimalDinoCharacter", "ExtraTamedSpeedMultiplier" }; }
+	FieldValue<float> ExtraUnTamedSpeedMultiplierField() { return { this, "APrimalDinoCharacter", "ExtraUnTamedSpeedMultiplier" }; }
+	FieldValue<long double> LastEggSpawnChanceTimeField() { return { this, "APrimalDinoCharacter", "LastEggSpawnChanceTime" }; }
+	FieldValue<FName> OriginalNPCVolumeNameField() { return { this, "APrimalDinoCharacter", "OriginalNPCVolumeName" }; }
+	FieldValue<float> OutsideOriginalNPCVolumeStasisDestroyIntervalField() { return { this, "APrimalDinoCharacter", "OutsideOriginalNPCVolumeStasisDestroyInterval" }; }
+	FieldValue<float> StasisedDestroyIntervalField() { return { this, "APrimalDinoCharacter", "StasisedDestroyInterval" }; }
+	FieldValue<float> TamedAllowNamingTimeField() { return { this, "APrimalDinoCharacter", "TamedAllowNamingTime" }; }
+	FieldValue<float> MovementSpeedScalingRotationRatePowerField() { return { this, "APrimalDinoCharacter", "MovementSpeedScalingRotationRatePower" }; }
+	FieldValue<float> AttackNoStaminaTorpidityMultiplierField() { return { this, "APrimalDinoCharacter", "AttackNoStaminaTorpidityMultiplier" }; }
+	FieldValue<float> DecayDestructionPeriodField() { return { this, "APrimalDinoCharacter", "DecayDestructionPeriod" }; }
+	FieldValue<long double> TamedAtTimeField() { return { this, "APrimalDinoCharacter", "TamedAtTime" }; }
+	FieldValue<long double> LastInAllyRangeTimeField() { return { this, "APrimalDinoCharacter", "LastInAllyRangeTime" }; }
+	FieldValue<TArray<APrimalStructure *>> LatchedOnStructuresField() { return { this, "APrimalDinoCharacter", "LatchedOnStructures" }; }
+	FieldValue<int> OriginalTargetingTeamField() { return { this, "APrimalDinoCharacter", "OriginalTargetingTeam" }; }
+	FieldValue<float> PreviousRootYawSpeedField() { return { this, "APrimalDinoCharacter", "PreviousRootYawSpeed" }; }
+	FieldValue<long double> LastTimeFallingField() { return { this, "APrimalDinoCharacter", "LastTimeFalling" }; }
+	FieldValue<float> TamedCorpseLifespanField() { return { this, "APrimalDinoCharacter", "TamedCorpseLifespan" }; }
+	FieldValue<float> MateBoostDamageReceiveMultiplierField() { return { this, "APrimalDinoCharacter", "MateBoostDamageReceiveMultiplier" }; }
+	FieldValue<float> MateBoostDamageGiveMultiplierField() { return { this, "APrimalDinoCharacter", "MateBoostDamageGiveMultiplier" }; }
+	FieldValue<float> MateBoostRangeField() { return { this, "APrimalDinoCharacter", "MateBoostRange" }; }
+	FieldValue<FName> DinoNameTagField() { return { this, "APrimalDinoCharacter", "DinoNameTag" }; }
+	FieldValue<AShooterPlayerController *> AttackMyTargetForPlayerControllerField() { return { this, "APrimalDinoCharacter", "AttackMyTargetForPlayerController" }; }
+	FieldValue<float> RidingAttackExtraVelocityDelayField() { return { this, "APrimalDinoCharacter", "RidingAttackExtraVelocityDelay" }; }
+	FieldValue<float> StepDamageRadialDamageIntervalField() { return { this, "APrimalDinoCharacter", "StepDamageRadialDamageInterval" }; }
+	FieldValue<float> StepDamageRadialDamageExtraRadiusField() { return { this, "APrimalDinoCharacter", "StepDamageRadialDamageExtraRadius" }; }
+	FieldValue<float> StepDamageRadialDamageAmountGeneralField() { return { this, "APrimalDinoCharacter", "StepDamageRadialDamageAmountGeneral" }; }
+	FieldValue<float> StepDamageRadialDamageAmountHarvestableField() { return { this, "APrimalDinoCharacter", "StepDamageRadialDamageAmountHarvestable" }; }
+	FieldValue<long double> LastRadialStepDamageTimeField() { return { this, "APrimalDinoCharacter", "LastRadialStepDamageTime" }; }
+	FieldValue<TSubclassOf<UDamageType>> StepHarvestableDamageTypeField() { return { this, "APrimalDinoCharacter", "StepHarvestableDamageType" }; }
+	FieldValue<float> StepDamageFootDamageIntervalField() { return { this, "APrimalDinoCharacter", "StepDamageFootDamageInterval" }; }
+	FieldValue<float> StepDamageFootDamageRadiusField() { return { this, "APrimalDinoCharacter", "StepDamageFootDamageRadius" }; }
+	FieldValue<float> StepDamageFootDamageAmountField() { return { this, "APrimalDinoCharacter", "StepDamageFootDamageAmount" }; }
+	FieldValue<TArray<FName>> StepDamageFootDamageSocketsField() { return { this, "APrimalDinoCharacter", "StepDamageFootDamageSockets" }; }
+	FieldValue<float> DurationBeforeMovingStuckPawnField() { return { this, "APrimalDinoCharacter", "DurationBeforeMovingStuckPawn" }; }
+	FieldValue<FVector> LastCheckedLocationField() { return { this, "APrimalDinoCharacter", "LastCheckedLocation" }; }
+	FieldValue<long double> LastValidNotStuckTimeField() { return { this, "APrimalDinoCharacter", "LastValidNotStuckTime" }; }
+	FieldValue<UAnimMontage *> StartledAnimationRightDefaultField() { return { this, "APrimalDinoCharacter", "StartledAnimationRightDefault" }; }
+	FieldValue<UAnimMontage *> StartledAnimationLeftField() { return { this, "APrimalDinoCharacter", "StartledAnimationLeft" }; }
+	FieldValue<TArray<UAnimMontage *>> StartledAnimationsField() { return { this, "APrimalDinoCharacter", "StartledAnimations" }; }
+	FieldValue<UAnimMontage *> FlyingStartledAnimationField() { return { this, "APrimalDinoCharacter", "FlyingStartledAnimation" }; }
+	FieldValue<float> RandomPlayStartledAnimIntervalMinField() { return { this, "APrimalDinoCharacter", "RandomPlayStartledAnimIntervalMin" }; }
+	FieldValue<float> RandomPlayStartledAnimIntervalMaxField() { return { this, "APrimalDinoCharacter", "RandomPlayStartledAnimIntervalMax" }; }
+	FieldValue<float> StartledAnimationCooldownField() { return { this, "APrimalDinoCharacter", "StartledAnimationCooldown" }; }
+	FieldValue<float> DefaultActivateAttackRangeOffsetField() { return { this, "APrimalDinoCharacter", "DefaultActivateAttackRangeOffset" }; }
+	FieldValue<float> CorpseTargetingMultiplierField() { return { this, "APrimalDinoCharacter", "CorpseTargetingMultiplier" }; }
+	FieldValue<long double> LastFootStepDamageTimeField() { return { this, "APrimalDinoCharacter", "LastFootStepDamageTime" }; }
+	FieldValue<long double> LastStartledTimeField() { return { this, "APrimalDinoCharacter", "LastStartledTime" }; }
+	FieldValue<float> CorpseLifespanNonRelevantField() { return { this, "APrimalDinoCharacter", "CorpseLifespanNonRelevant" }; }
+	FieldValue<float> MinStaminaForRiderField() { return { this, "APrimalDinoCharacter", "MinStaminaForRider" }; }
+	FieldValue<float> LoseStaminaWithRiderRateField() { return { this, "APrimalDinoCharacter", "LoseStaminaWithRiderRate" }; }
+	FieldValue<float> FollowingRunDistanceField() { return { this, "APrimalDinoCharacter", "FollowingRunDistance" }; }
+	FieldValue<float> MaxDinoKillerTransferWeightPercentField() { return { this, "APrimalDinoCharacter", "MaxDinoKillerTransferWeightPercent" }; }
+	FieldValue<float> NPCZoneVolumeCountWeightField() { return { this, "APrimalDinoCharacter", "NPCZoneVolumeCountWeight" }; }
+	FieldValue<float> NPCLerpToMaxRandomBaseLevelField() { return { this, "APrimalDinoCharacter", "NPCLerpToMaxRandomBaseLevel" }; }
+	FieldValue<FVector> FloatingHUDTextWorldOffsetField() { return { this, "APrimalDinoCharacter", "FloatingHUDTextWorldOffset" }; }
+	FieldValue<long double> LastAttackedTargetTimeField() { return { this, "APrimalDinoCharacter", "LastAttackedTargetTime" }; }
+	FieldValue<long double> LastForcedLandingCheckTimeField() { return { this, "APrimalDinoCharacter", "LastForcedLandingCheckTime" }; }
+	FieldValue<long double> LastAllyTargetLookTimeField() { return { this, "APrimalDinoCharacter", "LastAllyTargetLookTime" }; }
+	FieldValue<long double> LastAttackedTimeField() { return { this, "APrimalDinoCharacter", "LastAttackedTime" }; }
+	FieldValue<long double> LastPlayerDinoOverlapRelevantTimeField() { return { this, "APrimalDinoCharacter", "LastPlayerDinoOverlapRelevantTime" }; }
+	FieldValue<FRotator> DinoAimRotationOffsetField() { return { this, "APrimalDinoCharacter", "DinoAimRotationOffset" }; }
+	FieldValue<long double> LastDinoAllyLookInterpTimeField() { return { this, "APrimalDinoCharacter", "LastDinoAllyLookInterpTime" }; }
+	FieldValue<FVector> LastRiderOverlappedPositionField() { return { this, "APrimalDinoCharacter", "LastRiderOverlappedPosition" }; }
+	FieldValue<TWeakObjectPtr<APrimalCharacter>> AutoDragByPawnField() { return { this, "APrimalDinoCharacter", "AutoDragByPawn" }; }
+	FieldValue<long double> NextRidingFlyerUndergroundCheckField() { return { this, "APrimalDinoCharacter", "NextRidingFlyerUndergroundCheck" }; }
+	FieldValue<long double> LastSetRiderTimeField() { return { this, "APrimalDinoCharacter", "LastSetRiderTime" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> RepairRequirementsItemField() { return { this, "APrimalDinoCharacter", "RepairRequirementsItem" }; }
+	FieldValue<float> RepairAmountRemainingField() { return { this, "APrimalDinoCharacter", "RepairAmountRemaining" }; }
+	FieldValue<float> RepairCheckIntervalField() { return { this, "APrimalDinoCharacter", "RepairCheckInterval" }; }
+	FieldValue<float> RepairPercentPerIntervalField() { return { this, "APrimalDinoCharacter", "RepairPercentPerInterval" }; }
+	FieldValue<FVector> RiderCheckTraceOffsetField() { return { this, "APrimalDinoCharacter", "RiderCheckTraceOffset" }; }
+	FieldValue<FVector> RiderEjectionImpulseField() { return { this, "APrimalDinoCharacter", "RiderEjectionImpulse" }; }
+	FieldValue<float> WakingTameAffinityDecreaseFoodPercentageField() { return { this, "APrimalDinoCharacter", "WakingTameAffinityDecreaseFoodPercentage" }; }
+	FieldValue<float> WakingTameAllowFeedingFoodPercentageField() { return { this, "APrimalDinoCharacter", "WakingTameAllowFeedingFoodPercentage" }; }
+	FieldValue<float> WakingTameFoodAffinityMultiplierField() { return { this, "APrimalDinoCharacter", "WakingTameFoodAffinityMultiplier" }; }
+	FieldValue<float> CheckForWildAmbientHarvestingIntervalMinField() { return { this, "APrimalDinoCharacter", "CheckForWildAmbientHarvestingIntervalMin" }; }
+	FieldValue<float> CheckForWildAmbientHarvestingIntervalMaxField() { return { this, "APrimalDinoCharacter", "CheckForWildAmbientHarvestingIntervalMax" }; }
+	FieldValue<float> WildAmbientHarvestingTimerField() { return { this, "APrimalDinoCharacter", "WildAmbientHarvestingTimer" }; }
+	FieldValue<UAnimMontage *> WildAmbientHarvestingAnimationField() { return { this, "APrimalDinoCharacter", "WildAmbientHarvestingAnimation" }; }
+	FieldValue<TArray<UAnimMontage *>> WildAmbientHarvestingAnimationsField() { return { this, "APrimalDinoCharacter", "WildAmbientHarvestingAnimations" }; }
+	FieldValue<float> WildAmbientHarvestingRadiusField() { return { this, "APrimalDinoCharacter", "WildAmbientHarvestingRadius" }; }
+	FieldValue<int> FlyerNumUnderGroundFailField() { return { this, "APrimalDinoCharacter", "FlyerNumUnderGroundFail" }; }
+	FieldValue<int> AbsoluteBaseLevelField() { return { this, "APrimalDinoCharacter", "AbsoluteBaseLevel" }; }
+	FieldValue<TSubclassOf<UDamageType>> TamedHarvestDamageTypeField() { return { this, "APrimalDinoCharacter", "TamedHarvestDamageType" }; }
+	FieldValue<TArray<APrimalCharacter *>> DraggedRagdollsField() { return { this, "APrimalDinoCharacter", "DraggedRagdolls" }; }
+	FieldValue<FVector> LastOverrodeRandomWanderLocationField() { return { this, "APrimalDinoCharacter", "LastOverrodeRandomWanderLocation" }; }
+	FieldValue<float> ChargeBumpDamageField() { return { this, "APrimalDinoCharacter", "ChargeBumpDamage" }; }
+	FieldValue<TSubclassOf<UDamageType>> ChargeBumpDamageTypeField() { return { this, "APrimalDinoCharacter", "ChargeBumpDamageType" }; }
+	FieldValue<float> ChargeBumpImpulseField() { return { this, "APrimalDinoCharacter", "ChargeBumpImpulse" }; }
+	FieldValue<float> MinChargeIntervalField() { return { this, "APrimalDinoCharacter", "MinChargeInterval" }; }
+	FieldValue<float> PlayerMountedLaunchFowardSpeedField() { return { this, "APrimalDinoCharacter", "PlayerMountedLaunchFowardSpeed" }; }
+	FieldValue<float> PlayerMountedLaunchUpSpeedField() { return { this, "APrimalDinoCharacter", "PlayerMountedLaunchUpSpeed" }; }
+	FieldValue<float> AttackOnLaunchMaximumTargetDistanceField() { return { this, "APrimalDinoCharacter", "AttackOnLaunchMaximumTargetDistance" }; }
+	FieldValue<float> KeepFlightRemainingTimeField() { return { this, "APrimalDinoCharacter", "KeepFlightRemainingTime" }; }
+	FieldValue<UAnimMontage *> MountCharacterAnimationField() { return { this, "APrimalDinoCharacter", "MountCharacterAnimation" }; }
+	FieldValue<UAnimMontage *> UnmountCharacterAnimationField() { return { this, "APrimalDinoCharacter", "UnmountCharacterAnimation" }; }
+	FieldValue<UAnimMontage *> EndChargingAnimationField() { return { this, "APrimalDinoCharacter", "EndChargingAnimation" }; }
+	FieldValue<float> FlyingRunSpeedModifierField() { return { this, "APrimalDinoCharacter", "FlyingRunSpeedModifier" }; }
+	FieldValue<float> ChargingAnimDelayField() { return { this, "APrimalDinoCharacter", "ChargingAnimDelay" }; }
+	FieldValue<FName> RiderSocketNameField() { return { this, "APrimalDinoCharacter", "RiderSocketName" }; }
+	FieldValue<float> ChargingActivationRequiresStaminaField() { return { this, "APrimalDinoCharacter", "ChargingActivationRequiresStamina" }; }
+	FieldValue<float> ChargingActivationConsumesStaminaField() { return { this, "APrimalDinoCharacter", "ChargingActivationConsumesStamina" }; }
+	FieldValue<float> FlyerHardBreakingOverrideField() { return { this, "APrimalDinoCharacter", "FlyerHardBreakingOverride" }; }
+	FieldValue<float> BabyScaleField() { return { this, "APrimalDinoCharacter", "BabyScale" }; }
+	FieldValue<float> BabySpeedMultiplierField() { return { this, "APrimalDinoCharacter", "BabySpeedMultiplier" }; }
+	FieldValue<float> BabyPitchMultiplierField() { return { this, "APrimalDinoCharacter", "BabyPitchMultiplier" }; }
+	FieldValue<float> BabyVolumeMultiplierField() { return { this, "APrimalDinoCharacter", "BabyVolumeMultiplier" }; }
+	FieldValue<TWeakObjectPtr<AActor>> WanderAroundActorField() { return { this, "APrimalDinoCharacter", "WanderAroundActor" }; }
+	FieldValue<float> WanderAroundActorMaxDistanceField() { return { this, "APrimalDinoCharacter", "WanderAroundActorMaxDistance" }; }
+	FieldValue<long double> ChargingStartBlockedTimeField() { return { this, "APrimalDinoCharacter", "ChargingStartBlockedTime" }; }
+	FieldValue<long double> LastChargeEndTimeField() { return { this, "APrimalDinoCharacter", "LastChargeEndTime" }; }
+	FieldValue<TArray<APrimalStructure *>> SaddledStructuresField() { return { this, "APrimalDinoCharacter", "SaddledStructures" }; }
+	FieldValue<long double> LastTamedFlyerNearbyAllyCheckTimeField() { return { this, "APrimalDinoCharacter", "LastTamedFlyerNearbyAllyCheckTime" }; }
+	FieldValue<long double> LastUpdatedBabyAgeAtTimeField() { return { this, "APrimalDinoCharacter", "LastUpdatedBabyAgeAtTime" }; }
+	FieldValue<long double> LastUpdatedGestationAtTimeField() { return { this, "APrimalDinoCharacter", "LastUpdatedGestationAtTime" }; }
+	FieldValue<long double> LastUpdatedMatingAtTimeField() { return { this, "APrimalDinoCharacter", "LastUpdatedMatingAtTime" }; }
+	FieldValue<float> BabyAgeSpeedField() { return { this, "APrimalDinoCharacter", "BabyAgeSpeed" }; }
+	FieldValue<float> ExtraBabyAgeSpeedMultiplierField() { return { this, "APrimalDinoCharacter", "ExtraBabyAgeSpeedMultiplier" }; }
+	FieldValue<float> FemaleMatingRangeAdditionField() { return { this, "APrimalDinoCharacter", "FemaleMatingRangeAddition" }; }
+	FieldValue<float> FemaleMatingTimeField() { return { this, "APrimalDinoCharacter", "FemaleMatingTime" }; }
+	FieldValue<long double> NextAllowedMatingTimeField() { return { this, "APrimalDinoCharacter", "NextAllowedMatingTime" }; }
+	FieldValue<float> MatingProgressField() { return { this, "APrimalDinoCharacter", "MatingProgress" }; }
+	FieldValue<long double> LastMatingNotificationTimeField() { return { this, "APrimalDinoCharacter", "LastMatingNotificationTime" }; }
+	FieldValue<APrimalDinoCharacter *> MatingWithDinoField() { return { this, "APrimalDinoCharacter", "MatingWithDino" }; }
+	FieldValue<UAnimMontage *> MatingAnimationMaleField() { return { this, "APrimalDinoCharacter", "MatingAnimationMale" }; }
+	FieldArray<char, 12> GestationEggNumberOfLevelUpPointsAppliedField() { return { this, "APrimalDinoCharacter", "GestationEggNumberOfLevelUpPointsApplied" }; }
+	FieldValue<float> GestationEggTamedIneffectivenessModifierField() { return { this, "APrimalDinoCharacter", "GestationEggTamedIneffectivenessModifier" }; }
+	FieldArray<char, 6> GestationEggColorSetIndicesField() { return { this, "APrimalDinoCharacter", "GestationEggColorSetIndices" }; }
+	FieldValue<float> NewFemaleMinTimeBetweenMatingField() { return { this, "APrimalDinoCharacter", "NewFemaleMinTimeBetweenMating" }; }
+	FieldValue<float> NewFemaleMaxTimeBetweenMatingField() { return { this, "APrimalDinoCharacter", "NewFemaleMaxTimeBetweenMating" }; }
+	FieldValue<TArray<TSubclassOf<APrimalBuff>>> DefaultTamedBuffsField() { return { this, "APrimalDinoCharacter", "DefaultTamedBuffs" }; }
+	FieldValue<FVector> InterpolatedVelocityField() { return { this, "APrimalDinoCharacter", "InterpolatedVelocity" }; }
+	FieldValue<FVector> OldInterpolatedLocationField() { return { this, "APrimalDinoCharacter", "OldInterpolatedLocation" }; }
+	FieldValue<float> HyperThermiaInsulationField() { return { this, "APrimalDinoCharacter", "HyperThermiaInsulation" }; }
+	FieldValue<float> HypoThermiaInsulationField() { return { this, "APrimalDinoCharacter", "HypoThermiaInsulation" }; }
+	FieldValue<float> InsulationRangeField() { return { this, "APrimalDinoCharacter", "InsulationRange" }; }
+	FieldValue<float> GangOverlapRangeField() { return { this, "APrimalDinoCharacter", "GangOverlapRange" }; }
+	FieldValue<float> GangDamageResistanceField() { return { this, "APrimalDinoCharacter", "GangDamageResistance" }; }
+	FieldValue<float> GangDamageField() { return { this, "APrimalDinoCharacter", "GangDamage" }; }
+	FieldValue<int> MaxGangCountField() { return { this, "APrimalDinoCharacter", "MaxGangCount" }; }
+	FieldValue<int> GangCountField() { return { this, "APrimalDinoCharacter", "GangCount" }; }
+	FieldValue<long double> LastGangCheckTimeField() { return { this, "APrimalDinoCharacter", "LastGangCheckTime" }; }
+	FieldValue<FVector> LastGangCheckPositionField() { return { this, "APrimalDinoCharacter", "LastGangCheckPosition" }; }
+	FieldValue<int> PreviousTargetingTeamField() { return { this, "APrimalDinoCharacter", "PreviousTargetingTeam" }; }
+	FieldValue<int> LastRiderExitFrameCounterField() { return { this, "APrimalDinoCharacter", "LastRiderExitFrameCounter" }; }
+	FieldValue<float> WildRandomScaleField() { return { this, "APrimalDinoCharacter", "WildRandomScale" }; }
+	FieldValue<float> HeldJumpSlowFallingGravityZScaleField() { return { this, "APrimalDinoCharacter", "HeldJumpSlowFallingGravityZScale" }; }
+	FieldValue<UAnimMontage *> SlowFallingAnimField() { return { this, "APrimalDinoCharacter", "SlowFallingAnim" }; }
+	FieldValue<float> SlowFallingStaminaCostPerSecondField() { return { this, "APrimalDinoCharacter", "SlowFallingStaminaCostPerSecond" }; }
+	FieldValue<float> NoRiderRotationModifierField() { return { this, "APrimalDinoCharacter", "NoRiderRotationModifier" }; }
+	FieldValue<FName> RiderFPVCameraUseSocketNameField() { return { this, "APrimalDinoCharacter", "RiderFPVCameraUseSocketName" }; }
+	FieldValue<FName> RiderLatchedFPVCameraUseSocketNameField() { return { this, "APrimalDinoCharacter", "RiderLatchedFPVCameraUseSocketName" }; }
+	FieldValue<FName> PassengerFPVCameraRootSocketField() { return { this, "APrimalDinoCharacter", "PassengerFPVCameraRootSocket" }; }
+	FieldValue<TArray<FName>> FPVRiderBoneNamesToHideField() { return { this, "APrimalDinoCharacter", "FPVRiderBoneNamesToHide" }; }
+	FieldValue<float> ExtraRunningSpeedModifierField() { return { this, "APrimalDinoCharacter", "ExtraRunningSpeedModifier" }; }
+	FieldValue<float> ScaleExtraRunningSpeedModifierMinField() { return { this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierMin" }; }
+	FieldValue<float> ScaleExtraRunningSpeedModifierMaxField() { return { this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierMax" }; }
+	FieldValue<float> ScaleExtraRunningSpeedModifierSpeedField() { return { this, "APrimalDinoCharacter", "ScaleExtraRunningSpeedModifierSpeed" }; }
+	FieldValue<float> LastHigherScaleExtraRunningSpeedValueField() { return { this, "APrimalDinoCharacter", "LastHigherScaleExtraRunningSpeedValue" }; }
+	FieldValue<long double> LastHigherScaleExtraRunningSpeedTimeField() { return { this, "APrimalDinoCharacter", "LastHigherScaleExtraRunningSpeedTime" }; }
+	FieldValue<float> RiderMovementSpeedScalingRotationRatePowerMultiplierField() { return { this, "APrimalDinoCharacter", "RiderMovementSpeedScalingRotationRatePowerMultiplier" }; }
+	FieldValue<int> LoadDestroyWildDinosUnderVersionField() { return { this, "APrimalDinoCharacter", "LoadDestroyWildDinosUnderVersion" }; }
+	FieldValue<int> SaveDestroyWildDinosUnderVersionField() { return { this, "APrimalDinoCharacter", "SaveDestroyWildDinosUnderVersion" }; }
+	FieldValue<float> AllowWaterSurfaceExtraJumpStaminaCostField() { return { this, "APrimalDinoCharacter", "AllowWaterSurfaceExtraJumpStaminaCost" }; }
+	FieldValue<USoundBase *> PlayKillLocalSoundField() { return { this, "APrimalDinoCharacter", "PlayKillLocalSound" }; }
+	FieldValue<TWeakObjectPtr<AActor>> RiderAttackTargetField() { return { this, "APrimalDinoCharacter", "RiderAttackTarget" }; }
+	FieldValue<FVector> RiderAttackLocationField() { return { this, "APrimalDinoCharacter", "RiderAttackLocation" }; }
+	FieldValue<char> TribeGroupPetOrderingRankField() { return { this, "APrimalDinoCharacter", "TribeGroupPetOrderingRank" }; }
+	FieldValue<char> TribeGroupPetRidingRankField() { return { this, "APrimalDinoCharacter", "TribeGroupPetRidingRank" }; }
+	FieldValue<char> FollowStoppingDistanceField() { return { this, "APrimalDinoCharacter", "FollowStoppingDistance" }; }
+	FieldValue<FString> ImprinterNameField() { return { this, "APrimalDinoCharacter", "ImprinterName" }; }
+	FieldValue<unsigned __int64> ImprinterPlayerDataIDField() { return { this, "APrimalDinoCharacter", "ImprinterPlayerDataID" }; }
+	FieldValue<float> BabyMinCuddleIntervalField() { return { this, "APrimalDinoCharacter", "BabyMinCuddleInterval" }; }
+	FieldValue<float> BabyMaxCuddleIntervalField() { return { this, "APrimalDinoCharacter", "BabyMaxCuddleInterval" }; }
+	FieldValue<float> BabyCuddleGracePeriodField() { return { this, "APrimalDinoCharacter", "BabyCuddleGracePeriod" }; }
+	FieldValue<float> BabyCuddleLoseImpringQualityPerSecondField() { return { this, "APrimalDinoCharacter", "BabyCuddleLoseImpringQualityPerSecond" }; }
+	FieldValue<float> BabyCuddleWalkDistanceField() { return { this, "APrimalDinoCharacter", "BabyCuddleWalkDistance" }; }
+	FieldValue<FVector> BabyCuddleWalkStartingLocationField() { return { this, "APrimalDinoCharacter", "BabyCuddleWalkStartingLocation" }; }
+	FieldValue<long double> BabyNextCuddleTimeField() { return { this, "APrimalDinoCharacter", "BabyNextCuddleTime" }; }
+	FieldValue<TEnumAsByte<enum EBabyCuddleType::Type>> BabyCuddleTypeField() { return { this, "APrimalDinoCharacter", "BabyCuddleType" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> BabyCuddleFoodField() { return { this, "APrimalDinoCharacter", "BabyCuddleFood" }; }
+	FieldValue<UAnimMontage *> BabyCuddledAnimationField() { return { this, "APrimalDinoCharacter", "BabyCuddledAnimation" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalItem>>> MyBabyCuddleFoodTypesField() { return { this, "APrimalDinoCharacter", "MyBabyCuddleFoodTypes" }; }
+	FieldValue<float> RiderMaxImprintingQualityDamageReductionField() { return { this, "APrimalDinoCharacter", "RiderMaxImprintingQualityDamageReduction" }; }
+	FieldValue<float> RiderMaxImprintingQualityDamageMultiplierField() { return { this, "APrimalDinoCharacter", "RiderMaxImprintingQualityDamageMultiplier" }; }
+	FieldValue<float> BabyImprintingQualityTotalMaturationTimeField() { return { this, "APrimalDinoCharacter", "BabyImprintingQualityTotalMaturationTime" }; }
+	FieldValue<float> WakingTameMaxDistanceField() { return { this, "APrimalDinoCharacter", "WakingTameMaxDistance" }; }
+	FieldValue<float> TimeBetweenTamedWakingEatAnimationsField() { return { this, "APrimalDinoCharacter", "TimeBetweenTamedWakingEatAnimations" }; }
+	FieldValue<long double> LastEatAnimationTimeField() { return { this, "APrimalDinoCharacter", "LastEatAnimationTime" }; }
+	FieldValue<float> StepDamageFootDamageRunningMultiplierField() { return { this, "APrimalDinoCharacter", "StepDamageFootDamageRunningMultiplier" }; }
+	FieldValue<float> maxRangeForWeaponTriggeredTooltipField() { return { this, "APrimalDinoCharacter", "maxRangeForWeaponTriggeredTooltip" }; }
+	FieldValue<float> StepRadialDamageOffsetField() { return { this, "APrimalDinoCharacter", "StepRadialDamageOffset" }; }
+	FieldValue<float> ForcePawnBigPushingForTimeField() { return { this, "APrimalDinoCharacter", "ForcePawnBigPushingForTime" }; }
+	FieldValue<float> AIDinoForceActiveUntasisingRangeField() { return { this, "APrimalDinoCharacter", "AIDinoForceActiveUntasisingRange" }; }
+	FieldValue<float> WildRunningRotationRateModifierField() { return { this, "APrimalDinoCharacter", "WildRunningRotationRateModifier" }; }
+	FieldValue<float> TamedRunningRotationRateModifierField() { return { this, "APrimalDinoCharacter", "TamedRunningRotationRateModifier" }; }
+	FieldValue<float> TamedSwimmingRotationRateModifierField() { return { this, "APrimalDinoCharacter", "TamedSwimmingRotationRateModifier" }; }
+	FieldValue<float> WildSwimmingRotationRateModifierField() { return { this, "APrimalDinoCharacter", "WildSwimmingRotationRateModifier" }; }
+	FieldValue<float> RiderFlyingRotationRateModifierField() { return { this, "APrimalDinoCharacter", "RiderFlyingRotationRateModifier" }; }
+	FieldValue<float> NoRiderFlyingRotationRateModifierField() { return { this, "APrimalDinoCharacter", "NoRiderFlyingRotationRateModifier" }; }
+	FieldValue<float> AICombatRotationRateModifierField() { return { this, "APrimalDinoCharacter", "AICombatRotationRateModifier" }; }
+	FieldValue<float> WalkingRotationRateModifierField() { return { this, "APrimalDinoCharacter", "WalkingRotationRateModifier" }; }
+	FieldValue<float> SetAttackTargetTraceDistanceField() { return { this, "APrimalDinoCharacter", "SetAttackTargetTraceDistance" }; }
+	FieldValue<float> SetAttackTargetTraceWidthField() { return { this, "APrimalDinoCharacter", "SetAttackTargetTraceWidth" }; }
+	FieldValue<float> WanderRadiusMultiplierField() { return { this, "APrimalDinoCharacter", "WanderRadiusMultiplier" }; }
+	FieldValue<long double> RepeatPrimaryAttackLastSendTimeField() { return { this, "APrimalDinoCharacter", "RepeatPrimaryAttackLastSendTime" }; }
+	FieldValue<long double> NextTamedDinoCharacterStatusTickTimeField() { return { this, "APrimalDinoCharacter", "NextTamedDinoCharacterStatusTickTime" }; }
+	FieldValue<long double> LastTamedDinoCharacterStatusTickTimeField() { return { this, "APrimalDinoCharacter", "LastTamedDinoCharacterStatusTickTime" }; }
+	FieldValue<UAnimMontage *> PlayerMountedCarryAnimationField() { return { this, "APrimalDinoCharacter", "PlayerMountedCarryAnimation" }; }
+	FieldValue<float> HealthBarOffsetYField() { return { this, "APrimalDinoCharacter", "HealthBarOffsetY" }; }
+	FieldValue<float> LimitRiderYawOnLatchedRangeField() { return { this, "APrimalDinoCharacter", "LimitRiderYawOnLatchedRange" }; }
+	FieldValue<float> LatchingDistanceLimitField() { return { this, "APrimalDinoCharacter", "LatchingDistanceLimit" }; }
+	FieldValue<float> LatchingInitialYawField() { return { this, "APrimalDinoCharacter", "LatchingInitialYaw" }; }
+	FieldValue<float> LatchingInitialPitchField() { return { this, "APrimalDinoCharacter", "LatchingInitialPitch" }; }
+	FieldValue<float> LatchingInterpolatedPitchField() { return { this, "APrimalDinoCharacter", "LatchingInterpolatedPitch" }; }
+	FieldValue<float> LatchedFirstPersonViewAngleField() { return { this, "APrimalDinoCharacter", "LatchedFirstPersonViewAngle" }; }
+	FieldValue<float> LatchingCameraInterpolationSpeedField() { return { this, "APrimalDinoCharacter", "LatchingCameraInterpolationSpeed" }; }
+	FieldValue<float> TargetLatchingInitialYawField() { return { this, "APrimalDinoCharacter", "TargetLatchingInitialYaw" }; }
+	FieldValue<float> CurrentStrafeMagnitudeField() { return { this, "APrimalDinoCharacter", "CurrentStrafeMagnitude" }; }
+	FieldValue<float> GainStaminaWhenLatchedRateField() { return { this, "APrimalDinoCharacter", "GainStaminaWhenLatchedRate" }; }
+	FieldValue<int> LastFrameMoveRightField() { return { this, "APrimalDinoCharacter", "LastFrameMoveRight" }; }
+	FieldValue<int> LastFrameMoveLeftField() { return { this, "APrimalDinoCharacter", "LastFrameMoveLeft" }; }
+	FieldValue<FRotator> LastRiderMountedWeaponRotationField() { return { this, "APrimalDinoCharacter", "LastRiderMountedWeaponRotation" }; }
+	FieldValue<long double> LastRiderMountedWeaponRotationSentTimeField() { return { this, "APrimalDinoCharacter", "LastRiderMountedWeaponRotationSentTime" }; }
+	FieldValue<int> DeathGivesDossierIndexField() { return { this, "APrimalDinoCharacter", "DeathGivesDossierIndex" }; }
+	FieldValue<float> DeathGivesDossierDelayField() { return { this, "APrimalDinoCharacter", "DeathGivesDossierDelay" }; }
+	FieldValue<FName> SaddleRiderMovementTraceThruSocketNameField() { return { this, "APrimalDinoCharacter", "SaddleRiderMovementTraceThruSocketName" }; }
+	FieldValue<float> SwimmingRunSpeedModifierField() { return { this, "APrimalDinoCharacter", "SwimmingRunSpeedModifier" }; }
+	FieldValue<float> RidingSwimmingRunSpeedModifierField() { return { this, "APrimalDinoCharacter", "RidingSwimmingRunSpeedModifier" }; }
+	FieldValue<long double> DinoDownloadedAtTimeField() { return { this, "APrimalDinoCharacter", "DinoDownloadedAtTime" }; }
+	FieldValue<FString> UploadedFromServerNameField() { return { this, "APrimalDinoCharacter", "UploadedFromServerName" }; }
+	FieldValue<FString> LatestUploadedFromServerNameField() { return { this, "APrimalDinoCharacter", "LatestUploadedFromServerName" }; }
+	FieldValue<FString> PreviousUploadedFromServerNameField() { return { this, "APrimalDinoCharacter", "PreviousUploadedFromServerName" }; }
+	FieldValue<FString> TamedOnServerNameField() { return { this, "APrimalDinoCharacter", "TamedOnServerName" }; }
+	FieldValue<TArray<FDinoAncestorsEntry>> DinoAncestorsField() { return { this, "APrimalDinoCharacter", "DinoAncestors" }; }
+	FieldValue<TArray<FDinoAncestorsEntry>> DinoAncestorsMaleField() { return { this, "APrimalDinoCharacter", "DinoAncestorsMale" }; }
+	FieldValue<TArray<FDinoAncestorsEntry>> NextBabyDinoAncestorsField() { return { this, "APrimalDinoCharacter", "NextBabyDinoAncestors" }; }
+	FieldValue<TArray<FDinoAncestorsEntry>> NextBabyDinoAncestorsMaleField() { return { this, "APrimalDinoCharacter", "NextBabyDinoAncestorsMale" }; }
+	FieldValue<int> MaxAllowedRandomMutationsField() { return { this, "APrimalDinoCharacter", "MaxAllowedRandomMutations" }; }
+	FieldValue<int> RandomMutationRollsField() { return { this, "APrimalDinoCharacter", "RandomMutationRolls" }; }
+	FieldValue<float> RandomMutationChanceField() { return { this, "APrimalDinoCharacter", "RandomMutationChance" }; }
+	FieldValue<float> RandomMutationGivePointsField() { return { this, "APrimalDinoCharacter", "RandomMutationGivePoints" }; }
+	FieldValue<int> RandomMutationsMaleField() { return { this, "APrimalDinoCharacter", "RandomMutationsMale" }; }
+	FieldValue<int> RandomMutationsFemaleField() { return { this, "APrimalDinoCharacter", "RandomMutationsFemale" }; }
+	FieldValue<int> GestationEggRandomMutationsFemaleField() { return { this, "APrimalDinoCharacter", "GestationEggRandomMutationsFemale" }; }
+	FieldValue<int> GestationEggRandomMutationsMaleField() { return { this, "APrimalDinoCharacter", "GestationEggRandomMutationsMale" }; }
+	FieldValue<FName> WakingTameDistanceSocketNameField() { return { this, "APrimalDinoCharacter", "WakingTameDistanceSocketName" }; }
+	FieldValue<int> WakingTameConsumeEntireStackMaxQuantityField() { return { this, "APrimalDinoCharacter", "WakingTameConsumeEntireStackMaxQuantity" }; }
+	FieldValue<float> AttackPlayerDesirabilityMultiplierField() { return { this, "APrimalDinoCharacter", "AttackPlayerDesirabilityMultiplier" }; }
+	FieldValue<long double> LastAutoHealingItemUseField() { return { this, "APrimalDinoCharacter", "LastAutoHealingItemUse" }; }
+	FieldValue<long double> LastStartedCarryingCharacterTimeField() { return { this, "APrimalDinoCharacter", "LastStartedCarryingCharacterTime" }; }
+	FieldValue<float> FlyerAttachedExplosiveSpeedMultiplierField() { return { this, "APrimalDinoCharacter", "FlyerAttachedExplosiveSpeedMultiplier" }; }
+	//FieldValue<TArray<FDinoExtraDefaultItemList>> DinoExtraDefaultInventoryItemsField() { return { this, "APrimalDinoCharacter", "DinoExtraDefaultInventoryItems" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalItem>>> DeathGiveEngramClassesField() { return { this, "APrimalDinoCharacter", "DeathGiveEngramClasses" }; }
+	FieldValue<float> SinglePlayerOutgoingDamageModifierField() { return { this, "APrimalDinoCharacter", "SinglePlayerOutgoingDamageModifier" }; }
+	FieldValue<float> SinglePlayerIncomingDamageModifierField() { return { this, "APrimalDinoCharacter", "SinglePlayerIncomingDamageModifier" }; }
+	FieldValue<int> LastTickDelayFrameCountField() { return { this, "APrimalDinoCharacter", "LastTickDelayFrameCount" }; }
+	FieldValue<long double> NextTickDelayAllowTimeField() { return { this, "APrimalDinoCharacter", "NextTickDelayAllowTime" }; }
+	FieldValue<float> TickStatusTimeAccumulationField() { return { this, "APrimalDinoCharacter", "TickStatusTimeAccumulation" }; }
+	FieldValue<long double> LastServerTamedTickField() { return { this, "APrimalDinoCharacter", "LastServerTamedTick" }; }
+	FieldValue<int> LastTempDampenMovementInputAccelerationFrameField() { return { this, "APrimalDinoCharacter", "LastTempDampenMovementInputAccelerationFrame" }; }
+	FieldValue<UAnimMontage *> DinoLevelUpAnimationOverrideField() { return { this, "APrimalDinoCharacter", "DinoLevelUpAnimationOverride" }; }
+	FieldValue<TArray<TSubclassOf<AActor>>> DamageVictimClassesIgnoreBlockingGeomtryTraceField() { return { this, "APrimalDinoCharacter", "DamageVictimClassesIgnoreBlockingGeomtryTrace" }; }
+	FieldValue<long double> LastVacuumSpaceCheckTimeField() { return { this, "APrimalDinoCharacter", "LastVacuumSpaceCheckTime" }; }
+	FieldValue<long double> LastGrappledTimeField() { return { this, "APrimalDinoCharacter", "LastGrappledTime" }; }
+	FieldValue<float> CloneBaseElementCostField() { return { this, "APrimalDinoCharacter", "CloneBaseElementCost" }; }
+	FieldValue<float> CloneElementCostPerLevelField() { return { this, "APrimalDinoCharacter", "CloneElementCostPerLevel" }; }
+	FieldValue<FName> NonDedicatedFreezeWildDinoPhysicsIfLevelUnloadedField() { return { this, "APrimalDinoCharacter", "NonDedicatedFreezeWildDinoPhysicsIfLevelUnloaded" }; }
+	FieldValue<TArray<FName>> NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloadedField() { return { this, "APrimalDinoCharacter", "NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloaded" }; }
+	FieldValue<FVector> UnboardLocationTraceOffsetField() { return { this, "APrimalDinoCharacter", "UnboardLocationTraceOffset" }; }
+	FieldValue<FName> AttackLineOfSightMeshSocketNameField() { return { this, "APrimalDinoCharacter", "AttackLineOfSightMeshSocketName" }; }
+	FieldValue<float> AttackForceWalkDistanceMultiplierField() { return { this, "APrimalDinoCharacter", "AttackForceWalkDistanceMultiplier" }; }
+	FieldValue<float> AttackForceWalkRotationRateMultiplierField() { return { this, "APrimalDinoCharacter", "AttackForceWalkRotationRateMultiplier" }; }
+	FieldValue<int> OverrideDinoTameSoundIndexField() { return { this, "APrimalDinoCharacter", "OverrideDinoTameSoundIndex" }; }
+	FieldValue<USoundBase *> SwimSoundField() { return { this, "APrimalDinoCharacter", "SwimSound" }; }
+	FieldValue<float> SwimSoundIntervalPerHundredSpeedField() { return { this, "APrimalDinoCharacter", "SwimSoundIntervalPerHundredSpeed" }; }
+	FieldValue<float> SwimSoundTimeCacheField() { return { this, "APrimalDinoCharacter", "SwimSoundTimeCache" }; }
+	FieldValue<TSubclassOf<AController>> TamedAIControllerOverrideField() { return { this, "APrimalDinoCharacter", "TamedAIControllerOverride" }; }
+	FieldValue<int> PersonalTamedDinoCostField() { return { this, "APrimalDinoCharacter", "PersonalTamedDinoCost" }; }
+	FieldValue<long double> UploadEarliestValidTimeField() { return { this, "APrimalDinoCharacter", "UploadEarliestValidTime" }; }
+	FieldValue<float> StasisAutoDestroyIntervalField() { return { this, "APrimalDinoCharacter", "StasisAutoDestroyInterval" }; }
+	FieldValue<float> CarryCameraYawOffsetField() { return { this, "APrimalDinoCharacter", "CarryCameraYawOffset" }; }
+	FieldValue<float> ExtraDamageMultiplierField() { return { this, "APrimalDinoCharacter", "ExtraDamageMultiplier" }; }
+	FieldValue<float> ExtraTamedBaseHealthMultiplierField() { return { this, "APrimalDinoCharacter", "ExtraTamedBaseHealthMultiplier" }; }
+	FieldValue<float> AttackRangeOffsetField() { return { this, "APrimalDinoCharacter", "AttackRangeOffset" }; }
+	FieldValue<char> CurrentPassengerSeatIndexField() { return { this, "APrimalDinoCharacter", "CurrentPassengerSeatIndex" }; }
 
 	// Functions
 
@@ -4792,217 +4052,163 @@ struct APrimalDinoCharacter : APrimalCharacter
 
 struct AShooterWeapon : AActor
 {
-	float GetEquipTimeField() const { return GetNativeField<float>(this, "AShooterWeapon", "EquipTime"); }
-	void SetEquipTimeField(float newValue) { SetNativeField(this, "AShooterWeapon", "EquipTime", newValue); }
-	float GetItemDurabilityToConsumePerMeleeHitField() const { return GetNativeField<float>(this, "AShooterWeapon", "ItemDurabilityToConsumePerMeleeHit"); }
-	void SetItemDurabilityToConsumePerMeleeHitField(float newValue) { SetNativeField(this, "AShooterWeapon", "ItemDurabilityToConsumePerMeleeHit", newValue); }
-	float GetAmmoIconsCountField() const { return GetNativeField<float>(this, "AShooterWeapon", "AmmoIconsCount"); }
-	void SetAmmoIconsCountField(float newValue) { SetNativeField(this, "AShooterWeapon", "AmmoIconsCount", newValue); }
-	int GetPrimaryClipIconOffsetField() const { return GetNativeField<int>(this, "AShooterWeapon", "PrimaryClipIconOffset"); }
-	void SetPrimaryClipIconOffsetField(int newValue) { SetNativeField(this, "AShooterWeapon", "PrimaryClipIconOffset", newValue); }
-	int GetSecondaryClipIconOffsetField() const { return GetNativeField<int>(this, "AShooterWeapon", "SecondaryClipIconOffset"); }
-	void SetSecondaryClipIconOffsetField(int newValue) { SetNativeField(this, "AShooterWeapon", "SecondaryClipIconOffset", newValue); }
-	FVector2D GetTargetingInfoTooltipPaddingField() const { return GetNativeField<FVector2D>(this, "AShooterWeapon", "TargetingInfoTooltipPadding"); }
-	void SetTargetingInfoTooltipPaddingField(FVector2D newValue) { SetNativeField(this, "AShooterWeapon", "TargetingInfoTooltipPadding", newValue); }
-	FVector2D GetTargetingInfoTooltipScaleField() const { return GetNativeField<FVector2D>(this, "AShooterWeapon", "TargetingInfoTooltipScale"); }
-	void SetTargetingInfoTooltipScaleField(FVector2D newValue) { SetNativeField(this, "AShooterWeapon", "TargetingInfoTooltipScale", newValue); }
-	bool GetbDisableShooterOnElectricStormField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bDisableShooterOnElectricStorm"); }
-	void SetbDisableShooterOnElectricStormField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bDisableShooterOnElectricStorm", newValue); }
-	FName GetOverrideAttachPointField() const { return GetNativeField<FName>(this, "AShooterWeapon", "OverrideAttachPoint"); }
-	void SetOverrideAttachPointField(FName newValue) { SetNativeField(this, "AShooterWeapon", "OverrideAttachPoint", newValue); }
-	FVector GetFPVRelativeLocationField() const { return GetNativeField<FVector>(this, "AShooterWeapon", "FPVRelativeLocation"); }
-	void SetFPVRelativeLocationField(FVector newValue) { SetNativeField(this, "AShooterWeapon", "FPVRelativeLocation", newValue); }
-	FRotator GetFPVRelativeRotationField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVRelativeRotation"); }
-	void SetFPVRelativeRotationField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVRelativeRotation", newValue); }
-	FVector GetFPVRelativeLocation_TargetingField() const { return GetNativeField<FVector>(this, "AShooterWeapon", "FPVRelativeLocation_Targeting"); }
-	void SetFPVRelativeLocation_TargetingField(FVector newValue) { SetNativeField(this, "AShooterWeapon", "FPVRelativeLocation_Targeting", newValue); }
-	FRotator GetFPVRelativeRotation_TargetingField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVRelativeRotation_Targeting"); }
-	void SetFPVRelativeRotation_TargetingField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVRelativeRotation_Targeting", newValue); }
-	float GetFPVEnterTargetingInterpSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVEnterTargetingInterpSpeed"); }
-	void SetFPVEnterTargetingInterpSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVEnterTargetingInterpSpeed", newValue); }
-	float GetFPVExitTargetingInterpSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVExitTargetingInterpSpeed"); }
-	void SetFPVExitTargetingInterpSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVExitTargetingInterpSpeed", newValue); }
-	FRotator GetFPVLookAtMaximumOffsetField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVLookAtMaximumOffset"); }
-	void SetFPVLookAtMaximumOffsetField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVLookAtMaximumOffset", newValue); }
-	FRotator GetFPVLookAtSpeedBaseField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVLookAtSpeedBase"); }
-	void SetFPVLookAtSpeedBaseField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVLookAtSpeedBase", newValue); }
-	FRotator GetFPVLookAtInterpSpeedField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVLookAtInterpSpeed"); }
-	void SetFPVLookAtInterpSpeedField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVLookAtInterpSpeed", newValue); }
-	FRotator GetFPVLookAtMaximumOffset_TargetingField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVLookAtMaximumOffset_Targeting"); }
-	void SetFPVLookAtMaximumOffset_TargetingField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVLookAtMaximumOffset_Targeting", newValue); }
-	FRotator GetFPVLookAtSpeedBase_TargetingField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVLookAtSpeedBase_Targeting"); }
-	void SetFPVLookAtSpeedBase_TargetingField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVLookAtSpeedBase_Targeting", newValue); }
-	FRotator GetFPVLookAtInterpSpeed_TargetingField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVLookAtInterpSpeed_Targeting"); }
-	void SetFPVLookAtInterpSpeed_TargetingField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVLookAtInterpSpeed_Targeting", newValue); }
-	bool GetbUseBlueprintAnimNotificationsField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bUseBlueprintAnimNotifications"); }
-	void SetbUseBlueprintAnimNotificationsField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bUseBlueprintAnimNotifications", newValue); }
-	TArray<FName> GetMeleeSwingSocketsField() const { return GetNativeField<TArray<FName>>(this, "AShooterWeapon", "MeleeSwingSockets"); }
-	void SetMeleeSwingSocketsField(TArray<FName> newValue) { SetNativeField(this, "AShooterWeapon", "MeleeSwingSockets", newValue); }
-	float GetAllowMeleeTimeBeforeAnimationEndField() const { return GetNativeField<float>(this, "AShooterWeapon", "AllowMeleeTimeBeforeAnimationEnd"); }
-	void SetAllowMeleeTimeBeforeAnimationEndField(float newValue) { SetNativeField(this, "AShooterWeapon", "AllowMeleeTimeBeforeAnimationEnd", newValue); }
-	UPrimalItem* GetAssociatedPrimalItemField() const { return GetNativeField<UPrimalItem *>(this, "AShooterWeapon", "AssociatedPrimalItem"); }
-	void SetAssociatedPrimalItemField(UPrimalItem* newValue) { SetNativeField(this, "AShooterWeapon", "AssociatedPrimalItem", newValue); }
-	bool GetbCanBeUsedAsEquipmentField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bCanBeUsedAsEquipment"); }
-	void SetbCanBeUsedAsEquipmentField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bCanBeUsedAsEquipment", newValue); }
-	FItemNetInfo GetAssociatedItemNetInfoField() const { return GetNativeField<FItemNetInfo>(this, "AShooterWeapon", "AssociatedItemNetInfo"); }
-	void SetAssociatedItemNetInfoField(FItemNetInfo newValue) { SetNativeField(this, "AShooterWeapon", "AssociatedItemNetInfo", newValue); }
-	//FWeaponData GetWeaponConfigField() const { return GetNativeField<FWeaponData>(this, "AShooterWeapon", "WeaponConfig"); }
-	TSubclassOf<UPrimalItem> GetWeaponAmmoItemTemplateField() const { return GetNativeField<TSubclassOf<UPrimalItem>>(this, "AShooterWeapon", "WeaponAmmoItemTemplate"); }
-	void SetWeaponAmmoItemTemplateField(TSubclassOf<UPrimalItem> newValue) { SetNativeField(this, "AShooterWeapon", "WeaponAmmoItemTemplate", newValue); }
-	long double GetNextAllowedMeleeTimeField() const { return GetNativeField<long double>(this, "AShooterWeapon", "NextAllowedMeleeTime"); }
-	void SetNextAllowedMeleeTimeField(long double newValue) { SetNativeField(this, "AShooterWeapon", "NextAllowedMeleeTime", newValue); }
-	TArray<FVector> GetLastSocketPositionsField() const { return GetNativeField<TArray<FVector>>(this, "AShooterWeapon", "LastSocketPositions"); }
-	void SetLastSocketPositionsField(TArray<FVector> newValue) { SetNativeField(this, "AShooterWeapon", "LastSocketPositions", newValue); }
-	TArray<TWeakObjectPtr<AActor>> GetMeleeSwingHurtListField() const { return GetNativeField<TArray<TWeakObjectPtr<AActor>>>(this, "AShooterWeapon", "MeleeSwingHurtList"); }
-	long double GetLastFPVRenderTimeField() const { return GetNativeField<long double>(this, "AShooterWeapon", "LastFPVRenderTime"); }
-	void SetLastFPVRenderTimeField(long double newValue) { SetNativeField(this, "AShooterWeapon", "LastFPVRenderTime", newValue); }
-	FRotator GetLastCameraRotationField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "LastCameraRotation"); }
-	void SetLastCameraRotationField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "LastCameraRotation", newValue); }
-	FRotator GetFPVAdditionalLookRotOffsetField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVAdditionalLookRotOffset"); }
-	void SetFPVAdditionalLookRotOffsetField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVAdditionalLookRotOffset", newValue); }
-	FVector GetFPVLastLocOffsetField() const { return GetNativeField<FVector>(this, "AShooterWeapon", "FPVLastLocOffset"); }
-	void SetFPVLastLocOffsetField(FVector newValue) { SetNativeField(this, "AShooterWeapon", "FPVLastLocOffset", newValue); }
-	FVector GetFPVLastVROffsetField() const { return GetNativeField<FVector>(this, "AShooterWeapon", "FPVLastVROffset"); }
-	void SetFPVLastVROffsetField(FVector newValue) { SetNativeField(this, "AShooterWeapon", "FPVLastVROffset", newValue); }
-	FVector GetFPVRelativeLocationOffscreenOffsetField() const { return GetNativeField<FVector>(this, "AShooterWeapon", "FPVRelativeLocationOffscreenOffset"); }
-	void SetFPVRelativeLocationOffscreenOffsetField(FVector newValue) { SetNativeField(this, "AShooterWeapon", "FPVRelativeLocationOffscreenOffset", newValue); }
-	FRotator GetFPVLastRotOffsetField() const { return GetNativeField<FRotator>(this, "AShooterWeapon", "FPVLastRotOffset"); }
-	void SetFPVLastRotOffsetField(FRotator newValue) { SetNativeField(this, "AShooterWeapon", "FPVLastRotOffset", newValue); }
-	AShooterCharacter* GetMyPawnField() const { return GetNativeField<AShooterCharacter *>(this, "AShooterWeapon", "MyPawn"); }
-	void SetMyPawnField(AShooterCharacter* newValue) { SetNativeField(this, "AShooterWeapon", "MyPawn", newValue); }
-	FName GetMuzzleAttachPointField() const { return GetNativeField<FName>(this, "AShooterWeapon", "MuzzleAttachPoint"); }
-	void SetMuzzleAttachPointField(FName newValue) { SetNativeField(this, "AShooterWeapon", "MuzzleAttachPoint", newValue); }
-	int GetMeleeDamageAmountField() const { return GetNativeField<int>(this, "AShooterWeapon", "MeleeDamageAmount"); }
-	void SetMeleeDamageAmountField(int newValue) { SetNativeField(this, "AShooterWeapon", "MeleeDamageAmount", newValue); }
-	float GetTheMeleeSwingRadiusField() const { return GetNativeField<float>(this, "AShooterWeapon", "TheMeleeSwingRadius"); }
-	void SetTheMeleeSwingRadiusField(float newValue) { SetNativeField(this, "AShooterWeapon", "TheMeleeSwingRadius", newValue); }
-	float GetMeleeDamageImpulseField() const { return GetNativeField<float>(this, "AShooterWeapon", "MeleeDamageImpulse"); }
-	void SetMeleeDamageImpulseField(float newValue) { SetNativeField(this, "AShooterWeapon", "MeleeDamageImpulse", newValue); }
-	float GetFPVMoveOffscreenWhenTurningMaxMoveWeaponSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxMoveWeaponSpeed"); }
-	void SetFPVMoveOffscreenWhenTurningMaxMoveWeaponSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxMoveWeaponSpeed", newValue); }
-	float GetFPVMoveOffscreenWhenTurningMinMoveWeaponSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMinMoveWeaponSpeed"); }
-	void SetFPVMoveOffscreenWhenTurningMinMoveWeaponSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMinMoveWeaponSpeed", newValue); }
-	float GetFPVMoveOffscreenWhenTurningMinViewRotSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMinViewRotSpeed"); }
-	void SetFPVMoveOffscreenWhenTurningMinViewRotSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMinViewRotSpeed", newValue); }
-	float GetFPVMoveOffscreenWhenTurningMaxViewRotSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxViewRotSpeed"); }
-	void SetFPVMoveOffscreenWhenTurningMaxViewRotSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxViewRotSpeed", newValue); }
-	float GetFPVMoveOffscreenIdleRestoreIntervalField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMoveOffscreenIdleRestoreInterval"); }
-	void SetFPVMoveOffscreenIdleRestoreIntervalField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMoveOffscreenIdleRestoreInterval", newValue); }
-	float GetFPVMoveOffscreenIdleRestoreSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMoveOffscreenIdleRestoreSpeed"); }
-	void SetFPVMoveOffscreenIdleRestoreSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMoveOffscreenIdleRestoreSpeed", newValue); }
-	float GetFPVMoveOffscreenWhenTurningMaxOffsetField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxOffset"); }
-	void SetFPVMoveOffscreenWhenTurningMaxOffsetField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxOffset", newValue); }
-	long double GetFPVStoppedTurningTimeField() const { return GetNativeField<long double>(this, "AShooterWeapon", "FPVStoppedTurningTime"); }
-	void SetFPVStoppedTurningTimeField(long double newValue) { SetNativeField(this, "AShooterWeapon", "FPVStoppedTurningTime", newValue); }
-	//EWeaponState::Type GetCurrentStateField() const { return GetNativeField<EWeaponState::Type>(this, "AShooterWeapon", "CurrentState"); }
-	long double GetLastFireTimeField() const { return GetNativeField<long double>(this, "AShooterWeapon", "LastFireTime"); }
-	void SetLastFireTimeField(long double newValue) { SetNativeField(this, "AShooterWeapon", "LastFireTime", newValue); }
-	int GetCurrentAmmoField() const { return GetNativeField<int>(this, "AShooterWeapon", "CurrentAmmo"); }
-	void SetCurrentAmmoField(int newValue) { SetNativeField(this, "AShooterWeapon", "CurrentAmmo", newValue); }
-	int GetCurrentAmmoInClipField() const { return GetNativeField<int>(this, "AShooterWeapon", "CurrentAmmoInClip"); }
-	void SetCurrentAmmoInClipField(int newValue) { SetNativeField(this, "AShooterWeapon", "CurrentAmmoInClip", newValue); }
-	bool GetbReplicateCurrentAmmoInClipToNonOwnersField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bReplicateCurrentAmmoInClipToNonOwners"); }
-	void SetbReplicateCurrentAmmoInClipToNonOwnersField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bReplicateCurrentAmmoInClipToNonOwners", newValue); }
-	FName GetFPVAccessoryToggleComponentField() const { return GetNativeField<FName>(this, "AShooterWeapon", "FPVAccessoryToggleComponent"); }
-	void SetFPVAccessoryToggleComponentField(FName newValue) { SetNativeField(this, "AShooterWeapon", "FPVAccessoryToggleComponent", newValue); }
-	FName GetTPVAccessoryToggleComponentField() const { return GetNativeField<FName>(this, "AShooterWeapon", "TPVAccessoryToggleComponent"); }
-	void SetTPVAccessoryToggleComponentField(FName newValue) { SetNativeField(this, "AShooterWeapon", "TPVAccessoryToggleComponent", newValue); }
-	float GetTimeToAutoReloadField() const { return GetNativeField<float>(this, "AShooterWeapon", "TimeToAutoReload"); }
-	void SetTimeToAutoReloadField(float newValue) { SetNativeField(this, "AShooterWeapon", "TimeToAutoReload", newValue); }
-	int GetFiredLastNoAmmoShotField() const { return GetNativeField<int>(this, "AShooterWeapon", "FiredLastNoAmmoShot"); }
-	void SetFiredLastNoAmmoShotField(int newValue) { SetNativeField(this, "AShooterWeapon", "FiredLastNoAmmoShot", newValue); }
-	long double GetLastNotifyShotTimeField() const { return GetNativeField<long double>(this, "AShooterWeapon", "LastNotifyShotTime"); }
-	void SetLastNotifyShotTimeField(long double newValue) { SetNativeField(this, "AShooterWeapon", "LastNotifyShotTime", newValue); }
-	TSubclassOf<UDamageType> GetMeleeDamageTypeField() const { return GetNativeField<TSubclassOf<UDamageType>>(this, "AShooterWeapon", "MeleeDamageType"); }
-	void SetMeleeDamageTypeField(TSubclassOf<UDamageType> newValue) { SetNativeField(this, "AShooterWeapon", "MeleeDamageType", newValue); }
-	FVector GetVRTargetingModelOffsetField() const { return GetNativeField<FVector>(this, "AShooterWeapon", "VRTargetingModelOffset"); }
-	void SetVRTargetingModelOffsetField(FVector newValue) { SetNativeField(this, "AShooterWeapon", "VRTargetingModelOffset", newValue); }
-	FVector GetVRTargetingAimOriginOffsetField() const { return GetNativeField<FVector>(this, "AShooterWeapon", "VRTargetingAimOriginOffset"); }
-	void SetVRTargetingAimOriginOffsetField(FVector newValue) { SetNativeField(this, "AShooterWeapon", "VRTargetingAimOriginOffset", newValue); }
-	float GetScopeCrosshairSizeField() const { return GetNativeField<float>(this, "AShooterWeapon", "ScopeCrosshairSize"); }
-	void SetScopeCrosshairSizeField(float newValue) { SetNativeField(this, "AShooterWeapon", "ScopeCrosshairSize", newValue); }
-	FName GetScopeCrosshairColorParameterField() const { return GetNativeField<FName>(this, "AShooterWeapon", "ScopeCrosshairColorParameter"); }
-	void SetScopeCrosshairColorParameterField(FName newValue) { SetNativeField(this, "AShooterWeapon", "ScopeCrosshairColorParameter", newValue); }
-	float GetMinItemDurabilityPercentageForShotField() const { return GetNativeField<float>(this, "AShooterWeapon", "MinItemDurabilityPercentageForShot"); }
-	void SetMinItemDurabilityPercentageForShotField(float newValue) { SetNativeField(this, "AShooterWeapon", "MinItemDurabilityPercentageForShot", newValue); }
-	float GetOverrideTargetingFOVField() const { return GetNativeField<float>(this, "AShooterWeapon", "OverrideTargetingFOV"); }
-	void SetOverrideTargetingFOVField(float newValue) { SetNativeField(this, "AShooterWeapon", "OverrideTargetingFOV", newValue); }
-	float GetTargetingDelayTimeField() const { return GetNativeField<float>(this, "AShooterWeapon", "TargetingDelayTime"); }
-	void SetTargetingDelayTimeField(float newValue) { SetNativeField(this, "AShooterWeapon", "TargetingDelayTime", newValue); }
-	float GetTargetingFOVInterpSpeedField() const { return GetNativeField<float>(this, "AShooterWeapon", "TargetingFOVInterpSpeed"); }
-	void SetTargetingFOVInterpSpeedField(float newValue) { SetNativeField(this, "AShooterWeapon", "TargetingFOVInterpSpeed", newValue); }
-	float GetAimDriftYawAngleField() const { return GetNativeField<float>(this, "AShooterWeapon", "AimDriftYawAngle"); }
-	void SetAimDriftYawAngleField(float newValue) { SetNativeField(this, "AShooterWeapon", "AimDriftYawAngle", newValue); }
-	float GetAimDriftPitchAngleField() const { return GetNativeField<float>(this, "AShooterWeapon", "AimDriftPitchAngle"); }
-	void SetAimDriftPitchAngleField(float newValue) { SetNativeField(this, "AShooterWeapon", "AimDriftPitchAngle", newValue); }
-	float GetAimDriftYawFrequencyField() const { return GetNativeField<float>(this, "AShooterWeapon", "AimDriftYawFrequency"); }
-	void SetAimDriftYawFrequencyField(float newValue) { SetNativeField(this, "AShooterWeapon", "AimDriftYawFrequency", newValue); }
-	float GetAimDriftPitchFrequencyField() const { return GetNativeField<float>(this, "AShooterWeapon", "AimDriftPitchFrequency"); }
-	void SetAimDriftPitchFrequencyField(float newValue) { SetNativeField(this, "AShooterWeapon", "AimDriftPitchFrequency", newValue); }
-	float GetMeleeHitRandomChanceToDestroyItemField() const { return GetNativeField<float>(this, "AShooterWeapon", "MeleeHitRandomChanceToDestroyItem"); }
-	void SetMeleeHitRandomChanceToDestroyItemField(float newValue) { SetNativeField(this, "AShooterWeapon", "MeleeHitRandomChanceToDestroyItem", newValue); }
-	float GetGlobalFireCameraShakeScaleField() const { return GetNativeField<float>(this, "AShooterWeapon", "GlobalFireCameraShakeScale"); }
-	void SetGlobalFireCameraShakeScaleField(float newValue) { SetNativeField(this, "AShooterWeapon", "GlobalFireCameraShakeScale", newValue); }
-	float GetDurabilityCostToEquipField() const { return GetNativeField<float>(this, "AShooterWeapon", "DurabilityCostToEquip"); }
-	void SetDurabilityCostToEquipField(float newValue) { SetNativeField(this, "AShooterWeapon", "DurabilityCostToEquip", newValue); }
-	float GetPassiveDurabilityCostPerIntervalField() const { return GetNativeField<float>(this, "AShooterWeapon", "PassiveDurabilityCostPerInterval"); }
-	void SetPassiveDurabilityCostPerIntervalField(float newValue) { SetNativeField(this, "AShooterWeapon", "PassiveDurabilityCostPerInterval", newValue); }
-	float GetPassiveDurabilityCostIntervalField() const { return GetNativeField<float>(this, "AShooterWeapon", "PassiveDurabilityCostInterval"); }
-	void SetPassiveDurabilityCostIntervalField(float newValue) { SetNativeField(this, "AShooterWeapon", "PassiveDurabilityCostInterval", newValue); }
-	float GetGlobalFireCameraShakeScaleTargetingField() const { return GetNativeField<float>(this, "AShooterWeapon", "GlobalFireCameraShakeScaleTargeting"); }
-	void SetGlobalFireCameraShakeScaleTargetingField(float newValue) { SetNativeField(this, "AShooterWeapon", "GlobalFireCameraShakeScaleTargeting", newValue); }
-	float GetMeleeCameraShakeSpeedScaleField() const { return GetNativeField<float>(this, "AShooterWeapon", "MeleeCameraShakeSpeedScale"); }
-	void SetMeleeCameraShakeSpeedScaleField(float newValue) { SetNativeField(this, "AShooterWeapon", "MeleeCameraShakeSpeedScale", newValue); }
-	float GetReloadCameraShakeSpeedScaleField() const { return GetNativeField<float>(this, "AShooterWeapon", "ReloadCameraShakeSpeedScale"); }
-	void SetReloadCameraShakeSpeedScaleField(float newValue) { SetNativeField(this, "AShooterWeapon", "ReloadCameraShakeSpeedScale", newValue); }
-	float GetMeleeConsumesStaminaField() const { return GetNativeField<float>(this, "AShooterWeapon", "MeleeConsumesStamina"); }
-	void SetMeleeConsumesStaminaField(float newValue) { SetNativeField(this, "AShooterWeapon", "MeleeConsumesStamina", newValue); }
-	float GetHypoThermiaInsulationField() const { return GetNativeField<float>(this, "AShooterWeapon", "HypoThermiaInsulation"); }
-	void SetHypoThermiaInsulationField(float newValue) { SetNativeField(this, "AShooterWeapon", "HypoThermiaInsulation", newValue); }
-	float GetHyperThermiaInsulationField() const { return GetNativeField<float>(this, "AShooterWeapon", "HyperThermiaInsulation"); }
-	void SetHyperThermiaInsulationField(float newValue) { SetNativeField(this, "AShooterWeapon", "HyperThermiaInsulation", newValue); }
-	float GetInsulationRangeField() const { return GetNativeField<float>(this, "AShooterWeapon", "InsulationRange"); }
-	void SetInsulationRangeField(float newValue) { SetNativeField(this, "AShooterWeapon", "InsulationRange", newValue); }
-	long double GetLastDurabilityConsumptionTimeField() const { return GetNativeField<long double>(this, "AShooterWeapon", "LastDurabilityConsumptionTime"); }
-	void SetLastDurabilityConsumptionTimeField(long double newValue) { SetNativeField(this, "AShooterWeapon", "LastDurabilityConsumptionTime", newValue); }
-	bool GetbLastMeleeHitField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bLastMeleeHit"); }
-	void SetbLastMeleeHitField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bLastMeleeHit", newValue); }
-	bool GetbLastMeleeHitStationaryField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bLastMeleeHitStationary"); }
-	void SetbLastMeleeHitStationaryField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bLastMeleeHitStationary", newValue); }
-	bool GetbClientAlreadyReloadedField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bClientAlreadyReloaded"); }
-	void SetbClientAlreadyReloadedField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bClientAlreadyReloaded", newValue); }
-	float GetAutoReloadTimerField() const { return GetNativeField<float>(this, "AShooterWeapon", "AutoReloadTimer"); }
-	void SetAutoReloadTimerField(float newValue) { SetNativeField(this, "AShooterWeapon", "AutoReloadTimer", newValue); }
-	bool GetbConsumedDurabilityForThisMeleeHitField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bConsumedDurabilityForThisMeleeHit"); }
-	void SetbConsumedDurabilityForThisMeleeHitField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bConsumedDurabilityForThisMeleeHit", newValue); }
-	float GetFPVMeleeTraceFXRangeField() const { return GetNativeField<float>(this, "AShooterWeapon", "FPVMeleeTraceFXRange"); }
-	void SetFPVMeleeTraceFXRangeField(float newValue) { SetNativeField(this, "AShooterWeapon", "FPVMeleeTraceFXRange", newValue); }
-	float GetMeleeAttackHarvetUsableComponentsRadiusField() const { return GetNativeField<float>(this, "AShooterWeapon", "MeleeAttackHarvetUsableComponentsRadius"); }
-	void SetMeleeAttackHarvetUsableComponentsRadiusField(float newValue) { SetNativeField(this, "AShooterWeapon", "MeleeAttackHarvetUsableComponentsRadius", newValue); }
-	float GetMeleeAttackUsableHarvestDamageMultiplierField() const { return GetNativeField<float>(this, "AShooterWeapon", "MeleeAttackUsableHarvestDamageMultiplier"); }
-	void SetMeleeAttackUsableHarvestDamageMultiplierField(float newValue) { SetNativeField(this, "AShooterWeapon", "MeleeAttackUsableHarvestDamageMultiplier", newValue); }
-	bool GetbPreventOpeningInventoryField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bPreventOpeningInventory"); }
-	void SetbPreventOpeningInventoryField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bPreventOpeningInventory", newValue); }
-	bool GetbAllowUseOnSeatingStructureField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bAllowUseOnSeatingStructure"); }
-	void SetbAllowUseOnSeatingStructureField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bAllowUseOnSeatingStructure", newValue); }
-	bool GetbOnlyUseOnSeatingStructureField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bOnlyUseOnSeatingStructure"); }
-	void SetbOnlyUseOnSeatingStructureField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bOnlyUseOnSeatingStructure", newValue); }
-	bool GetbBPDoClientCheckCanFireField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bBPDoClientCheckCanFire"); }
-	void SetbBPDoClientCheckCanFireField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bBPDoClientCheckCanFire", newValue); }
-	bool GetbRestrictTPVCameraYawField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bRestrictTPVCameraYaw"); }
-	void SetbRestrictTPVCameraYawField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bRestrictTPVCameraYaw", newValue); }
-	float GetTPVCameraYawRangeField() const { return GetNativeField<float>(this, "AShooterWeapon", "TPVCameraYawRange"); }
-	void SetTPVCameraYawRangeField(float newValue) { SetNativeField(this, "AShooterWeapon", "TPVCameraYawRange", newValue); }
-	bool GetbFoceSimulatedTickField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bFoceSimulatedTick"); }
-	void SetbFoceSimulatedTickField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bFoceSimulatedTick", newValue); }
-	bool GetbWasLastFireFromGamePadField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bWasLastFireFromGamePad"); }
-	void SetbWasLastFireFromGamePadField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bWasLastFireFromGamePad", newValue); }
-	bool GetbDisableWeaponCrosshairField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bDisableWeaponCrosshair"); }
-	void SetbDisableWeaponCrosshairField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bDisableWeaponCrosshair", newValue); }
-	bool GetbBPOverrideAspectRatioField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bBPOverrideAspectRatio"); }
-	void SetbBPOverrideAspectRatioField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bBPOverrideAspectRatio", newValue); }
-	bool GetbForceAllowMountedWeaponryField() const { return GetNativeField<bool>(this, "AShooterWeapon", "bForceAllowMountedWeaponry"); }
-	void SetbForceAllowMountedWeaponryField(bool newValue) { SetNativeField(this, "AShooterWeapon", "bForceAllowMountedWeaponry", newValue); }
+	FieldValue<float> EquipTimeField() { return { this, "AShooterWeapon", "EquipTime" }; }
+	FieldValue<UAnimMontage *> OverrideProneInAnimField() { return { this, "AShooterWeapon", "OverrideProneInAnim" }; }
+	FieldValue<UAnimMontage *> OverrideProneOutAnimField() { return { this, "AShooterWeapon", "OverrideProneOutAnim" }; }
+	FieldValue<UAnimMontage *> OverrideJumpAnimField() { return { this, "AShooterWeapon", "OverrideJumpAnim" }; }
+	FieldValue<UAnimMontage *> OverrideLandedAnimField() { return { this, "AShooterWeapon", "OverrideLandedAnim" }; }
+	FieldValue<TArray<UAnimSequence *>> OverrideRiderAnimSequenceFromField() { return { this, "AShooterWeapon", "OverrideRiderAnimSequenceFrom" }; }
+	FieldValue<TArray<UAnimSequence *>> OverrideRiderAnimSequenceToField() { return { this, "AShooterWeapon", "OverrideRiderAnimSequenceTo" }; }
+	FieldValue<float> ItemDurabilityToConsumePerMeleeHitField() { return { this, "AShooterWeapon", "ItemDurabilityToConsumePerMeleeHit" }; }
+	FieldValue<float> AmmoIconsCountField() { return { this, "AShooterWeapon", "AmmoIconsCount" }; }
+	FieldValue<float> TargetingTooltipCheckRangeField() { return { this, "AShooterWeapon", "TargetingTooltipCheckRange" }; }
+	FieldValue<int> PrimaryClipIconOffsetField() { return { this, "AShooterWeapon", "PrimaryClipIconOffset" }; }
+	FieldValue<int> SecondaryClipIconOffsetField() { return { this, "AShooterWeapon", "SecondaryClipIconOffset" }; }
+	FieldValue<FVector2D> TargetingInfoTooltipPaddingField() { return { this, "AShooterWeapon", "TargetingInfoTooltipPadding" }; }
+	FieldValue<FVector2D> TargetingInfoTooltipScaleField() { return { this, "AShooterWeapon", "TargetingInfoTooltipScale" }; }
+	FieldValue<bool> bOnlyPassiveDurabilityWhenAccessoryActiveField() { return { this, "AShooterWeapon", "bOnlyPassiveDurabilityWhenAccessoryActive" }; }
+	FieldValue<bool> bDisableShooterOnElectricStormField() { return { this, "AShooterWeapon", "bDisableShooterOnElectricStorm" }; }
+	FieldValue<FName> OverrideAttachPointField() { return { this, "AShooterWeapon", "OverrideAttachPoint" }; }
+	FieldValue<FVector> FPVRelativeLocationField() { return { this, "AShooterWeapon", "FPVRelativeLocation" }; }
+	FieldValue<FRotator> FPVRelativeRotationField() { return { this, "AShooterWeapon", "FPVRelativeRotation" }; }
+	FieldValue<FVector> FPVRelativeLocation_TargetingField() { return { this, "AShooterWeapon", "FPVRelativeLocation_Targeting" }; }
+	FieldValue<FRotator> FPVRelativeRotation_TargetingField() { return { this, "AShooterWeapon", "FPVRelativeRotation_Targeting" }; }
+	FieldValue<float> FPVEnterTargetingInterpSpeedField() { return { this, "AShooterWeapon", "FPVEnterTargetingInterpSpeed" }; }
+	FieldValue<float> FPVExitTargetingInterpSpeedField() { return { this, "AShooterWeapon", "FPVExitTargetingInterpSpeed" }; }
+	FieldValue<float> EndDoMeleeSwingTimeField() { return { this, "AShooterWeapon", "EndDoMeleeSwingTime" }; }
+	FieldValue<FRotator> FPVLookAtMaximumOffsetField() { return { this, "AShooterWeapon", "FPVLookAtMaximumOffset" }; }
+	FieldValue<FRotator> FPVLookAtSpeedBaseField() { return { this, "AShooterWeapon", "FPVLookAtSpeedBase" }; }
+	FieldValue<FRotator> FPVLookAtInterpSpeedField() { return { this, "AShooterWeapon", "FPVLookAtInterpSpeed" }; }
+	FieldValue<FRotator> FPVLookAtMaximumOffset_TargetingField() { return { this, "AShooterWeapon", "FPVLookAtMaximumOffset_Targeting" }; }
+	FieldValue<FRotator> FPVLookAtSpeedBase_TargetingField() { return { this, "AShooterWeapon", "FPVLookAtSpeedBase_Targeting" }; }
+	FieldValue<FRotator> FPVLookAtInterpSpeed_TargetingField() { return { this, "AShooterWeapon", "FPVLookAtInterpSpeed_Targeting" }; }
+	FieldValue<FVector> FPVImmobilizedLocationOffsetField() { return { this, "AShooterWeapon", "FPVImmobilizedLocationOffset" }; }
+	FieldValue<FRotator> FPVImmobilizedRotationOffsetField() { return { this, "AShooterWeapon", "FPVImmobilizedRotationOffset" }; }
+	FieldValue<float> FPVImmobilizedInterpSpeedField() { return { this, "AShooterWeapon", "FPVImmobilizedInterpSpeed" }; }
+	FieldValue<bool> bUseBlueprintAnimNotificationsField() { return { this, "AShooterWeapon", "bUseBlueprintAnimNotifications" }; }
+	FieldValue<TArray<FName>> MeleeSwingSocketsField() { return { this, "AShooterWeapon", "MeleeSwingSockets" }; }
+	FieldValue<float> AllowMeleeTimeBeforeAnimationEndField() { return { this, "AShooterWeapon", "AllowMeleeTimeBeforeAnimationEnd" }; }
+	FieldValue<UPrimalItem *> AssociatedPrimalItemField() { return { this, "AShooterWeapon", "AssociatedPrimalItem" }; }
+	FieldValue<bool> bCanBeUsedAsEquipmentField() { return { this, "AShooterWeapon", "bCanBeUsedAsEquipment" }; }
+	FieldValue<FItemNetInfo> AssociatedItemNetInfoField() { return { this, "AShooterWeapon", "AssociatedItemNetInfo" }; }
+	//FieldValue<FWeaponData> WeaponConfigField() { return { this, "AShooterWeapon", "WeaponConfig" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> WeaponAmmoItemTemplateField() { return { this, "AShooterWeapon", "WeaponAmmoItemTemplate" }; }
+	FieldValue<long double> NextAllowedMeleeTimeField() { return { this, "AShooterWeapon", "NextAllowedMeleeTime" }; }
+	FieldValue<TArray<FVector>> LastSocketPositionsField() { return { this, "AShooterWeapon", "LastSocketPositions" }; }
+	FieldValue<TArray<AActor *>> MeleeSwingHurtListField() { return { this, "AShooterWeapon", "MeleeSwingHurtList" }; }
+	FieldValue<long double> LastFPVRenderTimeField() { return { this, "AShooterWeapon", "LastFPVRenderTime" }; }
+	FieldValue<FRotator> LastCameraRotationField() { return { this, "AShooterWeapon", "LastCameraRotation" }; }
+	FieldValue<FRotator> FPVAdditionalLookRotOffsetField() { return { this, "AShooterWeapon", "FPVAdditionalLookRotOffset" }; }
+	FieldValue<FVector> FPVLastLocOffsetField() { return { this, "AShooterWeapon", "FPVLastLocOffset" }; }
+	FieldValue<FVector> FPVLastVROffsetField() { return { this, "AShooterWeapon", "FPVLastVROffset" }; }
+	FieldValue<FVector> FPVRelativeLocationOffscreenOffsetField() { return { this, "AShooterWeapon", "FPVRelativeLocationOffscreenOffset" }; }
+	FieldValue<FRotator> FPVLastRotOffsetField() { return { this, "AShooterWeapon", "FPVLastRotOffset" }; }
+	FieldValue<AShooterCharacter *> MyPawnField() { return { this, "AShooterWeapon", "MyPawn" }; }
+	FieldValue<UAudioComponent *> FireACField() { return { this, "AShooterWeapon", "FireAC" }; }
+	FieldValue<FName> MuzzleAttachPointField() { return { this, "AShooterWeapon", "MuzzleAttachPoint" }; }
+	FieldValue<USoundCue *> FireSoundField() { return { this, "AShooterWeapon", "FireSound" }; }
+	FieldValue<USoundCue *> AltFireSoundField() { return { this, "AShooterWeapon", "AltFireSound" }; }
+	FieldValue<USoundCue *> FireFinishSoundField() { return { this, "AShooterWeapon", "FireFinishSound" }; }
+	FieldValue<USoundCue *> OutOfAmmoSoundField() { return { this, "AShooterWeapon", "OutOfAmmoSound" }; }
+	FieldValue<int> MeleeDamageAmountField() { return { this, "AShooterWeapon", "MeleeDamageAmount" }; }
+	FieldValue<float> TheMeleeSwingRadiusField() { return { this, "AShooterWeapon", "TheMeleeSwingRadius" }; }
+	FieldValue<float> MeleeDamageImpulseField() { return { this, "AShooterWeapon", "MeleeDamageImpulse" }; }
+	FieldValue<UAnimMontage *> WeaponMesh3PReloadAnimField() { return { this, "AShooterWeapon", "WeaponMesh3PReloadAnim" }; }
+	FieldValue<USoundCue *> EquipSoundField() { return { this, "AShooterWeapon", "EquipSound" }; }
+	FieldValue<UAnimMontage *> WeaponMesh3PFireAnimField() { return { this, "AShooterWeapon", "WeaponMesh3PFireAnim" }; }
+	FieldValue<float> FPVMoveOffscreenWhenTurningMaxMoveWeaponSpeedField() { return { this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxMoveWeaponSpeed" }; }
+	FieldValue<float> FPVMoveOffscreenWhenTurningMinMoveWeaponSpeedField() { return { this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMinMoveWeaponSpeed" }; }
+	FieldValue<float> FPVMoveOffscreenWhenTurningMinViewRotSpeedField() { return { this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMinViewRotSpeed" }; }
+	FieldValue<float> FPVMoveOffscreenWhenTurningMaxViewRotSpeedField() { return { this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxViewRotSpeed" }; }
+	FieldValue<float> FPVMoveOffscreenIdleRestoreIntervalField() { return { this, "AShooterWeapon", "FPVMoveOffscreenIdleRestoreInterval" }; }
+	FieldValue<float> FPVMoveOffscreenIdleRestoreSpeedField() { return { this, "AShooterWeapon", "FPVMoveOffscreenIdleRestoreSpeed" }; }
+	FieldValue<float> FPVMoveOffscreenWhenTurningMaxOffsetField() { return { this, "AShooterWeapon", "FPVMoveOffscreenWhenTurningMaxOffset" }; }
+	FieldValue<long double> FPVStoppedTurningTimeField() { return { this, "AShooterWeapon", "FPVStoppedTurningTime" }; }
+	FieldValue<float> ItemDestructionUnequipWeaponDelayField() { return { this, "AShooterWeapon", "ItemDestructionUnequipWeaponDelay" }; }
+	FieldValue<EWeaponState::Type> CurrentStateField() { return { this, "AShooterWeapon", "CurrentState" }; }
+	FieldValue<long double> LastFireTimeField() { return { this, "AShooterWeapon", "LastFireTime" }; }
+	FieldValue<int> CurrentAmmoField() { return { this, "AShooterWeapon", "CurrentAmmo" }; }
+	FieldValue<int> CurrentAmmoInClipField() { return { this, "AShooterWeapon", "CurrentAmmoInClip" }; }
+	FieldValue<bool> bReplicateCurrentAmmoInClipToNonOwnersField() { return { this, "AShooterWeapon", "bReplicateCurrentAmmoInClipToNonOwners" }; }
+	FieldValue<bool> bUseBPAdjustAmmoPerShotField() { return { this, "AShooterWeapon", "bUseBPAdjustAmmoPerShot" }; }
+	FieldValue<FName> FPVAccessoryToggleComponentField() { return { this, "AShooterWeapon", "FPVAccessoryToggleComponent" }; }
+	FieldValue<FName> TPVAccessoryToggleComponentField() { return { this, "AShooterWeapon", "TPVAccessoryToggleComponent" }; }
+	FieldValue<float> TimeToAutoReloadField() { return { this, "AShooterWeapon", "TimeToAutoReload" }; }
+	FieldValue<USoundBase *> ToggleAccessorySoundField() { return { this, "AShooterWeapon", "ToggleAccessorySound" }; }
+	FieldValue<int> FiredLastNoAmmoShotField() { return { this, "AShooterWeapon", "FiredLastNoAmmoShot" }; }
+	FieldValue<long double> LastNotifyShotTimeField() { return { this, "AShooterWeapon", "LastNotifyShotTime" }; }
+	FieldValue<TSubclassOf<UDamageType>> MeleeDamageTypeField() { return { this, "AShooterWeapon", "MeleeDamageType" }; }
+	FieldValue<FVector> VRTargetingModelOffsetField() { return { this, "AShooterWeapon", "VRTargetingModelOffset" }; }
+	FieldValue<FVector> VRTargetingAimOriginOffsetField() { return { this, "AShooterWeapon", "VRTargetingAimOriginOffset" }; }
+	FieldValue<UMaterialInterface *> ScopeOverlayMIField() { return { this, "AShooterWeapon", "ScopeOverlayMI" }; }
+	FieldValue<UMaterialInterface *> ScopeCrosshairMIField() { return { this, "AShooterWeapon", "ScopeCrosshairMI" }; }
+	FieldValue<float> ScopeCrosshairSizeField() { return { this, "AShooterWeapon", "ScopeCrosshairSize" }; }
+	FieldValue<FName> ScopeCrosshairColorParameterField() { return { this, "AShooterWeapon", "ScopeCrosshairColorParameter" }; }
+	FieldValue<float> MinItemDurabilityPercentageForShotField() { return { this, "AShooterWeapon", "MinItemDurabilityPercentageForShot" }; }
+	FieldValue<float> OverrideTargetingFOVField() { return { this, "AShooterWeapon", "OverrideTargetingFOV" }; }
+	FieldValue<float> TargetingDelayTimeField() { return { this, "AShooterWeapon", "TargetingDelayTime" }; }
+	FieldValue<float> TargetingFOVInterpSpeedField() { return { this, "AShooterWeapon", "TargetingFOVInterpSpeed" }; }
+	FieldValue<float> AimDriftYawAngleField() { return { this, "AShooterWeapon", "AimDriftYawAngle" }; }
+	FieldValue<float> AimDriftPitchAngleField() { return { this, "AShooterWeapon", "AimDriftPitchAngle" }; }
+	FieldValue<float> AimDriftYawFrequencyField() { return { this, "AShooterWeapon", "AimDriftYawFrequency" }; }
+	FieldValue<float> AimDriftPitchFrequencyField() { return { this, "AShooterWeapon", "AimDriftPitchFrequency" }; }
+	FieldValue<UAnimMontage *> AlternateInventoryEquipAnimField() { return { this, "AShooterWeapon", "AlternateInventoryEquipAnim" }; }
+	FieldValue<float> MeleeHitRandomChanceToDestroyItemField() { return { this, "AShooterWeapon", "MeleeHitRandomChanceToDestroyItem" }; }
+	FieldValue<float> GlobalFireCameraShakeScaleField() { return { this, "AShooterWeapon", "GlobalFireCameraShakeScale" }; }
+	FieldValue<float> DurabilityCostToEquipField() { return { this, "AShooterWeapon", "DurabilityCostToEquip" }; }
+	FieldValue<float> PassiveDurabilityCostPerIntervalField() { return { this, "AShooterWeapon", "PassiveDurabilityCostPerInterval" }; }
+	FieldValue<float> PassiveDurabilityCostIntervalField() { return { this, "AShooterWeapon", "PassiveDurabilityCostInterval" }; }
+	FieldValue<float> GlobalFireCameraShakeScaleTargetingField() { return { this, "AShooterWeapon", "GlobalFireCameraShakeScaleTargeting" }; }
+	FieldValue<float> MeleeCameraShakeSpeedScaleField() { return { this, "AShooterWeapon", "MeleeCameraShakeSpeedScale" }; }
+	FieldValue<float> ReloadCameraShakeSpeedScaleField() { return { this, "AShooterWeapon", "ReloadCameraShakeSpeedScale" }; }
+	FieldValue<float> MeleeConsumesStaminaField() { return { this, "AShooterWeapon", "MeleeConsumesStamina" }; }
+	FieldValue<float> HypoThermiaInsulationField() { return { this, "AShooterWeapon", "HypoThermiaInsulation" }; }
+	FieldValue<float> HyperThermiaInsulationField() { return { this, "AShooterWeapon", "HyperThermiaInsulation" }; }
+	FieldValue<float> InsulationRangeField() { return { this, "AShooterWeapon", "InsulationRange" }; }
+	FieldValue<long double> LastDurabilityConsumptionTimeField() { return { this, "AShooterWeapon", "LastDurabilityConsumptionTime" }; }
+	FieldValue<bool> bLastMeleeHitField() { return { this, "AShooterWeapon", "bLastMeleeHit" }; }
+	FieldValue<bool> bLastMeleeHitStationaryField() { return { this, "AShooterWeapon", "bLastMeleeHitStationary" }; }
+	FieldValue<bool> bClientAlreadyReloadedField() { return { this, "AShooterWeapon", "bClientAlreadyReloaded" }; }
+	FieldValue<float> AutoReloadTimerField() { return { this, "AShooterWeapon", "AutoReloadTimer" }; }
+	FieldValue<bool> bConsumedDurabilityForThisMeleeHitField() { return { this, "AShooterWeapon", "bConsumedDurabilityForThisMeleeHit" }; }
+	FieldValue<USoundCue *> TargetingSoundField() { return { this, "AShooterWeapon", "TargetingSound" }; }
+	FieldValue<USoundCue *> UntargetingSoundField() { return { this, "AShooterWeapon", "UntargetingSound" }; }
+	FieldValue<float> FPVMeleeTraceFXRangeField() { return { this, "AShooterWeapon", "FPVMeleeTraceFXRange" }; }
+	FieldValue<float> MeleeAttackHarvetUsableComponentsRadiusField() { return { this, "AShooterWeapon", "MeleeAttackHarvetUsableComponentsRadius" }; }
+	FieldValue<float> MeleeAttackUsableHarvestDamageMultiplierField() { return { this, "AShooterWeapon", "MeleeAttackUsableHarvestDamageMultiplier" }; }
+	FieldArray<bool, 6> bColorizeRegionsField() { return { this, "AShooterWeapon", "bColorizeRegions" }; }
+	FieldValue<UAnimMontage *> TPVForcePlayAnimField() { return { this, "AShooterWeapon", "TPVForcePlayAnim" }; }
+	FieldValue<bool> bPreventOpeningInventoryField() { return { this, "AShooterWeapon", "bPreventOpeningInventory" }; }
+	FieldValue<bool> bAllowUseOnSeatingStructureField() { return { this, "AShooterWeapon", "bAllowUseOnSeatingStructure" }; }
+	FieldValue<bool> bOnlyUseOnSeatingStructureField() { return { this, "AShooterWeapon", "bOnlyUseOnSeatingStructure" }; }
+	FieldValue<bool> bBPDoClientCheckCanFireField() { return { this, "AShooterWeapon", "bBPDoClientCheckCanFire" }; }
+	FieldValue<bool> bRestrictTPVCameraYawField() { return { this, "AShooterWeapon", "bRestrictTPVCameraYaw" }; }
+	FieldValue<float> TPVCameraYawRangeField() { return { this, "AShooterWeapon", "TPVCameraYawRange" }; }
+	FieldValue<bool> bFoceSimulatedTickField() { return { this, "AShooterWeapon", "bFoceSimulatedTick" }; }
+	FieldValue<bool> bWasLastFireFromGamePadField() { return { this, "AShooterWeapon", "bWasLastFireFromGamePad" }; }
+	FieldValue<bool> bDisableWeaponCrosshairField() { return { this, "AShooterWeapon", "bDisableWeaponCrosshair" }; }
+	FieldValue<bool> bBPOverrideAspectRatioField() { return { this, "AShooterWeapon", "bBPOverrideAspectRatio" }; }
+	FieldValue<bool> bForceAllowMountedWeaponryField() { return { this, "AShooterWeapon", "bForceAllowMountedWeaponry" }; }
+	FieldValue<float> FireCameraShakeSpreadScaleExponentField() { return { this, "AShooterWeapon", "FireCameraShakeSpreadScaleExponent" }; }
+	FieldValue<float> FireCameraShakeSpreadScaleExponentLessThanField() { return { this, "AShooterWeapon", "FireCameraShakeSpreadScaleExponentLessThan" }; }
+	FieldValue<float> FireCameraShakeSpreadScaleMultiplierLessThanField() { return { this, "AShooterWeapon", "FireCameraShakeSpreadScaleMultiplierLessThan" }; }
+	FieldValue<float> FireCameraShakeSpreadScaleMultiplierField() { return { this, "AShooterWeapon", "FireCameraShakeSpreadScaleMultiplier" }; }
+	FieldValue<bool> bUseFireCameraShakeScaleField() { return { this, "AShooterWeapon", "bUseFireCameraShakeScale" }; }
+	FieldValue<bool> bForceTickWithNoControllerField() { return { this, "AShooterWeapon", "bForceTickWithNoController" }; }
+	//FieldValue<FInstantWeaponData> InstantConfigField() { return { this, "AShooterWeapon", "InstantConfig" }; }
+	FieldValue<float> CurrentFiringSpreadField() { return { this, "AShooterWeapon", "CurrentFiringSpread" }; }
+	FieldValue<TSubclassOf<APrimalBuff>> ScopedBuffField() { return { this, "AShooterWeapon", "ScopedBuff" }; }
+	FieldValue<TWeakObjectPtr<APrimalBuff>> MyScopedBuffField() { return { this, "AShooterWeapon", "MyScopedBuff" }; }
+	FieldValue<UAnimSequence *> OverrideTPVShieldAnimationField() { return { this, "AShooterWeapon", "OverrideTPVShieldAnimation" }; }
+	FieldValue<bool> bAllowTargetingDuringMeleeSwingField() { return { this, "AShooterWeapon", "bAllowTargetingDuringMeleeSwing" }; }
+	FieldValue<FVector> FPVMuzzleLocationOffsetField() { return { this, "AShooterWeapon", "FPVMuzzleLocationOffset" }; }
+	FieldValue<FVector> TPVMuzzleLocationOffsetField() { return { this, "AShooterWeapon", "TPVMuzzleLocationOffset" }; }
+	FieldValue<bool> bForceTPV_EquippedWhileRidingField() { return { this, "AShooterWeapon", "bForceTPV_EquippedWhileRiding" }; }
+	FieldValue<bool> bCutsEnemyGrapplingCableField() { return { this, "AShooterWeapon", "bCutsEnemyGrapplingCable" }; }
+	FieldValue<FVector> FPVInventoryReequipOffsetField() { return { this, "AShooterWeapon", "FPVInventoryReequipOffset" }; }
+	FieldValue<long double> LocalInventoryViewingSkippedEquipAnimTimeField() { return { this, "AShooterWeapon", "LocalInventoryViewingSkippedEquipAnimTime" }; }
+	FieldValue<float> DraggingOffsetInterpField() { return { this, "AShooterWeapon", "DraggingOffsetInterp" }; }
+	FieldValue<bool> bForceTPVCameraOffsetField() { return { this, "AShooterWeapon", "bForceTPVCameraOffset" }; }
 
 	// Functions
 
@@ -5132,6 +4338,17 @@ struct AShooterWeapon : AActor
 
 struct AAIController : AController
 {
+	FieldValue<FVector> MoveTowardTargetOffsetField() { return { this, "AAIController", "MoveTowardTargetOffset" }; }
+	FieldValue<FVector> TargetFocalPositionOffsetField() { return { this, "AAIController", "TargetFocalPositionOffset" }; }
+	FieldValue<float> ReachedDestinationThresholdOffsetField() { return { this, "AAIController", "ReachedDestinationThresholdOffset" }; }
+	FieldValue<float> MovementGoalHeightField() { return { this, "AAIController", "MovementGoalHeight" }; }
+	FieldValue<unsigned int> RequestMoveIDField() { return { this, "AAIController", "RequestMoveID" }; }
+	FieldValue<TWeakObjectPtr<AActor>> CurrentGoalField() { return { this, "AAIController", "CurrentGoal" }; }
+	FieldValue<FVector> MoveSegmentDirectionField() { return { this, "AAIController", "MoveSegmentDirection" }; }
+	FieldValue<int> MoveSegmentStartIndexField() { return { this, "AAIController", "MoveSegmentStartIndex" }; }
+	FieldValue<int> MoveSegmentEndIndexField() { return { this, "AAIController", "MoveSegmentEndIndex" }; }
+	FieldValue<float> CurrentAcceptanceRadiusField() { return { this, "AAIController", "CurrentAcceptanceRadius" }; }
+
 	// Functions
 
 	UField * StaticClass() { return NativeCall<UField *>(this, "AAIController", "StaticClass"); }
@@ -5235,6 +4452,125 @@ struct AAIController : AController
 
 struct APrimalDinoAIController : AAIController
 {
+	FieldValue<float> DieIfLeftWaterWanderMinimumWaterHeightMultiplierField() { return { this, "APrimalDinoAIController", "DieIfLeftWaterWanderMinimumWaterHeightMultiplier" }; }
+	FieldValue<float> DieIfLeftWaterReachedRadiusDistanceCheckMultiplierField() { return { this, "APrimalDinoAIController", "DieIfLeftWaterReachedRadiusDistanceCheckMultiplier" }; }
+	FieldValue<float> DieIfLeftWaterTargetUnsubmergedTimeoutField() { return { this, "APrimalDinoAIController", "DieIfLeftWaterTargetUnsubmergedTimeout" }; }
+	FieldValue<float> LandDinoMaxWaterTargetDepthCapsuleMultiplierField() { return { this, "APrimalDinoAIController", "LandDinoMaxWaterTargetDepthCapsuleMultiplier" }; }
+	FieldValue<float> ExtraCorpseTargetingRangeField() { return { this, "APrimalDinoAIController", "ExtraCorpseTargetingRange" }; }
+	FieldValue<float> FleeFromAttackCoolDownTimeField() { return { this, "APrimalDinoAIController", "FleeFromAttackCoolDownTime" }; }
+	FieldValue<float> FleeFromAttackTimeLimitField() { return { this, "APrimalDinoAIController", "FleeFromAttackTimeLimit" }; }
+	FieldValue<float> ForceFleeUnderHealthPercentageField() { return { this, "APrimalDinoAIController", "ForceFleeUnderHealthPercentage" }; }
+	FieldValue<bool> bFleeOnCriticalHealthField() { return { this, "APrimalDinoAIController", "bFleeOnCriticalHealth" }; }
+	FieldValue<float> DieIfLeftWaterTargetingRequiresFreeDepthField() { return { this, "APrimalDinoAIController", "DieIfLeftWaterTargetingRequiresFreeDepth" }; }
+	FieldValue<long double> LastBlockadeCheckTimeField() { return { this, "APrimalDinoAIController", "LastBlockadeCheckTime" }; }
+	FieldValue<long double> LastMovingAroundBlockadeTimeField() { return { this, "APrimalDinoAIController", "LastMovingAroundBlockadeTime" }; }
+	FieldValue<float> MovingAroundBlockadeDirectionField() { return { this, "APrimalDinoAIController", "MovingAroundBlockadeDirection" }; }
+	FieldValue<FVector> MovingAroundBlockadePointField() { return { this, "APrimalDinoAIController", "MovingAroundBlockadePoint" }; }
+	FieldValue<float> LastBlockadeWidthField() { return { this, "APrimalDinoAIController", "LastBlockadeWidth" }; }
+	FieldValue<FVector> LastBlockadeHitNormalField() { return { this, "APrimalDinoAIController", "LastBlockadeHitNormal" }; }
+	FieldValue<FVector> LastBlockadeHitLocationField() { return { this, "APrimalDinoAIController", "LastBlockadeHitLocation" }; }
+	FieldValue<FVector> StartMovingAroundBlockadeLocationField() { return { this, "APrimalDinoAIController", "StartMovingAroundBlockadeLocation" }; }
+	FieldValue<AActor *> LastMovingAroundBlockadeActorField() { return { this, "APrimalDinoAIController", "LastMovingAroundBlockadeActor" }; }
+	FieldValue<AActor *> TargetField() { return { this, "APrimalDinoAIController", "Target" }; }
+	FieldValue<float> AttackDestinationOffsetField() { return { this, "APrimalDinoAIController", "AttackDestinationOffset" }; }
+	FieldValue<bool> bUseOverlapTargetCheckField() { return { this, "APrimalDinoAIController", "bUseOverlapTargetCheck" }; }
+	FieldValue<bool> bNotifyNeighborsWithoutDamageField() { return { this, "APrimalDinoAIController", "bNotifyNeighborsWithoutDamage" }; }
+	FieldValue<bool> bUseBPShouldNotifyNeighborField() { return { this, "APrimalDinoAIController", "bUseBPShouldNotifyNeighbor" }; }
+	FieldValue<bool> bRequireAbsoluteDamageForNeighborNotificationField() { return { this, "APrimalDinoAIController", "bRequireAbsoluteDamageForNeighborNotification" }; }
+	FieldValue<float> AboveDeltaZAttackRangeField() { return { this, "APrimalDinoAIController", "AboveDeltaZAttackRange" }; }
+	FieldValue<float> BelowDeltaZAttackRangeField() { return { this, "APrimalDinoAIController", "BelowDeltaZAttackRange" }; }
+	FieldValue<float> WildAboveDeltaZTargetingRangeField() { return { this, "APrimalDinoAIController", "WildAboveDeltaZTargetingRange" }; }
+	FieldValue<float> WildBelowDeltaZTargetingRangeField() { return { this, "APrimalDinoAIController", "WildBelowDeltaZTargetingRange" }; }
+	FieldValue<bool> bWildUseDeltaZTargetingForFlyerPawnOrBigDinoField() { return { this, "APrimalDinoAIController", "bWildUseDeltaZTargetingForFlyerPawnOrBigDino" }; }
+	FieldValue<bool> bDontWanderField() { return { this, "APrimalDinoAIController", "bDontWander" }; }
+	FieldValue<bool> bOnlyOverlapTargetCorpsesUnlessHasTargetField() { return { this, "APrimalDinoAIController", "bOnlyOverlapTargetCorpsesUnlessHasTarget" }; }
+	FieldValue<float> NaturalTargetingRangeField() { return { this, "APrimalDinoAIController", "NaturalTargetingRange" }; }
+	FieldValue<float> TamedTargetingRangeField() { return { this, "APrimalDinoAIController", "TamedTargetingRange" }; }
+	FieldValue<float> TamedCorpseFoodTargetingRangeField() { return { this, "APrimalDinoAIController", "TamedCorpseFoodTargetingRange" }; }
+	FieldValue<float> WanderRandomDistanceAmountField() { return { this, "APrimalDinoAIController", "WanderRandomDistanceAmount" }; }
+	FieldValue<float> FlyingWanderFixedDistanceAmountField() { return { this, "APrimalDinoAIController", "FlyingWanderFixedDistanceAmount" }; }
+	FieldValue<float> FlyingWanderRandomDistanceAmountField() { return { this, "APrimalDinoAIController", "FlyingWanderRandomDistanceAmount" }; }
+	FieldValue<float> MaxFlyingTargetDeltaZField() { return { this, "APrimalDinoAIController", "MaxFlyingTargetDeltaZ" }; }
+	FieldValue<float> WanderFlyingZScalerField() { return { this, "APrimalDinoAIController", "WanderFlyingZScaler" }; }
+	FieldValue<float> WanderFlyingClampZHeightAboveGroundField() { return { this, "APrimalDinoAIController", "WanderFlyingClampZHeightAboveGround" }; }
+	FieldValue<float> WanderFlyingMinZHeightAboveGroundField() { return { this, "APrimalDinoAIController", "WanderFlyingMinZHeightAboveGround" }; }
+	FieldValue<float> WanderFixedDistanceAmountField() { return { this, "APrimalDinoAIController", "WanderFixedDistanceAmount" }; }
+	FieldValue<bool> bUseAggroField() { return { this, "APrimalDinoAIController", "bUseAggro" }; }
+	FieldValue<float> MinAggroValueField() { return { this, "APrimalDinoAIController", "MinAggroValue" }; }
+	FieldValue<float> AggroToAddUponRemovingTargetField() { return { this, "APrimalDinoAIController", "AggroToAddUponRemovingTarget" }; }
+	FieldValue<float> AggroToAddUponAcquiringTargetField() { return { this, "APrimalDinoAIController", "AggroToAddUponAcquiringTarget" }; }
+	FieldValue<float> AggroFactorDecreaseSpeedField() { return { this, "APrimalDinoAIController", "AggroFactorDecreaseSpeed" }; }
+	FieldValue<float> AggroFactorDecreaseGracePeriodField() { return { this, "APrimalDinoAIController", "AggroFactorDecreaseGracePeriod" }; }
+	FieldValue<float> AggroFactorDamagePercentageMultiplierField() { return { this, "APrimalDinoAIController", "AggroFactorDamagePercentageMultiplier" }; }
+	FieldValue<float> AggroNotifyNeighborsMultiplierField() { return { this, "APrimalDinoAIController", "AggroNotifyNeighborsMultiplier" }; }
+	FieldValue<float> AggroNotifyNeighborsRangeField() { return { this, "APrimalDinoAIController", "AggroNotifyNeighborsRange" }; }
+	FieldValue<float> AggroNotifyNeighborsRangeFalloffField() { return { this, "APrimalDinoAIController", "AggroNotifyNeighborsRangeFalloff" }; }
+	FieldValue<float> TargetingDistanceReductionFactorLinearField() { return { this, "APrimalDinoAIController", "TargetingDistanceReductionFactorLinear" }; }
+	FieldValue<float> TargetingDistanceReductionFactorExponentField() { return { this, "APrimalDinoAIController", "TargetingDistanceReductionFactorExponent" }; }
+	FieldValue<float> BeyondTargetingRangeAggroAdditionField() { return { this, "APrimalDinoAIController", "BeyondTargetingRangeAggroAddition" }; }
+	FieldValue<float> AggroFactorDesirabilityMultiplierField() { return { this, "APrimalDinoAIController", "AggroFactorDesirabilityMultiplier" }; }
+	FieldValue<float> AttackRangeField() { return { this, "APrimalDinoAIController", "AttackRange" }; }
+	FieldValue<float> AttackIntervalField() { return { this, "APrimalDinoAIController", "AttackInterval" }; }
+	FieldValue<float> AttackRotationRangeDegreesField() { return { this, "APrimalDinoAIController", "AttackRotationRangeDegrees" }; }
+	FieldValue<float> AttackRotationGroundSpeedMultiplierField() { return { this, "APrimalDinoAIController", "AttackRotationGroundSpeedMultiplier" }; }
+	FieldValue<float> RangeTargetWildDinosMultiplierField() { return { this, "APrimalDinoAIController", "RangeTargetWildDinosMultiplier" }; }
+	FieldValue<FRotator> AttackRotationRateField() { return { this, "APrimalDinoAIController", "AttackRotationRate" }; }
+	FieldValue<bool> bFocusOnTargetDuringAttackField() { return { this, "APrimalDinoAIController", "bFocusOnTargetDuringAttack" }; }
+	FieldValue<FVector> FlyingMoveTowardsTargetOffsetField() { return { this, "APrimalDinoAIController", "FlyingMoveTowardsTargetOffset" }; }
+	FieldValue<FVector> CombatFlyingMoveTowardsTargetOffsetField() { return { this, "APrimalDinoAIController", "CombatFlyingMoveTowardsTargetOffset" }; }
+	FieldValue<FVector> FlyingTargetFocalPositionOffsetField() { return { this, "APrimalDinoAIController", "FlyingTargetFocalPositionOffset" }; }
+	FieldValue<float> FlyingReachedDestinationThresholdOffsetField() { return { this, "APrimalDinoAIController", "FlyingReachedDestinationThresholdOffset" }; }
+	FieldValue<float> SeekingIntervalCheckToFlyField() { return { this, "APrimalDinoAIController", "SeekingIntervalCheckToFly" }; }
+	FieldValue<float> SeekingPercentChanceToFlyField() { return { this, "APrimalDinoAIController", "SeekingPercentChanceToFly" }; }
+	FieldValue<float> SeekingIntervalCheckToLandField() { return { this, "APrimalDinoAIController", "SeekingIntervalCheckToLand" }; }
+	FieldValue<float> SeekingPercentChanceToLandField() { return { this, "APrimalDinoAIController", "SeekingPercentChanceToLand" }; }
+	FieldValue<float> MinimumWanderGroundNormalZField() { return { this, "APrimalDinoAIController", "MinimumWanderGroundNormalZ" }; }
+	FieldValue<float> FollowStoppingDistanceField() { return { this, "APrimalDinoAIController", "FollowStoppingDistance" }; }
+	FieldValue<bool> bUseOverlapTargetCheckTracesField() { return { this, "APrimalDinoAIController", "bUseOverlapTargetCheckTraces" }; }
+	FieldValue<bool> bUseAlternateMovePointField() { return { this, "APrimalDinoAIController", "bUseAlternateMovePoint" }; }
+	FieldValue<bool> bTotallyIgnoreWaterTargetsField() { return { this, "APrimalDinoAIController", "bTotallyIgnoreWaterTargets" }; }
+	FieldValue<bool> bWaterDinoAllowUnsubmergedTargetsField() { return { this, "APrimalDinoAIController", "bWaterDinoAllowUnsubmergedTargets" }; }
+	FieldValue<FVector> LastCheckAttackRangePawnLocationField() { return { this, "APrimalDinoAIController", "LastCheckAttackRangePawnLocation" }; }
+	FieldValue<FVector> LastCheckAttackRangeClosestPointField() { return { this, "APrimalDinoAIController", "LastCheckAttackRangeClosestPoint" }; }
+	FieldValue<FVector> LastCheckAttackRangeTargetLocationField() { return { this, "APrimalDinoAIController", "LastCheckAttackRangeTargetLocation" }; }
+	FieldValue<AActor *> LastCheckAttackRangeTargetField() { return { this, "APrimalDinoAIController", "LastCheckAttackRangeTarget" }; }
+	FieldValue<TArray<float>> TamedAITargetingRangeMultipliersField() { return { this, "APrimalDinoAIController", "TamedAITargetingRangeMultipliers" }; }
+	FieldValue<float> MateBoostAggroNotifyNeighborsMultiplierField() { return { this, "APrimalDinoAIController", "MateBoostAggroNotifyNeighborsMultiplier" }; }
+	FieldValue<TArray<TSubclassOf<APrimalDinoCharacter>>> AggroNotifyNeighborsClassesField() { return { this, "APrimalDinoAIController", "AggroNotifyNeighborsClasses" }; }
+	FieldValue<float> MoveAroundBlockadeAdditionalWidthField() { return { this, "APrimalDinoAIController", "MoveAroundBlockadeAdditionalWidth" }; }
+	FieldValue<float> MoveAroundObjectMaxVelocityField() { return { this, "APrimalDinoAIController", "MoveAroundObjectMaxVelocity" }; }
+	FieldValue<float> ForcedAggroTimeCounterField() { return { this, "APrimalDinoAIController", "ForcedAggroTimeCounter" }; }
+	FieldValue<float> TamedMaxFollowDistanceField() { return { this, "APrimalDinoAIController", "TamedMaxFollowDistance" }; }
+	FieldValue<float> LandDinoMaxFlyerTargetDeltaZField() { return { this, "APrimalDinoAIController", "LandDinoMaxFlyerTargetDeltaZ" }; }
+	FieldValue<float> NaturalMaxDepthZField() { return { this, "APrimalDinoAIController", "NaturalMaxDepthZ" }; }
+	FieldValue<TWeakObjectPtr<AActor>> ForcedAttackTargetField() { return { this, "APrimalDinoAIController", "ForcedAttackTarget" }; }
+	FieldValue<int> ForcedAttackEnemyTeamField() { return { this, "APrimalDinoAIController", "ForcedAttackEnemyTeam" }; }
+	FieldValue<long double> LastForcedAttackEnemyTeamTimeField() { return { this, "APrimalDinoAIController", "LastForcedAttackEnemyTeamTime" }; }
+	FieldValue<int> LastCharacterTargetTeamField() { return { this, "APrimalDinoAIController", "LastCharacterTargetTeam" }; }
+	FieldValue<float> ForcedFleeDurationField() { return { this, "APrimalDinoAIController", "ForcedFleeDuration" }; }
+	FieldValue<float> MinAttackIntervalForFleeingField() { return { this, "APrimalDinoAIController", "MinAttackIntervalForFleeing" }; }
+	FieldValue<float> MinLocChangeIntervalForFleeingField() { return { this, "APrimalDinoAIController", "MinLocChangeIntervalForFleeing" }; }
+	FieldValue<float> PercentageTorporForFleeingField() { return { this, "APrimalDinoAIController", "PercentageTorporForFleeing" }; }
+	FieldValue<float> DamagedForceAggroIntervalField() { return { this, "APrimalDinoAIController", "DamagedForceAggroInterval" }; }
+	FieldValue<long double> ForceAggroUntilTimeField() { return { this, "APrimalDinoAIController", "ForceAggroUntilTime" }; }
+	FieldValue<long double> LastExecutedAttackTimeField() { return { this, "APrimalDinoAIController", "LastExecutedAttackTime" }; }
+	FieldValue<long double> LastForcedFleeTimeField() { return { this, "APrimalDinoAIController", "LastForcedFleeTime" }; }
+	FieldValue<long double> LastFleeLocCheckTimeField() { return { this, "APrimalDinoAIController", "LastFleeLocCheckTime" }; }
+	FieldValue<FVector> LastFleeLocCheckField() { return { this, "APrimalDinoAIController", "LastFleeLocCheck" }; }
+	FieldValue<int> NumAlliesToAttackField() { return { this, "APrimalDinoAIController", "NumAlliesToAttack" }; }
+	FieldValue<float> FindLandingPositionZOffsetField() { return { this, "APrimalDinoAIController", "FindLandingPositionZOffset" }; }
+	FieldValue<float> TamedFollowAcceptanceRadiusOffsetField() { return { this, "APrimalDinoAIController", "TamedFollowAcceptanceRadiusOffset" }; }
+	FieldValue<float> TamedFollowAcceptanceHeightOffsetField() { return { this, "APrimalDinoAIController", "TamedFollowAcceptanceHeightOffset" }; }
+	FieldValue<float> AIFlightMaxLandingZDistanceField() { return { this, "APrimalDinoAIController", "AIFlightMaxLandingZDistance" }; }
+	FieldValue<long double> ForcedMoveToUntilTimeField() { return { this, "APrimalDinoAIController", "ForcedMoveToUntilTime" }; }
+	FieldValue<long double> LastHadAggroEntriesTimeField() { return { this, "APrimalDinoAIController", "LastHadAggroEntriesTime" }; }
+	FieldValue<TArray<TSubclassOf<AActor>>> WildTargetingDesireMultiplierClassesField() { return { this, "APrimalDinoAIController", "WildTargetingDesireMultiplierClasses" }; }
+	FieldValue<TArray<float>> WildTargetingDesireMultiplierValuesField() { return { this, "APrimalDinoAIController", "WildTargetingDesireMultiplierValues" }; }
+	FieldValue<TArray<TSubclassOf<AActor>>> TamedTargetingDesireMultiplierClassesField() { return { this, "APrimalDinoAIController", "TamedTargetingDesireMultiplierClasses" }; }
+	FieldValue<TArray<float>> TamedTargetingDesireMultiplierValuesField() { return { this, "APrimalDinoAIController", "TamedTargetingDesireMultiplierValues" }; }
+
+	// Functions
+
 	void ForceLand() { NativeCall<void>(this, "APrimalDinoAIController", "ForceLand"); }
 	FVector * GetRandomWanderDestination(FVector * result, FVector LocOverride, float RandomOffsetMultiplier, bool bUseRandomNegativeXDir, bool bOrientRandOffsetByRotation, FRotator OrientRandOffsetByRotation) { return NativeCall<FVector *, FVector *, FVector, float, bool, bool, FRotator>(this, "APrimalDinoAIController", "GetRandomWanderDestination", result, LocOverride, RandomOffsetMultiplier, bUseRandomNegativeXDir, bOrientRandOffsetByRotation, OrientRandOffsetByRotation); }
 	static FVector * StaticGetRandomWanderDestination(FVector * result, APrimalDinoCharacter * TargetCharacter, APrimalDinoAIController * TargetAIController, FVector LocOverride, float RandomOffsetMultiplier, bool bUseRandomNegativeXDir, bool bOrientRandOffsetByRotation, FRotator OrientRandOffsetByRotation, float GroundCheckSpreadOverride) { return NativeCall<FVector *, FVector *, APrimalDinoCharacter *, APrimalDinoAIController *, FVector, float, bool, bool, FRotator, float>(nullptr, "APrimalDinoAIController", "StaticGetRandomWanderDestination", result, TargetCharacter, TargetAIController, LocOverride, RandomOffsetMultiplier, bUseRandomNegativeXDir, bOrientRandOffsetByRotation, OrientRandOffsetByRotation, GroundCheckSpreadOverride); }
@@ -5278,15 +4614,18 @@ struct APrimalDinoAIController : AAIController
 	void ChangedAITarget() { NativeCall<void>(this, "APrimalDinoAIController", "ChangedAITarget"); }
 };
 
-struct ABrush : AActor {
+struct ABrush : AActor 
+{
 
 };
 
-struct AVolume : ABrush {
+struct AVolume : ABrush
+{
 
 };
 
-struct ANPCZoneVolume : AVolume {
+struct ANPCZoneVolume : AVolume
+{
 	// Fields
 	/*unsigned __int32 bOnlyCountWaterDinos : 1;
 	unsigned __int32 bOnlyCountLandDinos : 1;
@@ -5326,7 +4665,6 @@ struct FClassNameReplacement
 	FString ToClassName;
 };
 
-
 struct FNPCDifficultyLevelRange
 {
 	TArray<float> EnemyLevelsMin;
@@ -5334,14 +4672,8 @@ struct FNPCDifficultyLevelRange
 	TArray<float> GameDifficulties;
 };
 
-
-
 struct FNPCSpawnEntry
 {
-
-	// Fields
-	//FString GetAnEntryNameField() const { return GetNativeField<FString>(this, "FNPCSpawnEntry", "AnEntryName"); }
-
 	FString AnEntryName;
 	TArray<TSubclassOf<APrimalDinoCharacter>> NPCsToSpawn;
 	TArray<FString> NPCsToSpawnStrings;
@@ -5384,240 +4716,143 @@ struct __declspec(align(8)) UNPCSpawnEntriesContainer : UObject
 	float MaxDesiredNumEnemiesMultiplier;
 };
 
-struct FConfigCacheIni {
+struct FConfigCacheIni 
+{
 
 };
 
-struct AInfo : AActor {
+struct AInfo : AActor
+{
 
 };
 
-struct AWorldSettings : AInfo {
-
+struct AWorldSettings : AInfo 
+{
 };
 
-struct APrimalWorldSettings : AWorldSettings {
+struct APrimalWorldSettings : AWorldSettings
+{
 	TArray<FClassRemappingWeight> GetNPCRandomSpawnClassWeightsField() const { return GetNativeField<TArray<FClassRemappingWeight>>(this, "APrimalWorldSettings", "NPCRandomSpawnClassWeights"); }
 };
 
-struct ANPCZoneManager : AInfo {
+struct ANPCZoneManager : AInfo 
+{
+	FieldValue<TArray<FLinkedZoneSpawnVolumeEntry>> LinkedZoneSpawnVolumeEntriesField() { return { this, "ANPCZoneManager", "LinkedZoneSpawnVolumeEntries" }; }
+	FieldValue<TArray<AActor *>> DefaultZoneSpawnVolumeFloorsField() { return { this, "ANPCZoneManager", "DefaultZoneSpawnVolumeFloors" }; }
+	FieldValue<TArray<FName>> DefaultZoneSpawnVolumeFloorTagsField() { return { this, "ANPCZoneManager", "DefaultZoneSpawnVolumeFloorTags" }; }
+	FieldValue<TSubclassOf<UNPCSpawnEntriesContainer>> NPCSpawnEntriesContainerObjectField() { return { this, "ANPCZoneManager", "NPCSpawnEntriesContainerObject" }; }
+	FieldValue<bool> bEnabledField() { return { this, "ANPCZoneManager", "bEnabled" }; }
+	FieldValue<bool> bForceInEditorField() { return { this, "ANPCZoneManager", "bForceInEditor" }; }
+	FieldValue<bool> bNeverSpawnInWaterField() { return { this, "ANPCZoneManager", "bNeverSpawnInWater" }; }
+	FieldValue<bool> bOnlySpawnInWaterField() { return { this, "ANPCZoneManager", "bOnlySpawnInWater" }; }
+	FieldValue<bool> bAllowExtentTestField() { return { this, "ANPCZoneManager", "bAllowExtentTest" }; }
+	FieldValue<bool> bOnlyCheckMySublevelWaterField() { return { this, "ANPCZoneManager", "bOnlyCheckMySublevelWater" }; }
+	FieldValue<int> MinDesiredNumberOfNPCField() { return { this, "ANPCZoneManager", "MinDesiredNumberOfNPC" }; }
+	FieldValue<int> SP_MinDesiredNumberOfNPCField() { return { this, "ANPCZoneManager", "SP_MinDesiredNumberOfNPC" }; }
+	FieldValue<int> MaxNumberOfNPCField() { return { this, "ANPCZoneManager", "MaxNumberOfNPC" }; }
+	FieldValue<float> DesiredNumberOfNPCMultiplierField() { return { this, "ANPCZoneManager", "DesiredNumberOfNPCMultiplier" }; }
+	FieldValue<float> TheSpawnPointMinimumFloorNormalField() { return { this, "ANPCZoneManager", "TheSpawnPointMinimumFloorNormal" }; }
+	FieldValue<float> TheNewNewEditorNumberOfNPCMultiplierField() { return { this, "ANPCZoneManager", "TheNewNewEditorNumberOfNPCMultiplier" }; }
+	FieldValue<float> KillOffOverweightNPCStasisTimeField() { return { this, "ANPCZoneManager", "KillOffOverweightNPCStasisTime" }; }
+	FieldValue<float> TheMaximumWorldTimeForFullIncreaseField() { return { this, "ANPCZoneManager", "TheMaximumWorldTimeForFullIncrease" }; }
+	FieldValue<float> TheMinimumPlayerDistanceFromSpawnPointField() { return { this, "ANPCZoneManager", "TheMinimumPlayerDistanceFromSpawnPoint" }; }
+	FieldValue<float> TheIncreaseNPCIntervalField() { return { this, "ANPCZoneManager", "TheIncreaseNPCInterval" }; }
+	FieldValue<float> SP_TheIncreaseNPCIntervalField() { return { this, "ANPCZoneManager", "SP_TheIncreaseNPCInterval" }; }
+	FieldValue<float> TheIncreaseNPCIntervalMaxField() { return { this, "ANPCZoneManager", "TheIncreaseNPCIntervalMax" }; }
+	FieldValue<float> TheDecreaseNPCIntervalField() { return { this, "ANPCZoneManager", "TheDecreaseNPCInterval" }; }
+	FieldValue<float> NPCAIRangeMultiplierField() { return { this, "ANPCZoneManager", "NPCAIRangeMultiplier" }; }
+	FieldValue<bool> bNPCDontWanderField() { return { this, "ANPCZoneManager", "bNPCDontWander" }; }
+	FieldValue<bool> bNPCWildIgnoreWildField() { return { this, "ANPCZoneManager", "bNPCWildIgnoreWild" }; }
+	FieldValue<bool> bNPCNoKillXPField() { return { this, "ANPCZoneManager", "bNPCNoKillXP" }; }
+	FieldValue<bool> bNPCPreventSavingField() { return { this, "ANPCZoneManager", "bNPCPreventSaving" }; }
+	FieldValue<bool> bForceUntameableField() { return { this, "ANPCZoneManager", "bForceUntameable" }; }
+	FieldValue<bool> bUsesManualSpawningField() { return { this, "ANPCZoneManager", "bUsesManualSpawning" }; }
+	FieldValue<bool> bIgnoreVolumeEcompassingCheckField() { return { this, "ANPCZoneManager", "bIgnoreVolumeEcompassingCheck" }; }
+	FieldValue<bool> bSpawnAllNPCEntriesField() { return { this, "ANPCZoneManager", "bSpawnAllNPCEntries" }; }
+	FieldValue<bool> bOnlyUseInSingleplayerField() { return { this, "ANPCZoneManager", "bOnlyUseInSingleplayer" }; }
+	FieldValue<bool> bOnlyUseInDedicatedServerField() { return { this, "ANPCZoneManager", "bOnlyUseInDedicatedServer" }; }
+	FieldValue<float> NPCWanderRadiusMultiplierField() { return { this, "ANPCZoneManager", "NPCWanderRadiusMultiplier" }; }
+	FieldValue<int> MaxNumberSpawnZoneRandomPointChecksField() { return { this, "ANPCZoneManager", "MaxNumberSpawnZoneRandomPointChecks" }; }
+	FieldValue<int> TheNPCFullIncreaseMaximumIterationsField() { return { this, "ANPCZoneManager", "TheNPCFullIncreaseMaximumIterations" }; }
+	FieldValue<float> TheMinimumTamedDinoDistanceFromSpawnPointField() { return { this, "ANPCZoneManager", "TheMinimumTamedDinoDistanceFromSpawnPoint" }; }
+	FieldValue<float> TheMinimumStructureDistanceFromSpawnPointField() { return { this, "ANPCZoneManager", "TheMinimumStructureDistanceFromSpawnPoint" }; }
+	FieldValue<float> NPCLerpToMaxRandomBaseLevelField() { return { this, "ANPCZoneManager", "NPCLerpToMaxRandomBaseLevel" }; }
+	FieldValue<float> ManualSpawningNPCLerpToMaxRandomBaseLevelField() { return { this, "ANPCZoneManager", "ManualSpawningNPCLerpToMaxRandomBaseLevel" }; }
+	FieldValue<int> MaximumNumberNearbyCoreStructuresField() { return { this, "ANPCZoneManager", "MaximumNumberNearbyCoreStructures" }; }
+	FieldValue<int> AbsoluteMaximumNumberNearbyCoreStructuresField() { return { this, "ANPCZoneManager", "AbsoluteMaximumNumberNearbyCoreStructures" }; }
+	FieldValue<bool> bAutoKillUseGlobalStasisArrayField() { return { this, "ANPCZoneManager", "bAutoKillUseGlobalStasisArray" }; }
+	FieldValue<bool> bTraceForSpawnAgainstWaterField() { return { this, "ANPCZoneManager", "bTraceForSpawnAgainstWater" }; }
+	FieldValue<bool> bNPCForcePreventExitingWaterField() { return { this, "ANPCZoneManager", "bNPCForcePreventExitingWater" }; }
+	FieldValue<bool> bUseSpawnPointOverrideRotationField() { return { this, "ANPCZoneManager", "bUseSpawnPointOverrideRotation" }; }
+	FieldValue<float> NPCLevelMultiplierField() { return { this, "ANPCZoneManager", "NPCLevelMultiplier" }; }
+	FieldValue<int> ForceOverrideNPCBaseLevelField() { return { this, "ANPCZoneManager", "ForceOverrideNPCBaseLevel" }; }
+	FieldValue<TArray<FNPCSpawnEntry>> NPCSpawnEntriesField() { return { this, "ANPCZoneManager", "NPCSpawnEntries" }; }
+	FieldValue<TArray<FNPCSpawnLimit>> NPCSpawnLimitsField() { return { this, "ANPCZoneManager", "NPCSpawnLimits" }; }
+	FieldValue<int> UseDesiredNumberOfNPCField() { return { this, "ANPCZoneManager", "UseDesiredNumberOfNPC" }; }
+	FieldValue<int> NumNPCSpawnedField() { return { this, "ANPCZoneManager", "NumNPCSpawned" }; }
+	FieldValue<int> NumSpawnFailuresField() { return { this, "ANPCZoneManager", "NumSpawnFailures" }; }
+	FieldValue<long double> LastIncreaseNPCTimeField() { return { this, "ANPCZoneManager", "LastIncreaseNPCTime" }; }
+	FieldValue<long double> LastDecreaseNPCTimeField() { return { this, "ANPCZoneManager", "LastDecreaseNPCTime" }; }
+	FieldValue<bool> bForceRespawnDinosField() { return { this, "ANPCZoneManager", "bForceRespawnDinos" }; }
+	FieldValue<bool> bTriedFullIncreaseField() { return { this, "ANPCZoneManager", "bTriedFullIncrease" }; }
+	FieldValue<bool> bSpawnsWaterDinosField() { return { this, "ANPCZoneManager", "bSpawnsWaterDinos" }; }
+	FieldValue<bool> bSpawnsAmphibiousDinosField() { return { this, "ANPCZoneManager", "bSpawnsAmphibiousDinos" }; }
+	FieldValue<float> TheNextIncreaseNPCIntervalField() { return { this, "ANPCZoneManager", "TheNextIncreaseNPCInterval" }; }
+	FieldValue<float> CloseStructureDistanceFromSpawnPointField() { return { this, "ANPCZoneManager", "CloseStructureDistanceFromSpawnPoint" }; }
+	FieldValue<TArray<AActor *>> SpawnPointOverridesField() { return { this, "ANPCZoneManager", "SpawnPointOverrides" }; }
+	FieldValue<FName> NonDedicatedFreezeWildDinoPhysicsIfLevelUnloadedField() { return { this, "ANPCZoneManager", "NonDedicatedFreezeWildDinoPhysicsIfLevelUnloaded" }; }
+	FieldValue<TArray<FName>> NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloadedField() { return { this, "ANPCZoneManager", "NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloaded" }; }
+	FieldValue<float> MinimumManualSpawnIntervalField() { return { this, "ANPCZoneManager", "MinimumManualSpawnInterval" }; }
+	FieldValue<long double> LastManuallySpawnedTimeField() { return { this, "ANPCZoneManager", "LastManuallySpawnedTime" }; }
+	FieldValue<bool> bIgnoreNPCRandomClassReplacementsField() { return { this, "ANPCZoneManager", "bIgnoreNPCRandomClassReplacements" }; }
+	FieldValue<int> TheNPCDynamicIncreaseMaximumIterationsField() { return { this, "ANPCZoneManager", "TheNPCDynamicIncreaseMaximumIterations" }; }
+
 	// Functions
+
 	static UClass* GetPrivateStaticClass() { return NativeCall<UClass *, __int64, UClass **, void(__cdecl *)()>(nullptr, "ANPCZoneManager", "GetPrivateStaticClass", 0, nullptr, nullptr); }
-	//UClass *__fastcall ANPCZoneManager::GetPrivateStaticClass(TClassCompiledInDefer<ANPCZoneManager> *this, __int64 a2, UClass **a3, void (__cdecl *a4)())
-	//GetPrivateStaticClassBody<UClass>(const wchar_t *PackageName, const wchar_t *Name, UClass **ReturnClass, void(__cdecl *RegisterNativeFunc)()) { return NativeCall<void, const wchar_t *, const wchar_t *, UClass **, void(__cdecl *)()>(nullptr, "Global", "GetPrivateStaticClassBody<UClass>", PackageName, Name, ReturnClass, RegisterNativeFunc); }
-
-	/*"ANPCZoneManager": 2152400,
-	"AbsoluteMaximumNumberNearbyCoreStructures" : 1284,
-	"BeginPlay" : 2153296,
-	"CheckDecreaseNPC" : 2163376,
-	"CheckIncreaseNPC" : 2163536,
-	"CloseStructureDistanceFromSpawnPoint" : 1400,
-	"DefaultZoneSpawnVolumeFloorTags" : 1152,
-	"DefaultZoneSpawnVolumeFloors" : 1136,
-	"DesiredNumberOfNPCMultiplier" : 1196,
-	"EndPlay" : 2184720,
-	"FindLinkedSpawnVolumeEntryContainingPoint" : 2171856,
-	"ForceOverrideNPCBaseLevel" : 1324,
-	"GetBestNPCToAutoKill" : 2184160,
-	"GetNumberOfClassNPCTouching" : 2162704,
-	"GetNumberOfNPCTouching" : 2162432,
-	"GetPrivateStaticClass" : 7521056,
-	"GetValidSpawnPoint" : 2172096,
-	"HardLimitWildDinosToVolume" : 1296,
-	"IsValidNPCEntry" : 2164816,
-	"KillOffOverweightNPCStasisTime" : 1208,
-	"LastDecreaseNPCTime" : 1384,
-	"LastIncreaseNPCTime" : 1376,
-	"LastManuallySpawnedTime" : 1456,
-	"LinkedZoneSpawnVolumeEntries" : 1120,
-	"LinkedZoneVolumes" : 1104,
-	"ManualSpawningNPCLerpToMaxRandomBaseLevel" : 1276,
-	"MaxNumberOfNPC" : 1192,
-	"MaxNumberSpawnZoneRandomPointChecks" : 1256,
-	"MaximumNumberNearbyCoreStructures" : 1280,
-	"MinDesiredNumberOfNPC" : 1184,
-	"MinimumManualSpawnInterval" : 1448,
-	"NPCAIRangeMultiplier" : 1236,
-	"NPCLerpToMaxRandomBaseLevel" : 1272,
-	"NPCLevelMultiplier" : 1320,
-	"NPCLimitTargetsToVolume" : 1312,
-	"NPCSpawnEntries" : 1328,
-	"NPCSpawnEntriesContainerObject" : 1168,
-	"NPCSpawnLimits" : 1344,
-	"NPCWanderRadiusMultiplier" : 1252,
-	"NonDedicatedFreezeWildDinoPhysicsIfLevelUnloaded" : 1424,
-	"NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloaded" : 1432,
-	"NumNPCSpawned" : 1364,
-	"NumSpawnFailures" : 1368,
-	"Report" : 2165792,
-	"SP_MinDesiredNumberOfNPC" : 1188,
-	"SP_TheIncreaseNPCInterval" : 1224,
-	"SpawnFromEntries" : 2168384,
-	"SpawnNPC" : 2180368,
-	"SpawnNPCs" : 2164432,
-	"SpawnPointOverrides" : 1408,
-	"StaticRegisterNativesANPCZoneManager" : 7520576,
-	"StaticSpawnNPCs" : 2185072,
-	"TheDecreaseNPCInterval" : 1232,
-	"TheIncreaseNPCInterval" : 1220,
-	"TheIncreaseNPCIntervalMax" : 1228,
-	"TheMaximumWorldTimeForFullIncrease" : 1212,
-	"TheMinimumPlayerDistanceFromSpawnPoint" : 1216,
-	"TheMinimumStructureDistanceFromSpawnPoint" : 1268,
-	"TheMinimumTamedDinoDistanceFromSpawnPoint" : 1264,
-	"TheNPCFullIncreaseMaximumIterations" : 1260,
-	"TheNewNewEditorNumberOfNPCMultiplier" : 1204,
-	"TheNextIncreaseNPCInterval" : 1396,
-	"TheSpawnPointMinimumFloorNormal" : 1200,
-	"UseDesiredNumberOfNPC" : 1360,
-	"bAllowExtentTest" : 1180,
-	"bAutoKillUseGlobalStasisArray" : 1288,
-	"bEnabled" : 1176,
-	"bForceInEditor" : 1177,
-	"bForceRespawnDinos" : 1392,
-	"bForceUntameable" : 1244,
-	"bIgnoreNPCRandomClassReplacements" : 1464,
-	"bIgnoreVolumeEcompassingCheck" : 1246,
-	"bNPCDontWander" : 1240,
-	"bNPCForcePreventExitingWater" : 1305,
-	"bNPCNoKillXP" : 1242,
-	"bNPCPreventSaving" : 1243,
-	"bNPCWildIgnoreWild" : 1241,
-	"bNeverSpawnInWater" : 1178,
-	"bOnlyCheckMySublevelWater" : 1181,
-	"bOnlySpawnInWater" : 1179,
-	"bOnlyUseInDedicatedServer" : 1249,
-	"bOnlyUseInSingleplayer" : 1248,
-	"bSpawnAllNPCEntries" : 1247,
-	"bSpawnsAmphibiousDinos" : 1395,
-	"bSpawnsWaterDinos" : 1394,
-	"bTraceForSpawnAgainstWater" : 1304,
-	"bTriedFullIncrease" : 1393,
-	"bUseSpawnPointOverrideRotation" : 1306,
-	"bUsesManualSpawning" : 1245,
-	"~ANPCZoneManager" : 2152992*/
-
-	TArray<ANPCZoneVolume *> GetLinkedZoneVolumesField() const { return GetNativeField<TArray<ANPCZoneVolume *>>(this, "ANPCZoneManager", "LinkedZoneVolumes"); }
-	TArray<FLinkedZoneSpawnVolumeEntry> GetLinkedZoneSpawnVolumeEntriesField() const { return GetNativeField<TArray<FLinkedZoneSpawnVolumeEntry>>(this, "ANPCZoneManager", "LinkedZoneSpawnVolumeEntries"); }
-	TArray<FNPCSpawnEntry> GetNPCSpawnEntriesField() const { return GetNativeField<TArray<FNPCSpawnEntry>>(this, "ANPCZoneManager", "NPCSpawnEntries"); }
-	TArray<FNPCSpawnLimit> GetNPCSpawnLimitsField() const { return GetNativeField<TArray<FNPCSpawnLimit>>(this, "ANPCZoneManager", "NPCSpawnLimits"); }
-	TSubclassOf<UNPCSpawnEntriesContainer> GetNPCSpawnEntriesContainerObjectField() const { return GetNativeField<TSubclassOf<UNPCSpawnEntriesContainer>>(this, "ANPCZoneManager", "NPCSpawnEntriesContainerObject"); }
-	bool GetbIgnoreNPCRandomClassReplacementsField() const { return GetNativeField<bool>(this, "ANPCZoneManager", "bIgnoreNPCRandomClassReplacements"); }
-
-
-	// Fields
-	/*TArray<ANPCZoneVolume *, FDefaultAllocator> LinkedZoneVolumes;
-	TArray<FLinkedZoneSpawnVolumeEntry, FDefaultAllocator> LinkedZoneSpawnVolumeEntries;
-	TArray<AActor *, FDefaultAllocator> DefaultZoneSpawnVolumeFloors;
-	TArray<FName, FDefaultAllocator> DefaultZoneSpawnVolumeFloorTags;
-	TSubclassOf<UNPCSpawnEntriesContainer> NPCSpawnEntriesContainerObject;
-	bool bEnabled;
-	bool bForceInEditor;
-	bool bNeverSpawnInWater;
-	bool bOnlySpawnInWater;
-	bool bAllowExtentTest;
-	bool bOnlyCheckMySublevelWater;
-	int MinDesiredNumberOfNPC;
-	int SP_MinDesiredNumberOfNPC;
-	int MaxNumberOfNPC;
-	float DesiredNumberOfNPCMultiplier;
-	float TheSpawnPointMinimumFloorNormal;
-	float TheNewNewEditorNumberOfNPCMultiplier;
-	float KillOffOverweightNPCStasisTime;
-	float TheMaximumWorldTimeForFullIncrease;
-	float TheMinimumPlayerDistanceFromSpawnPoint;
-	float TheIncreaseNPCInterval;
-	float SP_TheIncreaseNPCInterval;
-	float TheIncreaseNPCIntervalMax;
-	float TheDecreaseNPCInterval;
-	float NPCAIRangeMultiplier;
-	bool bNPCDontWander;
-	bool bNPCWildIgnoreWild;
-	bool bNPCNoKillXP;
-	bool bNPCPreventSaving;
-	bool bForceUntameable;
-	bool bUsesManualSpawning;
-	bool bIgnoreVolumeEcompassingCheck;
-	bool bSpawnAllNPCEntries;
-	bool bOnlyUseInSingleplayer;
-	bool bOnlyUseInDedicatedServer;
-	float NPCWanderRadiusMultiplier;
-	int MaxNumberSpawnZoneRandomPointChecks;
-	int TheNPCFullIncreaseMaximumIterations;
-	float TheMinimumTamedDinoDistanceFromSpawnPoint;
-	float TheMinimumStructureDistanceFromSpawnPoint;
-	float NPCLerpToMaxRandomBaseLevel;
-	float ManualSpawningNPCLerpToMaxRandomBaseLevel;
-	int MaximumNumberNearbyCoreStructures;
-	int AbsoluteMaximumNumberNearbyCoreStructures;
-	bool bAutoKillUseGlobalStasisArray;
-	ANPCZoneVolume *HardLimitWildDinosToVolume;
-	bool bTraceForSpawnAgainstWater;
-	bool bNPCForcePreventExitingWater;
-	bool bUseSpawnPointOverrideRotation;
-	AVolume *NPCLimitTargetsToVolume;
-	float NPCLevelMultiplier;
-	int ForceOverrideNPCBaseLevel;
-	TArray<FNPCSpawnEntry, FDefaultAllocator> NPCSpawnEntries;
-	TArray<FNPCSpawnLimit, FDefaultAllocator> NPCSpawnLimits;
-	int UseDesiredNumberOfNPC;
-	int NumNPCSpawned;
-	int NumSpawnFailures;
-	long double LastIncreaseNPCTime;
-	long double LastDecreaseNPCTime;
-	bool bForceRespawnDinos;
-	bool bTriedFullIncrease;
-	bool bSpawnsWaterDinos;
-	bool bSpawnsAmphibiousDinos;
-	float TheNextIncreaseNPCInterval;
-	float CloseStructureDistanceFromSpawnPoint;
-	TArray<AActor *, FDefaultAllocator> SpawnPointOverrides;
-	FName NonDedicatedFreezeWildDinoPhysicsIfLevelUnloaded;
-	TArray<FName, FDefaultAllocator> NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloaded;
-	float MinimumManualSpawnInterval;
-	long double LastManuallySpawnedTime;
-	bool bIgnoreNPCRandomClassReplacements;*/
+	void BeginPlay() { NativeCall<void>(this, "ANPCZoneManager", "BeginPlay"); }
+	int GetNumberOfNPCTouching() { return NativeCall<int>(this, "ANPCZoneManager", "GetNumberOfNPCTouching"); }
+	int GetNumberOfClassNPCTouching(TSubclassOf<APrimalDinoCharacter> ADinoClass) { return NativeCall<int, TSubclassOf<APrimalDinoCharacter>>(this, "ANPCZoneManager", "GetNumberOfClassNPCTouching", ADinoClass); }
+	void CheckDecreaseNPC() { NativeCall<void>(this, "ANPCZoneManager", "CheckDecreaseNPC"); }
+	void CheckIncreaseNPC() { NativeCall<void>(this, "ANPCZoneManager", "CheckIncreaseNPC"); }
+	bool SpawnNPCs() { return NativeCall<bool>(this, "ANPCZoneManager", "SpawnNPCs"); }
+	bool IsValidNPCEntry(FNPCSpawnEntry * NPCEntry) { return NativeCall<bool, FNPCSpawnEntry *>(this, "ANPCZoneManager", "IsValidNPCEntry", NPCEntry); }
+	APrimalDinoCharacter * SpawnFromEntries(int SpawnVolumeEntry, TArray<FNPCSpawnEntry> * spawnEntries, FVector * AtSpawnPoint, TArray<APrimalDinoCharacter *> * AllSpawnedNPCs, float OverrideYaw) { return NativeCall<APrimalDinoCharacter *, int, TArray<FNPCSpawnEntry> *, FVector *, TArray<APrimalDinoCharacter *> *, float>(this, "ANPCZoneManager", "SpawnFromEntries", SpawnVolumeEntry, spawnEntries, AtSpawnPoint, AllSpawnedNPCs, OverrideYaw); }
+	int FindLinkedSpawnVolumeEntryContainingPoint(FVector AtPoint) { return NativeCall<int, FVector>(this, "ANPCZoneManager", "FindLinkedSpawnVolumeEntryContainingPoint", AtPoint); }
+	bool GetValidSpawnPoint(int volumeEntryIndex, FVector extentCheck, FVector * ValidSpawnPoint, FVector * OverrideStartPoint, float OverrideStartPointExpansionRadius, float WaterOnlySpawnMinimumWaterHeight, float MaximumWaterHeight, float SpawnMinDistanceFromStructuresMultiplier, float SpawnMinDistanceFromPlayersMultiplier, float SpawnMinDistanceFromTamedDinosMultiplier, float * OverrideYawOut) { return NativeCall<bool, int, FVector, FVector *, FVector *, float, float, float, float, float, float, float *>(this, "ANPCZoneManager", "GetValidSpawnPoint", volumeEntryIndex, extentCheck, ValidSpawnPoint, OverrideStartPoint, OverrideStartPointExpansionRadius, WaterOnlySpawnMinimumWaterHeight, MaximumWaterHeight, SpawnMinDistanceFromStructuresMultiplier, SpawnMinDistanceFromPlayersMultiplier, SpawnMinDistanceFromTamedDinosMultiplier, OverrideYawOut); }
+	APrimalDinoCharacter * SpawnNPC(TSubclassOf<APrimalDinoCharacter> PawnTemplate, FVector SpawnLoc, bool bOverrideNPCLevel, int NPCLevelOffset, float NPCLevelMultiplier, bool bAddLevelOffsetBeforeMultiplier, float WaterOnlySpawnMinimumWaterHeight, float SpawnVolumeStartExtentZ, float OverrideYaw, float MaximumWaterHeight) { return NativeCall<APrimalDinoCharacter *, TSubclassOf<APrimalDinoCharacter>, FVector, bool, int, float, bool, float, float, float, float>(this, "ANPCZoneManager", "SpawnNPC", PawnTemplate, SpawnLoc, bOverrideNPCLevel, NPCLevelOffset, NPCLevelMultiplier, bAddLevelOffsetBeforeMultiplier, WaterOnlySpawnMinimumWaterHeight, SpawnVolumeStartExtentZ, OverrideYaw, MaximumWaterHeight); }
+	APrimalDinoCharacter * GetBestNPCToAutoKill() { return NativeCall<APrimalDinoCharacter *>(this, "ANPCZoneManager", "GetBestNPCToAutoKill"); }
+	void EndPlay(EEndPlayReason::Type EndPlayReason) { NativeCall<void, EEndPlayReason::Type>(this, "ANPCZoneManager", "EndPlay", EndPlayReason); }
+	static TArray<APrimalDinoCharacter *> * StaticSpawnNPCs(TArray<APrimalDinoCharacter *> * result, UObject * WorldContext, ANPCZoneManager * AtZoneManager, TSubclassOf<UNPCSpawnEntriesContainer> TheNPCSpawnEntries, FVector AtSpawnPoint, FRotator AtRotation, int UseSpawnVolumeIndex) { return NativeCall<TArray<APrimalDinoCharacter *> *, TArray<APrimalDinoCharacter *> *, UObject *, ANPCZoneManager *, TSubclassOf<UNPCSpawnEntriesContainer>, FVector, FRotator, int>(nullptr, "ANPCZoneManager", "StaticSpawnNPCs", result, WorldContext, AtZoneManager, TheNPCSpawnEntries, AtSpawnPoint, AtRotation, UseSpawnVolumeIndex); }
+	static void StaticRegisterNativesANPCZoneManager() { NativeCall<void>(nullptr, "ANPCZoneManager", "StaticRegisterNativesANPCZoneManager"); }
 };
 
 struct ADroppedItem : AActor
 {
-	FItemNetInfo GetMyItemInfoField() const { return GetNativeField<FItemNetInfo>(this, "ADroppedItem", "MyItemInfo"); }
-	void SetMyItemInfoField(FItemNetInfo newValue) { SetNativeField(this, "ADroppedItem", "MyItemInfo", newValue); }
-	UPrimalItem* GetMyItemField() const { return GetNativeField<UPrimalItem*>(this, "ADroppedItem", "MyItem"); }
-	void SetMyItemField(UPrimalItem* newValue) { SetNativeField(this, "ADroppedItem", "MyItem", newValue); }
-	long double GetDroppedItemDestructionTimeField() const { return GetNativeField<long double>(this, "ADroppedItem", "DroppedItemDestructionTime"); }
-	void SetDroppedItemDestructionTimeField(long double newValue) { SetNativeField(this, "ADroppedItem", "DroppedItemDestructionTime", newValue); }
-	FString GetDroppedByNameField() const { return GetNativeField<FString>(this, "ADroppedItem", "DroppedByName"); }
-	void SetDroppedByNameField(FString newValue) { SetNativeField(this, "ADroppedItem", "DroppedByName", newValue); }
-	int GetDroppedByPlayerIDField() const { return GetNativeField<int>(this, "ADroppedItem", "DroppedByPlayerID"); }
-	void SetDroppedByPlayerIDField(int newValue) { SetNativeField(this, "ADroppedItem", "DroppedByPlayerID", newValue); }
-	TWeakObjectPtr<AActor> GetDroppedByActorField() const { return GetNativeField<TWeakObjectPtr<AActor>>(this, "ADroppedItem", "DroppedByActor"); }
-	void SetDroppedByActorField(TWeakObjectPtr<AActor> newValue) { SetNativeField(this, "ADroppedItem", "DroppedByActor", newValue); }
-
-	/*FItemNetInfo MyItemInfo;
-	UPrimalItem *MyItem;
-	unsigned __int32 bApplyImpulseOnSpawn : 1;
-	unsigned __int32 bDestroyOnStasis : 1;
-	unsigned __int32 bUseCollisionTrace : 1;
-	unsigned __int32 bPreventPickup : 1;
-	unsigned __int32 bDestroyOutOfWater : 1;
-	unsigned __int32 bIsUnderwater : 1;
-	float ImpulseMagnitude;
-	float ForceSleepTimer;
-	FVector DroppedItemScale;
-	FVector2D OverlayTooltipPadding;
-	FVector2D OverlayTooltipScale;
-	TSubclassOf<UPrimalItemToolTipWidget> HUDOverlayToolTipWidget;
-	FString DroppedByName;
-	long double DroppedItemDestructionTime;
-	float MaxPickUpDistance;
-	float PrevLinearDamping;
-	float PrevAngularDamping;
-	long double SpawnDropSoundTime;
-	FVector PreviousLocation;
-	TWeakObjectPtr<AActor, FWeakObjectPtr, FIndexToObject> DroppedByActor;*/
+	FieldValue<FItemNetInfo> MyItemInfoField() { return { this, "ADroppedItem", "MyItemInfo" }; }
+	FieldValue<UPrimalItem *> MyItemField() { return { this, "ADroppedItem", "MyItem" }; }
+	FieldValue<float> ImpulseMagnitudeField() { return { this, "ADroppedItem", "ImpulseMagnitude" }; }
+	FieldValue<float> ForceSleepTimerField() { return { this, "ADroppedItem", "ForceSleepTimer" }; }
+	FieldValue<FVector> DroppedItemScaleField() { return { this, "ADroppedItem", "DroppedItemScale" }; }
+	FieldValue<FVector2D> OverlayTooltipPaddingField() { return { this, "ADroppedItem", "OverlayTooltipPadding" }; }
+	FieldValue<FVector2D> OverlayTooltipScaleField() { return { this, "ADroppedItem", "OverlayTooltipScale" }; }
+	FieldValue<FString> DroppedByNameField() { return { this, "ADroppedItem", "DroppedByName" }; }
+	FieldValue<unsigned __int64> DroppedByPlayerIDField() { return { this, "ADroppedItem", "DroppedByPlayerID" }; }
+	FieldValue<long double> DroppedItemDestructionTimeField() { return { this, "ADroppedItem", "DroppedItemDestructionTime" }; }
+	FieldValue<bool> bClientDisablePhysicsField() { return { this, "ADroppedItem", "bClientDisablePhysics" }; }
+	FieldValue<UMaterialInterface *> NetDroppedMeshMaterialOverrideField() { return { this, "ADroppedItem", "NetDroppedMeshMaterialOverride" }; }
+	FieldValue<FVector> NetDroppedMeshOverrideScale3DField() { return { this, "ADroppedItem", "NetDroppedMeshOverrideScale3D" }; }
+	FieldValue<float> MaxPickUpDistanceField() { return { this, "ADroppedItem", "MaxPickUpDistance" }; }
+	FieldValue<float> PrevLinearDampingField() { return { this, "ADroppedItem", "PrevLinearDamping" }; }
+	FieldValue<float> PrevAngularDampingField() { return { this, "ADroppedItem", "PrevAngularDamping" }; }
+	FieldValue<long double> SpawnDropSoundTimeField() { return { this, "ADroppedItem", "SpawnDropSoundTime" }; }
+	FieldValue<FVector> PreviousLocationField() { return { this, "ADroppedItem", "PreviousLocation" }; }
+	FieldValue<TWeakObjectPtr<AActor>> DroppedByActorField() { return { this, "ADroppedItem", "DroppedByActor" }; }
+	FieldValue<float> FreezePhysicsAfterTimeField() { return { this, "ADroppedItem", "FreezePhysicsAfterTime" }; }
+	FieldValue<float> DroppedLifeSpanOverrideField() { return { this, "ADroppedItem", "DroppedLifeSpanOverride" }; }
 
 	// Functions
+
 	static UClass* StaticClass() { return NativeCall<UClass *>(nullptr, "ADroppedItem", "StaticClass"); }
 	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "ADroppedItem", "Tick", DeltaSeconds); }
 	void Stasis() { NativeCall<void>(this, "ADroppedItem", "Stasis"); }

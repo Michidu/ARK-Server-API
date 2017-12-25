@@ -165,6 +165,9 @@
     <ClInclude Include="Core\Private\Logger\easylogging++.h">
       <Filter>Core\Private\Logger</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Public\API\Fields.h">
+      <Filter>Core\Public\API</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="version.cpp" />

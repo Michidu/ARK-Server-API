@@ -40,6 +40,7 @@
     <ClInclude Include="Core\Public\API\ARK\Tribe.h" />
     <ClInclude Include="Core\Public\API\Base.h" />
     <ClInclude Include="Core\Public\API\Enums.h" />
+    <ClInclude Include="Core\Public\API\Fields.h" />
     <ClInclude Include="Core\Public\API\UE\BasicTypes.h" />
     <ClInclude Include="Core\Public\API\UE\Char.h" />
     <ClInclude Include="Core\Public\API\UE\CString.h" />

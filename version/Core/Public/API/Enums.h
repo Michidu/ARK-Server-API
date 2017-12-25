@@ -114,7 +114,7 @@ namespace EPrimalItemMessage
 	};
 }
 
-enum ECollisionChannel
+enum class ECollisionChannel
 {
 	ECC_WorldStatic = 0x0,
 	ECC_WorldDynamic = 0x1,
@@ -234,7 +234,7 @@ namespace ETextComparisonLevel
 	};
 }
 
-enum EFindName
+enum class EFindName
 {
 	/** Find a name; return 0 if it doesn't exist. */
 	FNAME_Find,
@@ -282,7 +282,7 @@ namespace EEndPlayReason
 	};
 }
 
-enum ECollisionResponse
+enum class ECollisionResponse
 {
 	ECR_Ignore,
 	ECR_Overlap,
@@ -290,7 +290,7 @@ enum ECollisionResponse
 	ECR_MAX
 };
 
-enum ENetMode
+enum class ENetMode
 {
 	NM_Standalone,
 	NM_DedicatedServer,
@@ -339,7 +339,7 @@ namespace ESTOFNotificationType
 	};
 }
 
-enum EMovementMode
+enum class EMovementMode
 {
 	MOVE_None,
 	MOVE_Walking,
@@ -404,7 +404,7 @@ namespace EShooterPhysMaterialType
 	};
 }
 
-enum EPhysicalSurface
+enum class EPhysicalSurface
 {
 	SurfaceType_Default,
 	SurfaceType1,
@@ -517,14 +517,14 @@ namespace EComponentMobility
 	};
 }
 
-enum ERelativeTransformSpace
+enum class ERelativeTransformSpace
 {
 	RTS_World,
 	RTS_Actor,
 	RTS_Component
 };
 
-enum EMoveComponentFlags
+enum class EMoveComponentFlags
 {
 	MOVECOMP_NoFlags,
 	MOVECOMP_IgnoreBases,
@@ -552,7 +552,7 @@ namespace ETribeGroupPermission
 	};
 }
 
-enum ETraceTypeQuery
+enum class ETraceTypeQuery
 {
 	TraceTypeQuery1,
 	TraceTypeQuery2,
@@ -589,7 +589,7 @@ enum ETraceTypeQuery
 	TraceTypeQuery_MAX
 };
 
-enum EInputEvent
+enum class EInputEvent
 {
 	IE_Pressed,
 	IE_Released,
@@ -632,3 +632,147 @@ namespace EMouseCursor
 		TotalCursorCount
 	};
 }
+
+namespace EWorldType
+{
+	enum Type
+	{
+		None,
+		Game,
+		Editor,
+		PIE,
+		Preview,
+		Inactive
+	};
+}
+
+enum class EObjectFlags
+{
+	RF_Public,
+	RF_Standalone,
+	RF_Native,
+	RF_Transactional,
+	RF_ClassDefaultObject,
+	RF_ArchetypeObject,
+	RF_Transient,
+	RF_RootSet,
+	RF_Unreachable,
+	RF_TagGarbageTemp,
+	RF_NeedLoad,
+	RF_AsyncLoading,
+	RF_NeedPostLoad,
+	RF_NeedPostLoadSubobjects,
+	RF_PendingKill,
+	RF_BeginDestroyed,
+	RF_FinishDestroyed,
+	RF_BeingRegenerated,
+	RF_DefaultSubObject,
+	RF_WasLoaded,
+	RF_TextExportTransient,
+	RF_LoadCompleted,
+	RF_WhiteListed,
+	RF_AsyncLoadingRef,
+	RF_MarkedByCooker,
+	RF_ForceTagExp,
+	RF_OlderObject,
+	RF_AllFlags,
+	RF_NoFlags,
+	RF_Load,
+	RF_PropagateToSubObjects
+};
+
+namespace EIncludeSuperFlag
+{
+	enum Type
+	{
+		ExcludeSuper,
+		IncludeSuper
+	};
+}
+
+namespace EAssetAvailability
+{
+	enum Type
+	{
+		DoesNotExist,
+		NotAvailable,
+		LocalSlow,
+		LocalFast
+	};
+}
+
+namespace EAssetAvailabilityProgressReportingType
+{
+	enum Type
+	{
+		ETA,
+		PercentageComplete
+	};
+}
+
+namespace ELevelExperienceRampType
+{
+	enum Type
+	{
+		Player,
+		DinoEasy,
+		DinoMedium,
+		DinoHard,
+		MAX
+	};
+}
+
+enum class ClassCastFlags : unsigned long long
+{
+	CASTCLASS_None = 0x0000000000000000,
+	CASTCLASS_UField = 0x0000000000000001,
+	CASTCLASS_UInt8Property = 0x0000000000000002,
+	CASTCLASS_UEnum = 0x0000000000000004,
+	CASTCLASS_UStruct = 0x0000000000000008,
+	CASTCLASS_UScriptStruct = 0x0000000000000010,
+	CASTCLASS_UClass = 0x0000000000000020,
+	CASTCLASS_UByteProperty = 0x0000000000000040,
+	CASTCLASS_UIntProperty = 0x0000000000000080,
+	CASTCLASS_UFloatProperty = 0x0000000000000100,
+	CASTCLASS_UUInt64Property = 0x0000000000000200,
+	CASTCLASS_UClassProperty = 0x0000000000000400,
+	CASTCLASS_UUInt32Property = 0x0000000000000800,
+	CASTCLASS_UInterfaceProperty = 0x0000000000001000,
+	CASTCLASS_UNameProperty = 0x0000000000002000,
+	CASTCLASS_UStrProperty = 0x0000000000004000,
+	CASTCLASS_UProperty = 0x0000000000008000,
+	CASTCLASS_UObjectProperty = 0x0000000000010000,
+	CASTCLASS_UBoolProperty = 0x0000000000020000,
+	CASTCLASS_UUInt16Property = 0x0000000000040000,
+	CASTCLASS_UFunction = 0x0000000000080000,
+	CASTCLASS_UStructProperty = 0x0000000000100000,
+	CASTCLASS_UArrayProperty = 0x0000000000200000,
+	CASTCLASS_UInt64Property = 0x0000000000400000,
+	CASTCLASS_UDelegateProperty = 0x0000000000800000,
+	CASTCLASS_UNumericProperty = 0x0000000001000000,
+	CASTCLASS_UMulticastDelegateProperty = 0x0000000002000000,
+	CASTCLASS_UObjectPropertyBase = 0x0000000004000000,
+	CASTCLASS_UWeakObjectProperty = 0x0000000008000000,
+	CASTCLASS_ULazyObjectProperty = 0x0000000010000000,
+	CASTCLASS_UAssetObjectProperty = 0x0000000020000000,
+	CASTCLASS_UTextProperty = 0x0000000040000000,
+	CASTCLASS_UInt16Property = 0x0000000080000000,
+	CASTCLASS_UDoubleProperty = 0x0000000100000000,
+	CASTCLASS_UAssetClassProperty = 0x0000000200000000,
+	CASTCLASS_UPackage = 0x0000000400000000,
+	CASTCLASS_ULevel = 0x0000000800000000,
+	CASTCLASS_AActor = 0x0000001000000000,
+	CASTCLASS_APlayerController = 0x0000002000000000,
+	CASTCLASS_APawn = 0x0000004000000000,
+	CASTCLASS_USceneComponent = 0x0000008000000000,
+	CASTCLASS_UPrimitiveComponent = 0x0000010000000000,
+	CASTCLASS_USkinnedMeshComponent = 0x0000020000000000,
+	CASTCLASS_USkeletalMeshComponent = 0x0000040000000000,
+	CASTCLASS_UBlueprint = 0x0000080000000000,
+	CASTCLASS_UDelegateFunction = 0x0000100000000000,
+	CASTCLASS_UStaticMeshComponent = 0x0000200000000000,
+	CASTCLASS_UMapProperty = 0x0000400000000000,
+	CASTCLASS_USetProperty = 0x0000800000000000,
+	CASTCLASS_UEnumProperty = 0x0001000000000000,
+	CASTCLASS_AllFlags = 0xFFFFFFFFFFFFFFFF
+};

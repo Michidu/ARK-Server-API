@@ -129,6 +129,13 @@ struct UAudioComponent;
 struct FQuat;
 struct FDinoOrderGroup{};
 struct FServerOptions{};
+struct ULocalPlayer;
+struct ASpectatorPawn;
+struct APlayerCameraManager;
+struct UAntiDupeTransactionLog;
+struct AMatineeActor;
+struct ANPCZoneManager;
+struct UStaticMesh;
 
 struct BitField
 {
