@@ -25,17 +25,17 @@ namespace ArkApi
 	{
 		auto& hooks = Hooks::Get();
 
-		hooks.SetHook("UWorld", "InitWorld", &Hook_UWorld_InitWorld, &UWorld_InitWorld_original);
-		hooks.SetHook("UWorld", "Tick", &Hook_UWorld_Tick, &UWorld_Tick_original);
-		hooks.SetHook("AShooterGameMode", "InitGame", &Hook_AShooterGameMode_InitGame, &AShooterGameMode_InitGame_original);
-		hooks.SetHook("AShooterPlayerController", "ServerSendChatMessage_Implementation",
+		hooks.SetHook("UWorld.InitWorld", &Hook_UWorld_InitWorld, &UWorld_InitWorld_original);
+		hooks.SetHook("UWorld.Tick", &Hook_UWorld_Tick, &UWorld_Tick_original);
+		hooks.SetHook("AShooterGameMode.InitGame", &Hook_AShooterGameMode_InitGame, &AShooterGameMode_InitGame_original);
+		hooks.SetHook("AShooterPlayerController.ServerSendChatMessage_Implementation",
 		              &Hook_AShooterPlayerController_ServerSendChatMessage_Impl,
 		              &AShooterPlayerController_ServerSendChatMessage_Impl_original);
-		hooks.SetHook("APlayerController", "ConsoleCommand", &Hook_APlayerController_ConsoleCommand,
+		hooks.SetHook("APlayerController.ConsoleCommand", &Hook_APlayerController_ConsoleCommand,
 		              &APlayerController_ConsoleCommand_original);
-		hooks.SetHook("RCONClientConnection", "ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
+		hooks.SetHook("RCONClientConnection.ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
 		              &RCONClientConnection_ProcessRCONPacket_original);
-		hooks.SetHook("AGameState", "DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
+		hooks.SetHook("AGameState.DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
 	}
 
 
@@ -58,7 +58,7 @@ namespace ArkApi
 	}
 
 	void Hook_AShooterGameMode_InitGame(AShooterGameMode* a_shooter_game_mode, FString* map_name, FString* options,
-	                                           FString* error_message)
+	                                    FString* error_message)
 	{
 		ApiUtils::Get().SetShooterGameMode(a_shooter_game_mode);
 
@@ -75,7 +75,7 @@ namespace ArkApi
 	}
 
 	FString* Hook_APlayerController_ConsoleCommand(APlayerController* a_player_controller, FString* result,
-	                                                      FString* cmd, bool write_to_log)
+	                                               FString* cmd, bool write_to_log)
 	{
 		Commands::Get().CheckConsoleCommands(a_player_controller, cmd, write_to_log);
 
@@ -83,7 +83,7 @@ namespace ArkApi
 	}
 
 	void Hook_RCONClientConnection_ProcessRCONPacket(RCONClientConnection* _this, RCONPacket* packet,
-	                                                        UWorld* in_world)
+	                                                 UWorld* in_world)
 	{
 		Commands::Get().CheckRconCommands(_this, packet, in_world);
 

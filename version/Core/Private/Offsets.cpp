@@ -23,13 +23,13 @@ namespace ArkApi
 		offsets_dump_.swap(offsets_dump);
 	}
 
-	DWORD64 Offsets::GetAddress(const void* base, const std::string& structure, const std::string& offset)
+	DWORD64 Offsets::GetAddress(const void* base, const std::string& name)
 	{
-		return reinterpret_cast<DWORD64>(base) + static_cast<DWORD64>(offsets_dump_[structure + "." + offset]);
+		return reinterpret_cast<DWORD64>(base) + static_cast<DWORD64>(offsets_dump_[name]);
 	}
-
-	LPVOID Offsets::GetAddress(const std::string& structure, const std::string& offset)
+	
+	LPVOID Offsets::GetAddress(const std::string& name)
 	{
-		return reinterpret_cast<LPVOID>(module_base_ + static_cast<DWORD64>(offsets_dump_[structure + "." + offset]));
+		return reinterpret_cast<LPVOID>(module_base_ + static_cast<DWORD64>(offsets_dump_[name]));
 	}
 }

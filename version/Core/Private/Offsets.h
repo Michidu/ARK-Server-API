@@ -17,8 +17,9 @@ namespace ArkApi
 
 		void Init(std::unordered_map<std::string, intptr_t>&& offsets_dump);
 
-		DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset);
-		LPVOID GetAddress(const std::string& structure, const std::string& offset);
+		DWORD64 GetAddress(const void* base, const std::string& name);
+		LPVOID GetAddress(const std::string& name);
+
 	private:
 		Offsets();
 

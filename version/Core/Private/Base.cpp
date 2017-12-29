@@ -1,14 +1,14 @@
 #include "../Public/API/Base.h"
 #include "Offsets.h"
 
-DWORD64 GetAddress(const void* base, const std::string& structure, const std::string& offset)
+DWORD64 GetAddress(const void* base, const std::string& name)
 {
-	return ArkApi::Offsets::Get().GetAddress(base, structure, offset);
+	return ArkApi::Offsets::Get().GetAddress(base, name);
 }
 
-LPVOID GetAddress(const std::string& structure, const std::string& offset)
+LPVOID GetAddress(const std::string& name)
 {
-	return ArkApi::Offsets::Get().GetAddress(structure, offset);
+	return ArkApi::Offsets::Get().GetAddress(name);
 }
 
 //BitField GetBitField(const void* base, const std::string& structure, const std::string& offset)

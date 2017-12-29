@@ -21,17 +21,16 @@ namespace ArkApi
 		return instance;
 	}
 
-	bool Hooks::SetHookInternal(const std::string& structure, const std::string& func_name, const LPVOID detour,
-	                            LPVOID* original)
+	bool Hooks::SetHookInternal(const std::string& func_name, const LPVOID detour, LPVOID* original)
 	{
-		const LPVOID target = Offsets::Get().GetAddress(structure, func_name);
+		const LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
-			LOG(ERROR) << func_name << " does not exist in " << structure;
+			LOG(ERROR) << func_name << " does not exist";
 			return false;
 		}
 
-		auto& hook_vector = all_hooks_[structure + "." + func_name];
+		auto& hook_vector = all_hooks_[func_name];
 
 		const LPVOID new_target = hook_vector.empty()
 			                          ? target
@@ -41,29 +40,29 @@ namespace ArkApi
 
 		if (MH_CreateHook(new_target, detour, original) != MH_OK)
 		{
-			LOG(ERROR) << "Failed to create hook for " << structure << "::" << func_name;
+			LOG(ERROR) << "Failed to create hook for " << func_name;
 			return false;
 		}
 
 		if (MH_EnableHook(new_target) != MH_OK)
 		{
-			LOG(ERROR) << "Failed to enable hook for " << structure << "::" << func_name;
+			LOG(ERROR) << "Failed to enable hook for " << func_name;
 			return false;
 		}
 
 		return true;
 	}
 
-	bool Hooks::DisableHook(const std::string& structure, const std::string& func_name, const LPVOID detour)
+	bool Hooks::DisableHook(const std::string& func_name, const LPVOID detour)
 	{
-		const LPVOID target = Offsets::Get().GetAddress(structure, func_name);
+		const LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
-			LOG(ERROR) << func_name << " does not exist in " << structure;
+			LOG(ERROR) << func_name << " does not exist";
 			return false;
 		}
 
-		auto& hook_vector = all_hooks_[structure + "." + func_name];
+		auto& hook_vector = all_hooks_[func_name];
 
 		auto iter = std::find_if(hook_vector.begin(), hook_vector.end(),
 		                         [detour](const std::shared_ptr<Hook>& hook) -> bool
@@ -82,7 +81,7 @@ namespace ArkApi
 		{
 			if (MH_RemoveHook(hook->target) != MH_OK)
 			{
-				LOG(ERROR) << "Failed to disable hook for " << structure << "::" << func_name;
+				LOG(ERROR) << "Failed to disable hook for " << func_name;
 				return false;
 			}
 		}
@@ -96,7 +95,7 @@ namespace ArkApi
 		// Enable all hooks again
 		for (const auto& hook : hook_vec)
 		{
-			SetHook(structure, func_name, hook->detour, hook->original);
+			SetHookInternal(func_name, hook->detour, hook->original);
 		}
 
 		return true;

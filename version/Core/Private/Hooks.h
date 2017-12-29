@@ -17,10 +17,9 @@ namespace ArkApi
 		Hooks& operator=(const Hooks&) = delete;
 		Hooks& operator=(Hooks&&) = delete;
 
-		bool SetHookInternal(const std::string& structure, const std::string& func_name, const LPVOID detour,
-		                     LPVOID* original) override;
+		bool SetHookInternal(const std::string& func_name, const LPVOID detour, LPVOID* original) override;
 
-		bool DisableHook(const std::string& structure, const std::string& func_name, const LPVOID detour) override;
+		bool DisableHook(const std::string& func_name, const LPVOID detour) override;
 
 	private:
 		struct Hook

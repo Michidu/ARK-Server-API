@@ -6,28 +6,28 @@
 #include "Base.h"
 
 template <typename RT, typename... ArgsTypes, typename... Args>
-RT NativeCall(void* _this, const std::string& structure, const std::string& func_name, Args&&... args)
+RT NativeCall(void* _this, const std::string& func_name, Args&&... args)
 {
-	return static_cast<RT(__fastcall*)(DWORD64, ArgsTypes ...)>(GetAddress(structure, func_name))(
+	return static_cast<RT(__fastcall*)(DWORD64, ArgsTypes ...)>(GetAddress(func_name))(
 		reinterpret_cast<DWORD64>(_this), std::forward<Args>(args)...);
 }
 
 template <typename RT, typename... ArgsTypes, typename... Args>
-RT NativeCall(nullptr_t, const std::string& structure, const std::string& funcName, Args&&... args)
+RT NativeCall(nullptr_t, const std::string& funcName, Args&&... args)
 {
-	return static_cast<RT(__fastcall*)(ArgsTypes ...)>(GetAddress(structure, funcName))(std::forward<Args>(args)...);
+	return static_cast<RT(__fastcall*)(ArgsTypes ...)>(GetAddress(funcName))(std::forward<Args>(args)...);
 }
 
 template <typename RT>
-RT GetNativeField(const void* _this, const std::string& structure, const std::string& field_name)
+RT GetNativeField(const void* _this, const std::string& field_name)
 {
-	return *reinterpret_cast<RT*>(GetAddress(_this, structure, field_name));
+	return *reinterpret_cast<RT*>(GetAddress(_this, field_name));
 }
 
 template <typename RT>
-RT GetNativePointerField(const void* _this, const std::string& structure, const std::string& field_name)
+RT GetNativePointerField(const void* _this, const std::string& field_name)
 {
-	return reinterpret_cast<RT>(GetAddress(_this, structure, field_name));
+	return reinterpret_cast<RT>(GetAddress(_this, field_name));
 }
 
 template <typename RT, typename T>
@@ -53,8 +53,8 @@ template <typename T>
 class FieldValue
 {
 public:
-	FieldValue(void* parent, const std::string& structure, const std::string& field_name)
-		: value_(GetNativePointerField<T*>(parent, structure, field_name))
+	FieldValue(void* parent, const std::string& field_name)
+		: value_(GetNativePointerField<T*>(parent, field_name))
 	{
 	}
 
@@ -87,8 +87,8 @@ template <typename T>
 class FieldPointer
 {
 public:
-	FieldPointer(void* parent, const std::string& structure, const std::string& field_name)
-		: value_(GetNativePointerField<T>(parent, structure, field_name))
+	FieldPointer(void* parent, const std::string& field_name)
+		: value_(GetNativePointerField<T>(parent, field_name))
 	{
 	}
 
@@ -107,8 +107,8 @@ template <typename T, size_t size>
 class FieldArray
 {
 public:
-	FieldArray(void* parent, const std::string& structure, const std::string& field_name)
-		: value_(GetNativePointerField<T*>(parent, structure, field_name))
+	FieldArray(void* parent, const std::string& field_name)
+		: value_(GetNativePointerField<T*>(parent, field_name))
 	{
 	}
 
