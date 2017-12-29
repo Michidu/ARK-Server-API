@@ -187,10 +187,8 @@ namespace ArkApi
 	void PdbReader::DumpType(IDiaSymbol* symbol, const std::string& structure, int indent) const
 	{
 		IDiaEnumSymbols* enum_children;
-		IDiaSymbol* symbol_type;
 		IDiaSymbol* symbol_child;
 		DWORD sym_tag;
-		DWORD sym_tag_type;
 		ULONG celt = 0;
 
 		if (indent > 5)
@@ -203,15 +201,6 @@ namespace ArkApi
 		{
 		case SymTagData:
 			DumpData(symbol, structure);
-
-			/*if (symbol->get_type(&symbol_type) == S_OK &&
-				symbol_type->get_symTag(&sym_tag_type) == S_OK &&
-				sym_tag_type == SymTagUDT)
-			{
-				DumpType(symbol_type, structure, indent + 2);
-			}*/
-
-			//symbol_type->Release();
 			break;
 		case SymTagEnum:
 		case SymTagUDT:

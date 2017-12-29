@@ -41,20 +41,20 @@ namespace ArkApi
 		/**
 		 * \brief Find and load all plugins
 		 */
-		void LoadAllPlugins();
+		void LoadAllPlugins() noexcept;
 
 		/**
 		 * \brief Load plugin by it's name
 		 * \param plugin_name File name of the plugin
 		 * \return Loaded plugin
 		 */
-		std::shared_ptr<Plugin>& LoadPlugin(const std::string& plugin_name);
+		std::shared_ptr<Plugin>& LoadPlugin(const std::string& plugin_name) noexcept(false);
 
 		/**
 		 * \brief Unload plugin by it's name. Plugin must free all used resources.
 		 * \param plugin_name File name of the plugin
 		 */
-		void UnloadPlugin(const std::string& plugin_name);
+		void UnloadPlugin(const std::string& plugin_name) noexcept(false);
 
 		/**
 		 * \brief Find plugin by it's name

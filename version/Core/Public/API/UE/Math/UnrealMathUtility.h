@@ -1,9 +1,7 @@
 #pragma once
 
-#include <winnt.h>
-
-#include "BasicTypes.h"
-#include "GenericPlatformMath.h"
+#include "../BasicTypes.h"
+#include "../GenericPlatform/GenericPlatformMath.h"
 
 
 //#define IMPLEMENT_ASSIGNMENT_OPERATOR_MANUALLY
@@ -594,56 +592,7 @@ struct FMath : FGenericPlatformMath
 		return ((L012 * ((T2 - T) * InvT2MinusT1)) + (L123 * ((T - T1) * InvT2MinusT1)));
 	}
 
-	/* Same as CubicCRSplineInterp but with additional saftey checks. If the checks fail P1 is returned. **/
-	template <class U>
-	static U CubicCRSplineInterpSafe(const U& P0, const U& P1, const U& P2, const U& P3, const float T0, const float T1,
-	                                 const float T2, const float T3, const float T)
-	{
-		//Based on http://www.cemyuksel.com/research/catmullrom_param/catmullrom.pdf 
-		float T1MinusT0 = T1 - T0;
-		float T2MinusT1 = T2 - T1;
-		float T3MinusT2 = T3 - T2;
-		float T2MinusT0 = T2 - T0;
-		float T3MinusT1 = T3 - T1;
-		if (FMath::IsNearlyZero(T1MinusT0) || FMath::IsNearlyZero(T2MinusT1) || FMath::IsNearlyZero(T3MinusT2) || FMath::
-			IsNearlyZero(T2MinusT0) || FMath::IsNearlyZero(T3MinusT1))
-		{
-			//There's going to be a divide by zero here so just bail out and return P1
-			return P1;
-		}
-
-		float InvT1MinusT0 = 1.0f / T1MinusT0;
-		U L01 = (P0 * ((T1 - T) * InvT1MinusT0)) + (P1 * ((T - T0) * InvT1MinusT0));
-		float InvT2MinusT1 = 1.0f / T2MinusT1;
-		U L12 = (P1 * ((T2 - T) * InvT2MinusT1)) + (P2 * ((T - T1) * InvT2MinusT1));
-		float InvT3MinusT2 = 1.0f / T3MinusT2;
-		U L23 = (P2 * ((T3 - T) * InvT3MinusT2)) + (P3 * ((T - T2) * InvT3MinusT2));
-
-		float InvT2MinusT0 = 1.0f / T2MinusT0;
-		U L012 = (L01 * ((T2 - T) * InvT2MinusT0)) + (L12 * ((T - T0) * InvT2MinusT0));
-		float InvT3MinusT1 = 1.0f / T3MinusT1;
-		U L123 = (L12 * ((T3 - T) * InvT3MinusT1)) + (L23 * ((T - T1) * InvT3MinusT1));
-
-		return ((L012 * ((T2 - T) * InvT2MinusT1)) + (L123 * ((T - T1) * InvT2MinusT1)));
-	}
-
 	// Geometry intersection 
-
-
-	/**
-	 * Find the intersection of a line and an offset plane. Assumes that the
-	 * line and plane do indeed intersect; you must make sure they're not
-	 * parallel before calling.
-	 *
-	 * @param Point1 the first point defining the line
-	 * @param Point2 the second point defining the line
-	 * @param PlaneOrigin the origin of the plane
-	 * @param PlaneNormal the normal of the plane
-	 *
-	 * @return The point of intersection between the line and the plane.
-	 */
-	static FVector LinePlaneIntersection(const FVector& Point1, const FVector& Point2, const FVector& PlaneOrigin,
-	                                     const FVector& PlaneNormal);
 
 	/**
 	* Converts a floating point number to an integer which is further from zero, "larger" in absolute value: 0.1 becomes 1, -0.1 becomes -1

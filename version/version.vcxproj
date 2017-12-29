@@ -42,24 +42,72 @@
     <ClInclude Include="Core\Public\API\Enums.h" />
     <ClInclude Include="Core\Public\API\Fields.h" />
     <ClInclude Include="Core\Public\API\UE\BasicTypes.h" />
-    <ClInclude Include="Core\Public\API\UE\Char.h" />
-    <ClInclude Include="Core\Public\API\UE\CString.h" />
-    <ClInclude Include="Core\Public\API\UE\FString.h" />
-    <ClInclude Include="Core\Public\API\UE\GenericPlatformMath.h" />
-    <ClInclude Include="Core\Public\API\UE\GenericPlatformString.h" />
-    <ClInclude Include="Core\Public\API\UE\Malloc.h" />
-    <ClInclude Include="Core\Public\API\UE\MicrosoftPlatformString.h" />
-    <ClInclude Include="Core\Public\API\UE\TArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\BinarySearch.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\Impl\BinaryHeap.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\IntroSort.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\Reverse.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\Sort.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\BitArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\ContainerAllocationPolicies.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\EnumAsByte.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\FString.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Map.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\ScriptArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Set.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\SparseArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\TArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Delegates\IntegerSequence.h" />
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformMath.h" />
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformMemory.h" />
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformString.h" />
+    <ClInclude Include="Core\Public\API\UE\HAL\UnrealMemory.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Color.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\ColorList.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\IntPoint.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\IntVector.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Quat.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Rotator.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\UnrealMathUtility.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Vector.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Vector2D.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\ByteSwap.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\Char.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\CString.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\StructBuilder.h" />
+    <ClInclude Include="Core\Public\API\UE\NetSerialization.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\AlignmentTemplates.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\AndOrNot.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\AreTypesEqual.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\ChooseClass.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Decay.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\EnableIf.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Function.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\HasGetTypeHash.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IdentityFunctor.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Invoke.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\IsArithmetic.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsContiguousContainer.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsEnum.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsEnumClass.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\IsPODType.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\IsPointer.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\IsTriviallyCopyAssignable.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsTriviallyCopyConstructible.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsTriviallyDestructible.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Less.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\MemoryOps.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\PointerIsConvertibleFromTo.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\RemoveCV.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\RemoveReference.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\ReversePredicate.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Sorting.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Tuple.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\TypeCompatibleBytes.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\TypeHash.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\UnrealTemplate.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\UnrealTypeTraits.h" />
     <ClInclude Include="Core\Public\API\UE\UE.h" />
-    <ClInclude Include="Core\Public\API\UE\UnrealMathUtility.h" />
-    <ClInclude Include="Core\Public\API\UE\Vectors.h" />
+    <ClInclude Include="Core\Public\API\UE\Windows\MicrosoftPlatformString.h" />
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
@@ -145,7 +193,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
-    <IncludePath>F:\Programs\Ark\ArkProxyDll\version\Core\Public;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\DIA SDK\include;$(IncludePath)</IncludePath>
+    <IncludePath>F:\Programs\Ark\ARK-Server-Beyond-API-2.0\version\Core\Public;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\DIA SDK\include;$(IncludePath)</IncludePath>
     <LibraryPath>F:\Projects\lib;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\DIA SDK\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

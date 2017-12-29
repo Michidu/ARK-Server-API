@@ -139,10 +139,10 @@ struct UStaticMesh;
 
 struct BitField
 {
-	DWORD64 offset;
-	unsigned int bit_position;
-	unsigned int num_bits;
-	unsigned int length; //in bytes
+	LONG offset;
+	DWORD bit_position;
+	ULONGLONG num_bits;
+	ULONGLONG length; //in bytes
 };
 
 // Address helpers

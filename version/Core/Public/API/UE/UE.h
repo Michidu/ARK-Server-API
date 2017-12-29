@@ -3,8 +3,9 @@
 #include <comdef.h>
 #include <xmmintrin.h>
 
-#include "TArray.h"
-#include "FString.h"
+#include "Containers/TArray.h"
+#include "Containers/FString.h"
+#include "Containers/EnumAsByte.h"
 #include "API/Fields.h"
 #include "API/Enums.h"
 
@@ -44,44 +45,6 @@ struct FTransform
 	__m128 Scale3D;
 };
 
-template <class TEnum>
-class TEnumAsByte
-{
-public:
-	TEnumAsByte()
-		: value_(0)
-	{
-	}
-
-	TEnumAsByte(TEnum _value)
-		: value_(static_cast<uint8_t>(_value))
-	{
-	}
-
-	explicit TEnumAsByte(int32_t _value)
-		: value_(static_cast<uint8_t>(_value))
-	{
-	}
-
-	explicit TEnumAsByte(uint8_t _value)
-		: value_(_value)
-	{
-	}
-
-	operator TEnum() const
-	{
-		return static_cast<TEnum>(value_);
-	}
-
-	TEnum GetValue() const
-	{
-		return static_cast<TEnum>(value_);
-	}
-
-private:
-	uint8_t value_;
-};
-
 struct FBoxSphereBounds
 {
 };
@@ -101,35 +64,6 @@ struct UFunction
 struct FBox
 {
 };
-
-struct FLinearColor
-{
-	constexpr FLinearColor()
-		: R(0), G(0), B(0), A(0)
-	{
-	}
-
-	constexpr FLinearColor(float InR, float InG, float InB, float InA = 1.0f) : R(InR), G(InG), B(InB), A(InA)
-	{
-	}
-
-	float R,
-	      G,
-	      B,
-	      A;
-};
-
-namespace Colors
-{
-	constexpr FLinearColor White(1.f, 1.f, 1.f);
-	constexpr FLinearColor Gray(0.5f, 0.5f, 0.5f);
-	constexpr FLinearColor Black(0, 0, 0);
-	constexpr FLinearColor Transparent(0, 0, 0, 0);
-	constexpr FLinearColor Red(1.f, 0, 0);
-	constexpr FLinearColor Green(0, 1.f, 0);
-	constexpr FLinearColor Blue(0, 0, 1.f);
-	constexpr FLinearColor Yellow(1.f, 1.f, 0);
-}
 
 template <typename ObjectType>
 struct TSharedPtr
@@ -200,23 +134,6 @@ struct FText
 	static void GetEmpty() { NativeCall<void>(nullptr, "FText", "GetEmpty"); }
 };
 
-struct FColor
-{
-	union
-	{
-		struct
-		{
-			unsigned __int8 B, G, R, A;
-		};
-
-		unsigned __int32 AlignmentDummy;
-	};
-};
-
-struct FIntVector
-{
-};
-
 struct FDateTime
 {
 };
@@ -227,17 +144,17 @@ struct TWeakObjectPtr
 	int ObjectIndex;
 	int ObjectSerialNumber;
 
-	FORCEINLINE T& operator*() const
+	FORCEINLINE T& operator*()
 	{
 		return *Get();
 	}
 
-	FORCEINLINE T* operator->() const
+	FORCEINLINE T* operator->()
 	{
 		return Get();
 	}
 
-	T* Get(bool bEvenIfPendingKill = false) const
+	T* Get(bool bEvenIfPendingKill = false)
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr", "Get", bEvenIfPendingKill);
 	}
@@ -249,6 +166,16 @@ using TAutoWeakObjectPtr = TWeakObjectPtr<T>;
 template <typename T>
 struct TSubclassOf
 {
+	TSubclassOf()
+		: uClass(nullptr)
+	{
+	}
+
+	TSubclassOf(UClass* uClass)
+		: uClass(uClass)
+	{
+	}
+
 	UClass* uClass;
 };
 

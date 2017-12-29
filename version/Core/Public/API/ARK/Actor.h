@@ -44,6 +44,43 @@ struct FUniqueNetIdRepl
 	TSharedPtr<FUniqueNetId> UniqueNetId;
 };
 
+struct FActorSpawnParameters
+{
+	FActorSpawnParameters::FActorSpawnParameters()
+		: Name()
+		  , Template(NULL)
+		  , Owner(NULL)
+		  , Instigator(NULL)
+		  , OverrideLevel(NULL)
+		  , bNoCollisionFail(0)
+		  , bRemoteOwned(false)
+		  , bNoFail(false)
+		  , bDeferConstruction(false)
+		  , bAllowDuringConstructionScript(false)
+		  , bDeferBeginPlay(0)
+		  , ExtraSpawnData(0)
+		  , ObjectFlags(EObjectFlags::RF_Transactional)
+	      , AttachToComponent(nullptr)
+	{
+	}
+
+	FName Name;
+	AActor *Template;
+	AActor *Owner;
+	APawn *Instigator;
+	ULevel *OverrideLevel;
+	unsigned __int32 bNoCollisionFail : 1;
+	unsigned __int32 bRemoteOwned : 1;
+	unsigned __int32 bNoFail : 1;
+	unsigned __int32 bDeferConstruction : 1;
+	unsigned __int32 bAllowDuringConstructionScript : 1;
+	unsigned __int32 bDeferBeginPlay : 1;
+	int ExtraSpawnData;
+	EObjectFlags ObjectFlags;
+	USceneComponent *AttachToComponent;
+	FName AttachToBoneName;
+};
+
 struct USceneComponent
 {
 	FieldValue<FTransform> ComponentToWorldField() { return { this, "USceneComponent", "ComponentToWorld" }; }

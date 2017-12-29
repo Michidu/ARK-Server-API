@@ -147,7 +147,7 @@ struct AShooterGameState : AGameState
 	FieldValue<TArray<int>> PreventOfflinePvPLiveTeamsField() { return { this, "AShooterGameState", "PreventOfflinePvPLiveTeams" }; }
 	FieldValue<TArray<int>> PreventOfflinePvPExpiringTeamsField() { return { this, "AShooterGameState", "PreventOfflinePvPExpiringTeams" }; }
 	FieldValue<TArray<double>> PreventOfflinePvPExpiringTimesField() { return { this, "AShooterGameState", "PreventOfflinePvPExpiringTimes" }; }
-	//FieldValue<TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >> PreventOfflinePvPLiveTimesField() { return { this, "AShooterGameState", "PreventOfflinePvPLiveTimes" }; }
+	FieldValue<TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >> PreventOfflinePvPLiveTimesField() { return { this, "AShooterGameState", "PreventOfflinePvPLiveTimes" }; }
 	FieldValue<bool> bAllowAnyoneBabyImprintCuddleField() { return { this, "AShooterGameState", "bAllowAnyoneBabyImprintCuddle" }; }
 	FieldValue<bool> bDisableImprintDinoBuffField() { return { this, "AShooterGameState", "bDisableImprintDinoBuff" }; }
 	FieldValue<int> MaxPersonalTamedDinosField() { return { this, "AShooterGameState", "MaxPersonalTamedDinos" }; }

@@ -22,7 +22,7 @@ namespace ArkApi
 		virtual AShooterGameMode* GetShooterGameMode() const = 0;
 
 		/**
-		* \brief Sends 'server' message to the specific player. Using sprintf formatting.
+		* \brief Sends server message to the specific player. Using sprintf formatting.
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
 		* \param player_controller Player
@@ -67,6 +67,115 @@ namespace ArkApi
 		}
 
 		/**
+		 * \brief Sends chat message to the specific player. Using sprintf formatting.
+		 * \tparam T Either a a char or wchar_t
+		 * \tparam Args Optional arguments types
+		 * \param player_controller Player
+		 * \param sender_name Name of the sender
+		 * \param msg Message
+		 * \param args Optional arguments
+		 */
+		template <typename T, typename... Args>
+		void SendChatMessage(AShooterPlayerController* player_controller, const FString& sender_name, const T* msg,
+		                     Args&&... args)
+		{
+			if constexpr (!TIsCharType<T>::Value)
+				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
+
+			const FString text(FormatText(msg, std::forward<Args>(args)...));
+
+			FChatMessage chat_message = FChatMessage();
+			chat_message.SenderName = sender_name;
+			chat_message.Message = text;
+
+			player_controller->ClientChatMessage(chat_message);
+		}
+
+		/**
+		* \brief Sends server message to all players. Using sprintf formatting.
+		* \tparam T Either a a char or wchar_t
+		* \tparam Args Optional arguments types
+		* \param msg_color Message color
+		* \param msg Message
+		* \param args Optional arguments
+		*/
+		template <typename T, typename... Args>
+		void SendServerMessageToAll(FLinearColor msg_color, const T* msg,
+		                            Args&&... args)
+		{
+			if constexpr (!TIsCharType<T>::Value)
+				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
+
+			FString text = FormatText(msg, std::forward<Args>(args)...);
+
+			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+			{
+				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
+
+				shooter_pc->ClientServerChatDirectMessage(&text, msg_color, false);
+			}
+		}
+
+		/**
+		* \brief Sends notification (on-screen message) to all players. Using sprintf formatting.
+		* \tparam T Either a a char or wchar_t
+		* \tparam Args Optional arguments types
+		* \param color Message color
+		* \param display_scale Size of text
+		* \param display_time Display time
+		* \param icon Message icon (optional)
+		* \param msg Message
+		* \param args Optional arguments
+		*/
+		template <typename T, typename... Args>
+		void SendNotificationToAll(FLinearColor color, float display_scale,
+		                           float display_time, UTexture2D* icon, const T* msg, Args&&... args)
+		{
+			if constexpr (!TIsCharType<T>::Value)
+				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
+
+			FString text = FormatText(msg, std::forward<Args>(args)...);
+
+			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+			{
+				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
+
+				shooter_pc->ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon, nullptr);
+			}
+		}
+
+		/**
+		* \brief Sends chat message to all players. Using sprintf formatting.
+		* \tparam T Either a a char or wchar_t
+		* \tparam Args Optional arguments types
+		* \param sender_name Name of the sender
+		* \param msg Message
+		* \param args Optional arguments
+		*/
+		template <typename T, typename... Args>
+		void SendChatMessageToAll(const FString& sender_name, const T* msg, Args&&... args)
+		{
+			if constexpr (!TIsCharType<T>::Value)
+				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
+
+			const FString text(FormatText(msg, std::forward<Args>(args)...));
+
+			FChatMessage chat_message = FChatMessage();
+			chat_message.SenderName = sender_name;
+			chat_message.Message = text;
+
+			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+			{
+				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
+
+				shooter_pc->ClientChatMessage(chat_message);
+			}
+		}
+
+		/**
 		* \brief Formats text using sprintf
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
@@ -89,6 +198,139 @@ namespace ArkApi
 			return FString(buffer.get());
 		}
 
+		/**
+		 * \brief Receives Steam ID from player controller
+		 * \param controller Player controller
+		 * \return Steam ID
+		 */
+		static __int64 GetSteamIdFromController(AController* controller)
+		{
+			__int64 steam_id = 0;
+
+			APlayerState* player_state = controller->PlayerStateField()();
+			if (player_state)
+			{
+				steam_id = player_state->UniqueIdField()().UniqueNetId->UniqueNetId;
+			}
+
+			return steam_id;
+		}
+
+		AShooterPlayerController* FindPlayerFromSteamName(const FString& steam_name) const
+		{
+			AShooterPlayerController* result = nullptr;
+
+			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+			{
+				const FString current_name = player_controller->PlayerStateField()()->PlayerNameField()();
+				if (current_name == steam_name)
+				{
+					AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
+
+					result = shooter_pc;
+					break;
+				}
+			}
+
+			return result;
+		}
+
+		AShooterPlayerController* FindPlayerFromSteamId(__int64 steam_id) const
+		{
+			AShooterPlayerController* result = nullptr;
+
+			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+			{
+				APlayerState* player_state = player_controller->PlayerStateField()();
+				const __int64 current_steam_id = player_state->UniqueIdField()().UniqueNetId->UniqueNetId;
+
+				if (current_steam_id == steam_id)
+				{
+					AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
+
+					result = shooter_pc;
+					break;
+				}
+			}
+
+			return result;
+		}
+
+		/*bool SpawnDrop(const wchar_t* blueprint, FVector pos, int amount, float item_quality = 0.0f,
+		               bool force_blueprint = false, float life_span = 0.0f) const
+		{
+			UObject* object = Globals::StaticLoadObject(UObject::StaticClass(), nullptr, blueprint, nullptr, 0, 0, true);
+
+			TSubclassOf<UPrimalItem> archetype;// (reinterpret_cast<UClass*>(object));
+			archetype.uClass = reinterpret_cast<UClass*>(object);
+			TSubclassOf<ADroppedItem> archetype_dropped;
+			archetype_dropped.uClass = reinterpret_cast<UClass*>(object);
+
+			APlayerController* player = GetWorld()->GetFirstPlayerController();
+			if (player)
+			{
+				FVector pos2{1, 1, 1};
+				FRotator rot{0, 0, 0};
+
+
+				UPrimalInventoryComponent::StaticDropNewItem(player, archetype, item_quality, false, amount, force_blueprint,
+				                                             archetype_dropped, &rot,
+				                                             true, &pos2, &rot, true, false, false, true, nullptr, pos2,
+					nullptr, life_span);
+
+				return true;
+			}
+
+			return false;
+		}*/
+
+		/**
+		 * \brief Spawns a dino near player or at specific coordinates
+		 * \param player Player. If null, random player will be chosen. At least one player should be on the map
+		 * \param blueprint Blueprint path
+		 * \param location Spawn position. If null, dino will be spawned near player
+		 * \param lvl Level of the dino
+		 * \param force_tame Force tame
+		 * \return Spawned dino or null
+		 */
+		APrimalDinoCharacter* SpawnDino(AShooterPlayerController* player, FString blueprint, FVector* location, int lvl,
+		                      bool force_tame) const
+		{
+			if (!player)
+			{
+				player = static_cast<AShooterPlayerController*>(GetWorld()->GetFirstPlayerController());
+				if (!player)
+					return nullptr;
+			}
+
+			AActor* actor = player->SpawnActor(&blueprint, 100, 0, 0, true);
+			if (actor && actor->IsA(APrimalDinoCharacter::GetPrivateStaticClass()))
+			{
+				APrimalDinoCharacter* dino = static_cast<APrimalDinoCharacter*>(actor);
+
+				dino->AbsoluteBaseLevelField() = lvl;
+
+				if (location && !location->IsZero())
+				{
+					FRotator rotation{0, 0, 0};
+					dino->TeleportTo(location, &rotation, true, false);
+				}
+
+				if (force_tame)
+				{
+					dino->TameDino(player, true, player->TargetingTeamField()());
+				}
+
+				dino->BeginPlay();
+
+				return dino;
+			}
+
+			return nullptr;
+		}
+
 	private:
 		template <typename T, typename... Args>
 		size_t CountTextSize(const T* msg, Args&&... args)
@@ -96,11 +338,11 @@ namespace ArkApi
 			size_t size = 0;
 
 			if constexpr (std::is_same<T, wchar_t>::value)
-				size = swprintf_s(nullptr, 0, msg, std::forward<Args>(args)...) + 1;
+				size = _snwprintf(nullptr, 0, msg, std::forward<Args>(args)...);
 			else if constexpr (std::is_same<T, char>::value)
-				size = snprintf(nullptr, 0, msg, std::forward<Args>(args)...) + 1;
+				size = snprintf(nullptr, 0, msg, std::forward<Args>(args)...);
 
-			return size;
+			return size + 1;
 		}
 	};
 

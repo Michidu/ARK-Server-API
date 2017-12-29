@@ -2,7 +2,7 @@
 
 #include <tchar.h>
 
-#include "GenericPlatformString.h"
+#include "../GenericPlatform/GenericPlatformString.h"
 
 /**
 * Microsoft specific implementation 

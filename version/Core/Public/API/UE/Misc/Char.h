@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BasicTypes.h"
+#include "../BasicTypes.h"
 
 #include <ctype.h>
 #include <wctype.h>

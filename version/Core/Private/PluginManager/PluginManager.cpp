@@ -23,7 +23,7 @@ namespace ArkApi
 		return instance;
 	}
 
-	void PluginManager::LoadAllPlugins()
+	void PluginManager::LoadAllPlugins() noexcept
 	{
 		namespace fs = std::experimental::filesystem;
 
@@ -50,7 +50,7 @@ namespace ArkApi
 		LOG(INFO) << "Loaded all plugins" << std::endl;
 	}
 
-	std::shared_ptr<Plugin>& PluginManager::LoadPlugin(const std::string& plugin_name)
+	std::shared_ptr<Plugin>& PluginManager::LoadPlugin(const std::string& plugin_name) noexcept(false)
 	{
 		namespace fs = std::experimental::filesystem;
 
@@ -75,7 +75,7 @@ namespace ArkApi
 		                                                             plugin_info["Description"], plugin_info["Version"]));
 	}
 
-	void PluginManager::UnloadPlugin(const std::string& plugin_name)
+	void PluginManager::UnloadPlugin(const std::string& plugin_name) noexcept(false)
 	{
 		namespace fs = std::experimental::filesystem;
 

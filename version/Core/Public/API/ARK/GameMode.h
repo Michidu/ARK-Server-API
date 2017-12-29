@@ -3,6 +3,8 @@
 #include "API/UE/UE.h"
 #include "API/Enums.h"
 
+#include "API/UE/Containers/Map.h"
+
 class UWorld
 {
 public:
@@ -271,7 +273,7 @@ struct AShooterGameMode : AGameMode
 	FieldValue<FString> AlarmNotificationKeyField() { return { this, "AShooterGameMode", "AlarmNotificationKey" }; }
 	FieldValue<FString> AlarmNotificationURLField() { return { this, "AShooterGameMode", "AlarmNotificationURL" }; }
 	FieldValue<FString> BanFileNameField() { return { this, "AShooterGameMode", "BanFileName" }; }
-	//FieldValue<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >> BannedMapField() { return { this, "AShooterGameMode", "BannedMap" }; }
+	FieldValue<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >> BannedMapField() { return { this, "AShooterGameMode", "BannedMap" }; }
 	FieldValue<long double> LastTimeCheckedForSaveBackupField() { return { this, "AShooterGameMode", "LastTimeCheckedForSaveBackup" }; }
 	FieldValue<int> LastDayOfYearBackedUpField() { return { this, "AShooterGameMode", "LastDayOfYearBackedUp" }; }
 	FieldValue<long double> TimeLastStartedDoingRemoteBackupField() { return { this, "AShooterGameMode", "TimeLastStartedDoingRemoteBackup" }; }
@@ -284,9 +286,9 @@ struct AShooterGameMode : AGameMode
 	FieldValue<TArray<FUniqueNetIdUInt64>> PlayersExclusiveListField() { return { this, "AShooterGameMode", "PlayersExclusiveList" }; }
 	FieldValue<void *> GameBackupPipeReadField() { return { this, "AShooterGameMode", "GameBackupPipeRead" }; }
 	FieldValue<void *> GameBackupPipeWriteField() { return { this, "AShooterGameMode", "GameBackupPipeWrite" }; }
-	//FieldValue<TSet<unsigned int, DefaultKeyFuncs<unsigned int, 0>, FDefaultSetAllocator>> TribesIdsField() { return { this, "AShooterGameMode", "TribesIds" }; }
-	//FieldValue<TMap<int, unsigned __int64, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, unsigned __int64, 0> >> PlayersIdsField() { return { this, "AShooterGameMode", "PlayersIds" }; }
-	//FieldValue<TMap<unsigned __int64, int, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned __int64, int, 0> >> SteamIdsField() { return { this, "AShooterGameMode", "SteamIds" }; }
+	FieldValue<TSet<unsigned int, DefaultKeyFuncs<unsigned int, 0>, FDefaultSetAllocator>> TribesIdsField() { return { this, "AShooterGameMode", "TribesIds" }; }
+	FieldValue<TMap<int, unsigned __int64, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, unsigned __int64, 0> >> PlayersIdsField() { return { this, "AShooterGameMode", "PlayersIds" }; }
+	FieldValue<TMap<unsigned __int64, int, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned __int64, int, 0> >> SteamIdsField() { return { this, "AShooterGameMode", "SteamIds" }; }
 	FieldValue<FString> LaunchOptionsField() { return { this, "AShooterGameMode", "LaunchOptions" }; }
 	FieldValue<TArray<FTribeData>> TribesDataField() { return { this, "AShooterGameMode", "TribesData" }; }
 	FieldValue<FString> PGMapNameField() { return { this, "AShooterGameMode", "PGMapName" }; }
@@ -507,9 +509,9 @@ struct AShooterGameMode : AGameMode
 	FieldValue<long double> LastBonusSupplyCrateItemGiveTimeField() { return { this, "AShooterGameMode", "LastBonusSupplyCrateItemGiveTime" }; }
 	FieldValue<bool> bEnableDeathTeamSpectatorField() { return { this, "AShooterGameMode", "bEnableDeathTeamSpectator" }; }
 	FieldValue<bool> bTribeStoreCharacterConfigurationField() { return { this, "AShooterGameMode", "bTribeStoreCharacterConfiguration" }; }
-	//FieldValue<TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0> >> PvEActiveTribeWarsField() { return { this, "AShooterGameMode", "PvEActiveTribeWars" }; }
-	//FieldValue<TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0> >> TribeAlliesField() { return { this, "AShooterGameMode", "TribeAllies" }; }
-	//FieldValue<TMap<unsigned __int64, UPrimalPlayerData *, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned __int64, UPrimalPlayerData *, 0> >> IDtoPlayerDatasField() { return { this, "AShooterGameMode", "IDtoPlayerDatas" }; }
+	FieldValue<TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0> >> PvEActiveTribeWarsField() { return { this, "AShooterGameMode", "PvEActiveTribeWars" }; }
+	FieldValue<TMap<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, TSet<int, DefaultKeyFuncs<int, 0>, FDefaultSetAllocator>, 0> >> TribeAlliesField() { return { this, "AShooterGameMode", "TribeAllies" }; }
+	FieldValue<TMap<unsigned __int64, UPrimalPlayerData *, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned __int64, UPrimalPlayerData *, 0> >> IDtoPlayerDatasField() { return { this, "AShooterGameMode", "IDtoPlayerDatas" }; }
 	FieldValue<int> MaxTribeLogsField() { return { this, "AShooterGameMode", "MaxTribeLogs" }; }
 	FieldValue<int> MaxPersonalTamedDinosField() { return { this, "AShooterGameMode", "MaxPersonalTamedDinos" }; }
 	FieldValue<int> PersonalTamedDinosSaddleStructureCostField() { return { this, "AShooterGameMode", "PersonalTamedDinosSaddleStructureCost" }; }
@@ -883,7 +885,7 @@ struct UPrimalGameData : UObject
 	FieldValue<UTexture2D *> NameTagTribeAdminField() { return { this, "UPrimalGameData", "NameTagTribeAdmin" }; }
 	FieldValue<TArray<UTexture2D *>> BadgeGroupsNameTagField() { return { this, "UPrimalGameData", "BadgeGroupsNameTag" }; }
 	FieldValue<TArray<FString>> AchievementIDsField() { return { this, "UPrimalGameData", "AchievementIDs" }; }
-	//FieldValue<TSet<FString, DefaultKeyFuncs<FString, 0>, FDefaultSetAllocator>> AchievementIDSetField() { return { this, "UPrimalGameData", "AchievementIDSet" }; }
+	FieldValue<TSet<FString, DefaultKeyFuncs<FString, 0>, FDefaultSetAllocator>> AchievementIDSetField() { return { this, "UPrimalGameData", "AchievementIDSet" }; }
 	FieldValue<TArray<float>> AdditionalEggWeightsToSpawnField() { return { this, "UPrimalGameData", "AdditionalEggWeightsToSpawn" }; }
 	FieldValue<TArray<TSubclassOf<UPrimalItem>>> AdditionalEggItemsToSpawnField() { return { this, "UPrimalGameData", "AdditionalEggItemsToSpawn" }; }
 	FieldValue<TArray<float>> FertilizedAdditionalEggWeightsToSpawnField() { return { this, "UPrimalGameData", "FertilizedAdditionalEggWeightsToSpawn" }; }

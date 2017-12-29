@@ -27,7 +27,7 @@ struct FTribeData
 	int LogIndex;
 	TArray<FTribeRankGroup> TribeRankGroups;
 	int NumTribeDinos;
-	char unk[50];//TSet<unsigned __int64, DefaultKeyFuncs<unsigned __int64, 0>, FDefaultSetAllocator> MembersPlayerDataIDSet_Server;
+	TSet<uint64> MembersPlayerDataIDSet_Server;
 
 	// Functions
 

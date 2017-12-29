@@ -3,6 +3,8 @@
 #include <Windows.h>
 #include <string>
 
+#include "Base.h"
+
 template <typename RT, typename... ArgsTypes, typename... Args>
 RT NativeCall(void* _this, const std::string& structure, const std::string& func_name, Args&&... args)
 {
@@ -65,6 +67,16 @@ public:
 	{
 		*value_ = other;
 		return *value_;
+	}
+
+	T& Get() const
+	{
+		return *value_;
+	}
+
+	void Set(const T& other)
+	{
+		*value_ = other;
 	}
 
 private:

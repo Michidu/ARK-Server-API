@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Char.h"
-#include "MicrosoftPlatformString.h"
+#include "../Windows/MicrosoftPlatformString.h"
 
 #define MAX_SPRINTF 1024
 
@@ -360,7 +360,6 @@ const typename TCString<T>::CharType* TCString<T>::Spc(int32 NumSpaces)
 template <typename T>
 const typename TCString<T>::CharType* TCString<T>::Tab(int32 NumTabs)
 {
-	check(NumTabs >= 0 && NumTabs <= TCStringSpcHelper<T>::MAX_TABS);
 	return TCStringSpcHelper<T>::TabArray + TCStringSpcHelper<T>::MAX_TABS - NumTabs;
 }
 

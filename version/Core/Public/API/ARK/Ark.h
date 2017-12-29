@@ -2,7 +2,9 @@
 
 #include "../Base.h"
 
-#include "../UE/Vectors.h"
+#include "../UE/Math/Vector.h"
+#include "../UE/Math/Rotator.h"
+#include "../UE/NetSerialization.h"
 #include "../Enums.h"
 #include "../UE/UE.h"
 #include "Inventory.h"
