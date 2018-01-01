@@ -2,6 +2,15 @@
 
 struct FTribeGovernment
 {
+	FTribeGovernment()
+	{
+		TribeGovern_PINCode = 0;
+		TribeGovern_DinoOwnership = 0;
+		TribeGovern_StructureOwnership = 0;
+		TribeGovern_DinoTaming = 0;
+		TribeGovern_DinoUnclaimAdminOnly = 0;
+	}
+
 	int TribeGovern_PINCode;
 	int TribeGovern_DinoOwnership;
 	int TribeGovern_StructureOwnership;
@@ -11,6 +20,15 @@ struct FTribeGovernment
 
 struct FTribeData
 {
+	FTribeData()
+	{
+		OwnerPlayerDataID = 0;
+		TribeID = 0;
+		bSetGovernment = false;
+		LogIndex = 0;
+		NumTribeDinos = 0;
+	}
+
 	FString TribeName;
 	unsigned int OwnerPlayerDataID;
 	int TribeID;

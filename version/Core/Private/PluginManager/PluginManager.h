@@ -12,12 +12,13 @@ namespace ArkApi
 	struct Plugin
 	{
 		Plugin(const HINSTANCE h_module, const std::string& name, const std::string& full_name,
-		       const std::string& description, const std::string& version)
+		       const std::string& description, float version, float min_api_version)
 			: h_module(h_module),
 			  name(name),
 			  full_name(full_name),
 			  description(description),
-			  version(version)
+			  version(version),
+			  min_api_version(min_api_version)
 		{
 		}
 
@@ -25,7 +26,8 @@ namespace ArkApi
 		std::string name;
 		std::string full_name;
 		std::string description;
-		std::string version;
+		float version;
+		float min_api_version;
 	};
 
 	class PluginManager

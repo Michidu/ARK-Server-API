@@ -5,7 +5,7 @@
 
 #include "API/UE/Containers/Map.h"
 
-class UWorld
+class UWorld : UObject
 {
 public:
 	FieldValue<TArray<TSubclassOf<AActor>>> ActorsClassesAllowedToSaveField() { return { this, "UWorld.ActorsClassesAllowedToSave" }; }

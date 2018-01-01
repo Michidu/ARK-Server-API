@@ -203,19 +203,25 @@ namespace ArkApi
 		 * \param controller Player controller
 		 * \return Steam ID
 		 */
-		static __int64 GetSteamIdFromController(AController* controller)
+		static uint64 GetSteamIdFromController(AController* controller)
 		{
-			__int64 steam_id = 0;
+			uint64 steam_id = 0;
 
 			APlayerState* player_state = controller->PlayerStateField()();
 			if (player_state)
 			{
-				steam_id = player_state->UniqueIdField()().UniqueNetId->UniqueNetId;
+				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object);
+				steam_id = steam_net_id->UniqueNetId;
 			}
 
 			return steam_id;
 		}
 
+		/**
+		 * \brief Receives player from steam name
+		 * \param steam_name Steam name
+		 * \return Pointer to AShooterPlayerController
+		 */
 		AShooterPlayerController* FindPlayerFromSteamName(const FString& steam_name) const
 		{
 			AShooterPlayerController* result = nullptr;
@@ -236,7 +242,12 @@ namespace ArkApi
 			return result;
 		}
 
-		AShooterPlayerController* FindPlayerFromSteamId(__int64 steam_id) const
+		/**
+		 * \brief Receives player from steam id
+		 * \param steam_id Steam id
+		 * \return Pointer to AShooterPlayerController
+		 */
+		AShooterPlayerController* FindPlayerFromSteamId(uint64 steam_id) const
 		{
 			AShooterPlayerController* result = nullptr;
 
@@ -244,7 +255,9 @@ namespace ArkApi
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				APlayerState* player_state = player_controller->PlayerStateField()();
-				const __int64 current_steam_id = player_state->UniqueIdField()().UniqueNetId->UniqueNetId;
+
+				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object);
+				const uint64 current_steam_id = steam_net_id->UniqueNetId;
 
 				if (current_steam_id == steam_id)
 				{

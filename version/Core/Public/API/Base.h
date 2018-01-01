@@ -9,6 +9,8 @@
 #define ARK_API __declspec(dllimport)
 #endif
 
+#define API_VERSION "2.0"
+
 // Structs forward declaration
 
 struct AShooterPlayerController;

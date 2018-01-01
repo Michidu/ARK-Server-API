@@ -38,8 +38,11 @@ namespace ArkApi
 			{
 				std::shared_ptr<Plugin>& plugin = LoadPlugin(filename.generic_string());
 
-				LOG(INFO) << "Loaded plugin - " << (plugin->full_name == "" ? plugin->name : plugin->full_name) << " V" << plugin->
-					version << " (" << plugin->description << ")";
+				std::stringstream stream;
+				stream << "Loaded plugin - " << (plugin->full_name == "" ? plugin->name : plugin->full_name) << " V" << std::fixed
+					<< std::setprecision(1) << plugin->version << " (" << plugin->description << ")";
+
+				LOG(INFO) << stream.str();
 			}
 			catch (const std::runtime_error& error)
 			{
@@ -64,15 +67,21 @@ namespace ArkApi
 		if (iter != loaded_plugins_.end())
 			throw std::runtime_error("Plugin " + plugin_name + " was already loaded");
 
+		auto plugin_info = ReadPluginInfo(plugin_name);
+
+		// Check version		
+		const float required_version = static_cast<float>(plugin_info["MinApiVersion"]);
+		if (required_version != .0f && std::stof(API_VERSION) < required_version)
+			throw std::runtime_error("Plugin " + plugin_name + " requires newer API version!");
+
 		const HINSTANCE h_module = LoadLibraryExA(full_path.c_str(), nullptr, LOAD_LIBRARY_SEARCH_USER_DIRS);
 		if (!h_module)
 			throw std::runtime_error(
 				"Failed to load plugin - " + plugin_name + "\nError code: " + std::to_string(GetLastError()));
 
-		auto plugin_info = ReadPluginInfo(plugin_name);
-
 		return loaded_plugins_.emplace_back(std::make_shared<Plugin>(h_module, plugin_name, plugin_info["FullName"],
-		                                                             plugin_info["Description"], plugin_info["Version"]));
+		                                                             plugin_info["Description"], plugin_info["Version"],
+		                                                             plugin_info["MinApiVersion"]));
 	}
 
 	void PluginManager::UnloadPlugin(const std::string& plugin_name) noexcept(false)
@@ -102,8 +111,9 @@ namespace ArkApi
 		nlohmann::json plugin_info;
 
 		plugin_info["FullName"] = "";
-		plugin_info["Description"] = "";
-		plugin_info["Version"] = "1.0";
+		plugin_info["Description"] = "No description";
+		plugin_info["Version"] = 1.0f;
+		plugin_info["MinApiVersion"] = .0f;
 
 		const std::string dir_path = Tools::GetCurrentDir() + "/ArkApi/Plugins/" + plugin_name;
 		const std::string config_path = dir_path + "/PluginInfo.json";

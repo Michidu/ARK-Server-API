@@ -179,7 +179,17 @@ struct TSubclassOf
 	UClass* uClass;
 };
 
-struct FUniqueNetId
+struct IOnlinePlatformData
+{
+	void *vfptr;
+};
+
+struct FUniqueNetId : IOnlinePlatformData
+{
+
+};
+
+struct FUniqueNetIdSteam : FUniqueNetId
 {
 	unsigned __int64 UniqueNetId;
 

@@ -56,7 +56,7 @@ void Init()
 	ConfigureLogger();
 
 	LOG(INFO) << "-----------------------------------------------";
-	LOG(INFO) << "ARK Beyond Api V2.0" << std::endl;
+	LOG(INFO) << "ARK Beyond Api V" << API_VERSION << std::endl;
 	LOG(INFO) << "Loading..." << std::endl;
 
 	ArkApi::PdbReader pdb_reader;

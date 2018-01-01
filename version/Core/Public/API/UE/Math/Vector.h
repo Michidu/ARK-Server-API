@@ -1662,6 +1662,14 @@ FORCEINLINE float FVector::BoxPushOut(const FVector& Normal, const FVector& Size
 	return FMath::Abs(Normal.X*Size.X) + FMath::Abs(Normal.Y*Size.Y) + FMath::Abs(Normal.Z*Size.Z);
 }
 
+FORCEINLINE FString FVector::ToString() const
+{
+	wchar_t buffer[256];
+	swprintf_s(buffer, TEXT("X=%3.3f Y=%3.3f Z=%3.3f"), X, Y, Z);
+
+	return FString(buffer);
+}
+
 /** Component-wise clamp for FVector */
 FORCEINLINE FVector ClampVector(const FVector& V, const FVector& Min, const FVector& Max)
 {
