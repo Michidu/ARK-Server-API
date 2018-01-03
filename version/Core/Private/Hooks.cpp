@@ -72,7 +72,7 @@ namespace ArkApi
 
 		if (iter == hook_vector.end())
 		{
-			LOG(ERROR) << "Failed to find hook";
+			LOG(WARNING) << "Failed to find hook";
 			return false;
 		}
 

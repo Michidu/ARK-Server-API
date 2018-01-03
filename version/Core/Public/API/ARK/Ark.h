@@ -20,6 +20,7 @@
 #include "IApiUtils.h"
 #include "ICommands.h"
 #include "IHooks.h"
+#include "Tools.h"
 
 #define DECLARE_HOOK(name, returnType, ...) typedef returnType(__fastcall * name ## _Func)(__VA_ARGS__); \
 name ## _Func name ## _original; \

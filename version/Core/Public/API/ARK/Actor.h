@@ -46,7 +46,7 @@ struct FUniqueNetIdRepl
 
 struct FActorSpawnParameters
 {
-	FActorSpawnParameters::FActorSpawnParameters()
+	FActorSpawnParameters()
 		: Name()
 		, Template(NULL)
 		, Owner(NULL)

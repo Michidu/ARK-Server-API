@@ -9,6 +9,7 @@
 #define PLATFORM_HAS_64BIT_ATOMICS 1
 #define PLATFORM_64BITS 1
 #define PLATFORM_COMPILER_HAS_DEFAULTED_FUNCTIONS 1
+#define PLATFORM_LITTLE_ENDIAN 1
 
 #define check(expr)	{}
 #define checkSlow(expr)	{}
