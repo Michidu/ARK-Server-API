@@ -32,9 +32,6 @@
     <Filter Include="Core\Private\PluginManager">
       <UniqueIdentifier>{3138185d-1378-4bb6-a9ae-08b8972ffc94}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Private\Logger">
-      <UniqueIdentifier>{84ca9881-961a-4a9f-b527-7cf45ea98693}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Public\API\UE\Containers">
       <UniqueIdentifier>{25cd0b19-4654-4a59-b866-3b5fc5212b3c}</UniqueIdentifier>
     </Filter>
@@ -61,6 +58,9 @@
     </Filter>
     <Filter Include="Core\Public\API\UE\Containers\Algo\Impl">
       <UniqueIdentifier>{e949db5b-8a3f-4ca4-b6b4-5cca87260ec1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\Logger">
+      <UniqueIdentifier>{84ca9881-961a-4a9f-b527-7cf45ea98693}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -158,9 +158,6 @@
     </ClInclude>
     <ClInclude Include="Core\Private\Offsets.h">
       <Filter>Core\Private</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Private\Logger\easylogging++.h">
-      <Filter>Core\Private\Logger</Filter>
     </ClInclude>
     <ClInclude Include="Core\Public\API\Fields.h">
       <Filter>Core\Public\API</Filter>
@@ -339,6 +336,9 @@
     <ClInclude Include="Core\Public\API\UE\Templates\TypeHash.h">
       <Filter>Core\Public\API\UE\Templates</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Public\Logger\Logger.h">
+      <Filter>Core\Public\Logger</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="version.cpp" />
@@ -366,10 +366,10 @@
     <ClCompile Include="Core\Private\Offsets.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Private\Logger\easylogging++.cc">
-      <Filter>Core\Private\Logger</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Private\Base.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Logger.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
   </ItemGroup>

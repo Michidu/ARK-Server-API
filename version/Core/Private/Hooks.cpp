@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Logger/easylogging++.h"
+#include "Logger/Logger.h"
 
 #include "../../MinHook.h"
 #include "Offsets.h"
@@ -12,7 +12,10 @@ namespace ArkApi
 	Hooks::Hooks()
 	{
 		if (MH_Initialize() != MH_OK)
-			LOG(FATAL) << "Can't initialize MinHook";
+		{
+			Log::GetLog()->critical("Can't initialize MinHook");
+			throw;
+		}
 	}
 
 	Hooks& Hooks::Get()
@@ -26,7 +29,7 @@ namespace ArkApi
 		const LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
-			LOG(ERROR) << func_name << " does not exist";
+			Log::GetLog()->error("{} does not exist", func_name);
 			return false;
 		}
 
@@ -40,13 +43,13 @@ namespace ArkApi
 
 		if (MH_CreateHook(new_target, detour, original) != MH_OK)
 		{
-			LOG(ERROR) << "Failed to create hook for " << func_name;
+			Log::GetLog()->error("Failed to create hook for {}", func_name);
 			return false;
 		}
 
 		if (MH_EnableHook(new_target) != MH_OK)
 		{
-			LOG(ERROR) << "Failed to enable hook for " << func_name;
+			Log::GetLog()->error("Failed to enable hook for {}", func_name);
 			return false;
 		}
 
@@ -58,7 +61,7 @@ namespace ArkApi
 		const LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
-			LOG(ERROR) << func_name << " does not exist";
+			Log::GetLog()->error("{} does not exist", func_name);
 			return false;
 		}
 
@@ -72,7 +75,7 @@ namespace ArkApi
 
 		if (iter == hook_vector.end())
 		{
-			LOG(WARNING) << "Failed to find hook";
+			Log::GetLog()->warn("Failed to find hook");
 			return false;
 		}
 
@@ -81,7 +84,7 @@ namespace ArkApi
 		{
 			if (MH_RemoveHook(hook->target) != MH_OK)
 			{
-				LOG(ERROR) << "Failed to disable hook for " << func_name;
+				Log::GetLog()->error("Failed to disable hook for {}", func_name);
 				return false;
 			}
 		}

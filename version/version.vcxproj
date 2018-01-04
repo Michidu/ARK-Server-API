@@ -26,7 +26,6 @@
     <ClInclude Include="Core\Private\Commands.h" />
     <ClInclude Include="Core\Private\Hooks.h" />
     <ClInclude Include="Core\Private\HooksImpl.h" />
-    <ClInclude Include="Core\Private\Logger\easylogging++.h" />
     <ClInclude Include="Core\Private\Offsets.h" />
     <ClInclude Include="Core\Private\PDBReader\PDBReader.h" />
     <ClInclude Include="Core\Private\PluginManager\PluginManager.h" />
@@ -111,6 +110,7 @@
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
+    <ClInclude Include="Core\Public\Logger\Logger.h" />
     <ClInclude Include="Core\Public\Tools.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MinHook.h" />
@@ -121,7 +121,7 @@
     <ClCompile Include="Core\Private\Commands.cpp" />
     <ClCompile Include="Core\Private\Hooks.cpp" />
     <ClCompile Include="Core\Private\HooksImpl.cpp" />
-    <ClCompile Include="Core\Private\Logger\easylogging++.cc" />
+    <ClCompile Include="Core\Private\Logger.cpp" />
     <ClCompile Include="Core\Private\Offsets.cpp" />
     <ClCompile Include="Core\Private\PDBReader\PDBReader.cpp" />
     <ClCompile Include="Core\Private\PluginManager\PluginManager.cpp" />

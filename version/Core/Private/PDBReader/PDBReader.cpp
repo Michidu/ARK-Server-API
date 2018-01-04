@@ -3,7 +3,7 @@
 #include <fstream>
 #include <comdef.h>
 
-#include "../Logger/easylogging++.h"
+#include "Logger/Logger.h"
 #include "../Private/Offsets.h"
 #include "Tools.h"
 
@@ -29,17 +29,17 @@ namespace ArkApi
 		}
 		catch (const std::runtime_error&)
 		{
-			LOG(ERROR) << "Failed to load data from pdb file ";
+			Log::GetLog()->error("Failed to load data from pdb file ");
 			throw;
 		}
 
 		if (!ReadConfig())
 			throw std::runtime_error("Failed to open config.json");
 
-		LOG(INFO) << "Dumping structures..";
+		Log::GetLog()->info("Dumping structures..");
 		DumpStructs(symbol);
 
-		LOG(INFO) << "Dumping functions.." << std::endl;
+		Log::GetLog()->info("Dumping functions..\n");
 		DumpFreeFunctions(symbol);
 
 		Cleanup(symbol, dia_session);

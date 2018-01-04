@@ -3,7 +3,7 @@
 #include <windows.h>
 #include <iostream>
 
-#include "Logger/easylogging++.h"
+#include "Logger/Logger.h"
 
 #include "Hooks.h"
 #include "ApiUtils.h"
@@ -43,7 +43,7 @@ namespace ArkApi
 
 	void Hook_UWorld_InitWorld(UWorld* world, DWORD64 ivs)
 	{
-		LOG(INFO) << "[API] UWorld::InitWorld was called";
+		Log::GetLog()->info("UWorld::InitWorld was called");
 
 		ApiUtils::Get().SetWorld(world);
 

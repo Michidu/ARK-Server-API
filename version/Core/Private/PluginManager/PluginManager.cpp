@@ -3,7 +3,7 @@
 #include <fstream>
 #include <filesystem>
 
-#include "../Logger/easylogging++.h"
+#include "Logger/Logger.h"
 #include "../Commands.h"
 #include "Tools.h"
 
@@ -42,15 +42,15 @@ namespace ArkApi
 				stream << "Loaded plugin - " << (plugin->full_name == "" ? plugin->name : plugin->full_name) << " V" << std::fixed
 					<< std::setprecision(1) << plugin->version << " (" << plugin->description << ")";
 
-				LOG(INFO) << stream.str();
+				Log::GetLog()->info(stream.str());
 			}
 			catch (const std::runtime_error& error)
 			{
-				LOG(WARNING) << error.what() << std::endl;
+				Log::GetLog()->warn(error.what());
 			}
 		}
 
-		LOG(INFO) << "Loaded all plugins" << std::endl;
+		Log::GetLog()->info("Loaded all plugins\n");
 	}
 
 	std::shared_ptr<Plugin>& PluginManager::LoadPlugin(const std::string& plugin_name) noexcept(false)
@@ -156,11 +156,11 @@ namespace ArkApi
 			}
 			catch (const std::runtime_error& error)
 			{
-				LOG(WARNING) << error.what();
+				Log::GetLog()->warn(error.what());
 				return;
 			}
 
-			LOG(INFO) << "Loaded plugin - " << plugin_name.c_str();
+			Log::GetLog()->info("Loaded plugin - {}", plugin_name.c_str());
 		}
 	}
 
@@ -179,11 +179,11 @@ namespace ArkApi
 			}
 			catch (const std::runtime_error& error)
 			{
-				LOG(WARNING) << error.what();
+				Log::GetLog()->warn(error.what());
 				return;
 			}
 
-			LOG(INFO) << "Unloaded plugin - " << plugin_name.c_str();
+			Log::GetLog()->info("Unloaded plugin - {}", plugin_name.c_str());
 		}
 	}
 }

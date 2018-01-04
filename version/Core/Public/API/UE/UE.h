@@ -203,6 +203,7 @@ struct FUniqueNetIdSteam : FUniqueNetId
 
 struct UObjectBase
 {
+	FieldValue<EObjectFlags> ObjectFlagsField() { return { this, "UObjectBase.ObjectFlags" }; }
 	FieldValue<int> InternalIndexField() { return { this, "UObjectBase.InternalIndex" }; }
 	FieldValue<UClass *> ClassField() { return { this, "UObjectBase.Class" }; }
 	FieldValue<FName> NameField() { return { this, "UObjectBase.Name" }; }

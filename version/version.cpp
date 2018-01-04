@@ -1,19 +1,16 @@
 #include <Windows.h>
 #include <stdio.h>
 
-#include "Core/Private/Logger/easylogging++.h"
 #include "Core/Private/PDBReader/PDBReader.h"
 #include "Core/Private/Offsets.h"
 #include "Core/Private/HooksImpl.h"
 #include "Core/Private/PluginManager/PluginManager.h"
+#include "Core/Public/Logger/Logger.h"
 
 #pragma comment(lib, "libMinHook-x64-v141-md.lib")
 
-#define ELPP_THREAD_SAFE
-INITIALIZE_EASYLOGGINGPP
-
 HINSTANCE m_hinst_dll = nullptr;
-extern "C" UINT_PTR mProcs[17] = {0};
+extern "C" UINT_PTR mProcs[17]{0};
 
 LPCSTR import_names[] = {
 	"GetFileVersionInfoA", "GetFileVersionInfoByHandle", "GetFileVersionInfoExA", "GetFileVersionInfoExW",
@@ -29,35 +26,15 @@ void OpenConsole()
 	freopen_s(&pCout, "conout$", "w", stdout);
 }
 
-void ConfigureLogger()
-{
-	el::Configurations default_conf;
-	default_conf.setToDefault();
-
-	default_conf.setGlobally(el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m} %msg");
-	default_conf.setGlobally(el::ConfigurationType::Filename, "logs/ArkApi.log");
-	default_conf.setGlobally(el::ConfigurationType::MaxLogFileSize, "512000");
-
-	default_conf.set(el::Level::Warning, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m} [%level] %msg");
-	default_conf.set(el::Level::Error, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m} [%level] %msg");
-	default_conf.set(el::Level::Fatal, el::ConfigurationType::Format, "%datetime{%Y-%M-%d %H:%m} [%level] %msg");
-
-	default_conf.setGlobally(el::ConfigurationType::ToStandardOutput, "true");
-	default_conf.setGlobally(el::ConfigurationType::ToFile, "true");
-
-	el::Loggers::reconfigureLogger("default", default_conf);
-
-	el::Loggers::addFlag(el::LoggingFlag::ColoredTerminalOutput);
-}
-
 void Init()
 {
 	OpenConsole();
-	ConfigureLogger();
 
-	LOG(INFO) << "-----------------------------------------------";
-	LOG(INFO) << "ARK Beyond Api V" << API_VERSION << std::endl;
-	LOG(INFO) << "Loading..." << std::endl;
+	Log::Get().Init("API");
+
+	Log::GetLog()->info("-----------------------------------------------");
+	Log::GetLog()->info("ARK Beyond Api V{}", API_VERSION);
+	Log::GetLog()->info("Loading...\n");
 
 	ArkApi::PdbReader pdb_reader;
 
@@ -70,7 +47,8 @@ void Init()
 	}
 	catch (const std::runtime_error& error)
 	{
-		LOG(FATAL) << "Failed to read pdb. " << error.what();
+		Log::GetLog()->critical("Failed to read pdb. {}", error.what());
+		return;
 	}
 
 	ArkApi::Offsets::Get().Init(move(offsets_dump));
@@ -79,8 +57,8 @@ void Init()
 
 	ArkApi::PluginManager::Get().LoadAllPlugins();
 
-	LOG(INFO) << "API was successfully loaded";
-	LOG(INFO) << "-----------------------------------------------" << std::endl;
+	Log::GetLog()->info("API was successfully loaded");
+	Log::GetLog()->info("-----------------------------------------------\n");
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID)

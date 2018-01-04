@@ -78,7 +78,7 @@ namespace ArkApi
 		virtual bool RemoveOnTickCallback(const FString& id) = 0;
 
 		/**
-		 * \brief Removes a on-timer callback
+		 * \brief Removes an on-timer callback
 		 * \param id Callback ID
 		 * \return true if success, false otherwise
 		 */
