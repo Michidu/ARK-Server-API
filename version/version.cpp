@@ -28,6 +28,8 @@ void OpenConsole()
 
 void Init()
 {
+	using namespace ArkApi;
+
 	OpenConsole();
 
 	Log::Get().Init("API");
@@ -36,14 +38,15 @@ void Init()
 	Log::GetLog()->info("ARK Beyond Api V{}", API_VERSION);
 	Log::GetLog()->info("Loading...\n");
 
-	ArkApi::PdbReader pdb_reader;
+	PdbReader pdb_reader;
 
 	std::unordered_map<std::string, intptr_t> offsets_dump;
 	std::unordered_map<std::string, BitField> bitfields_dump;
 
 	try
 	{
-		pdb_reader.Read(L"ShooterGameServer.pdb", &offsets_dump, &bitfields_dump);
+		const std::wstring dir = Tools::ConvertToWideStr(Tools::GetCurrentDir());
+		pdb_reader.Read(dir + L"/ShooterGameServer.pdb", &offsets_dump, &bitfields_dump);
 	}
 	catch (const std::runtime_error& error)
 	{
@@ -51,11 +54,11 @@ void Init()
 		return;
 	}
 
-	ArkApi::Offsets::Get().Init(move(offsets_dump));
+	Offsets::Get().Init(move(offsets_dump));
 
-	ArkApi::InitHooks();
+	InitHooks();
 
-	ArkApi::PluginManager::Get().LoadAllPlugins();
+	PluginManager::Get().LoadAllPlugins();
 
 	Log::GetLog()->info("API was successfully loaded");
 	Log::GetLog()->info("-----------------------------------------------\n");

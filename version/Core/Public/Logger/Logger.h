@@ -29,7 +29,6 @@ public:
 		auto& sinks = GetLogSinks();
 
 		logger_ = std::make_shared<spdlog::logger>(plugin_name, begin(sinks), end(sinks));
-		register_logger(logger_);
 
 		logger_->set_pattern("%D %R [%n][%l] %v");
 		logger_->flush_on(spdlog::level::info);

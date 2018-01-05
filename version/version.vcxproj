@@ -193,8 +193,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
-    <IncludePath>F:\Programs\Ark\ARK-Server-Beyond-API-2.0\version\Core\Public;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\DIA SDK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects\lib;C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\DIA SDK\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(MSBuildStartupDirectory)\version\Core\Public;$(VSInstallDir)\DIA SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>F:\Projects\lib;$(VSInstallDir)\DIA SDK\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -260,6 +260,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>version.def</ModuleDefinitionFile>
       <AdditionalOptions>/LTCG:OFF %(AdditionalOptions)</AdditionalOptions>
+      <ImportLibrary>$(OutDir)ArkApi.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
