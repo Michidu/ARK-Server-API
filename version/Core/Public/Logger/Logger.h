@@ -3,7 +3,7 @@
 #include "API/Base.h"
 #include "Logger/spdlog/spdlog.h"
 
-extern "C" ARK_API std::vector<spdlog::sink_ptr>& APIENTRY GetLogSinks();
+ARK_API std::vector<spdlog::sink_ptr>& APIENTRY GetLogSinks();
 
 class Log
 {
@@ -36,6 +36,7 @@ public:
 
 private:
 	Log() = default;
+	~Log() = default;
 
 	std::shared_ptr<spdlog::logger> logger_;
 };

@@ -22,6 +22,7 @@ namespace ArkApi
 
 	private:
 		Offsets();
+		~Offsets() = default;
 
 		DWORD64 module_base_;
 		std::unordered_map<std::string, intptr_t> offsets_dump_;

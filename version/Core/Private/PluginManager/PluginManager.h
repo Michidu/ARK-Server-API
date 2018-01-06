@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <memory>
 
@@ -11,12 +12,12 @@ namespace ArkApi
 {
 	struct Plugin
 	{
-		Plugin(const HINSTANCE h_module, const std::string& name, const std::string& full_name,
-		       const std::string& description, float version, float min_api_version)
+		Plugin(HINSTANCE h_module, std::string name, std::string full_name,
+		       std::string description, float version, float min_api_version)
 			: h_module(h_module),
-			  name(name),
-			  full_name(full_name),
-			  description(description),
+			  name(std::move(name)),
+			  full_name(std::move(full_name)),
+			  description(std::move(description)),
 			  version(version),
 			  min_api_version(min_api_version)
 		{
@@ -67,6 +68,7 @@ namespace ArkApi
 
 	private:
 		PluginManager();
+		~PluginManager() = default;
 
 		static nlohmann::json ReadPluginInfo(const std::string& plugin_name);
 

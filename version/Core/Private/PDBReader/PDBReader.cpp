@@ -45,7 +45,7 @@ namespace ArkApi
 		Cleanup(symbol, dia_session);
 	}
 
-	void PdbReader::LoadDataFromPdb(std::wstring path, IDiaDataSource** dia_source, IDiaSession** session,
+	void PdbReader::LoadDataFromPdb(const std::wstring& path, IDiaDataSource** dia_source, IDiaSession** session,
 	                                IDiaSymbol** symbol)
 	{
 		const std::string current_dir = Tools::GetCurrentDir();
@@ -55,13 +55,13 @@ namespace ArkApi
 		if (!h_module)
 			throw std::runtime_error("Failed to load msdia140.dll. Error code - " + std::to_string(GetLastError()));
 
-		HRESULT (WINAPI* DllGetClassObject)(REFCLSID, REFIID, LPVOID) =
-			reinterpret_cast<HRESULT(WINAPI*)(REFCLSID, REFIID, LPVOID)>(GetProcAddress(h_module, "DllGetClassObject"));
-		if (!DllGetClassObject)
+		const auto dll_get_class_object = reinterpret_cast<HRESULT(WINAPI*)(REFCLSID, REFIID, LPVOID)>(GetProcAddress(
+			h_module, "DllGetClassObject"));
+		if (!dll_get_class_object)
 			throw std::runtime_error("Can't find DllGetClassObject. Error code - " + std::to_string(GetLastError()));
 
 		IClassFactory* class_factory;
-		HRESULT hr = DllGetClassObject(__uuidof(DiaSource), IID_IClassFactory, &class_factory);
+		HRESULT hr = dll_get_class_object(__uuidof(DiaSource), IID_IClassFactory, &class_factory);
 		if (FAILED(hr))
 			throw std::runtime_error("DllGetClassObject has failed. Error code - " + std::to_string(GetLastError()));
 

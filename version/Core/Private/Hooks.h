@@ -17,14 +17,14 @@ namespace ArkApi
 		Hooks& operator=(const Hooks&) = delete;
 		Hooks& operator=(Hooks&&) = delete;
 
-		bool SetHookInternal(const std::string& func_name, const LPVOID detour, LPVOID* original) override;
+		bool SetHookInternal(const std::string& func_name, LPVOID detour, LPVOID* original) override;
 
-		bool DisableHook(const std::string& func_name, const LPVOID detour) override;
+		bool DisableHook(const std::string& func_name, LPVOID detour) override;
 
 	private:
 		struct Hook
 		{
-			Hook(const LPVOID target, const LPVOID detour, LPVOID* original)
+			Hook(LPVOID target, LPVOID detour, LPVOID* original)
 				: target(target),
 				  detour(detour),
 				  original(original)
@@ -37,6 +37,7 @@ namespace ArkApi
 		};
 
 		Hooks();
+		~Hooks() = default;
 
 		std::unordered_map<std::string, std::vector<std::shared_ptr<Hook>>> all_hooks_;
 	};

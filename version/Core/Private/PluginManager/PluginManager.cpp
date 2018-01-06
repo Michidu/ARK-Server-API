@@ -31,7 +31,7 @@ namespace ArkApi
 
 		for (const auto& dir_name : fs::directory_iterator(dir_path))
 		{
-			auto path = dir_name.path();
+			const auto& path = dir_name.path();
 			auto filename = path.filename();
 
 			try
@@ -39,7 +39,7 @@ namespace ArkApi
 				std::shared_ptr<Plugin>& plugin = LoadPlugin(filename.generic_string());
 
 				std::stringstream stream;
-				stream << "Loaded plugin - " << (plugin->full_name == "" ? plugin->name : plugin->full_name) << " V" << std::fixed
+				stream << "Loaded plugin - " << (plugin->full_name.empty() ? plugin->name : plugin->full_name) << " V" << std::fixed
 					<< std::setprecision(1) << plugin->version << " (" << plugin->description << ")";
 
 				Log::GetLog()->info(stream.str());
@@ -70,11 +70,11 @@ namespace ArkApi
 		auto plugin_info = ReadPluginInfo(plugin_name);
 
 		// Check version		
-		const float required_version = static_cast<float>(plugin_info["MinApiVersion"]);
+		const auto required_version = static_cast<float>(plugin_info["MinApiVersion"]);
 		if (required_version != .0f && std::stof(API_VERSION) < required_version)
 			throw std::runtime_error("Plugin " + plugin_name + " requires newer API version!");
 
-		const HINSTANCE h_module = LoadLibraryExA(full_path.c_str(), nullptr, LOAD_LIBRARY_SEARCH_USER_DIRS);
+		HINSTANCE h_module = LoadLibraryExA(full_path.c_str(), nullptr, LOAD_LIBRARY_SEARCH_USER_DIRS);
 		if (!h_module)
 			throw std::runtime_error(
 				"Failed to load plugin - " + plugin_name + "\nError code: " + std::to_string(GetLastError()));

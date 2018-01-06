@@ -309,7 +309,7 @@ namespace ArkApi
 		 * \return Spawned dino or null
 		 */
 		APrimalDinoCharacter* SpawnDino(AShooterPlayerController* player, FString blueprint, FVector* location, int lvl,
-		                      bool force_tame) const
+		                                bool force_tame) const
 		{
 			if (!player)
 			{
@@ -359,5 +359,5 @@ namespace ArkApi
 		}
 	};
 
-	extern "C" ARK_API IApiUtils& APIENTRY GetApiUtils();
+	ARK_API IApiUtils& APIENTRY GetApiUtils();
 }

@@ -24,9 +24,9 @@ namespace ArkApi
 		return instance;
 	}
 
-	bool Hooks::SetHookInternal(const std::string& func_name, const LPVOID detour, LPVOID* original)
+	bool Hooks::SetHookInternal(const std::string& func_name, LPVOID detour, LPVOID* original)
 	{
-		const LPVOID target = Offsets::Get().GetAddress(func_name);
+		LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
 			Log::GetLog()->error("{} does not exist", func_name);
@@ -35,7 +35,7 @@ namespace ArkApi
 
 		auto& hook_vector = all_hooks_[func_name];
 
-		const LPVOID new_target = hook_vector.empty()
+		LPVOID new_target = hook_vector.empty()
 			                          ? target
 			                          : hook_vector.back()->detour;
 
@@ -56,9 +56,9 @@ namespace ArkApi
 		return true;
 	}
 
-	bool Hooks::DisableHook(const std::string& func_name, const LPVOID detour)
+	bool Hooks::DisableHook(const std::string& func_name, LPVOID detour)
 	{
-		const LPVOID target = Offsets::Get().GetAddress(func_name);
+		LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
 			Log::GetLog()->error("{} does not exist", func_name);
@@ -67,7 +67,7 @@ namespace ArkApi
 
 		auto& hook_vector = all_hooks_[func_name];
 
-		auto iter = std::find_if(hook_vector.begin(), hook_vector.end(),
+		const auto iter = std::find_if(hook_vector.begin(), hook_vector.end(),
 		                         [detour](const std::shared_ptr<Hook>& hook) -> bool
 		                         {
 			                         return hook->detour == detour;

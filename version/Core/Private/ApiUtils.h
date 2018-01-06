@@ -27,6 +27,8 @@ namespace ArkApi
 		{
 		}
 
+		~ApiUtils() = default;
+
 		UWorld* u_world_;
 		AShooterGameMode* shooter_game_mode_;
 	};

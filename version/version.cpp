@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include <stdio.h>
+#include <cstdio>
 
 #include "Core/Private/PDBReader/PDBReader.h"
 #include "Core/Private/Offsets.h"

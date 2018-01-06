@@ -17,7 +17,7 @@ namespace ArkApi
 		* \return true if success, false otherwise
 		*/
 		template <typename T>
-		bool SetHook(const std::string& func_name, const LPVOID detour, T** original)
+		bool SetHook(const std::string& func_name, LPVOID detour, T** original)
 		{
 			return SetHookInternal(func_name, detour, reinterpret_cast<LPVOID*>(original));
 		}
@@ -28,12 +28,12 @@ namespace ArkApi
 		 * \param detour A pointer to the detour function
 		 * \return true if success, false otherwise
 		 */
-		virtual bool DisableHook(const std::string& func_name, const LPVOID detour) = 0;
+		virtual bool DisableHook(const std::string& func_name, LPVOID detour) = 0;
 
 	private:
-		virtual bool SetHookInternal(const std::string& func_name, const LPVOID detour,
+		virtual bool SetHookInternal(const std::string& func_name, LPVOID detour,
 		                             LPVOID* original) = 0;
 	};
 
-	extern "C" ARK_API IHooks& APIENTRY GetHooks();
+	ARK_API IHooks& APIENTRY GetHooks();
 }

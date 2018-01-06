@@ -85,5 +85,5 @@ namespace ArkApi
 		virtual bool RemoveOnTimerCallback(const FString& id) = 0;
 	};
 
-	extern "C" ARK_API ICommands& APIENTRY GetCommands();
+	ARK_API ICommands& APIENTRY GetCommands();
 }

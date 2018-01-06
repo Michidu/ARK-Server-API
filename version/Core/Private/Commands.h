@@ -3,6 +3,7 @@
 #include "ICommands.h"
 
 #include <algorithm>
+#include <utility>
 #include <vector>
 #include <memory>
 
@@ -46,13 +47,14 @@ namespace ArkApi
 
 	private:
 		Commands() = default;
+		~Commands() = default;
 
 		template <typename T>
 		struct Command
 		{
-			Command(const FString& command, const std::function<T>& callback)
-				: command(command),
-				  callback(callback)
+			Command(FString command, std::function<T> callback)
+				: command(std::move(command)),
+				  callback(std::move(callback))
 			{
 			}
 

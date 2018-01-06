@@ -6,8 +6,8 @@ namespace ArkApi
 	{
 		module_base_ = reinterpret_cast<DWORD64>(GetModuleHandle(nullptr));
 
-		const PIMAGE_DOS_HEADER dos_header = reinterpret_cast<PIMAGE_DOS_HEADER>(module_base_);
-		const PIMAGE_NT_HEADERS nt_headers = reinterpret_cast<PIMAGE_NT_HEADERS>(module_base_ + dos_header->e_lfanew);
+		const auto dos_header = reinterpret_cast<PIMAGE_DOS_HEADER>(module_base_);
+		const auto nt_headers = reinterpret_cast<PIMAGE_NT_HEADERS>(module_base_ + dos_header->e_lfanew);
 
 		module_base_ += nt_headers->OptionalHeader.BaseOfCode;
 	}

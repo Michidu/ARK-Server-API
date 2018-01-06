@@ -20,7 +20,7 @@ namespace ArkApi
 		          std::unordered_map<std::string, BitField>* bitfields_dump);
 
 	private:
-		static void LoadDataFromPdb(std::wstring, IDiaDataSource**, IDiaSession**, IDiaSymbol**);
+		static void LoadDataFromPdb(const std::wstring&, IDiaDataSource**, IDiaSession**, IDiaSymbol**);
 		bool ReadConfig();
 		void DumpStructs(IDiaSymbol*);
 		void DumpFreeFunctions(IDiaSymbol*);
