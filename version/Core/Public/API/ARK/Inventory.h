@@ -18,7 +18,68 @@ struct FCustomItemData
 	TArray<FName> CustomDataNames;
 };
 
-struct UPrimalInventoryComponent
+struct UActorComponent : UObject
+{
+	FieldValue<TArray<FName>> ComponentTagsField() { return { this, "UActorComponent.ComponentTags" }; }
+	FieldValue<FName> CustomTagField() { return { this, "UActorComponent.CustomTag" }; }
+	FieldValue<int> CustomDataField() { return { this, "UActorComponent.CustomData" }; }
+	FieldValue<AActor *> CachedOwnerField() { return { this, "UActorComponent.CachedOwner" }; }
+	FieldValue<UWorld *> WorldField() { return { this, "UActorComponent.World" }; }
+
+	// Functions
+
+	void PostInitProperties() { NativeCall<void>(this, "UActorComponent.PostInitProperties"); }
+	void PostRename(UObject * OldOuter, FName OldName) { NativeCall<void, UObject *, FName>(this, "UActorComponent.PostRename", OldOuter, OldName); }
+	AActor * GetOwner() { return NativeCall<AActor *>(this, "UActorComponent.GetOwner"); }
+	UWorld * GetWorld() { return NativeCall<UWorld *>(this, "UActorComponent.GetWorld"); }
+	ULevel * GetComponentLevel() { return NativeCall<ULevel *>(this, "UActorComponent.GetComponentLevel"); }
+	FString * GetReadableName(FString * result) { return NativeCall<FString *, FString *>(this, "UActorComponent.GetReadableName", result); }
+	void BeginDestroy() { NativeCall<void>(this, "UActorComponent.BeginDestroy"); }
+	bool NeedsLoadForClient() { return NativeCall<bool>(this, "UActorComponent.NeedsLoadForClient"); }
+	bool NeedsLoadForServer() { return NativeCall<bool>(this, "UActorComponent.NeedsLoadForServer"); }
+	void OnRegister() { NativeCall<void>(this, "UActorComponent.OnRegister"); }
+	void InitializeComponent() { NativeCall<void>(this, "UActorComponent.InitializeComponent"); }
+	void UninitializeComponent() { NativeCall<void>(this, "UActorComponent.UninitializeComponent"); }
+	void SetComponentTickEnabled(bool bEnabled) { NativeCall<void, bool>(this, "UActorComponent.SetComponentTickEnabled", bEnabled); }
+	void SetComponentTickEnabledAsync(bool bEnabled) { NativeCall<void, bool>(this, "UActorComponent.SetComponentTickEnabledAsync", bEnabled); }
+	void RegisterComponentTickFunctions(bool bRegister, bool bSaveAndRestoreComponentTickState) { NativeCall<void, bool, bool>(this, "UActorComponent.RegisterComponentTickFunctions", bRegister, bSaveAndRestoreComponentTickState); }
+	void RegisterComponentWithWorld(UWorld * InWorld) { NativeCall<void, UWorld *>(this, "UActorComponent.RegisterComponentWithWorld", InWorld); }
+	void RegisterComponent() { NativeCall<void>(this, "UActorComponent.RegisterComponent"); }
+	void UnregisterComponent() { NativeCall<void>(this, "UActorComponent.UnregisterComponent"); }
+	void DestroyComponent() { NativeCall<void>(this, "UActorComponent.DestroyComponent"); }
+	void OnComponentCreated() { NativeCall<void>(this, "UActorComponent.OnComponentCreated"); }
+	void OnComponentDestroyed() { NativeCall<void>(this, "UActorComponent.OnComponentDestroyed"); }
+	void CreateRenderState_Concurrent() { NativeCall<void>(this, "UActorComponent.CreateRenderState_Concurrent"); }
+	void SendRenderTransform_Concurrent() { NativeCall<void>(this, "UActorComponent.SendRenderTransform_Concurrent"); }
+	void SendRenderDynamicData_Concurrent() { NativeCall<void>(this, "UActorComponent.SendRenderDynamicData_Concurrent"); }
+	void DestroyRenderState_Concurrent() { NativeCall<void>(this, "UActorComponent.DestroyRenderState_Concurrent"); }
+	void CreatePhysicsState() { NativeCall<void>(this, "UActorComponent.CreatePhysicsState"); }
+	void DestroyPhysicsState() { NativeCall<void>(this, "UActorComponent.DestroyPhysicsState"); }
+	void ExecuteRegisterEvents() { NativeCall<void>(this, "UActorComponent.ExecuteRegisterEvents"); }
+	void ExecuteUnregisterEvents() { NativeCall<void>(this, "UActorComponent.ExecuteUnregisterEvents"); }
+	void ReregisterComponent() { NativeCall<void>(this, "UActorComponent.ReregisterComponent"); }
+	void RecreateRenderState_Concurrent() { NativeCall<void>(this, "UActorComponent.RecreateRenderState_Concurrent"); }
+	void RecreatePhysicsState(bool bRestoreBoneTransforms) { NativeCall<void, bool>(this, "UActorComponent.RecreatePhysicsState", bRestoreBoneTransforms); }
+	void AddTickPrerequisiteActor(AActor * PrerequisiteActor) { NativeCall<void, AActor *>(this, "UActorComponent.AddTickPrerequisiteActor", PrerequisiteActor); }
+	void AddTickPrerequisiteComponent(UActorComponent * PrerequisiteComponent) { NativeCall<void, UActorComponent *>(this, "UActorComponent.AddTickPrerequisiteComponent", PrerequisiteComponent); }
+	void RemoveTickPrerequisiteActor(AActor * PrerequisiteActor) { NativeCall<void, AActor *>(this, "UActorComponent.RemoveTickPrerequisiteActor", PrerequisiteActor); }
+	void RemoveTickPrerequisiteComponent(UActorComponent * PrerequisiteComponent) { NativeCall<void, UActorComponent *>(this, "UActorComponent.RemoveTickPrerequisiteComponent", PrerequisiteComponent); }
+	void DoDeferredRenderUpdates_Concurrent() { NativeCall<void>(this, "UActorComponent.DoDeferredRenderUpdates_Concurrent"); }
+	void MarkForNeededEndOfFrameUpdate() { NativeCall<void>(this, "UActorComponent.MarkForNeededEndOfFrameUpdate"); }
+	void MarkForNeededEndOfFrameRecreate() { NativeCall<void>(this, "UActorComponent.MarkForNeededEndOfFrameRecreate"); }
+	void Activate(bool bReset) { NativeCall<void, bool>(this, "UActorComponent.Activate", bReset); }
+	void Deactivate() { NativeCall<void>(this, "UActorComponent.Deactivate"); }
+	bool ShouldActivate() { return NativeCall<bool>(this, "UActorComponent.ShouldActivate"); }
+	void SetActive(bool bNewActive, bool bReset) { NativeCall<void, bool, bool>(this, "UActorComponent.SetActive", bNewActive, bReset); }
+	void ToggleActive() { NativeCall<void>(this, "UActorComponent.ToggleActive"); }
+	bool IsActive() { return NativeCall<bool>(this, "UActorComponent.IsActive"); }
+	bool IsNameStableForNetworking() { return NativeCall<bool>(this, "UActorComponent.IsNameStableForNetworking"); }
+	bool IsSupportedForNetworking() { return NativeCall<bool>(this, "UActorComponent.IsSupportedForNetworking"); }
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty> * OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty> *>(this, "UActorComponent.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	bool AlwaysReplicatePropertyConditional(UProperty * forProperty) { return NativeCall<bool, UProperty *>(this, "UActorComponent.AlwaysReplicatePropertyConditional", forProperty); }
+};
+
+struct UPrimalInventoryComponent : UActorComponent
 {
 	FieldValue<TArray<TWeakObjectPtr<AShooterPlayerController>>> RemoteViewingInventoryPlayerControllersField() { return { this, "UPrimalInventoryComponent.RemoteViewingInventoryPlayerControllers" }; }
 	FieldValue<TArray<UPrimalItem *>> InventoryItemsField() { return { this, "UPrimalInventoryComponent.InventoryItems" }; }
