@@ -22,7 +22,7 @@ namespace ArkApi
 		virtual AShooterGameMode* GetShooterGameMode() const = 0;
 
 		/**
-		* \brief Sends server message to the specific player. Using sprintf formatting.
+		* \brief Sends server message to the specific player. Using fmt::format.
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
 		* \param player_controller Player
@@ -34,16 +34,13 @@ namespace ArkApi
 		void SendServerMessage(AShooterPlayerController* player_controller, FLinearColor msg_color, const T* msg,
 		                       Args&&... args)
 		{
-			if constexpr (!TIsCharType<T>::Value)
-				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
-
-			FString text = FormatText(msg, std::forward<Args>(args)...);
+			FString text(FormatText(msg, std::forward<Args>(args)...));
 
 			player_controller->ClientServerChatDirectMessage(&text, msg_color, false);
 		}
 
 		/**
-		* \brief Sends notification (on-screen message) to the specific player. Using sprintf formatting.
+		* \brief Sends notification (on-screen message) to the specific player. Using fmt::format.
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
 		* \param player_controller Player
@@ -58,16 +55,13 @@ namespace ArkApi
 		void SendNotification(AShooterPlayerController* player_controller, FLinearColor color, float display_scale,
 		                      float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
-			if constexpr (!TIsCharType<T>::Value)
-				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
-
-			FString text = FormatText(msg, std::forward<Args>(args)...);
+			FString text(FormatText(msg, std::forward<Args>(args)...));
 
 			player_controller->ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon, nullptr);
 		}
 
 		/**
-		 * \brief Sends chat message to the specific player. Using sprintf formatting.
+		 * \brief Sends chat message to the specific player. Using fmt::format.
 		 * \tparam T Either a a char or wchar_t
 		 * \tparam Args Optional arguments types
 		 * \param player_controller Player
@@ -79,9 +73,6 @@ namespace ArkApi
 		void SendChatMessage(AShooterPlayerController* player_controller, const FString& sender_name, const T* msg,
 		                     Args&&... args)
 		{
-			if constexpr (!TIsCharType<T>::Value)
-				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
-
 			const FString text(FormatText(msg, std::forward<Args>(args)...));
 
 			FChatMessage chat_message = FChatMessage();
@@ -92,7 +83,7 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Sends server message to all players. Using sprintf formatting.
+		* \brief Sends server message to all players. Using fmt::format.
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
 		* \param msg_color Message color
@@ -103,10 +94,7 @@ namespace ArkApi
 		void SendServerMessageToAll(FLinearColor msg_color, const T* msg,
 		                            Args&&... args)
 		{
-			if constexpr (!TIsCharType<T>::Value)
-				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
-
-			FString text = FormatText(msg, std::forward<Args>(args)...);
+			FString text(FormatText(msg, std::forward<Args>(args)...));
 
 			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
@@ -118,7 +106,7 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Sends notification (on-screen message) to all players. Using sprintf formatting.
+		* \brief Sends notification (on-screen message) to all players. Using fmt::format.
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
 		* \param color Message color
@@ -132,10 +120,7 @@ namespace ArkApi
 		void SendNotificationToAll(FLinearColor color, float display_scale,
 		                           float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
-			if constexpr (!TIsCharType<T>::Value)
-				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
-
-			FString text = FormatText(msg, std::forward<Args>(args)...);
+			FString text(FormatText(msg, std::forward<Args>(args)...));
 
 			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
@@ -147,7 +132,7 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Sends chat message to all players. Using sprintf formatting.
+		* \brief Sends chat message to all players. Using fmt::format.
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
 		* \param sender_name Name of the sender
@@ -157,9 +142,6 @@ namespace ArkApi
 		template <typename T, typename... Args>
 		void SendChatMessageToAll(const FString& sender_name, const T* msg, Args&&... args)
 		{
-			if constexpr (!TIsCharType<T>::Value)
-				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
-
 			const FString text(FormatText(msg, std::forward<Args>(args)...));
 
 			FChatMessage chat_message = FChatMessage();
@@ -176,7 +158,7 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Formats text using sprintf
+		* \brief Formats text using fmt::format
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types
 		* \param msg Message
@@ -186,16 +168,12 @@ namespace ArkApi
 		template <typename T, typename... Args>
 		FString FormatText(const T* msg, Args&&... args)
 		{
-			const size_t size = CountTextSize(msg, std::forward<Args>(args)...);
+			if constexpr (!TIsCharType<T>::Value)
+				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
 
-			std::unique_ptr<T[]> buffer(new T[size]);
+			auto formatted_msg = fmt::format(msg, std::forward<Args>(args)...);
 
-			if constexpr (std::is_same<T, wchar_t>::value)
-				_snwprintf_s(buffer.get(), size, _TRUNCATE, msg, std::forward<Args>(args)...);
-			else if constexpr (std::is_same<T, char>::value)
-				_snprintf_s(buffer.get(), size, _TRUNCATE, msg, std::forward<Args>(args)...);
-
-			return FString(buffer.get());
+			return FString(formatted_msg.c_str());
 		}
 
 		/**
@@ -342,20 +320,6 @@ namespace ArkApi
 			}
 
 			return nullptr;
-		}
-
-	private:
-		template <typename T, typename... Args>
-		size_t CountTextSize(const T* msg, Args&&... args)
-		{
-			size_t size = 0;
-
-			if constexpr (std::is_same<T, wchar_t>::value)
-				size = _snwprintf(nullptr, 0, msg, std::forward<Args>(args)...);
-			else if constexpr (std::is_same<T, char>::value)
-				size = snprintf(nullptr, 0, msg, std::forward<Args>(args)...);
-
-			return size + 1;
 		}
 	};
 
