@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include "API/ARK/Ark.h"
 
 namespace ArkApi
@@ -34,7 +35,7 @@ namespace ArkApi
 		void SendServerMessage(AShooterPlayerController* player_controller, FLinearColor msg_color, const T* msg,
 		                       Args&&... args)
 		{
-			FString text(FormatText(msg, std::forward<Args>(args)...));
+			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
 			player_controller->ClientServerChatDirectMessage(&text, msg_color, false);
 		}
@@ -55,7 +56,7 @@ namespace ArkApi
 		void SendNotification(AShooterPlayerController* player_controller, FLinearColor color, float display_scale,
 		                      float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
-			FString text(FormatText(msg, std::forward<Args>(args)...));
+			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
 			player_controller->ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon, nullptr);
 		}
@@ -73,7 +74,7 @@ namespace ArkApi
 		void SendChatMessage(AShooterPlayerController* player_controller, const FString& sender_name, const T* msg,
 		                     Args&&... args)
 		{
-			const FString text(FormatText(msg, std::forward<Args>(args)...));
+			const FString text(FString::Format(msg, std::forward<Args>(args)...));
 
 			FChatMessage chat_message = FChatMessage();
 			chat_message.SenderName = sender_name;
@@ -94,7 +95,7 @@ namespace ArkApi
 		void SendServerMessageToAll(FLinearColor msg_color, const T* msg,
 		                            Args&&... args)
 		{
-			FString text(FormatText(msg, std::forward<Args>(args)...));
+			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
 			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
@@ -120,7 +121,7 @@ namespace ArkApi
 		void SendNotificationToAll(FLinearColor color, float display_scale,
 		                           float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
-			FString text(FormatText(msg, std::forward<Args>(args)...));
+			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
 			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
@@ -142,7 +143,7 @@ namespace ArkApi
 		template <typename T, typename... Args>
 		void SendChatMessageToAll(const FString& sender_name, const T* msg, Args&&... args)
 		{
-			const FString text(FormatText(msg, std::forward<Args>(args)...));
+			const FString text(FString::Format(msg, std::forward<Args>(args)...));
 
 			FChatMessage chat_message = FChatMessage();
 			chat_message.SenderName = sender_name;
@@ -158,25 +159,6 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Formats text using fmt::format
-		* \tparam T Either a a char or wchar_t
-		* \tparam Args Optional arguments types
-		* \param msg Message
-		* \param args Optional arguments
-		* \return Formatted text
-		*/
-		template <typename T, typename... Args>
-		FString FormatText(const T* msg, Args&&... args)
-		{
-			if constexpr (!TIsCharType<T>::Value)
-				static_assert(TIsCharType<T>::Value, "Msg must be a char or wchar_t");
-
-			auto formatted_msg = fmt::format(msg, std::forward<Args>(args)...);
-
-			return FString(formatted_msg.c_str());
-		}
-
-		/**
 		 * \brief Receives Steam ID from player controller
 		 * \param controller Player controller
 		 * \return Steam ID
@@ -188,7 +170,8 @@ namespace ArkApi
 			APlayerState* player_state = controller->PlayerStateField()();
 			if (player_state)
 			{
-				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object);
+				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object
+				);
 				steam_id = steam_net_id->UniqueNetId;
 			}
 
@@ -221,6 +204,43 @@ namespace ArkApi
 		}
 
 		/**
+		* \brief Receives player from character name
+		* \param character_name Character name
+		* \param search Type Defaulted To ESearchCase::Type::IgnoreCase
+		* \param full_match Will match the full length of the string if true
+		* \return Pointer to AShooterPlayerController
+		*/
+		AShooterPlayerController* FindPlayerFromCharacterName(const FString& character_name,
+		                                                      ESearchCase::Type search = ESearchCase::Type::IgnoreCase,
+		                                                      bool full_match = false) const
+		{
+			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+			{
+				AShooterPlayerController* shooter_player = static_cast<AShooterPlayerController*>(player_controller.Get());
+				FString char_name = GetCharacterName(shooter_player);
+
+				if (full_match ? char_name.Equals(character_name, search) : char_name.StartsWith(character_name, search))
+					return shooter_player;
+			}
+
+			return nullptr;
+		}
+
+		/**
+		* \brief Returns the character name
+		* \param player_controller Player
+		*/
+		static FString GetCharacterName(AShooterPlayerController* player_controller)
+		{
+			FString name;
+			if (player_controller)
+				player_controller->GetPlayerCharacterName(&name);
+
+			return name;
+		}
+
+		/**
 		 * \brief Receives player from steam id
 		 * \param steam_id Steam id
 		 * \return Pointer to AShooterPlayerController
@@ -234,7 +254,8 @@ namespace ArkApi
 			{
 				APlayerState* player_state = player_controller->PlayerStateField()();
 
-				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object);
+				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object
+				);
 				const uint64 current_steam_id = steam_net_id->UniqueNetId;
 
 				if (current_steam_id == steam_id)
@@ -320,6 +341,120 @@ namespace ArkApi
 			}
 
 			return nullptr;
+		}
+
+		/**
+		* \brief Returns true if character is riding a dino, false otherwise
+		* \param player_controller Player
+		*/
+		static bool IsRidingDino(AShooterPlayerController* player_controller)
+		{
+			return player_controller && player_controller->GetPlayerCharacter()
+				&& player_controller->GetPlayerCharacter()->GetRidingDino() != nullptr;
+		}
+
+		/**
+		* \brief Returns the dino the character is riding
+		* \param player_controller Player
+		* \return APrimalDinoCharacter*
+		*/
+		static APrimalDinoCharacter* GetRidingDino(AShooterPlayerController* player_controller)
+		{
+			return player_controller && player_controller->GetPlayerCharacter()
+			       && player_controller->GetPlayerCharacter()->GetRidingDino()
+				       ? player_controller->GetPlayerCharacter()->GetRidingDino()
+				       : nullptr;
+		}
+
+		/**
+		* \brief Returns the position of a player
+		* \param player_controller Player
+		* \return FVector
+		*/
+		static FVector GetPosition(AShooterPlayerController* player_controller)
+		{
+			return player_controller ? player_controller->DefaultActorLocationField()() : FVector{0, 0, 0};
+		}
+
+		/**
+		* \brief Teleport one player to another
+		* \param me Player
+		* \param him Other Player
+		* \param check_for_dino If set true prevents players teleporting with dino's or teleporting to a player on a dino
+		* \param max_dist Is the max distance the characters can be away from each other -1 is disabled
+		*/
+		static std::optional<FString> TeleportToPlayer(AShooterPlayerController* me, AShooterPlayerController* him,
+		                                               bool check_for_dino,
+		                                               float max_dist = -1)
+		{
+			if (!(me && him && me->GetPlayerCharacter() && him->GetPlayerCharacter()
+				&& !me->GetPlayerCharacter()->IsDead() && !him->GetPlayerCharacter()->IsDead())
+				)
+			{
+				return "One of players is dead";
+			}
+
+			if (check_for_dino && (IsRidingDino(me) || IsRidingDino(him)))
+			{
+				return "One of players is riding a dino";
+			}
+
+			if (max_dist != -1 && FVector::Distance(GetPosition(me), GetPosition(him)) > max_dist)
+			{
+				return "Person is too far away";
+			}
+
+			const FVector pos = him->DefaultActorLocationField()();
+
+			me->SetPlayerPos(pos.X, pos.Y, pos.Z);
+
+			return {};
+		}
+
+		/**
+		* \brief Teleport player to pos
+		* \param player_controller Player
+		* \param pos New position
+		*/
+		static bool TeleportToPos(AShooterPlayerController* player_controller, FVector pos)
+		{
+			if (player_controller && player_controller->GetPlayerCharacter() && !player_controller
+			                                                                     ->GetPlayerCharacter()->IsDead())
+			{
+				player_controller->SetPlayerPos(pos.X, pos.Y, pos.Z);
+				return true;
+			}
+
+			return false;
+		}
+
+		/**
+		* \brief Counts a specific items quantity
+		* \param player_controller Player
+		* \param item_name The name of the item you want to count the quantity of
+		*/
+		static int GetInventoryItemCount(AShooterPlayerController* player_controller, const FString& item_name)
+		{
+			if (!player_controller)
+				return 0;
+
+			UPrimalInventoryComponent* inventory_component = player_controller
+			                                                 ->GetPlayerCharacter()->MyInventoryComponentField()();
+			if (!inventory_component)
+				return 0;
+
+			FString name;
+			int item_count = 0;
+
+			for (UPrimalItem* item : inventory_component->InventoryItemsField()())
+			{
+				item->GetItemName(&name, true, false, nullptr);
+
+				if (name.Equals(item_name, ESearchCase::IgnoreCase))
+					item_count += item->GetItemQuantity();
+			}
+
+			return item_count;
 		}
 	};
 

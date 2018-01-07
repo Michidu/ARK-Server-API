@@ -32,11 +32,11 @@ namespace ArkApi
 		for (const auto& dir_name : fs::directory_iterator(dir_path))
 		{
 			const auto& path = dir_name.path();
-			auto filename = path.filename();
+			const auto filename = path.filename().stem().generic_string();
 
 			try
 			{
-				std::shared_ptr<Plugin>& plugin = LoadPlugin(filename.generic_string());
+				std::shared_ptr<Plugin>& plugin = LoadPlugin(filename);
 
 				std::stringstream stream;
 				stream << "Loaded plugin - " << (plugin->full_name.empty() ? plugin->name : plugin->full_name) << " V" << std::fixed

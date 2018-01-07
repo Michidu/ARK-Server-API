@@ -10,6 +10,7 @@
 #include "../Templates/UnrealTemplate.h"
 #include "../Math/UnrealMathUtility.h"
 #include "../Misc/CString.h"
+#include "Logger/Logger.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244)
@@ -1586,6 +1587,9 @@ public:
 		return Result;
 	}
 
+	/**
+	 * \brief Convert FString to std::string
+	 */
 	std::string ToString() const
 	{
 		TCHAR* data = Data.GetData();
@@ -1598,6 +1602,25 @@ public:
 		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(data, data + length, '?', &str[0]);
 
 		return str;
+	}
+
+	/**
+	* \brief Formats text using fmt::format
+	* \tparam T Either a a char or wchar_t
+	* \tparam Args Optional arguments types
+	* \param format Message
+	* \param args Optional arguments
+	* \return Formatted text
+	*/
+	template <typename T, typename... Args>
+	static FString Format(const T* format, Args&&... args)
+	{
+		if constexpr (!TIsCharType<T>::Value)
+			static_assert(TIsCharType<T>::Value, "format must be a char or wchar_t");
+
+		auto formatted_msg = fmt::format(format, std::forward<Args>(args)...);
+
+		return FString(formatted_msg.c_str());
 	}
 };
 

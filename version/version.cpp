@@ -1,5 +1,6 @@
 #include <Windows.h>
 #include <cstdio>
+#include <filesystem>
 
 #include "Core/Private/PDBReader/PDBReader.h"
 #include "Core/Private/Offsets.h"
@@ -30,7 +31,14 @@ void Init()
 {
 	using namespace ArkApi;
 
+	namespace fs = std::experimental::filesystem;
+
 	OpenConsole();
+
+	const std::string current_dir = Tools::GetCurrentDir();
+
+	if (!fs::exists(current_dir + "/logs"))
+		fs::create_directory(current_dir + "/logs");
 
 	Log::Get().Init("API");
 
@@ -45,7 +53,7 @@ void Init()
 
 	try
 	{
-		const std::wstring dir = Tools::ConvertToWideStr(Tools::GetCurrentDir());
+		const std::wstring dir = Tools::ConvertToWideStr(current_dir);
 		pdb_reader.Read(dir + L"/ShooterGameServer.pdb", &offsets_dump, &bitfields_dump);
 	}
 	catch (const std::runtime_error& error)

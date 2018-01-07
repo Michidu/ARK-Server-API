@@ -32,27 +32,14 @@ public:
 	/** Vector's Z component. */
 	float Z;
 
+
 public:
 
-	/** A zero vector (0,0,0) */
 	static const FVector ZeroVector;
 
-	/** One vector (1,1,1) */
-	static const FVector OneVector;
-
-	/** World up vector (0,0,1) */
-	static const FVector UpVector;
-
-	/** Unreal forward vector (1,0,0) */
-	static const FVector ForwardVector;
-
-	/** Unreal right vector (0,1,0) */
-	static const FVector RightVector;
-
-public:
-
-	/** Default constructor (no initialization). */
-	FORCEINLINE FVector();
+	/** Default constructor */
+	FORCEINLINE FVector() : X(0), Y(0), Z(0)
+	{};
 
 	/**
 	 * Constructor initializing all components to a single float value.
@@ -68,7 +55,7 @@ public:
 	 * @param InY Y Coordinate.
 	 * @param InZ Z Coordinate.
 	 */
-	FORCEINLINE FVector(float InX, float InY, float InZ);
+	FORCEINLINE CONSTEXPR FVector(float InX, float InY, float InZ);
 
 	/**
 	 * Constructs a vector from an FVector2D and Z value.
@@ -868,19 +855,7 @@ public:
 	 * @return Vector containing radian values
 	 */
 	static FVector DegreesToRadians(const FVector& DegVector);
-
-	/**
-	 * Given a current set of cluster centers, a set of points, iterate N times to move clusters to be central. 
-	 *
-	 * @param Clusters Reference to array of Clusters.
-	 * @param Points Set of points.
-	 * @param NumIterations Number of iterations.
-	 * @param NumConnectionsToBeValid Sometimes you will have long strings that come off the mass of points
-	 * which happen to have been chosen as Cluster starting points.  You want to be able to disregard those.
-	 */
-	static void GenerateClusterCenters(TArray<FVector>& Clusters, const TArray<FVector>& Points, int32 NumIterations, int32 NumConnectionsToBeValid);
 };
-
 
 /* FVector inline functions
  *****************************************************************************/
@@ -1084,15 +1059,12 @@ inline FVector FVector::DegreesToRadians(const FVector& DegVector)
 	return DegVector * (PI / 180.f);
 }
 
-FORCEINLINE FVector::FVector()
-{}
-
 FORCEINLINE FVector::FVector(float InF)
 	: X(InF), Y(InF), Z(InF)
 {
 }
 
-FORCEINLINE FVector::FVector(float InX, float InY, float InZ)
+FORCEINLINE CONSTEXPR FVector::FVector(float InX, float InY, float InZ)
 	: X(InX), Y(InY), Z(InZ)
 {
 }
