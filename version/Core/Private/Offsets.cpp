@@ -18,9 +18,10 @@ namespace ArkApi
 		return instance;
 	}
 
-	void Offsets::Init(std::unordered_map<std::string, intptr_t>&& offsets_dump)
+	void Offsets::Init(std::unordered_map<std::string, intptr_t>&& offsets_dump, std::unordered_map<std::string, BitField>&& bitfields_dump)
 	{
 		offsets_dump_.swap(offsets_dump);
+		bitfields_dump_.swap(bitfields_dump);
 	}
 
 	DWORD64 Offsets::GetAddress(const void* base, const std::string& name)
@@ -31,5 +32,27 @@ namespace ArkApi
 	LPVOID Offsets::GetAddress(const std::string& name)
 	{
 		return reinterpret_cast<LPVOID>(module_base_ + static_cast<DWORD64>(offsets_dump_[name]));
+	}
+
+	BitField Offsets::GetBitField(const void* base, const std::string& name)
+	{
+		return GetBitFieldInternal(base, name);
+	}
+
+	BitField Offsets::GetBitField(LPVOID base, const std::string& name)
+	{
+		return GetBitFieldInternal(base, name);
+	}
+
+	BitField Offsets::GetBitFieldInternal(const void* base, const std::string& name)
+	{
+		auto bf = bitfields_dump_[name];
+		auto cf = BitField();
+		cf.bit_position = bf.bit_position;
+		cf.length = bf.length;
+		cf.num_bits = bf.num_bits;
+		cf.offset = reinterpret_cast<DWORD64>(base) + static_cast<DWORD64>(bf.offset);
+
+		return cf;
 	}
 }

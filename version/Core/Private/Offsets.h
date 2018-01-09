@@ -2,6 +2,7 @@
 
 #include <windows.h>
 #include <unordered_map>
+#include "../Public/API/Base.h"
 
 namespace ArkApi
 {
@@ -15,16 +16,22 @@ namespace ArkApi
 		Offsets& operator=(const Offsets&) = delete;
 		Offsets& operator=(Offsets&&) = delete;
 
-		void Init(std::unordered_map<std::string, intptr_t>&& offsets_dump);
+		void Init(std::unordered_map<std::string, intptr_t>&& offsets_dump, std::unordered_map<std::string, BitField>&& bitfields_dump);
 
 		DWORD64 GetAddress(const void* base, const std::string& name);
 		LPVOID GetAddress(const std::string& name);
+
+		BitField GetBitField(const void* base, const std::string& name);
+		BitField GetBitField(LPVOID base, const std::string& name);
 
 	private:
 		Offsets();
 		~Offsets() = default;
 
+		BitField GetBitFieldInternal(const void* base, const std::string& name);
+
 		DWORD64 module_base_;
 		std::unordered_map<std::string, intptr_t> offsets_dump_;
+		std::unordered_map<std::string, BitField> bitfields_dump_;
 	};
 }

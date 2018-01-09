@@ -263,7 +263,7 @@ namespace ArkApi
 				if (type->get_length(&length) != S_OK)
 					return;
 
-				const BitField bit_field{offset, bit_position, num_bits, length};
+				const BitField bit_field{static_cast<DWORD64>(offset), bit_position, num_bits, length};
 
 				(*bitfields_dump_)[structure + "." + std::string(bbstr_name)] = bit_field;
 			}
