@@ -62,7 +62,7 @@ void Init()
 		return;
 	}
 
-	Offsets::Get().Init(move(offsets_dump));
+	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump));
 
 	InitHooks();
 

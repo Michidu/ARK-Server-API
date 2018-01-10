@@ -141,7 +141,7 @@ struct UStaticMesh;
 
 struct BitField
 {
-	LONG offset;
+	DWORD64 offset;
 	DWORD bit_position;
 	ULONGLONG num_bits;
 	ULONGLONG length; //in bytes
@@ -152,5 +152,5 @@ struct BitField
 ARK_API DWORD64 GetAddress(const void* base, const std::string& name);
 ARK_API LPVOID GetAddress(const std::string& name);
 
-//ARK_API BitField GetBitField(const void* base, const std::string& structure, const std::string& offset);
-//ARK_API BitField GetBitField(LPVOID base, const std::string& structure, const std::string& offset);
+ARK_API BitField GetBitField(const void* base, const std::string& name);
+ARK_API BitField GetBitField(LPVOID base, const std::string& name);

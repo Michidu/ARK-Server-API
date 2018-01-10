@@ -11,12 +11,12 @@ LPVOID GetAddress(const std::string& name)
 	return ArkApi::Offsets::Get().GetAddress(name);
 }
 
-//BitField GetBitField(const void* base, const std::string& structure, const std::string& offset)
-//{
-	//return ArkApi::Offsets::Get().GetBitField(base, structure, offset);
-//}
+BitField GetBitField(const void* base, const std::string& name)
+{
+	return ArkApi::Offsets::Get().GetBitField(base, name);
+}
 
-//BitField GetBitField(LPVOID base, const std::string& structure, const std::string& offset)
-//{
-	//return ArkApi::Hooks::Get().GetBitField(base, structure, offset);
-//}
+BitField GetBitField(LPVOID base, const std::string& name)
+{
+	return ArkApi::Offsets::Get().GetBitField(base, name);
+}
