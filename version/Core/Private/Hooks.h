@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IHooks.h"
+#include <IHooks.h>
 
 #include <unordered_map>
 #include <memory>

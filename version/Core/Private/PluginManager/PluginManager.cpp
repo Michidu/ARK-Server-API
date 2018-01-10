@@ -3,9 +3,10 @@
 #include <fstream>
 #include <filesystem>
 
-#include "Logger/Logger.h"
+#include <Logger/Logger.h>
+#include <Tools.h>
+
 #include "../Commands.h"
-#include "Tools.h"
 
 namespace ArkApi
 {

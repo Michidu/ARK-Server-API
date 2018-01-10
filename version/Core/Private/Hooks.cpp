@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Logger/Logger.h"
+#include <Logger/Logger.h>
 
 #include "../../MinHook.h"
 #include "Offsets.h"

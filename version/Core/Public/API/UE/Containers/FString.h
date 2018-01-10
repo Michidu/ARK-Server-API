@@ -4,13 +4,14 @@
 
 #include <string>
 
+#include <Logger/Logger.h>
+
 #include "TArray.h"
 #include "../Windows/MicrosoftPlatformString.h"
 #include "../Templates/MemoryOps.h"
 #include "../Templates/UnrealTemplate.h"
 #include "../Math/UnrealMathUtility.h"
 #include "../Misc/CString.h"
-#include "Logger/Logger.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244)
@@ -1599,7 +1600,7 @@ public:
 
 		const auto length = Len();
 		std::string str(length, '\0');
-		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(data, data + length, '?', &str[0]);
+		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(data, data + length, '?', str.data());
 
 		return str;
 	}

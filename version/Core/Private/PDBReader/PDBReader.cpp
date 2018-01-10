@@ -3,9 +3,10 @@
 #include <fstream>
 #include <comdef.h>
 
-#include "Logger/Logger.h"
+#include <Logger/Logger.h>
+#include <Tools.h>
+
 #include "../Private/Offsets.h"
-#include "Tools.h"
 
 namespace ArkApi
 {

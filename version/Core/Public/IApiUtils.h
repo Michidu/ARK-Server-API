@@ -11,14 +11,12 @@ namespace ArkApi
 		virtual ~IApiUtils() = default;
 
 		/**
-		* \brief Receives a pointer to UWorld
-		* \return Pointer to UWorld
+		* \brief Returns a pointer to UWorld
 		*/
 		virtual UWorld* GetWorld() const = 0;
 
 		/**
-		* \brief Receives a pointer to AShooterGameMode
-		* \return Pointer to AShooterGameMode
+		* \brief Returns a pointer to AShooterGameMode
 		*/
 		virtual AShooterGameMode* GetShooterGameMode() const = 0;
 
@@ -159,9 +157,7 @@ namespace ArkApi
 		}
 
 		/**
-		 * \brief Receives Steam ID from player controller
-		 * \param controller Player controller
-		 * \return Steam ID
+		 * \brief Returns Steam ID from player controller
 		 */
 		static uint64 GetSteamIdFromController(AController* controller)
 		{
@@ -179,7 +175,7 @@ namespace ArkApi
 		}
 
 		/**
-		 * \brief Receives player from steam name
+		 * \brief Finds player from the given steam name
 		 * \param steam_name Steam name
 		 * \return Pointer to AShooterPlayerController
 		 */
@@ -204,7 +200,7 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Receives player from character name
+		* \brief Finds player from the given character name
 		* \param character_name Character name
 		* \param search Type Defaulted To ESearchCase::Type::IgnoreCase
 		* \param full_match Will match the full length of the string if true
@@ -228,20 +224,29 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Returns the character name
+		* \brief Returns the character name of player
 		* \param player_controller Player
 		*/
 		static FString GetCharacterName(AShooterPlayerController* player_controller)
 		{
-			FString name;
-			if (player_controller)
-				player_controller->GetPlayerCharacterName(&name);
+			AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField()());
+			if (player_state && player_state->MyPlayerDataStructField()())
+				return player_state->MyPlayerDataStructField()()->MyPlayerCharacterConfigField()().PlayerCharacterName;
 
-			return name;
+			return FString("");
 		}
 
 		/**
-		 * \brief Receives player from steam id
+		* \brief Returns the steam name of player
+		* \param player_controller Player
+		*/
+		static FString GetSteamName(AController* player_controller)
+		{
+			return player_controller->PlayerStateField()()->PlayerNameField()();
+		}
+
+		/**
+		 * \brief Finds player from the given steam id
 		 * \param steam_id Steam id
 		 * \return Pointer to AShooterPlayerController
 		 */
@@ -252,11 +257,7 @@ namespace ArkApi
 			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
-				APlayerState* player_state = player_controller->PlayerStateField()();
-
-				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object
-				);
-				const uint64 current_steam_id = steam_net_id->UniqueNetId;
+				const uint64 current_steam_id = GetSteamIdFromController(player_controller.Get());
 
 				if (current_steam_id == steam_id)
 				{
@@ -388,8 +389,8 @@ namespace ArkApi
 		                                               float max_dist = -1)
 		{
 			if (!(me && him && me->GetPlayerCharacter() && him->GetPlayerCharacter()
-				&& !me->GetPlayerCharacter()->IsDead() && !him->GetPlayerCharacter()->IsDead())
-				)
+					&& !me->GetPlayerCharacter()->IsDead() && !him->GetPlayerCharacter()->IsDead())
+			)
 			{
 				return "One of players is dead";
 			}
@@ -412,14 +413,14 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Teleport player to pos
+		* \brief Teleports player to the given position
 		* \param player_controller Player
 		* \param pos New position
 		*/
 		static bool TeleportToPos(AShooterPlayerController* player_controller, FVector pos)
 		{
-			if (player_controller && player_controller->GetPlayerCharacter() && !player_controller
-			                                                                     ->GetPlayerCharacter()->IsDead())
+			if (player_controller && player_controller->GetPlayerCharacter()
+				&& !player_controller->GetPlayerCharacter()->IsDead())
 			{
 				player_controller->SetPlayerPos(pos.X, pos.Y, pos.Z);
 				return true;
@@ -455,6 +456,42 @@ namespace ArkApi
 			}
 
 			return item_count;
+		}
+
+		/**
+		 * \brief Returns IP address of player
+		 */
+		static FString GetIPAddress(AShooterPlayerController* player)
+		{
+			FString ip_address = "";
+
+			AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player->PlayerStateField()());
+
+			if (player_state && player_state->MyPlayerDataStructField()())
+				ip_address = player_state->MyPlayerDataStructField()()->SavedNetworkAddressField()();
+
+			return ip_address;
+		}
+
+		/**
+		 * \brief Returns blueprint from UPrimalItem
+		 */
+		static FString GetItemBlueprint(UPrimalItem* item)
+		{
+			FString path_name;
+			item->ClassField()()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
+
+			if (int find_index = 0; path_name.FindChar(' ', find_index))
+			{
+				path_name = "Blueprint'" + path_name.Mid(find_index + 1,
+				                                         path_name.Len() - (find_index + (path_name.EndsWith(
+					                                                                          "_C", ESearchCase::CaseSensitive)
+					                                                                          ? 3
+					                                                                          : 1))) + "'";
+				return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
+			}
+
+			return FString("");
 		}
 	};
 

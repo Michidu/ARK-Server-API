@@ -1,4 +1,5 @@
-#include "../Public/API/Base.h"
+#include <API/Base.h>
+
 #include "Offsets.h"
 
 DWORD64 GetAddress(const void* base, const std::string& name)

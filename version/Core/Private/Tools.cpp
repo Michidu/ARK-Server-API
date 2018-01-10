@@ -24,9 +24,19 @@ namespace ArkApi::Tools
 			wstr.resize(size);
 
 			size_t converted_chars;
-			mbstowcs_s(&converted_chars, &wstr[0], size + 1, text.c_str(), _TRUNCATE);
+			mbstowcs_s(&converted_chars, wstr.data(), size + 1, text.c_str(), _TRUNCATE);
 		}
 
 		return wstr;
+	}
+	
+	std::string ConvertToAnsiStr(const std::wstring& text)
+	{
+		const size_t length = text.size();
+
+		std::string str(length, '\0');
+		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(text.c_str(), text.c_str() + length, '?', str.data());
+
+		return str;
 	}
 }
