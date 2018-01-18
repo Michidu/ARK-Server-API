@@ -138,6 +138,12 @@ struct UAntiDupeTransactionLog;
 struct AMatineeActor;
 struct ANPCZoneManager;
 struct UStaticMesh;
+struct UPrimalLocalProfile;
+struct UPrimalBuffPersistentData;
+struct UCharacterMovementComponent{};
+struct FDinoExtraDefaultItemList{};
+struct FWeaponData{};
+struct FAIRequestID{};
 
 struct BitField
 {

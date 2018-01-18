@@ -40,10 +40,12 @@ namespace ArkApi
 		Log::GetLog()->info("Dumping structures..");
 		DumpStructs(symbol);
 
-		Log::GetLog()->info("Dumping functions..\n");
+		Log::GetLog()->info("Dumping functions..");
 		DumpFreeFunctions(symbol);
 
 		Cleanup(symbol, dia_session);
+
+		Log::GetLog()->info("Successfully read information from PDB\n");
 	}
 
 	void PdbReader::LoadDataFromPdb(const std::wstring& path, IDiaDataSource** dia_source, IDiaSession** session,

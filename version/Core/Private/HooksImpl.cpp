@@ -36,6 +36,8 @@ namespace ArkApi
 		hooks.SetHook("RCONClientConnection.ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
 		              &RCONClientConnection_ProcessRCONPacket_original);
 		hooks.SetHook("AGameState.DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
+
+		Log::GetLog()->info("Initialized hooks\n");
 	}
 
 

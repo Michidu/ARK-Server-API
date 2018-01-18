@@ -65,7 +65,7 @@ struct FBox
 {
 };
 
-template <typename ObjectType>
+template <typename ObjectType, int Dummy = int()>
 struct TSharedPtr
 {
 	ObjectType* Object;

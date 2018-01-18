@@ -8,7 +8,7 @@
 #include "Core/Private/PluginManager/PluginManager.h"
 #include "Core/Public/Logger/Logger.h"
 
-#pragma comment(lib, "libMinHook-x64-v141-md.lib")
+#pragma comment(lib, "libMinHook.x64.lib")
 
 HINSTANCE m_hinst_dll = nullptr;
 extern "C" UINT_PTR mProcs[17]{0};
@@ -23,8 +23,8 @@ LPCSTR import_names[] = {
 void OpenConsole()
 {
 	AllocConsole();
-	FILE* pCout;
-	freopen_s(&pCout, "conout$", "w", stdout);
+	FILE* p_cout;
+	freopen_s(&p_cout, "conout$", "w", stdout);
 }
 
 void Init()
@@ -41,7 +41,7 @@ void Init()
 		fs::create_directory(current_dir + "/logs");
 
 	Log::Get().Init("API");
-
+	
 	Log::GetLog()->info("-----------------------------------------------");
 	Log::GetLog()->info("ARK: Server Api V{}", API_VERSION);
 	Log::GetLog()->info("Loading...\n");
@@ -56,7 +56,7 @@ void Init()
 		const std::wstring dir = Tools::ConvertToWideStr(current_dir);
 		pdb_reader.Read(dir + L"/ShooterGameServer.pdb", &offsets_dump, &bitfields_dump);
 	}
-	catch (const std::runtime_error& error)
+	catch (const std::exception& error)
 	{
 		Log::GetLog()->critical("Failed to read pdb. {}", error.what());
 		return;

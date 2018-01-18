@@ -47,7 +47,7 @@ namespace ArkApi
 
 				Log::GetLog()->info(stream.str());
 			}
-			catch (const std::runtime_error& error)
+			catch (const std::exception& error)
 			{
 				Log::GetLog()->warn(error.what());
 			}
@@ -180,7 +180,7 @@ namespace ArkApi
 			{
 				Get().LoadPlugin(plugin_name);
 			}
-			catch (const std::runtime_error& error)
+			catch (const std::exception& error)
 			{
 				GetApiUtils().SendServerMessage(shooter_controller, FColorList::Red, "Failed to load plugin - {}", error.what());
 
@@ -209,7 +209,7 @@ namespace ArkApi
 			{
 				Get().UnloadPlugin(plugin_name);
 			}
-			catch (const std::runtime_error& error)
+			catch (const std::exception& error)
 			{
 				GetApiUtils().SendServerMessage(shooter_controller, FColorList::Red, "Failed to unload plugin - {}", error.what());
 

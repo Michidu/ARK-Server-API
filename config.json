@@ -73,11 +73,11 @@
 	"UBoolProperty",
 	"APrimalDinoAIController",
 	"APrimalStructureItemContainer",
-	"UShooterGameInstance"
+	"UShooterGameInstance",
+	"AMatineeActor"
   ],
   "functions": [
     "StaticLoadObject",
-    "GetPrivateStaticClassBody<UClass>",
     "RaycastSingle",
 	"StaticConstructObject"
   ]
