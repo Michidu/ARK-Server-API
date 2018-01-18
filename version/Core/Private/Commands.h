@@ -73,7 +73,7 @@ namespace ArkApi
 		bool RemoveCommand(const FString& command, std::vector<std::shared_ptr<T>>& commands)
 		{
 			auto iter = std::find_if(commands.begin(), commands.end(),
-			                         [command](const std::shared_ptr<T>& data) -> bool
+			                         [&command](const std::shared_ptr<T>& data) -> bool
 			                         {
 				                         return data->command == command;
 			                         });

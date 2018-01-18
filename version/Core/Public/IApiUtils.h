@@ -200,16 +200,18 @@ namespace ArkApi
 		}
 
 		/**
-		* \brief Finds player from the given character name
+		* \brief Finds all matching players from the given character name
 		* \param character_name Character name
 		* \param search Type Defaulted To ESearchCase::Type::IgnoreCase
 		* \param full_match Will match the full length of the string if true
-		* \return Pointer to AShooterPlayerController
+		* \return Array of AShooterPlayerController*
 		*/
-		AShooterPlayerController* FindPlayerFromCharacterName(const FString& character_name,
+		TArray<AShooterPlayerController*> FindPlayerFromCharacterName(const FString& character_name,
 		                                                      ESearchCase::Type search = ESearchCase::Type::IgnoreCase,
 		                                                      bool full_match = false) const
 		{
+			TArray<AShooterPlayerController*> found_players;
+
 			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
@@ -217,10 +219,10 @@ namespace ArkApi
 				FString char_name = GetCharacterName(shooter_player);
 
 				if (full_match ? char_name.Equals(character_name, search) : char_name.StartsWith(character_name, search))
-					return shooter_player;
+					found_players.Add(shooter_player);
 			}
 
-			return nullptr;
+			return found_players;
 		}
 
 		/**

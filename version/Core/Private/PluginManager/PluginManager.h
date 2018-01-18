@@ -14,13 +14,14 @@ namespace ArkApi
 	struct Plugin
 	{
 		Plugin(HINSTANCE h_module, std::string name, std::string full_name,
-		       std::string description, float version, float min_api_version)
+		       std::string description, float version, float min_api_version, std::vector<std::string> dependencies)
 			: h_module(h_module),
 			  name(std::move(name)),
 			  full_name(std::move(full_name)),
 			  description(std::move(description)),
 			  version(version),
-			  min_api_version(min_api_version)
+			  min_api_version(min_api_version),
+			  dependencies(std::move(dependencies))
 		{
 		}
 
@@ -30,6 +31,7 @@ namespace ArkApi
 		std::string description;
 		float version;
 		float min_api_version;
+		std::vector<std::string> dependencies;
 	};
 
 	class PluginManager
@@ -45,7 +47,7 @@ namespace ArkApi
 		/**
 		 * \brief Find and load all plugins
 		 */
-		void LoadAllPlugins() noexcept;
+		void LoadAllPlugins();
 
 		/**
 		 * \brief Load plugin by it's name
@@ -72,6 +74,8 @@ namespace ArkApi
 		~PluginManager() = default;
 
 		static nlohmann::json ReadPluginInfo(const std::string& plugin_name);
+
+		void CheckPluginsDependencies();
 
 		// Callbacks
 		static void LoadPluginCmd(APlayerController*, FString*, bool);

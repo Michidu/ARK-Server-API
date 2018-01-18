@@ -43,7 +43,7 @@ void Init()
 	Log::Get().Init("API");
 
 	Log::GetLog()->info("-----------------------------------------------");
-	Log::GetLog()->info("ARK Beyond Api V{}", API_VERSION);
+	Log::GetLog()->info("ARK: Server Api V{}", API_VERSION);
 	Log::GetLog()->info("Loading...\n");
 
 	PdbReader pdb_reader;
@@ -65,6 +65,8 @@ void Init()
 	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump));
 
 	InitHooks();
+
+	Log::GetLog()->info("Loading plugins..\n");
 
 	PluginManager::Get().LoadAllPlugins();
 

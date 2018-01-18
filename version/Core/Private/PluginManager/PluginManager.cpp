@@ -5,6 +5,7 @@
 
 #include <Logger/Logger.h>
 #include <Tools.h>
+#include <API/UE/Math/ColorList.h>
 
 #include "../Commands.h"
 
@@ -24,7 +25,7 @@ namespace ArkApi
 		return instance;
 	}
 
-	void PluginManager::LoadAllPlugins() noexcept
+	void PluginManager::LoadAllPlugins()
 	{
 		namespace fs = std::experimental::filesystem;
 
@@ -37,9 +38,10 @@ namespace ArkApi
 
 			try
 			{
+				std::stringstream stream;
+
 				std::shared_ptr<Plugin>& plugin = LoadPlugin(filename);
 
-				std::stringstream stream;
 				stream << "Loaded plugin - " << (plugin->full_name.empty() ? plugin->name : plugin->full_name) << " V" << std::fixed
 					<< std::setprecision(1) << plugin->version << " (" << plugin->description << ")";
 
@@ -50,6 +52,8 @@ namespace ArkApi
 				Log::GetLog()->warn(error.what());
 			}
 		}
+
+		CheckPluginsDependencies();
 
 		Log::GetLog()->info("Loaded all plugins\n");
 	}
@@ -82,7 +86,8 @@ namespace ArkApi
 
 		return loaded_plugins_.emplace_back(std::make_shared<Plugin>(h_module, plugin_name, plugin_info["FullName"],
 		                                                             plugin_info["Description"], plugin_info["Version"],
-		                                                             plugin_info["MinApiVersion"]));
+		                                                             plugin_info["MinApiVersion"],
+		                                                             plugin_info["Dependencies"]));
 	}
 
 	void PluginManager::UnloadPlugin(const std::string& plugin_name) noexcept(false)
@@ -109,12 +114,7 @@ namespace ArkApi
 
 	nlohmann::json PluginManager::ReadPluginInfo(const std::string& plugin_name)
 	{
-		nlohmann::json plugin_info;
-
-		plugin_info["FullName"] = "";
-		plugin_info["Description"] = "No description";
-		plugin_info["Version"] = 1.0f;
-		plugin_info["MinApiVersion"] = .0f;
+		nlohmann::json plugin_info = nlohmann::json::object();
 
 		const std::string dir_path = Tools::GetCurrentDir() + "/ArkApi/Plugins/" + plugin_name;
 		const std::string config_path = dir_path + "/PluginInfo.json";
@@ -126,7 +126,30 @@ namespace ArkApi
 			file.close();
 		}
 
+		plugin_info["FullName"] = plugin_info.value("FullName", "");
+		plugin_info["Description"] = plugin_info.value("Description", "No description");
+		plugin_info["Version"] = plugin_info.value("Version", 1.0f);
+		plugin_info["MinApiVersion"] = plugin_info.value("MinApiVersion", .0f);
+		plugin_info["Dependencies"] = plugin_info.value("Dependencies", std::vector<std::string>{});
+
 		return plugin_info;
+	}
+
+	void PluginManager::CheckPluginsDependencies()
+	{
+		for (const auto& plugin : loaded_plugins_)
+		{
+			if (plugin->dependencies.empty())
+				continue;
+
+			for (const std::string& dependency : plugin->dependencies)
+			{
+				if (FindPlugin(dependency) == loaded_plugins_.end())
+				{
+					Log::GetLog()->error("Plugin {} is  missing! {} might not work correctly", dependency, plugin->name);
+				}
+			}
+		}
 	}
 
 	std::vector<std::shared_ptr<Plugin>>::const_iterator PluginManager::FindPlugin(const std::string& plugin_name)
@@ -149,6 +172,8 @@ namespace ArkApi
 
 		if (parsed.IsValidIndex(1))
 		{
+			AShooterPlayerController* shooter_controller = static_cast<AShooterPlayerController*>(player_controller);
+
 			const std::string plugin_name = parsed[1].ToString();
 
 			try
@@ -157,9 +182,13 @@ namespace ArkApi
 			}
 			catch (const std::runtime_error& error)
 			{
+				GetApiUtils().SendServerMessage(shooter_controller, FColorList::Red, "Failed to load plugin - {}", error.what());
+
 				Log::GetLog()->warn(error.what());
 				return;
 			}
+
+			GetApiUtils().SendServerMessage(shooter_controller, FColorList::Green, "Successfully loaded plugin");
 
 			Log::GetLog()->info("Loaded plugin - {}", plugin_name.c_str());
 		}
@@ -172,6 +201,8 @@ namespace ArkApi
 
 		if (parsed.IsValidIndex(1))
 		{
+			AShooterPlayerController* shooter_controller = static_cast<AShooterPlayerController*>(player_controller);
+
 			const std::string plugin_name = parsed[1].ToString();
 
 			try
@@ -180,9 +211,13 @@ namespace ArkApi
 			}
 			catch (const std::runtime_error& error)
 			{
+				GetApiUtils().SendServerMessage(shooter_controller, FColorList::Red, "Failed to unload plugin - {}", error.what());
+
 				Log::GetLog()->warn(error.what());
 				return;
 			}
+
+			GetApiUtils().SendServerMessage(shooter_controller, FColorList::Green, "Successfully unloaded plugin");
 
 			Log::GetLog()->info("Unloaded plugin - {}", plugin_name.c_str());
 		}
