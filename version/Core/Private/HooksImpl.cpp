@@ -8,10 +8,12 @@
 #include "Hooks.h"
 #include "ApiUtils.h"
 #include "Commands.h"
+#include "PluginManager/PluginManager.h"
 
 namespace ArkApi
 {
 	// Hooks declaration
+	DECLARE_HOOK(UEngine_Init, void, DWORD64, DWORD64);
 	DECLARE_HOOK(UWorld_InitWorld, void, UWorld*, DWORD64);
 	DECLARE_HOOK(UWorld_Tick, void, DWORD64, DWORD64, float);
 	DECLARE_HOOK(AShooterGameMode_InitGame, void, AShooterGameMode*, FString*, FString*, FString*);
@@ -25,6 +27,7 @@ namespace ArkApi
 	{
 		auto& hooks = Hooks::Get();
 
+		hooks.SetHook("UEngine.Init", &Hook_UEngine_Init, &UEngine_Init_original);
 		hooks.SetHook("UWorld.InitWorld", &Hook_UWorld_InitWorld, &UWorld_InitWorld_original);
 		hooks.SetHook("UWorld.Tick", &Hook_UWorld_Tick, &UWorld_Tick_original);
 		hooks.SetHook("AShooterGameMode.InitGame", &Hook_AShooterGameMode_InitGame, &AShooterGameMode_InitGame_original);
@@ -40,8 +43,17 @@ namespace ArkApi
 		Log::GetLog()->info("Initialized hooks\n");
 	}
 
-
 	// Hooks
+
+	void Hook_UEngine_Init(DWORD64 _this, DWORD64 InEngineLoop)
+	{
+		UEngine_Init_original(_this, InEngineLoop);
+
+		Log::GetLog()->info("UGameEngine::Init was called");
+		Log::GetLog()->info("Loading plugins..\n");
+
+		PluginManager::Get().LoadAllPlugins();
+	}
 
 	void Hook_UWorld_InitWorld(UWorld* world, DWORD64 ivs)
 	{

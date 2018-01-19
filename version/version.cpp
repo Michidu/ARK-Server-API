@@ -58,17 +58,13 @@ void Init()
 	}
 	catch (const std::exception& error)
 	{
-		Log::GetLog()->critical("Failed to read pdb. {}", error.what());
+		Log::GetLog()->critical("Failed to read pdb - {}", error.what());
 		return;
 	}
 
 	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump));
 
 	InitHooks();
-
-	Log::GetLog()->info("Loading plugins..\n");
-
-	PluginManager::Get().LoadAllPlugins();
 
 	Log::GetLog()->info("API was successfully loaded");
 	Log::GetLog()->info("-----------------------------------------------\n");

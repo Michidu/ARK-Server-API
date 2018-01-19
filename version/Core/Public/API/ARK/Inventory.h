@@ -1,6 +1,6 @@
 #pragma once
 
-class UWorld;
+struct UWorld;
 
 struct FItemNetID
 {
@@ -16,6 +16,31 @@ struct FCustomItemData
 	TArray<UObject *> CustomDataObjects;
 	TArray<UClass *> CustomDataClasses;
 	TArray<FName> CustomDataNames;
+};
+
+struct FItemCraftQueueEntry
+{
+	FItemNetID ItemID;
+	int Quantity;
+	bool bIsRepair;
+	bool bIgnoreInventoryRequirement;
+	float RepairPercentage;
+	float RepairSpeedMultiplier;
+};
+
+struct FItemSpawnActorClassOverride
+{
+	TSubclassOf<UPrimalItem> ItemClass;
+	TSubclassOf<AActor> ActorClassOverride;
+};
+
+struct FLevelExperienceRamp
+{
+	TArray<float> ExperiencePointsForLevel;
+};
+
+struct UAssetUserData : UObject
+{
 };
 
 struct UActorComponent : UObject
@@ -205,7 +230,6 @@ struct UPrimalInventoryComponent : UActorComponent
 	void InitDefaultInventory() { NativeCall<void>(this, "UPrimalInventoryComponent.InitDefaultInventory"); }
 	void InitializeInventory() { NativeCall<void>(this, "UPrimalInventoryComponent.InitializeInventory"); }
 	void CheckRefreshDefaultInventoryItems() { NativeCall<void>(this, "UPrimalInventoryComponent.CheckRefreshDefaultInventoryItems"); }
-	void SetFirstPersonMasterPoseComponent(USkeletalMeshComponent * WeaponComp) { NativeCall<void, USkeletalMeshComponent *>(this, "UPrimalInventoryComponent.SetFirstPersonMasterPoseComponent", WeaponComp); }
 	void SetEquippedItemsOwnerNoSee(bool bNewOwnerNoSee, bool bForceHideFirstPerson) { NativeCall<void, bool, bool>(this, "UPrimalInventoryComponent.SetEquippedItemsOwnerNoSee", bNewOwnerNoSee, bForceHideFirstPerson); }
 	bool RemoteInventoryAllowViewing(AShooterPlayerController * PC) { return NativeCall<bool, AShooterPlayerController *>(this, "UPrimalInventoryComponent.RemoteInventoryAllowViewing", PC); }
 	bool RemoteInventoryAllowAddItems(AShooterPlayerController * PC, UPrimalItem * anItem, int * anItemQuantityOverride, bool bRequestedByPlayer) { return NativeCall<bool, AShooterPlayerController *, UPrimalItem *, int *, bool>(this, "UPrimalInventoryComponent.RemoteInventoryAllowAddItems", PC, anItem, anItemQuantityOverride, bRequestedByPlayer); }
@@ -388,7 +412,6 @@ struct UPrimalItem : UObject
 	FieldValue<TArray<TSubclassOf<AShooterWeapon>>> SkinWeaponTemplatesField() { return { this, "UPrimalItem.SkinWeaponTemplates" }; }
 	FieldValue<TSubclassOf<AShooterWeapon>> AmmoSupportDragOntoWeaponItemWeaponTemplateField() { return { this, "UPrimalItem.AmmoSupportDragOntoWeaponItemWeaponTemplate" }; }
 	FieldValue<TArray<TSubclassOf<AShooterWeapon>>> AmmoSupportDragOntoWeaponItemWeaponTemplatesField() { return { this, "UPrimalItem.AmmoSupportDragOntoWeaponItemWeaponTemplates" }; }
-	//FieldValue<TArray<FUseItemAddCharacterStatusValue>> UseItemAddCharacterStatusValuesField() { return { this, "UPrimalItem.UseItemAddCharacterStatusValues" }; }
 	FieldValue<float> Ingredient_WeightIncreasePerQuantityField() { return { this, "UPrimalItem.Ingredient_WeightIncreasePerQuantity" }; }
 	FieldValue<float> Ingredient_FoodIncreasePerQuantityField() { return { this, "UPrimalItem.Ingredient_FoodIncreasePerQuantity" }; }
 	FieldValue<float> Ingredient_HealthIncreasePerQuantityField() { return { this, "UPrimalItem.Ingredient_HealthIncreasePerQuantity" }; }
@@ -399,6 +422,7 @@ struct UPrimalItem : UObject
 	FieldValue<FString> DurabilityStringShortField() { return { this, "UPrimalItem.DurabilityStringShort" }; }
 	FieldValue<FString> DurabilityStringField() { return { this, "UPrimalItem.DurabilityString" }; }
 	FieldValue<float> DroppedItemLifeSpanOverrideField() { return { this, "UPrimalItem.DroppedItemLifeSpanOverride" }; }
+	FieldValue<UStaticMesh *> DroppedMeshOverrideField() { return { this, "UPrimalItem.DroppedMeshOverride" }; }
 	FieldValue<UMaterialInterface *> DroppedMeshMaterialOverrideField() { return { this, "UPrimalItem.DroppedMeshMaterialOverride" }; }
 	FieldValue<FVector> DroppedMeshOverrideScale3DField() { return { this, "UPrimalItem.DroppedMeshOverrideScale3D" }; }
 	FieldValue<TSubclassOf<UPrimalItem>> SpoilingItemField() { return { this, "UPrimalItem.SpoilingItem" }; }
@@ -446,7 +470,6 @@ struct UPrimalItem : UObject
 	FieldArray<__int16, 6> ItemColorIDField() { return { this, "UPrimalItem.ItemColorID" }; }
 	FieldArray<__int16, 6> PreSkinItemColorIDField() { return { this, "UPrimalItem.PreSkinItemColorID" }; }
 	FieldArray<char, 6> bUseItemColorField() { return { this, "UPrimalItem.bUseItemColor" }; }
-	//FieldValue<TSubclassOf<UPrimalColorSet>> RandomColorSetField() { return { this, "UPrimalItem.RandomColorSet" }; }
 	FieldValue<int> ItemQuantityField() { return { this, "UPrimalItem.ItemQuantity" }; }
 	FieldValue<int> MaxItemQuantityField() { return { this, "UPrimalItem.MaxItemQuantity" }; }
 	FieldValue<TArray<unsigned __int64>> SteamItemUserIDsField() { return { this, "UPrimalItem.SteamItemUserIDs" }; }
@@ -477,7 +500,6 @@ struct UPrimalItem : UObject
 	FieldValue<TWeakObjectPtr<AShooterWeapon>> AssociatedWeaponField() { return { this, "UPrimalItem.AssociatedWeapon" }; }
 	FieldValue<UPrimalItem *> MyItemSkinField() { return { this, "UPrimalItem.MyItemSkin" }; }
 	FieldValue<TWeakObjectPtr<AShooterCharacter>> LastOwnerPlayerField() { return { this, "UPrimalItem.LastOwnerPlayer" }; }
-	//FieldValue<TArray<FCropItemPhaseData>> CropPhasesDataField() { return { this, "UPrimalItem.CropPhasesData" }; }
 	FieldValue<float> CropGrowingFertilizerConsumptionRateField() { return { this, "UPrimalItem.CropGrowingFertilizerConsumptionRate" }; }
 	FieldValue<float> CropMaxFruitFertilizerConsumptionRateField() { return { this, "UPrimalItem.CropMaxFruitFertilizerConsumptionRate" }; }
 	FieldValue<float> CropGrowingWaterConsumptionRateField() { return { this, "UPrimalItem.CropGrowingWaterConsumptionRate" }; }
@@ -587,8 +609,6 @@ struct UPrimalItem : UObject
 	void EquippedItem() { NativeCall<void>(this, "UPrimalItem.EquippedItem"); }
 	void UnequippedItem() { NativeCall<void>(this, "UPrimalItem.UnequippedItem"); }
 	void UpdatedItem() { NativeCall<void>(this, "UPrimalItem.UpdatedItem"); }
-	void AddAttachments(AActor * UseOtherActor, bool bDontRemoveBeforeAttaching, USkeletalMeshComponent * Saddle, bool bRefreshDefaultAttachments) { NativeCall<void, AActor *, bool, USkeletalMeshComponent *, bool>(this, "UPrimalItem.AddAttachments", UseOtherActor, bDontRemoveBeforeAttaching, Saddle, bRefreshDefaultAttachments); }
-	void SetFirstPersonMasterPoseComponent(USkeletalMeshComponent * NewMasterPoseComponent) { NativeCall<void, USkeletalMeshComponent *>(this, "UPrimalItem.SetFirstPersonMasterPoseComponent", NewMasterPoseComponent); }
 	void SetOwnerNoSee(bool bNoSee, bool bForceHideFirstPerson) { NativeCall<void, bool, bool>(this, "UPrimalItem.SetOwnerNoSee", bNoSee, bForceHideFirstPerson); }
 	void RemoveAttachments(AActor * UseOtherActor, bool bRefreshDefaultAttachments) { NativeCall<void, AActor *, bool>(this, "UPrimalItem.RemoveAttachments", UseOtherActor, bRefreshDefaultAttachments); }
 	UActorComponent * GetAttachedComponent(int attachmentIndex, AActor * UseOtherActor) { return NativeCall<UActorComponent *, int, AActor *>(this, "UPrimalItem.GetAttachedComponent", attachmentIndex, UseOtherActor); }
@@ -693,6 +713,8 @@ struct UPrimalItem : UObject
 	bool IsUsableConsumable() { return NativeCall<bool>(this, "UPrimalItem.IsUsableConsumable"); }
 	bool CanEquipWeapon() { return NativeCall<bool>(this, "UPrimalItem.CanEquipWeapon"); }
 	void RemoveCustomItemData(FName CustomDataName) { NativeCall<void, FName>(this, "UPrimalItem.RemoveCustomItemData", CustomDataName); }
+	bool GetCustomItemData(FName CustomDataName, FCustomItemData * OutData) { return NativeCall<bool, FName, FCustomItemData *>(this, "UPrimalItem.GetCustomItemData", CustomDataName, OutData); }
+	void SetCustomItemData(FCustomItemData * InData) { NativeCall<void, FCustomItemData *>(this, "UPrimalItem.SetCustomItemData", InData); }
 	int GetEngramRequirementLevel() { return NativeCall<int>(this, "UPrimalItem.GetEngramRequirementLevel"); }
 	void BPSetWeaponClipAmmo(int NewClipAmmo) { NativeCall<void, int>(this, "UPrimalItem.BPSetWeaponClipAmmo", NewClipAmmo); }
 	void Crafted_Implementation(bool bWasCraftedFromEngram) { NativeCall<void, bool>(this, "UPrimalItem.Crafted_Implementation", bWasCraftedFromEngram); }
@@ -763,22 +785,11 @@ struct FItemNetInfo
 	FieldValue<FString> CrafterCharacterNameField() { return { this, "FItemNetInfo.CrafterCharacterName" }; }
 	FieldValue<FString> CrafterTribeNameField() { return { this, "FItemNetInfo.CrafterTribeName" }; }
 	FieldValue<float> CraftedSkillBonusField() { return { this, "FItemNetInfo.CraftedSkillBonus" }; }
-};
 
-struct FItemCraftQueueEntry
-{
-	FItemNetID ItemID;
-	int Quantity;
-	bool bIsRepair;
-	bool bIgnoreInventoryRequirement;
-	float RepairPercentage;
-	float RepairSpeedMultiplier;
-};
+	// Functions
 
-struct FItemSpawnActorClassOverride
-{
-	TSubclassOf<UPrimalItem> ItemClass;
-	TSubclassOf<AActor> ActorClassOverride;
+	FItemNetInfo * operator=(FItemNetInfo * __that) { return NativeCall<FItemNetInfo *, FItemNetInfo *>(this, "FItemNetInfo.operator=", __that); }
+	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FItemNetInfo.StaticStruct"); }
 };
 
 struct FItemStatInfo
@@ -798,9 +809,3 @@ struct FItemStatInfo
 	unsigned __int16 GetRandomValue(float QualityLevel, float * outRandonMultiplier) { return NativeCall<unsigned __int16, float, float *>(this, "FItemStatInfo.GetRandomValue", QualityLevel, outRandonMultiplier); }
 	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FItemStatInfo.StaticStruct"); }
 };
-
-struct FLevelExperienceRamp
-{
-	TArray<float> ExperiencePointsForLevel;
-};
-

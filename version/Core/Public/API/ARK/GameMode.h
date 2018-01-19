@@ -5,13 +5,27 @@
 
 #include "API/UE/Containers/Map.h"
 
-class UWorld : UObject
+struct UWorld : UObject
 {
-public:
+	struct InitializationValues
+	{
+		unsigned __int32 bInitializeScenes : 1;
+		unsigned __int32 bAllowAudioPlayback : 1;
+		unsigned __int32 bRequiresHitProxies : 1;
+		unsigned __int32 bCreatePhysicsScene : 1;
+		unsigned __int32 bCreateNavigation : 1;
+		unsigned __int32 bCreateAISystem : 1;
+		unsigned __int32 bShouldSimulatePhysics : 1;
+		unsigned __int32 bEnableTraceCollision : 1;
+		unsigned __int32 bTransactional : 1;
+		unsigned __int32 bCreateFXSystem : 1;
+	};
+
 	FieldValue<TArray<TSubclassOf<AActor>>> ActorsClassesAllowedToSaveField() { return { this, "UWorld.ActorsClassesAllowedToSave" }; }
 	FieldValue<bool> bIsIdleField() { return { this, "UWorld.bIsIdle" }; }
+	FieldValue<TArray<TWeakObjectPtr<AActor>>> LocalStasisActorsField() { return { this, "UWorld.LocalStasisActors" }; }
+	FieldValue<TSet<FName, DefaultKeyFuncs<FName, 0>, FDefaultSetAllocator>> LevelNameHashField() { return { this, "UWorld.LevelNameHash" }; }
 	FieldValue<ULevel *> PersistentLevelField() { return { this, "UWorld.PersistentLevel" }; }
-	FieldValue<UNetDriver *> NetDriverField() { return { this, "UWorld.NetDriver" }; }
 	FieldValue<AGameState *> GameStateField() { return { this, "UWorld.GameState" }; }
 	FieldValue<TArray<UObject *>> ExtraReferencedObjectsField() { return { this, "UWorld.ExtraReferencedObjects" }; }
 	FieldValue<FString> StreamingLevelsPrefixField() { return { this, "UWorld.StreamingLevelsPrefix" }; }
@@ -23,9 +37,14 @@ public:
 	FieldValue<ULevel *> CurrentLevelField() { return { this, "UWorld.CurrentLevel" }; }
 	FieldValue<int> FrameCounterField() { return { this, "UWorld.FrameCounter" }; }
 	FieldValue<bool> GamePreviewField() { return { this, "UWorld.GamePreview" }; }
+	FieldValue<TMap<FString, TArray<TArray<TArray<unsigned int>>>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, TArray<TArray<TArray<unsigned int>>>, 0> >> LocalInstancedStaticMeshComponentInstancesVisibilityStateField() { return { this, "UWorld.LocalInstancedStaticMeshComponentInstancesVisibilityState" }; }
+	FieldValue<TMap<FName, TWeakObjectPtr<UClass>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, TWeakObjectPtr<UClass>, 0> >> PrioritizedObjectMapField() { return { this, "UWorld.PrioritizedObjectMap" }; }
 	FieldValue<TArray<TAutoWeakObjectPtr<AController>>> ControllerListField() { return { this, "UWorld.ControllerList" }; }
 	FieldValue<TArray<TAutoWeakObjectPtr<APlayerController>>> PlayerControllerListField() { return { this, "UWorld.PlayerControllerList" }; }
 	FieldValue<TArray<TAutoWeakObjectPtr<APawn>>> PawnListField() { return { this, "UWorld.PawnList" }; }
+	FieldValue<TSet<TWeakObjectPtr<UActorComponent>, DefaultKeyFuncs<TWeakObjectPtr<UActorComponent>, 0>, FDefaultSetAllocator>> ComponentsThatNeedEndOfFrameUpdateField() { return { this, "UWorld.ComponentsThatNeedEndOfFrameUpdate" }; }
+	FieldValue<TSet<TWeakObjectPtr<UActorComponent>, DefaultKeyFuncs<TWeakObjectPtr<UActorComponent>, 0>, FDefaultSetAllocator>> ComponentsThatNeedEndOfFrameUpdate_OnGameThreadField() { return { this, "UWorld.ComponentsThatNeedEndOfFrameUpdate_OnGameThread" }; }
+	FieldValue<TMap<TWeakObjectPtr<UBlueprint>, TWeakObjectPtr<UObject>, FDefaultSetAllocator, TDefaultMapKeyFuncs<TWeakObjectPtr<UBlueprint>, TWeakObjectPtr<UObject>, 0> >> BlueprintObjectsBeingDebuggedField() { return { this, "UWorld.BlueprintObjectsBeingDebugged" }; }
 	FieldValue<bool> bRequiresHitProxiesField() { return { this, "UWorld.bRequiresHitProxies" }; }
 	FieldValue<long double> BuildStreamingDataTimerField() { return { this, "UWorld.BuildStreamingDataTimer" }; }
 	FieldValue<bool> bInTickField() { return { this, "UWorld.bInTick" }; }
@@ -100,6 +119,8 @@ public:
 	void PostSaveRoot(bool bCleanupIsRequired) { NativeCall<void, bool>(this, "UWorld.PostSaveRoot", bCleanupIsRequired); }
 	void SetupParameterCollectionInstances() { NativeCall<void>(this, "UWorld.SetupParameterCollectionInstances"); }
 	void UpdateParameterCollectionInstances(bool bUpdateInstanceUniformBuffers) { NativeCall<void, bool>(this, "UWorld.UpdateParameterCollectionInstances", bUpdateInstanceUniformBuffers); }
+	void InitWorld(UWorld::InitializationValues IVS) { NativeCall<void, UWorld::InitializationValues>(this, "UWorld.InitWorld", IVS); }
+	void InitializeNewWorld(UWorld::InitializationValues IVS) { NativeCall<void, UWorld::InitializationValues>(this, "UWorld.InitializeNewWorld", IVS); }
 	void RemoveActor(AActor * Actor, bool bShouldModifyLevel) { NativeCall<void, AActor *, bool>(this, "UWorld.RemoveActor", Actor, bShouldModifyLevel); }
 	bool AllowAudioPlayback() { return NativeCall<bool>(this, "UWorld.AllowAudioPlayback"); }
 	void ClearWorldComponents() { NativeCall<void>(this, "UWorld.ClearWorldComponents"); }
@@ -128,6 +149,7 @@ public:
 	bool IsPreparingMapChange() { return NativeCall<bool>(this, "UWorld.IsPreparingMapChange"); }
 	bool SetNewWorldOrigin(FIntVector InNewOriginLocation) { return NativeCall<bool, FIntVector>(this, "UWorld.SetNewWorldOrigin", InNewOriginLocation); }
 	void NavigateTo(FIntVector InLocation) { NativeCall<void, FIntVector>(this, "UWorld.NavigateTo", InLocation); }
+	void GetMatineeActors(TArray<AMatineeActor *> * OutMatineeActors) { NativeCall<void, TArray<AMatineeActor *> *>(this, "UWorld.GetMatineeActors", OutMatineeActors); }
 	void SeamlessTravel(FString * SeamlessTravelURL, bool bAbsolute, FGuid MapPackageGuid) { NativeCall<void, FString *, bool, FGuid>(this, "UWorld.SeamlessTravel", SeamlessTravelURL, bAbsolute, MapPackageGuid); }
 	bool IsInSeamlessTravel() { return NativeCall<bool>(this, "UWorld.IsInSeamlessTravel"); }
 	void UpdateConstraintActors() { NativeCall<void>(this, "UWorld.UpdateConstraintActors"); }
@@ -140,6 +162,7 @@ public:
 	FString * GetAddressURL(FString * result) { return NativeCall<FString *, FString *>(this, "UWorld.GetAddressURL", result); }
 	static FString * RemovePIEPrefix(FString * result, FString * Source) { return NativeCall<FString *, FString *, FString *>(nullptr, "UWorld.RemovePIEPrefix", result, Source); }
 	void ServerTravel(FString * FURL, bool bAbsolute, bool bShouldSkipGameNotify) { NativeCall<void, FString *, bool, bool>(this, "UWorld.ServerTravel", FURL, bAbsolute, bShouldSkipGameNotify); }
+	UClass * GetModPrioritizedClass(FName * NameIn) { return NativeCall<UClass *, FName *>(this, "UWorld.GetModPrioritizedClass", NameIn); }
 	bool LoadFromFile(FString * filename) { return NativeCall<bool, FString *>(this, "UWorld.LoadFromFile", filename); }
 	void UpdateMemoryState(FName PackageName, bool bSave, ULevel * Level) { NativeCall<void, FName, bool, ULevel *>(this, "UWorld.UpdateMemoryState", PackageName, bSave, Level); }
 	void AddToInternalOctree(UPrimitiveComponent * InComponent) { NativeCall<void, UPrimitiveComponent *>(this, "UWorld.AddToInternalOctree", InComponent); }
@@ -147,8 +170,8 @@ public:
 	bool LineTraceSingle(FHitResult * OutHit, FVector * Start, FVector * End, FCollisionQueryParams * Params, FCollisionObjectQueryParams * ObjectQueryParams) { return NativeCall<bool, FHitResult *, FVector *, FVector *, FCollisionQueryParams *, FCollisionObjectQueryParams *>(this, "UWorld.LineTraceSingle", OutHit, Start, End, Params, ObjectQueryParams); }
 	void StartAsyncTrace() { NativeCall<void>(this, "UWorld.StartAsyncTrace"); }
 	void FinishAsyncTrace() { NativeCall<void>(this, "UWorld.FinishAsyncTrace"); }
-	void SetupPhysicsTickFunctions(float DeltaSeconds) { NativeCall<void, float>(this, "UWorld.SetupPhysicsTickFunctions", DeltaSeconds); }
 	void FinishPhysicsSim() { NativeCall<void>(this, "UWorld.FinishPhysicsSim"); }
+	static void StaticRegisterNativesUWorld() { NativeCall<void>(nullptr, "UWorld.StaticRegisterNativesUWorld"); }
 };
 
 // Level
