@@ -69,6 +69,11 @@ namespace ArkApi
 		 */
 		std::vector<std::shared_ptr<Plugin>>::const_iterator FindPlugin(const std::string& plugin_name);
 
+		/**
+		* \brief Returns true if plugin was loaded, false otherwise
+		*/
+		bool IsPluginLoaded(const std::string& plugin_name);
+
 	private:
 		PluginManager();
 		~PluginManager() = default;

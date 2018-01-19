@@ -1,6 +1,8 @@
 #include "Tools.h"
 
-#include <windows.h>
+#include <Windows.h>
+
+#include "PluginManager/PluginManager.h"
 
 namespace ArkApi::Tools
 {
@@ -38,5 +40,10 @@ namespace ArkApi::Tools
 		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(text.c_str(), text.c_str() + length, '?', str.data());
 
 		return str;
+	}
+
+	bool IsPluginLoaded(const std::string& plugin_name)
+	{
+		return PluginManager::Get().IsPluginLoaded(plugin_name);
 	}
 }

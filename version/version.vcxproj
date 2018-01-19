@@ -161,7 +161,7 @@
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
     <IncludePath>$(MSBuildStartupDirectory)\version\Core\Public;$(VSInstallDir)\DIA SDK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>F:\Projects\lib;$(VSInstallDir)\DIA SDK\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>..\lib;$(VSInstallDir)\DIA SDK\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

@@ -68,8 +68,7 @@ namespace ArkApi
 		if (!fs::exists(full_path))
 			throw std::runtime_error("Plugin " + plugin_name + " does not exist");
 
-		const auto iter = FindPlugin(plugin_name);
-		if (iter != loaded_plugins_.end())
+		if (IsPluginLoaded(plugin_name))
 			throw std::runtime_error("Plugin " + plugin_name + " was already loaded");
 
 		auto plugin_info = ReadPluginInfo(plugin_name);
@@ -144,7 +143,7 @@ namespace ArkApi
 
 			for (const std::string& dependency : plugin->dependencies)
 			{
-				if (FindPlugin(dependency) == loaded_plugins_.end())
+				if (!IsPluginLoaded(dependency))
 				{
 					Log::GetLog()->error("Plugin {} is  missing! {} might not work correctly", dependency, plugin->name);
 				}
@@ -161,6 +160,11 @@ namespace ArkApi
 		                               });
 
 		return iter;
+	}
+
+	bool PluginManager::IsPluginLoaded(const std::string& plugin_name)
+	{
+		return FindPlugin(plugin_name) != loaded_plugins_.end();
 	}
 
 	// Callbacks
