@@ -1,6 +1,6 @@
 #pragma once
 
-#include "API/Base.h"
+#include "../API/Base.h"
 #include "Logger/spdlog/spdlog.h"
 
 ARK_API std::vector<spdlog::sink_ptr>& APIENTRY GetLogSinks();

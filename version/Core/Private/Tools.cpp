@@ -1,7 +1,5 @@
 #include "Tools.h"
 
-#include <Windows.h>
-
 #include "PluginManager/PluginManager.h"
 
 namespace ArkApi::Tools

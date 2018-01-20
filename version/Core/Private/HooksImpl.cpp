@@ -1,8 +1,5 @@
 #include "HooksImpl.h"
 
-#include <Windows.h>
-#include <iostream>
-
 #include <Logger/Logger.h>
 
 #include "Hooks.h"

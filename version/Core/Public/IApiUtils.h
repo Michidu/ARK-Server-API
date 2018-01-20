@@ -166,8 +166,8 @@ namespace ArkApi
 			APlayerState* player_state = controller->PlayerStateField()();
 			if (player_state)
 			{
-				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()().UniqueNetId.Object
-				);
+				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()()
+				                                                                              .UniqueNetId.Object);
 				steam_id = steam_net_id->UniqueNetId;
 			}
 
@@ -207,8 +207,9 @@ namespace ArkApi
 		* \return Array of AShooterPlayerController*
 		*/
 		TArray<AShooterPlayerController*> FindPlayerFromCharacterName(const FString& character_name,
-		                                                      ESearchCase::Type search = ESearchCase::Type::IgnoreCase,
-		                                                      bool full_match = false) const
+		                                                              ESearchCase::Type search = ESearchCase::Type::
+			                                                              IgnoreCase,
+		                                                              bool full_match = false) const
 		{
 			TArray<AShooterPlayerController*> found_players;
 
@@ -218,7 +219,9 @@ namespace ArkApi
 				AShooterPlayerController* shooter_player = static_cast<AShooterPlayerController*>(player_controller.Get());
 				FString char_name = GetCharacterName(shooter_player);
 
-				if (full_match ? char_name.Equals(character_name, search) : char_name.StartsWith(character_name, search))
+				if (!char_name.IsEmpty() && (full_match
+					                             ? char_name.Equals(character_name, search)
+					                             : char_name.StartsWith(character_name, search)))
 					found_players.Add(shooter_player);
 			}
 
@@ -364,7 +367,6 @@ namespace ArkApi
 		static APrimalDinoCharacter* GetRidingDino(AShooterPlayerController* player_controller)
 		{
 			return player_controller && player_controller->GetPlayerCharacter()
-			       && player_controller->GetPlayerCharacter()->GetRidingDino()
 				       ? player_controller->GetPlayerCharacter()->GetRidingDino()
 				       : nullptr;
 		}
@@ -374,7 +376,7 @@ namespace ArkApi
 		* \param player_controller Player
 		* \return FVector
 		*/
-		static FVector GetPosition(AShooterPlayerController* player_controller)
+		static FVector GetPosition(APlayerController* player_controller)
 		{
 			return player_controller ? player_controller->DefaultActorLocationField()() : FVector{0, 0, 0};
 		}
@@ -419,10 +421,9 @@ namespace ArkApi
 		* \param player_controller Player
 		* \param pos New position
 		*/
-		static bool TeleportToPos(AShooterPlayerController* player_controller, FVector pos)
+		static bool TeleportToPos(AShooterPlayerController* player_controller, const FVector& pos)
 		{
-			if (player_controller && player_controller->GetPlayerCharacter()
-				&& !player_controller->GetPlayerCharacter()->IsDead())
+			if (player_controller && !IsPlayerDead(player_controller))
 			{
 				player_controller->SetPlayerPos(pos.X, pos.Y, pos.Z);
 				return true;
@@ -431,20 +432,22 @@ namespace ArkApi
 			return false;
 		}
 
+
 		/**
 		* \brief Counts a specific items quantity
 		* \param player_controller Player
 		* \param item_name The name of the item you want to count the quantity of
-		*/
+		 * \return On success, the function returns amount of items player has. Returns -1 if the function has failed.
+		 */
 		static int GetInventoryItemCount(AShooterPlayerController* player_controller, const FString& item_name)
 		{
 			if (!player_controller)
-				return 0;
+				return -1;
 
 			UPrimalInventoryComponent* inventory_component = player_controller
 			                                                 ->GetPlayerCharacter()->MyInventoryComponentField()();
 			if (!inventory_component)
-				return 0;
+				return -1;
 
 			FString name;
 			int item_count = 0;
@@ -494,6 +497,14 @@ namespace ArkApi
 			}
 
 			return FString("");
+		}
+
+		/**
+		 * \brief Returns true if player is dead, false otherwise
+		 */
+		static bool IsPlayerDead(AShooterPlayerController* player)
+		{
+			return player->GetPlayerCharacter() == nullptr;
 		}
 	};
 
