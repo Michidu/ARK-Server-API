@@ -77,12 +77,21 @@ namespace ArkApi
 	}
 
 	void Hook_AShooterPlayerController_ServerSendChatMessage_Impl(
-		AShooterPlayerController* a_shooter_player_controller, FString* message, EChatSendMode::Type mode)
+		AShooterPlayerController* player_controller, FString* message, EChatSendMode::Type mode)
 	{
-		if (Commands::Get().CheckChatCommands(a_shooter_player_controller, message, mode))
+		const long double last_chat_time = player_controller->LastChatMessageTimeField()();
+		const long double time_seconds = ApiUtils::Get().GetWorld()->TimeSecondsField()();
+
+		if (last_chat_time > 0 && time_seconds - last_chat_time < 1.0)
 			return;
 
-		AShooterPlayerController_ServerSendChatMessage_Impl_original(a_shooter_player_controller, message, mode);
+		if (Commands::Get().CheckChatCommands(player_controller, message, mode))
+		{
+			player_controller->LastChatMessageTimeField() = time_seconds;
+			return;
+		}
+
+		AShooterPlayerController_ServerSendChatMessage_Impl_original(player_controller, message, mode);
 	}
 
 	FString* Hook_APlayerController_ConsoleCommand(APlayerController* a_player_controller, FString* result,
