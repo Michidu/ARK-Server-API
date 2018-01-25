@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="version_asm.asm" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Core\Private\ApiUtils.h" />
+    <ClInclude Include="Core\Private\Commands.h" />
+    <ClInclude Include="Core\Private\Hooks.h" />
+    <ClInclude Include="Core\Private\HooksImpl.h" />
+    <ClInclude Include="Core\Private\Offsets.h" />
+    <ClInclude Include="Core\Private\PDBReader\PDBReader.h" />
+    <ClInclude Include="Core\Private\PluginManager\PluginManager.h" />
+    <ClInclude Include="Core\Public\API\ARK\Actor.h" />
+    <ClInclude Include="Core\Public\API\ARK\Ark.h" />
+    <ClInclude Include="Core\Public\API\ARK\GameMode.h" />
+    <ClInclude Include="Core\Public\API\ARK\GameState.h" />
+    <ClInclude Include="Core\Public\API\ARK\Inventory.h" />
+    <ClInclude Include="Core\Public\API\ARK\Other.h" />
+    <ClInclude Include="Core\Public\API\ARK\PrimalStructure.h" />
+    <ClInclude Include="Core\Public\API\ARK\Tribe.h" />
+    <ClInclude Include="Core\Public\API\Base.h" />
+    <ClInclude Include="Core\Public\API\Enums.h" />
+    <ClInclude Include="Core\Public\API\Fields.h" />
+    <ClInclude Include="Core\Public\API\UE\BasicTypes.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\BinarySearch.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\Impl\BinaryHeap.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\IntroSort.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\Reverse.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Algo\Sort.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\BitArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\ContainerAllocationPolicies.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\EnumAsByte.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\FString.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Map.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\ScriptArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\Set.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\SparseArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Containers\TArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Delegates\IntegerSequence.h" />
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformMath.h" />
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformMemory.h" />
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformString.h" />
+    <ClInclude Include="Core\Public\API\UE\HAL\UnrealMemory.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Color.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\ColorList.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\IntPoint.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\IntVector.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Quat.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Rotator.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\UnrealMathUtility.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Vector.h" />
+    <ClInclude Include="Core\Public\API\UE\Math\Vector2D.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\ByteSwap.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\Char.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\CString.h" />
+    <ClInclude Include="Core\Public\API\UE\Misc\StructBuilder.h" />
+    <ClInclude Include="Core\Public\API\UE\NetSerialization.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\AlignmentTemplates.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\AndOrNot.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\AreTypesEqual.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\ChooseClass.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Decay.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\EnableIf.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Function.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\HasGetTypeHash.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IdentityFunctor.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Invoke.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsArithmetic.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsContiguousContainer.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsEnum.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsEnumClass.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsPODType.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsPointer.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsTriviallyCopyAssignable.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsTriviallyCopyConstructible.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\IsTriviallyDestructible.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Less.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\MemoryOps.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\PointerIsConvertibleFromTo.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\RemoveCV.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\RemoveReference.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\ReversePredicate.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Sorting.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\Tuple.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\TypeCompatibleBytes.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\TypeHash.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\UnrealTemplate.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\UnrealTypeTraits.h" />
+    <ClInclude Include="Core\Public\API\UE\UE.h" />
+    <ClInclude Include="Core\Public\API\UE\Windows\MicrosoftPlatformString.h" />
+    <ClInclude Include="Core\Public\IApiUtils.h" />
+    <ClInclude Include="Core\Public\ICommands.h" />
+    <ClInclude Include="Core\Public\IHooks.h" />
+    <ClInclude Include="Core\Public\Logger\Logger.h" />
+    <ClInclude Include="Core\Public\Tools.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="MinHook.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core\Private\ApiUtils.cpp" />
+    <ClCompile Include="Core\Private\Base.cpp" />
+    <ClCompile Include="Core\Private\Commands.cpp" />
+    <ClCompile Include="Core\Private\Hooks.cpp" />
+    <ClCompile Include="Core\Private\HooksImpl.cpp" />
+    <ClCompile Include="Core\Private\Logger.cpp" />
+    <ClCompile Include="Core\Private\Offsets.cpp" />
+    <ClCompile Include="Core\Private\PDBReader\PDBReader.cpp" />
+    <ClCompile Include="Core\Private\PluginManager\PluginManager.cpp" />
+    <ClCompile Include="Core\Private\Tools.cpp" />
+    <ClCompile Include="version.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="version.def" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3941E9F8-2E29-4D69-8717-F74562ED5301}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>version</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>NotSet</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(VSInstallDir)\DIA SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib;$(VSInstallDir)\DIA SDK\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>version.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>..\version\Core\Public;</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>version.def</ModuleDefinitionFile>
+      <ImportLibrary>$(OutDir)ArkApi.lib</ImportLibrary>
+      <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>
