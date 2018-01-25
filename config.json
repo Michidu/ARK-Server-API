@@ -68,18 +68,10 @@
 	"FAssetData",
 	"UBlueprint",
 	"UTexture2D",
-	"FMemory",
-	"ADroppedItem",
-	"UBoolProperty",
-	"APrimalDinoAIController",
-	"APrimalStructureItemContainer",
-	"UShooterGameInstance",
-	"AMatineeActor",
-	"UEngine"
+	"AGameSession",
+	"FItemStatInfo"
   ],
   "functions": [
-    "StaticLoadObject",
-    "RaycastSingle",
-	"StaticConstructObject"
+    "StaticLoadObject"
   ]
 }
