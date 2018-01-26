@@ -78,7 +78,7 @@ namespace ArkApi
 		if (required_version != .0f && std::stof(API_VERSION) < required_version)
 			throw std::runtime_error("Plugin " + plugin_name + " requires newer API version!");
 
-		HINSTANCE h_module = LoadLibraryExA(full_path.c_str(), nullptr, LOAD_LIBRARY_SEARCH_USER_DIRS);
+		HINSTANCE h_module = LoadLibraryA(full_path.c_str());
 		if (!h_module)
 			throw std::runtime_error(
 				"Failed to load plugin - " + plugin_name + "\nError code: " + std::to_string(GetLastError()));
