@@ -47,7 +47,7 @@ namespace ArkApi
 		/**
 		* \brief Get all plugin pdb configs
 		*/
-		static nlohmann::json PluginManager::GetAllPDBConfigs();
+		static nlohmann::json GetAllPDBConfigs();
 
 		/**
 		 * \brief Find and load all plugins

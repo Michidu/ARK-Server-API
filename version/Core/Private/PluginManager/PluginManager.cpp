@@ -41,7 +41,7 @@ namespace ArkApi
 
 			try
 			{
-				auto plugin_pdb_config = ReadPluginPDBConfig(filename);
+				const auto plugin_pdb_config = ReadPluginPDBConfig(filename);
 				MergePdbConfig(result, plugin_pdb_config);
 			}
 			catch (const std::exception& error)
@@ -65,7 +65,7 @@ namespace ArkApi
 		if (!fs::exists(config_path))
 			return plugin_pdb_config;
 
-		std::ifstream file{ config_path };
+		std::ifstream file{config_path};
 		if (file.is_open())
 		{
 			file >> plugin_pdb_config;
