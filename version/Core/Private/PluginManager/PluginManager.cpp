@@ -34,6 +34,9 @@ namespace ArkApi
 		for (const auto& dir_name : fs::directory_iterator(dir_path))
 		{
 			const auto& path = dir_name.path();
+			if (!is_directory(path))
+				continue;
+
 			const auto filename = path.filename().stem().generic_string();
 
 			try
