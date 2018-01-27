@@ -45,6 +45,11 @@ namespace ArkApi
 		PluginManager& operator=(PluginManager&&) = delete;
 
 		/**
+		* \brief Get all plugin pdb configs
+		*/
+		static nlohmann::json PluginManager::GetAllPDBConfigs();
+
+		/**
 		 * \brief Find and load all plugins
 		 */
 		void LoadAllPlugins();
@@ -79,6 +84,7 @@ namespace ArkApi
 		~PluginManager() = default;
 
 		static nlohmann::json ReadPluginInfo(const std::string& plugin_name);
+		static nlohmann::json ReadPluginPDBConfig(const std::string& plugin_name);
 
 		void CheckPluginsDependencies();
 
