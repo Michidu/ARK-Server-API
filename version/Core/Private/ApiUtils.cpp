@@ -32,6 +32,18 @@ namespace ArkApi
 		return shooter_game_mode_;
 	}
 
+	// Status
+
+	void ApiUtils::SetStatus(ServerStatus status)
+	{
+		status_ = status;
+	}
+
+	ServerStatus ApiUtils::GetStatus() const
+	{
+		return status_;
+	}
+
 	// Free function
 	IApiUtils& GetApiUtils()
 	{
