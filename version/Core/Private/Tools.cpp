@@ -29,7 +29,7 @@ namespace ArkApi::Tools
 
 		return wstr;
 	}
-	
+
 	std::string ConvertToAnsiStr(const std::wstring& text)
 	{
 		const size_t length = text.size();
@@ -38,6 +38,30 @@ namespace ArkApi::Tools
 		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(text.c_str(), text.c_str() + length, '?', str.data());
 
 		return str;
+	}
+
+	std::string Utf8Encode(const std::wstring& wstr)
+	{
+		if (wstr.empty())
+			return std::string();
+
+		const int size = static_cast<int>(wstr.size()) + 1;
+		std::string str(size, '\0');
+		WideCharToMultiByte(CP_UTF8, 0, wstr.data(), static_cast<int>(wstr.size()), str.data(), size, nullptr, nullptr);
+
+		return str;
+	}
+
+	std::wstring Utf8Decode(const std::string& str)
+	{
+		if (str.empty())
+			return std::wstring();
+
+		const int size = static_cast<int>(str.size()) + 1;
+		std::wstring wstr(size, '\0');
+		MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), wstr.data(), size);
+
+		return wstr;
 	}
 
 	bool IsPluginLoaded(const std::string& plugin_name)
