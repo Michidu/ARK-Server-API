@@ -336,12 +336,23 @@ namespace ArkApi
 					dino->TeleportTo(location, &rotation, true, false);
 				}
 
+				dino->BeginPlay();
+
 				if (force_tame)
 				{
-					dino->TameDino(player, true, player->TargetingTeamField()());
-				}
+					dino->TamingTeamIDField() = player->TargetingTeamField()();
 
-				dino->BeginPlay();
+					AShooterPlayerState* state = static_cast<AShooterPlayerState*>(player->PlayerStateField()());
+
+					FString player_name;
+					state->GetPlayerName(&player_name);
+
+					dino->TamerStringField() = player_name;
+
+					state->SetTribeTamingDinoSettings(dino);
+
+					dino->TameDino(player, false, 0);
+				}
 
 				return dino;
 			}
