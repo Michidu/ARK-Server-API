@@ -51,10 +51,21 @@ void Init()
 	std::unordered_map<std::string, intptr_t> offsets_dump;
 	std::unordered_map<std::string, BitField> bitfields_dump;
 
+	nlohmann::json plugin_pdb_config;
+	try
+	{
+		plugin_pdb_config = PluginManager::GetAllPDBConfigs();
+	}
+	catch (const std::exception& error)
+	{
+		Log::GetLog()->critical("Failed to read plugin pdb configs - {}", error.what());
+		return;
+	}
+
 	try
 	{
 		const std::wstring dir = Tools::ConvertToWideStr(current_dir);
-		pdb_reader.Read(dir + L"/ShooterGameServer.pdb", &offsets_dump, &bitfields_dump);
+		pdb_reader.Read(dir + L"/ShooterGameServer.pdb", plugin_pdb_config, &offsets_dump, &bitfields_dump);
 	}
 	catch (const std::exception& error)
 	{

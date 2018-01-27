@@ -8,6 +8,7 @@
 #include <API/UE/Math/ColorList.h>
 
 #include "../Commands.h"
+#include "../Helpers.h"
 
 namespace ArkApi
 {
@@ -23,6 +24,55 @@ namespace ArkApi
 	{
 		static PluginManager instance;
 		return instance;
+	}
+
+	nlohmann::json PluginManager::GetAllPDBConfigs()
+	{
+		namespace fs = std::experimental::filesystem;
+
+		const std::string dir_path = Tools::GetCurrentDir() + "/ArkApi/Plugins";
+
+		auto result = nlohmann::json({});
+
+		for (const auto& dir_name : fs::directory_iterator(dir_path))
+		{
+			const auto& path = dir_name.path();
+			const auto filename = path.filename().stem().generic_string();
+
+			try
+			{
+				auto plugin_pdb_config = ReadPluginPDBConfig(filename);
+				MergePdbConfig(result, plugin_pdb_config);
+			}
+			catch (const std::exception& error)
+			{
+				Log::GetLog()->warn(error.what());
+			}
+		}
+
+		return result;
+	}
+
+	nlohmann::json PluginManager::ReadPluginPDBConfig(const std::string& plugin_name)
+	{
+		namespace fs = std::experimental::filesystem;
+
+		nlohmann::json plugin_pdb_config = nlohmann::json::object({});
+
+		const std::string dir_path = Tools::GetCurrentDir() + "/ArkApi/Plugins/" + plugin_name;
+		const std::string config_path = dir_path + "/PdbConfig.json";
+
+		if (!fs::exists(config_path))
+			return plugin_pdb_config;
+
+		std::ifstream file{ config_path };
+		if (file.is_open())
+		{
+			file >> plugin_pdb_config;
+			file.close();
+		}
+
+		return plugin_pdb_config;
 	}
 
 	void PluginManager::LoadAllPlugins()

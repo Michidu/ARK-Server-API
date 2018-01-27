@@ -7,10 +7,11 @@
 #include <Tools.h>
 
 #include "../Private/Offsets.h"
+#include "../Private/Helpers.h"
 
 namespace ArkApi
 {
-	void PdbReader::Read(std::wstring path, std::unordered_map<std::string, intptr_t>* offsets_dump,
+	void PdbReader::Read(std::wstring path, nlohmann::json plugin_pdb_config, std::unordered_map<std::string, intptr_t>* offsets_dump,
 	                     std::unordered_map<std::string, BitField>* bitfields_dump)
 	{
 		offsets_dump_ = offsets_dump;
@@ -36,6 +37,17 @@ namespace ArkApi
 
 		if (!ReadConfig())
 			throw std::runtime_error("Failed to open config.json");
+
+		try
+		{
+			MergePdbConfig(config_, plugin_pdb_config);
+		}
+		catch (const std::runtime_error&)
+		{
+			Log::GetLog()->error("Failed to merge api config with pdb configs");
+			throw;
+		}
+
 
 		Log::GetLog()->info("Dumping structures..");
 		DumpStructs(symbol);

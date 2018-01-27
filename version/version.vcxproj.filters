@@ -339,6 +339,9 @@
     <ClInclude Include="Core\Public\Logger\Logger.h">
       <Filter>Core\Public\Logger</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Private\Helpers.h">
+      <Filter>Core\Private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="version.cpp" />
@@ -370,6 +373,9 @@
       <Filter>Core\Private</Filter>
     </ClCompile>
     <ClCompile Include="Core\Private\Logger.cpp">
+      <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Helpers.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
   </ItemGroup>
