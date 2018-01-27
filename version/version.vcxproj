@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="Core\Private\ApiUtils.h" />
     <ClInclude Include="Core\Private\Commands.h" />
+    <ClInclude Include="Core\Private\Helpers.h" />
     <ClInclude Include="Core\Private\Hooks.h" />
     <ClInclude Include="Core\Private\HooksImpl.h" />
     <ClInclude Include="Core\Private\Offsets.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="Core\Private\ApiUtils.cpp" />
     <ClCompile Include="Core\Private\Base.cpp" />
     <ClCompile Include="Core\Private\Commands.cpp" />
+    <ClCompile Include="Core\Private\Helpers.cpp" />
     <ClCompile Include="Core\Private\Hooks.cpp" />
     <ClCompile Include="Core\Private\HooksImpl.cpp" />
     <ClCompile Include="Core\Private\Logger.cpp" />

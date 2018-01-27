@@ -16,7 +16,7 @@ namespace ArkApi
 		{
 		}
 
-		void Read(std::wstring path, std::unordered_map<std::string, intptr_t>* offsets_dump,
+		void Read(std::wstring path, nlohmann::json plugin_pdb_config, std::unordered_map<std::string, intptr_t>* offsets_dump,
 		          std::unordered_map<std::string, BitField>* bitfields_dump);
 
 	private:
