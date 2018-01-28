@@ -73,7 +73,8 @@ void Init()
 		return;
 	}
 
-	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump));
+	//Plugin Reload
+	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump), pdb_reader.IsPluginReloadEnabled(), pdb_reader.PluginReloadDelaySeconds());
 
 	InitHooks();
 
