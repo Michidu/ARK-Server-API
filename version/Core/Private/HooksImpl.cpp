@@ -19,6 +19,7 @@ namespace ArkApi
 	DECLARE_HOOK(APlayerController_ConsoleCommand, FString*, APlayerController*, FString*, FString*, bool);
 	DECLARE_HOOK(RCONClientConnection_ProcessRCONPacket, void, RCONClientConnection*, RCONPacket*, UWorld*);
 	DECLARE_HOOK(AGameState_DefaultTimer, void, AGameState*);
+	DECLARE_HOOK(AShooterGameMode_BeginPlay, void, AShooterGameMode*);
 
 	void InitHooks()
 	{
@@ -36,6 +37,7 @@ namespace ArkApi
 		hooks.SetHook("RCONClientConnection.ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
 		              &RCONClientConnection_ProcessRCONPacket_original);
 		hooks.SetHook("AGameState.DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
+		hooks.SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay, &AShooterGameMode_BeginPlay_original);
 
 		Log::GetLog()->info("Initialized hooks\n");
 	}
@@ -115,5 +117,12 @@ namespace ArkApi
 		Commands::Get().CheckOnTimerCallbacks();
 
 		AGameState_DefaultTimer_original(_this);
+	}
+
+	void Hook_AShooterGameMode_BeginPlay(AShooterGameMode *_AShooterGameMode)
+	{
+		AShooterGameMode_BeginPlay_original(_AShooterGameMode);
+
+		ApiUtils::Get().SetStatus(ServerStatus::Ready);
 	}
 }

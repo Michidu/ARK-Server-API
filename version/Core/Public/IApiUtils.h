@@ -5,6 +5,8 @@
 
 namespace ArkApi
 {
+	enum class ServerStatus { Loading, Ready };
+
 	class ARK_API IApiUtils
 	{
 	public:
@@ -19,6 +21,11 @@ namespace ArkApi
 		* \brief Returns a pointer to AShooterGameMode
 		*/
 		virtual AShooterGameMode* GetShooterGameMode() const = 0;
+
+		/**
+		* \brief Returns the current server status
+		*/
+		virtual ServerStatus GetStatus() const = 0;
 
 		/**
 		* \brief Sends server message to the specific player. Using fmt::format.
