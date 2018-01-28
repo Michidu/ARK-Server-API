@@ -119,7 +119,7 @@ namespace ArkApi
 		AGameState_DefaultTimer_original(_this);
 	}
 
-	void Hook_AShooterGameMode_BeginPlay(AShooterGameMode *_AShooterGameMode)
+	void Hook_AShooterGameMode_BeginPlay(AShooterGameMode* _AShooterGameMode)
 	{
 		AShooterGameMode_BeginPlay_original(_AShooterGameMode);
 

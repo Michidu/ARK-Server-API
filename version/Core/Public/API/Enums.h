@@ -902,3 +902,44 @@ enum class EName
 	NAME_PerformanceCapture,
 	NAME_MaxHardcodedNameIndex
 };
+
+enum ESocketType
+{
+	SOCKTYPE_Unknown = 0x0,
+	SOCKTYPE_Datagram = 0x1,
+	SOCKTYPE_Streaming = 0x2,
+};
+
+namespace ESocketInternalState
+{
+	enum Param
+	{
+		CanRead,
+		CanWrite,
+		HasError
+	};
+
+	enum Return
+	{
+		Yes,
+		No,
+		EncounteredError
+	};
+}
+
+enum ESocketConnectionState
+{
+	SCS_NotConnected,
+	SCS_Connected,
+	SCS_ConnectionError
+};
+
+namespace ESocketReceiveFlags
+{
+	enum Type
+	{
+		None,
+		Peek,
+		WaitAll
+	};
+}

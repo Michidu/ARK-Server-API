@@ -1,5 +1,7 @@
 #pragma once
 
+#include "API/Enums.h"
+
 struct FDamageEvent
 {
 	FieldValue<float> ImpulseField() { return { this, "FDamageEvent.Impulse" }; }
@@ -39,9 +41,57 @@ struct FHitResult
 	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FHitResult.StaticStruct"); }
 };
 
+struct FInternetAddr
+{
+};
+
+struct FSocket
+{
+	FieldValue<ESocketType> SocketTypeField() { return { this, "FSocket.SocketType" }; }
+	FieldValue<FString> SocketDescriptionField() { return { this, "FSocket.SocketDescription" }; }
+};
+
+struct FSocketBSD : FSocket
+{
+	FieldValue<unsigned __int64> SocketField() { return { this, "FSocketBSD.Socket" }; }
+	FieldValue<FDateTime> LastActivityTimeField() { return { this, "FSocketBSD.LastActivityTime" }; }
+	//FieldValue<ISocketSubsystem *> SocketSubsystemField() { return { this, "FSocketBSD.SocketSubsystem" }; }
+
+	// Functions
+
+	bool Close() { return NativeCall<bool>(this, "FSocketBSD.Close"); }
+	bool Bind(FInternetAddr * Addr) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.Bind", Addr); }
+	bool Connect(FInternetAddr * Addr) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.Connect", Addr); }
+	bool Listen(int MaxBacklog) { return NativeCall<bool, int>(this, "FSocketBSD.Listen", MaxBacklog); }
+	//ESocketInternalState::Return HasState(ESocketInternalState::Param State, FTimespan WaitTime) { return NativeCall<ESocketInternalState::Return, ESocketInternalState::Param, FTimespan>(this, "FSocketBSD.HasState", State, WaitTime); }
+	bool HasPendingConnection(bool * bHasPendingConnection) { return NativeCall<bool, bool *>(this, "FSocketBSD.HasPendingConnection", bHasPendingConnection); }
+	bool HasPendingData(unsigned int * PendingDataSize) { return NativeCall<bool, unsigned int *>(this, "FSocketBSD.HasPendingData", PendingDataSize); }
+	FSocket * Accept(FString * SocketDescription) { return NativeCall<FSocket *, FString *>(this, "FSocketBSD.Accept", SocketDescription); }
+	FSocket * Accept(FInternetAddr * OutAddr, FString * SocketDescription) { return NativeCall<FSocket *, FInternetAddr *, FString *>(this, "FSocketBSD.Accept", OutAddr, SocketDescription); }
+	bool SendTo(const char * Data, int Count, int * BytesSent, FInternetAddr * Destination) { return NativeCall<bool, const char *, int, int *, FInternetAddr *>(this, "FSocketBSD.SendTo", Data, Count, BytesSent, Destination); }
+	bool Send(const char * Data, int Count, int * BytesSent) { return NativeCall<bool, const char *, int, int *>(this, "FSocketBSD.Send", Data, Count, BytesSent); }
+	bool RecvFrom(char * Data, int BufferSize, int * BytesRead, FInternetAddr * Source, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char *, int, int *, FInternetAddr *, ESocketReceiveFlags::Type>(this, "FSocketBSD.RecvFrom", Data, BufferSize, BytesRead, Source, Flags); }
+	bool Recv(char * Data, int BufferSize, int * BytesRead, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char *, int, int *, ESocketReceiveFlags::Type>(this, "FSocketBSD.Recv", Data, BufferSize, BytesRead, Flags); }
+	//bool Wait(ESocketWaitConditions::Type Condition, FTimespan WaitTime) { return NativeCall<bool, ESocketWaitConditions::Type, FTimespan>(this, "FSocketBSD.Wait", Condition, WaitTime); }
+	ESocketConnectionState GetConnectionState() { return NativeCall<ESocketConnectionState>(this, "FSocketBSD.GetConnectionState"); }
+	void GetAddress(FInternetAddr * OutAddr) { NativeCall<void, FInternetAddr *>(this, "FSocketBSD.GetAddress", OutAddr); }
+	bool SetNonBlocking(bool bIsNonBlocking) { return NativeCall<bool, bool>(this, "FSocketBSD.SetNonBlocking", bIsNonBlocking); }
+	bool SetBroadcast(bool bAllowBroadcast) { return NativeCall<bool, bool>(this, "FSocketBSD.SetBroadcast", bAllowBroadcast); }
+	bool JoinMulticastGroup(FInternetAddr * GroupAddress) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.JoinMulticastGroup", GroupAddress); }
+	bool LeaveMulticastGroup(FInternetAddr * GroupAddress) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.LeaveMulticastGroup", GroupAddress); }
+	bool SetMulticastLoopback(bool bLoopback) { return NativeCall<bool, bool>(this, "FSocketBSD.SetMulticastLoopback", bLoopback); }
+	bool SetMulticastTtl(char TimeToLive) { return NativeCall<bool, char>(this, "FSocketBSD.SetMulticastTtl", TimeToLive); }
+	bool SetReuseAddr(bool bAllowReuse) { return NativeCall<bool, bool>(this, "FSocketBSD.SetReuseAddr", bAllowReuse); }
+	bool SetLinger(bool bShouldLinger, int Timeout) { return NativeCall<bool, bool, int>(this, "FSocketBSD.SetLinger", bShouldLinger, Timeout); }
+	bool SetSendBufferSize(int Size, int * NewSize) { return NativeCall<bool, int, int *>(this, "FSocketBSD.SetSendBufferSize", Size, NewSize); }
+	bool SetReceiveBufferSize(int Size, int * NewSize) { return NativeCall<bool, int, int *>(this, "FSocketBSD.SetReceiveBufferSize", Size, NewSize); }
+	int GetPortNo() { return NativeCall<int>(this, "FSocketBSD.GetPortNo"); }
+	//void FThreadedFSocketBSD(unsigned __int64 InSocket, ESocketType InSocketType, FString * InSocketDescription, ISocketSubsystem * InSubsystem) { NativeCall<void, unsigned __int64, ESocketType, FString *, ISocketSubsystem *>(this, "FSocketBSD.FThreadedFSocketBSD", InSocket, InSocketType, InSocketDescription, InSubsystem); }
+};
+
 struct RCONClientConnection
 {
-	//FieldValue<FSocket *> SocketField() { return { this, "RCONClientConnection.Socket" }; }
+	FieldValue<FSocket *> SocketField() { return { this, "RCONClientConnection.Socket" }; }
 	FieldValue<UShooterCheatManager *> CheatManagerField() { return { this, "RCONClientConnection.CheatManager" }; }
 	FieldValue<bool> IsAuthenticatedField() { return { this, "RCONClientConnection.IsAuthenticated" }; }
 	FieldValue<bool> IsClosedField() { return { this, "RCONClientConnection.IsClosed" }; }

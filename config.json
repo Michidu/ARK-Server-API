@@ -75,7 +75,8 @@
 	"APrimalStructureItemContainer",
 	"UShooterGameInstance",
 	"AMatineeActor",
-	"UEngine"
+	"UEngine",
+	"FSocket"
   ],
   "functions": [
     "StaticLoadObject",
