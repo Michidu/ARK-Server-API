@@ -104,6 +104,7 @@ BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID)
 	}
 	else if (fdw_reason == DLL_PROCESS_DETACH)
 	{
+		ArkApi::PluginManager::Get().Destroy();
 		FreeLibrary(m_hinst_dll);
 	}
 

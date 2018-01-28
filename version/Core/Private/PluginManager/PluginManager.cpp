@@ -108,7 +108,24 @@ namespace ArkApi
 
 		CheckPluginsDependencies();
 
+		PluginChangesHandle = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)PluginChanges, 0, 0, 0);
+
 		Log::GetLog()->info("Loaded all plugins\n");
+	}
+
+	namespace PluginChanges
+	{
+		time_t GetFileLastModifiedTime(std::string FileName)
+		{
+			struct stat result;
+			return stat(FileName.c_str(), &result) == 0 ? result.st_mtime : 0;
+		}
+
+		bool EndsWith(const std::string& a, const std::string& b)
+		{
+			if (b.size() > a.size()) return false;
+			return std::equal(a.begin() + a.size() - b.size(), a.end(), b.begin());
+		}
 	}
 
 	std::shared_ptr<Plugin>& PluginManager::LoadPlugin(const std::string& plugin_name) noexcept(false)
@@ -116,9 +133,9 @@ namespace ArkApi
 		namespace fs = std::experimental::filesystem;
 
 		const std::string dir_path = Tools::GetCurrentDir() + "/ArkApi/Plugins/" + plugin_name;
-		const std::string full_path = dir_path + "/" + plugin_name + ".dll";
+		const std::string full_dll_path = dir_path + "/" + plugin_name + ".dll", full_dll_api_path = dir_path + "/" + plugin_name + ".dll.ArkApi";
 
-		if (!fs::exists(full_path))
+		if (!fs::exists(full_dll_path))
 			throw std::runtime_error("Plugin " + plugin_name + " does not exist");
 
 		if (IsPluginLoaded(plugin_name))
@@ -131,7 +148,9 @@ namespace ArkApi
 		if (required_version != .0f && std::stof(API_VERSION) < required_version)
 			throw std::runtime_error("Plugin " + plugin_name + " requires newer API version!");
 
-		HINSTANCE h_module = LoadLibraryA(full_path.c_str());
+		if ((!fs::exists(full_dll_api_path) || PluginChanges::GetFileLastModifiedTime(full_dll_api_path) != PluginChanges::GetFileLastModifiedTime(full_dll_path)) && !CopyFileA(full_dll_path.c_str(), full_dll_api_path.c_str(), false))
+			throw std::runtime_error("Plugin " + plugin_name + " can't be copied to .ArkApi Extension!");
+		HINSTANCE h_module = LoadLibraryA(full_dll_api_path.c_str());
 		if (!h_module)
 			throw std::runtime_error(
 				"Failed to load plugin - " + plugin_name + "\nError code: " + std::to_string(GetLastError()));
@@ -151,9 +170,9 @@ namespace ArkApi
 			throw std::runtime_error("Plugin " + plugin_name + " is not loaded");
 
 		const std::string dir_path = Tools::GetCurrentDir() + "/ArkApi/Plugins/" + plugin_name;
-		const std::string full_path = dir_path + "/" + plugin_name + ".dll";
+		const std::string full_dll_api_path = dir_path + "/" + plugin_name + ".dll.ArkApi";
 
-		if (!fs::exists(full_path))
+		if (!fs::exists(full_dll_api_path))
 			throw std::runtime_error("Plugin " + plugin_name + " does not exist");
 
 		const BOOL result = FreeLibrary((*iter)->h_module);
@@ -220,8 +239,89 @@ namespace ArkApi
 		return FindPlugin(plugin_name) != loaded_plugins_.end();
 	}
 
-	// Callbacks
+	void PluginManager::PluginChanges()
+	{
+		namespace fs = std::experimental::filesystem;
+		Get().PluginChangesIsRunning = true;
+		bool LoadedAll = false;
+		int IndexOf = 0;
+		std::string FilePath, DLLName, DLLPath, PluginFilePath;
+		while (Get().PluginChangesIsRunning)
+		{
+			for (auto& pluginsdir : fs::directory_iterator(Tools::GetCurrentDir() + "/ArkApi/Plugins"))
+			{
+				for (auto& pluginsdir : fs::directory_iterator(pluginsdir.path().generic_string()))
+				{
+					FilePath = pluginsdir.path().generic_string();
+					if (!pluginsdir.path().has_filename() || !fs::exists(FilePath)) continue;
+					DLLName = pluginsdir.path().filename().stem().generic_string();
+					DLLPath = pluginsdir.path().parent_path().generic_string() + "/";
+					PluginFilePath = DLLPath + DLLName + ".dll.ArkApi";
+					if (PluginChanges::EndsWith(FilePath, ".dll"))
+					{
+						if (fs::exists(PluginFilePath) && Get().FindPlugin(DLLName) != Get().loaded_plugins_.end())
+						{
+							if (PluginChanges::GetFileLastModifiedTime(PluginFilePath) != PluginChanges::GetFileLastModifiedTime(FilePath))
+							{
+								try
+								{
+									Get().UnloadPlugin(DLLName);
+									Get().LoadPlugin(DLLName);
+								}
+								catch (const std::runtime_error& error)
+								{
+									Log::GetLog()->warn(error.what());
+									continue;
+								}
+								Log::GetLog()->info("Reloaded plugin - {}", DLLName.c_str());
+							}
+						}
+						else
+						{
+							try
+							{
+								Get().LoadPlugin(DLLName);
+							}
+							catch (const std::runtime_error& error)
+							{
+								Log::GetLog()->warn(error.what());
+								continue;
+							}
+							Log::GetLog()->info("Loaded plugin - {}", DLLName.c_str());
+						}
+					}
+					else if (PluginChanges::EndsWith(FilePath, ".dll.ArkApi") && !fs::exists(DLLPath + DLLName))
+					{
+						DLLName = DLLName.substr(0, DLLName.find_last_of('.'));
+						if (Get().FindPlugin(DLLName) != Get().loaded_plugins_.end())
+						{
+							try
+							{
+								Get().UnloadPlugin(DLLName);
+							}
+							catch (const std::runtime_error& error)
+							{
+								Log::GetLog()->warn(error.what());
+								continue;
+							}
+						}
+						DeleteFileA(FilePath.c_str());
+						Log::GetLog()->info("Unloaded plugin - {}", DLLName.c_str());
+					}
+				}
+			}
+			Sleep(5000);
+		}
+	}
 
+	void PluginManager::Destroy()
+	{
+		PluginChangesIsRunning = false;
+		WaitForSingleObject(PluginChangesHandle, INFINITE);
+		CloseHandle(PluginChangesHandle);
+	}
+
+	// Callbacks
 	void PluginManager::LoadPluginCmd(APlayerController* player_controller, FString* cmd, bool)
 	{
 		TArray<FString> parsed;
