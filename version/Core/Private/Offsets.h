@@ -20,6 +20,8 @@ namespace ArkApi
 		DWORD64 GetAddress(const void* base, const std::string& name);
 		LPVOID GetAddress(const std::string& name);
 
+		LPVOID GetDataAddress(const std::string& name);
+
 		BitField GetBitField(const void* base, const std::string& name);
 		BitField GetBitField(LPVOID base, const std::string& name);
 
@@ -30,6 +32,7 @@ namespace ArkApi
 		BitField GetBitFieldInternal(const void* base, const std::string& name);
 
 		DWORD64 module_base_;
+		DWORD64 data_base_;
 		std::unordered_map<std::string, intptr_t> offsets_dump_;
 		std::unordered_map<std::string, BitField> bitfields_dump_;
 	};

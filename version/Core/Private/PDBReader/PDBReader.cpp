@@ -55,6 +55,9 @@ namespace ArkApi
 		Log::GetLog()->info("Dumping functions..");
 		DumpFreeFunctions(symbol);
 
+		Log::GetLog()->info("Dumping globals..");
+		DumpGlobalVariables(symbol);
+
 		Cleanup(symbol, dia_session);
 
 		Log::GetLog()->info("Successfully read information from PDB\n");
@@ -183,6 +186,44 @@ namespace ArkApi
 
 			const auto find_res = find(funcs_array.begin(), funcs_array.end(), str_name);
 			if (find_res != funcs_array.end())
+			{
+				DWORD offset;
+				if (symbol->get_addressOffset(&offset) != S_OK)
+					continue;
+
+				(*offsets_dump_)["Global." + str_name] = offset;
+			}
+
+			SysFreeString(bstr_name);
+
+			symbol->Release();
+		}
+
+		enum_symbols->Release();
+	}
+
+	void PdbReader::DumpGlobalVariables(IDiaSymbol* g_symbol)
+	{
+		IDiaSymbol* symbol;
+
+		auto globals_array = config_["globals"].get<std::vector<std::string>>();
+
+		IDiaEnumSymbols* enum_symbols;
+		if (FAILED(g_symbol->findChildren(SymTagData, nullptr, nsNone, &enum_symbols)))
+			throw std::runtime_error("Failed to find symbols");
+
+		ULONG celt = 0;
+		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
+		{
+			BSTR bstr_name;
+			if (symbol->get_name(&bstr_name) != S_OK)
+				continue;
+
+			const _bstr_t bbstr_name(bstr_name);
+			const std::string str_name(bbstr_name);
+
+			const auto find_res = find(globals_array.begin(), globals_array.end(), str_name);
+			if (find_res != globals_array.end())
 			{
 				DWORD offset;
 				if (symbol->get_addressOffset(&offset) != S_OK)

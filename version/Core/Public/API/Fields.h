@@ -30,6 +30,12 @@ RT GetNativePointerField(const void* _this, const std::string& field_name)
 	return reinterpret_cast<RT>(GetAddress(_this, field_name));
 }
 
+template <typename RT>
+RT GetNativeDataPointerField(const std::string& field_name)
+{
+	return reinterpret_cast<RT>(GetDataAddress(field_name));
+}
+
 template <typename RT, typename T>
 RT GetNativeBitField(const void* _this, const std::string& field_name)
 {
@@ -126,6 +132,40 @@ public:
 
 private:
 	T* value_;
+};
+
+template <typename T>
+class DataValue
+{
+public:
+	DataValue(const std::string& field_name)
+		: value_(GetNativeDataPointerField<T*>(field_name))
+	{
+	}
+
+	T& operator()() const
+	{
+		return *value_;
+	}
+
+	T& operator=(const T& other)
+	{
+		*value_ = other;
+		return *value_;
+	}
+
+	T& Get() const
+	{
+		return *value_;
+	}
+
+	void Set(const T& other)
+	{
+		*value_ = other;
+	}
+
+private:
+	T * value_;
 };
 
 template <typename RT, typename T>

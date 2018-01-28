@@ -24,6 +24,7 @@ namespace ArkApi
 		bool ReadConfig();
 		void DumpStructs(IDiaSymbol*);
 		void DumpFreeFunctions(IDiaSymbol*);
+		void DumpGlobalVariables(IDiaSymbol*);
 		void DumpType(IDiaSymbol*, const std::string&, int) const;
 		void DumpData(IDiaSymbol*, const std::string&) const;
 		static std::string GetName(IDiaSymbol*);

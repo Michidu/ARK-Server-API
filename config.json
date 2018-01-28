@@ -76,11 +76,15 @@
 	"UShooterGameInstance",
 	"AMatineeActor",
 	"UEngine",
+	"UPrimalGlobals"
 	"FSocket"
   ],
   "functions": [
     "StaticLoadObject",
     "RaycastSingle",
 	"StaticConstructObject"
+  ],
+  "globals": [
+  	"GEngine"
   ]
 }
