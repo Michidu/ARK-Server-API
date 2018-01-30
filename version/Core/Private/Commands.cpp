@@ -37,6 +37,11 @@ namespace ArkApi
 		on_timer_callbacks_.push_back(std::make_shared<OnTimerCallback>(id, callback));
 	}
 
+	void Commands::AddOnChatMessageCallback(const FString& id, const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>& callback)
+	{
+		on_chat_message_callbacks_.push_back(std::make_shared<OnChatMessageCallback>(id, callback));
+	}
+
 	bool Commands::RemoveChatCommand(const FString& command)
 	{
 		return RemoveCommand<ChatCommand>(command, chat_commands_);
@@ -60,6 +65,11 @@ namespace ArkApi
 	bool Commands::RemoveOnTimerCallback(const FString& id)
 	{
 		return RemoveCommand<OnTimerCallback>(id, on_timer_callbacks_);
+	}
+
+	bool Commands::RemoveOnChatMessageCallback(const FString& id)
+	{
+		return RemoveCommand<OnChatMessageCallback>(id, on_chat_message_callbacks_);
 	}
 
 	bool Commands::CheckChatCommands(AShooterPlayerController* shooter_player_controller, FString* message,
@@ -93,6 +103,22 @@ namespace ArkApi
 		{
 			data->callback();
 		}
+	}
+
+	bool Commands::CheckOnChatMessageCallbacks(
+		AShooterPlayerController* player_controller, 
+		FString* message, 
+		EChatSendMode::Type mode, 
+		bool spam_check, 
+		bool command_executed)
+	{
+		bool prevent_default = false;
+		for (const auto& data : on_chat_message_callbacks_)
+		{
+			prevent_default |= data->callback(player_controller, message, mode, spam_check, command_executed);
+		}
+
+		return prevent_default;
 	}
 
 	// Free function

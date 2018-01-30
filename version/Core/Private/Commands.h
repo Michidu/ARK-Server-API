@@ -29,6 +29,7 @@ namespace ArkApi
 
 		void AddOnTickCallback(const FString& id, const std::function<void(float)>& callback) override;
 		void AddOnTimerCallback(const FString& id, const std::function<void()>& callback) override;
+		void AddOnChatMessageCallback(const FString& id, const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>& callback) override;
 
 		bool RemoveChatCommand(const FString& command) override;
 		bool RemoveConsoleCommand(const FString& command) override;
@@ -36,6 +37,7 @@ namespace ArkApi
 
 		bool RemoveOnTickCallback(const FString& id) override;
 		bool RemoveOnTimerCallback(const FString& id) override;
+		bool RemoveOnChatMessageCallback(const FString& id) override;
 
 		bool CheckChatCommands(AShooterPlayerController* shooter_player_controller, FString* message,
 		                       EChatSendMode::Type mode);
@@ -44,6 +46,7 @@ namespace ArkApi
 		                       UWorld* u_world);
 		void CheckOnTickCallbacks(float delta_seconds);
 		void CheckOnTimerCallbacks();
+		bool CheckOnChatMessageCallbacks(AShooterPlayerController* player_controller, FString* message, EChatSendMode::Type mode, bool spam_check, bool command_executed);
 
 	private:
 		Commands() = default;
@@ -68,6 +71,7 @@ namespace ArkApi
 
 		using OnTickCallback = Command<void(float)>;
 		using OnTimerCallback = Command<void()>;
+		using OnChatMessageCallback = Command<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>;
 
 		template <typename T>
 		bool RemoveCommand(const FString& command, std::vector<std::shared_ptr<T>>& commands)
@@ -118,5 +122,6 @@ namespace ArkApi
 
 		std::vector<std::shared_ptr<OnTickCallback>> on_tick_callbacks_;
 		std::vector<std::shared_ptr<OnTimerCallback>> on_timer_callbacks_;
+		std::vector<std::shared_ptr<OnChatMessageCallback>> on_chat_message_callbacks_;
 	};
 }
