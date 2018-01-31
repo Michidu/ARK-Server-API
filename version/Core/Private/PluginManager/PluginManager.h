@@ -79,6 +79,9 @@ namespace ArkApi
 		*/
 		bool IsPluginLoaded(const std::string& plugin_name);
 
+		//Plugin Reload
+		void Destroy();
+
 	private:
 		PluginManager();
 		~PluginManager() = default;
@@ -87,6 +90,13 @@ namespace ArkApi
 		static nlohmann::json ReadPluginPDBConfig(const std::string& plugin_name);
 
 		void CheckPluginsDependencies();
+
+		// Plugin Reload
+		int PluginReloadSeconds;
+		bool PluginChangesIsRunning, PluginReloadEnabled;
+		HANDLE PluginChangesHandle;
+		static void PluginChanges();
+		void SetPluginReload(const bool PluginReloadEnabled, const int PluginReloadSeconds) { this->PluginReloadEnabled = PluginReloadEnabled; this->PluginReloadSeconds = (PluginReloadSeconds * 1000); }
 
 		// Callbacks
 		static void LoadPluginCmd(APlayerController*, FString*, bool);

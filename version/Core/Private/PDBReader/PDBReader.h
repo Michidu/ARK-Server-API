@@ -12,13 +12,18 @@ namespace ArkApi
 	public:
 		PdbReader()
 			: offsets_dump_(nullptr),
-			  bitfields_dump_(nullptr)
+			  bitfields_dump_(nullptr),
+			  PluginReloadSeconds(0),
+			  PluginReloadEnabled(false)
 		{
 		}
 
 		void Read(std::wstring path, nlohmann::json plugin_pdb_config, std::unordered_map<std::string, intptr_t>* offsets_dump,
 		          std::unordered_map<std::string, BitField>* bitfields_dump);
 
+		//Plugin Reload
+		const bool IsPluginReloadEnabled() { return PluginReloadEnabled; }
+		const int PluginReloadDelaySeconds() { return PluginReloadSeconds;  }
 	private:
 		static void LoadDataFromPdb(const std::wstring&, IDiaDataSource**, IDiaSession**, IDiaSymbol**);
 		bool ReadConfig();
@@ -35,5 +40,9 @@ namespace ArkApi
 		std::unordered_map<std::string, BitField>* bitfields_dump_;
 
 		nlohmann::json config_;
+
+		//Plugin Reload
+		int PluginReloadSeconds;
+		bool PluginReloadEnabled;
 	};
 }

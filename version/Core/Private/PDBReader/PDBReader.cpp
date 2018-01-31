@@ -40,7 +40,11 @@ namespace ArkApi
 			throw std::runtime_error("Failed to open config.json");
 
 		try
-		{
+		{		
+			//Plugin Reload
+			PluginReloadEnabled = config_.value("AutomaticPluginReloading", false);
+			PluginReloadSeconds = config_.value("AutomaticPluginReloadSeconds", 5);
+
 			MergePdbConfig(config_, plugin_pdb_config);
 		}
 		catch (const std::runtime_error&)
