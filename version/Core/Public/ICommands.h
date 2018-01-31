@@ -1,8 +1,7 @@
 #pragma once
 
 #include <functional>
-
-#include "API/ARK/Ark.h"
+#include <API/ARK/Ark.h>
 
 namespace ArkApi
 {
@@ -54,7 +53,9 @@ namespace ArkApi
 		* \param id Unique ID
 		* \param callback Callback function
 		*/
-		virtual void AddOnChatMessageCallback(const FString& id, const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>& callback) = 0;
+		virtual void AddOnChatMessageCallback(const FString& id,
+		                                      const std::function<bool(AShooterPlayerController*, FString*,
+		                                                               EChatSendMode::Type, bool, bool)>& callback) = 0;
 
 		/**
 		 * \brief Removes a chat command

@@ -29,7 +29,9 @@ namespace ArkApi
 
 		void AddOnTickCallback(const FString& id, const std::function<void(float)>& callback) override;
 		void AddOnTimerCallback(const FString& id, const std::function<void()>& callback) override;
-		void AddOnChatMessageCallback(const FString& id, const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>& callback) override;
+		void AddOnChatMessageCallback(const FString& id,
+		                              const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool,
+		                                                       bool)>& callback) override;
 
 		bool RemoveChatCommand(const FString& command) override;
 		bool RemoveConsoleCommand(const FString& command) override;
@@ -46,7 +48,8 @@ namespace ArkApi
 		                       UWorld* u_world);
 		void CheckOnTickCallbacks(float delta_seconds);
 		void CheckOnTimerCallbacks();
-		bool CheckOnChatMessageCallbacks(AShooterPlayerController* player_controller, FString* message, EChatSendMode::Type mode, bool spam_check, bool command_executed);
+		bool CheckOnChatMessageCallbacks(AShooterPlayerController* player_controller, FString* message,
+		                                 EChatSendMode::Type mode, bool spam_check, bool command_executed);
 
 	private:
 		Commands() = default;

@@ -1,5 +1,5 @@
 #include "Offsets.h"
-#include "Logger\Logger.h"
+#include "Logger/Logger.h"
 
 namespace ArkApi
 {
@@ -17,12 +17,12 @@ namespace ArkApi
 		const auto first_section = IMAGE_FIRST_SECTION(nt_headers);
 		const auto end_section = first_section + section_count;
 
-		auto data_section_header = std::find_if(first_section, end_section, [](_IMAGE_SECTION_HEADER hdr)
+		const auto data_section_header = std::find_if(first_section, end_section, [](_IMAGE_SECTION_HEADER hdr)
 		{
 			auto name = std::string(reinterpret_cast<char*>(hdr.Name), 8);
 			name.erase(std::remove(name.begin(), name.end(), '\0'), name.end());
 
-			return name.compare(".data") == 0;
+			return name == ".data";
 		});
 
 		if (data_section_header == end_section)
@@ -40,7 +40,8 @@ namespace ArkApi
 		return instance;
 	}
 
-	void Offsets::Init(std::unordered_map<std::string, intptr_t>&& offsets_dump, std::unordered_map<std::string, BitField>&& bitfields_dump)
+	void Offsets::Init(std::unordered_map<std::string, intptr_t>&& offsets_dump,
+	                   std::unordered_map<std::string, BitField>&& bitfields_dump)
 	{
 		offsets_dump_.swap(offsets_dump);
 		bitfields_dump_.swap(bitfields_dump);
@@ -50,7 +51,7 @@ namespace ArkApi
 	{
 		return reinterpret_cast<DWORD64>(base) + static_cast<DWORD64>(offsets_dump_[name]);
 	}
-	
+
 	LPVOID Offsets::GetAddress(const std::string& name)
 	{
 		return reinterpret_cast<LPVOID>(module_base_ + static_cast<DWORD64>(offsets_dump_[name]));

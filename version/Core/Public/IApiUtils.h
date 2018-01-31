@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "API/ARK/Ark.h"
+#include <API/ARK/Ark.h>
 
 namespace ArkApi
 {
@@ -522,7 +522,10 @@ namespace ArkApi
 		 */
 		static bool IsPlayerDead(AShooterPlayerController* player)
 		{
-			return player->GetPlayerCharacter() == nullptr;
+			if (!player->GetPlayerCharacter())
+				return true;
+
+			return player->GetPlayerCharacter()->IsDead();
 		}
 	};
 

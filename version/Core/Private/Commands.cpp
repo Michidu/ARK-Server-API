@@ -37,7 +37,9 @@ namespace ArkApi
 		on_timer_callbacks_.push_back(std::make_shared<OnTimerCallback>(id, callback));
 	}
 
-	void Commands::AddOnChatMessageCallback(const FString& id, const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>& callback)
+	void Commands::AddOnChatMessageCallback(const FString& id,
+	                                        const std::function<bool(AShooterPlayerController*, FString*,
+	                                                                 EChatSendMode::Type, bool, bool)>& callback)
 	{
 		on_chat_message_callbacks_.push_back(std::make_shared<OnChatMessageCallback>(id, callback));
 	}
@@ -106,10 +108,10 @@ namespace ArkApi
 	}
 
 	bool Commands::CheckOnChatMessageCallbacks(
-		AShooterPlayerController* player_controller, 
-		FString* message, 
-		EChatSendMode::Type mode, 
-		bool spam_check, 
+		AShooterPlayerController* player_controller,
+		FString* message,
+		EChatSendMode::Type mode,
+		bool spam_check,
 		bool command_executed)
 	{
 		bool prevent_default = false;
