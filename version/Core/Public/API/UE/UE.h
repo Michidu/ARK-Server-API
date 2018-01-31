@@ -493,6 +493,8 @@ struct Globals
 		const auto flags_value = static_cast<std::underlying_type<ClassCastFlags>::type>(flags);
 		return _class != nullptr && (_class->ClassCastFlagsField()() & flags_value) == flags_value;
 	}
+
+	static DataValue<UEngine *> GEngine() { return { "Global.GEngine" }; }
 };
 
 template <>

@@ -10,6 +10,8 @@ namespace ArkApi
 		                                       right.value("structures", std::vector<std::string>{}));
 		left["functions"] = MergeStringArrays(left.value("functions", std::vector<std::string>{}),
 		                                      right.value("functions", std::vector<std::string>{}));
+		left["globals"] = MergeStringArrays(left.value("globals", std::vector<std::string>{}),
+		                                    right.value("globals", std::vector<std::string>{}));
 	}
 
 	std::vector<std::string> MergeStringArrays(std::vector<std::string> first, std::vector<std::string> second)

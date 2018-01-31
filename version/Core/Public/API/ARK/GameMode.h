@@ -174,6 +174,18 @@ struct UWorld : UObject
 	static void StaticRegisterNativesUWorld() { NativeCall<void>(nullptr, "UWorld.StaticRegisterNativesUWorld"); }
 };
 
+struct UEngine : UObject
+{
+	FieldValue<UPrimalGlobals *> GameSingletonField() { return { this, "UEngine.GameSingleton" }; } // UObject *
+};
+
+struct UPrimalGlobals : UObject
+{
+	FieldValue<UPrimalGameData *> PrimalGameDataField() { return { this, "UPrimalGlobals.PrimalGameData" }; }
+	FieldValue<UPrimalGameData *> PrimalGameDataOverrideField() { return { this, "UPrimalGlobals.PrimalGameDataOverride" }; }
+};
+
+
 // Level
 
 struct ULevelBase
