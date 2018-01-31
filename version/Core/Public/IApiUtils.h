@@ -1,7 +1,7 @@
 #pragma once
 
 #include <optional>
-#include "API/ARK/Ark.h"
+#include <API/ARK/Ark.h>
 
 namespace ArkApi
 {
@@ -335,15 +335,11 @@ namespace ArkApi
 			{
 				APrimalDinoCharacter* dino = static_cast<APrimalDinoCharacter*>(actor);
 
-				dino->AbsoluteBaseLevelField() = lvl;
-
 				if (location && !location->IsZero())
 				{
 					FRotator rotation{0, 0, 0};
 					dino->TeleportTo(location, &rotation, true, false);
 				}
-
-				dino->BeginPlay();
 
 				if (force_tame)
 				{
@@ -360,6 +356,10 @@ namespace ArkApi
 
 					dino->TameDino(player, false, 0);
 				}
+
+				dino->AbsoluteBaseLevelField() = lvl;
+
+				dino->BeginPlay();
 
 				return dino;
 			}
@@ -522,7 +522,10 @@ namespace ArkApi
 		 */
 		static bool IsPlayerDead(AShooterPlayerController* player)
 		{
-			return player->GetPlayerCharacter() == nullptr;
+			if (!player->GetPlayerCharacter())
+				return true;
+
+			return player->GetPlayerCharacter()->IsDead();
 		}
 	};
 

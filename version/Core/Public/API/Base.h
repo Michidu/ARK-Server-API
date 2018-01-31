@@ -144,6 +144,9 @@ struct UCharacterMovementComponent{};
 struct FDinoExtraDefaultItemList{};
 struct FWeaponData{};
 struct FAIRequestID{};
+struct UPrimalGameData;
+struct UEngine;
+struct UPrimalGlobals;
 
 struct BitField
 {
@@ -157,6 +160,8 @@ struct BitField
 
 ARK_API DWORD64 GetAddress(const void* base, const std::string& name);
 ARK_API LPVOID GetAddress(const std::string& name);
+
+ARK_API LPVOID GetDataAddress(const std::string& name);
 
 ARK_API BitField GetBitField(const void* base, const std::string& name);
 ARK_API BitField GetBitField(LPVOID base, const std::string& name);

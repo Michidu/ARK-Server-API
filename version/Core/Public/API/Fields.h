@@ -30,6 +30,12 @@ RT GetNativePointerField(const void* _this, const std::string& field_name)
 	return reinterpret_cast<RT>(GetAddress(_this, field_name));
 }
 
+template <typename RT>
+RT GetNativeDataPointerField(const std::string& field_name)
+{
+	return reinterpret_cast<RT>(GetDataAddress(field_name));
+}
+
 template <typename RT, typename T>
 RT GetNativeBitField(const void* _this, const std::string& field_name)
 {
@@ -46,7 +52,7 @@ void SetNativeBitField(LPVOID _this, const std::string& field_name, T new_value)
 	const auto bf = GetBitField(_this, field_name);
 	const auto mask = ~0ULL >> sizeof(unsigned long long) * 8 - bf.num_bits << bf.bit_position;
 	*reinterpret_cast<T*>(bf.offset) = (*reinterpret_cast<T*>(bf.offset) & ~mask) | ((new_value << bf.bit_position) & mask
-		);
+	);
 }
 
 template <typename T>
@@ -63,10 +69,10 @@ public:
 		return *value_;
 	}
 
-	T& operator=(const T& other)
+	FieldValue& operator=(const T& other)
 	{
 		*value_ = other;
-		return *value_;
+		return *this;
 	}
 
 	T& Get() const
@@ -97,7 +103,7 @@ public:
 		return value_;
 	}
 
-	T operator=(const T& other) = delete;
+	FieldPointer& operator=(const T& other) = delete;
 
 private:
 	T value_;
@@ -117,11 +123,45 @@ public:
 		return value_;
 	}
 
-	T& operator=(const T& other) = delete;
+	FieldArray& operator=(const T& other) = delete;
 
 	static size_t GetSize()
 	{
 		return size;
+	}
+
+private:
+	T* value_;
+};
+
+template <typename T>
+class DataValue
+{
+public:
+	DataValue(const std::string& field_name)
+		: value_(GetNativeDataPointerField<T*>(field_name))
+	{
+	}
+
+	T& operator()() const
+	{
+		return *value_;
+	}
+
+	DataValue& operator=(const T& other)
+	{
+		*value_ = other;
+		return *this;
+	}
+
+	T& Get() const
+	{
+		return *value_;
+	}
+
+	void Set(const T& other)
+	{
+		*value_ = other;
 	}
 
 private:
@@ -142,10 +182,10 @@ public:
 		return GetNativeBitField<RT, T>(parent_, field_name_);
 	}
 
-	RT operator=(const T& other)
+	BitFieldValue& operator=(const T& other)
 	{
 		SetNativeBitField<T>(parent_, field_name_, other);
-		return operator()();
+		return *this;
 	}
 
 	RT Get() const
