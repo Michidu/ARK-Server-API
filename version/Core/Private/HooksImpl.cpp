@@ -84,14 +84,14 @@ namespace ArkApi
 		const long double last_chat_time = player_controller->LastChatMessageTimeField()();
 		const long double time_seconds = ApiUtils::Get().GetWorld()->TimeSecondsField()();
 
-		if (last_chat_time > 0 && time_seconds - last_chat_time < 1.0)
-			return;
+		auto spam_check = last_chat_time > 0 && time_seconds - last_chat_time < 1.0;
 
-		if (Commands::Get().CheckChatCommands(player_controller, message, mode))
-		{
-			player_controller->LastChatMessageTimeField() = time_seconds;
-			return;
-		}
+		auto command_executed = !spam_check ? Commands::Get().CheckChatCommands(player_controller, message, mode) : false;
+		if (command_executed) player_controller->LastChatMessageTimeField() = time_seconds;
+
+		auto prevent_default =  Commands::Get().CheckOnChatMessageCallbacks(player_controller, message, mode, spam_check, command_executed);
+
+		if (spam_check || command_executed || prevent_default) return;
 
 		AShooterPlayerController_ServerSendChatMessage_Impl_original(player_controller, message, mode);
 	}

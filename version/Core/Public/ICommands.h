@@ -50,6 +50,13 @@ namespace ArkApi
 		virtual void AddOnTimerCallback(const FString& id, const std::function<void()>& callback) = 0;
 
 		/**
+		* \brief Added function will be called for AShooterPlayerController->ServerSendChatMessage events
+		* \param id Unique ID
+		* \param callback Callback function
+		*/
+		virtual void AddOnChatMessageCallback(const FString& id, const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>& callback) = 0;
+
+		/**
 		 * \brief Removes a chat command
 		 * \param command Command name
 		 * \return true if success, false otherwise
@@ -83,6 +90,13 @@ namespace ArkApi
 		 * \return true if success, false otherwise
 		 */
 		virtual bool RemoveOnTimerCallback(const FString& id) = 0;
+
+		/**
+		* \brief Removes an on-chat-message callback
+		* \param id Callback ID
+		* \return true if success, false otherwise
+		*/
+		virtual bool RemoveOnChatMessageCallback(const FString& id) = 0;
 	};
 
 	ARK_API ICommands& APIENTRY GetCommands();
