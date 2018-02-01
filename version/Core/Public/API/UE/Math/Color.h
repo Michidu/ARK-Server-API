@@ -359,16 +359,6 @@ struct FLinearColor
 	{
 		return R * 0.3f + G * 0.59f + B * 0.11f;
 	}
-
-	// Common colors.	
-	static const FLinearColor White;
-	static const FLinearColor Gray;
-	static const FLinearColor Black;
-	static const FLinearColor Transparent;
-	static const FLinearColor Red;
-	static const FLinearColor Green;
-	static const FLinearColor Blue;
-	static const FLinearColor Yellow;
 };
 
 FORCEINLINE FLinearColor operator*(float Scalar, const FLinearColor& Color)
@@ -522,22 +512,6 @@ public:
 	{
 		return (B << 24) | (G << 16) | (R << 8) | (A << 0);
 	}
-
-	/** Some pre-inited colors, useful for debug code */
-	static const FColor White;
-	static const FColor Black;
-	static const FColor Transparent;
-	static const FColor Red;
-	static const FColor Green;
-	static const FColor Blue;
-	static const FColor Yellow;
-	static const FColor Cyan;
-	static const FColor Magenta;
-	static const FColor Orange;
-	static const FColor Purple;
-	static const FColor Turquoise;
-	static const FColor Silver;
-	static const FColor Emerald;
 
 private:
 	/**

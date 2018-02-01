@@ -128,10 +128,10 @@ namespace ArkApi
 		auto settings = ReadSettingsConfig();
 
 		const bool auto_reload_enabled = settings["settings"].value("AutomaticPluginReloading", false);
-		reload_sleep_seconds_ = settings["settings"].value("AutomaticPluginReloadSeconds", 5) * 1000;
-
 		if (auto_reload_enabled)
 		{
+			reload_sleep_seconds_ = settings["settings"].value("AutomaticPluginReloadSeconds", 5) * 1000;
+
 			std::thread thread(&PluginManager::DetectPluginChanges, this);
 			thread.detach();
 		}
