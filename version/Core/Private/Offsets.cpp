@@ -41,12 +41,10 @@ namespace ArkApi
 	}
 
 	void Offsets::Init(std::unordered_map<std::string, intptr_t>&& offsets_dump,
-	                   std::unordered_map<std::string, BitField>&& bitfields_dump, bool PluginReloadEnabled, int PluginReloadSeconds)
+	                   std::unordered_map<std::string, BitField>&& bitfields_dump)
 	{
 		offsets_dump_.swap(offsets_dump);
 		bitfields_dump_.swap(bitfields_dump);
-		this->PluginReloadEnabled = PluginReloadEnabled;
-		this->PluginReloadSeconds = PluginReloadSeconds;
 	}
 
 	DWORD64 Offsets::GetAddress(const void* base, const std::string& name)

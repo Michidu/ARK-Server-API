@@ -40,11 +40,7 @@ namespace ArkApi
 			throw std::runtime_error("Failed to open config.json");
 
 		try
-		{		
-			//Plugin Reload
-			PluginReloadEnabled = config_.value("AutomaticPluginReloading", false);
-			PluginReloadSeconds = config_.value("AutomaticPluginReloadSeconds", 5);
-
+		{
 			MergePdbConfig(config_, plugin_pdb_config);
 		}
 		catch (const std::runtime_error&)
@@ -52,7 +48,6 @@ namespace ArkApi
 			Log::GetLog()->error("Failed to merge api config with pdb configs");
 			throw;
 		}
-
 
 		Log::GetLog()->info("Dumping structures..");
 		DumpStructs(symbol);
@@ -383,10 +378,6 @@ namespace ArkApi
 			return;
 
 		(*offsets_dump_)[std::string(structure) + "." + str_name] = offset;
-		//jsonDump["structures"][structure][str_name] = nlohmann::json({
-		//{"offset", offset},
-		//{"kind", "method"}
-		//});
 
 		SysFreeString(bstr_name);
 	}

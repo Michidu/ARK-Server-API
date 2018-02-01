@@ -41,7 +41,7 @@ void Init()
 		fs::create_directory(current_dir + "/logs");
 
 	Log::Get().Init("API");
-	
+
 	Log::GetLog()->info("-----------------------------------------------");
 	Log::GetLog()->info("ARK: Server Api V{}", API_VERSION);
 	Log::GetLog()->info("Loading...\n");
@@ -73,8 +73,7 @@ void Init()
 		return;
 	}
 
-	//Plugin Reload
-	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump), pdb_reader.IsPluginReloadEnabled(), pdb_reader.PluginReloadDelaySeconds());
+	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump));
 
 	InitHooks();
 
@@ -105,7 +104,6 @@ BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID)
 	}
 	else if (fdw_reason == DLL_PROCESS_DETACH)
 	{
-		ArkApi::PluginManager::Get().Destroy();
 		FreeLibrary(m_hinst_dll);
 	}
 

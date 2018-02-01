@@ -79,29 +79,25 @@ namespace ArkApi
 		*/
 		bool IsPluginLoaded(const std::string& plugin_name);
 
-		//Plugin Reload
-		void Destroy();
-
 	private:
 		PluginManager();
 		~PluginManager() = default;
 
 		static nlohmann::json ReadPluginInfo(const std::string& plugin_name);
 		static nlohmann::json ReadPluginPDBConfig(const std::string& plugin_name);
+		static nlohmann::json ReadSettingsConfig();
 
 		void CheckPluginsDependencies();
 
-		// Plugin Reload
-		int PluginReloadSeconds;
-		bool PluginChangesIsRunning, PluginReloadEnabled;
-		HANDLE PluginChangesHandle;
-		static void PluginChanges();
-		void SetPluginReload(const bool PluginReloadEnabled, const int PluginReloadSeconds) { this->PluginReloadEnabled = PluginReloadEnabled; this->PluginReloadSeconds = (PluginReloadSeconds * 1000); }
+		void DetectPluginChanges();
 
 		// Callbacks
 		static void LoadPluginCmd(APlayerController*, FString*, bool);
 		static void UnloadPluginCmd(APlayerController*, FString*, bool);
 
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;
+
+		// Plugins auto reloading
+		int reload_sleep_seconds_;
 	};
 }
