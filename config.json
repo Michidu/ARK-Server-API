@@ -82,8 +82,8 @@
     "UEngine",
     "UPrimalGlobals",
     "FSocket",
-	"UPrimalGameData",
-	"UPrimalEngramEntry"
+    "UPrimalGameData",
+    "UPrimalEngramEntry"
   ],
   "functions":[
     "StaticLoadObject",
