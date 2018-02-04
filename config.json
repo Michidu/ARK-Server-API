@@ -81,7 +81,9 @@
     "AMatineeActor",
     "UEngine",
     "UPrimalGlobals",
-    "FSocket"
+    "FSocket",
+	"UPrimalGameData",
+	"UPrimalEngramEntry"
   ],
   "functions":[
     "StaticLoadObject",
