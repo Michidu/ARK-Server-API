@@ -294,6 +294,34 @@ struct APrimalBuff
 	void SetBuffCauser(AActor * CausedBy) { NativeCall<void, AActor *>(this, "APrimalBuff.SetBuffCauser", CausedBy); }
 };
 
+struct UPrimalEngramEntry
+{
+	FieldValue<int> RequiredCharacterLevelField() { return { this, "UPrimalEngramEntry.RequiredCharacterLevel" }; }
+	FieldValue<int> RequiredEngramPointsField() { return { this, "UPrimalEngramEntry.RequiredEngramPoints" }; }
+	FieldValue<TSubclassOf<UPrimalItem>> BluePrintEntryField() { return { this, "UPrimalEngramEntry.BluePrintEntry" }; }
+	FieldValue<FString> ExtraEngramDescriptionField() { return { this, "UPrimalEngramEntry.ExtraEngramDescription" }; }
+	//FieldValue<TArray<FEngramEntries>> EngramRequirementSetsField() { return { this, "UPrimalEngramEntry.EngramRequirementSets" }; }
+	FieldValue<int> MyEngramIndexField() { return { this, "UPrimalEngramEntry.MyEngramIndex" }; }
+	//FieldValue<TEnumAsByte<enum EEngramGroup::Type>> EngramGroupField() { return { this, "UPrimalEngramEntry.EngramGroup" }; }
+
+	// Functions
+
+	UObject * GetObjectW() { return NativeCall<UObject *>(this, "UPrimalEngramEntry.GetObjectW"); }
+	FString * GetEntryString(FString * result) { return NativeCall<FString *, FString *>(this, "UPrimalEngramEntry.GetEntryString", result); }
+	UTexture2D * GetEntryIcon(UObject * AssociatedDataObject, bool bIsEnabled) { return NativeCall<UTexture2D *, UObject *, bool>(this, "UPrimalEngramEntry.GetEntryIcon", AssociatedDataObject, bIsEnabled); }
+	bool MeetsEngramRequirements(AShooterPlayerState * aPlayerState, bool bOnlyCheckLevel, bool bDontCheckEngramPreRequirements) { return NativeCall<bool, AShooterPlayerState *, bool, bool>(this, "UPrimalEngramEntry.MeetsEngramRequirements", aPlayerState, bOnlyCheckLevel, bDontCheckEngramPreRequirements); }
+	bool MeetsEngramChainRequirements(AShooterPlayerState * aPlayerState) { return NativeCall<bool, AShooterPlayerState *>(this, "UPrimalEngramEntry.MeetsEngramChainRequirements", aPlayerState); }
+	FString * GetEngramDescription(FString * result, AShooterPlayerState * aPlayerState) { return NativeCall<FString *, FString *, AShooterPlayerState *>(this, "UPrimalEngramEntry.GetEngramDescription", result, aPlayerState); }
+	FString * GetEngramName(FString * result) { return NativeCall<FString *, FString *>(this, "UPrimalEngramEntry.GetEngramName", result); }
+	int GetRequiredEngramPoints() { return NativeCall<int>(this, "UPrimalEngramEntry.GetRequiredEngramPoints"); }
+	int GetRequiredLevel() { return NativeCall<int>(this, "UPrimalEngramEntry.GetRequiredLevel"); }
+	bool UseEngramRequirementSets() { return NativeCall<bool>(this, "UPrimalEngramEntry.UseEngramRequirementSets"); }
+	bool IsEngramClassHidden(TSubclassOf<UPrimalItem> ForItemClass) { return NativeCall<bool, TSubclassOf<UPrimalItem>>(this, "UPrimalEngramEntry.IsEngramClassHidden", ForItemClass); }
+	void GetAllChainedPreReqs(AShooterPlayerState * aPlayerState, TArray<TSubclassOf<UPrimalEngramEntry>> * TestedEntries) { NativeCall<void, AShooterPlayerState *, TArray<TSubclassOf<UPrimalEngramEntry>> *>(this, "UPrimalEngramEntry.GetAllChainedPreReqs", aPlayerState, TestedEntries); }
+	int GetChainRequiredEngramPoints(TArray<TSubclassOf<UPrimalEngramEntry>> * TestedEntries) { return NativeCall<int, TArray<TSubclassOf<UPrimalEngramEntry>> *>(this, "UPrimalEngramEntry.GetChainRequiredEngramPoints", TestedEntries); }
+	void ClearHiddenEngramRequirements() { NativeCall<void>(this, "UPrimalEngramEntry.ClearHiddenEngramRequirements"); }
+};
+
 struct FDinoAncestorsEntry
 {
 	FString MaleName;

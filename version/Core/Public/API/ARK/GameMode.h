@@ -2,8 +2,9 @@
 
 #include "API/UE/UE.h"
 #include "API/Enums.h"
-
 #include "API/UE/Containers/Map.h"
+
+#include "Other.h"
 
 struct UWorld : UObject
 {
@@ -176,15 +177,184 @@ struct UWorld : UObject
 
 struct UEngine : UObject
 {
-	FieldValue<UPrimalGlobals *> GameSingletonField() { return { this, "UEngine.GameSingleton" }; } // UObject *
+	FieldValue<TWeakObjectPtr<AMatineeActor>> ActiveMatineeField() { return { this, "UEngine.ActiveMatinee" }; }
+	FieldValue<TArray<FString>> AdditionalFontNamesField() { return { this, "UEngine.AdditionalFontNames" }; }
+	FieldValue<TSubclassOf<ULocalPlayer>> LocalPlayerClassField() { return { this, "UEngine.LocalPlayerClass" }; }
+	FieldValue<TSubclassOf<AWorldSettings>> WorldSettingsClassField() { return { this, "UEngine.WorldSettingsClass" }; }
+	//FieldValue<TSubclassOf<UGameUserSettings>> GameUserSettingsClassField() { return { this, "UEngine.GameUserSettingsClass" }; }
+	//FieldValue<UGameUserSettings *> GameUserSettingsField() { return { this, "UEngine.GameUserSettings" }; }
+	FieldValue<UPrimalGlobals *> GameSingletonField() { return { this, "UEngine.GameSingleton" }; }
+	FieldValue<TSubclassOf<APawn>> DefaultPreviewPawnClassField() { return { this, "UEngine.DefaultPreviewPawnClass" }; }
+	FieldValue<FString> PlayOnConsoleSaveDirField() { return { this, "UEngine.PlayOnConsoleSaveDir" }; }
+	FieldValue<UTexture2D *> DefaultTextureField() { return { this, "UEngine.DefaultTexture" }; }
+	FieldValue<UTexture2D *> DefaultBSPVertexTextureField() { return { this, "UEngine.DefaultBSPVertexTexture" }; }
+	FieldValue<UTexture2D *> HighFrequencyNoiseTextureField() { return { this, "UEngine.HighFrequencyNoiseTexture" }; }
+	FieldValue<UTexture2D *> DefaultBokehTextureField() { return { this, "UEngine.DefaultBokehTexture" }; }
+	FieldValue<FLinearColor> LightingOnlyBrightnessField() { return { this, "UEngine.LightingOnlyBrightness" }; }
+	FieldValue<TArray<FColor>> LightComplexityColorsField() { return { this, "UEngine.LightComplexityColors" }; }
+	FieldValue<TArray<FLinearColor>> ShaderComplexityColorsField() { return { this, "UEngine.ShaderComplexityColors" }; }
+	FieldValue<TArray<FLinearColor>> StationaryLightOverlapColorsField() { return { this, "UEngine.StationaryLightOverlapColors" }; }
+	FieldValue<float> MaxPixelShaderAdditiveComplexityCountField() { return { this, "UEngine.MaxPixelShaderAdditiveComplexityCount" }; }
+	FieldValue<float> MaxES2PixelShaderAdditiveComplexityCountField() { return { this, "UEngine.MaxES2PixelShaderAdditiveComplexityCount" }; }
+	FieldValue<float> MinLightMapDensityField() { return { this, "UEngine.MinLightMapDensity" }; }
+	FieldValue<float> IdealLightMapDensityField() { return { this, "UEngine.IdealLightMapDensity" }; }
+	FieldValue<float> MaxLightMapDensityField() { return { this, "UEngine.MaxLightMapDensity" }; }
+	FieldValue<float> RenderLightMapDensityGrayscaleScaleField() { return { this, "UEngine.RenderLightMapDensityGrayscaleScale" }; }
+	FieldValue<float> RenderLightMapDensityColorScaleField() { return { this, "UEngine.RenderLightMapDensityColorScale" }; }
+	FieldValue<FLinearColor> LightMapDensityVertexMappedColorField() { return { this, "UEngine.LightMapDensityVertexMappedColor" }; }
+	FieldValue<FLinearColor> LightMapDensitySelectedColorField() { return { this, "UEngine.LightMapDensitySelectedColor" }; }
+	FieldValue<UTexture2D *> PreIntegratedSkinBRDFTextureField() { return { this, "UEngine.PreIntegratedSkinBRDFTexture" }; }
+	FieldValue<UTexture2D *> MiniFontTextureField() { return { this, "UEngine.MiniFontTexture" }; }
+	FieldValue<UTexture2D *> LightMapDensityTextureField() { return { this, "UEngine.LightMapDensityTexture" }; }
+	FieldValue<TArray<FString>> DeferredCommandsField() { return { this, "UEngine.DeferredCommands" }; }
+	FieldValue<int> TickCyclesField() { return { this, "UEngine.TickCycles" }; }
+	FieldValue<int> GameCyclesField() { return { this, "UEngine.GameCycles" }; }
+	FieldValue<int> ClientCyclesField() { return { this, "UEngine.ClientCycles" }; }
+	FieldValue<float> NearClipPlaneField() { return { this, "UEngine.NearClipPlane" }; }
+	FieldValue<float> TimeBetweenPurgingPendingKillObjectsField() { return { this, "UEngine.TimeBetweenPurgingPendingKillObjects" }; }
+	FieldValue<float> AsyncLoadingTimeLimitField() { return { this, "UEngine.AsyncLoadingTimeLimit" }; }
+	FieldValue<float> PriorityAsyncLoadingExtraTimeField() { return { this, "UEngine.PriorityAsyncLoadingExtraTime" }; }
+	FieldValue<float> LevelStreamingActorsUpdateTimeLimitField() { return { this, "UEngine.LevelStreamingActorsUpdateTimeLimit" }; }
+	FieldValue<int> LevelStreamingComponentsRegistrationGranularityField() { return { this, "UEngine.LevelStreamingComponentsRegistrationGranularity" }; }
+	FieldValue<int> MaximumLoopIterationCountField() { return { this, "UEngine.MaximumLoopIterationCount" }; }
+	FieldValue<int> NumPawnsAllowedToBeSpawnedInAFrameField() { return { this, "UEngine.NumPawnsAllowedToBeSpawnedInAFrame" }; }
+	FieldValue<FColor> C_WorldBoxField() { return { this, "UEngine.C_WorldBox" }; }
+	FieldValue<FColor> C_BrushWireField() { return { this, "UEngine.C_BrushWire" }; }
+	FieldValue<FColor> C_AddWireField() { return { this, "UEngine.C_AddWire" }; }
+	FieldValue<FColor> C_SubtractWireField() { return { this, "UEngine.C_SubtractWire" }; }
+	FieldValue<FColor> C_SemiSolidWireField() { return { this, "UEngine.C_SemiSolidWire" }; }
+	FieldValue<FColor> C_NonSolidWireField() { return { this, "UEngine.C_NonSolidWire" }; }
+	FieldValue<FColor> C_WireBackgroundField() { return { this, "UEngine.C_WireBackground" }; }
+	FieldValue<FColor> C_ScaleBoxHiField() { return { this, "UEngine.C_ScaleBoxHi" }; }
+	FieldValue<FColor> C_VolumeCollisionField() { return { this, "UEngine.C_VolumeCollision" }; }
+	FieldValue<FColor> C_BSPCollisionField() { return { this, "UEngine.C_BSPCollision" }; }
+	FieldValue<FColor> C_OrthoBackgroundField() { return { this, "UEngine.C_OrthoBackground" }; }
+	FieldValue<FColor> C_VolumeField() { return { this, "UEngine.C_Volume" }; }
+	FieldValue<FColor> C_BrushShapeField() { return { this, "UEngine.C_BrushShape" }; }
+	FieldValue<float> StreamingDistanceFactorField() { return { this, "UEngine.StreamingDistanceFactor" }; }
+	FieldValue<TEnumAsByte<enum ETransitionType>> TransitionTypeField() { return { this, "UEngine.TransitionType" }; }
+	FieldValue<FString> TransitionDescriptionField() { return { this, "UEngine.TransitionDescription" }; }
+	FieldValue<FString> TransitionGameModeField() { return { this, "UEngine.TransitionGameMode" }; }
+	FieldValue<float> MeshLODRangeField() { return { this, "UEngine.MeshLODRange" }; }
+	FieldValue<float> CameraRotationThresholdField() { return { this, "UEngine.CameraRotationThreshold" }; }
+	FieldValue<float> CameraTranslationThresholdField() { return { this, "UEngine.CameraTranslationThreshold" }; }
+	FieldValue<float> PrimitiveProbablyVisibleTimeField() { return { this, "UEngine.PrimitiveProbablyVisibleTime" }; }
+	FieldValue<float> MaxOcclusionPixelsFractionField() { return { this, "UEngine.MaxOcclusionPixelsFraction" }; }
+	FieldValue<int> MaxParticleResizeField() { return { this, "UEngine.MaxParticleResize" }; }
+	FieldValue<int> MaxParticleResizeWarnField() { return { this, "UEngine.MaxParticleResizeWarn" }; }
+	FieldValue<float> NetClientTicksPerSecondField() { return { this, "UEngine.NetClientTicksPerSecond" }; }
+	FieldValue<float> DisplayGammaField() { return { this, "UEngine.DisplayGamma" }; }
+	FieldValue<float> MinDesiredFrameRateField() { return { this, "UEngine.MinDesiredFrameRate" }; }
+	FieldValue<FLinearColor> DefaultSelectedMaterialColorField() { return { this, "UEngine.DefaultSelectedMaterialColor" }; }
+	FieldValue<FLinearColor> SelectedMaterialColorField() { return { this, "UEngine.SelectedMaterialColor" }; }
+	FieldValue<FLinearColor> SelectionOutlineColorField() { return { this, "UEngine.SelectionOutlineColor" }; }
+	FieldValue<FLinearColor> SelectedMaterialColorOverrideField() { return { this, "UEngine.SelectedMaterialColorOverride" }; }
+	FieldValue<bool> bIsOverridingSelectedColorField() { return { this, "UEngine.bIsOverridingSelectedColor" }; }
+	FieldValue<unsigned int> bEnableVisualLogRecordingOnStartField() { return { this, "UEngine.bEnableVisualLogRecordingOnStart" }; }
+	FieldValue<int> ScreenSaverInhibitorSemaphoreField() { return { this, "UEngine.ScreenSaverInhibitorSemaphore" }; }
+	FieldValue<FString> MatineeCaptureNameField() { return { this, "UEngine.MatineeCaptureName" }; }
+	FieldValue<FString> MatineePackageCaptureNameField() { return { this, "UEngine.MatineePackageCaptureName" }; }
+	FieldValue<int> MatineeCaptureFPSField() { return { this, "UEngine.MatineeCaptureFPS" }; }
+	FieldValue<bool> bNoTextureStreamingField() { return { this, "UEngine.bNoTextureStreaming" }; }
+	FieldValue<FString> ParticleEventManagerClassPathField() { return { this, "UEngine.ParticleEventManagerClassPath" }; }
+	FieldValue<float> SelectionHighlightIntensityField() { return { this, "UEngine.SelectionHighlightIntensity" }; }
+	FieldValue<float> BSPSelectionHighlightIntensityField() { return { this, "UEngine.BSPSelectionHighlightIntensity" }; }
+	FieldValue<float> HoverHighlightIntensityField() { return { this, "UEngine.HoverHighlightIntensity" }; }
+	FieldValue<float> SelectionHighlightIntensityBillboardsField() { return { this, "UEngine.SelectionHighlightIntensityBillboards" }; }
+	FieldValue<FString> LastModDownloadTextField() { return { this, "UEngine.LastModDownloadText" }; }
+	FieldValue<FString> PrimalNetAuth_MyIPStrField() { return { this, "UEngine.PrimalNetAuth_MyIPStr" }; }
+	FieldValue<FString> PrimalNetAuth_TokenField() { return { this, "UEngine.PrimalNetAuth_Token" }; }
+	FieldValue<bool> bIsInitializedField() { return { this, "UEngine.bIsInitialized" }; }
+	//FieldValue<FAudioDevice *> AudioDeviceField() { return { this, "UEngine.AudioDevice" }; }
+	FieldValue<bool> bPendingHardwareSurveyResultsField() { return { this, "UEngine.bPendingHardwareSurveyResults" }; }
+	FieldValue<TArray<FString>> ServerActorsField() { return { this, "UEngine.ServerActors" }; }
+	FieldValue<int> NextWorldContextHandleField() { return { this, "UEngine.NextWorldContextHandle" }; }
+
+	// Functions
+
+	//FAudioDevice * GetAudioDevice() { return NativeCall<FAudioDevice *>(this, "UEngine.GetAudioDevice"); }
+	bool IsInitialized() { return NativeCall<bool>(this, "UEngine.IsInitialized"); }
+	FString * GetLastModDownloadText(FString * result) { return NativeCall<FString *, FString *>(this, "UEngine.GetLastModDownloadText", result); }
+	void TickFPSChart(float DeltaSeconds) { NativeCall<void, float>(this, "UEngine.TickFPSChart", DeltaSeconds); }
+	void StartFPSChart() { NativeCall<void>(this, "UEngine.StartFPSChart"); }
+	void StopFPSChart() { NativeCall<void>(this, "UEngine.StopFPSChart"); }
+	void DumpFPSChartToLog(float TotalTime, float DeltaTime, int NumFrames, FString * InMapName) { NativeCall<void, float, float, int, FString *>(this, "UEngine.DumpFPSChartToLog", TotalTime, DeltaTime, NumFrames, InMapName); }
+	void DumpFPSChart(FString * InMapName, bool bForceDump) { NativeCall<void, FString *, bool>(this, "UEngine.DumpFPSChart", InMapName, bForceDump); }
+	void Tick(float DeltaSeconds, bool bIdleMode) { NativeCall<void, float, bool>(this, "UEngine.Tick", DeltaSeconds, bIdleMode); }
+	void OnExternalUIChange(bool bInIsOpening) { NativeCall<void, bool>(this, "UEngine.OnExternalUIChange", bInIsOpening); }
+	void ShutdownAudioDevice() { NativeCall<void>(this, "UEngine.ShutdownAudioDevice"); }
+	void PreExit() { NativeCall<void>(this, "UEngine.PreExit"); }
+	void TickDeferredCommands() { NativeCall<void>(this, "UEngine.TickDeferredCommands"); }
+	void UpdateTimeAndHandleMaxTickRate() { NativeCall<void>(this, "UEngine.UpdateTimeAndHandleMaxTickRate"); }
+	void ParseCommandline() { NativeCall<void>(this, "UEngine.ParseCommandline"); }
+	void InitializeObjectReferences() { NativeCall<void>(this, "UEngine.InitializeObjectReferences"); }
+	bool InitializeAudioDevice() { return NativeCall<bool>(this, "UEngine.InitializeAudioDevice"); }
+	bool UseSound() { return NativeCall<bool>(this, "UEngine.UseSound"); }
+	bool InitializeHMDDevice() { return NativeCall<bool>(this, "UEngine.InitializeHMDDevice"); }
+	void RecordHMDAnalytics() { NativeCall<void>(this, "UEngine.RecordHMDAnalytics"); }
+	bool IsSplitScreen(UWorld * InWorld) { return NativeCall<bool, UWorld *>(this, "UEngine.IsSplitScreen", InWorld); }
+	ULocalPlayer * GetLocalPlayerFromControllerId(UWorld * InWorld, int ControllerId) { return NativeCall<ULocalPlayer *, UWorld *, int>(this, "UEngine.GetLocalPlayerFromControllerId", InWorld, ControllerId); }
+	void SwapControllerId(ULocalPlayer * NewPlayer, int CurrentControllerId, int NewControllerID) { NativeCall<void, ULocalPlayer *, int, int>(this, "UEngine.SwapControllerId", NewPlayer, CurrentControllerId, NewControllerID); }
+	APlayerController * GetFirstLocalPlayerController(UWorld * InWorld) { return NativeCall<APlayerController *, UWorld *>(this, "UEngine.GetFirstLocalPlayerController", InWorld); }
+	void GetAllLocalPlayerControllers(TArray<APlayerController *> * PlayerList) { NativeCall<void, TArray<APlayerController *> *>(this, "UEngine.GetAllLocalPlayerControllers", PlayerList); }
+	void OnLostFocusPause(bool EnablePause) { NativeCall<void, bool>(this, "UEngine.OnLostFocusPause", EnablePause); }
+	void TickHardwareSurvey() { NativeCall<void>(this, "UEngine.TickHardwareSurvey"); }
+	static FString * HardwareSurveyBucketRAM(FString * result, unsigned int MemoryMB) { return NativeCall<FString *, FString *, unsigned int>(nullptr, "UEngine.HardwareSurveyBucketRAM", result, MemoryMB); }
+	static FString * HardwareSurveyBucketVRAM(FString * result, unsigned int VidMemoryMB) { return NativeCall<FString *, FString *, unsigned int>(nullptr, "UEngine.HardwareSurveyBucketVRAM", result, VidMemoryMB); }
+	static FString * HardwareSurveyBucketResolution(FString * result, unsigned int DisplayWidth, unsigned int DisplayHeight) { return NativeCall<FString *, FString *, unsigned int, unsigned int>(nullptr, "UEngine.HardwareSurveyBucketResolution", result, DisplayWidth, DisplayHeight); }
+	float GetMaxTickRate(float DeltaTime, bool bAllowFrameRateSmoothing) { return NativeCall<float, float, bool>(this, "UEngine.GetMaxTickRate", DeltaTime, bAllowFrameRateSmoothing); }
+	void EnableScreenSaver(bool bEnable) { NativeCall<void, bool>(this, "UEngine.EnableScreenSaver", bEnable); }
+	static FGuid * GetPackageGuid(FGuid * result, FName PackageName) { return NativeCall<FGuid *, FGuid *, FName>(nullptr, "UEngine.GetPackageGuid", result, PackageName); }
+	void PerformanceCapture(FString * CaptureName) { NativeCall<void, FString *>(this, "UEngine.PerformanceCapture", CaptureName); }
+	void WorldAdded(UWorld * InWorld) { NativeCall<void, UWorld *>(this, "UEngine.WorldAdded", InWorld); }
+	void WorldDestroyed(UWorld * InWorld) { NativeCall<void, UWorld *>(this, "UEngine.WorldDestroyed", InWorld); }
+	TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> * GetLocalPlayerIterator(TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> * result, UWorld * World) { return NativeCall<TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> *, TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> *, UWorld *>(this, "UEngine.GetLocalPlayerIterator", result, World); }
+	TArray<ULocalPlayer *> * GetGamePlayers(UWorld * World) { return NativeCall<TArray<ULocalPlayer *> *, UWorld *>(this, "UEngine.GetGamePlayers", World); }
+	ULocalPlayer * FindFirstLocalPlayerFromControllerId(int ControllerId) { return NativeCall<ULocalPlayer *, int>(this, "UEngine.FindFirstLocalPlayerFromControllerId", ControllerId); }
+	int GetNumGamePlayers(UWorld * InWorld) { return NativeCall<int, UWorld *>(this, "UEngine.GetNumGamePlayers", InWorld); }
+	ULocalPlayer * GetFirstGamePlayer(UWorld * InWorld) { return NativeCall<ULocalPlayer *, UWorld *>(this, "UEngine.GetFirstGamePlayer", InWorld); }
+	ULocalPlayer * GetDebugLocalPlayer() { return NativeCall<ULocalPlayer *>(this, "UEngine.GetDebugLocalPlayer"); }
+	bool CreateNamedNetDriver(UWorld * InWorld, FName NetDriverName, FName NetDriverDefinition) { return NativeCall<bool, UWorld *, FName, FName>(this, "UEngine.CreateNamedNetDriver", InWorld, NetDriverName, NetDriverDefinition); }
+	void DestroyNamedNetDriver(UWorld * InWorld, FName NetDriverName) { NativeCall<void, UWorld *, FName>(this, "UEngine.DestroyNamedNetDriver", InWorld, NetDriverName); }
+	void SpawnServerActors(UWorld * World) { NativeCall<void, UWorld *>(this, "UEngine.SpawnServerActors", World); }
+	bool MakeSureMapNameIsValid(FString * InOutMapName) { return NativeCall<bool, FString *>(this, "UEngine.MakeSureMapNameIsValid", InOutMapName); }
+	void CancelAllPending() { NativeCall<void>(this, "UEngine.CancelAllPending"); }
+	void ClearDebugDisplayProperties() { NativeCall<void>(this, "UEngine.ClearDebugDisplayProperties"); }
+	void UpdateTransitionType(UWorld * CurrentWorld) { NativeCall<void, UWorld *>(this, "UEngine.UpdateTransitionType", CurrentWorld); }
+	void DestroyWorldContext(UWorld * InWorld) { NativeCall<void, UWorld *>(this, "UEngine.DestroyWorldContext", InWorld); }
+	void VerifyLoadMapWorldCleanup() { NativeCall<void>(this, "UEngine.VerifyLoadMapWorldCleanup"); }
+	void CreateGameUserSettings() { NativeCall<void>(this, "UEngine.CreateGameUserSettings"); }
+	//UGameUserSettings * GetGameUserSettings() { return NativeCall<UGameUserSettings *>(this, "UEngine.GetGameUserSettings"); }
+	//static void CopyPropertiesForUnrelatedObjects(UObject * OldObject, UObject * NewObject, UEngine::FCopyPropertiesForUnrelatedObjectsParams Params) { NativeCall<void, UObject *, UObject *, UEngine::FCopyPropertiesForUnrelatedObjectsParams>(nullptr, "UEngine.CopyPropertiesForUnrelatedObjects", OldObject, NewObject, Params); }
+	bool ShouldAbsorbAuthorityOnlyEvent() { return NativeCall<bool>(this, "UEngine.ShouldAbsorbAuthorityOnlyEvent"); }
+	bool ShouldAbsorbCosmeticOnlyEvent() { return NativeCall<bool>(this, "UEngine.ShouldAbsorbCosmeticOnlyEvent"); }
+	bool IsEngineStat(FString * InName) { return NativeCall<bool, FString *>(this, "UEngine.IsEngineStat", InName); }
 };
 
 struct UPrimalGlobals : UObject
 {
 	FieldValue<UPrimalGameData *> PrimalGameDataField() { return { this, "UPrimalGlobals.PrimalGameData" }; }
 	FieldValue<UPrimalGameData *> PrimalGameDataOverrideField() { return { this, "UPrimalGlobals.PrimalGameDataOverride" }; }
-};
+	FieldValue<bool> bAllowSingleplayerField() { return { this, "UPrimalGlobals.bAllowSingleplayer" }; }
+	FieldValue<bool> bAllowNonDedicatedHostField() { return { this, "UPrimalGlobals.bAllowNonDedicatedHost" }; }
+	FieldValue<TArray<FString>> UIOnlyShowMapFileNamesField() { return { this, "UPrimalGlobals.UIOnlyShowMapFileNames" }; }
+	FieldValue<TArray<FString>> UIOnlyShowModIDsField() { return { this, "UPrimalGlobals.UIOnlyShowModIDs" }; }
+	FieldValue<bool> bTotalConversionShowUnofficialServersField() { return { this, "UPrimalGlobals.bTotalConversionShowUnofficialServers" }; }
+	FieldValue<FString> CreditStringField() { return { this, "UPrimalGlobals.CreditString" }; }
+	FieldValue<bool> bGameMediaLoadedField() { return { this, "UPrimalGlobals.bGameMediaLoaded" }; }
+	FieldValue<bool> bStartedAsyncLoadField() { return { this, "UPrimalGlobals.bStartedAsyncLoad" }; }
 
+	// Functions
+
+	void AsyncLoadGameMedia() { NativeCall<void>(this, "UPrimalGlobals.AsyncLoadGameMedia"); }
+	void FinishLoadGameMedia() { NativeCall<void>(this, "UPrimalGlobals.FinishLoadGameMedia"); }
+	void FinishedLoadingGameMedia() { NativeCall<void>(this, "UPrimalGlobals.FinishedLoadingGameMedia"); }
+	void LoadNextTick(UWorld * ForWorld) { NativeCall<void, UWorld *>(this, "UPrimalGlobals.LoadNextTick", ForWorld); }
+	void OnConfirmationDialogClosed(bool bAccept) { NativeCall<void, bool>(this, "UPrimalGlobals.OnConfirmationDialogClosed", bAccept); }
+	//static ADayCycleManager * GetDayCycleManager(UWorld * World) { return NativeCall<ADayCycleManager *, UWorld *>(nullptr, "UPrimalGlobals.GetDayCycleManager", World); }
+	//static ASOTFNotification * GetSOTFNotificationManager(UWorld * World) { return NativeCall<ASOTFNotification *, UWorld *>(nullptr, "UPrimalGlobals.GetSOTFNotificationManager", World); }
+	static void StaticRegisterNativesUPrimalGlobals() { NativeCall<void>(nullptr, "UPrimalGlobals.StaticRegisterNativesUPrimalGlobals"); }
+};
 
 // Level
 
@@ -799,9 +969,9 @@ struct UPrimalGameData : UObject
 	//FieldArray<FPrimalEquipmentDefinition, 9> EquipmentTypeDefinitionsField() { return { this, "UPrimalGameData.EquipmentTypeDefinitions" }; }
 	FieldValue<TArray<TSubclassOf<UPrimalItem>>> MasterItemListField() { return { this, "UPrimalGameData.MasterItemList" }; }
 	//FieldValue<TArray<FPrimalItemQuality>> ItemQualityDefinitionsField() { return { this, "UPrimalGameData.ItemQualityDefinitions" }; }
-	//FieldValue<TArray<TSubclassOf<UPrimalEngramEntry>>> EngramBlueprintClassesField() { return { this, "UPrimalGameData.EngramBlueprintClasses" }; }
-	//FieldValue<TArray<TSubclassOf<UPrimalEngramEntry>>> AdditionalEngramBlueprintClassesField() { return { this, "UPrimalGameData.AdditionalEngramBlueprintClasses" }; }
-	//FieldValue<TArray<TSubclassOf<UPrimalEngramEntry>>> RemoveEngramBlueprintClassesField() { return { this, "UPrimalGameData.RemoveEngramBlueprintClasses" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalEngramEntry>>> EngramBlueprintClassesField() { return { this, "UPrimalGameData.EngramBlueprintClasses" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalEngramEntry>>> AdditionalEngramBlueprintClassesField() { return { this, "UPrimalGameData.AdditionalEngramBlueprintClasses" }; }
+	FieldValue<TArray<TSubclassOf<UPrimalEngramEntry>>> RemoveEngramBlueprintClassesField() { return { this, "UPrimalGameData.RemoveEngramBlueprintClasses" }; }
 	//FieldValue<TArray<FStatusValueModifierDescription>> StatusValueModifierDescriptionsField() { return { this, "UPrimalGameData.StatusValueModifierDescriptions" }; }
 	FieldValue<TArray<FString>> PlayerSpawnRegionsField() { return { this, "UPrimalGameData.PlayerSpawnRegions" }; }
 	FieldValue<USoundBase *> TutorialDisplaySoundField() { return { this, "UPrimalGameData.TutorialDisplaySound" }; }
@@ -841,12 +1011,19 @@ struct UPrimalGameData : UObject
 	FieldValue<USoundBase *> Sound_TribeWarEndField() { return { this, "UPrimalGameData.Sound_TribeWarEnd" }; }
 	FieldValue<USoundBase *> Sound_DropInventoryItemField() { return { this, "UPrimalGameData.Sound_DropInventoryItem" }; }
 	FieldValue<USoundBase *> Sound_RefillWaterContainerField() { return { this, "UPrimalGameData.Sound_RefillWaterContainer" }; }
+	FieldValue<TArray<UPrimalEngramEntry *>> EngramBlueprintEntriesField() { return { this, "UPrimalGameData.EngramBlueprintEntries" }; }
+	//FieldValue<TArray<UGenericDataListEntry *>> ExplorerNoteEntriesObjectsField() { return { this, "UPrimalGameData.ExplorerNoteEntriesObjects" }; }
+	//FieldValue<TArray<UGenericDataListEntry *>> HeadHairStylesEntriesObjectsField() { return { this, "UPrimalGameData.HeadHairStylesEntriesObjects" }; }
+	//FieldValue<TArray<UGenericDataListEntry *>> FacialHairStylesEntriesObjectsField() { return { this, "UPrimalGameData.FacialHairStylesEntriesObjects" }; }
+	//FieldValue<TSubclassOf<UToolTipWidget>> DefaultToolTipWidgetField() { return { this, "UPrimalGameData.DefaultToolTipWidget" }; }
 	FieldValue<TSubclassOf<UPrimalItem>> StarterNoteItemField() { return { this, "UPrimalGameData.StarterNoteItem" }; }
 	FieldValue<TArray<TSubclassOf<UPrimalItem>>> PrimaryResourcesField() { return { this, "UPrimalGameData.PrimaryResources" }; }
 	FieldValue<TSubclassOf<ADroppedItem>> GenericDroppedItemTemplateField() { return { this, "UPrimalGameData.GenericDroppedItemTemplate" }; }
 	FieldValue<UMaterialInterface *> PostProcess_KnockoutBlurField() { return { this, "UPrimalGameData.PostProcess_KnockoutBlur" }; }
 	FieldValue<TArray<UMaterialInterface *>> BuffPostProcessEffectsField() { return { this, "UPrimalGameData.BuffPostProcessEffects" }; }
 	FieldValue<TArray<UMaterialInterface *>> AdditionalBuffPostProcessEffectsField() { return { this, "UPrimalGameData.AdditionalBuffPostProcessEffects" }; }
+	//FieldValue<TSubclassOf<ADroppedItemLowQuality>> GenericDroppedItemTemplateLowQualityField() { return { this, "UPrimalGameData.GenericDroppedItemTemplateLowQuality" }; }
+	//FieldValue<TArray<FTutorialDefinition>> TutorialDefinitionsField() { return { this, "UPrimalGameData.TutorialDefinitions" }; }
 	FieldValue<UTexture2D *> UnknownIconField() { return { this, "UPrimalGameData.UnknownIcon" }; }
 	FieldValue<UMaterialInterface *> UnknownMaterialField() { return { this, "UPrimalGameData.UnknownMaterial" }; }
 	FieldValue<UTexture2D *> WhiteTextureField() { return { this, "UPrimalGameData.WhiteTexture" }; }
@@ -862,6 +1039,7 @@ struct UPrimalGameData : UObject
 	FieldValue<float> GlobalSpecificArmorRatingMultiplierField() { return { this, "UPrimalGameData.GlobalSpecificArmorRatingMultiplier" }; }
 	FieldValue<float> GlobalGeneralArmorRatingMultiplierField() { return { this, "UPrimalGameData.GlobalGeneralArmorRatingMultiplier" }; }
 	FieldValue<float> EnemyFoundationPreventionRadiusField() { return { this, "UPrimalGameData.EnemyFoundationPreventionRadius" }; }
+	//FieldValue<TArray<FColorDefinition>> ColorDefinitionsField() { return { this, "UPrimalGameData.ColorDefinitions" }; }
 	FieldValue<TArray<UObject *>> ExtraResourcesField() { return { this, "UPrimalGameData.ExtraResources" }; }
 	FieldValue<TArray<UObject *>> BaseExtraResourcesField() { return { this, "UPrimalGameData.BaseExtraResources" }; }
 	FieldValue<TSubclassOf<UObject>> BaseExtraResourcesContainerField() { return { this, "UPrimalGameData.BaseExtraResourcesContainer" }; }
@@ -870,9 +1048,11 @@ struct UPrimalGameData : UObject
 	FieldValue<USoundBase *> CombatMusicDay_HeavyField() { return { this, "UPrimalGameData.CombatMusicDay_Heavy" }; }
 	FieldValue<USoundBase *> CombatMusicNight_HeavyField() { return { this, "UPrimalGameData.CombatMusicNight_Heavy" }; }
 	FieldValue<USoundBase *> LevelUpStingerSoundField() { return { this, "UPrimalGameData.LevelUpStingerSound" }; }
+	//FieldArray<FPlayerCharacterGenderDefinition, 2> PlayerCharacterGenderDefinitionsField() { return { this, "UPrimalGameData.PlayerCharacterGenderDefinitions" }; }
 	FieldValue<TSubclassOf<AGameMode>> DefaultGameModeField() { return { this, "UPrimalGameData.DefaultGameMode" }; }
 	FieldArray<FLevelExperienceRamp, 4> LevelExperienceRampsField() { return { this, "UPrimalGameData.LevelExperienceRamps" }; }
 	FieldArray<FLevelExperienceRamp, 4> SinglePlayerLevelExperienceRampsField() { return { this, "UPrimalGameData.SinglePlayerLevelExperienceRamps" }; }
+	//FieldValue<TArray<FNamedTeamDefinition>> NamedTeamDefinitionsField() { return { this, "UPrimalGameData.NamedTeamDefinitions" }; }
 	FieldValue<TArray<int>> PlayerLevelEngramPointsField() { return { this, "UPrimalGameData.PlayerLevelEngramPoints" }; }
 	FieldValue<TArray<int>> PlayerLevelEngramPointsSPField() { return { this, "UPrimalGameData.PlayerLevelEngramPointsSP" }; }
 	FieldValue<TArray<FString>> PreventBuildStructureReasonStringsField() { return { this, "UPrimalGameData.PreventBuildStructureReasonStrings" }; }
@@ -912,8 +1092,6 @@ struct UPrimalGameData : UObject
 	FieldValue<float> MaxPaintDurationConsumptionField() { return { this, "UPrimalGameData.MaxPaintDurationConsumption" }; }
 	FieldValue<float> MinDinoRadiusForPaintConsumptionField() { return { this, "UPrimalGameData.MinDinoRadiusForPaintConsumption" }; }
 	FieldValue<float> MaxDinoRadiusForPaintConsumptionField() { return { this, "UPrimalGameData.MaxDinoRadiusForPaintConsumption" }; }
-	//FieldValue<TArray<FDinoBabySetup>> DinoBabySetupsField() { return { this, "UPrimalGameData.DinoBabySetups" }; }
-	//FieldValue<TArray<FDinoBabySetup>> DinoGestationSetupsField() { return { this, "UPrimalGameData.DinoGestationSetups" }; }
 	FieldValue<TSubclassOf<UPrimalItem>> SoapItemTemplateField() { return { this, "UPrimalGameData.SoapItemTemplate" }; }
 	FieldValue<UTexture2D *> NameTagWildcardAdminField() { return { this, "UPrimalGameData.NameTagWildcardAdmin" }; }
 	FieldValue<UTexture2D *> NameTagServerAdminField() { return { this, "UPrimalGameData.NameTagServerAdmin" }; }
@@ -932,10 +1110,12 @@ struct UPrimalGameData : UObject
 	FieldValue<USoundBase *> HitMarkerCharacterSoundField() { return { this, "UPrimalGameData.HitMarkerCharacterSound" }; }
 	FieldValue<USoundBase *> HitMarkerStructureSoundField() { return { this, "UPrimalGameData.HitMarkerStructureSound" }; }
 	FieldValue<UMaterialInterface *> PostProcess_ColorLUTField() { return { this, "UPrimalGameData.PostProcess_ColorLUT" }; }
+	//FieldValue<TSubclassOf<UPrimalStructureSettings>> DefaultStructureSettingsField() { return { this, "UPrimalGameData.DefaultStructureSettings" }; }
 	FieldValue<USoundBase *> Sound_DossierUnlockedField() { return { this, "UPrimalGameData.Sound_DossierUnlocked" }; }
 	FieldValue<USoundBase *> Sound_ItemUseOnItemField() { return { this, "UPrimalGameData.Sound_ItemUseOnItem" }; }
 	FieldValue<USoundBase *> Sound_RemoveItemSkinField() { return { this, "UPrimalGameData.Sound_RemoveItemSkin" }; }
 	FieldValue<USoundBase *> Sound_RemoveClipAmmoField() { return { this, "UPrimalGameData.Sound_RemoveClipAmmo" }; }
+	//FieldValue<TArray<FExplorerNoteEntry>> ExplorerNoteEntriesField() { return { this, "UPrimalGameData.ExplorerNoteEntries" }; }
 	FieldValue<float> ExplorerNoteXPGainField() { return { this, "UPrimalGameData.ExplorerNoteXPGain" }; }
 	FieldArray<UTexture2D *[3], 23> BuffTypeBackgroundsField() { return { this, "UPrimalGameData.BuffTypeBackgrounds" }; }
 	FieldArray<UTexture2D *[3], 23> BuffTypeForegroundsField() { return { this, "UPrimalGameData.BuffTypeForegrounds" }; }
@@ -943,6 +1123,8 @@ struct UPrimalGameData : UObject
 	FieldValue<UTexture2D *> PerMapExplorerNoteLockedIconField() { return { this, "UPrimalGameData.PerMapExplorerNoteLockedIcon" }; }
 	FieldValue<UTexture2D *> TamedDinoUnlockedIconField() { return { this, "UPrimalGameData.TamedDinoUnlockedIcon" }; }
 	FieldValue<UTexture2D *> TamedDinoLockedIconField() { return { this, "UPrimalGameData.TamedDinoLockedIcon" }; }
+	//FieldValue<TArray<FUnlockableEmoteEntry>> UnlockableEmotesField() { return { this, "UPrimalGameData.UnlockableEmotes" }; }
+	//FieldValue<TArray<FClassRemappingWeight>> GlobalNPCRandomSpawnClassWeightsField() { return { this, "UPrimalGameData.GlobalNPCRandomSpawnClassWeights" }; }
 	FieldValue<UTexture2D *> DinoOrderIconField() { return { this, "UPrimalGameData.DinoOrderIcon" }; }
 	FieldValue<TArray<TSubclassOf<AActor>>> ServerExtraWorldSingletonActorClassesField() { return { this, "UPrimalGameData.ServerExtraWorldSingletonActorClasses" }; }
 	FieldValue<bool> bForceServerUseDinoListField() { return { this, "UPrimalGameData.bForceServerUseDinoList" }; }
@@ -963,7 +1145,28 @@ struct UPrimalGameData : UObject
 	FieldValue<USoundBase *> Sound_GenericUnboardPassengerField() { return { this, "UPrimalGameData.Sound_GenericUnboardPassenger" }; }
 	FieldValue<USoundBase *> Sound_CraftingTabToggleField() { return { this, "UPrimalGameData.Sound_CraftingTabToggle" }; }
 	FieldValue<TSubclassOf<UPrimalItem>> GenericBatteryItemClassField() { return { this, "UPrimalGameData.GenericBatteryItemClass" }; }
-	//FieldValue<TMap<UClass *, UPrimalEngramEntry *, FDefaultSetAllocator, TDefaultMapKeyFuncs<UClass *, UPrimalEngramEntry *, 0> >> ItemEngramMapField() { return { this, "UPrimalGameData.ItemEngramMap" }; }
+	FieldValue<TMap<UClass *, UPrimalEngramEntry *, FDefaultSetAllocator, TDefaultMapKeyFuncs<UClass *, UPrimalEngramEntry *, 0> >> ItemEngramMapField() { return { this, "UPrimalGameData.ItemEngramMap" }; }
+
+	// Functions
+
+	void Initialize() { NativeCall<void>(this, "UPrimalGameData.Initialize"); }
+	bool CanTeamTarget(int attackerTeam, int victimTeam, int originalVictimTargetingTeam, AActor * Attacker, AActor * Victim) { return NativeCall<bool, int, int, int, AActor *, AActor *>(this, "UPrimalGameData.CanTeamTarget", attackerTeam, victimTeam, originalVictimTargetingTeam, Attacker, Victim); }
+	bool CanTeamDamage(int attackerTeam, int victimTeam, AActor * Attacker) { return NativeCall<bool, int, int, AActor *>(this, "UPrimalGameData.CanTeamDamage", attackerTeam, victimTeam, Attacker); }
+	float GetTeamTargetingDesirabilityMultiplier(int attackerTeam, int victimTeam) { return NativeCall<float, int, int>(this, "UPrimalGameData.GetTeamTargetingDesirabilityMultiplier", attackerTeam, victimTeam); }
+	USoundBase * GetGenericCombatMusic_Implementation(APrimalCharacter * forCharacter, APrimalCharacter * forEnemy) { return NativeCall<USoundBase *, APrimalCharacter *, APrimalCharacter *>(this, "UPrimalGameData.GetGenericCombatMusic_Implementation", forCharacter, forEnemy); }
+	FLevelExperienceRamp * GetLevelExperienceRamp(ELevelExperienceRampType::Type levelType) { return NativeCall<FLevelExperienceRamp *, ELevelExperienceRampType::Type>(this, "UPrimalGameData.GetLevelExperienceRamp", levelType); }
+	TArray<int> * GetPlayerLevelEngramPoints() { return NativeCall<TArray<int> *>(this, "UPrimalGameData.GetPlayerLevelEngramPoints"); }
+	//static TSubclassOf<UObject> * GetRemappedClass(TSubclassOf<UObject> * result, TArray<FClassRemapping> * RemappedClasses, TSubclassOf<UObject> ForClass) { return NativeCall<TSubclassOf<UObject> *, TSubclassOf<UObject> *, TArray<FClassRemapping> *, TSubclassOf<UObject>>(nullptr, "UPrimalGameData.GetRemappedClass", result, RemappedClasses, ForClass); }
+	//static void GetClassAdditions(TArray<TSubclassOf<UObject>> * TheClassAdditions, TArray<FClassAddition> * ClassAdditions, TSubclassOf<UObject> ForClass) { NativeCall<void, TArray<TSubclassOf<UObject>> *, TArray<FClassAddition> *, TSubclassOf<UObject>>(nullptr, "UPrimalGameData.GetClassAdditions", TheClassAdditions, ClassAdditions, ForClass); }
+	TArray<FString> * GetPlayerSpawnRegions(UWorld * ForWorld) { return NativeCall<TArray<FString> *, UWorld *>(this, "UPrimalGameData.GetPlayerSpawnRegions", ForWorld); }
+	bool MergeModData(UPrimalGameData * InMergeCanidate) { return NativeCall<bool, UPrimalGameData *>(this, "UPrimalGameData.MergeModData", InMergeCanidate); }
+	TArray<FColor> * GetGlobalColorTable(TArray<FColor> * result) { return NativeCall<TArray<FColor> *, TArray<FColor> *>(this, "UPrimalGameData.GetGlobalColorTable", result); }
+	static bool LocalIsPerMapExplorerNoteUnlocked(int ExplorerNoteIndex) { return NativeCall<bool, int>(nullptr, "UPrimalGameData.LocalIsPerMapExplorerNoteUnlocked", ExplorerNoteIndex); }
+	bool LocalIsTamedDinoTagUnlocked(FName DinoNameTag) { return NativeCall<bool, FName>(this, "UPrimalGameData.LocalIsTamedDinoTagUnlocked", DinoNameTag); }
+	static bool LocalIsGlobalExplorerNoteUnlocked(int ExplorerNoteIndex) { return NativeCall<bool, int>(nullptr, "UPrimalGameData.LocalIsGlobalExplorerNoteUnlocked", ExplorerNoteIndex); }
+	static UClass * GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "UPrimalGameData.GetPrivateStaticClass"); }
+	USoundBase * GetGenericCombatMusic(APrimalCharacter * forCharacter, APrimalCharacter * forEnemy) { return NativeCall<USoundBase *, APrimalCharacter *, APrimalCharacter *>(this, "UPrimalGameData.GetGenericCombatMusic", forCharacter, forEnemy); }
+	void LoadedWorld(UWorld * TheWorld) { NativeCall<void, UWorld *>(this, "UPrimalGameData.LoadedWorld", TheWorld); }
 };
 
 struct UGameInstance : UObject //, FExec
