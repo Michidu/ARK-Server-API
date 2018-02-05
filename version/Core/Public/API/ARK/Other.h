@@ -302,7 +302,7 @@ struct UPrimalEngramEntry
 	FieldValue<FString> ExtraEngramDescriptionField() { return { this, "UPrimalEngramEntry.ExtraEngramDescription" }; }
 	//FieldValue<TArray<FEngramEntries>> EngramRequirementSetsField() { return { this, "UPrimalEngramEntry.EngramRequirementSets" }; }
 	FieldValue<int> MyEngramIndexField() { return { this, "UPrimalEngramEntry.MyEngramIndex" }; }
-	//FieldValue<TEnumAsByte<enum EEngramGroup::Type>> EngramGroupField() { return { this, "UPrimalEngramEntry.EngramGroup" }; }
+	FieldValue<TEnumAsByte<enum EEngramGroup::Type>> EngramGroupField() { return { this, "UPrimalEngramEntry.EngramGroup" }; }
 
 	// Functions
 

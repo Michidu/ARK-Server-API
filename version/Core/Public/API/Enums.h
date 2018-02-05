@@ -943,3 +943,16 @@ namespace ESocketReceiveFlags
 		WaitAll
 	};
 }
+
+namespace EEngramGroup
+{
+	enum Type
+	{
+		ARK_PRIME,
+		ARK_SCORCHEDEARTH,
+		ARK_TEK,
+		ARK_UNLEARNED,
+		ARK_ABERRATION,
+		MAX
+	};
+}
