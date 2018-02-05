@@ -948,11 +948,11 @@ namespace EEngramGroup
 {
 	enum Type
 	{
-		ARK_PRIME,
-		ARK_SCORCHEDEARTH,
-		ARK_TEK,
-		ARK_UNLEARNED,
-		ARK_ABERRATION,
-		MAX
+		ARK_PRIME = 0x2,
+		ARK_SCORCHEDEARTH = 0x4,
+		ARK_TEK = 0x8,
+		ARK_UNLEARNED = 0x10,
+		ARK_ABERRATION = 0x20,
+		MAX = 0x21
 	};
 }
