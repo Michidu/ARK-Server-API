@@ -20,36 +20,27 @@ struct FTribeGovernment
 
 struct FTribeData
 {
-	FTribeData()
-	{
-		OwnerPlayerDataID = 0;
-		TribeID = 0;
-		bSetGovernment = false;
-		LogIndex = 0;
-		NumTribeDinos = 0;
-	}
-
-	FString TribeName;
-	unsigned int OwnerPlayerDataID;
-	int TribeID;
-	TArray<FString> MembersPlayerName;
-	TArray<unsigned int> MembersPlayerDataID;
-	TArray<unsigned char> MembersRankGroups;
-	TArray<unsigned int> TribeAdmins;
-	TArray<FTribeAlliance> TribeAlliances;
-	bool bSetGovernment;
-	FTribeGovernment TribeGovernment;
-	TArray<FPrimalPlayerCharacterConfigStruct> MembersConfigs;
-	TArray<FTribeWar> TribeWars;
-	TArray<FString> TribeLog;
-	int LogIndex;
-	TArray<FTribeRankGroup> TribeRankGroups;
-	int NumTribeDinos;
-	TSet<uint64> MembersPlayerDataIDSet_Server;
+	FieldValue<FString> TribeNameField() { return { this, "FTribeData.TribeName" }; }
+	FieldValue<long double> LastNameChangeTimeField() { return { this, "FTribeData.LastNameChangeTime" }; }
+	FieldValue<unsigned int> OwnerPlayerDataIDField() { return { this, "FTribeData.OwnerPlayerDataID" }; }
+	FieldValue<int> TribeIDField() { return { this, "FTribeData.TribeID" }; }
+	FieldValue<TArray<FString>> MembersPlayerNameField() { return { this, "FTribeData.MembersPlayerName" }; }
+	FieldValue<TArray<unsigned int>> MembersPlayerDataIDField() { return { this, "FTribeData.MembersPlayerDataID" }; }
+	FieldValue<TArray<unsigned char>> MembersRankGroupsField() { return { this, "FTribeData.MembersRankGroups" }; }
+	FieldValue<TArray<unsigned int>> TribeAdminsField() { return { this, "FTribeData.TribeAdmins" }; }
+	FieldValue<TArray<FTribeAlliance>> TribeAlliancesField() { return { this, "FTribeData.TribeAlliances" }; }
+	FieldValue<bool> bSetGovernmentField() { return { this, "FTribeData.bSetGovernment" }; }
+	FieldValue<FTribeGovernment> TribeGovernmentField() { return { this, "FTribeData.TribeGovernment" }; }
+	FieldValue<TArray<FPrimalPlayerCharacterConfigStruct>> MembersConfigsField() { return { this, "FTribeData.MembersConfigs" }; }
+	FieldValue<TArray<FTribeWar>> TribeWarsField() { return { this, "FTribeData.TribeWars" }; }
+	FieldValue<TArray<FString>> TribeLogField() { return { this, "FTribeData.TribeLog" }; }
+	FieldValue<int> LogIndexField() { return { this, "FTribeData.LogIndex" }; }
+	FieldValue<TArray<FTribeRankGroup>> TribeRankGroupsField() { return { this, "FTribeData.TribeRankGroups" }; }
+	FieldValue<int> NumTribeDinosField() { return { this, "FTribeData.NumTribeDinos" }; }
+	FieldValue<TSet<unsigned __int64, DefaultKeyFuncs<unsigned __int64, 0>, FDefaultSetAllocator>> MembersPlayerDataIDSet_ServerField() { return { this, "FTribeData.MembersPlayerDataIDSet_Server" }; }
 
 	// Functions
 
-	FTribeData(FTribeData * __that) { NativeCall<void, FTribeData *>(this, "FTribeData.FTribeData", __that); }
 	bool IsTribeWarActive(int TribeID, UWorld * ForWorld, bool bIncludeUnstarted) { return NativeCall<bool, int, UWorld *, bool>(this, "FTribeData.IsTribeWarActive", TribeID, ForWorld, bIncludeUnstarted); }
 	bool HasTribeWarRequest(int TribeID, UWorld * ForWorld) { return NativeCall<bool, int, UWorld *>(this, "FTribeData.HasTribeWarRequest", TribeID, ForWorld); }
 	void RefreshTribeWars(UWorld * ForWorld) { NativeCall<void, UWorld *>(this, "FTribeData.RefreshTribeWars", ForWorld); }
@@ -57,6 +48,7 @@ struct FTribeData
 	bool IsTribeAlliedWith(unsigned int OtherTribeID) { return NativeCall<bool, unsigned int>(this, "FTribeData.IsTribeAlliedWith", OtherTribeID); }
 	bool GetTribeRankGroupForPlayer(unsigned int PlayerDataID, FTribeRankGroup * outRankGroup) { return NativeCall<bool, unsigned int, FTribeRankGroup *>(this, "FTribeData.GetTribeRankGroupForPlayer", PlayerDataID, outRankGroup); }
 	int GetBestRankGroupForRank(int Rank) { return NativeCall<int, int>(this, "FTribeData.GetBestRankGroupForRank", Rank); }
+	long double GetSecondsSinceLastNameChange(UObject * WorldContextObject) { return NativeCall<long double, UObject *>(this, "FTribeData.GetSecondsSinceLastNameChange", WorldContextObject); }
 	int GetDefaultRankGroupIndex() { return NativeCall<int>(this, "FTribeData.GetDefaultRankGroupIndex"); }
 	FTribeData * operator=(FTribeData * __that) { return NativeCall<FTribeData *, FTribeData *>(this, "FTribeData.operator=", __that); }
 	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeData.StaticStruct"); }
@@ -123,7 +115,7 @@ struct FTribeAlliance
 {
 	FString AllianceName;
 	unsigned int AllianceID;
-	TArray<FString> MembersTribeName;
-	TArray<unsigned int> MembersTribeID;
-	TArray<unsigned int> AdminsTribeID;
+	TArray<FString, FDefaultAllocator> MembersTribeName;
+	TArray<unsigned int, FDefaultAllocator> MembersTribeID;
+	TArray<unsigned int, FDefaultAllocator> AdminsTribeID;
 };

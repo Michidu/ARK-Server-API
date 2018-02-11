@@ -385,7 +385,6 @@ struct AGameMode
 	FieldValue<FString> DefaultPlayerNameField() { return { this, "AGameMode.DefaultPlayerName" }; }
 	FieldValue<TArray<APlayerStart *>> PlayerStartsField() { return { this, "AGameMode.PlayerStarts" }; }
 	FieldValue<TSubclassOf<APlayerController>> PlayerControllerClassField() { return { this, "AGameMode.PlayerControllerClass" }; }
-	FieldValue<TSubclassOf<ASpectatorPawn>> SpectatorClassField() { return { this, "AGameMode.SpectatorClass" }; }
 	FieldValue<TSubclassOf<APlayerState>> PlayerStateClassField() { return { this, "AGameMode.PlayerStateClass" }; }
 	FieldValue<TSubclassOf<AGameState>> GameStateClassField() { return { this, "AGameMode.GameStateClass" }; }
 	FieldValue<AGameState *> GameStateField() { return { this, "AGameMode.GameState" }; }
@@ -430,9 +429,9 @@ struct AGameMode
 	void ProcessServerTravel(FString * URL, bool bAbsolute) { NativeCall<void, FString *, bool>(this, "AGameMode.ProcessServerTravel", URL, bAbsolute); }
 	void GetSeamlessTravelActorList(bool bToEntry, TArray<AActor *> * ActorList) { NativeCall<void, bool, TArray<AActor *> *>(this, "AGameMode.GetSeamlessTravelActorList", bToEntry, ActorList); }
 	void SetBandwidthLimit(float AsyncIOBandwidthLimit) { NativeCall<void, float>(this, "AGameMode.SetBandwidthLimit", AsyncIOBandwidthLimit); }
-	FString * InitNewPlayer(FString * result, APlayerController * NewPlayerController, TSharedPtr<FUniqueNetId> * UniqueId, FString * Options, FString * Portal) { return NativeCall<FString *, FString *, APlayerController *, TSharedPtr<FUniqueNetId> *, FString *, FString *>(this, "AGameMode.InitNewPlayer", result, NewPlayerController, UniqueId, Options, Portal); }
+	FString * InitNewPlayer(FString * result, APlayerController * NewPlayerController, TSharedPtr<FUniqueNetId, 0> * UniqueId, FString * Options, FString * Portal) { return NativeCall<FString *, FString *, APlayerController *, TSharedPtr<FUniqueNetId, 0> *, FString *, FString *>(this, "AGameMode.InitNewPlayer", result, NewPlayerController, UniqueId, Options, Portal); }
 	bool MustSpectate(APlayerController * NewPlayerController) { return NativeCall<bool, APlayerController *>(this, "AGameMode.MustSpectate", NewPlayerController); }
-	APlayerController * Login(UPlayer * NewPlayer, FString * Portal, FString * Options, TSharedPtr<FUniqueNetId> * UniqueId, FString * ErrorMessage) { return NativeCall<APlayerController *, UPlayer *, FString *, FString *, TSharedPtr<FUniqueNetId> *, FString *>(this, "AGameMode.Login", NewPlayer, Portal, Options, UniqueId, ErrorMessage); }
+	APlayerController * Login(UPlayer * NewPlayer, FString * Portal, FString * Options, TSharedPtr<FUniqueNetId, 0> * UniqueId, FString * ErrorMessage) { return NativeCall<APlayerController *, UPlayer *, FString *, FString *, TSharedPtr<FUniqueNetId, 0> *, FString *>(this, "AGameMode.Login", NewPlayer, Portal, Options, UniqueId, ErrorMessage); }
 	void Reset() { NativeCall<void>(this, "AGameMode.Reset"); }
 	void RemovePlayerControllerFromPlayerCount(APlayerController * PC) { NativeCall<void, APlayerController *>(this, "AGameMode.RemovePlayerControllerFromPlayerCount", PC); }
 	int GetNumPlayers() { return NativeCall<int>(this, "AGameMode.GetNumPlayers"); }
@@ -444,8 +443,8 @@ struct AGameMode
 	FString * GetDefaultGameClassPath(FString * result, FString * MapName, FString * Options, FString * Portal) { return NativeCall<FString *, FString *, FString *, FString *, FString *>(this, "AGameMode.GetDefaultGameClassPath", result, MapName, Options, Portal); }
 	TSubclassOf<AGameSession> * GetGameSessionClass(TSubclassOf<AGameSession> * result) { return NativeCall<TSubclassOf<AGameSession> *, TSubclassOf<AGameSession> *>(this, "AGameMode.GetGameSessionClass", result); }
 	APlayerController * ProcessClientTravel(FString * FURL, FGuid NextMapGuid, bool bSeamless, bool bAbsolute) { return NativeCall<APlayerController *, FString *, FGuid, bool, bool>(this, "AGameMode.ProcessClientTravel", FURL, NextMapGuid, bSeamless, bAbsolute); }
-	void PreLogin(FString * Options, FString * Address, TSharedPtr<FUniqueNetId> * UniqueId, FString * authToken, FString * ErrorMessage) { NativeCall<void, FString *, FString *, TSharedPtr<FUniqueNetId> *, FString *, FString *>(this, "AGameMode.PreLogin", Options, Address, UniqueId, authToken, ErrorMessage); }
-	void RemoveConnectedPlayer(TSharedPtr<FUniqueNetId> * UniqueNetId) { NativeCall<void, TSharedPtr<FUniqueNetId> *>(this, "AGameMode.RemoveConnectedPlayer", UniqueNetId); }
+	void PreLogin(FString * Options, FString * Address, TSharedPtr<FUniqueNetId, 0> * UniqueId, FString * authToken, FString * ErrorMessage) { NativeCall<void, FString *, FString *, TSharedPtr<FUniqueNetId, 0> *, FString *, FString *>(this, "AGameMode.PreLogin", Options, Address, UniqueId, authToken, ErrorMessage); }
+	void RemoveConnectedPlayer(TSharedPtr<FUniqueNetId, 0> * UniqueNetId) { NativeCall<void, TSharedPtr<FUniqueNetId, 0> *>(this, "AGameMode.RemoveConnectedPlayer", UniqueNetId); }
 	APlayerController * SpawnPlayerController(FVector * SpawnLocation, FRotator * SpawnRotation) { return NativeCall<APlayerController *, FVector *, FRotator *>(this, "AGameMode.SpawnPlayerController", SpawnLocation, SpawnRotation); }
 	TSubclassOf<UObject> * GetDefaultPawnClassForController_Implementation(TSubclassOf<UObject> * result, AController * InController) { return NativeCall<TSubclassOf<UObject> *, TSubclassOf<UObject> *, AController *>(this, "AGameMode.GetDefaultPawnClassForController_Implementation", result, InController); }
 	APawn * SpawnDefaultPawnFor(AController * NewPlayer, AActor * StartSpot) { return NativeCall<APawn *, AController *, AActor *>(this, "AGameMode.SpawnDefaultPawnFor", NewPlayer, StartSpot); }
@@ -498,6 +497,7 @@ struct AShooterGameMode : AGameMode
 	FieldValue<TArray<FTribeData>> TribesDataField() { return { this, "AShooterGameMode.TribesData" }; }
 	FieldValue<FString> PGMapNameField() { return { this, "AShooterGameMode.PGMapName" }; }
 	FieldValue<FString> PGTerrainPropertiesStringField() { return { this, "AShooterGameMode.PGTerrainPropertiesString" }; }
+	FieldValue<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >> PGTerrainPropertiesField() { return { this, "AShooterGameMode.PGTerrainProperties" }; }
 	FieldValue<bool> bAutoCreateNewPlayerDataField() { return { this, "AShooterGameMode.bAutoCreateNewPlayerData" }; }
 	FieldValue<bool> bIsRestartingField() { return { this, "AShooterGameMode.bIsRestarting" }; }
 	FieldValue<bool> bProximityVoiceChatField() { return { this, "AShooterGameMode.bProximityVoiceChat" }; }
@@ -574,6 +574,8 @@ struct AShooterGameMode : AGameMode
 	FieldValue<float> MateBoostEffectMultiplierField() { return { this, "AShooterGameMode.MateBoostEffectMultiplier" }; }
 	FieldValue<float> AutoSavePeriodMinutesField() { return { this, "AShooterGameMode.AutoSavePeriodMinutes" }; }
 	FieldValue<float> XPMultiplierField() { return { this, "AShooterGameMode.XPMultiplier" }; }
+	FieldValue<float> TribeNameChangeCooldownField() { return { this, "AShooterGameMode.TribeNameChangeCooldown" }; }
+	FieldValue<bool> bAllowHideDamageSourceFromLogsField() { return { this, "AShooterGameMode.bAllowHideDamageSourceFromLogs" }; }
 	FieldValue<float> KillXPMultiplierField() { return { this, "AShooterGameMode.KillXPMultiplier" }; }
 	FieldValue<float> HarvestXPMultiplierField() { return { this, "AShooterGameMode.HarvestXPMultiplier" }; }
 	FieldValue<float> CraftXPMultiplierField() { return { this, "AShooterGameMode.CraftXPMultiplier" }; }
@@ -744,6 +746,7 @@ struct AShooterGameMode : AGameMode
 	FieldValue<bool> bDestroyUnconnectedWaterPipesField() { return { this, "AShooterGameMode.bDestroyUnconnectedWaterPipes" }; }
 	FieldValue<bool> bAllowCrateSpawnsOnTopOfStructuresField() { return { this, "AShooterGameMode.bAllowCrateSpawnsOnTopOfStructures" }; }
 	FieldValue<bool> bNotifyAdminCommandsInChatField() { return { this, "AShooterGameMode.bNotifyAdminCommandsInChat" }; }
+	FieldValue<bool> bRandomSupplyCratePointsField() { return { this, "AShooterGameMode.bRandomSupplyCratePoints" }; }
 	FieldValue<float> PreventOfflinePvPIntervalField() { return { this, "AShooterGameMode.PreventOfflinePvPInterval" }; }
 	//FieldValue<TArray<FItemCraftingCostOverride>> OverrideItemCraftingCostsField() { return { this, "AShooterGameMode.OverrideItemCraftingCosts" }; }
 	//FieldValue<TArray<FConfigItemCraftingCostOverride>> ConfigOverrideItemCraftingCostsField() { return { this, "AShooterGameMode.ConfigOverrideItemCraftingCosts" }; }
@@ -797,15 +800,27 @@ struct AShooterGameMode : AGameMode
 	FieldValue<bool> bLimitTurretsInRangeField() { return { this, "AShooterGameMode.bLimitTurretsInRange" }; }
 	FieldValue<float> LimitTurretsRangeField() { return { this, "AShooterGameMode.LimitTurretsRange" }; }
 	FieldValue<int> LimitTurretsNumField() { return { this, "AShooterGameMode.LimitTurretsNum" }; }
+	FieldValue<bool> bHardLimitTurretsInRangeField() { return { this, "AShooterGameMode.bHardLimitTurretsInRange" }; }
 	FieldValue<bool> bAutoUnlockAllEngramsField() { return { this, "AShooterGameMode.bAutoUnlockAllEngrams" }; }
 	FieldValue<long double> ServerLastForceRespawnWildDinosTimeField() { return { this, "AShooterGameMode.ServerLastForceRespawnWildDinosTime" }; }
 	FieldValue<FString> UseStructurePreventionVolumeTagStringField() { return { this, "AShooterGameMode.UseStructurePreventionVolumeTagString" }; }
 	FieldValue<float> BaseTemperatureMultiplierField() { return { this, "AShooterGameMode.BaseTemperatureMultiplier" }; }
 	FieldValue<bool> bForceAllowAllStructuresField() { return { this, "AShooterGameMode.bForceAllowAllStructures" }; }
 	FieldValue<bool> bForceAllowAscensionItemDownloadsField() { return { this, "AShooterGameMode.bForceAllowAscensionItemDownloads" }; }
+	FieldValue<bool> bShowCreativeModeField() { return { this, "AShooterGameMode.bShowCreativeMode" }; }
 	FieldValue<float> GlobalPoweredBatteryDurabilityDecreasePerSecondField() { return { this, "AShooterGameMode.GlobalPoweredBatteryDurabilityDecreasePerSecond" }; }
 	FieldValue<float> SingleplayerSettingsCorpseLifespanMultiplierField() { return { this, "AShooterGameMode.SingleplayerSettingsCorpseLifespanMultiplier" }; }
 	FieldValue<float> UseCorpseLifeSpanMultiplierField() { return { this, "AShooterGameMode.UseCorpseLifeSpanMultiplier" }; }
+	FieldValue<bool> bUseBPPreSpawnedDinoField() { return { this, "AShooterGameMode.bUseBPPreSpawnedDino" }; }
+	FieldValue<float> PreventOfflinePvPConnectionInvincibleIntervalField() { return { this, "AShooterGameMode.PreventOfflinePvPConnectionInvincibleInterval" }; }
+	FieldValue<float> TamedDinoCharacterFoodDrainMultiplierField() { return { this, "AShooterGameMode.TamedDinoCharacterFoodDrainMultiplier" }; }
+	FieldValue<float> WildDinoCharacterFoodDrainMultiplierField() { return { this, "AShooterGameMode.WildDinoCharacterFoodDrainMultiplier" }; }
+	FieldValue<float> WildDinoTorporDrainMultiplierField() { return { this, "AShooterGameMode.WildDinoTorporDrainMultiplier" }; }
+	FieldValue<float> PassiveTameIntervalMultiplierField() { return { this, "AShooterGameMode.PassiveTameIntervalMultiplier" }; }
+	FieldValue<float> TamedDinoTorporDrainMultiplierField() { return { this, "AShooterGameMode.TamedDinoTorporDrainMultiplier" }; }
+	FieldValue<bool> bDisableWeatherFogField() { return { this, "AShooterGameMode.bDisableWeatherFog" }; }
+	FieldValue<FString> ArkServerMetricsKeyField() { return { this, "AShooterGameMode.ArkServerMetricsKey" }; }
+	FieldValue<FString> ArkServerMetricsURLField() { return { this, "AShooterGameMode.ArkServerMetricsURL" }; }
 	FieldValue<FName> UseStructurePreventionVolumeTagField() { return { this, "AShooterGameMode.UseStructurePreventionVolumeTag" }; }
 	FieldValue<bool> bHasCovertedToStoreField() { return { this, "AShooterGameMode.bHasCovertedToStore" }; }
 	FieldValue<bool> bAllowStoredDatasField() { return { this, "AShooterGameMode.bAllowStoredDatas" }; }
@@ -837,7 +852,7 @@ struct AShooterGameMode : AGameMode
 	TSubclassOf<AGameSession> * GetGameSessionClass(TSubclassOf<AGameSession> * result) { return NativeCall<TSubclassOf<AGameSession> *, TSubclassOf<AGameSession> *>(this, "AShooterGameMode.GetGameSessionClass", result); }
 	void HandleMatchHasStarted() { NativeCall<void>(this, "AShooterGameMode.HandleMatchHasStarted"); }
 	void HandleLeavingMap() { NativeCall<void>(this, "AShooterGameMode.HandleLeavingMap"); }
-	void PreLogin(FString * Options, FString * Address, TSharedPtr<FUniqueNetId> * UniqueId, FString * authToken, FString * ErrorMessage) { NativeCall<void, FString *, FString *, TSharedPtr<FUniqueNetId> *, FString *, FString *>(this, "AShooterGameMode.PreLogin", Options, Address, UniqueId, authToken, ErrorMessage); }
+	void PreLogin(FString * Options, FString * Address, TSharedPtr<FUniqueNetId, 0> * UniqueId, FString * authToken, FString * ErrorMessage) { NativeCall<void, FString *, FString *, TSharedPtr<FUniqueNetId, 0> *, FString *, FString *>(this, "AShooterGameMode.PreLogin", Options, Address, UniqueId, authToken, ErrorMessage); }
 	void PostLogin(APlayerController * NewPlayer) { NativeCall<void, APlayerController *>(this, "AShooterGameMode.PostLogin", NewPlayer); }
 	TArray<FString> * GetWhiteListedMap(TArray<FString> * result) { return NativeCall<TArray<FString> *, TArray<FString> *>(this, "AShooterGameMode.GetWhiteListedMap", result); }
 	void Killed(AController * Killer, AController * KilledPlayer, APawn * KilledPawn, UDamageType * DamageType) { NativeCall<void, AController *, AController *, APawn *, UDamageType *>(this, "AShooterGameMode.Killed", Killer, KilledPlayer, KilledPawn, DamageType); }
@@ -867,12 +882,13 @@ struct AShooterGameMode : AGameMode
 	void TickSaveBackup() { NativeCall<void>(this, "AShooterGameMode.TickSaveBackup"); }
 	unsigned __int64 AddNewTribe(AShooterPlayerState * PlayerOwner, FString * TribeName, FTribeGovernment * TribeGovernment) { return NativeCall<unsigned __int64, AShooterPlayerState *, FString *, FTribeGovernment *>(this, "AShooterGameMode.AddNewTribe", PlayerOwner, TribeName, TribeGovernment); }
 	void RemoveTribe(unsigned __int64 TribeID) { NativeCall<void, unsigned __int64>(this, "AShooterGameMode.RemoveTribe", TribeID); }
+	void UpdateTribeData(FTribeData* NewTribeData) { NativeCall<void, FTribeData*>(this, "AShooterGameMode.UpdateTribeData", NewTribeData); }
 	void RemovePlayerFromTribe(unsigned __int64 TribeID, unsigned __int64 PlayerDataID, bool bDontUpdatePlayerState) { NativeCall<void, unsigned __int64, unsigned __int64, bool>(this, "AShooterGameMode.RemovePlayerFromTribe", TribeID, PlayerDataID, bDontUpdatePlayerState); }
 	int GetTribeIDOfPlayerID(unsigned __int64 PlayerDataID) { return NativeCall<int, unsigned __int64>(this, "AShooterGameMode.GetTribeIDOfPlayerID", PlayerDataID); }
 	FTribeData * GetTribeData(FTribeData * result, unsigned __int64 TribeID) { return NativeCall<FTribeData *, FTribeData *, unsigned __int64>(this, "AShooterGameMode.GetTribeData", result, TribeID); }
 	void BeginPlay() { NativeCall<void>(this, "AShooterGameMode.BeginPlay"); }
 	void GetActorSaveGameTypes(TArray<TSubclassOf<AActor>> * saveGameTypes) { NativeCall<void, TArray<TSubclassOf<AActor>> *>(this, "AShooterGameMode.GetActorSaveGameTypes", saveGameTypes); }
-	FString * InitNewPlayer(FString * result, APlayerController * NewPlayerController, TSharedPtr<FUniqueNetId> * UniqueId, FString * Options, FString * Portal) { return NativeCall<FString *, FString *, APlayerController *, TSharedPtr<FUniqueNetId> *, FString *, FString *>(this, "AShooterGameMode.InitNewPlayer", result, NewPlayerController, UniqueId, Options, Portal); }
+	FString * InitNewPlayer(FString * result, APlayerController * NewPlayerController, TSharedPtr<FUniqueNetId, 0> * UniqueId, FString * Options, FString * Portal) { return NativeCall<FString *, FString *, APlayerController *, TSharedPtr<FUniqueNetId, 0> *, FString *, FString *>(this, "AShooterGameMode.InitNewPlayer", result, NewPlayerController, UniqueId, Options, Portal); }
 	void SendServerDirectMessage(FString * PlayerSteamID, FString * MessageText, FLinearColor MessageColor, bool bIsBold, int ReceiverTeamId, int ReceiverPlayerID, FString * PlayerName) { NativeCall<void, FString *, FString *, FLinearColor, bool, int, int, FString *>(this, "AShooterGameMode.SendServerDirectMessage", PlayerSteamID, MessageText, MessageColor, bIsBold, ReceiverTeamId, ReceiverPlayerID, PlayerName); }
 	void SendServerChatMessage(FString * MessageText, FLinearColor MessageColor, bool bIsBold, int ReceiverTeamId, int ReceiverPlayerID) { NativeCall<void, FString *, FLinearColor, bool, int, int>(this, "AShooterGameMode.SendServerChatMessage", MessageText, MessageColor, bIsBold, ReceiverTeamId, ReceiverPlayerID); }
 	void SendServerNotification(FString * MessageText, FLinearColor MessageColor, float DisplayScale, float DisplayTime, UTexture2D * MessageIcon, USoundBase * SoundToPlay, int ReceiverTeamId, int ReceiverPlayerID, bool bDoBillboard) { NativeCall<void, FString *, FLinearColor, float, float, UTexture2D *, USoundBase *, int, int, bool>(this, "AShooterGameMode.SendServerNotification", MessageText, MessageColor, DisplayScale, DisplayTime, MessageIcon, SoundToPlay, ReceiverTeamId, ReceiverPlayerID, bDoBillboard); }
@@ -917,6 +933,7 @@ struct AShooterGameMode : AGameMode
 	void ListenServerClampPlayerLocations() { NativeCall<void>(this, "AShooterGameMode.ListenServerClampPlayerLocations"); }
 	FString * ValidateTribeName(FString * result, FString theTribeName) { return NativeCall<FString *, FString *, FString>(this, "AShooterGameMode.ValidateTribeName", result, theTribeName); }
 	void AdjustDamage(AActor * Victim, float * Damage, FDamageEvent * DamageEvent, AController * EventInstigator, AActor * DamageCauser) { NativeCall<void, AActor *, float *, FDamageEvent *, AController *, AActor *>(this, "AShooterGameMode.AdjustDamage", Victim, Damage, DamageEvent, EventInstigator, DamageCauser); }
+	bool AllowRenameTribe(AShooterPlayerState * ForPlayerState, FString * TribeName) { return NativeCall<bool, AShooterPlayerState *, FString *>(this, "AShooterGameMode.AllowRenameTribe", ForPlayerState, TribeName); }
 	void SetTimeOfDay(FString * timeString) { NativeCall<void, FString *>(this, "AShooterGameMode.SetTimeOfDay", timeString); }
 	void KickAllPlayersAndReload() { NativeCall<void>(this, "AShooterGameMode.KickAllPlayersAndReload"); }
 	bool PlayerCanRestart(APlayerController * Player) { return NativeCall<bool, APlayerController *>(this, "AShooterGameMode.PlayerCanRestart", Player); }
@@ -950,6 +967,8 @@ struct AShooterGameMode : AGameMode
 	void LoadTributePlayerDatas(FString UniqueID) { NativeCall<void, FString>(this, "AShooterGameMode.LoadTributePlayerDatas", UniqueID); }
 	void DownloadTransferredPlayer(AShooterPlayerController * NewPlayer) { NativeCall<void, AShooterPlayerController *>(this, "AShooterGameMode.DownloadTransferredPlayer", NewPlayer); }
 	void CheckForDupedDinos() { NativeCall<void>(this, "AShooterGameMode.CheckForDupedDinos"); }
+	void FlushPrimalStats(AShooterPlayerController * ForPC) { NativeCall<void, AShooterPlayerController *>(this, "AShooterGameMode.FlushPrimalStats", ForPC); }
+	void SendAllCachedArkMetrics() { NativeCall<void>(this, "AShooterGameMode.SendAllCachedArkMetrics"); }
 };
 
 struct ACustomGameMode : AShooterGameMode
