@@ -2781,6 +2781,7 @@ struct AShooterCharacter : APrimalCharacter
 
 	// Functions
 
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "AShooterCharacter.GetPrivateStaticClass"); }
 	bool BuffsPreventFirstPerson() { return NativeCall<bool>(this, "AShooterCharacter.BuffsPreventFirstPerson"); }
 	void PostInitializeComponents() { NativeCall<void>(this, "AShooterCharacter.PostInitializeComponents"); }
 	void AuthPostSpawnInit() { NativeCall<void>(this, "AShooterCharacter.AuthPostSpawnInit"); }
@@ -3819,6 +3820,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 
 	// Functions
 
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "APrimalDinoCharacter.GetPrivateStaticClass"); }
 	void CheckAndHandleBasedPlayersBeingPushedThroughWalls() { NativeCall<void>(this, "APrimalDinoCharacter.CheckAndHandleBasedPlayersBeingPushedThroughWalls"); }
 	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "APrimalDinoCharacter.Tick", DeltaSeconds); }
 	void PlayHardEndChargingShake_Implementation() { NativeCall<void>(this, "APrimalDinoCharacter.PlayHardEndChargingShake_Implementation"); }

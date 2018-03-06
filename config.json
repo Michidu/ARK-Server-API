@@ -83,7 +83,8 @@
     "UPrimalGlobals",
     "FSocket",
     "UPrimalGameData",
-    "UPrimalEngramEntry"
+    "UPrimalEngramEntry",
+	"UKismetSystemLibrary"
   ],
   "functions":[
     "StaticLoadObject",
