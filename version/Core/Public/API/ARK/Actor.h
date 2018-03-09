@@ -277,6 +277,179 @@ struct USceneComponent : UActorComponent
 	static void StaticRegisterNativesUSceneComponent() { NativeCall<void>(nullptr, "USceneComponent.StaticRegisterNativesUSceneComponent"); }
 };
 
+struct UPrimitiveComponent : USceneComponent
+{
+	BitFieldValue<bool, unsigned __int32> bGenerateOverlapEvents() { return { this, "UPrimitiveComponent.bGenerateOverlapEvents" }; }
+	FieldValue<float> MinDrawDistanceField() { return { this, "UPrimitiveComponent.MinDrawDistance" }; }
+	FieldValue<float> MassiveLODSizeOnScreenField() { return { this, "UPrimitiveComponent.MassiveLODSizeOnScreen" }; }
+	FieldValue<float> LDMaxDrawDistanceField() { return { this, "UPrimitiveComponent.LDMaxDrawDistance" }; }
+	FieldValue<float> CachedMaxDrawDistanceField() { return { this, "UPrimitiveComponent.CachedMaxDrawDistance" }; }
+	FieldValue<TEnumAsByte<enum ESceneDepthPriorityGroup>> DepthPriorityGroupField() { return { this, "UPrimitiveComponent.DepthPriorityGroup" }; }
+	FieldValue<TEnumAsByte<enum ESceneDepthPriorityGroup>> ViewOwnerDepthPriorityGroupField() { return { this, "UPrimitiveComponent.ViewOwnerDepthPriorityGroup" }; }
+	FieldValue<int> CustomDepthStencilValueField() { return { this, "UPrimitiveComponent.CustomDepthStencilValue" }; }
+	FieldValue<int> ObjectLayerField() { return { this, "UPrimitiveComponent.ObjectLayer" }; }
+	FieldValue<TEnumAsByte<enum EIndirectLightingCacheQuality>> IndirectLightingCacheQualityField() { return { this, "UPrimitiveComponent.IndirectLightingCacheQuality" }; }
+	FieldValue<bool> bHasCachedStaticLightingField() { return { this, "UPrimitiveComponent.bHasCachedStaticLighting" }; }
+	FieldValue<bool> bStaticLightingBuildEnqueuedField() { return { this, "UPrimitiveComponent.bStaticLightingBuildEnqueued" }; }
+	FieldValue<int> TranslucencySortPriorityField() { return { this, "UPrimitiveComponent.TranslucencySortPriority" }; }
+	FieldValue<int> VisibilityIdField() { return { this, "UPrimitiveComponent.VisibilityId" }; }
+	FieldValue<float> LastPhysxSleepTimeField() { return { this, "UPrimitiveComponent.LastPhysxSleepTime" }; }
+	FieldValue<unsigned int> GameThread_OverlapIncrementorField() { return { this, "UPrimitiveComponent.GameThread_OverlapIncrementor" }; }
+	FieldValue<unsigned int> GameThread_OverlapIndexMaskField() { return { this, "UPrimitiveComponent.GameThread_OverlapIndexMask" }; }
+	FieldValue<int> InternalOctreeMaskField() { return { this, "UPrimitiveComponent.InternalOctreeMask" }; }
+	FieldValue<float> LpvBiasMultiplierField() { return { this, "UPrimitiveComponent.LpvBiasMultiplier" }; }
+	FieldValue<float> OverrideStepHeightField() { return { this, "UPrimitiveComponent.OverrideStepHeight" }; }
+	FieldValue<float> LastCheckedAllCollideableDescendantsTimeField() { return { this, "UPrimitiveComponent.LastCheckedAllCollideableDescendantsTime" }; }
+	FieldValue<float> BoundsScaleField() { return { this, "UPrimitiveComponent.BoundsScale" }; }
+	FieldValue<long double> LastSubmitTimeField() { return { this, "UPrimitiveComponent.LastSubmitTime" }; }
+	FieldValue<long double> LastRenderTimeField() { return { this, "UPrimitiveComponent.LastRenderTime" }; }
+	FieldValue<long double> LastRenderTimeIgnoreShadowField() { return { this, "UPrimitiveComponent.LastRenderTimeIgnoreShadow" }; }
+	FieldValue<TEnumAsByte<enum ECanBeCharacterBase>> CanCharacterStepUpOnField() { return { this, "UPrimitiveComponent.CanCharacterStepUpOn" }; }
+	FieldValue<TArray<TWeakObjectPtr<AActor>>> MoveIgnoreActorsField() { return { this, "UPrimitiveComponent.MoveIgnoreActors" }; }
+	//FieldValue<FComponentBeginOverlapSignature> OnComponentBeginOverlapField() { return { this, "UPrimitiveComponent.OnComponentBeginOverlap" }; }
+	/*FieldValue<FComponentHitSignature> OnComponentHitField() { return { this, "UPrimitiveComponent.OnComponentHit" }; }
+	FieldValue<FComponentBeginOverlapSignature> OnComponentBeginOverlapField() { return { this, "UPrimitiveComponent.OnComponentBeginOverlap" }; }
+	FieldValue<FComponentEndOverlapSignature> OnComponentEndOverlapField() { return { this, "UPrimitiveComponent.OnComponentEndOverlap" }; }
+	FieldValue<FComponentBeginCursorOverSignature> OnBeginCursorOverField() { return { this, "UPrimitiveComponent.OnBeginCursorOver" }; }
+	FieldValue<FComponentEndCursorOverSignature> OnEndCursorOverField() { return { this, "UPrimitiveComponent.OnEndCursorOver" }; }
+	FieldValue<FComponentOnClickedSignature> OnClickedField() { return { this, "UPrimitiveComponent.OnClicked" }; }
+	FieldValue<FComponentOnReleasedSignature> OnReleasedField() { return { this, "UPrimitiveComponent.OnReleased" }; }
+	FieldValue<FComponentOnInputTouchBeginSignature> OnInputTouchBeginField() { return { this, "UPrimitiveComponent.OnInputTouchBegin" }; }
+	FieldValue<FComponentOnInputTouchEndSignature> OnInputTouchEndField() { return { this, "UPrimitiveComponent.OnInputTouchEnd" }; }
+	FieldValue<FComponentBeginTouchOverSignature> OnInputTouchEnterField() { return { this, "UPrimitiveComponent.OnInputTouchEnter" }; }
+	FieldValue<FComponentEndTouchOverSignature> OnInputTouchLeaveField() { return { this, "UPrimitiveComponent.OnInputTouchLeave" }; }
+	FieldValue<FPrimitiveSceneProxy *> SceneProxyField() { return { this, "UPrimitiveComponent.SceneProxy" }; }
+	FieldValue<FThreadSafeCounter> AttachmentCounterField() { return { this, "UPrimitiveComponent.AttachmentCounter" }; }
+	FieldValue<TLazyObjectPtr<UPrimitiveComponent>> ReplacementPrimitiveField() { return { this, "UPrimitiveComponent.ReplacementPrimitive" }; }*/
+	FieldValue<unsigned int> ProxyMeshIDField() { return { this, "UPrimitiveComponent.ProxyMeshID" }; }
+	FieldValue<bool> bIsProxyMeshParentField() { return { this, "UPrimitiveComponent.bIsProxyMeshParent" }; }
+	FieldValue<bool> bHasActiveProxyMeshChildrenField() { return { this, "UPrimitiveComponent.bHasActiveProxyMeshChildren" }; }
+
+	// Functions
+
+
+	UField * GetPrivateStaticClass() { return NativeCall<UField *>(this, "UPrimitiveComponent.GetPrivateStaticClass"); }
+	void GetLightAndShadowMapMemoryUsage(int * OutNum, int * OutMax) { NativeCall<void, int *, int *>(this, "UPrimitiveComponent.GetLightAndShadowMapMemoryUsage", OutNum, OutMax); }
+	bool CanBeBaseForCharacter(APawn * Pawn) { return NativeCall<bool, APawn *>(this, "UPrimitiveComponent.CanBeBaseForCharacter", Pawn); }
+	bool AreSymmetricRotations(FQuat * A, FQuat * B, FVector * Scale3D) { return NativeCall<bool, FQuat *, FQuat *, FVector *>(this, "UPrimitiveComponent.AreSymmetricRotations", A, B, Scale3D); }
+	char GetStaticDepthPriorityGroup() { return NativeCall<char>(this, "UPrimitiveComponent.GetStaticDepthPriorityGroup"); }
+	bool HasValidSettingsForStaticLighting() { return NativeCall<bool>(this, "UPrimitiveComponent.HasValidSettingsForStaticLighting"); }
+	void DestroyRenderState_Concurrent() { NativeCall<void>(this, "UPrimitiveComponent.DestroyRenderState_Concurrent"); }
+	void FinishDestroy() { NativeCall<void>(this, "UPrimitiveComponent.FinishDestroy"); }
+	void InvalidateLightingCacheDetailed(bool bInvalidateBuildEnqueuedLighting, bool bTranslationOnly) { NativeCall<void, bool, bool>(this, "UPrimitiveComponent.InvalidateLightingCacheDetailed", bInvalidateBuildEnqueuedLighting, bTranslationOnly); }
+	bool IsEditorOnly() { return NativeCall<bool>(this, "UPrimitiveComponent.IsEditorOnly"); }
+	void RegisterComponentTickFunctions(bool bRegister, bool bSaveAndRestoreComponentTickState) { NativeCall<void, bool, bool>(this, "UPrimitiveComponent.RegisterComponentTickFunctions", bRegister, bSaveAndRestoreComponentTickState); }
+	void CreateRenderState_Concurrent() { NativeCall<void>(this, "UPrimitiveComponent.CreateRenderState_Concurrent"); }
+	void SendRenderTransform_Concurrent() { NativeCall<void>(this, "UPrimitiveComponent.SendRenderTransform_Concurrent"); }
+	void OnRegister() { NativeCall<void>(this, "UPrimitiveComponent.OnRegister"); }
+	void OnUnregister() { NativeCall<void>(this, "UPrimitiveComponent.OnUnregister"); }
+	void OnAttachmentChanged() { NativeCall<void>(this, "UPrimitiveComponent.OnAttachmentChanged"); }
+	void CreatePhysicsState() { NativeCall<void>(this, "UPrimitiveComponent.CreatePhysicsState"); }
+	void OnUpdateTransform(bool bSkipPhysicsMove) { NativeCall<void, bool>(this, "UPrimitiveComponent.OnUpdateTransform", bSkipPhysicsMove); }
+	void PostLoad() { NativeCall<void>(this, "UPrimitiveComponent.PostLoad"); }
+	void PostDuplicate(bool bDuplicateForPIE) { NativeCall<void, bool>(this, "UPrimitiveComponent.PostDuplicate", bDuplicateForPIE); }
+	bool IsReadyForFinishDestroy() { return NativeCall<bool>(this, "UPrimitiveComponent.IsReadyForFinishDestroy"); }
+	bool NeedsLoadForClient() { return NativeCall<bool>(this, "UPrimitiveComponent.NeedsLoadForClient"); }
+	bool NeedsLoadForServer() { return NativeCall<bool>(this, "UPrimitiveComponent.NeedsLoadForServer"); }
+	void SetOwnerNoSee(bool bNewOwnerNoSee) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetOwnerNoSee", bNewOwnerNoSee); }
+	void SetOnlyOwnerSee(bool bNewOnlyOwnerSee) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetOnlyOwnerSee", bNewOnlyOwnerSee); }
+	bool ShouldComponentAddToScene() { return NativeCall<bool>(this, "UPrimitiveComponent.ShouldComponentAddToScene"); }
+	bool ShouldCreatePhysicsState() { return NativeCall<bool>(this, "UPrimitiveComponent.ShouldCreatePhysicsState"); }
+	bool HasValidPhysicsState() { return NativeCall<bool>(this, "UPrimitiveComponent.HasValidPhysicsState"); }
+	bool ShouldRenderSelected() { return NativeCall<bool>(this, "UPrimitiveComponent.ShouldRenderSelected"); }
+	void SetCastShadow(bool NewCastShadow) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetCastShadow", NewCastShadow); }
+	void SetCullDistance(float NewCullDistance) { NativeCall<void, float>(this, "UPrimitiveComponent.SetCullDistance", NewCullDistance); }
+	void SetAbsoluteMaxDrawScale(bool bInValue) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetAbsoluteMaxDrawScale", bInValue); }
+	bool IsWorldGeometry() { return NativeCall<bool>(this, "UPrimitiveComponent.IsWorldGeometry"); }
+	ECollisionChannel GetCollisionObjectType() { return NativeCall<ECollisionChannel>(this, "UPrimitiveComponent.GetCollisionObjectType"); }
+	void InitSweepCollisionParams(FCollisionQueryParams * OutParams, FCollisionResponseParams * OutResponseParam) { NativeCall<void, FCollisionQueryParams *, FCollisionResponseParams *>(this, "UPrimitiveComponent.InitSweepCollisionParams", OutParams, OutResponseParam); }
+	bool MoveComponentImpl(FVector * Delta, FQuat * NewRotationQuat, bool bSweep, FHitResult * OutHit, EMoveComponentFlags MoveFlags, bool bUpdateOverlaps) { return NativeCall<bool, FVector *, FQuat *, bool, FHitResult *, EMoveComponentFlags, bool>(this, "UPrimitiveComponent.MoveComponentImpl", Delta, NewRotationQuat, bSweep, OutHit, MoveFlags, bUpdateOverlaps); }
+	void DispatchBlockingHit(AActor * Owner, FHitResult * BlockingHit) { NativeCall<void, AActor *, FHitResult *>(this, "UPrimitiveComponent.DispatchBlockingHit", Owner, BlockingHit); }
+	bool IsNavigationRelevant() { return NativeCall<bool>(this, "UPrimitiveComponent.IsNavigationRelevant"); }
+	FBox * GetNavigationBounds(FBox * result) { return NativeCall<FBox *, FBox *>(this, "UPrimitiveComponent.GetNavigationBounds", result); }
+	void SetCanEverAffectNavigation(bool bRelevant) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetCanEverAffectNavigation", bRelevant); }
+	bool LineTraceComponent(FHitResult * OutHit, FVector Start, FVector End, FCollisionQueryParams * Params) { return NativeCall<bool, FHitResult *, FVector, FVector, FCollisionQueryParams *>(this, "UPrimitiveComponent.LineTraceComponent", OutHit, Start, End, Params); }
+	bool ComponentOverlapComponentImpl(UPrimitiveComponent * PrimComp, FVector Pos, FQuat * Quat, FCollisionQueryParams * Params) { return NativeCall<bool, UPrimitiveComponent *, FVector, FQuat *, FCollisionQueryParams *>(this, "UPrimitiveComponent.ComponentOverlapComponentImpl", PrimComp, Pos, Quat, Params); }
+	bool IsOverlappingActor(AActor * Other) { return NativeCall<bool, AActor *>(this, "UPrimitiveComponent.IsOverlappingActor", Other); }
+	void GetOverlappingActors(TArray<AActor *> * OutOverlappingActors, UClass * ClassFilter) { NativeCall<void, TArray<AActor *> *, UClass *>(this, "UPrimitiveComponent.GetOverlappingActors", OutOverlappingActors, ClassFilter); }
+	void GetOverlappingComponents(TArray<UPrimitiveComponent *> * OutOverlappingComponents) { NativeCall<void, TArray<UPrimitiveComponent *> *>(this, "UPrimitiveComponent.GetOverlappingComponents", OutOverlappingComponents); }
+	bool AreAllCollideableDescendantsRelative(bool bAllowCachedValue) { return NativeCall<bool, bool>(this, "UPrimitiveComponent.AreAllCollideableDescendantsRelative", bAllowCachedValue); }
+	void IgnoreActorWhenMoving(AActor * Actor, bool bShouldIgnore) { NativeCall<void, AActor *, bool>(this, "UPrimitiveComponent.IgnoreActorWhenMoving", Actor, bShouldIgnore); }
+	void UpdatePhysicsVolume(bool bTriggerNotifiers) { NativeCall<void, bool>(this, "UPrimitiveComponent.UpdatePhysicsVolume", bTriggerNotifiers); }
+	static void DispatchMouseOverEvents(UPrimitiveComponent * CurrentComponent, UPrimitiveComponent * NewComponent) { NativeCall<void, UPrimitiveComponent *, UPrimitiveComponent *>(nullptr, "UPrimitiveComponent.DispatchMouseOverEvents", CurrentComponent, NewComponent); }
+	static void DispatchTouchOverEvents(ETouchIndex::Type FingerIndex, UPrimitiveComponent * CurrentComponent, UPrimitiveComponent * NewComponent) { NativeCall<void, ETouchIndex::Type, UPrimitiveComponent *, UPrimitiveComponent *>(nullptr, "UPrimitiveComponent.DispatchTouchOverEvents", FingerIndex, CurrentComponent, NewComponent); }
+	void DispatchOnClicked() { NativeCall<void>(this, "UPrimitiveComponent.DispatchOnClicked"); }
+	void DispatchOnReleased() { NativeCall<void>(this, "UPrimitiveComponent.DispatchOnReleased"); }
+	void DispatchOnInputTouchBegin(ETouchIndex::Type FingerIndex) { NativeCall<void, ETouchIndex::Type>(this, "UPrimitiveComponent.DispatchOnInputTouchBegin", FingerIndex); }
+	void DispatchOnInputTouchEnd(ETouchIndex::Type FingerIndex) { NativeCall<void, ETouchIndex::Type>(this, "UPrimitiveComponent.DispatchOnInputTouchEnd", FingerIndex); }
+	void SetRenderCustomDepth(bool bValue) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetRenderCustomDepth", bValue); }
+	void SetCustomDepthStencilValue(int Value) { NativeCall<void, int>(this, "UPrimitiveComponent.SetCustomDepthStencilValue", Value); }
+	bool CanCharacterStepUp(APawn * Pawn) { return NativeCall<bool, APawn *>(this, "UPrimitiveComponent.CanCharacterStepUp", Pawn); }
+	bool CanEditSimulatePhysics() { return NativeCall<bool>(this, "UPrimitiveComponent.CanEditSimulatePhysics"); }
+	void SetSimulatePhysics(bool bSimulate) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetSimulatePhysics", bSimulate); }
+	void AddImpulse(FVector Impulse, FName BoneName, bool bVelChange) { NativeCall<void, FVector, FName, bool>(this, "UPrimitiveComponent.AddImpulse", Impulse, BoneName, bVelChange); }
+	void AddImpulseAtLocation(FVector Impulse, FVector Location, FName BoneName) { NativeCall<void, FVector, FVector, FName>(this, "UPrimitiveComponent.AddImpulseAtLocation", Impulse, Location, BoneName); }
+	void AddForce(FVector Force, FName BoneName) { NativeCall<void, FVector, FName>(this, "UPrimitiveComponent.AddForce", Force, BoneName); }
+	void AddForceAtLocation(FVector Force, FVector Location, FName BoneName) { NativeCall<void, FVector, FVector, FName>(this, "UPrimitiveComponent.AddForceAtLocation", Force, Location, BoneName); }
+	void SetAllPhysicsLinearVelocity(FVector NewVel, bool bAddToCurrent) { NativeCall<void, FVector, bool>(this, "UPrimitiveComponent.SetAllPhysicsLinearVelocity", NewVel, bAddToCurrent); }
+	void SetAllPhysicsAngularVelocity(FVector * NewAngVel, bool bAddToCurrent) { NativeCall<void, FVector *, bool>(this, "UPrimitiveComponent.SetAllPhysicsAngularVelocity", NewAngVel, bAddToCurrent); }
+	void SetAllPhysicsPosition(FVector NewPos) { NativeCall<void, FVector>(this, "UPrimitiveComponent.SetAllPhysicsPosition", NewPos); }
+	void SetAllPhysicsRotation(FRotator NewRot) { NativeCall<void, FRotator>(this, "UPrimitiveComponent.SetAllPhysicsRotation", NewRot); }
+	void WakeAllRigidBodies() { NativeCall<void>(this, "UPrimitiveComponent.WakeAllRigidBodies"); }
+	void SetEnableGravity(bool bGravityEnabled) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetEnableGravity", bGravityEnabled); }
+	bool IsGravityEnabled() { return NativeCall<bool>(this, "UPrimitiveComponent.IsGravityEnabled"); }
+	void SetLinearDamping(float InDamping) { NativeCall<void, float>(this, "UPrimitiveComponent.SetLinearDamping", InDamping); }
+	float GetLinearDamping() { return NativeCall<float>(this, "UPrimitiveComponent.GetLinearDamping"); }
+	void SetAngularDamping(float InDamping) { NativeCall<void, float>(this, "UPrimitiveComponent.SetAngularDamping", InDamping); }
+	float GetAngularDamping() { return NativeCall<float>(this, "UPrimitiveComponent.GetAngularDamping"); }
+	float GetMass() { return NativeCall<float>(this, "UPrimitiveComponent.GetMass"); }
+	float CalculateMass(FName __formal) { return NativeCall<float, FName>(this, "UPrimitiveComponent.CalculateMass", __formal); }
+	void PutAllRigidBodiesToSleep() { NativeCall<void>(this, "UPrimitiveComponent.PutAllRigidBodiesToSleep"); }
+	bool IsAnyRigidBodyAwake() { return NativeCall<bool>(this, "UPrimitiveComponent.IsAnyRigidBodyAwake"); }
+	void SetNotifyRigidBodyCollision(bool bNewNotifyRigidBodyCollision) { NativeCall<void, bool>(this, "UPrimitiveComponent.SetNotifyRigidBodyCollision", bNewNotifyRigidBodyCollision); }
+	void SetPhysMaterialOverride(UPhysicalMaterial * NewPhysMaterial) { NativeCall<void, UPhysicalMaterial *>(this, "UPrimitiveComponent.SetPhysMaterialOverride", NewPhysMaterial); }
+	void SyncComponentToRBPhysics() { NativeCall<void>(this, "UPrimitiveComponent.SyncComponentToRBPhysics"); }
+	void GetWeldedBodies(TArray<FBodyInstance *> * OutWeldedBodies, TArray<FName> * OutLabels) { NativeCall<void, TArray<FBodyInstance *> *, TArray<FName> *>(this, "UPrimitiveComponent.GetWeldedBodies", OutWeldedBodies, OutLabels); }
+	bool WeldToImplementation(USceneComponent * InParent, FName ParentSocketName, bool bWeldSimulatedChild) { return NativeCall<bool, USceneComponent *, FName, bool>(this, "UPrimitiveComponent.WeldToImplementation", InParent, ParentSocketName, bWeldSimulatedChild); }
+	void WeldTo(USceneComponent * InParent, FName InSocketName) { NativeCall<void, USceneComponent *, FName>(this, "UPrimitiveComponent.WeldTo", InParent, InSocketName); }
+	void UnWeldFromParent() { NativeCall<void>(this, "UPrimitiveComponent.UnWeldFromParent"); }
+	FBodyInstance * GetBodyInstance(FName BoneName, bool bGetWelded) { return NativeCall<FBodyInstance *, FName, bool>(this, "UPrimitiveComponent.GetBodyInstance", BoneName, bGetWelded); }
+	bool IsSimulatingPhysics(FName BoneName) { return NativeCall<bool, FName>(this, "UPrimitiveComponent.IsSimulatingPhysics", BoneName); }
+	FVector * GetComponentVelocity(FVector * result) { return NativeCall<FVector *, FVector *>(this, "UPrimitiveComponent.GetComponentVelocity", result); }
+	void SetCollisionObjectType(ECollisionChannel Channel) { NativeCall<void, ECollisionChannel>(this, "UPrimitiveComponent.SetCollisionObjectType", Channel); }
+	void SetCollisionResponseToAllChannels(ECollisionResponse NewResponse) { NativeCall<void, ECollisionResponse>(this, "UPrimitiveComponent.SetCollisionResponseToAllChannels", NewResponse); }
+	void SetCollisionEnabled(ECollisionEnabled::Type NewType) { NativeCall<void, ECollisionEnabled::Type>(this, "UPrimitiveComponent.SetCollisionEnabled", NewType); }
+	void SetCollisionProfileName(FName InCollisionProfileName) { NativeCall<void, FName>(this, "UPrimitiveComponent.SetCollisionProfileName", InCollisionProfileName); }
+	void OnActorEnableCollisionChanged() { NativeCall<void>(this, "UPrimitiveComponent.OnActorEnableCollisionChanged"); }
+	void OnComponentCollisionSettingsChanged() { NativeCall<void>(this, "UPrimitiveComponent.OnComponentCollisionSettingsChanged"); }
+	bool K2_LineTraceComponent(FVector TraceStart, FVector TraceEnd, bool bTraceComplex, bool bShowTrace, FVector * HitLocation, FVector * HitNormal, FName * BoneName) { return NativeCall<bool, FVector, FVector, bool, bool, FVector *, FVector *, FName *>(this, "UPrimitiveComponent.K2_LineTraceComponent", TraceStart, TraceEnd, bTraceComplex, bShowTrace, HitLocation, HitNormal, BoneName); }
+	ECollisionEnabled::Type GetCollisionEnabled() { return NativeCall<ECollisionEnabled::Type>(this, "UPrimitiveComponent.GetCollisionEnabled"); }
+	ECollisionResponse GetCollisionResponseToChannel(ECollisionChannel Channel) { return NativeCall<ECollisionResponse, ECollisionChannel>(this, "UPrimitiveComponent.GetCollisionResponseToChannel", Channel); }
+	void UpdatePhysicsToRBChannels() { NativeCall<void>(this, "UPrimitiveComponent.UpdatePhysicsToRBChannels"); }
+	void SetInternalOctreeMask(int InOctreeMask, bool bReregisterWithTree) { NativeCall<void, int, bool>(this, "UPrimitiveComponent.SetInternalOctreeMask", InOctreeMask, bReregisterWithTree); }
+	static void StaticRegisterNativesUPrimitiveComponent() { NativeCall<void>(nullptr, "UPrimitiveComponent.StaticRegisterNativesUPrimitiveComponent"); }
+};
+
+struct UShapeComponent : UPrimitiveComponent
+{
+	//bool ShouldCollideWhenPlacing() { return NativeCall<bool>(this, "UShapeComponent.ShouldCollideWhenPlacing"); }
+	//UBodySetup * GetBodySetup() { return NativeCall<UBodySetup *>(this, "UShapeComponent.GetBodySetup"); }
+};
+
+struct USphereComponent : UShapeComponent
+{
+	// Functions
+
+	static UClass * StaticClass() { return NativeCall<UClass *>(nullptr, "USphereComponent.StaticClass"); }
+	FBoxSphereBounds * CalcBounds(FBoxSphereBounds * result, FTransform * LocalToWorld) { return NativeCall<FBoxSphereBounds *, FBoxSphereBounds *, FTransform *>(this, "USphereComponent.CalcBounds", result, LocalToWorld); }
+	void CalcBoundingCylinder(float * CylinderRadius, float * CylinderHalfHeight) { NativeCall<void, float *, float *>(this, "USphereComponent.CalcBoundingCylinder", CylinderRadius, CylinderHalfHeight); }
+	void UpdateBodySetup() { NativeCall<void>(this, "USphereComponent.UpdateBodySetup"); }
+	void SetSphereRadius(float InSphereRadius, bool bUpdateOverlaps) { NativeCall<void, float, bool>(this, "USphereComponent.SetSphereRadius", InSphereRadius, bUpdateOverlaps); }
+	bool IsZeroExtent() { return NativeCall<bool>(this, "USphereComponent.IsZeroExtent"); }
+	bool AreSymmetricRotations(FQuat * A, FQuat * B, FVector * Scale3D) { return NativeCall<bool, FQuat *, FQuat *, FVector *>(this, "USphereComponent.AreSymmetricRotations", A, B, Scale3D); }
+	static void StaticRegisterNativesUSphereComponent() { NativeCall<void>(nullptr, "USphereComponent.StaticRegisterNativesUSphereComponent"); }
+};
+
 struct AActor : UObject
 {
 	FieldValue<float> CustomTimeDilationField() { return { this, "AActor.CustomTimeDilation" }; }
@@ -1418,6 +1591,7 @@ struct AShooterPlayerController : APlayerController
 
 	// Functions
 
+	static UClass * GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "AShooterPlayerController.GetPrivateStaticClass"); }
 	void EnableCheats(FString Pass) { NativeCall<void, FString>(this, "AShooterPlayerController.EnableCheats", Pass); }
 	void CheckCheatsPassword_Implementation(FString * Pass) { NativeCall<void, FString *>(this, "AShooterPlayerController.CheckCheatsPassword_Implementation", Pass); }
 	void CheckRequestSpectator_Implementation(FString * InSpectatorPass) { NativeCall<void, FString *>(this, "AShooterPlayerController.CheckRequestSpectator_Implementation", InSpectatorPass); }

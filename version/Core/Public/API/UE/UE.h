@@ -24,6 +24,10 @@ struct FName
 	{
 	}
 
+	FName(EName) : ComparisonIndex(0), Number(0)
+	{
+	}
+
 	//static TStaticIndirectArrayThreadSafeRead<FNameEntry, 2097152, 16384> * GetNames() { return NativeCall<TStaticIndirectArrayThreadSafeRead<FNameEntry, 2097152, 16384> *>(nullptr, "FName.GetNames"); }
 	static FString * NameToDisplayString(FString * result, FString * InDisplayName, const bool bIsBool) { return NativeCall<FString *, FString *, FString *, const bool>(nullptr, "FName.NameToDisplayString", result, InDisplayName, bIsBool); }
 	FName(const wchar_t * Name, EFindName FindType, bool __formal) { NativeCall<void, const wchar_t *, EFindName, bool>(this, "FName.FName", Name, FindType, __formal); }

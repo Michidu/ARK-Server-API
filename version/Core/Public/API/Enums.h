@@ -753,7 +753,7 @@ enum class ClassCastFlags : unsigned long long
 	CASTCLASS_AllFlags = 0xFFFFFFFFFFFFFFFF
 };
 
-enum class EName
+enum EName
 {
 	NAME_None,
 	NAME_ByteProperty,
@@ -1004,3 +1004,13 @@ enum EObjectTypeQuery
 	ObjectTypeQuery32,
 	ObjectTypeQuery_MAX,
 };
+
+namespace ECollisionEnabled
+{
+	enum Type
+	{
+		NoCollision,
+		QueryOnly,
+		QueryAndPhysics
+	};
+}

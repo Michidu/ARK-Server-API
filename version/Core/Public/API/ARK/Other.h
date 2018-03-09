@@ -15,23 +15,33 @@ struct FDamageEvent
 	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FDamageEvent.StaticStruct"); }
 };
 
-struct FHitResult
+struct UPhysicalMaterial
 {
-	FieldValue<float> TimeField() { return { this, "FHitResult.Time" }; }
-	FieldValue<FVector_NetQuantize> LocationField() { return { this, "FHitResult.Location" }; }
-	FieldValue<FVector_NetQuantizeNormal> NormalField() { return { this, "FHitResult.Normal" }; }
-	FieldValue<FVector_NetQuantize> ImpactPointField() { return { this, "FHitResult.ImpactPoint" }; }
-	FieldValue<FVector_NetQuantizeNormal> ImpactNormalField() { return { this, "FHitResult.ImpactNormal" }; }
-	FieldValue<FVector_NetQuantize> TraceStartField() { return { this, "FHitResult.TraceStart" }; }
-	FieldValue<FVector_NetQuantize> TraceEndField() { return { this, "FHitResult.TraceEnd" }; }
-	FieldValue<float> PenetrationDepthField() { return { this, "FHitResult.PenetrationDepth" }; }
-	FieldValue<int> ItemField() { return { this, "FHitResult.Item" }; }
-	//FieldValue<TWeakObjectPtr<UPhysicalMaterial>> PhysMaterialField() { return { this, "FHitResult.PhysMaterial" }; }
-	FieldValue<TWeakObjectPtr<AActor>> ActorField() { return { this, "FHitResult.Actor" }; }
-	FieldValue<TWeakObjectPtr<UPrimitiveComponent>> ComponentField() { return { this, "FHitResult.Component" }; }
-	//FieldValue<FBodyInstance *> BodyInstanceField() { return { this, "FHitResult.BodyInstance" }; }
-	FieldValue<FName> BoneNameField() { return { this, "FHitResult.BoneName" }; }
-	FieldValue<int> FaceIndexField() { return { this, "FHitResult.FaceIndex" }; }
+};
+struct FBodyInstance
+{
+};
+
+struct __declspec(align(8)) FHitResult
+{
+	unsigned __int32 bBlockingHit : 1;
+	unsigned __int32 bStartPenetrating : 1;
+	unsigned __int32 bVolatileCollision : 1;
+	float Time;
+	FVector_NetQuantize Location;
+	FVector_NetQuantizeNormal Normal;
+	FVector_NetQuantize ImpactPoint;
+	FVector_NetQuantizeNormal ImpactNormal;
+	FVector_NetQuantize TraceStart;
+	FVector_NetQuantize TraceEnd;
+	float PenetrationDepth;
+	int Item;
+	TWeakObjectPtr<UPhysicalMaterial> PhysMaterial;
+	TWeakObjectPtr<AActor> Actor;
+	TWeakObjectPtr<UPrimitiveComponent> Component;
+	FBodyInstance *BodyInstance;
+	FName BoneName;
+	int FaceIndex;
 
 	// Functions
 
@@ -39,6 +49,13 @@ struct FHitResult
 	AActor * GetActor() { return NativeCall<AActor *>(this, "FHitResult.GetActor"); }
 	UPrimitiveComponent * GetComponent() { return NativeCall<UPrimitiveComponent *>(this, "FHitResult.GetComponent"); }
 	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FHitResult.StaticStruct"); }
+};
+
+struct FOverlapInfo
+{
+	bool bFromSweep;
+	FHitResult OverlapInfo;
+	void *CachedCompPtr;
 };
 
 struct FInternetAddr
