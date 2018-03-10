@@ -1764,6 +1764,143 @@ public:
 		return OriginalNum - ArrayNum;
 	}
 
+	/**
+	* Remove all instances that match the predicate
+	*
+	* @param Predicate Predicate class instance
+	* @see Remove, RemoveSingle, RemoveSingleSwap, RemoveSwap
+	*/
+	template <class PREDICATE_CLASS>
+	void RemoveAllSwap(const PREDICATE_CLASS& Predicate, bool bAllowShrinking = true)
+	{
+		for (int32 ItemIndex = 0; ItemIndex < Num();)
+		{
+			if (Predicate((*this)[ItemIndex]))
+			{
+				RemoveAtSwap(ItemIndex, 1, bAllowShrinking);
+			}
+			else
+			{
+				++ItemIndex;
+			}
+		}
+	}
+
+	/**
+	* Removes the first occurrence of the specified item in the array. This version is much more efficient
+	* O(Count) instead of O(ArrayNum), but does not preserve the order
+	*
+	* @param Item The item to remove
+	*
+	* @returns The number of items removed. For RemoveSingleItem, this is always either 0 or 1.
+	* @see Add, Insert, Remove, RemoveAll, RemoveAllSwap, RemoveSwap
+	*/
+	int32 RemoveSingleSwap(const ElementType& Item, bool bAllowShrinking = true)
+	{
+		int32 Index = Find(Item);
+		if (Index == INDEX_NONE)
+		{
+			return 0;
+		}
+
+		RemoveAtSwap(Index, 1, bAllowShrinking);
+
+		// Removed one item
+		return 1;
+	}
+
+	/**
+	* Removes item from the array.
+	*
+	* This version is much more efficient, because it uses RemoveAtSwap
+	* internally which is O(Count) instead of RemoveAt which is O(ArrayNum),
+	* but does not preserve the order.
+	*
+	* @returns Number of elements removed.
+	* @see Add, Insert, Remove, RemoveAll, RemoveAllSwap
+	*/
+	int32 RemoveSwap(const ElementType& Item)
+	{
+		CheckAddress(&Item);
+
+		const int32 OriginalNum = ArrayNum;
+		for (int32 Index = 0; Index < ArrayNum; Index++)
+		{
+			if ((*this)[Index] == Item)
+			{
+				RemoveAtSwap(Index--);
+			}
+		}
+		return OriginalNum - ArrayNum;
+	}
+
+	/**
+	* Removes an element (or elements) at given location optionally shrinking
+	* the array.
+	*
+	* This version is much more efficient than RemoveAt (O(Count) instead of
+	* O(ArrayNum)), but does not preserve the order.
+	*
+	* @param Index Location in array of the element to remove.
+	* @param Count (Optional) Number of elements to remove. Default is 1.
+	* @param bAllowShrinking (Optional) Tells if this call can shrink array if
+	*                        suitable after remove. Default is true.
+	*/
+	FORCEINLINE void RemoveAtSwap(int32 Index)
+	{
+		RemoveAtSwapImpl(Index, 1, true);
+	}
+
+	/**
+	* Removes an element (or elements) at given location optionally shrinking
+	* the array.
+	*
+	* This version is much more efficient than RemoveAt (O(Count) instead of
+	* O(ArrayNum)), but does not preserve the order.
+	*
+	* @param Index Location in array of the element to remove.
+	* @param Count (Optional) Number of elements to remove. Default is 1.
+	* @param bAllowShrinking (Optional) Tells if this call can shrink array if
+	*                        suitable after remove. Default is true.
+	*/
+	template <typename CountType>
+	FORCEINLINE void RemoveAtSwap(int32 Index, CountType Count, bool bAllowShrinking = true)
+	{
+		RemoveAtSwapImpl(Index, Count, bAllowShrinking);
+	}
+
+private:
+	void RemoveAtSwapImpl(int32 Index, int32 Count = 1, bool bAllowShrinking = true)
+	{
+		if (Count)
+		{
+			CheckInvariants();
+			checkSlow((Count >= 0) & (Index >= 0) & (Index + Count <= ArrayNum));
+
+			DestructItems(GetData() + Index, Count);
+
+			// Replace the elements in the hole created by the removal with elements from the end of the array, so the range of indices used by the array is contiguous.
+			const int32 NumElementsInHole = Count;
+			const int32 NumElementsAfterHole = ArrayNum - (Index + Count);
+			const int32 NumElementsToMoveIntoHole = FPlatformMath::Min(NumElementsInHole, NumElementsAfterHole);
+			if (NumElementsToMoveIntoHole)
+			{
+				FMemory::Memcpy(
+					(uint8*)AllocatorInstance.GetAllocation() + (Index) * sizeof(ElementType),
+					(uint8*)AllocatorInstance.GetAllocation() + (ArrayNum - NumElementsToMoveIntoHole) * sizeof(ElementType),
+					NumElementsToMoveIntoHole * sizeof(ElementType)
+				);
+			}
+			ArrayNum -= Count;
+
+			if (bAllowShrinking)
+			{
+				ResizeShrink();
+			}
+		}
+	}
+
+public:
 	// Iterators
 	typedef TIndexedContainerIterator<      TArray, ElementType, int32> TIterator;
 	typedef TIndexedContainerIterator<const TArray, const ElementType, int32> TConstIterator;

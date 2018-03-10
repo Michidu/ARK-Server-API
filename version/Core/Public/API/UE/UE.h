@@ -89,7 +89,7 @@ struct TSharedPtr
 template <typename ObjectType>
 struct TSubobjectPtr
 {
-	UObject *Object;
+	ObjectType *Object;
 
 	FORCEINLINE ObjectType& operator*() const
 	{

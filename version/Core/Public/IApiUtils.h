@@ -170,12 +170,15 @@ namespace ArkApi
 		{
 			uint64 steam_id = 0;
 
-			APlayerState* player_state = controller->PlayerStateField()();
-			if (player_state)
+			if (controller)
 			{
-				FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()()
-				                                                                              .UniqueNetId.Object);
-				steam_id = steam_net_id->UniqueNetId;
+				APlayerState* player_state = controller->PlayerStateField()();
+				if (player_state)
+				{
+					FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()()
+					                                                                              .UniqueNetId.Object);
+					steam_id = steam_net_id->UniqueNetId;
+				}
 			}
 
 			return steam_id;
@@ -198,6 +201,30 @@ namespace ArkApi
 				{
 					AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
 
+					result = shooter_pc;
+					break;
+				}
+			}
+
+			return result;
+		}
+
+		/**
+		* \brief Finds player controller from the given player character
+		* \param character Player character
+		* \return Pointer to AShooterPlayerController
+		*/
+		AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character) const
+		{
+			AShooterPlayerController* result = nullptr;
+
+			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+			{
+				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
+
+				if (shooter_pc->GetPlayerCharacter() == character)
+				{
 					result = shooter_pc;
 					break;
 				}
@@ -241,9 +268,12 @@ namespace ArkApi
 		*/
 		static FString GetCharacterName(AShooterPlayerController* player_controller)
 		{
-			AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField()());
-			if (player_state && player_state->MyPlayerDataStructField()())
-				return player_state->MyPlayerDataStructField()()->MyPlayerCharacterConfigField()().PlayerCharacterName;
+			if (player_controller)
+			{
+				AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField()());
+				if (player_state && player_state->MyPlayerDataStructField()())
+					return player_state->MyPlayerDataStructField()()->MyPlayerCharacterConfigField()().PlayerCharacterName;
+			}
 
 			return FString("");
 		}
@@ -254,7 +284,7 @@ namespace ArkApi
 		*/
 		static FString GetSteamName(AController* player_controller)
 		{
-			return player_controller->PlayerStateField()()->PlayerNameField()();
+			return player_controller ? player_controller->PlayerStateField()()->PlayerNameField()() : "";
 		}
 
 		/**
@@ -407,8 +437,7 @@ namespace ArkApi
 		* \param max_dist Is the max distance the characters can be away from each other -1 is disabled
 		*/
 		static std::optional<FString> TeleportToPlayer(AShooterPlayerController* me, AShooterPlayerController* him,
-		                                               bool check_for_dino,
-		                                               float max_dist = -1)
+		                                               bool check_for_dino, float max_dist = -1)
 		{
 			if (!(me && him && me->GetPlayerCharacter() && him->GetPlayerCharacter()
 					&& !me->GetPlayerCharacter()->IsDead() && !him->GetPlayerCharacter()->IsDead())
@@ -462,8 +491,8 @@ namespace ArkApi
 			if (!player_controller)
 				return -1;
 
-			UPrimalInventoryComponent* inventory_component = player_controller
-			                                                 ->GetPlayerCharacter()->MyInventoryComponentField()();
+			UPrimalInventoryComponent* inventory_component =
+				player_controller->GetPlayerCharacter()->MyInventoryComponentField()();
 			if (!inventory_component)
 				return -1;
 
@@ -488,10 +517,13 @@ namespace ArkApi
 		{
 			FString ip_address = "";
 
-			AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player->PlayerStateField()());
+			if (player)
+			{
+				AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player->PlayerStateField()());
 
-			if (player_state && player_state->MyPlayerDataStructField()())
-				ip_address = player_state->MyPlayerDataStructField()()->SavedNetworkAddressField()();
+				if (player_state && player_state->MyPlayerDataStructField()())
+					ip_address = player_state->MyPlayerDataStructField()()->SavedNetworkAddressField()();
+			}
 
 			return ip_address;
 		}
@@ -501,17 +533,20 @@ namespace ArkApi
 		 */
 		static FString GetItemBlueprint(UPrimalItem* item)
 		{
-			FString path_name;
-			item->ClassField()()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
-
-			if (int find_index = 0; path_name.FindChar(' ', find_index))
+			if (item)
 			{
-				path_name = "Blueprint'" + path_name.Mid(find_index + 1,
-				                                         path_name.Len() - (find_index + (path_name.EndsWith(
-					                                                                          "_C", ESearchCase::CaseSensitive)
-					                                                                          ? 3
-					                                                                          : 1))) + "'";
-				return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
+				FString path_name;
+				item->ClassField()()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
+
+				if (int find_index = 0; path_name.FindChar(' ', find_index))
+				{
+					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
+					                                         path_name.Len() - (find_index + (path_name.EndsWith(
+						                                                                          "_C", ESearchCase::CaseSensitive)
+						                                                                          ? 3
+						                                                                          : 1))) + "'";
+					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
+				}
 			}
 
 			return FString("");
@@ -522,7 +557,7 @@ namespace ArkApi
 		 */
 		static bool IsPlayerDead(AShooterPlayerController* player)
 		{
-			if (!player->GetPlayerCharacter())
+			if (!player || !player->GetPlayerCharacter())
 				return true;
 
 			return player->GetPlayerCharacter()->IsDead();
