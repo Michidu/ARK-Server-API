@@ -1014,3 +1014,10 @@ namespace ECollisionEnabled
 		QueryAndPhysics
 	};
 }
+
+enum ERadialImpulseFalloff
+{
+	RIF_Constant,
+	RIF_Linear,
+	RIF_MAX
+};

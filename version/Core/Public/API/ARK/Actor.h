@@ -306,21 +306,6 @@ struct UPrimitiveComponent : USceneComponent
 	FieldValue<long double> LastRenderTimeIgnoreShadowField() { return { this, "UPrimitiveComponent.LastRenderTimeIgnoreShadow" }; }
 	FieldValue<TEnumAsByte<enum ECanBeCharacterBase>> CanCharacterStepUpOnField() { return { this, "UPrimitiveComponent.CanCharacterStepUpOn" }; }
 	FieldValue<TArray<TWeakObjectPtr<AActor>>> MoveIgnoreActorsField() { return { this, "UPrimitiveComponent.MoveIgnoreActors" }; }
-	//FieldValue<FComponentBeginOverlapSignature> OnComponentBeginOverlapField() { return { this, "UPrimitiveComponent.OnComponentBeginOverlap" }; }
-	/*FieldValue<FComponentHitSignature> OnComponentHitField() { return { this, "UPrimitiveComponent.OnComponentHit" }; }
-	FieldValue<FComponentBeginOverlapSignature> OnComponentBeginOverlapField() { return { this, "UPrimitiveComponent.OnComponentBeginOverlap" }; }
-	FieldValue<FComponentEndOverlapSignature> OnComponentEndOverlapField() { return { this, "UPrimitiveComponent.OnComponentEndOverlap" }; }
-	FieldValue<FComponentBeginCursorOverSignature> OnBeginCursorOverField() { return { this, "UPrimitiveComponent.OnBeginCursorOver" }; }
-	FieldValue<FComponentEndCursorOverSignature> OnEndCursorOverField() { return { this, "UPrimitiveComponent.OnEndCursorOver" }; }
-	FieldValue<FComponentOnClickedSignature> OnClickedField() { return { this, "UPrimitiveComponent.OnClicked" }; }
-	FieldValue<FComponentOnReleasedSignature> OnReleasedField() { return { this, "UPrimitiveComponent.OnReleased" }; }
-	FieldValue<FComponentOnInputTouchBeginSignature> OnInputTouchBeginField() { return { this, "UPrimitiveComponent.OnInputTouchBegin" }; }
-	FieldValue<FComponentOnInputTouchEndSignature> OnInputTouchEndField() { return { this, "UPrimitiveComponent.OnInputTouchEnd" }; }
-	FieldValue<FComponentBeginTouchOverSignature> OnInputTouchEnterField() { return { this, "UPrimitiveComponent.OnInputTouchEnter" }; }
-	FieldValue<FComponentEndTouchOverSignature> OnInputTouchLeaveField() { return { this, "UPrimitiveComponent.OnInputTouchLeave" }; }
-	FieldValue<FPrimitiveSceneProxy *> SceneProxyField() { return { this, "UPrimitiveComponent.SceneProxy" }; }
-	FieldValue<FThreadSafeCounter> AttachmentCounterField() { return { this, "UPrimitiveComponent.AttachmentCounter" }; }
-	FieldValue<TLazyObjectPtr<UPrimitiveComponent>> ReplacementPrimitiveField() { return { this, "UPrimitiveComponent.ReplacementPrimitive" }; }*/
 	FieldValue<unsigned int> ProxyMeshIDField() { return { this, "UPrimitiveComponent.ProxyMeshID" }; }
 	FieldValue<bool> bIsProxyMeshParentField() { return { this, "UPrimitiveComponent.bIsProxyMeshParent" }; }
 	FieldValue<bool> bHasActiveProxyMeshChildrenField() { return { this, "UPrimitiveComponent.bHasActiveProxyMeshChildren" }; }
@@ -4941,6 +4926,287 @@ struct AMatineeActor : AActor
 	void PostNetReceive() { NativeCall<void>(this, "AMatineeActor.PostNetReceive"); }
 	void InitClientMatinee() { NativeCall<void>(this, "AMatineeActor.InitClientMatinee"); }
 	static UClass * GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "AMatineeActor.GetPrivateStaticClass"); }
+};
+
+struct UCharacterMovementComponent
+{
+	FieldValue<ACharacter *> CharacterOwnerField() { return { this, "UCharacterMovementComponent.CharacterOwner" }; }
+	FieldValue<float> MaxStepHeightField() { return { this, "UCharacterMovementComponent.MaxStepHeight" }; }
+	FieldValue<float> JumpZVelocityField() { return { this, "UCharacterMovementComponent.JumpZVelocity" }; }
+	FieldValue<float> JumpOffJumpZFactorField() { return { this, "UCharacterMovementComponent.JumpOffJumpZFactor" }; }
+	FieldValue<bool> bSlipOffLedgesField() { return { this, "UCharacterMovementComponent.bSlipOffLedges" }; }
+	FieldValue<float> LedgeSlipCapsuleRadiusMultiplierField() { return { this, "UCharacterMovementComponent.LedgeSlipCapsuleRadiusMultiplier" }; }
+	FieldValue<float> LedgeSlipPushVelocityField() { return { this, "UCharacterMovementComponent.LedgeSlipPushVelocity" }; }
+	FieldValue<float> LedgeSlipVelocityBuildUpMultiplierField() { return { this, "UCharacterMovementComponent.LedgeSlipVelocityBuildUpMultiplier" }; }
+	FieldValue<float> WalkableFloorAngleField() { return { this, "UCharacterMovementComponent.WalkableFloorAngle" }; }
+	FieldValue<float> WalkableFloorZField() { return { this, "UCharacterMovementComponent.WalkableFloorZ" }; }
+	FieldValue<TEnumAsByte<enum EMovementMode>> MovementModeField() { return { this, "UCharacterMovementComponent.MovementMode" }; }
+	FieldValue<char> CustomMovementModeField() { return { this, "UCharacterMovementComponent.CustomMovementMode" }; }
+	FieldValue<FVector> OldBaseLocationField() { return { this, "UCharacterMovementComponent.OldBaseLocation" }; }
+	FieldValue<FQuat> OldBaseQuatField() { return { this, "UCharacterMovementComponent.OldBaseQuat" }; }
+	FieldValue<long double> LastNonZeroAccelField() { return { this, "UCharacterMovementComponent.LastNonZeroAccel" }; }
+	FieldValue<float> CurrentLedgeSlipPushVelocityField() { return { this, "UCharacterMovementComponent.CurrentLedgeSlipPushVelocity" }; }
+	FieldValue<int> LastFrameDisabledFloorBasingField() { return { this, "UCharacterMovementComponent.LastFrameDisabledFloorBasing" }; }
+	FieldValue<long double> ForceBigPushingTimeField() { return { this, "UCharacterMovementComponent.ForceBigPushingTime" }; }
+	FieldValue<float> GravityScaleField() { return { this, "UCharacterMovementComponent.GravityScale" }; }
+	FieldValue<float> GroundFrictionField() { return { this, "UCharacterMovementComponent.GroundFriction" }; }
+	FieldValue<float> MaxWalkSpeedField() { return { this, "UCharacterMovementComponent.MaxWalkSpeed" }; }
+	FieldValue<float> MaxWalkSpeedCrouchedField() { return { this, "UCharacterMovementComponent.MaxWalkSpeedCrouched" }; }
+	FieldValue<float> MaxWalkSpeedProneField() { return { this, "UCharacterMovementComponent.MaxWalkSpeedProne" }; }
+	FieldValue<float> MaxCustomMovementSpeedField() { return { this, "UCharacterMovementComponent.MaxCustomMovementSpeed" }; }
+	FieldValue<float> MaxSwimSpeedField() { return { this, "UCharacterMovementComponent.MaxSwimSpeed" }; }
+	FieldValue<float> MaxFlySpeedField() { return { this, "UCharacterMovementComponent.MaxFlySpeed" }; }
+	FieldValue<float> LandedPreventRequestedMoveIntervalField() { return { this, "UCharacterMovementComponent.LandedPreventRequestedMoveInterval" }; }
+	FieldValue<float> LandedPreventRequestedMoveMinVelocityMagnitudeField() { return { this, "UCharacterMovementComponent.LandedPreventRequestedMoveMinVelocityMagnitude" }; }
+	FieldValue<float> MinimumImpulseToApplyField() { return { this, "UCharacterMovementComponent.MinimumImpulseToApply" }; }
+	FieldValue<long double> LastLandedTimeField() { return { this, "UCharacterMovementComponent.LastLandedTime" }; }
+	FieldValue<float> MaxAccelerationField() { return { this, "UCharacterMovementComponent.MaxAcceleration" }; }
+	FieldValue<float> MaxImpulseVelocityMagnitudeField() { return { this, "UCharacterMovementComponent.MaxImpulseVelocityMagnitude" }; }
+	FieldValue<float> MaxImpulseVelocityZField() { return { this, "UCharacterMovementComponent.MaxImpulseVelocityZ" }; }
+	FieldValue<float> BrakingDecelerationWalkingField() { return { this, "UCharacterMovementComponent.BrakingDecelerationWalking" }; }
+	FieldValue<float> BrakingDecelerationFallingField() { return { this, "UCharacterMovementComponent.BrakingDecelerationFalling" }; }
+	FieldValue<float> BrakingDecelerationSwimmingField() { return { this, "UCharacterMovementComponent.BrakingDecelerationSwimming" }; }
+	FieldValue<float> BrakingDecelerationFlyingField() { return { this, "UCharacterMovementComponent.BrakingDecelerationFlying" }; }
+	FieldValue<float> AirControlField() { return { this, "UCharacterMovementComponent.AirControl" }; }
+	FieldValue<float> AirControlBoostMultiplierField() { return { this, "UCharacterMovementComponent.AirControlBoostMultiplier" }; }
+	FieldValue<float> AirControlBoostVelocityThresholdField() { return { this, "UCharacterMovementComponent.AirControlBoostVelocityThreshold" }; }
+	FieldValue<float> FallingLateralFrictionField() { return { this, "UCharacterMovementComponent.FallingLateralFriction" }; }
+	FieldValue<float> CrouchedHalfHeightField() { return { this, "UCharacterMovementComponent.CrouchedHalfHeight" }; }
+	FieldValue<float> ProneHalfHeightField() { return { this, "UCharacterMovementComponent.ProneHalfHeight" }; }
+	FieldValue<float> BuoyancyField() { return { this, "UCharacterMovementComponent.Buoyancy" }; }
+	FieldValue<float> PerchRadiusThresholdField() { return { this, "UCharacterMovementComponent.PerchRadiusThreshold" }; }
+	FieldValue<float> PerchAdditionalHeightField() { return { this, "UCharacterMovementComponent.PerchAdditionalHeight" }; }
+	FieldValue<FRotator> RotationRateField() { return { this, "UCharacterMovementComponent.RotationRate" }; }
+	FieldValue<UPrimitiveComponent *> DeferredUpdatedMoveComponentField() { return { this, "UCharacterMovementComponent.DeferredUpdatedMoveComponent" }; }
+	FieldValue<float> MaxOutOfWaterStepHeightField() { return { this, "UCharacterMovementComponent.MaxOutOfWaterStepHeight" }; }
+	FieldValue<float> OutofWaterZField() { return { this, "UCharacterMovementComponent.OutofWaterZ" }; }
+	FieldValue<float> MassField() { return { this, "UCharacterMovementComponent.Mass" }; }
+	FieldValue<float> DinoClientPositionErrorToleranceStoppedField() { return { this, "UCharacterMovementComponent.DinoClientPositionErrorToleranceStopped" }; }
+	FieldValue<float> DinoClientPositionErrorToleranceMovingFlyingField() { return { this, "UCharacterMovementComponent.DinoClientPositionErrorToleranceMovingFlying" }; }
+	FieldValue<float> PlayerClientPositionErrorToleranceOverrideField() { return { this, "UCharacterMovementComponent.PlayerClientPositionErrorToleranceOverride" }; }
+	FieldValue<float> SimulatedTickSkipDistanceSQField() { return { this, "UCharacterMovementComponent.SimulatedTickSkipDistanceSQ" }; }
+	FieldValue<bool> bEnablePhysicsInteractionField() { return { this, "UCharacterMovementComponent.bEnablePhysicsInteraction" }; }
+	FieldValue<bool> bTouchForceScaledToMassField() { return { this, "UCharacterMovementComponent.bTouchForceScaledToMass" }; }
+	FieldValue<bool> bPushForceScaledToMassField() { return { this, "UCharacterMovementComponent.bPushForceScaledToMass" }; }
+	FieldValue<bool> bScalePushForceToVelocityField() { return { this, "UCharacterMovementComponent.bScalePushForceToVelocity" }; }
+	FieldValue<float> StandingDownwardForceScaleField() { return { this, "UCharacterMovementComponent.StandingDownwardForceScale" }; }
+	FieldValue<float> InitialPushForceFactorField() { return { this, "UCharacterMovementComponent.InitialPushForceFactor" }; }
+	FieldValue<float> PushForceFactorField() { return { this, "UCharacterMovementComponent.PushForceFactor" }; }
+	FieldValue<float> PushForcePointZOffsetFactorField() { return { this, "UCharacterMovementComponent.PushForcePointZOffsetFactor" }; }
+	FieldValue<float> TouchForceFactorField() { return { this, "UCharacterMovementComponent.TouchForceFactor" }; }
+	FieldValue<float> MinTouchForceField() { return { this, "UCharacterMovementComponent.MinTouchForce" }; }
+	FieldValue<float> MaxTouchForceField() { return { this, "UCharacterMovementComponent.MaxTouchForce" }; }
+	FieldValue<float> RepulsionForceField() { return { this, "UCharacterMovementComponent.RepulsionForce" }; }
+	FieldValue<FVector> LastUpdateLocationField() { return { this, "UCharacterMovementComponent.LastUpdateLocation" }; }
+	FieldValue<FVector> MoveStartLocationField() { return { this, "UCharacterMovementComponent.MoveStartLocation" }; }
+	FieldValue<float> AnalogInputModifierField() { return { this, "UCharacterMovementComponent.AnalogInputModifier" }; }
+	FieldValue<float> BackwardsMaxSpeedMultiplierField() { return { this, "UCharacterMovementComponent.BackwardsMaxSpeedMultiplier" }; }
+	FieldValue<float> BackwardsMovementDotThresholdField() { return { this, "UCharacterMovementComponent.BackwardsMovementDotThreshold" }; }
+	FieldValue<FVector> PendingForceToApplyField() { return { this, "UCharacterMovementComponent.PendingForceToApply" }; }
+	FieldValue<FVector> PendingImpulseToApplyField() { return { this, "UCharacterMovementComponent.PendingImpulseToApply" }; }
+	FieldValue<FVector> AccelerationField() { return { this, "UCharacterMovementComponent.Acceleration" }; }
+	FieldValue<float> MaxSimulationTimeStepField() { return { this, "UCharacterMovementComponent.MaxSimulationTimeStep" }; }
+	FieldValue<int> MaxSimulationIterationsField() { return { this, "UCharacterMovementComponent.MaxSimulationIterations" }; }
+	FieldValue<float> LedgeCheckThresholdField() { return { this, "UCharacterMovementComponent.LedgeCheckThreshold" }; }
+	FieldValue<float> JumpOutOfWaterPitchField() { return { this, "UCharacterMovementComponent.JumpOutOfWaterPitch" }; }
+	FieldValue<float> UpperImpactNormalScaleField() { return { this, "UCharacterMovementComponent.UpperImpactNormalScale" }; }
+	FieldValue<TEnumAsByte<enum EMovementMode>> DefaultLandMovementModeField() { return { this, "UCharacterMovementComponent.DefaultLandMovementMode" }; }
+	FieldValue<TEnumAsByte<enum EMovementMode>> DefaultWaterMovementModeField() { return { this, "UCharacterMovementComponent.DefaultWaterMovementMode" }; }
+	FieldValue<float> PreventWaterHoppingPlaneOffsetField() { return { this, "UCharacterMovementComponent.PreventWaterHoppingPlaneOffset" }; }
+	FieldValue<long double> PreventWaterHopping_LastTimeAtSurfaceField() { return { this, "UCharacterMovementComponent.PreventWaterHopping_LastTimeAtSurface" }; }
+	FieldValue<float> AccelerationFollowsRotationMinDotField() { return { this, "UCharacterMovementComponent.AccelerationFollowsRotationMinDot" }; }
+	FieldValue<float> AccelerationFollowsRotationStopDistanceField() { return { this, "UCharacterMovementComponent.AccelerationFollowsRotationStopDistance" }; }
+	FieldValue<float> RotationAccelerationField() { return { this, "UCharacterMovementComponent.RotationAcceleration" }; }
+	FieldValue<float> RotationBrakingField() { return { this, "UCharacterMovementComponent.RotationBraking" }; }
+	FieldValue<float> AngleToStartRotationBrakingField() { return { this, "UCharacterMovementComponent.AngleToStartRotationBraking" }; }
+	FieldValue<float> SwimmingAccelZMultiplierField() { return { this, "UCharacterMovementComponent.SwimmingAccelZMultiplier" }; }
+	FieldValue<float> TamedSwimmingAccelZMultiplierField() { return { this, "UCharacterMovementComponent.TamedSwimmingAccelZMultiplier" }; }
+	FieldValue<bool> bHACKTickedField() { return { this, "UCharacterMovementComponent.bHACKTicked" }; }
+	FieldValue<bool> bHackTestDisableRotationCodeField() { return { this, "UCharacterMovementComponent.bHackTestDisableRotationCode" }; }
+	FieldValue<FVector> LastForcedNetVelocityField() { return { this, "UCharacterMovementComponent.LastForcedNetVelocity" }; }
+	FieldValue<long double> LastStepUpTimeField() { return { this, "UCharacterMovementComponent.LastStepUpTime" }; }
+	FieldValue<int> BadFloorPenetrationCountField() { return { this, "UCharacterMovementComponent.BadFloorPenetrationCount" }; }
+	FieldValue<FVector> AvoidanceLockVelocityField() { return { this, "UCharacterMovementComponent.AvoidanceLockVelocity" }; }
+	FieldValue<float> AvoidanceLockTimerField() { return { this, "UCharacterMovementComponent.AvoidanceLockTimer" }; }
+	FieldValue<long double> LastSkippedMoveTimeField() { return { this, "UCharacterMovementComponent.LastSkippedMoveTime" }; }
+	FieldValue<long double> LastSwimTimeField() { return { this, "UCharacterMovementComponent.LastSwimTime" }; }
+	FieldValue<FRotator> CurrentRotationSpeedField() { return { this, "UCharacterMovementComponent.CurrentRotationSpeed" }; }
+	FieldValue<FVector> RequestedVelocityField() { return { this, "UCharacterMovementComponent.RequestedVelocity" }; }
+	FieldValue<long double> DisableMovementPhysicsUntilTimeField() { return { this, "UCharacterMovementComponent.DisableMovementPhysicsUntilTime" }; }
+	FieldValue<float> LostDeltaTimeField() { return { this, "UCharacterMovementComponent.LostDeltaTime" }; }
+	FieldValue<float> LastLostDeltaTimeField() { return { this, "UCharacterMovementComponent.LastLostDeltaTime" }; }
+	FieldValue<int> AvoidanceUIDField() { return { this, "UCharacterMovementComponent.AvoidanceUID" }; }
+	FieldValue<float> AvoidanceWeightField() { return { this, "UCharacterMovementComponent.AvoidanceWeight" }; }
+	FieldValue<FVector> PendingLaunchVelocityField() { return { this, "UCharacterMovementComponent.PendingLaunchVelocity" }; }
+	FieldValue<float> MinTimeBetweenTimeStampResetsField() { return { this, "UCharacterMovementComponent.MinTimeBetweenTimeStampResets" }; }
+	FieldValue<bool> bWasSimulatingRootMotionField() { return { this, "UCharacterMovementComponent.bWasSimulatingRootMotion" }; }
+	FieldValue<FVector> LastCheckedFloorAtRelativeLocField() { return { this, "UCharacterMovementComponent.LastCheckedFloorAtRelativeLoc" }; }
+
+	// Functions
+
+	bool HasPredictionData_Server() { return NativeCall<bool>(this, "UCharacterMovementComponent.HasPredictionData_Server"); }
+	bool HasPredictionData_Client() { return NativeCall<bool>(this, "UCharacterMovementComponent.HasPredictionData_Client"); }
+	UObject * GetUObjectInterfaceNetworkPredictionInterface() { return NativeCall<UObject *>(this, "UCharacterMovementComponent.GetUObjectInterfaceNetworkPredictionInterface"); }
+	float GetJumpZVelocity() { return NativeCall<float>(this, "UCharacterMovementComponent.GetJumpZVelocity"); }
+	void OnUnregister() { NativeCall<void>(this, "UCharacterMovementComponent.OnUnregister"); }
+	void PostLoad() { NativeCall<void>(this, "UCharacterMovementComponent.PostLoad"); }
+	void OnRegister() { NativeCall<void>(this, "UCharacterMovementComponent.OnRegister"); }
+	void BeginDestroy() { NativeCall<void>(this, "UCharacterMovementComponent.BeginDestroy"); }
+	void SetUpdatedComponent(UPrimitiveComponent * NewUpdatedComponent) { NativeCall<void, UPrimitiveComponent *>(this, "UCharacterMovementComponent.SetUpdatedComponent", NewUpdatedComponent); }
+	bool HasValidData() { return NativeCall<bool>(this, "UCharacterMovementComponent.HasValidData"); }
+	bool DoJump(bool bReplayingMoves) { return NativeCall<bool, bool>(this, "UCharacterMovementComponent.DoJump", bReplayingMoves); }
+	FVector * GetImpartedMovementBaseVelocity(FVector * result) { return NativeCall<FVector *, FVector *>(this, "UCharacterMovementComponent.GetImpartedMovementBaseVelocity", result); }
+	void Launch(FVector * LaunchVel, bool bNoLowerVelocity) { NativeCall<void, FVector *, bool>(this, "UCharacterMovementComponent.Launch", LaunchVel, bNoLowerVelocity); }
+	bool HandlePendingLaunch() { return NativeCall<bool>(this, "UCharacterMovementComponent.HandlePendingLaunch"); }
+	void JumpOff(AActor * MovementBaseActor) { NativeCall<void, AActor *>(this, "UCharacterMovementComponent.JumpOff", MovementBaseActor); }
+	FVector * GetBestDirectionOffActor(FVector * result, AActor * BaseActor) { return NativeCall<FVector *, FVector *, AActor *>(this, "UCharacterMovementComponent.GetBestDirectionOffActor", result, BaseActor); }
+	float GetNetworkSafeRandomAngleDegrees() { return NativeCall<float>(this, "UCharacterMovementComponent.GetNetworkSafeRandomAngleDegrees"); }
+	void SetDefaultMovementMode() { NativeCall<void>(this, "UCharacterMovementComponent.SetDefaultMovementMode"); }
+	void SetMovementMode(EMovementMode NewMovementMode, char NewCustomMode) { NativeCall<void, EMovementMode, char>(this, "UCharacterMovementComponent.SetMovementMode", NewMovementMode, NewCustomMode); }
+	void OnMovementModeChanged(EMovementMode PreviousMovementMode, char PreviousCustomMode) { NativeCall<void, EMovementMode, char>(this, "UCharacterMovementComponent.OnMovementModeChanged", PreviousMovementMode, PreviousCustomMode); }
+	void ApplyNetworkMovementMode(const char ReceivedMode) { NativeCall<void, const char>(this, "UCharacterMovementComponent.ApplyNetworkMovementMode", ReceivedMode); }
+	void PerformAirControl(FVector Direction, float ZDiff) { NativeCall<void, FVector, float>(this, "UCharacterMovementComponent.PerformAirControl", Direction, ZDiff); }
+	void PerformAirControlForPathFollowing(FVector Direction, float ZDiff) { NativeCall<void, FVector, float>(this, "UCharacterMovementComponent.PerformAirControlForPathFollowing", Direction, ZDiff); }
+	void ExecuteStoredMoves() { NativeCall<void>(this, "UCharacterMovementComponent.ExecuteStoredMoves"); }
+	void AdjustProxyCapsuleSize() { NativeCall<void>(this, "UCharacterMovementComponent.AdjustProxyCapsuleSize"); }
+	void SimulatedTick(float DeltaSeconds) { NativeCall<void, float>(this, "UCharacterMovementComponent.SimulatedTick", DeltaSeconds); }
+	void SimulateRootMotion(float DeltaSeconds, FTransform * LocalRootMotionTransform) { NativeCall<void, float, FTransform *>(this, "UCharacterMovementComponent.SimulateRootMotion", DeltaSeconds, LocalRootMotionTransform); }
+	void SimulateMovement(float DeltaSeconds) { NativeCall<void, float>(this, "UCharacterMovementComponent.SimulateMovement", DeltaSeconds); }
+	UPrimitiveComponent * GetMovementBase() { return NativeCall<UPrimitiveComponent *>(this, "UCharacterMovementComponent.GetMovementBase"); }
+	void SetBase(UPrimitiveComponent * NewBase, FName BoneName, bool bNotifyActor) { NativeCall<void, UPrimitiveComponent *, FName, bool>(this, "UCharacterMovementComponent.SetBase", NewBase, BoneName, bNotifyActor); }
+	void MaybeUpdateBasedMovement(float DeltaSeconds) { NativeCall<void, float>(this, "UCharacterMovementComponent.MaybeUpdateBasedMovement", DeltaSeconds); }
+	void MaybeSaveBaseLocation() { NativeCall<void>(this, "UCharacterMovementComponent.MaybeSaveBaseLocation"); }
+	void UpdateBasedMovement(float DeltaSeconds) { NativeCall<void, float>(this, "UCharacterMovementComponent.UpdateBasedMovement", DeltaSeconds); }
+	void UpdateBasedRotation(FRotator * FinalRotation, FRotator * ReducedRotation) { NativeCall<void, FRotator *, FRotator *>(this, "UCharacterMovementComponent.UpdateBasedRotation", FinalRotation, ReducedRotation); }
+	void DisableMovement() { NativeCall<void>(this, "UCharacterMovementComponent.DisableMovement"); }
+	void PerformMovement(float DeltaSeconds) { NativeCall<void, float>(this, "UCharacterMovementComponent.PerformMovement", DeltaSeconds); }
+	void CallMovementUpdateDelegate(float DeltaTime, FVector * OldLocation, FVector * OldVelocity) { NativeCall<void, float, FVector *, FVector *>(this, "UCharacterMovementComponent.CallMovementUpdateDelegate", DeltaTime, OldLocation, OldVelocity); }
+	void SaveBaseLocation() { NativeCall<void>(this, "UCharacterMovementComponent.SaveBaseLocation"); }
+	bool CanCrouchInCurrentState() { return NativeCall<bool>(this, "UCharacterMovementComponent.CanCrouchInCurrentState"); }
+	bool CanProneInCurrentState() { return NativeCall<bool>(this, "UCharacterMovementComponent.CanProneInCurrentState"); }
+	void Crouch(bool bClientSimulation) { NativeCall<void, bool>(this, "UCharacterMovementComponent.Crouch", bClientSimulation); }
+	void UnCrouch(bool bClientSimulation, bool bForce) { NativeCall<void, bool, bool>(this, "UCharacterMovementComponent.UnCrouch", bClientSimulation, bForce); }
+	void StartNewPhysics(float deltaTime, int Iterations) { NativeCall<void, float, int>(this, "UCharacterMovementComponent.StartNewPhysics", deltaTime, Iterations); }
+	float GetGravityZ() { return NativeCall<float>(this, "UCharacterMovementComponent.GetGravityZ"); }
+	float GetMaxSpeed() { return NativeCall<float>(this, "UCharacterMovementComponent.GetMaxSpeed"); }
+	bool ResolvePenetrationImpl(FVector * Adjustment, FHitResult * Hit, FQuat * NewRotation) { return NativeCall<bool, FVector *, FHitResult *, FQuat *>(this, "UCharacterMovementComponent.ResolvePenetrationImpl", Adjustment, Hit, NewRotation); }
+	float SlideAlongSurface(FVector * Delta, float Time, FVector * InNormal, FHitResult * Hit, bool bHandleImpact) { return NativeCall<float, FVector *, float, FVector *, FHitResult *, bool>(this, "UCharacterMovementComponent.SlideAlongSurface", Delta, Time, InNormal, Hit, bHandleImpact); }
+	void TwoWallAdjust(FVector * Delta, FHitResult * Hit, FVector * OldHitNormal) { NativeCall<void, FVector *, FHitResult *, FVector *>(this, "UCharacterMovementComponent.TwoWallAdjust", Delta, Hit, OldHitNormal); }
+	FVector * ComputeSlideVector(FVector * result, FVector * InDelta, const float Time, FVector * Normal, FHitResult * Hit) { return NativeCall<FVector *, FVector *, FVector *, const float, FVector *, FHitResult *>(this, "UCharacterMovementComponent.ComputeSlideVector", result, InDelta, Time, Normal, Hit); }
+	FVector * HandleSlopeBoosting(FVector * result, FVector * SlideResult, FVector * Delta, const float Time, FVector * Normal, FHitResult * Hit) { return NativeCall<FVector *, FVector *, FVector *, FVector *, const float, FVector *, FHitResult *>(this, "UCharacterMovementComponent.HandleSlopeBoosting", result, SlideResult, Delta, Time, Normal, Hit); }
+	FVector * AdjustUpperHemisphereImpact(FVector * result, FVector * Delta, FHitResult * Hit) { return NativeCall<FVector *, FVector *, FVector *, FHitResult *>(this, "UCharacterMovementComponent.AdjustUpperHemisphereImpact", result, Delta, Hit); }
+	FVector * NewFallVelocity(FVector * result, FVector * InitialVelocity, FVector * Gravity, float DeltaTime) { return NativeCall<FVector *, FVector *, FVector *, FVector *, float>(this, "UCharacterMovementComponent.NewFallVelocity", result, InitialVelocity, Gravity, DeltaTime); }
+	float ImmersionDepth(bool bUseLineTrace) { return NativeCall<float, bool>(this, "UCharacterMovementComponent.ImmersionDepth", bUseLineTrace); }
+	bool IsFlying() { return NativeCall<bool>(this, "UCharacterMovementComponent.IsFlying"); }
+	bool IsMovingOnGround() { return NativeCall<bool>(this, "UCharacterMovementComponent.IsMovingOnGround"); }
+	bool IsFalling() { return NativeCall<bool>(this, "UCharacterMovementComponent.IsFalling"); }
+	bool IsSwimming() { return NativeCall<bool>(this, "UCharacterMovementComponent.IsSwimming"); }
+	bool IsCrouching() { return NativeCall<bool>(this, "UCharacterMovementComponent.IsCrouching"); }
+	bool IsProne() { return NativeCall<bool>(this, "UCharacterMovementComponent.IsProne"); }
+	void CalcVelocity(float DeltaTime, float Friction, bool bFluid, float BrakingDeceleration) { NativeCall<void, float, float, bool, float>(this, "UCharacterMovementComponent.CalcVelocity", DeltaTime, Friction, bFluid, BrakingDeceleration); }
+	bool ApplyRequestedMove(float DeltaTime, float MaxAccel, float MaxSpeed, float Friction, float BrakingDeceleration, FVector * OutAcceleration, float * OutRequestedSpeed) { return NativeCall<bool, float, float, float, float, float, FVector *, float *>(this, "UCharacterMovementComponent.ApplyRequestedMove", DeltaTime, MaxAccel, MaxSpeed, Friction, BrakingDeceleration, OutAcceleration, OutRequestedSpeed); }
+	void RequestDirectMove(FVector * MoveVelocity, bool bForceMaxSpeed) { NativeCall<void, FVector *, bool>(this, "UCharacterMovementComponent.RequestDirectMove", MoveVelocity, bForceMaxSpeed); }
+	bool CanStopPathFollowing() { return NativeCall<bool>(this, "UCharacterMovementComponent.CanStopPathFollowing"); }
+	void NotifyBumpedPawn(APawn * BumpedPawn) { NativeCall<void, APawn *>(this, "UCharacterMovementComponent.NotifyBumpedPawn", BumpedPawn); }
+	float GetMaxJumpHeight() { return NativeCall<float>(this, "UCharacterMovementComponent.GetMaxJumpHeight"); }
+	float GetModifiedMaxAcceleration() { return NativeCall<float>(this, "UCharacterMovementComponent.GetModifiedMaxAcceleration"); }
+	float K2_GetModifiedMaxAcceleration() { return NativeCall<float>(this, "UCharacterMovementComponent.K2_GetModifiedMaxAcceleration"); }
+	float GetMaxAcceleration() { return NativeCall<float>(this, "UCharacterMovementComponent.GetMaxAcceleration"); }
+	void ApplyVelocityBraking(float DeltaTime, float Friction, float BrakingDeceleration) { NativeCall<void, float, float, float>(this, "UCharacterMovementComponent.ApplyVelocityBraking", DeltaTime, Friction, BrakingDeceleration); }
+	bool PhysFlyingAsync(float deltaTime, int Iterations, float friction, float brakingDeceleration) { return NativeCall<bool, float, int, float, float>(this, "UCharacterMovementComponent.PhysFlyingAsync", deltaTime, Iterations, friction, brakingDeceleration); }
+	void PhysFlying(float deltaTime, int Iterations, float friction, float brakingDeceleration) { NativeCall<void, float, int, float, float>(this, "UCharacterMovementComponent.PhysFlying", deltaTime, Iterations, friction, brakingDeceleration); }
+	void PhysSwimming(float deltaTime, int Iterations) { NativeCall<void, float, int>(this, "UCharacterMovementComponent.PhysSwimming", deltaTime, Iterations); }
+	void StartSwimming(FVector OldLocation, FVector OldVelocity, float timeTick, float remainingTime, int Iterations) { NativeCall<void, FVector, FVector, float, float, int>(this, "UCharacterMovementComponent.StartSwimming", OldLocation, OldVelocity, timeTick, remainingTime, Iterations); }
+	float Swim(FVector Delta, FHitResult * Hit) { return NativeCall<float, FVector, FHitResult *>(this, "UCharacterMovementComponent.Swim", Delta, Hit); }
+	FVector * FindWaterLine(FVector * result, FVector InWater, FVector OutofWater) { return NativeCall<FVector *, FVector *, FVector, FVector>(this, "UCharacterMovementComponent.FindWaterLine", result, InWater, OutofWater); }
+	void NotifyJumpApex() { NativeCall<void>(this, "UCharacterMovementComponent.NotifyJumpApex"); }
+	FVector * GetFallingLateralAcceleration(FVector * result, float DeltaTime) { return NativeCall<FVector *, FVector *, float>(this, "UCharacterMovementComponent.GetFallingLateralAcceleration", result, DeltaTime); }
+	float GetAirControl(float DeltaTime, float TickAirControl, FVector * FallAcceleration) { return NativeCall<float, float, float, FVector *>(this, "UCharacterMovementComponent.GetAirControl", DeltaTime, TickAirControl, FallAcceleration); }
+	float BoostAirControl(float DeltaTime, float TickAirControl, FVector * FallAcceleration) { return NativeCall<float, float, float, FVector *>(this, "UCharacterMovementComponent.BoostAirControl", DeltaTime, TickAirControl, FallAcceleration); }
+	void PhysFalling(float deltaTime, int Iterations) { NativeCall<void, float, int>(this, "UCharacterMovementComponent.PhysFalling", deltaTime, Iterations); }
+	bool FindAirControlImpact(float DeltaTime, float TickAirControl, FVector * FallAcceleration, FHitResult * OutHitResult) { return NativeCall<bool, float, float, FVector *, FHitResult *>(this, "UCharacterMovementComponent.FindAirControlImpact", DeltaTime, TickAirControl, FallAcceleration, OutHitResult); }
+	float LimitAirControl(float DeltaTime, float TickAirControl, FVector * FallAcceleration, FHitResult * HitResult) { return NativeCall<float, float, float, FVector *, FHitResult *>(this, "UCharacterMovementComponent.LimitAirControl", DeltaTime, TickAirControl, FallAcceleration, HitResult); }
+	bool CheckLedgeDirection(FVector * OldLocation, FVector * SideStep, FVector * GravDir) { return NativeCall<bool, FVector *, FVector *, FVector *>(this, "UCharacterMovementComponent.CheckLedgeDirection", OldLocation, SideStep, GravDir); }
+	FVector * GetLedgeMove(FVector * result, FVector * OldLocation, FVector * Delta, FVector * GravDir) { return NativeCall<FVector *, FVector *, FVector *, FVector *, FVector *>(this, "UCharacterMovementComponent.GetLedgeMove", result, OldLocation, Delta, GravDir); }
+	bool CanWalkOffLedges() { return NativeCall<bool>(this, "UCharacterMovementComponent.CanWalkOffLedges"); }
+	bool CheckFall(FHitResult * Hit, FVector Delta, FVector subLoc, float remainingTime, float timeTick, int Iterations, bool bMustJump) { return NativeCall<bool, FHitResult *, FVector, FVector, float, float, int, bool>(this, "UCharacterMovementComponent.CheckFall", Hit, Delta, subLoc, remainingTime, timeTick, Iterations, bMustJump); }
+	void StartFalling(int Iterations, float remainingTime, float timeTick, FVector * Delta, FVector * subLoc) { NativeCall<void, int, float, float, FVector *, FVector *>(this, "UCharacterMovementComponent.StartFalling", Iterations, remainingTime, timeTick, Delta, subLoc); }
+	FVector * ComputeGroundMovementDelta(FVector * result, FVector * Delta, FHitResult * RampHit, const bool bHitFromLineTrace) { return NativeCall<FVector *, FVector *, FVector *, FHitResult *, const bool>(this, "UCharacterMovementComponent.ComputeGroundMovementDelta", result, Delta, RampHit, bHitFromLineTrace); }
+	void MaintainHorizontalGroundVelocity() { NativeCall<void>(this, "UCharacterMovementComponent.MaintainHorizontalGroundVelocity"); }
+	bool PhysWalkingAsync(float deltaTime, int Iterations) { return NativeCall<bool, float, int>(this, "UCharacterMovementComponent.PhysWalkingAsync", deltaTime, Iterations); }
+	void PhysWalking(float deltaTime, int Iterations) { NativeCall<void, float, int>(this, "UCharacterMovementComponent.PhysWalking", deltaTime, Iterations); }
+	void PhysCustom(float deltaTime, int Iterations) { NativeCall<void, float, int>(this, "UCharacterMovementComponent.PhysCustom", deltaTime, Iterations); }
+	void AdjustFloorHeight() { NativeCall<void>(this, "UCharacterMovementComponent.AdjustFloorHeight"); }
+	void StopActiveMovement() { NativeCall<void>(this, "UCharacterMovementComponent.StopActiveMovement"); }
+	void ProcessLanded(FHitResult * Hit, float remainingTime, int Iterations) { NativeCall<void, FHitResult *, float, int>(this, "UCharacterMovementComponent.ProcessLanded", Hit, remainingTime, Iterations); }
+	void SetPostLandedPhysics(FHitResult * Hit) { NativeCall<void, FHitResult *>(this, "UCharacterMovementComponent.SetPostLandedPhysics", Hit); }
+	void OnTeleported() { NativeCall<void>(this, "UCharacterMovementComponent.OnTeleported"); }
+	FRotator * GetDeltaRotation(FRotator * result, float DeltaTime) { return NativeCall<FRotator *, FRotator *, float>(this, "UCharacterMovementComponent.GetDeltaRotation", result, DeltaTime); }
+	FRotator * ComputeOrientToMovementRotation(FRotator * result, FRotator * CurrentRotation, float DeltaTime, FRotator * DeltaRotation) { return NativeCall<FRotator *, FRotator *, FRotator *, float, FRotator *>(this, "UCharacterMovementComponent.ComputeOrientToMovementRotation", result, CurrentRotation, DeltaTime, DeltaRotation); }
+	void PhysicsRotation(float DeltaTime) { NativeCall<void, float>(this, "UCharacterMovementComponent.PhysicsRotation", DeltaTime); }
+	bool ShouldJumpOutOfWater(FVector * JumpDir) { return NativeCall<bool, FVector *>(this, "UCharacterMovementComponent.ShouldJumpOutOfWater", JumpDir); }
+	void ServerJumpOutOfWater_Implementation(FVector_NetQuantize100 WallNormal, char JumpFlag) { NativeCall<void, FVector_NetQuantize100, char>(this, "UCharacterMovementComponent.ServerJumpOutOfWater_Implementation", WallNormal, JumpFlag); }
+	bool CheckWaterJump(FVector CheckPoint, FVector * WallNormal) { return NativeCall<bool, FVector, FVector *>(this, "UCharacterMovementComponent.CheckWaterJump", CheckPoint, WallNormal); }
+	void AddImpulse(FVector Impulse, bool bVelocityChange, float MassScaleImpulseExponent, bool bOverrideMaxImpulseZ) { NativeCall<void, FVector, bool, float, bool>(this, "UCharacterMovementComponent.AddImpulse", Impulse, bVelocityChange, MassScaleImpulseExponent, bOverrideMaxImpulseZ); }
+	void AddForce(FVector Force) { NativeCall<void, FVector>(this, "UCharacterMovementComponent.AddForce", Force); }
+	bool IsWalkable(FHitResult * Hit) { return NativeCall<bool, FHitResult *>(this, "UCharacterMovementComponent.IsWalkable", Hit); }
+	void SetWalkableFloorZ(float InWalkableFloorZ) { NativeCall<void, float>(this, "UCharacterMovementComponent.SetWalkableFloorZ", InWalkableFloorZ); }
+	bool IsWithinEdgeTolerance(FVector * CapsuleLocation, FVector * TestImpactPoint, const float CapsuleRadius) { return NativeCall<bool, FVector *, FVector *, const float>(this, "UCharacterMovementComponent.IsWithinEdgeTolerance", CapsuleLocation, TestImpactPoint, CapsuleRadius); }
+	bool IsValidLandingSpot(FVector * CapsuleLocation, FHitResult * Hit) { return NativeCall<bool, FVector *, FHitResult *>(this, "UCharacterMovementComponent.IsValidLandingSpot", CapsuleLocation, Hit); }
+	bool ShouldCheckForValidLandingSpot(float DeltaTime, FVector * Delta, FHitResult * Hit) { return NativeCall<bool, float, FVector *, FHitResult *>(this, "UCharacterMovementComponent.ShouldCheckForValidLandingSpot", DeltaTime, Delta, Hit); }
+	float GetPerchRadiusThreshold() { return NativeCall<float>(this, "UCharacterMovementComponent.GetPerchRadiusThreshold"); }
+	float GetValidPerchRadius() { return NativeCall<float>(this, "UCharacterMovementComponent.GetValidPerchRadius"); }
+	bool ShouldComputePerchResult(FHitResult * InHit, bool bCheckRadius) { return NativeCall<bool, FHitResult *, bool>(this, "UCharacterMovementComponent.ShouldComputePerchResult", InHit, bCheckRadius); }
+	bool CanStepUp(FHitResult * Hit) { return NativeCall<bool, FHitResult *>(this, "UCharacterMovementComponent.CanStepUp", Hit); }
+	void HandleImpact(FHitResult * Impact, float TimeSlice, FVector * MoveDelta) { NativeCall<void, FHitResult *, float, FVector *>(this, "UCharacterMovementComponent.HandleImpact", Impact, TimeSlice, MoveDelta); }
+	void ApplyImpactPhysicsForces(FHitResult * Impact, FVector * ImpactAcceleration, FVector * ImpactVelocity) { NativeCall<void, FHitResult *, FVector *, FVector *>(this, "UCharacterMovementComponent.ApplyImpactPhysicsForces", Impact, ImpactAcceleration, ImpactVelocity); }
+	FString * GetMovementName(FString * result) { return NativeCall<FString *, FString *>(this, "UCharacterMovementComponent.GetMovementName", result); }
+	void ForceReplicationUpdate() { NativeCall<void>(this, "UCharacterMovementComponent.ForceReplicationUpdate"); }
+	FVector * ConstrainInputAcceleration(FVector * result, FVector * InputAcceleration) { return NativeCall<FVector *, FVector *, FVector *>(this, "UCharacterMovementComponent.ConstrainInputAcceleration", result, InputAcceleration); }
+	FVector * ScaleInputAcceleration(FVector * result, FVector * InputAcceleration) { return NativeCall<FVector *, FVector *, FVector *>(this, "UCharacterMovementComponent.ScaleInputAcceleration", result, InputAcceleration); }
+	float ComputeAnalogInputModifier() { return NativeCall<float>(this, "UCharacterMovementComponent.ComputeAnalogInputModifier"); }
+	bool ClientUpdatePositionAfterServerUpdate() { return NativeCall<bool>(this, "UCharacterMovementComponent.ClientUpdatePositionAfterServerUpdate"); }
+	void ForcePositionUpdate(float DeltaTime) { NativeCall<void, float>(this, "UCharacterMovementComponent.ForcePositionUpdate", DeltaTime); }
+	void ResetPredictionData_Client() { NativeCall<void>(this, "UCharacterMovementComponent.ResetPredictionData_Client"); }
+	void ResetPredictionData_Server() { NativeCall<void>(this, "UCharacterMovementComponent.ResetPredictionData_Server"); }
+	void ReplicateMoveToServer(float DeltaTime, FVector * NewAcceleration) { NativeCall<void, float, FVector *>(this, "UCharacterMovementComponent.ReplicateMoveToServer", DeltaTime, NewAcceleration); }
+	void ServerMoveOld_Implementation(float OldTimeStamp, FVector_NetQuantize100 OldAccel, char OldMoveFlags) { NativeCall<void, float, FVector_NetQuantize100, char>(this, "UCharacterMovementComponent.ServerMoveOld_Implementation", OldTimeStamp, OldAccel, OldMoveFlags); }
+	void ServerMoveWithRotation_Implementation(float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char MoveFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode, FRotator ClientRotation) { NativeCall<void, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char, FRotator>(this, "UCharacterMovementComponent.ServerMoveWithRotation_Implementation", TimeStamp, InAccel, ClientLoc, MoveFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode, ClientRotation); }
+	void ServerMoveOldWithRotation_Implementation(float OldTimeStamp, FVector_NetQuantize100 OldAccel, char OldMoveFlags, FRotator OldRotation) { NativeCall<void, float, FVector_NetQuantize100, char, FRotator>(this, "UCharacterMovementComponent.ServerMoveOldWithRotation_Implementation", OldTimeStamp, OldAccel, OldMoveFlags, OldRotation); }
+	void ServerMoveDualWithRotation_Implementation(float TimeStamp0, FVector_NetQuantize100 InAccel0, char PendingFlags, unsigned int View0, float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char NewFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBone, char ClientMovementMode, FRotator InRotation0, FRotator InRotation) { NativeCall<void, float, FVector_NetQuantize100, char, unsigned int, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char, FRotator, FRotator>(this, "UCharacterMovementComponent.ServerMoveDualWithRotation_Implementation", TimeStamp0, InAccel0, PendingFlags, View0, TimeStamp, InAccel, ClientLoc, NewFlags, ClientRoll, View, ClientMovementBase, ClientBaseBone, ClientMovementMode, InRotation0, InRotation); }
+	void ServerMoveHandleClientErrorForDinos(float TimeStamp, float DeltaTime, FVector * Accel, FVector * RelativeClientLoc, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode, FRotator * InClientRot) { NativeCall<void, float, float, FVector *, FVector *, UPrimitiveComponent *, FName, char, FRotator *>(this, "UCharacterMovementComponent.ServerMoveHandleClientErrorForDinos", TimeStamp, DeltaTime, Accel, RelativeClientLoc, ClientMovementBase, ClientBaseBoneName, ClientMovementMode, InClientRot); }
+	void ServerMoveDual_Implementation(float TimeStamp0, FVector_NetQuantize100 InAccel0, char PendingFlags, unsigned int View0, float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char NewFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBone, char ClientMovementMode) { NativeCall<void, float, FVector_NetQuantize100, char, unsigned int, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char>(this, "UCharacterMovementComponent.ServerMoveDual_Implementation", TimeStamp0, InAccel0, PendingFlags, View0, TimeStamp, InAccel, ClientLoc, NewFlags, ClientRoll, View, ClientMovementBase, ClientBaseBone, ClientMovementMode); }
+	void ServerMove_Implementation(float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char MoveFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode) { NativeCall<void, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char>(this, "UCharacterMovementComponent.ServerMove_Implementation", TimeStamp, InAccel, ClientLoc, MoveFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode); }
+	void ServerMoveHandleClientError(float TimeStamp, float DeltaTime, FVector * Accel, FVector * RelativeClientLoc, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode) { NativeCall<void, float, float, FVector *, FVector *, UPrimitiveComponent *, FName, char>(this, "UCharacterMovementComponent.ServerMoveHandleClientError", TimeStamp, DeltaTime, Accel, RelativeClientLoc, ClientMovementBase, ClientBaseBoneName, ClientMovementMode); }
+	void ServerMoveOnlyRotation_Implementation(float TimeStamp, char ClientRoll, unsigned int View) { NativeCall<void, float, char, unsigned int>(this, "UCharacterMovementComponent.ServerMoveOnlyRotation_Implementation", TimeStamp, ClientRoll, View); }
+	void ServerMoveDualOnlyRotation_Implementation(float TimeStamp0, unsigned int View0, float TimeStamp, char ClientRoll, unsigned int View) { NativeCall<void, float, unsigned int, float, char, unsigned int>(this, "UCharacterMovementComponent.ServerMoveDualOnlyRotation_Implementation", TimeStamp0, View0, TimeStamp, ClientRoll, View); }
+	void MoveAutonomous(float ClientTimeStamp, float DeltaTime, char CompressedFlags, FVector * NewAccel) { NativeCall<void, float, float, char, FVector *>(this, "UCharacterMovementComponent.MoveAutonomous", ClientTimeStamp, DeltaTime, CompressedFlags, NewAccel); }
+	void UpdateFloorFromAdjustment() { NativeCall<void>(this, "UCharacterMovementComponent.UpdateFloorFromAdjustment"); }
+	void SendClientAdjustment() { NativeCall<void>(this, "UCharacterMovementComponent.SendClientAdjustment"); }
+	void ClientVeryShortAdjustPosition_Implementation(float TimeStamp, FVector NewLoc, UPrimitiveComponent * NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, char ServerMovementMode) { NativeCall<void, float, FVector, UPrimitiveComponent *, FName, bool, bool, char>(this, "UCharacterMovementComponent.ClientVeryShortAdjustPosition_Implementation", TimeStamp, NewLoc, NewBase, NewBaseBoneName, bHasBase, bBaseRelativePosition, ServerMovementMode); }
+	void ClientAdjustPosition_Implementation(float TimeStamp, FVector NewLocation, FVector NewVelocity, UPrimitiveComponent * NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, char ServerMovementMode) { NativeCall<void, float, FVector, FVector, UPrimitiveComponent *, FName, bool, bool, char>(this, "UCharacterMovementComponent.ClientAdjustPosition_Implementation", TimeStamp, NewLocation, NewVelocity, NewBase, NewBaseBoneName, bHasBase, bBaseRelativePosition, ServerMovementMode); }
+	void ClientAdjustRootMotionPosition_Implementation(float TimeStamp, float ServerMontageTrackPosition, FVector ServerLoc, FVector_NetQuantizeNormal ServerRotation, float ServerVelZ, UPrimitiveComponent * ServerBase, FName ServerBaseBoneName, bool bHasBase, bool bBaseRelativePosition, char ServerMovementMode) { NativeCall<void, float, float, FVector, FVector_NetQuantizeNormal, float, UPrimitiveComponent *, FName, bool, bool, char>(this, "UCharacterMovementComponent.ClientAdjustRootMotionPosition_Implementation", TimeStamp, ServerMontageTrackPosition, ServerLoc, ServerRotation, ServerVelZ, ServerBase, ServerBaseBoneName, bHasBase, bBaseRelativePosition, ServerMovementMode); }
+	void ClientAckGoodMove_Implementation(float TimeStamp) { NativeCall<void, float>(this, "UCharacterMovementComponent.ClientAckGoodMove_Implementation", TimeStamp); }
+	void CapsuleTouched(AActor * Other, UPrimitiveComponent * OtherComp, int OtherBodyIndex, bool bFromSweep, FHitResult * SweepResult) { NativeCall<void, AActor *, UPrimitiveComponent *, int, bool, FHitResult *>(this, "UCharacterMovementComponent.CapsuleTouched", Other, OtherComp, OtherBodyIndex, bFromSweep, SweepResult); }
+	void ApplyRepulsionForce(float DeltaSeconds) { NativeCall<void, float>(this, "UCharacterMovementComponent.ApplyRepulsionForce", DeltaSeconds); }
+	void ApplyAccumulatedForces(float DeltaSeconds) { NativeCall<void, float>(this, "UCharacterMovementComponent.ApplyAccumulatedForces", DeltaSeconds); }
+	void AddRadialForce(FVector * Origin, float Radius, float Strength, ERadialImpulseFalloff Falloff) { NativeCall<void, FVector *, float, float, ERadialImpulseFalloff>(this, "UCharacterMovementComponent.AddRadialForce", Origin, Radius, Strength, Falloff); }
+	void AddRadialImpulse(FVector * Origin, float Radius, float Strength, ERadialImpulseFalloff Falloff, bool bVelChange) { NativeCall<void, FVector *, float, float, ERadialImpulseFalloff, bool>(this, "UCharacterMovementComponent.AddRadialImpulse", Origin, Radius, Strength, Falloff, bVelChange); }
+	void RegisterComponentTickFunctions(bool bRegister, bool bSaveAndRestoreComponentTickState) { NativeCall<void, bool, bool>(this, "UCharacterMovementComponent.RegisterComponentTickFunctions", bRegister, bSaveAndRestoreComponentTickState); }
+	void UpdateFromCompressedFlags(char Flags) { NativeCall<void, char>(this, "UCharacterMovementComponent.UpdateFromCompressedFlags", Flags); }
+	void Prone(bool bClientSimulation) { NativeCall<void, bool>(this, "UCharacterMovementComponent.Prone", bClientSimulation); }
+	void UnProne(bool bClientSimulation, bool bForce) { NativeCall<void, bool, bool>(this, "UCharacterMovementComponent.UnProne", bClientSimulation, bForce); }
+	void ClientAckGoodMove(float TimeStamp) { NativeCall<void, float>(this, "UCharacterMovementComponent.ClientAckGoodMove", TimeStamp); }
+	void ClientAdjustPosition(float TimeStamp, FVector NewLoc, FVector NewVel, UPrimitiveComponent * NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, char ServerMovementMode) { NativeCall<void, float, FVector, FVector, UPrimitiveComponent *, FName, bool, bool, char>(this, "UCharacterMovementComponent.ClientAdjustPosition", TimeStamp, NewLoc, NewVel, NewBase, NewBaseBoneName, bHasBase, bBaseRelativePosition, ServerMovementMode); }
+	void ClientVeryShortAdjustPosition(float TimeStamp, FVector NewLoc, UPrimitiveComponent * NewBase, FName NewBaseBoneName, bool bHasBase, bool bBaseRelativePosition, char ServerMovementMode) { NativeCall<void, float, FVector, UPrimitiveComponent *, FName, bool, bool, char>(this, "UCharacterMovementComponent.ClientVeryShortAdjustPosition", TimeStamp, NewLoc, NewBase, NewBaseBoneName, bHasBase, bBaseRelativePosition, ServerMovementMode); }
+	void ServerMove(float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char CompressedMoveFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode) { NativeCall<void, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char>(this, "UCharacterMovementComponent.ServerMove", TimeStamp, InAccel, ClientLoc, CompressedMoveFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode); }
+	void ServerMoveDual(float TimeStamp0, FVector_NetQuantize100 InAccel0, char PendingFlags, unsigned int View0, float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char NewFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode) { NativeCall<void, float, FVector_NetQuantize100, char, unsigned int, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char>(this, "UCharacterMovementComponent.ServerMoveDual", TimeStamp0, InAccel0, PendingFlags, View0, TimeStamp, InAccel, ClientLoc, NewFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode); }
+	void ServerMoveDualOnlyRotation(float TimeStamp0, unsigned int View0, float TimeStamp, char ClientRoll, unsigned int View) { NativeCall<void, float, unsigned int, float, char, unsigned int>(this, "UCharacterMovementComponent.ServerMoveDualOnlyRotation", TimeStamp0, View0, TimeStamp, ClientRoll, View); }
+	void ServerMoveDualWithRotation(float TimeStamp0, FVector_NetQuantize100 InAccel0, char PendingFlags, unsigned int View0, float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char NewFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode, FRotator InRotation0, FRotator InRotation) { NativeCall<void, float, FVector_NetQuantize100, char, unsigned int, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char, FRotator, FRotator>(this, "UCharacterMovementComponent.ServerMoveDualWithRotation", TimeStamp0, InAccel0, PendingFlags, View0, TimeStamp, InAccel, ClientLoc, NewFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode, InRotation0, InRotation); }
+	void ServerMoveOld(float OldTimeStamp, FVector_NetQuantize100 OldAccel, char OldMoveFlags) { NativeCall<void, float, FVector_NetQuantize100, char>(this, "UCharacterMovementComponent.ServerMoveOld", OldTimeStamp, OldAccel, OldMoveFlags); }
+	void ServerMoveOldWithRotation(float OldTimeStamp, FVector_NetQuantize100 OldAccel, char OldMoveFlags, FRotator OldRotation) { NativeCall<void, float, FVector_NetQuantize100, char, FRotator>(this, "UCharacterMovementComponent.ServerMoveOldWithRotation", OldTimeStamp, OldAccel, OldMoveFlags, OldRotation); }
+	void ServerMoveOnlyRotation(float TimeStamp, char ClientRoll, unsigned int View) { NativeCall<void, float, char, unsigned int>(this, "UCharacterMovementComponent.ServerMoveOnlyRotation", TimeStamp, ClientRoll, View); }
+	void ServerMoveWithRotation(float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char CompressedMoveFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode, FRotator ClientRotation) { NativeCall<void, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent *, FName, char, FRotator>(this, "UCharacterMovementComponent.ServerMoveWithRotation", TimeStamp, InAccel, ClientLoc, CompressedMoveFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode, ClientRotation); }
 };
 
 struct ABrush : AActor

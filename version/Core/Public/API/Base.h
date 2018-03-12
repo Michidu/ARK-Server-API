@@ -140,7 +140,7 @@ struct ANPCZoneManager;
 struct UStaticMesh;
 struct UPrimalLocalProfile;
 struct UPrimalBuffPersistentData;
-struct UCharacterMovementComponent{};
+struct UCharacterMovementComponent;
 struct FDinoExtraDefaultItemList{};
 struct FWeaponData{};
 struct FAIRequestID{};
