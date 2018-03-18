@@ -147,6 +147,7 @@ struct FAIRequestID{};
 struct UPrimalGameData;
 struct UEngine;
 struct UPrimalGlobals;
+struct APrimalStructurePlacer;
 
 struct BitField
 {
