@@ -1197,7 +1197,7 @@ struct AShooterPlayerState : APlayerState
 	FieldArray<TSubclassOf<UPrimalItem>, 10> DefaultItemSlotClassesField() { return { this, "AShooterPlayerState.DefaultItemSlotClasses" }; }
 	FieldArray<char, 10> DefaultItemSlotEngramsField() { return { this, "AShooterPlayerState.DefaultItemSlotEngrams" }; }
 	FieldPointer<FTribeData *> MyTribeDataField() { return { this, "AShooterPlayerState.MyTribeData" }; }
-	FieldPointer<FTribeData *> LastTribeInviteDataField() { return { this, "AShooterPlayerState.LastTribeInviteData" };
+	FieldPointer<FTribeData *> LastTribeInviteDataField() { return { this, "AShooterPlayerState.LastTribeInviteData" }; }
 	FieldValue<int> TotalEngramPointsField() { return { this, "AShooterPlayerState.TotalEngramPoints" }; }
 	FieldValue<int> FreeEngramPointsField() { return { this, "AShooterPlayerState.FreeEngramPoints" }; }
 	FieldValue<TArray<TSubclassOf<UPrimalItem>>> EngramItemBlueprintsField() { return { this, "AShooterPlayerState.EngramItemBlueprints" }; }
