@@ -896,7 +896,7 @@ struct AShooterGameMode : AGameMode
 	void TickSaveBackup() { NativeCall<void>(this, "AShooterGameMode.TickSaveBackup"); }
 	unsigned __int64 AddNewTribe(AShooterPlayerState * PlayerOwner, FString * TribeName, FTribeGovernment * TribeGovernment) { return NativeCall<unsigned __int64, AShooterPlayerState *, FString *, FTribeGovernment *>(this, "AShooterGameMode.AddNewTribe", PlayerOwner, TribeName, TribeGovernment); }
 	void RemoveTribe(unsigned __int64 TribeID) { NativeCall<void, unsigned __int64>(this, "AShooterGameMode.RemoveTribe", TribeID); }
-	//void UpdateTribeData(FTribeData NewTribeData) { NativeCall<void, FTribeData>(this, "AShooterGameMode.UpdateTribeData", NewTribeData); }
+ 	void UpdateTribeData(FTribeData* NewTribeData) { NativeCall<void, FTribeData*>(this, "AShooterGameMode.UpdateTribeData", NewTribeData); } 	
 	void RemovePlayerFromTribe(unsigned __int64 TribeID, unsigned __int64 PlayerDataID, bool bDontUpdatePlayerState) { NativeCall<void, unsigned __int64, unsigned __int64, bool>(this, "AShooterGameMode.RemovePlayerFromTribe", TribeID, PlayerDataID, bDontUpdatePlayerState); }
 	int GetTribeIDOfPlayerID(unsigned __int64 PlayerDataID) { return NativeCall<int, unsigned __int64>(this, "AShooterGameMode.GetTribeIDOfPlayerID", PlayerDataID); }
 	FTribeData * GetTribeData(FTribeData * result, unsigned __int64 TribeID) { return NativeCall<FTribeData *, FTribeData *, unsigned __int64>(this, "AShooterGameMode.GetTribeData", result, TribeID); }
