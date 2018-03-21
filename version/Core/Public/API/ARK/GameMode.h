@@ -6,6 +6,12 @@
 
 #include "Other.h"
 
+struct __declspec(align(8)) FEngramEntryAutoUnlock
+{
+	FString EngramClassName;
+	int LevelToAutoUnlock;
+};
+
 struct UWorld : UObject
 {
 	struct InitializationValues
@@ -369,6 +375,7 @@ struct ULevel : ULevelBase
 
 // Game Mode
 
+
 struct AGameMode
 {
 	FieldValue<FName> MatchStateField() { return { this, "AGameMode.MatchState" }; }
@@ -392,6 +399,13 @@ struct AGameMode
 	FieldValue<UAntiDupeTransactionLog *> AntiDupeTransactionLogField() { return { this, "AGameMode.AntiDupeTransactionLog" }; }
 	FieldValue<float> InactivePlayerStateLifeSpanField() { return { this, "AGameMode.InactivePlayerStateLifeSpan" }; }
 	FieldValue<TArray<APlayerStart *>> UsedPlayerStartsField() { return { this, "AGameMode.UsedPlayerStarts" }; }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bUseSeamlessTravel() { return { this, "AGameMode.bUseSeamlessTravel" }; }
+	BitFieldValue<bool, unsigned __int32> bPauseable() { return { this, "AGameMode.bPauseable" }; }
+	BitFieldValue<bool, unsigned __int32> bStartPlayersAsSpectators() { return { this, "AGameMode.bStartPlayersAsSpectators" }; }
+	BitFieldValue<bool, unsigned __int32> bDelayedStart() { return { this, "AGameMode.bDelayedStart" }; }
 
 	// Functions
 
@@ -636,7 +650,7 @@ struct AShooterGameMode : AGameMode
 	FieldValue<TArray<int>> ExcludeItemIndicesField() { return { this, "AShooterGameMode.ExcludeItemIndices" }; }
 	//FieldValue<TArray<FEngramEntryOverride>> OverrideEngramEntriesField() { return { this, "AShooterGameMode.OverrideEngramEntries" }; }
 	//FieldValue<TArray<FEngramEntryOverride>> OverrideNamedEngramEntriesField() { return { this, "AShooterGameMode.OverrideNamedEngramEntries" }; }
-	//FieldValue<TArray<FEngramEntryAutoUnlock>> EngramEntryAutoUnlocksField() { return { this, "AShooterGameMode.EngramEntryAutoUnlocks" }; }
+	FieldValue<TArray<FEngramEntryAutoUnlock>> EngramEntryAutoUnlocksField() { return { this, "AShooterGameMode.EngramEntryAutoUnlocks" }; }
 	FieldValue<TArray<FString>> PreventDinoTameClassNamesField() { return { this, "AShooterGameMode.PreventDinoTameClassNames" }; }
 	//FieldValue<TArray<FDinoSpawnWeightMultiplier>> DinoSpawnWeightMultipliersField() { return { this, "AShooterGameMode.DinoSpawnWeightMultipliers" }; }
 	//FieldValue<TArray<FClassMultiplier>> DinoClassResistanceMultipliersField() { return { this, "AShooterGameMode.DinoClassResistanceMultipliers" }; }
@@ -882,7 +896,7 @@ struct AShooterGameMode : AGameMode
 	void TickSaveBackup() { NativeCall<void>(this, "AShooterGameMode.TickSaveBackup"); }
 	unsigned __int64 AddNewTribe(AShooterPlayerState * PlayerOwner, FString * TribeName, FTribeGovernment * TribeGovernment) { return NativeCall<unsigned __int64, AShooterPlayerState *, FString *, FTribeGovernment *>(this, "AShooterGameMode.AddNewTribe", PlayerOwner, TribeName, TribeGovernment); }
 	void RemoveTribe(unsigned __int64 TribeID) { NativeCall<void, unsigned __int64>(this, "AShooterGameMode.RemoveTribe", TribeID); }
-	void UpdateTribeData(FTribeData* NewTribeData) { NativeCall<void, FTribeData*>(this, "AShooterGameMode.UpdateTribeData", NewTribeData); }
+	//void UpdateTribeData(FTribeData NewTribeData) { NativeCall<void, FTribeData>(this, "AShooterGameMode.UpdateTribeData", NewTribeData); }
 	void RemovePlayerFromTribe(unsigned __int64 TribeID, unsigned __int64 PlayerDataID, bool bDontUpdatePlayerState) { NativeCall<void, unsigned __int64, unsigned __int64, bool>(this, "AShooterGameMode.RemovePlayerFromTribe", TribeID, PlayerDataID, bDontUpdatePlayerState); }
 	int GetTribeIDOfPlayerID(unsigned __int64 PlayerDataID) { return NativeCall<int, unsigned __int64>(this, "AShooterGameMode.GetTribeIDOfPlayerID", PlayerDataID); }
 	FTribeData * GetTribeData(FTribeData * result, unsigned __int64 TribeID) { return NativeCall<FTribeData *, FTribeData *, unsigned __int64>(this, "AShooterGameMode.GetTribeData", result, TribeID); }
@@ -913,6 +927,8 @@ struct AShooterGameMode : AGameMode
 	bool UnbanPlayer(FString PlayerSteamName, FString PlayerSteamID) { return NativeCall<bool, FString, FString>(this, "AShooterGameMode.UnbanPlayer", PlayerSteamName, PlayerSteamID); }
 	void SaveBannedList() { NativeCall<void>(this, "AShooterGameMode.SaveBannedList"); }
 	void LoadBannedList() { NativeCall<void>(this, "AShooterGameMode.LoadBannedList"); }
+	//FString * GetSaveDirectoryName(FString * result, ESaveType::Type SaveType) { return NativeCall<FString *, FString *, ESaveType::Type>(this, "AShooterGameMode.GetSaveDirectoryName", result, SaveType); }
+	//FString * GeneratePGMapFolderName(FString * result, TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> > PGMapOptionsString) { return NativeCall<FString *, FString *, TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >>(this, "AShooterGameMode.GeneratePGMapFolderName", result, PGMapOptionsString); }
 	FString * GetMapName(FString * result) { return NativeCall<FString *, FString *>(this, "AShooterGameMode.GetMapName", result); }
 	void UpdateSaveBackupFiles() { NativeCall<void>(this, "AShooterGameMode.UpdateSaveBackupFiles"); }
 	void LoadTribeIds_Process(unsigned int theTribeID) { NativeCall<void, unsigned int>(this, "AShooterGameMode.LoadTribeIds_Process", theTribeID); }
@@ -933,7 +949,6 @@ struct AShooterGameMode : AGameMode
 	void ListenServerClampPlayerLocations() { NativeCall<void>(this, "AShooterGameMode.ListenServerClampPlayerLocations"); }
 	FString * ValidateTribeName(FString * result, FString theTribeName) { return NativeCall<FString *, FString *, FString>(this, "AShooterGameMode.ValidateTribeName", result, theTribeName); }
 	void AdjustDamage(AActor * Victim, float * Damage, FDamageEvent * DamageEvent, AController * EventInstigator, AActor * DamageCauser) { NativeCall<void, AActor *, float *, FDamageEvent *, AController *, AActor *>(this, "AShooterGameMode.AdjustDamage", Victim, Damage, DamageEvent, EventInstigator, DamageCauser); }
-	bool AllowRenameTribe(AShooterPlayerState * ForPlayerState, FString * TribeName) { return NativeCall<bool, AShooterPlayerState *, FString *>(this, "AShooterGameMode.AllowRenameTribe", ForPlayerState, TribeName); }
 	void SetTimeOfDay(FString * timeString) { NativeCall<void, FString *>(this, "AShooterGameMode.SetTimeOfDay", timeString); }
 	void KickAllPlayersAndReload() { NativeCall<void>(this, "AShooterGameMode.KickAllPlayersAndReload"); }
 	bool PlayerCanRestart(APlayerController * Player) { return NativeCall<bool, APlayerController *>(this, "AShooterGameMode.PlayerCanRestart", Player); }

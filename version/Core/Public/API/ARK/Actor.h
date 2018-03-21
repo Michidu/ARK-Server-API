@@ -792,6 +792,7 @@ struct AActor : UObject
 	void InitializeComponents() { NativeCall<void>(this, "AActor.InitializeComponents"); }
 	void UninitializeComponents(EEndPlayReason::Type EndPlayReason) { NativeCall<void, EEndPlayReason::Type>(this, "AActor.UninitializeComponents", EndPlayReason); }
 	void InvalidateLightingCacheDetailed(bool bTranslationOnly) { NativeCall<void, bool>(this, "AActor.InvalidateLightingCacheDetailed", bTranslationOnly); }
+	bool ActorLineTraceSingle(FHitResult * OutHit, FVector * Start, FVector * End, ECollisionChannel TraceChannel, FCollisionQueryParams * Params) { return NativeCall<bool, FHitResult *, FVector *, FVector *, ECollisionChannel, FCollisionQueryParams *>(this, "AActor.ActorLineTraceSingle", OutHit, Start, End, TraceChannel, Params); }
 	void SetLifeSpan(float InLifespan) { NativeCall<void, float>(this, "AActor.SetLifeSpan", InLifespan); }
 	float GetLifeSpan() { return NativeCall<float>(this, "AActor.GetLifeSpan"); }
 	void PostInitializeComponents() { NativeCall<void>(this, "AActor.PostInitializeComponents"); }
@@ -1195,8 +1196,8 @@ struct AShooterPlayerState : APlayerState
 	FieldPointer<FPrimalPlayerDataStruct *> MyPlayerDataStructField() { return { this, "AShooterPlayerState.MyPlayerDataStruct" }; }
 	FieldArray<TSubclassOf<UPrimalItem>, 10> DefaultItemSlotClassesField() { return { this, "AShooterPlayerState.DefaultItemSlotClasses" }; }
 	FieldArray<char, 10> DefaultItemSlotEngramsField() { return { this, "AShooterPlayerState.DefaultItemSlotEngrams" }; }
-	FieldPointer<FTribeData *> MyTribeDataField() { return { this, "AShooterPlayerState.MyTribeData" }; }
-	FieldPointer<FTribeData *> LastTribeInviteDataField() { return { this, "AShooterPlayerState.LastTribeInviteData" }; }
+	FieldValue<FTribeData> MyTribeDataField() { return { this, "AShooterPlayerState.MyTribeData" }; }
+	FieldValue<FTribeData> LastTribeInviteDataField() { return { this, "AShooterPlayerState.LastTribeInviteData" }; }
 	FieldValue<int> TotalEngramPointsField() { return { this, "AShooterPlayerState.TotalEngramPoints" }; }
 	FieldValue<int> FreeEngramPointsField() { return { this, "AShooterPlayerState.FreeEngramPoints" }; }
 	FieldValue<TArray<TSubclassOf<UPrimalItem>>> EngramItemBlueprintsField() { return { this, "AShooterPlayerState.EngramItemBlueprints" }; }
@@ -1293,6 +1294,7 @@ struct AShooterPlayerState : APlayerState
 	void AcceptJoinAlliance(unsigned int AllianceID, unsigned int NewMemberID, FString NewMemberName) { NativeCall<void, unsigned int, unsigned int, FString>(this, "AShooterPlayerState.AcceptJoinAlliance", AllianceID, NewMemberID, NewMemberName); }
 	bool AllowTribeGroupPermission(ETribeGroupPermission::Type TribeGroupPermission, UObject * OnObject) { return NativeCall<bool, ETribeGroupPermission::Type, UObject *>(this, "AShooterPlayerState.AllowTribeGroupPermission", TribeGroupPermission, OnObject); }
 	void ServerRequestSpawnPointsForDownloadedCharacters_Implementation(unsigned __int64 PlayerDataID, int IgnoreBedID) { NativeCall<void, unsigned __int64, int>(this, "AShooterPlayerState.ServerRequestSpawnPointsForDownloadedCharacters_Implementation", PlayerDataID, IgnoreBedID); }
+	void OnRep_UpdatedEngrams() { NativeCall<void>(this, "AShooterPlayerState.OnRep_UpdatedEngrams"); }
 	static void StaticRegisterNativesAShooterPlayerState() { NativeCall<void>(nullptr, "AShooterPlayerState.StaticRegisterNativesAShooterPlayerState"); }
 	UField * GetPrivateStaticClass() { return NativeCall<UField *>(this, "AShooterPlayerState.GetPrivateStaticClass"); }
 	void ClientGetServerOptions(FServerOptions info) { NativeCall<void, FServerOptions>(this, "AShooterPlayerState.ClientGetServerOptions", info); }
@@ -2059,6 +2061,7 @@ struct AShooterPlayerController : APlayerController
 	void SendAlarmNotification(FString SteamID, FString Title, FString Message) { NativeCall<void, FString, FString, FString>(this, "AShooterPlayerController.SendAlarmNotification", SteamID, Title, Message); }
 	bool SendUseItemSlotToStructure() { return NativeCall<bool>(this, "AShooterPlayerController.SendUseItemSlotToStructure"); }
 	void SpectatorUseItem(int Index) { NativeCall<void, int>(this, "AShooterPlayerController.SpectatorUseItem", Index); }
+	void ExportDinoData(APrimalDinoCharacter * DinoToExport) { NativeCall<void, APrimalDinoCharacter *>(this, "AShooterPlayerController.ExportDinoData", DinoToExport); }
 	void ApplyDepthOfFieldSetting(int Index, float CurrentTimer) { NativeCall<void, int, float>(this, "AShooterPlayerController.ApplyDepthOfFieldSetting", Index, CurrentTimer); }
 	void ServerReleaseSeatingStructure_Implementation() { NativeCall<void>(this, "AShooterPlayerController.ServerReleaseSeatingStructure_Implementation"); }
 	void AdminCheat(FString * Msg) { NativeCall<void, FString *>(this, "AShooterPlayerController.AdminCheat", Msg); }
@@ -2476,6 +2479,7 @@ struct APrimalCharacter : ACharacter
 	FieldValue<UAnimMontage *> JumpAnimField() { return { this, "APrimalCharacter.JumpAnim" }; }
 	FieldValue<UAnimMontage *> LandedAnimField() { return { this, "APrimalCharacter.LandedAnim" }; }
 	FieldValue<UAnimMontage *> HurtAnimField() { return { this, "APrimalCharacter.HurtAnim" }; }
+	FieldValue<UAnimMontage *> PinnedAnimField() { return { this, "APrimalCharacter.PinnedAnim" }; }
 	FieldValue<USoundCue *> HurtSoundField() { return { this, "APrimalCharacter.HurtSound" }; }
 	FieldValue<FName> RootBodyBoneNameField() { return { this, "APrimalCharacter.RootBodyBoneName" }; }
 	FieldValue<TArray<APrimalBuff *>> BuffsField() { return { this, "APrimalCharacter.Buffs" }; }
@@ -3050,6 +3054,7 @@ struct APrimalCharacter : ACharacter
 	void UnPossessed() { NativeCall<void>(this, "APrimalCharacter.UnPossessed"); }
 	void TryCallAttackTarget() { NativeCall<void>(this, "APrimalCharacter.TryCallAttackTarget"); }
 	void TryCallMoveTo() { NativeCall<void>(this, "APrimalCharacter.TryCallMoveTo"); }
+	UTexture2D * GetOverrideDefaultCharacterParamTexture(FName theParamName, UTexture2D * CurrentTexture) { return NativeCall<UTexture2D *, FName, UTexture2D *>(this, "APrimalCharacter.GetOverrideDefaultCharacterParamTexture", theParamName, CurrentTexture); }
 	bool CanBePainted() { return NativeCall<bool>(this, "APrimalCharacter.CanBePainted"); }
 	UPaintingTexture * GetPaintingTexture() { return NativeCall<UPaintingTexture *>(this, "APrimalCharacter.GetPaintingTexture"); }
 	bool AllowColoringBy(APlayerController * ForPC, UObject * anItem) { return NativeCall<bool, APlayerController *, UObject *>(this, "APrimalCharacter.AllowColoringBy", ForPC, anItem); }
@@ -3071,7 +3076,7 @@ struct APrimalCharacter : ACharacter
 	void NotifyBumpedByPawn(APrimalCharacter * ByPawn) { NativeCall<void, APrimalCharacter *>(this, "APrimalCharacter.NotifyBumpedByPawn", ByPawn); }
 	void NotifyBumpedPawn(APawn * BumpedPawn) { NativeCall<void, APawn *>(this, "APrimalCharacter.NotifyBumpedPawn", BumpedPawn); }
 	void PossessedBy(AController * NewController) { NativeCall<void, AController *>(this, "APrimalCharacter.PossessedBy", NewController); }
-	void BPNetAddCharacterMovementImpulse(FVector Impulse, bool bVelChange, float ImpulseExponent, bool bSetNewMovementMode, EMovementMode NewMovementMode, bool bOverrideMaxImpulseZ) { NativeCall<void, FVector, bool, float, bool, EMovementMode, bool>(this, "APrimalCharacter.BPNetAddCharacterMovementImpulse", Impulse, bVelChange, ImpulseExponent, bSetNewMovementMode, NewMovementMode, bOverrideMaxImpulseZ); }
+	void BPNetAddCharacterMovementImpulse(FVector Impulse, bool bVelChange, float ImpulseExponent, bool bSetNewMovementMode, EMovementMode NewMovementMode, bool bOverrideMaxImpulseZ, bool bApplyToBigPawns) { NativeCall<void, FVector, bool, float, bool, EMovementMode, bool, bool>(this, "APrimalCharacter.BPNetAddCharacterMovementImpulse", Impulse, bVelChange, ImpulseExponent, bSetNewMovementMode, NewMovementMode, bOverrideMaxImpulseZ, bApplyToBigPawns); }
 	void BPNetSetCharacterMovementVelocity(bool bSetNewVelocity, FVector NewVelocity, bool bSetNewMovementMode, EMovementMode NewMovementMode) { NativeCall<void, bool, FVector, bool, EMovementMode>(this, "APrimalCharacter.BPNetSetCharacterMovementVelocity", bSetNewVelocity, NewVelocity, bSetNewMovementMode, NewMovementMode); }
 	float GetGravityZScale() { return NativeCall<float>(this, "APrimalCharacter.GetGravityZScale"); }
 	void OnMovementModeChanged(EMovementMode PrevMovementMode, char PreviousCustomMode) { NativeCall<void, EMovementMode, char>(this, "APrimalCharacter.OnMovementModeChanged", PrevMovementMode, PreviousCustomMode); }
@@ -3339,6 +3344,7 @@ struct AShooterCharacter : APrimalCharacter
 	FieldValue<long double> LastNotStuckTimeField() { return { this, "AShooterCharacter.LastNotStuckTime" }; }
 	FieldValue<USoundBase *> ProneMoveSoundField() { return { this, "AShooterCharacter.ProneMoveSound" }; }
 	FieldValue<long double> UploadEarliestValidTimeField() { return { this, "AShooterCharacter.UploadEarliestValidTime" }; }
+	FieldValue<long double> LastCollisionStuckTimeField() { return { this, "AShooterCharacter.LastCollisionStuckTime" }; }
 	FieldValue<int> SimulatedLastFrameProcessedForceUpdateAimedActorsField() { return { this, "AShooterCharacter.SimulatedLastFrameProcessedForceUpdateAimedActors" }; }
 	FieldValue<FVector> OriginalLastHitWallSweepCheckLocationField() { return { this, "AShooterCharacter.OriginalLastHitWallSweepCheckLocation" }; }
 	FieldValue<int> LastCapsuleAttachmentChangedIncrementField() { return { this, "AShooterCharacter.LastCapsuleAttachmentChangedIncrement" }; }
@@ -3963,6 +3969,7 @@ struct UPrimalCharacterStatusComponent
 	void SetTamed(float TameIneffectivenessModifier) { NativeCall<void, float>(this, "UPrimalCharacterStatusComponent.SetTamed", TameIneffectivenessModifier); }
 	void ApplyTamingStatModifiers(float TameIneffectivenessModifier) { NativeCall<void, float>(this, "UPrimalCharacterStatusComponent.ApplyTamingStatModifiers", TameIneffectivenessModifier); }
 	FString * GetStatusValueString(FString * result, EPrimalCharacterStatusValue::Type ValueType, bool bValueOnly) { return NativeCall<FString *, FString *, EPrimalCharacterStatusValue::Type, bool>(this, "UPrimalCharacterStatusComponent.GetStatusValueString", result, ValueType, bValueOnly); }
+	FString * GetStatusNameString(FString * result, EPrimalCharacterStatusValue::Type ValueType) { return NativeCall<FString *, FString *, EPrimalCharacterStatusValue::Type>(this, "UPrimalCharacterStatusComponent.GetStatusNameString", result, ValueType); }
 	FString * GetStatusMaxValueString(FString * result, EPrimalCharacterStatusValue::Type ValueType, bool bValueOnly) { return NativeCall<FString *, FString *, EPrimalCharacterStatusValue::Type, bool>(this, "UPrimalCharacterStatusComponent.GetStatusMaxValueString", result, ValueType, bValueOnly); }
 	void AddExperience(float HowMuch, bool bShareWithTribe, EXPType::Type XPType) { NativeCall<void, float, bool, EXPType::Type>(this, "UPrimalCharacterStatusComponent.AddExperience", HowMuch, bShareWithTribe, XPType); }
 	int GetNumLevelUpsAvailable() { return NativeCall<int>(this, "UPrimalCharacterStatusComponent.GetNumLevelUpsAvailable"); }
@@ -4049,6 +4056,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	FieldValue<float> BabyChanceOfTwinsField() { return { this, "APrimalDinoCharacter.BabyChanceOfTwins" }; }
 	FieldValue<float> BabyGestationSpeedField() { return { this, "APrimalDinoCharacter.BabyGestationSpeed" }; }
 	FieldValue<float> ExtraBabyGestationSpeedMultiplierField() { return { this, "APrimalDinoCharacter.ExtraBabyGestationSpeedMultiplier" }; }
+	FieldValue<float> AutoFadeOutAfterTameTimeField() { return { this, "APrimalDinoCharacter.AutoFadeOutAfterTameTime" }; }
 	FieldValue<long double> LastEggBoostedTimeField() { return { this, "APrimalDinoCharacter.LastEggBoostedTime" }; }
 	FieldValue<float> WildPercentageChanceOfBabyField() { return { this, "APrimalDinoCharacter.WildPercentageChanceOfBaby" }; }
 	FieldValue<float> WildBabyAgeWeightField() { return { this, "APrimalDinoCharacter.WildBabyAgeWeight" }; }
@@ -4059,7 +4067,6 @@ struct APrimalDinoCharacter : APrimalCharacter
 	FieldValue<float> BabyAgeField() { return { this, "APrimalDinoCharacter.BabyAge" }; }
 	FieldValue<float> MaxPercentOfCapsulHeightAllowedForIKField() { return { this, "APrimalDinoCharacter.MaxPercentOfCapsulHeightAllowedForIK" }; }
 	FieldValue<float> SlopeBiasForMaxCapsulePercentField() { return { this, "APrimalDinoCharacter.SlopeBiasForMaxCapsulePercent" }; }
-	FieldValue<float> AutoFadeOutAfterTameTimeField() { return { this, "APrimalDinoCharacter.AutoFadeOutAfterTameTime" }; }
 	FieldValue<float> FlyingForceRotationRateModifierField() { return { this, "APrimalDinoCharacter.FlyingForceRotationRateModifier" }; }
 	FieldValue<TArray<FName>> HideBoneNamesField() { return { this, "APrimalDinoCharacter.HideBoneNames" }; }
 	FieldValue<FString> HideBonesStringField() { return { this, "APrimalDinoCharacter.HideBonesString" }; }
@@ -4820,6 +4827,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	bool AddPassenger(APrimalCharacter * Character, int PassengerSeatIndex, bool bForcePassenger, bool bAllowFlyersAndWaterDinos) { return NativeCall<bool, APrimalCharacter *, int, bool, bool>(this, "APrimalDinoCharacter.AddPassenger", Character, PassengerSeatIndex, bForcePassenger, bAllowFlyersAndWaterDinos); }
 	void RemovePassenger(APrimalCharacter * Character, bool bFromCharacter, bool bFromPlayerController) { NativeCall<void, APrimalCharacter *, bool, bool>(this, "APrimalDinoCharacter.RemovePassenger", Character, bFromCharacter, bFromPlayerController); }
 	bool CheckLocalPassengers() { return NativeCall<bool>(this, "APrimalDinoCharacter.CheckLocalPassengers"); }
+	bool IsPassengerSeatAvailable(int PassengerSeatIndex) { return NativeCall<bool, int>(this, "APrimalDinoCharacter.IsPassengerSeatAvailable", PassengerSeatIndex); }
 	bool CanTakePassenger(APrimalCharacter * Character, int PassengerSeatIndex, bool bForcePassenger, bool bAllowFlyersAndWaterDinos) { return NativeCall<bool, APrimalCharacter *, int, bool, bool>(this, "APrimalDinoCharacter.CanTakePassenger", Character, PassengerSeatIndex, bForcePassenger, bAllowFlyersAndWaterDinos); }
 	int GetNumPassengerSeats(bool bOnlyManualPassengerSeats) { return NativeCall<int, bool>(this, "APrimalDinoCharacter.GetNumPassengerSeats", bOnlyManualPassengerSeats); }
 	FSaddlePassengerSeatDefinition * GetPassengerSeatDefinition(char SeatIndex) { return NativeCall<FSaddlePassengerSeatDefinition *, char>(this, "APrimalDinoCharacter.GetPassengerSeatDefinition", SeatIndex); }
@@ -4840,6 +4848,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	void ClearRider(bool FromRider, bool bCancelForceLand, bool SpawnDinoDefaultController, int OverrideUnboardDirection) { NativeCall<void, bool, bool, bool, int>(this, "APrimalDinoCharacter.ClearRider", FromRider, bCancelForceLand, SpawnDinoDefaultController, OverrideUnboardDirection); }
 	void ControllerLeavingGame(AShooterPlayerController * theController) { NativeCall<void, AShooterPlayerController *>(this, "APrimalDinoCharacter.ControllerLeavingGame", theController); }
 	FString * GetEntryString(FString * result) { return NativeCall<FString *, FString *>(this, "APrimalDinoCharacter.GetEntryString", result); }
+	UTexture2D * GetEntryIcon(UObject * AssociatedDataObject, bool bIsEnabled) { return NativeCall<UTexture2D *, UObject *, bool>(this, "APrimalDinoCharacter.GetEntryIcon", AssociatedDataObject, bIsEnabled); }
 	UMaterialInterface * GetEntryIconMaterial(UObject * AssociatedDataObject, bool bIsEnabled) { return NativeCall<UMaterialInterface *, UObject *, bool>(this, "APrimalDinoCharacter.GetEntryIconMaterial", AssociatedDataObject, bIsEnabled); }
 	UObject * GetUObjectInterfaceDataListEntryInterface() { return NativeCall<UObject *>(this, "APrimalDinoCharacter.GetUObjectInterfaceDataListEntryInterface"); }
 	FString * GetEntryDescription(FString * result) { return NativeCall<FString *, FString *>(this, "APrimalDinoCharacter.GetEntryDescription", result); }
@@ -4921,6 +4930,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	void UnclaimDino(bool bDestroyAI) { NativeCall<void, bool>(this, "APrimalDinoCharacter.UnclaimDino", bDestroyAI); }
 	bool TryMultiUse(APlayerController * ForPC, int UseIndex) { return NativeCall<bool, APlayerController *, int>(this, "APrimalDinoCharacter.TryMultiUse", ForPC, UseIndex); }
 	bool SetTurretMode_Implementation(bool enabled) { return NativeCall<bool, bool>(this, "APrimalDinoCharacter.SetTurretMode_Implementation", enabled); }
+	void SetTurretModeMovementRestrictions(bool enabled) { NativeCall<void, bool>(this, "APrimalDinoCharacter.SetTurretModeMovementRestrictions", enabled); }
 	void ClientMultiUse(APlayerController * ForPC, int UseIndex) { NativeCall<void, APlayerController *, int>(this, "APrimalDinoCharacter.ClientMultiUse", ForPC, UseIndex); }
 	void ChangeActorTeam(int NewTeam) { NativeCall<void, int>(this, "APrimalDinoCharacter.ChangeActorTeam", NewTeam); }
 	void LinkedSupplyCrateDestroyed(APrimalStructureItemContainer_SupplyCrate * aCrate) { NativeCall<void, APrimalStructureItemContainer_SupplyCrate *>(this, "APrimalDinoCharacter.LinkedSupplyCrateDestroyed", aCrate); }
