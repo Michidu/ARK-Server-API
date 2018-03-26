@@ -342,6 +342,18 @@
     <ClInclude Include="Core\Private\Helpers.h">
       <Filter>Core\Private</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\SharedPointer.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Templates\SharedPointerInternals.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\Windows\WindowsPlatformAtomics.h">
+      <Filter>Core\Public\API\UE\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformAtomics.h">
+      <Filter>Core\Public\API\UE\GenericPlatform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="version.cpp" />

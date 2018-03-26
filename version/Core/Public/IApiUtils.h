@@ -176,7 +176,7 @@ namespace ArkApi
 				if (player_state)
 				{
 					FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()()
-					                                                                              .UniqueNetId.Object);
+					                                                                              .UniqueNetId.Get());
 					steam_id = steam_net_id->UniqueNetId;
 				}
 			}

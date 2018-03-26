@@ -6,6 +6,7 @@
 #include "Containers/TArray.h"
 #include "Containers/FString.h"
 #include "Containers/EnumAsByte.h"
+#include "Templates/SharedPointer.h"
 #include "API/Fields.h"
 #include "API/Enums.h"
 
@@ -68,26 +69,6 @@ struct UFunction
 struct FBox
 {
 };
-
-template <typename ObjectType, int Dummy = int()>
-struct TSharedPtr
-{
-	ObjectType* Object{};
-	short int SharedReferenceCount{};
-
-	FORCEINLINE ObjectType& operator*() const
-	{
-		return *Object;
-	}
-
-	FORCEINLINE ObjectType* operator->() const
-	{
-		return Object;
-	}
-};
-
-template <typename ObjectType, int Dummy = int()>
-using TSharedRef = TSharedPtr<ObjectType>;
 
 template <typename ObjectType>
 struct TSubobjectPtr
@@ -697,6 +678,11 @@ struct FHttpResponseWinInet
 	void ProcessResponseHeaders() { NativeCall<void>(this, "FHttpResponseWinInet.ProcessResponseHeaders"); }
 	FString * QueryHeaderString(FString * result, unsigned int HttpQueryInfoLevel, FString * HeaderName) { return NativeCall<FString *, FString *, unsigned int, FString *>(this, "FHttpResponseWinInet.QueryHeaderString", result, HttpQueryInfoLevel, HeaderName); }
 	int QueryContentLength() { return NativeCall<int>(this, "FHttpResponseWinInet.QueryContentLength"); }
+	~FHttpResponseWinInet() { NativeCall<void>(this, "FHttpResponseWinInet.~FHttpResponseWinInet"); }
+};
+
+struct IHttpResponse : FHttpResponseWinInet
+{
 };
 
 struct FHttpRequestWinInet
@@ -733,8 +719,9 @@ struct FHttpRequestWinInet
 	FString * GenerateHeaderBuffer(FString * result, unsigned int ContentLength) { return NativeCall<FString *, FString *, unsigned int>(this, "FHttpRequestWinInet.GenerateHeaderBuffer", result, ContentLength); }
 	void CancelRequest() { NativeCall<void>(this, "FHttpRequestWinInet.CancelRequest"); }
 	EHttpRequestStatus::Type GetStatus() { return NativeCall<EHttpRequestStatus::Type>(this, "FHttpRequestWinInet.GetStatus"); }
-	//TSharedPtr<IHttpResponse, 1> * GetResponse(TSharedPtr<IHttpResponse, 1> * result) { return NativeCall<TSharedPtr<IHttpResponse, 1> *, TSharedPtr<IHttpResponse, 1> *>(this, "FHttpRequestWinInet.GetResponse", result); }
+	TSharedPtr<IHttpResponse, 1> * GetResponse(TSharedPtr<IHttpResponse, 1> * result) { return NativeCall<TSharedPtr<IHttpResponse, 1> *, TSharedPtr<IHttpResponse, 1> *>(this, "FHttpRequestWinInet.GetResponse", result); }
 	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "FHttpRequestWinInet.Tick", DeltaSeconds); }
+	~FHttpRequestWinInet() { NativeCall<void>(this, "FHttpRequestWinInet.~FHttpRequestWinInet"); }
 };
 
 struct IHttpRequest : FHttpRequestWinInet

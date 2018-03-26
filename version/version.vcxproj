@@ -49,6 +49,7 @@
     <ClInclude Include="Core\Public\API\UE\Containers\SparseArray.h" />
     <ClInclude Include="Core\Public\API\UE\Containers\TArray.h" />
     <ClInclude Include="Core\Public\API\UE\Delegates\IntegerSequence.h" />
+    <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformAtomics.h" />
     <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformMath.h" />
     <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformMemory.h" />
     <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformString.h" />
@@ -92,6 +93,8 @@
     <ClInclude Include="Core\Public\API\UE\Templates\RemoveCV.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\RemoveReference.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\ReversePredicate.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\SharedPointer.h" />
+    <ClInclude Include="Core\Public\API\UE\Templates\SharedPointerInternals.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\Sorting.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\Tuple.h" />
     <ClInclude Include="Core\Public\API\UE\Templates\TypeCompatibleBytes.h" />
@@ -100,6 +103,7 @@
     <ClInclude Include="Core\Public\API\UE\Templates\UnrealTypeTraits.h" />
     <ClInclude Include="Core\Public\API\UE\UE.h" />
     <ClInclude Include="Core\Public\API\UE\Windows\MicrosoftPlatformString.h" />
+    <ClInclude Include="Core\Public\API\UE\Windows\WindowsPlatformAtomics.h" />
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
