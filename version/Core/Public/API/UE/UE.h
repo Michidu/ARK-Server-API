@@ -72,8 +72,8 @@ struct FBox
 template <typename ObjectType, int Dummy = int()>
 struct TSharedPtr
 {
-	ObjectType* Object;
-	short int SharedReferenceCount;
+	ObjectType* Object{};
+	short int SharedReferenceCount{};
 
 	FORCEINLINE ObjectType& operator*() const
 	{
@@ -85,6 +85,9 @@ struct TSharedPtr
 		return Object;
 	}
 };
+
+template <typename ObjectType, int Dummy = int()>
+using TSharedRef = TSharedPtr<ObjectType>;
 
 template <typename ObjectType>
 struct TSubobjectPtr
@@ -662,4 +665,97 @@ struct FCollisionResponseParams
 struct FCollisionObjectQueryParams
 {
 	int ObjectTypesToQuery;
+};
+
+struct FHttpRequestWinInet;
+
+struct FHttpResponseWinInet
+{
+	FieldValue<FHttpRequestWinInet *> RequestField() { return { this, "FHttpResponseWinInet.Request" }; }
+	FieldValue<int> AsyncBytesReadField() { return { this, "FHttpResponseWinInet.AsyncBytesRead" }; }
+	FieldValue<int> TotalBytesReadField() { return { this, "FHttpResponseWinInet.TotalBytesRead" }; }
+	//FieldValue<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >> ResponseHeadersField() { return { this, "FHttpResponseWinInet.ResponseHeaders" }; }
+	FieldValue<int> ResponseCodeField() { return { this, "FHttpResponseWinInet.ResponseCode" }; }
+	FieldValue<int> ContentLengthField() { return { this, "FHttpResponseWinInet.ContentLength" }; }
+	FieldValue<TArray<unsigned char>> ResponsePayloadField() { return { this, "FHttpResponseWinInet.ResponsePayload" }; }
+	FieldValue<volatile int> bIsReadyField() { return { this, "FHttpResponseWinInet.bIsReady" }; }
+	FieldValue<volatile int> bResponseSucceededField() { return { this, "FHttpResponseWinInet.bResponseSucceeded" }; }
+	FieldValue<int> MaxReadBufferSizeField() { return { this, "FHttpResponseWinInet.MaxReadBufferSize" }; }
+
+	// Functions
+
+	FString * GetURL(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpResponseWinInet.GetURL", result); }
+	FString * GetContentAsString(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpResponseWinInet.GetContentAsString", result); }
+	FString * GetURLParameter(FString * result, FString * ParameterName) { return NativeCall<FString *, FString *, FString *>(this, "FHttpResponseWinInet.GetURLParameter", result, ParameterName); }
+	FString * GetHeader(FString * result, FString * HeaderName) { return NativeCall<FString *, FString *, FString *>(this, "FHttpResponseWinInet.GetHeader", result, HeaderName); }
+	TArray<FString> * GetAllHeaders(TArray<FString> * result) { return NativeCall<TArray<FString> *, TArray<FString> *>(this, "FHttpResponseWinInet.GetAllHeaders", result); }
+	FString * GetContentType(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpResponseWinInet.GetContentType", result); }
+	int GetContentLength() { return NativeCall<int>(this, "FHttpResponseWinInet.GetContentLength"); }
+	TArray<unsigned char> * GetContent() { return NativeCall<TArray<unsigned char> *>(this, "FHttpResponseWinInet.GetContent"); }
+	int GetResponseCode() { return NativeCall<int>(this, "FHttpResponseWinInet.GetResponseCode"); }
+	void ProcessResponse() { NativeCall<void>(this, "FHttpResponseWinInet.ProcessResponse"); }
+	void ProcessResponseHeaders() { NativeCall<void>(this, "FHttpResponseWinInet.ProcessResponseHeaders"); }
+	FString * QueryHeaderString(FString * result, unsigned int HttpQueryInfoLevel, FString * HeaderName) { return NativeCall<FString *, FString *, unsigned int, FString *>(this, "FHttpResponseWinInet.QueryHeaderString", result, HttpQueryInfoLevel, HeaderName); }
+	int QueryContentLength() { return NativeCall<int>(this, "FHttpResponseWinInet.QueryContentLength"); }
+};
+
+struct FHttpRequestWinInet
+{
+	FieldValue<FString> RequestVerbField() { return { this, "FHttpRequestWinInet.RequestVerb" }; }
+	//FieldValue<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >> RequestHeadersField() { return { this, "FHttpRequestWinInet.RequestHeaders" }; }
+	FieldValue<TArray<unsigned char>> RequestPayloadField() { return { this, "FHttpRequestWinInet.RequestPayload" }; }
+	FieldValue<TSharedPtr<FHttpResponseWinInet, 1>> ResponseField() { return { this, "FHttpRequestWinInet.Response" }; }
+	FieldValue<EHttpRequestStatus::Type> CompletionStatusField() { return { this, "FHttpRequestWinInet.CompletionStatus" }; }
+	FieldValue<void *> ConnectionHandleField() { return { this, "FHttpRequestWinInet.ConnectionHandle" }; }
+	FieldValue<void *> RequestHandleField() { return { this, "FHttpRequestWinInet.RequestHandle" }; }
+	FieldValue<volatile int> ElapsedTimeSinceLastServerResponseField() { return { this, "FHttpRequestWinInet.ElapsedTimeSinceLastServerResponse" }; }
+	FieldValue<int> ProgressBytesSentField() { return { this, "FHttpRequestWinInet.ProgressBytesSent" }; }
+	FieldValue<long double> StartRequestTimeField() { return { this, "FHttpRequestWinInet.StartRequestTime" }; }
+	FieldValue<bool> bDebugVerboseField() { return { this, "FHttpRequestWinInet.bDebugVerbose" }; }
+
+	// Functions
+
+	FString * GetURL(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpRequestWinInet.GetURL", result); }
+	FString * GetURLParameter(FString * result, FString * ParameterName) { return NativeCall<FString *, FString *, FString *>(this, "FHttpRequestWinInet.GetURLParameter", result, ParameterName); }
+	FString * GetHeader(FString * result, FString * HeaderName) { return NativeCall<FString *, FString *, FString *>(this, "FHttpRequestWinInet.GetHeader", result, HeaderName); }
+	TArray<FString> * GetAllHeaders(TArray<FString> * result) { return NativeCall<TArray<FString> *, TArray<FString> *>(this, "FHttpRequestWinInet.GetAllHeaders", result); }
+	FString * GetContentType(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpRequestWinInet.GetContentType", result); }
+	int GetContentLength() { return NativeCall<int>(this, "FHttpRequestWinInet.GetContentLength"); }
+	FString * GetVerb(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpRequestWinInet.GetVerb", result); }
+	void SetVerb(FString * Verb) { NativeCall<void, FString *>(this, "FHttpRequestWinInet.SetVerb", Verb); }
+	void SetURL(FString * URL) { NativeCall<void, FString *>(this, "FHttpRequestWinInet.SetURL", URL); }
+	void SetContent(TArray<unsigned char> * ContentPayload) { NativeCall<void, TArray<unsigned char> *>(this, "FHttpRequestWinInet.SetContent", ContentPayload); }
+	void SetContentAsString(FString * ContentString) { NativeCall<void, FString *>(this, "FHttpRequestWinInet.SetContentAsString", ContentString); }
+	void SetHeader(FString * HeaderName, FString * HeaderValue) { NativeCall<void, FString *, FString *>(this, "FHttpRequestWinInet.SetHeader", HeaderName, HeaderValue); }
+	bool ProcessRequest() { return NativeCall<bool>(this, "FHttpRequestWinInet.ProcessRequest"); }
+	bool StartRequest() { return NativeCall<bool>(this, "FHttpRequestWinInet.StartRequest"); }
+	void FinishedRequest() { NativeCall<void>(this, "FHttpRequestWinInet.FinishedRequest"); }
+	FString * GenerateHeaderBuffer(FString * result, unsigned int ContentLength) { return NativeCall<FString *, FString *, unsigned int>(this, "FHttpRequestWinInet.GenerateHeaderBuffer", result, ContentLength); }
+	void CancelRequest() { NativeCall<void>(this, "FHttpRequestWinInet.CancelRequest"); }
+	EHttpRequestStatus::Type GetStatus() { return NativeCall<EHttpRequestStatus::Type>(this, "FHttpRequestWinInet.GetStatus"); }
+	//TSharedPtr<IHttpResponse, 1> * GetResponse(TSharedPtr<IHttpResponse, 1> * result) { return NativeCall<TSharedPtr<IHttpResponse, 1> *, TSharedPtr<IHttpResponse, 1> *>(this, "FHttpRequestWinInet.GetResponse", result); }
+	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "FHttpRequestWinInet.Tick", DeltaSeconds); }
+};
+
+struct IHttpRequest : FHttpRequestWinInet
+{
+};
+
+struct FHttpModule
+{
+	//FieldValue<FHttpManager *> HttpManagerField() { return { this, "FHttpModule.HttpManager" }; }
+	FieldValue<float> HttpTimeoutField() { return { this, "FHttpModule.HttpTimeout" }; }
+	FieldValue<float> HttpConnectionTimeoutField() { return { this, "FHttpModule.HttpConnectionTimeout" }; }
+	FieldValue<float> HttpReceiveTimeoutField() { return { this, "FHttpModule.HttpReceiveTimeout" }; }
+	FieldValue<float> HttpSendTimeoutField() { return { this, "FHttpModule.HttpSendTimeout" }; }
+	FieldValue<int> HttpMaxConnectionsPerServerField() { return { this, "FHttpModule.HttpMaxConnectionsPerServer" }; }
+	FieldValue<int> MaxReadBufferSizeField() { return { this, "FHttpModule.MaxReadBufferSize" }; }
+	FieldValue<bool> bEnableHttpField() { return { this, "FHttpModule.bEnableHttp" }; }
+
+	// Functions
+
+	void StartupModule() { NativeCall<void>(this, "FHttpModule.StartupModule"); }
+	void ShutdownModule() { NativeCall<void>(this, "FHttpModule.ShutdownModule"); }
+	static FHttpModule * Get() { return NativeCall<FHttpModule *>(nullptr, "FHttpModule.Get"); }
+	TSharedRef<IHttpRequest, 0> * CreateRequest(TSharedRef<IHttpRequest, 0> * result) { return NativeCall<TSharedRef<IHttpRequest, 0> *, TSharedRef<IHttpRequest, 0> *>(this, "FHttpModule.CreateRequest", result); }
 };

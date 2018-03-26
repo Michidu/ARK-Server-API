@@ -1037,3 +1037,14 @@ namespace EPrimalStatsValueTypes
 		MAX = 0x7,
 	};
 }
+
+namespace EHttpRequestStatus
+{
+	enum Type
+	{
+		NotStarted = 0x0,
+		Processing = 0x1,
+		Failed = 0x2,
+		Succeeded = 0x3,
+	};
+}

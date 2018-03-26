@@ -81,7 +81,10 @@
     "UKismetSystemLibrary",
     "USphereComponent",
     "UPrimitiveComponent",
-    "UActorComponent"
+    "UActorComponent",
+    "FHttpModule",
+    "FHttpRequestWinInet",
+    "FHttpResponseWinInet"
   ],
   "functions":[
     "StaticLoadObject",
