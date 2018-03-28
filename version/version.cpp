@@ -27,6 +27,28 @@ void OpenConsole()
 	freopen_s(&p_cout, "conout$", "w", stdout);
 }
 
+void PruneOldLogs()
+{
+	using namespace ArkApi;
+
+	namespace fs = std::experimental::filesystem;
+
+	const auto now = std::chrono::system_clock::now();
+
+	const std::string current_dir = Tools::GetCurrentDir();
+
+	for (const auto& file : fs::directory_iterator(current_dir + "/logs"))
+	{
+		const auto ftime = last_write_time(file);
+
+		auto diff = std::chrono::duration_cast<std::chrono::hours>(now - ftime);
+		if (diff.count() >= 24 * 14) // 14 days
+		{
+			fs::remove(file);
+		}
+	}
+}
+
 void Init()
 {
 	using namespace ArkApi;
@@ -39,6 +61,8 @@ void Init()
 
 	if (!fs::exists(current_dir + "/logs"))
 		fs::create_directory(current_dir + "/logs");
+
+	PruneOldLogs();
 
 	Log::Get().Init("API");
 
