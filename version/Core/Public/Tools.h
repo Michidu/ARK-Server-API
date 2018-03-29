@@ -24,4 +24,9 @@ namespace ArkApi::Tools
 	 * \brief Returns true if plugin was loaded, false otherwise
 	 */
 	ARK_API bool IsPluginLoaded(const std::string& plugin_name);
+
+	/**
+	* \brief Returns Current Running Api Version
+	*/
+	ARK_API std::string GetApiVer();
 }

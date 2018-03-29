@@ -70,4 +70,9 @@ namespace ArkApi::Tools
 	{
 		return PluginManager::Get().IsPluginLoaded(plugin_name);
 	}
+
+	std::string GetApiVer()
+	{
+		return API_VERSION;
+	}
 }
