@@ -37,22 +37,22 @@ RT GetNativeDataPointerField(const std::string& field_name)
 }
 
 template <typename RT, typename T>
-RT GetNativeBitField(const void* _this, const std::string& field_name)
+RT GetNativeBitField(const LPVOID _this, const std::string& field_name)
 {
 	const auto bf = GetBitField(_this, field_name);
-	T result = ((*reinterpret_cast<T*>(bf.offset)) >> bf.bit_position) & ~0ULL >> sizeof(unsigned long long) * 8 - bf.
-		num_bits;
+	T result =
+		((*reinterpret_cast<T*>(bf.offset)) >> bf.bit_position) & (~0ULL >> (sizeof(unsigned long long) * 8 - bf.num_bits));
 
 	return static_cast<RT>(result);
 }
 
-template <typename T>
-void SetNativeBitField(LPVOID _this, const std::string& field_name, T new_value)
+template <typename RT, typename T>
+void SetNativeBitField(LPVOID _this, const std::string& field_name, RT new_value)
 {
 	const auto bf = GetBitField(_this, field_name);
-	const auto mask = ~0ULL >> sizeof(unsigned long long) * 8 - bf.num_bits << bf.bit_position;
-	*reinterpret_cast<T*>(bf.offset) = (*reinterpret_cast<T*>(bf.offset) & ~mask) | ((new_value << bf.bit_position) & mask
-	);
+	const auto mask = (~0ULL >> ((sizeof(unsigned long long) * 8) - bf.num_bits)) << bf.bit_position;
+	*reinterpret_cast<T*>(bf.offset) =
+		(*reinterpret_cast<T*>(bf.offset) & ~mask) | ((static_cast<T>(new_value) << bf.bit_position) & mask);
 }
 
 template <typename T>
@@ -182,9 +182,9 @@ public:
 		return GetNativeBitField<RT, T>(parent_, field_name_);
 	}
 
-	BitFieldValue& operator=(const T& other)
+	BitFieldValue& operator=(RT other)
 	{
-		SetNativeBitField<T>(parent_, field_name_, other);
+		SetNativeBitField<RT, T>(parent_, field_name_, other);
 		return *this;
 	}
 
@@ -193,9 +193,9 @@ public:
 		return GetNativeBitField<RT, T>(parent_, field_name_);
 	}
 
-	void Set(const T& other)
+	void Set(RT other)
 	{
-		SetNativeBitField<T>(parent_, field_name_, other);
+		SetNativeBitField<RT, T>(parent_, field_name_, other);
 	}
 
 private:

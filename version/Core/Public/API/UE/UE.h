@@ -306,11 +306,11 @@ struct UClass : UStruct
 	FieldValue<TArray<UField *>> NetFieldsField() { return { this, "UClass.NetFields" }; }
 	FieldValue<UObject *> ClassDefaultObjectField() { return { this, "UClass.ClassDefaultObject" }; }
 	FieldValue<bool> bCookedField() { return { this, "UClass.bCooked" }; }
-	//FieldValue<TMap<FName, UFunction *, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, UFunction *, 0> >> FuncMapField() { return { this, "UClass.FuncMap" }; }
+	FieldValue<TMap<FName, UFunction *, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, UFunction *, 0> >> FuncMapField() { return { this, "UClass.FuncMap" }; }
+	//FieldValue<TArray<FNativeFunctionLookup>> NativeFunctionLookupTableField() { return { this, "UClass.NativeFunctionLookupTable" }; }
 
 	// Functions
 
-	static UClass* StaticClass() { return NativeCall<UClass *>(nullptr, "UClass.StaticClass"); }
 	UObject * GetDefaultObject(bool bCreateIfNeeded) { return NativeCall<UObject *, bool>(this, "UClass.GetDefaultObject", bCreateIfNeeded); }
 	void AddFunctionToFunctionMap(UFunction * NewFunction) { NativeCall<void, UFunction *>(this, "UClass.AddFunctionToFunctionMap", NewFunction); }
 	void PostInitProperties() { NativeCall<void>(this, "UClass.PostInitProperties"); }

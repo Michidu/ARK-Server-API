@@ -311,7 +311,7 @@ struct APrimalBuff
 	void SetBuffCauser(AActor * CausedBy) { NativeCall<void, AActor *>(this, "APrimalBuff.SetBuffCauser", CausedBy); }
 };
 
-struct UPrimalEngramEntry
+struct UPrimalEngramEntry : UObject
 {
 	FieldValue<int> RequiredCharacterLevelField() { return { this, "UPrimalEngramEntry.RequiredCharacterLevel" }; }
 	FieldValue<int> RequiredEngramPointsField() { return { this, "UPrimalEngramEntry.RequiredEngramPoints" }; }

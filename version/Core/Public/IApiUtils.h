@@ -348,10 +348,11 @@ namespace ArkApi
 		 * \param location Spawn position. If null, dino will be spawned near player
 		 * \param lvl Level of the dino
 		 * \param force_tame Force tame
+		 * \param neutered Neuter dino
 		 * \return Spawned dino or null
 		 */
 		APrimalDinoCharacter* SpawnDino(AShooterPlayerController* player, FString blueprint, FVector* location, int lvl,
-		                                bool force_tame) const
+		                                bool force_tame, bool neutered = false) const
 		{
 			if (!player)
 			{
@@ -386,6 +387,9 @@ namespace ArkApi
 
 					dino->TameDino(player, false, 0);
 				}
+
+				if (neutered)
+					dino->DoNeuter_Implementation();
 
 				dino->AbsoluteBaseLevelField() = lvl;
 

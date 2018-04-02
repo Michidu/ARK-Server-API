@@ -123,6 +123,22 @@ public:
 	}
 
 	/**
+	* Constructor to create FString from std::string
+	*/
+	FORCEINLINE explicit FString(const std::string& str)
+		: FString(str.c_str())
+	{
+	}
+	
+	/**
+	* Constructor to create FString from std::wstring
+	*/
+	FORCEINLINE explicit FString(const std::wstring& str)
+		: FString(str.c_str())
+	{
+	}
+
+	/**
 	* Copy Assignment from array of TCHAR
 	*
 	* @param Other array of TCHAR
