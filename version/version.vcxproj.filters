@@ -62,6 +62,9 @@
     <Filter Include="Core\Public\Logger">
       <UniqueIdentifier>{84ca9881-961a-4a9f-b527-7cf45ea98693}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Private\Tools">
+      <UniqueIdentifier>{42c6cb7c-645b-4e1d-9da8-7da22b6efea5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="version_asm.asm" />
@@ -372,9 +375,6 @@
     <ClCompile Include="Core\Private\HooksImpl.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
-    <ClCompile Include="Core\Private\Tools.cpp">
-      <Filter>Core\Private</Filter>
-    </ClCompile>
     <ClCompile Include="Core\Private\Commands.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
@@ -392,6 +392,12 @@
     </ClCompile>
     <ClCompile Include="Core\Private\Helpers.cpp">
       <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Tools\Requests.cpp">
+      <Filter>Core\Private\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Tools\Tools.cpp">
+      <Filter>Core\Private\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

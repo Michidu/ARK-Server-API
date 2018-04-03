@@ -120,7 +120,8 @@
     <ClCompile Include="Core\Private\Offsets.cpp" />
     <ClCompile Include="Core\Private\PDBReader\PDBReader.cpp" />
     <ClCompile Include="Core\Private\PluginManager\PluginManager.cpp" />
-    <ClCompile Include="Core\Private\Tools.cpp" />
+    <ClCompile Include="Core\Private\Tools\Requests.cpp" />
+    <ClCompile Include="Core\Private\Tools\Tools.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
