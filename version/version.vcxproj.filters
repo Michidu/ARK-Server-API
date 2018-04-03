@@ -354,6 +354,9 @@
     <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformAtomics.h">
       <Filter>Core\Public\API\UE\GenericPlatform</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Public\Requests.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="version.cpp" />

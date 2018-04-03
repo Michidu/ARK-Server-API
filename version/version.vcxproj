@@ -104,6 +104,7 @@
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
     <ClInclude Include="Core\Public\Logger\Logger.h" />
+    <ClInclude Include="Core\Public\Requests.h" />
     <ClInclude Include="Core\Public\Tools.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MinHook.h" />
