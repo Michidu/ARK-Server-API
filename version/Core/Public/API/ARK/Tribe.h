@@ -20,24 +20,24 @@ struct FTribeGovernment
 
 struct FTribeData
 {
-	FieldValue<FString> TribeNameField() { return { this, "FTribeData.TribeName" }; }
-	FieldValue<long double> LastNameChangeTimeField() { return { this, "FTribeData.LastNameChangeTime" }; }
-	FieldValue<unsigned int> OwnerPlayerDataIDField() { return { this, "FTribeData.OwnerPlayerDataID" }; }
-	FieldValue<int> TribeIDField() { return { this, "FTribeData.TribeID" }; }
-	FieldValue<TArray<FString>> MembersPlayerNameField() { return { this, "FTribeData.MembersPlayerName" }; }
-	FieldValue<TArray<unsigned int>> MembersPlayerDataIDField() { return { this, "FTribeData.MembersPlayerDataID" }; }
-	FieldValue<TArray<unsigned char>> MembersRankGroupsField() { return { this, "FTribeData.MembersRankGroups" }; }
-	FieldValue<TArray<unsigned int>> TribeAdminsField() { return { this, "FTribeData.TribeAdmins" }; }
-	FieldValue<TArray<FTribeAlliance>> TribeAlliancesField() { return { this, "FTribeData.TribeAlliances" }; }
-	FieldValue<bool> bSetGovernmentField() { return { this, "FTribeData.bSetGovernment" }; }
-	FieldValue<FTribeGovernment> TribeGovernmentField() { return { this, "FTribeData.TribeGovernment" }; }
-	FieldValue<TArray<FPrimalPlayerCharacterConfigStruct>> MembersConfigsField() { return { this, "FTribeData.MembersConfigs" }; }
-	FieldValue<TArray<FTribeWar>> TribeWarsField() { return { this, "FTribeData.TribeWars" }; }
-	FieldValue<TArray<FString>> TribeLogField() { return { this, "FTribeData.TribeLog" }; }
-	FieldValue<int> LogIndexField() { return { this, "FTribeData.LogIndex" }; }
-	FieldValue<TArray<FTribeRankGroup>> TribeRankGroupsField() { return { this, "FTribeData.TribeRankGroups" }; }
-	FieldValue<int> NumTribeDinosField() { return { this, "FTribeData.NumTribeDinos" }; }
-	FieldValue<TSet<unsigned __int64, DefaultKeyFuncs<unsigned __int64, 0>, FDefaultSetAllocator>> MembersPlayerDataIDSet_ServerField() { return { this, "FTribeData.MembersPlayerDataIDSet_Server" }; }
+	FString& TribeNameField() { return *GetNativePointerField<FString*>(this, "FTribeData.TribeName"); }
+	long double& LastNameChangeTimeField() { return *GetNativePointerField<long double*>(this, "FTribeData.LastNameChangeTime"); }
+	unsigned int& OwnerPlayerDataIDField() { return *GetNativePointerField<unsigned int*>(this, "FTribeData.OwnerPlayerDataID"); }
+	int& TribeIDField() { return *GetNativePointerField<int*>(this, "FTribeData.TribeID"); }
+	TArray<FString>& MembersPlayerNameField() { return *GetNativePointerField<TArray<FString>*>(this, "FTribeData.MembersPlayerName"); }
+	TArray<unsigned int>& MembersPlayerDataIDField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "FTribeData.MembersPlayerDataID"); }
+	TArray<unsigned char>& MembersRankGroupsField() { return *GetNativePointerField<TArray<unsigned char>*>(this, "FTribeData.MembersRankGroups"); }
+	TArray<unsigned int>& TribeAdminsField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "FTribeData.TribeAdmins"); }
+	TArray<FTribeAlliance>& TribeAlliancesField() { return *GetNativePointerField<TArray<FTribeAlliance>*>(this, "FTribeData.TribeAlliances"); }
+	bool& bSetGovernmentField() { return *GetNativePointerField<bool*>(this, "FTribeData.bSetGovernment"); }
+	FTribeGovernment& TribeGovernmentField() { return *GetNativePointerField<FTribeGovernment*>(this, "FTribeData.TribeGovernment"); }
+	TArray<FPrimalPlayerCharacterConfigStruct>& MembersConfigsField() { return *GetNativePointerField<TArray<FPrimalPlayerCharacterConfigStruct>*>(this, "FTribeData.MembersConfigs"); }
+	TArray<FTribeWar>& TribeWarsField() { return *GetNativePointerField<TArray<FTribeWar>*>(this, "FTribeData.TribeWars"); }
+	TArray<FString>& TribeLogField() { return *GetNativePointerField<TArray<FString>*>(this, "FTribeData.TribeLog"); }
+	int& LogIndexField() { return *GetNativePointerField<int*>(this, "FTribeData.LogIndex"); }
+	TArray<FTribeRankGroup>& TribeRankGroupsField() { return *GetNativePointerField<TArray<FTribeRankGroup>*>(this, "FTribeData.TribeRankGroups"); }
+	int& NumTribeDinosField() { return *GetNativePointerField<int*>(this, "FTribeData.NumTribeDinos"); }
+	TSet<unsigned __int64, DefaultKeyFuncs<unsigned __int64, 0>, FDefaultSetAllocator>& MembersPlayerDataIDSet_ServerField() { return *GetNativePointerField<TSet<unsigned __int64, DefaultKeyFuncs<unsigned __int64, 0>, FDefaultSetAllocator>*>(this, "FTribeData.MembersPlayerDataIDSet_Server"); }
 
 	// Functions
 

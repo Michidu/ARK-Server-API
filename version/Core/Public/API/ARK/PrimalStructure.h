@@ -2,30 +2,28 @@
 
 struct APrimalTargetableActor : AActor
 {
-	FieldValue<float> LowHealthPercentageField() { return { this, "APrimalTargetableActor.LowHealthPercentage" }; }
-	FieldValue<TSubclassOf<AActor>> DestructionActorTemplateField() { return { this, "APrimalTargetableActor.DestructionActorTemplate" }; }
-	FieldValue<float> LifeSpanAfterDeathField() { return { this, "APrimalTargetableActor.LifeSpanAfterDeath" }; }
-	FieldValue<USoundCue *> DeathSoundField() { return { this, "APrimalTargetableActor.DeathSound" }; }
-	FieldValue<float> PassiveDamageHealthReplicationPercentIntervalField() { return { this, "APrimalTargetableActor.PassiveDamageHealthReplicationPercentInterval" }; }
-	FieldValue<float> DamageNotifyTeamAggroMultiplierField() { return { this, "APrimalTargetableActor.DamageNotifyTeamAggroMultiplier" }; }
-	FieldValue<float> DamageNotifyTeamAggroRangeField() { return { this, "APrimalTargetableActor.DamageNotifyTeamAggroRange" }; }
-	FieldValue<float> DamageNotifyTeamAggroRangeFalloffField() { return { this, "APrimalTargetableActor.DamageNotifyTeamAggroRangeFalloff" }; }
-	FieldValue<FVector> DestructibleMeshLocationOffsetField() { return { this, "APrimalTargetableActor.DestructibleMeshLocationOffset" }; }
-	FieldValue<FVector> DestructibleMeshScaleOverrideField() { return { this, "APrimalTargetableActor.DestructibleMeshScaleOverride" }; }
-	FieldValue<FRotator> DestructibleMeshRotationOffsetField() { return { this, "APrimalTargetableActor.DestructibleMeshRotationOffset" }; }
-	FieldValue<FString> DescriptiveNameField() { return { this, "APrimalTargetableActor.DescriptiveName" }; }
-	FieldValue<float> ReplicatedHealthField() { return { this, "APrimalTargetableActor.ReplicatedHealth" }; }
-	FieldValue<float> HealthField() { return { this, "APrimalTargetableActor.Health" }; }
-	FieldValue<float> MaxHealthField() { return { this, "APrimalTargetableActor.MaxHealth" }; }
-	FieldValue<float> DestructibleMeshDeathImpulseScaleField() { return { this, "APrimalTargetableActor.DestructibleMeshDeathImpulseScale" }; }
-	FieldValue<float> LastReplicatedHealthValueField() { return { this, "APrimalTargetableActor.LastReplicatedHealthValue" }; }
-	FieldValue<TEnumAsByte<enum EShooterPhysMaterialType::Type>> TargetableDamageFXDefaultPhysMaterialField() { return { this, "APrimalTargetableActor.TargetableDamageFXDefaultPhysMaterial" }; }
-	//FieldValue<TSubclassOf<UPrimalStructureSettings>> StructureSettingsClassField() { return { this, "APrimalTargetableActor.StructureSettingsClass" }; }
-	//FieldValue<UPrimalStructureSettings *> MyStructureSettingsCDOField() { return { this, "APrimalTargetableActor.MyStructureSettingsCDO" }; }
-	FieldValue<float> LastHealthBeforeTakeDamageField() { return { this, "APrimalTargetableActor.LastHealthBeforeTakeDamage" }; }
-	FieldValue<long double> NextAllowRepairTimeField() { return { this, "APrimalTargetableActor.NextAllowRepairTime" }; }
-	FieldValue<float> LastPreBlueprintAdjustmentActualDamageField() { return { this, "APrimalTargetableActor.LastPreBlueprintAdjustmentActualDamage" }; }
-	FieldValue<float> LastReplicatedHealthField() { return { this, "APrimalTargetableActor.LastReplicatedHealth" }; }
+	float& LowHealthPercentageField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.LowHealthPercentage"); }
+	TSubclassOf<AActor>& DestructionActorTemplateField() { return *GetNativePointerField<TSubclassOf<AActor>*>(this, "APrimalTargetableActor.DestructionActorTemplate"); }
+	float& LifeSpanAfterDeathField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.LifeSpanAfterDeath"); }
+	USoundCue * DeathSoundField() { return *GetNativePointerField<USoundCue **>(this, "APrimalTargetableActor.DeathSound"); }
+	float& PassiveDamageHealthReplicationPercentIntervalField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.PassiveDamageHealthReplicationPercentInterval"); }
+	float& DamageNotifyTeamAggroMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.DamageNotifyTeamAggroMultiplier"); }
+	float& DamageNotifyTeamAggroRangeField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.DamageNotifyTeamAggroRange"); }
+	float& DamageNotifyTeamAggroRangeFalloffField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.DamageNotifyTeamAggroRangeFalloff"); }
+	FVector& DestructibleMeshLocationOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalTargetableActor.DestructibleMeshLocationOffset"); }
+	FVector& DestructibleMeshScaleOverrideField() { return *GetNativePointerField<FVector*>(this, "APrimalTargetableActor.DestructibleMeshScaleOverride"); }
+	FRotator& DestructibleMeshRotationOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalTargetableActor.DestructibleMeshRotationOffset"); }
+	FString& DescriptiveNameField() { return *GetNativePointerField<FString*>(this, "APrimalTargetableActor.DescriptiveName"); }
+	float& ReplicatedHealthField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.ReplicatedHealth"); }
+	float& HealthField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.Health"); }
+	float& MaxHealthField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.MaxHealth"); }
+	float& DestructibleMeshDeathImpulseScaleField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.DestructibleMeshDeathImpulseScale"); }
+	float& LastReplicatedHealthValueField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.LastReplicatedHealthValue"); }
+	TEnumAsByte<enum EShooterPhysMaterialType::Type>& TargetableDamageFXDefaultPhysMaterialField() { return *GetNativePointerField<TEnumAsByte<enum EShooterPhysMaterialType::Type>*>(this, "APrimalTargetableActor.TargetableDamageFXDefaultPhysMaterial"); }
+	float& LastHealthBeforeTakeDamageField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.LastHealthBeforeTakeDamage"); }
+	long double& NextAllowRepairTimeField() { return *GetNativePointerField<long double*>(this, "APrimalTargetableActor.NextAllowRepairTime"); }
+	float& LastPreBlueprintAdjustmentActualDamageField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.LastPreBlueprintAdjustmentActualDamage"); }
+	float& LastReplicatedHealthField() { return *GetNativePointerField<float*>(this, "APrimalTargetableActor.LastReplicatedHealth"); }
 
 	// Bit fields
 
@@ -89,127 +87,127 @@ struct APrimalTargetableActor : AActor
 
 struct APrimalStructure : APrimalTargetableActor
 {
-	FieldValue<FVector2D> OverlayTooltipPaddingField() { return { this, "APrimalStructure.OverlayTooltipPadding" }; }
-	FieldValue<FVector2D> OverlayTooltipScaleField() { return { this, "APrimalStructure.OverlayTooltipScale" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> ConsumesPrimalItemField() { return { this, "APrimalStructure.ConsumesPrimalItem" }; }
-	FieldValue<float> ScaleFactorField() { return { this, "APrimalStructure.ScaleFactor" }; }
-	FieldValue<int> StructureSnapTypeFlagsField() { return { this, "APrimalStructure.StructureSnapTypeFlags" }; }
-	//FieldValue<TArray<FPrimalStructureSnapPoint>> SnapPointsField() { return { this, "APrimalStructure.SnapPoints" }; }
-	FieldValue<float> PlacementOffsetForVerticalGroundField() { return { this, "APrimalStructure.PlacementOffsetForVerticalGround" }; }
-	FieldValue<float> PlacementInitialTracePointOffsetForVerticalGroundField() { return { this, "APrimalStructure.PlacementInitialTracePointOffsetForVerticalGround" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> StructuresAllowedToBeVerticalGroundField() { return { this, "APrimalStructure.StructuresAllowedToBeVerticalGround" }; }
-	FieldValue<float> TraceDistanceFromActorToWallVerticalGroundField() { return { this, "APrimalStructure.TraceDistanceFromActorToWallVerticalGround" }; }
-	FieldValue<FVector> PlacementHitLocOffsetField() { return { this, "APrimalStructure.PlacementHitLocOffset" }; }
-	FieldValue<FVector> PlacementEncroachmentCheckOffsetField() { return { this, "APrimalStructure.PlacementEncroachmentCheckOffset" }; }
-	FieldValue<FVector> PlacementEncroachmentBoxExtentField() { return { this, "APrimalStructure.PlacementEncroachmentBoxExtent" }; }
-	FieldValue<FVector> PlacementTraceScaleField() { return { this, "APrimalStructure.PlacementTraceScale" }; }
-	FieldValue<FVector> SnapAlternatePlacementTraceScaleField() { return { this, "APrimalStructure.SnapAlternatePlacementTraceScale" }; }
-	FieldValue<FRotator> PlacementRotOffsetField() { return { this, "APrimalStructure.PlacementRotOffset" }; }
-	FieldValue<FRotator> PlacementTraceRotOffsetField() { return { this, "APrimalStructure.PlacementTraceRotOffset" }; }
-	FieldValue<FRotator> SnappingRotationOffsetField() { return { this, "APrimalStructure.SnappingRotationOffset" }; }
-	FieldValue<float> RepairAmountRemainingField() { return { this, "APrimalStructure.RepairAmountRemaining" }; }
-	FieldValue<float> RepairCheckIntervalField() { return { this, "APrimalStructure.RepairCheckInterval" }; }
-	FieldValue<float> PlacementFloorCheckZExtentUpField() { return { this, "APrimalStructure.PlacementFloorCheckZExtentUp" }; }
-	FieldValue<float> RepairPercentPerIntervalField() { return { this, "APrimalStructure.RepairPercentPerInterval" }; }
-	FieldValue<float> DecayDestructionPeriodField() { return { this, "APrimalStructure.DecayDestructionPeriod" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> PreventPlacingOnFloorClassesField() { return { this, "APrimalStructure.PreventPlacingOnFloorClasses" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> AllowPlacingOnFloorClassesField() { return { this, "APrimalStructure.AllowPlacingOnFloorClasses" }; }
-	FieldValue<TSubobjectPtr<USceneComponent>> MyRootTransformField() { return { this, "APrimalStructure.MyRootTransform" }; }
-	FieldValue<int> TraceIgnoreStructuresWithTypeFlagsField() { return { this, "APrimalStructure.TraceIgnoreStructuresWithTypeFlags" }; }
-	FieldValue<int> bTraceCheckOnlyUseStructuresWithTypeFlagsField() { return { this, "APrimalStructure.bTraceCheckOnlyUseStructuresWithTypeFlags" }; }
+	FVector2D& OverlayTooltipPaddingField() { return *GetNativePointerField<FVector2D*>(this, "APrimalStructure.OverlayTooltipPadding"); }
+	FVector2D& OverlayTooltipScaleField() { return *GetNativePointerField<FVector2D*>(this, "APrimalStructure.OverlayTooltipScale"); }
+	TSubclassOf<UPrimalItem>& ConsumesPrimalItemField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructure.ConsumesPrimalItem"); }
+	float& ScaleFactorField() { return *GetNativePointerField<float*>(this, "APrimalStructure.ScaleFactor"); }
+	int& StructureSnapTypeFlagsField() { return *GetNativePointerField<int*>(this, "APrimalStructure.StructureSnapTypeFlags"); }
+	//TArray<FPrimalStructureSnapPoint>& SnapPointsField() { return *GetNativePointerField<TArray<FPrimalStructureSnapPoint>*>(this, "APrimalStructure.SnapPoints"); }
+	float& PlacementOffsetForVerticalGroundField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementOffsetForVerticalGround"); }
+	float& PlacementInitialTracePointOffsetForVerticalGroundField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementInitialTracePointOffsetForVerticalGround"); }
+	TArray<TSubclassOf<APrimalStructure>>& StructuresAllowedToBeVerticalGroundField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.StructuresAllowedToBeVerticalGround"); }
+	float& TraceDistanceFromActorToWallVerticalGroundField() { return *GetNativePointerField<float*>(this, "APrimalStructure.TraceDistanceFromActorToWallVerticalGround"); }
+	FVector& PlacementHitLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.PlacementHitLocOffset"); }
+	FVector& PlacementEncroachmentCheckOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.PlacementEncroachmentCheckOffset"); }
+	FVector& PlacementEncroachmentBoxExtentField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.PlacementEncroachmentBoxExtent"); }
+	FVector& PlacementTraceScaleField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.PlacementTraceScale"); }
+	FVector& SnapAlternatePlacementTraceScaleField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.SnapAlternatePlacementTraceScale"); }
+	FRotator& PlacementRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructure.PlacementRotOffset"); }
+	FRotator& PlacementTraceRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructure.PlacementTraceRotOffset"); }
+	FRotator& SnappingRotationOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructure.SnappingRotationOffset"); }
+	float& RepairAmountRemainingField() { return *GetNativePointerField<float*>(this, "APrimalStructure.RepairAmountRemaining"); }
+	float& RepairCheckIntervalField() { return *GetNativePointerField<float*>(this, "APrimalStructure.RepairCheckInterval"); }
+	float& PlacementFloorCheckZExtentUpField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementFloorCheckZExtentUp"); }
+	float& RepairPercentPerIntervalField() { return *GetNativePointerField<float*>(this, "APrimalStructure.RepairPercentPerInterval"); }
+	float& DecayDestructionPeriodField() { return *GetNativePointerField<float*>(this, "APrimalStructure.DecayDestructionPeriod"); }
+	TArray<TSubclassOf<APrimalStructure>>& PreventPlacingOnFloorClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.PreventPlacingOnFloorClasses"); }
+	TArray<TSubclassOf<APrimalStructure>>& AllowPlacingOnFloorClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.AllowPlacingOnFloorClasses"); }
+	TSubobjectPtr<USceneComponent>& MyRootTransformField() { return *GetNativePointerField<TSubobjectPtr<USceneComponent>*>(this, "APrimalStructure.MyRootTransform"); }
+	int& TraceIgnoreStructuresWithTypeFlagsField() { return *GetNativePointerField<int*>(this, "APrimalStructure.TraceIgnoreStructuresWithTypeFlags"); }
+	int& bTraceCheckOnlyUseStructuresWithTypeFlagsField() { return *GetNativePointerField<int*>(this, "APrimalStructure.bTraceCheckOnlyUseStructuresWithTypeFlags"); }
 	FieldArray<char, 6> AllowStructureColorSetsField() { return { this, "APrimalStructure.AllowStructureColorSets" }; }
-	FieldValue<FVector> WaterVolumeCheckPointOffsetField() { return { this, "APrimalStructure.WaterVolumeCheckPointOffset" }; }
-	FieldValue<float> WaterPlacementMinimumWaterHeightField() { return { this, "APrimalStructure.WaterPlacementMinimumWaterHeight" }; }
-	FieldValue<float> PlacementMaxZDeltaField() { return { this, "APrimalStructure.PlacementMaxZDelta" }; }
-	FieldValue<float> PlacementChooseRotationMaxRangeOverrideField() { return { this, "APrimalStructure.PlacementChooseRotationMaxRangeOverride" }; }
-	FieldValue<float> PlacementMaxRangeField() { return { this, "APrimalStructure.PlacementMaxRange" }; }
-	FieldValue<float> MaxSnapLocRangeField() { return { this, "APrimalStructure.MaxSnapLocRange" }; }
-	FieldValue<float> SnapOverlapCheckRadiusField() { return { this, "APrimalStructure.SnapOverlapCheckRadius" }; }
-	FieldValue<float> MaximumFoundationSupport2DBuildDistanceField() { return { this, "APrimalStructure.MaximumFoundationSupport2DBuildDistance" }; }
-	FieldValue<float> PlacementFloorCheckZExtentField() { return { this, "APrimalStructure.PlacementFloorCheckZExtent" }; }
-	FieldValue<float> LastHealthPercentageField() { return { this, "APrimalStructure.LastHealthPercentage" }; }
-	FieldValue<FRotator> TakeGroundNormalRotationOffsetField() { return { this, "APrimalStructure.TakeGroundNormalRotationOffset" }; }
-	FieldValue<float> DemolishGiveItemCraftingResourcePercentageField() { return { this, "APrimalStructure.DemolishGiveItemCraftingResourcePercentage" }; }
-	FieldValue<TSubclassOf<APrimalStructure>> AllowReplacementByStructureClassTypeField() { return { this, "APrimalStructure.AllowReplacementByStructureClassType" }; }
-	FieldValue<TSubclassOf<APrimalStructure>> PreventReplacementOfStructureClassTypeField() { return { this, "APrimalStructure.PreventReplacementOfStructureClassType" }; }
-	FieldValue<float> MaximumHeightAboveWorldGroundField() { return { this, "APrimalStructure.MaximumHeightAboveWorldGround" }; }
-	FieldValue<float> MaximumHeightUnderWorldMaxKillZField() { return { this, "APrimalStructure.MaximumHeightUnderWorldMaxKillZ" }; }
-	FieldValue<FRotator> PreviewCameraRotationField() { return { this, "APrimalStructure.PreviewCameraRotation" }; }
-	FieldValue<FVector> PreviewCameraPivotOffsetField() { return { this, "APrimalStructure.PreviewCameraPivotOffset" }; }
-	FieldValue<float> PreviewCameraDistanceScaleFactorField() { return { this, "APrimalStructure.PreviewCameraDistanceScaleFactor" }; }
-	FieldValue<float> PreviewCameraDefaultZoomMultiplierField() { return { this, "APrimalStructure.PreviewCameraDefaultZoomMultiplier" }; }
-	FieldValue<float> PreviewCameraMaxZoomMultiplierField() { return { this, "APrimalStructure.PreviewCameraMaxZoomMultiplier" }; }
-	FieldValue<float> ReturnDamageAmountField() { return { this, "APrimalStructure.ReturnDamageAmount" }; }
-	FieldValue<int> StructureRangeTypeFlagField() { return { this, "APrimalStructure.StructureRangeTypeFlag" }; }
-	FieldValue<int> LimitMaxStructuresInRangeTypeFlagField() { return { this, "APrimalStructure.LimitMaxStructuresInRangeTypeFlag" }; }
-	FieldValue<float> ReturnDamageImpulseField() { return { this, "APrimalStructure.ReturnDamageImpulse" }; }
-	FieldValue<TSubclassOf<UDamageType>> ReturnDamageTypeField() { return { this, "APrimalStructure.ReturnDamageType" }; }
-	FieldValue<TArray<TSubclassOf<UDamageType>>> ReturnDamageExcludeIncomingTypesField() { return { this, "APrimalStructure.ReturnDamageExcludeIncomingTypes" }; }
-	FieldValue<TArray<TSubclassOf<UDamageType>>> ReturnDamageOnlyForIncomingTypesField() { return { this, "APrimalStructure.ReturnDamageOnlyForIncomingTypes" }; }
-	FieldValue<int> OwningPlayerIDField() { return { this, "APrimalStructure.OwningPlayerID" }; }
-	FieldValue<FString> OwningPlayerNameField() { return { this, "APrimalStructure.OwningPlayerName" }; }
-	FieldValue<long double> LastInAllyRangeTimeField() { return { this, "APrimalStructure.LastInAllyRangeTime" }; }
-	FieldValue<float> DecayDestructionPeriodMultiplierField() { return { this, "APrimalStructure.DecayDestructionPeriodMultiplier" }; }
-	FieldValue<TWeakObjectPtr<APrimalDinoCharacter>> SaddleDinoField() { return { this, "APrimalStructure.SaddleDino" }; }
-	FieldValue<TArray<APrimalDinoCharacter *>> LatchedDinosField() { return { this, "APrimalStructure.LatchedDinos" }; }
-	FieldValue<UMaterialInterface *> PreviewMaterialField() { return { this, "APrimalStructure.PreviewMaterial" }; }
-	FieldValue<FName> PreviewMaterialColorParamNameField() { return { this, "APrimalStructure.PreviewMaterialColorParamName" }; }
-	FieldValue<TArray<FVector>> PlacementTraceDirectionsField() { return { this, "APrimalStructure.PlacementTraceDirections" }; }
-	FieldValue<TArray<APrimalStructure *>> LinkedStructuresField() { return { this, "APrimalStructure.LinkedStructures" }; }
-	FieldValue<TArray<unsigned int>> LinkedStructuresIDField() { return { this, "APrimalStructure.LinkedStructuresID" }; }
-	FieldValue<TArray<APrimalStructure *>> StructuresPlacedOnFloorField() { return { this, "APrimalStructure.StructuresPlacedOnFloor" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> SnapToStructureTypesToExcludeField() { return { this, "APrimalStructure.SnapToStructureTypesToExclude" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> SnapFromStructureTypesToExcludeField() { return { this, "APrimalStructure.SnapFromStructureTypesToExclude" }; }
-	FieldValue<APrimalStructure *> PlacedOnFloorStructureField() { return { this, "APrimalStructure.PlacedOnFloorStructure" }; }
-	FieldValue<APrimalStructure *> PrimarySnappedStructureChildField() { return { this, "APrimalStructure.PrimarySnappedStructureChild" }; }
-	FieldValue<APrimalStructure *> PrimarySnappedStructureParentField() { return { this, "APrimalStructure.PrimarySnappedStructureParent" }; }
-	FieldValue<FString> OwnerNameField() { return { this, "APrimalStructure.OwnerName" }; }
+	FVector& WaterVolumeCheckPointOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.WaterVolumeCheckPointOffset"); }
+	float& WaterPlacementMinimumWaterHeightField() { return *GetNativePointerField<float*>(this, "APrimalStructure.WaterPlacementMinimumWaterHeight"); }
+	float& PlacementMaxZDeltaField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementMaxZDelta"); }
+	float& PlacementChooseRotationMaxRangeOverrideField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementChooseRotationMaxRangeOverride"); }
+	float& PlacementMaxRangeField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementMaxRange"); }
+	float& MaxSnapLocRangeField() { return *GetNativePointerField<float*>(this, "APrimalStructure.MaxSnapLocRange"); }
+	float& SnapOverlapCheckRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructure.SnapOverlapCheckRadius"); }
+	float& MaximumFoundationSupport2DBuildDistanceField() { return *GetNativePointerField<float*>(this, "APrimalStructure.MaximumFoundationSupport2DBuildDistance"); }
+	float& PlacementFloorCheckZExtentField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementFloorCheckZExtent"); }
+	float& LastHealthPercentageField() { return *GetNativePointerField<float*>(this, "APrimalStructure.LastHealthPercentage"); }
+	FRotator& TakeGroundNormalRotationOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructure.TakeGroundNormalRotationOffset"); }
+	float& DemolishGiveItemCraftingResourcePercentageField() { return *GetNativePointerField<float*>(this, "APrimalStructure.DemolishGiveItemCraftingResourcePercentage"); }
+	TSubclassOf<APrimalStructure>& AllowReplacementByStructureClassTypeField() { return *GetNativePointerField<TSubclassOf<APrimalStructure>*>(this, "APrimalStructure.AllowReplacementByStructureClassType"); }
+	TSubclassOf<APrimalStructure>& PreventReplacementOfStructureClassTypeField() { return *GetNativePointerField<TSubclassOf<APrimalStructure>*>(this, "APrimalStructure.PreventReplacementOfStructureClassType"); }
+	float& MaximumHeightAboveWorldGroundField() { return *GetNativePointerField<float*>(this, "APrimalStructure.MaximumHeightAboveWorldGround"); }
+	float& MaximumHeightUnderWorldMaxKillZField() { return *GetNativePointerField<float*>(this, "APrimalStructure.MaximumHeightUnderWorldMaxKillZ"); }
+	FRotator& PreviewCameraRotationField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructure.PreviewCameraRotation"); }
+	FVector& PreviewCameraPivotOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.PreviewCameraPivotOffset"); }
+	float& PreviewCameraDistanceScaleFactorField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PreviewCameraDistanceScaleFactor"); }
+	float& PreviewCameraDefaultZoomMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PreviewCameraDefaultZoomMultiplier"); }
+	float& PreviewCameraMaxZoomMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PreviewCameraMaxZoomMultiplier"); }
+	float& ReturnDamageAmountField() { return *GetNativePointerField<float*>(this, "APrimalStructure.ReturnDamageAmount"); }
+	int& StructureRangeTypeFlagField() { return *GetNativePointerField<int*>(this, "APrimalStructure.StructureRangeTypeFlag"); }
+	int& LimitMaxStructuresInRangeTypeFlagField() { return *GetNativePointerField<int*>(this, "APrimalStructure.LimitMaxStructuresInRangeTypeFlag"); }
+	float& ReturnDamageImpulseField() { return *GetNativePointerField<float*>(this, "APrimalStructure.ReturnDamageImpulse"); }
+	TSubclassOf<UDamageType>& ReturnDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "APrimalStructure.ReturnDamageType"); }
+	TArray<TSubclassOf<UDamageType>>& ReturnDamageExcludeIncomingTypesField() { return *GetNativePointerField<TArray<TSubclassOf<UDamageType>>*>(this, "APrimalStructure.ReturnDamageExcludeIncomingTypes"); }
+	TArray<TSubclassOf<UDamageType>>& ReturnDamageOnlyForIncomingTypesField() { return *GetNativePointerField<TArray<TSubclassOf<UDamageType>>*>(this, "APrimalStructure.ReturnDamageOnlyForIncomingTypes"); }
+	int& OwningPlayerIDField() { return *GetNativePointerField<int*>(this, "APrimalStructure.OwningPlayerID"); }
+	FString& OwningPlayerNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructure.OwningPlayerName"); }
+	long double& LastInAllyRangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructure.LastInAllyRangeTime"); }
+	float& DecayDestructionPeriodMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalStructure.DecayDestructionPeriodMultiplier"); }
+	TWeakObjectPtr<APrimalDinoCharacter>& SaddleDinoField() { return *GetNativePointerField<TWeakObjectPtr<APrimalDinoCharacter>*>(this, "APrimalStructure.SaddleDino"); }
+	TArray<APrimalDinoCharacter *> LatchedDinosField() { return *GetNativePointerField<TArray<APrimalDinoCharacter *>*>(this, "APrimalStructure.LatchedDinos"); }
+	UMaterialInterface * PreviewMaterialField() { return *GetNativePointerField<UMaterialInterface **>(this, "APrimalStructure.PreviewMaterial"); }
+	FName& PreviewMaterialColorParamNameField() { return *GetNativePointerField<FName*>(this, "APrimalStructure.PreviewMaterialColorParamName"); }
+	TArray<FVector>& PlacementTraceDirectionsField() { return *GetNativePointerField<TArray<FVector>*>(this, "APrimalStructure.PlacementTraceDirections"); }
+	TArray<APrimalStructure *> LinkedStructuresField() { return *GetNativePointerField<TArray<APrimalStructure *>*>(this, "APrimalStructure.LinkedStructures"); }
+	TArray<unsigned int>& LinkedStructuresIDField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "APrimalStructure.LinkedStructuresID"); }
+	TArray<APrimalStructure *> StructuresPlacedOnFloorField() { return *GetNativePointerField<TArray<APrimalStructure *>*>(this, "APrimalStructure.StructuresPlacedOnFloor"); }
+	TArray<TSubclassOf<APrimalStructure>>& SnapToStructureTypesToExcludeField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.SnapToStructureTypesToExclude"); }
+	TArray<TSubclassOf<APrimalStructure>>& SnapFromStructureTypesToExcludeField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.SnapFromStructureTypesToExclude"); }
+	APrimalStructure * PlacedOnFloorStructureField() { return *GetNativePointerField<APrimalStructure **>(this, "APrimalStructure.PlacedOnFloorStructure"); }
+	APrimalStructure * PrimarySnappedStructureChildField() { return *GetNativePointerField<APrimalStructure **>(this, "APrimalStructure.PrimarySnappedStructureChild"); }
+	APrimalStructure * PrimarySnappedStructureParentField() { return *GetNativePointerField<APrimalStructure **>(this, "APrimalStructure.PrimarySnappedStructureParent"); }
+	FString& OwnerNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructure.OwnerName"); }
 	FieldArray<__int16, 6> StructureColorsField() { return { this, "APrimalStructure.StructureColors" }; }
-	FieldValue<APawn *> AttachedToField() { return { this, "APrimalStructure.AttachedTo" }; }
-	FieldValue<APrimalStructureExplosiveTransGPS *> AttachedTransponderField() { return { this, "APrimalStructure.AttachedTransponder" }; }
-	FieldValue<unsigned int> StructureIDField() { return { this, "APrimalStructure.StructureID" }; }
-	FieldValue<unsigned int> AttachedToDinoID1Field() { return { this, "APrimalStructure.AttachedToDinoID1" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> OnlyAllowStructureClassesToAttachField() { return { this, "APrimalStructure.OnlyAllowStructureClassesToAttach" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> OnlyAllowStructureClassesFromAttachField() { return { this, "APrimalStructure.OnlyAllowStructureClassesFromAttach" }; }
-	FieldValue<unsigned int> TaggedIndexField() { return { this, "APrimalStructure.TaggedIndex" }; }
-	FieldValue<unsigned int> TaggedIndexTwoField() { return { this, "APrimalStructure.TaggedIndexTwo" }; }
-	FieldValue<unsigned int> ProcessTreeTagField() { return { this, "APrimalStructure.ProcessTreeTag" }; }
-	FieldValue<long double> LastStructureStasisTimeField() { return { this, "APrimalStructure.LastStructureStasisTime" }; }
-	FieldValue<long double> LastColorizationTimeField() { return { this, "APrimalStructure.LastColorizationTime" }; }
-	FieldValue<UMaterialInterface *> StructureIconMaterialField() { return { this, "APrimalStructure.StructureIconMaterial" }; }
-	FieldValue<FVector> SpawnEmitterLocationOffsetField() { return { this, "APrimalStructure.SpawnEmitterLocationOffset" }; }
-	FieldValue<FRotator> SpawnEmitterRotationOffsetField() { return { this, "APrimalStructure.SpawnEmitterRotationOffset" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> PickupGivesItemField() { return { this, "APrimalStructure.PickupGivesItem" }; }
-	FieldValue<float> ExcludeInStructuresRadiusField() { return { this, "APrimalStructure.ExcludeInStructuresRadius" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> ExcludeInStructuresRadiusClassesField() { return { this, "APrimalStructure.ExcludeInStructuresRadiusClasses" }; }
-	FieldValue<float> LastFadeOpacityField() { return { this, "APrimalStructure.LastFadeOpacity" }; }
-	FieldValue<bool> bClientAddedToStructuresArrayField() { return { this, "APrimalStructure.bClientAddedToStructuresArray" }; }
-	FieldValue<long double> LastFailedPinTimeField() { return { this, "APrimalStructure.LastFailedPinTime" }; }
-	FieldValue<TArray<FString>> PreventBuildStructureReasonStringOverridesField() { return { this, "APrimalStructure.PreventBuildStructureReasonStringOverrides" }; }
-	FieldValue<FVector> FloatingHudLocTextOffsetField() { return { this, "APrimalStructure.FloatingHudLocTextOffset" }; }
-	FieldValue<float> LastBumpedDamageTimeField() { return { this, "APrimalStructure.LastBumpedDamageTime" }; }
-	FieldValue<int> ForceLimitStructuresInRangeField() { return { this, "APrimalStructure.ForceLimitStructuresInRange" }; }
-	FieldValue<int> PlacementMaterialForwardDirIndexField() { return { this, "APrimalStructure.PlacementMaterialForwardDirIndex" }; }
-	FieldValue<float> ForcePreventPlacingInOfflineRaidStructuresRadiusField() { return { this, "APrimalStructure.ForcePreventPlacingInOfflineRaidStructuresRadius" }; }
-	FieldValue<FName> AttachToStaticMeshSocketNameBaseField() { return { this, "APrimalStructure.AttachToStaticMeshSocketNameBase" }; }
-	FieldValue<TSubclassOf<AActor>> ItemsUseAlternateActorClassAttachmentField() { return { this, "APrimalStructure.ItemsUseAlternateActorClassAttachment" }; }
-	FieldValue<float> UnstasisAutoDestroyAfterTimeField() { return { this, "APrimalStructure.UnstasisAutoDestroyAfterTime" }; }
-	FieldValue<char> TribeGroupStructureRankField() { return { this, "APrimalStructure.TribeGroupStructureRank" }; }
-	FieldValue<char> TribeRankHUDYOffsetField() { return { this, "APrimalStructure.TribeRankHUDYOffset" }; }
-	FieldValue<TArray<TSubclassOf<APrimalDinoCharacter>>> PreventSaddleDinoClassesField() { return { this, "APrimalStructure.PreventSaddleDinoClasses" }; }
-	FieldValue<TArray<TSubclassOf<APrimalDinoCharacter>>> AllowSaddleDinoClassesField() { return { this, "APrimalStructure.AllowSaddleDinoClasses" }; }
-	FieldValue<FName> PlaceOnWallUseStaticMeshTagField() { return { this, "APrimalStructure.PlaceOnWallUseStaticMeshTag" }; }
-	FieldValue<TSubclassOf<APrimalStructure>> SnapStructureClassField() { return { this, "APrimalStructure.SnapStructureClass" }; }
-	FieldValue<float> DemolishActivationTimeField() { return { this, "APrimalStructure.DemolishActivationTime" }; }
-	FieldValue<FVector> GroundEncroachmentCheckLocationOffsetField() { return { this, "APrimalStructure.GroundEncroachmentCheckLocationOffset" }; }
-	FieldValue<int> StructureMinAllowedVersionField() { return { this, "APrimalStructure.StructureMinAllowedVersion" }; }
-	FieldValue<int> SavedStructureMinAllowedVersionField() { return { this, "APrimalStructure.SavedStructureMinAllowedVersion" }; }
-	FieldValue<float> OverrideEnemyFoundationPreventionRadiusField() { return { this, "APrimalStructure.OverrideEnemyFoundationPreventionRadius" }; }
-	FieldValue<int> BedIDField() { return { this, "APrimalStructure.BedID" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> ForceAllowWallAttachmentClassesField() { return { this, "APrimalStructure.ForceAllowWallAttachmentClasses" }; }
-	FieldValue<float> LimitMaxStructuresInRangeRadiusField() { return { this, "APrimalStructure.LimitMaxStructuresInRangeRadius" }; }
-	FieldValue<TArray<TSubclassOf<APrimalStructure>>> FastDecayLinkedStructureClassesField() { return { this, "APrimalStructure.FastDecayLinkedStructureClasses" }; }
-	FieldValue<float> PlacementMaxZAbovePlayerHeightField() { return { this, "APrimalStructure.PlacementMaxZAbovePlayerHeight" }; }
+	APawn * AttachedToField() { return *GetNativePointerField<APawn **>(this, "APrimalStructure.AttachedTo"); }
+	APrimalStructureExplosiveTransGPS * AttachedTransponderField() { return *GetNativePointerField<APrimalStructureExplosiveTransGPS **>(this, "APrimalStructure.AttachedTransponder"); }
+	unsigned int& StructureIDField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructure.StructureID"); }
+	unsigned int& AttachedToDinoID1Field() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructure.AttachedToDinoID1"); }
+	TArray<TSubclassOf<APrimalStructure>>& OnlyAllowStructureClassesToAttachField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.OnlyAllowStructureClassesToAttach"); }
+	TArray<TSubclassOf<APrimalStructure>>& OnlyAllowStructureClassesFromAttachField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.OnlyAllowStructureClassesFromAttach"); }
+	unsigned int& TaggedIndexField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructure.TaggedIndex"); }
+	unsigned int& TaggedIndexTwoField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructure.TaggedIndexTwo"); }
+	unsigned int& ProcessTreeTagField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructure.ProcessTreeTag"); }
+	long double& LastStructureStasisTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructure.LastStructureStasisTime"); }
+	long double& LastColorizationTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructure.LastColorizationTime"); }
+	UMaterialInterface * StructureIconMaterialField() { return *GetNativePointerField<UMaterialInterface **>(this, "APrimalStructure.StructureIconMaterial"); }
+	FVector& SpawnEmitterLocationOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.SpawnEmitterLocationOffset"); }
+	FRotator& SpawnEmitterRotationOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructure.SpawnEmitterRotationOffset"); }
+	TSubclassOf<UPrimalItem>& PickupGivesItemField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructure.PickupGivesItem"); }
+	float& ExcludeInStructuresRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructure.ExcludeInStructuresRadius"); }
+	TArray<TSubclassOf<APrimalStructure>>& ExcludeInStructuresRadiusClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.ExcludeInStructuresRadiusClasses"); }
+	float& LastFadeOpacityField() { return *GetNativePointerField<float*>(this, "APrimalStructure.LastFadeOpacity"); }
+	bool& bClientAddedToStructuresArrayField() { return *GetNativePointerField<bool*>(this, "APrimalStructure.bClientAddedToStructuresArray"); }
+	long double& LastFailedPinTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructure.LastFailedPinTime"); }
+	TArray<FString>& PreventBuildStructureReasonStringOverridesField() { return *GetNativePointerField<TArray<FString>*>(this, "APrimalStructure.PreventBuildStructureReasonStringOverrides"); }
+	FVector& FloatingHudLocTextOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.FloatingHudLocTextOffset"); }
+	float& LastBumpedDamageTimeField() { return *GetNativePointerField<float*>(this, "APrimalStructure.LastBumpedDamageTime"); }
+	int& ForceLimitStructuresInRangeField() { return *GetNativePointerField<int*>(this, "APrimalStructure.ForceLimitStructuresInRange"); }
+	int& PlacementMaterialForwardDirIndexField() { return *GetNativePointerField<int*>(this, "APrimalStructure.PlacementMaterialForwardDirIndex"); }
+	float& ForcePreventPlacingInOfflineRaidStructuresRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructure.ForcePreventPlacingInOfflineRaidStructuresRadius"); }
+	FName& AttachToStaticMeshSocketNameBaseField() { return *GetNativePointerField<FName*>(this, "APrimalStructure.AttachToStaticMeshSocketNameBase"); }
+	TSubclassOf<AActor>& ItemsUseAlternateActorClassAttachmentField() { return *GetNativePointerField<TSubclassOf<AActor>*>(this, "APrimalStructure.ItemsUseAlternateActorClassAttachment"); }
+	float& UnstasisAutoDestroyAfterTimeField() { return *GetNativePointerField<float*>(this, "APrimalStructure.UnstasisAutoDestroyAfterTime"); }
+	char& TribeGroupStructureRankField() { return *GetNativePointerField<char*>(this, "APrimalStructure.TribeGroupStructureRank"); }
+	char& TribeRankHUDYOffsetField() { return *GetNativePointerField<char*>(this, "APrimalStructure.TribeRankHUDYOffset"); }
+	TArray<TSubclassOf<APrimalDinoCharacter>>& PreventSaddleDinoClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalDinoCharacter>>*>(this, "APrimalStructure.PreventSaddleDinoClasses"); }
+	TArray<TSubclassOf<APrimalDinoCharacter>>& AllowSaddleDinoClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalDinoCharacter>>*>(this, "APrimalStructure.AllowSaddleDinoClasses"); }
+	FName& PlaceOnWallUseStaticMeshTagField() { return *GetNativePointerField<FName*>(this, "APrimalStructure.PlaceOnWallUseStaticMeshTag"); }
+	TSubclassOf<APrimalStructure>& SnapStructureClassField() { return *GetNativePointerField<TSubclassOf<APrimalStructure>*>(this, "APrimalStructure.SnapStructureClass"); }
+	float& DemolishActivationTimeField() { return *GetNativePointerField<float*>(this, "APrimalStructure.DemolishActivationTime"); }
+	FVector& GroundEncroachmentCheckLocationOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructure.GroundEncroachmentCheckLocationOffset"); }
+	int& StructureMinAllowedVersionField() { return *GetNativePointerField<int*>(this, "APrimalStructure.StructureMinAllowedVersion"); }
+	int& SavedStructureMinAllowedVersionField() { return *GetNativePointerField<int*>(this, "APrimalStructure.SavedStructureMinAllowedVersion"); }
+	float& OverrideEnemyFoundationPreventionRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructure.OverrideEnemyFoundationPreventionRadius"); }
+	int& BedIDField() { return *GetNativePointerField<int*>(this, "APrimalStructure.BedID"); }
+	TArray<TSubclassOf<APrimalStructure>>& ForceAllowWallAttachmentClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.ForceAllowWallAttachmentClasses"); }
+	float& LimitMaxStructuresInRangeRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructure.LimitMaxStructuresInRangeRadius"); }
+	TArray<TSubclassOf<APrimalStructure>>& FastDecayLinkedStructureClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "APrimalStructure.FastDecayLinkedStructureClasses"); }
+	float& PlacementMaxZAbovePlayerHeightField() { return *GetNativePointerField<float*>(this, "APrimalStructure.PlacementMaxZAbovePlayerHeight"); }
 
 	// Bit fields
 
@@ -481,23 +479,23 @@ struct APrimalStructure : APrimalTargetableActor
 
 struct APrimalStructureDoor : APrimalStructure
 {
-	FieldValue<TSubobjectPtr<USceneComponent>> MyDoorTransformField() { return { this, "APrimalStructureDoor.MyDoorTransform" }; }
-	FieldValue<float> RotationSpeedField() { return { this, "APrimalStructureDoor.RotationSpeed" }; }
-	FieldValue<USoundCue *> DoorOpenSoundField() { return { this, "APrimalStructureDoor.DoorOpenSound" }; }
-	FieldValue<USoundCue *> DoorCloseSoundField() { return { this, "APrimalStructureDoor.DoorCloseSound" }; }
-	FieldValue<unsigned int> CurrentPinCodeField() { return { this, "APrimalStructureDoor.CurrentPinCode" }; }
-	FieldValue<float> DoorStateChangeIgnoreEncroachmentIntervalField() { return { this, "APrimalStructureDoor.DoorStateChangeIgnoreEncroachmentInterval" }; }
-	FieldValue<char> DoorOpenStateField() { return { this, "APrimalStructureDoor.DoorOpenState" }; }
-	FieldValue<char> ClientPrevDoorOpenStateField() { return { this, "APrimalStructureDoor.ClientPrevDoorOpenState" }; }
-	FieldValue<long double> LastLockStateChangeTimeField() { return { this, "APrimalStructureDoor.LastLockStateChangeTime" }; }
-	FieldValue<FRotator> SecondDoorDefaultRotField() { return { this, "APrimalStructureDoor.SecondDoorDefaultRot" }; }
-	FieldValue<float> CurrentDoorAngleField() { return { this, "APrimalStructureDoor.CurrentDoorAngle" }; }
-	FieldValue<USoundBase *> UnlockDoorSoundField() { return { this, "APrimalStructureDoor.UnlockDoorSound" }; }
-	FieldValue<USoundBase *> LockDoorSoundField() { return { this, "APrimalStructureDoor.LockDoorSound" }; }
-	FieldValue<USoundBase *> LockedSoundField() { return { this, "APrimalStructureDoor.LockedSound" }; }
-	FieldValue<long double> LastPinOpenSuccessTimeField() { return { this, "APrimalStructureDoor.LastPinOpenSuccessTime" }; }
-	FieldValue<long double> LastDoorStateChangeTimeField() { return { this, "APrimalStructureDoor.LastDoorStateChangeTime" }; }
-	FieldValue<char> DelayedDoorStateField() { return { this, "APrimalStructureDoor.DelayedDoorState" }; }
+	TSubobjectPtr<USceneComponent>& MyDoorTransformField() { return *GetNativePointerField<TSubobjectPtr<USceneComponent>*>(this, "APrimalStructureDoor.MyDoorTransform"); }
+	float& RotationSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.RotationSpeed"); }
+	USoundCue * DoorOpenSoundField() { return *GetNativePointerField<USoundCue **>(this, "APrimalStructureDoor.DoorOpenSound"); }
+	USoundCue * DoorCloseSoundField() { return *GetNativePointerField<USoundCue **>(this, "APrimalStructureDoor.DoorCloseSound"); }
+	unsigned int& CurrentPinCodeField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureDoor.CurrentPinCode"); }
+	float& DoorStateChangeIgnoreEncroachmentIntervalField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.DoorStateChangeIgnoreEncroachmentInterval"); }
+	char& DoorOpenStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.DoorOpenState"); }
+	char& ClientPrevDoorOpenStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.ClientPrevDoorOpenState"); }
+	long double& LastLockStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastLockStateChangeTime"); }
+	FRotator& SecondDoorDefaultRotField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureDoor.SecondDoorDefaultRot"); }
+	float& CurrentDoorAngleField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.CurrentDoorAngle"); }
+	USoundBase * UnlockDoorSoundField() { return *GetNativePointerField<USoundBase **>(this, "APrimalStructureDoor.UnlockDoorSound"); }
+	USoundBase * LockDoorSoundField() { return *GetNativePointerField<USoundBase **>(this, "APrimalStructureDoor.LockDoorSound"); }
+	USoundBase * LockedSoundField() { return *GetNativePointerField<USoundBase **>(this, "APrimalStructureDoor.LockedSound"); }
+	long double& LastPinOpenSuccessTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastPinOpenSuccessTime"); }
+	long double& LastDoorStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastDoorStateChangeTime"); }
+	char& DelayedDoorStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.DelayedDoorState"); }
 
 	// Bit fields
 
@@ -523,6 +521,7 @@ struct APrimalStructureDoor : APrimalStructure
 
 	// Functions
 
+	static UClass * GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "APrimalStructureDoor.GetPrivateStaticClass"); }
 	void BeginPlay() { NativeCall<void>(this, "APrimalStructureDoor.BeginPlay"); }
 	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "APrimalStructureDoor.Tick", DeltaSeconds); }
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty> * OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty> *>(this, "APrimalStructureDoor.GetLifetimeReplicatedProps", OutLifetimeProps); }
@@ -546,78 +545,79 @@ struct APrimalStructureDoor : APrimalStructure
 
 struct APrimalStructureItemContainer : APrimalStructure
 {
-	FieldValue<UPrimalInventoryComponent *> MyInventoryComponentField() { return { this, "APrimalStructureItemContainer.MyInventoryComponent" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> BatteryClassOverrideField() { return { this, "APrimalStructureItemContainer.BatteryClassOverride" }; }
-	FieldValue<int> PoweredOverrideCounterField() { return { this, "APrimalStructureItemContainer.PoweredOverrideCounter" }; }
-	FieldValue<float> NotifyNearbyPowerGeneratorDistanceField() { return { this, "APrimalStructureItemContainer.NotifyNearbyPowerGeneratorDistance" }; }
-	FieldValue<int> NotifyNearbyPowerGeneratorOctreeGroupField() { return { this, "APrimalStructureItemContainer.NotifyNearbyPowerGeneratorOctreeGroup" }; }
-	FieldValue<TArray<UMaterialInterface *>> ActivateMaterialsField() { return { this, "APrimalStructureItemContainer.ActivateMaterials" }; }
-	FieldValue<TArray<UMaterialInterface *>> InActivateMaterialsField() { return { this, "APrimalStructureItemContainer.InActivateMaterials" }; }
-	FieldValue<FString> BoxNameField() { return { this, "APrimalStructureItemContainer.BoxName" }; }
-	FieldValue<float> InsulationRangeField() { return { this, "APrimalStructureItemContainer.InsulationRange" }; }
-	FieldValue<float> HyperThermiaInsulationField() { return { this, "APrimalStructureItemContainer.HyperThermiaInsulation" }; }
-	FieldValue<float> HypoThermiaInsulationField() { return { this, "APrimalStructureItemContainer.HypoThermiaInsulation" }; }
-	FieldValue<float> ContainerActiveDecreaseHealthSpeedField() { return { this, "APrimalStructureItemContainer.ContainerActiveDecreaseHealthSpeed" }; }
-	FieldValue<float> FuelConsumptionIntervalsMultiplierField() { return { this, "APrimalStructureItemContainer.FuelConsumptionIntervalsMultiplier" }; }
-	FieldValue<float> DropInventoryOnDestructionLifespanField() { return { this, "APrimalStructureItemContainer.DropInventoryOnDestructionLifespan" }; }
-	FieldValue<FString> ActivateContainerStringField() { return { this, "APrimalStructureItemContainer.ActivateContainerString" }; }
-	FieldValue<FString> DeactivateContainerStringField() { return { this, "APrimalStructureItemContainer.DeactivateContainerString" }; }
-	FieldValue<TSubclassOf<UDamageType>> ContainerActiveHealthDecreaseDamageTypePassiveField() { return { this, "APrimalStructureItemContainer.ContainerActiveHealthDecreaseDamageTypePassive" }; }
-	FieldValue<TArray<TSubclassOf<UPrimalItem>>> ActiveRequiresFuelItemsField() { return { this, "APrimalStructureItemContainer.ActiveRequiresFuelItems" }; }
-	FieldValue<TArray<float>> FuelItemsConsumeIntervalField() { return { this, "APrimalStructureItemContainer.FuelItemsConsumeInterval" }; }
-	FieldValue<TArray<TSubclassOf<UPrimalItem>>> FuelItemsConsumedGiveItemsField() { return { this, "APrimalStructureItemContainer.FuelItemsConsumedGiveItems" }; }
-	FieldValue<long double> NetDestructionTimeField() { return { this, "APrimalStructureItemContainer.NetDestructionTime" }; }
-	FieldValue<unsigned int> CurrentPinCodeField() { return { this, "APrimalStructureItemContainer.CurrentPinCode" }; }
-	FieldValue<long double> CurrentFuelTimeCacheField() { return { this, "APrimalStructureItemContainer.CurrentFuelTimeCache" }; }
-	FieldValue<long double> LastCheckedFuelTimeField() { return { this, "APrimalStructureItemContainer.LastCheckedFuelTime" }; }
-	FieldValue<int> LinkedPowerJunctionStructureIDField() { return { this, "APrimalStructureItemContainer.LinkedPowerJunctionStructureID" }; }
-	FieldValue<int> CurrentItemCountField() { return { this, "APrimalStructureItemContainer.CurrentItemCount" }; }
-	FieldValue<int> MaxItemCountField() { return { this, "APrimalStructureItemContainer.MaxItemCount" }; }
-	FieldValue<TWeakObjectPtr<APrimalStructure>> LinkedPowerJunctionStructureField() { return { this, "APrimalStructureItemContainer.LinkedPowerJunctionStructure" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> NextConsumeFuelGiveItemTypeField() { return { this, "APrimalStructureItemContainer.NextConsumeFuelGiveItemType" }; }
-	FieldValue<long double> LastLockStateChangeTimeField() { return { this, "APrimalStructureItemContainer.LastLockStateChangeTime" }; }
-	FieldValue<long double> LastActiveStateChangeTimeField() { return { this, "APrimalStructureItemContainer.LastActiveStateChangeTime" }; }
-	FieldValue<int> LastPowerJunctionLinkIDField() { return { this, "APrimalStructureItemContainer.LastPowerJunctionLinkID" }; }
-	FieldValue<float> BasedCharacterDamageIntervalField() { return { this, "APrimalStructureItemContainer.BasedCharacterDamageInterval" }; }
-	FieldValue<float> BasedCharacterDamageAmountField() { return { this, "APrimalStructureItemContainer.BasedCharacterDamageAmount" }; }
-	FieldValue<TSubclassOf<UDamageType>> BasedCharacterDamageTypeField() { return { this, "APrimalStructureItemContainer.BasedCharacterDamageType" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> EngramRequirementClassOverrideField() { return { this, "APrimalStructureItemContainer.EngramRequirementClassOverride" }; }
-	FieldValue<AActor *> LinkedBlueprintSpawnActorPointField() { return { this, "APrimalStructureItemContainer.LinkedBlueprintSpawnActorPoint" }; }
-	FieldValue<TSubclassOf<APrimalStructureItemContainer>> PoweredNearbyStructureTemplateField() { return { this, "APrimalStructureItemContainer.PoweredNearbyStructureTemplate" }; }
-	FieldValue<float> PoweredNearbyStructureRangeField() { return { this, "APrimalStructureItemContainer.PoweredNearbyStructureRange" }; }
-	FieldValue<FString> OpenSceneActionNameField() { return { this, "APrimalStructureItemContainer.OpenSceneActionName" }; }
-	FieldValue<FString> DisabledOpenSceneActionNameField() { return { this, "APrimalStructureItemContainer.DisabledOpenSceneActionName" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> RequiresItemForOpenSceneActionField() { return { this, "APrimalStructureItemContainer.RequiresItemForOpenSceneAction" }; }
-	FieldValue<long double> DeathCacheCreationTimeField() { return { this, "APrimalStructureItemContainer.DeathCacheCreationTime" }; }
-	FieldValue<long double> LastBasedCharacterDamageTimeField() { return { this, "APrimalStructureItemContainer.LastBasedCharacterDamageTime" }; }
-	FieldValue<int> LastBasedCharacterDamageFrameField() { return { this, "APrimalStructureItemContainer.LastBasedCharacterDamageFrame" }; }
-	FieldValue<long double> LastSignNamingTimeField() { return { this, "APrimalStructureItemContainer.LastSignNamingTime" }; }
-	FieldValue<FVector> JunctionCableBeamOffsetStartField() { return { this, "APrimalStructureItemContainer.JunctionCableBeamOffsetStart" }; }
-	FieldValue<FVector> JunctionCableBeamOffsetEndField() { return { this, "APrimalStructureItemContainer.JunctionCableBeamOffsetEnd" }; }
-	FieldValue<USoundBase *> ContainerActivatedSoundField() { return { this, "APrimalStructureItemContainer.ContainerActivatedSound" }; }
-	FieldValue<USoundBase *> ContainerDeactivatedSoundField() { return { this, "APrimalStructureItemContainer.ContainerDeactivatedSound" }; }
-	FieldValue<TSubclassOf<APrimalStructureItemContainer>> DemolishInventoryDepositClassField() { return { this, "APrimalStructureItemContainer.DemolishInventoryDepositClass" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> FuelItemTrueClassField() { return { this, "APrimalStructureItemContainer.FuelItemTrueClass" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> ReplicatedFuelItemClassField() { return { this, "APrimalStructureItemContainer.ReplicatedFuelItemClass" }; }
-	FieldValue<__int16> ReplicatedFuelItemColorIndexField() { return { this, "APrimalStructureItemContainer.ReplicatedFuelItemColorIndex" }; }
-	FieldValue<USoundBase *> DefaultAudioTemplateField() { return { this, "APrimalStructureItemContainer.DefaultAudioTemplate" }; }
-	FieldValue<TArray<TSubclassOf<UPrimalItem>>> OverrideParticleTemplateItemClassesField() { return { this, "APrimalStructureItemContainer.OverrideParticleTemplateItemClasses" }; }
-	FieldValue<TArray<USoundBase *>> OverrideAudioTemplatesField() { return { this, "APrimalStructureItemContainer.OverrideAudioTemplates" }; }
-	FieldValue<float> MaxActivationDistanceField() { return { this, "APrimalStructureItemContainer.MaxActivationDistance" }; }
-	FieldValue<FString> BoxNamePrefaceStringField() { return { this, "APrimalStructureItemContainer.BoxNamePrefaceString" }; }
-	FieldValue<char> TribeGroupInventoryRankField() { return { this, "APrimalStructureItemContainer.TribeGroupInventoryRank" }; }
-	FieldValue<TArray<float>> FuelConsumeDecreaseDurabilityAmountsField() { return { this, "APrimalStructureItemContainer.FuelConsumeDecreaseDurabilityAmounts" }; }
-	FieldValue<float> RandomFuelUpdateTimeMinField() { return { this, "APrimalStructureItemContainer.RandomFuelUpdateTimeMin" }; }
-	FieldValue<float> RandomFuelUpdateTimeMaxField() { return { this, "APrimalStructureItemContainer.RandomFuelUpdateTimeMax" }; }
-	FieldValue<long double> LastDeactivatedTimeField() { return { this, "APrimalStructureItemContainer.LastDeactivatedTime" }; }
-	FieldValue<long double> LastActivatedTimeField() { return { this, "APrimalStructureItemContainer.LastActivatedTime" }; }
-	FieldValue<float> ValidCraftingResourceMaxDurabilityField() { return { this, "APrimalStructureItemContainer.ValidCraftingResourceMaxDurability" }; }
-	FieldValue<float> ActivationCooldownTimeField() { return { this, "APrimalStructureItemContainer.ActivationCooldownTime" }; }
-	FieldValue<float> UsablePriorityField() { return { this, "APrimalStructureItemContainer.UsablePriority" }; }
-	FieldValue<unsigned __int64> DeathCacheCharacterIDField() { return { this, "APrimalStructureItemContainer.DeathCacheCharacterID" }; }
-	FieldValue<float> SinglePlayerFuelConsumptionIntervalsMultiplierField() { return { this, "APrimalStructureItemContainer.SinglePlayerFuelConsumptionIntervalsMultiplier" }; }
-	FieldValue<float> PoweredBatteryDurabilityToDecreasePerSecondField() { return { this, "APrimalStructureItemContainer.PoweredBatteryDurabilityToDecreasePerSecond" }; }
-	FieldValue<float> DropInventoryDepositTraceDistanceField() { return { this, "APrimalStructureItemContainer.DropInventoryDepositTraceDistance" }; }
+	UPrimalInventoryComponent * MyInventoryComponentField() { return *GetNativePointerField<UPrimalInventoryComponent **>(this, "APrimalStructureItemContainer.MyInventoryComponent"); }
+	TSubclassOf<UPrimalItem>& BatteryClassOverrideField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureItemContainer.BatteryClassOverride"); }
+	int& PoweredOverrideCounterField() { return *GetNativePointerField<int*>(this, "APrimalStructureItemContainer.PoweredOverrideCounter"); }
+	float& NotifyNearbyPowerGeneratorDistanceField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.NotifyNearbyPowerGeneratorDistance"); }
+	int& NotifyNearbyPowerGeneratorOctreeGroupField() { return *GetNativePointerField<int*>(this, "APrimalStructureItemContainer.NotifyNearbyPowerGeneratorOctreeGroup"); }
+	TArray<UMaterialInterface *> ActivateMaterialsField() { return *GetNativePointerField<TArray<UMaterialInterface *>*>(this, "APrimalStructureItemContainer.ActivateMaterials"); }
+	TArray<UMaterialInterface *> InActivateMaterialsField() { return *GetNativePointerField<TArray<UMaterialInterface *>*>(this, "APrimalStructureItemContainer.InActivateMaterials"); }
+	FString& BoxNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructureItemContainer.BoxName"); }
+	float& InsulationRangeField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.InsulationRange"); }
+	float& HyperThermiaInsulationField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.HyperThermiaInsulation"); }
+	float& HypoThermiaInsulationField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.HypoThermiaInsulation"); }
+	float& ContainerActiveDecreaseHealthSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.ContainerActiveDecreaseHealthSpeed"); }
+	float& FuelConsumptionIntervalsMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.FuelConsumptionIntervalsMultiplier"); }
+	float& DropInventoryOnDestructionLifespanField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.DropInventoryOnDestructionLifespan"); }
+	FString& ActivateContainerStringField() { return *GetNativePointerField<FString*>(this, "APrimalStructureItemContainer.ActivateContainerString"); }
+	FString& DeactivateContainerStringField() { return *GetNativePointerField<FString*>(this, "APrimalStructureItemContainer.DeactivateContainerString"); }
+	TSubclassOf<UDamageType>& ContainerActiveHealthDecreaseDamageTypePassiveField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "APrimalStructureItemContainer.ContainerActiveHealthDecreaseDamageTypePassive"); }
+	TArray<TSubclassOf<UPrimalItem>>& ActiveRequiresFuelItemsField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "APrimalStructureItemContainer.ActiveRequiresFuelItems"); }
+	TArray<float>& FuelItemsConsumeIntervalField() { return *GetNativePointerField<TArray<float>*>(this, "APrimalStructureItemContainer.FuelItemsConsumeInterval"); }
+	TArray<TSubclassOf<UPrimalItem>>& FuelItemsConsumedGiveItemsField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "APrimalStructureItemContainer.FuelItemsConsumedGiveItems"); }
+	long double& NetDestructionTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.NetDestructionTime"); }
+	unsigned int& CurrentPinCodeField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureItemContainer.CurrentPinCode"); }
+	long double& CurrentFuelTimeCacheField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.CurrentFuelTimeCache"); }
+	long double& LastCheckedFuelTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.LastCheckedFuelTime"); }
+	int& LinkedPowerJunctionStructureIDField() { return *GetNativePointerField<int*>(this, "APrimalStructureItemContainer.LinkedPowerJunctionStructureID"); }
+	int& CurrentItemCountField() { return *GetNativePointerField<int*>(this, "APrimalStructureItemContainer.CurrentItemCount"); }
+	int& MaxItemCountField() { return *GetNativePointerField<int*>(this, "APrimalStructureItemContainer.MaxItemCount"); }
+	TWeakObjectPtr<APrimalStructure>& LinkedPowerJunctionStructureField() { return *GetNativePointerField<TWeakObjectPtr<APrimalStructure>*>(this, "APrimalStructureItemContainer.LinkedPowerJunctionStructure"); }
+	TSubclassOf<UPrimalItem>& NextConsumeFuelGiveItemTypeField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureItemContainer.NextConsumeFuelGiveItemType"); }
+	long double& LastLockStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.LastLockStateChangeTime"); }
+	long double& LastActiveStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.LastActiveStateChangeTime"); }
+	int& LastPowerJunctionLinkIDField() { return *GetNativePointerField<int*>(this, "APrimalStructureItemContainer.LastPowerJunctionLinkID"); }
+	float& BasedCharacterDamageIntervalField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.BasedCharacterDamageInterval"); }
+	float& BasedCharacterDamageAmountField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.BasedCharacterDamageAmount"); }
+	TSubclassOf<UDamageType>& BasedCharacterDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "APrimalStructureItemContainer.BasedCharacterDamageType"); }
+	TSubclassOf<UPrimalItem>& EngramRequirementClassOverrideField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureItemContainer.EngramRequirementClassOverride"); }
+	AActor * LinkedBlueprintSpawnActorPointField() { return *GetNativePointerField<AActor **>(this, "APrimalStructureItemContainer.LinkedBlueprintSpawnActorPoint"); }
+	TSubclassOf<APrimalStructureItemContainer>& PoweredNearbyStructureTemplateField() { return *GetNativePointerField<TSubclassOf<APrimalStructureItemContainer>*>(this, "APrimalStructureItemContainer.PoweredNearbyStructureTemplate"); }
+	float& PoweredNearbyStructureRangeField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.PoweredNearbyStructureRange"); }
+	FString& OpenSceneActionNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructureItemContainer.OpenSceneActionName"); }
+	FString& DisabledOpenSceneActionNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructureItemContainer.DisabledOpenSceneActionName"); }
+	TSubclassOf<UPrimalItem>& RequiresItemForOpenSceneActionField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureItemContainer.RequiresItemForOpenSceneAction"); }
+	long double& DeathCacheCreationTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.DeathCacheCreationTime"); }
+	long double& LastBasedCharacterDamageTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.LastBasedCharacterDamageTime"); }
+	int& LastBasedCharacterDamageFrameField() { return *GetNativePointerField<int*>(this, "APrimalStructureItemContainer.LastBasedCharacterDamageFrame"); }
+	long double& LastSignNamingTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.LastSignNamingTime"); }
+	FVector& JunctionCableBeamOffsetStartField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureItemContainer.JunctionCableBeamOffsetStart"); }
+	FVector& JunctionCableBeamOffsetEndField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureItemContainer.JunctionCableBeamOffsetEnd"); }
+	USoundBase * ContainerActivatedSoundField() { return *GetNativePointerField<USoundBase **>(this, "APrimalStructureItemContainer.ContainerActivatedSound"); }
+	USoundBase * ContainerDeactivatedSoundField() { return *GetNativePointerField<USoundBase **>(this, "APrimalStructureItemContainer.ContainerDeactivatedSound"); }
+	TSubclassOf<APrimalStructureItemContainer>& DemolishInventoryDepositClassField() { return *GetNativePointerField<TSubclassOf<APrimalStructureItemContainer>*>(this, "APrimalStructureItemContainer.DemolishInventoryDepositClass"); }
+	TSubclassOf<UPrimalItem>& FuelItemTrueClassField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureItemContainer.FuelItemTrueClass"); }
+	TSubclassOf<UPrimalItem>& ReplicatedFuelItemClassField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureItemContainer.ReplicatedFuelItemClass"); }
+	__int16& ReplicatedFuelItemColorIndexField() { return *GetNativePointerField<__int16*>(this, "APrimalStructureItemContainer.ReplicatedFuelItemColorIndex"); }
+	USoundBase * DefaultAudioTemplateField() { return *GetNativePointerField<USoundBase **>(this, "APrimalStructureItemContainer.DefaultAudioTemplate"); }
+	TArray<TSubclassOf<UPrimalItem>>& OverrideParticleTemplateItemClassesField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "APrimalStructureItemContainer.OverrideParticleTemplateItemClasses"); }
+	TArray<USoundBase *> OverrideAudioTemplatesField() { return *GetNativePointerField<TArray<USoundBase *>*>(this, "APrimalStructureItemContainer.OverrideAudioTemplates"); }
+	float& MaxActivationDistanceField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.MaxActivationDistance"); }
+	FString& BoxNamePrefaceStringField() { return *GetNativePointerField<FString*>(this, "APrimalStructureItemContainer.BoxNamePrefaceString"); }
+	char& TribeGroupInventoryRankField() { return *GetNativePointerField<char*>(this, "APrimalStructureItemContainer.TribeGroupInventoryRank"); }
+	TArray<float>& FuelConsumeDecreaseDurabilityAmountsField() { return *GetNativePointerField<TArray<float>*>(this, "APrimalStructureItemContainer.FuelConsumeDecreaseDurabilityAmounts"); }
+	float& RandomFuelUpdateTimeMinField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.RandomFuelUpdateTimeMin"); }
+	float& RandomFuelUpdateTimeMaxField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.RandomFuelUpdateTimeMax"); }
+	long double& LastDeactivatedTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.LastDeactivatedTime"); }
+	long double& LastActivatedTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureItemContainer.LastActivatedTime"); }
+	float& ValidCraftingResourceMaxDurabilityField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.ValidCraftingResourceMaxDurability"); }
+	float& ActivationCooldownTimeField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.ActivationCooldownTime"); }
+	float& UsablePriorityField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.UsablePriority"); }
+	unsigned __int64& DeathCacheCharacterIDField() { return *GetNativePointerField<unsigned __int64*>(this, "APrimalStructureItemContainer.DeathCacheCharacterID"); }
+	float& SinglePlayerFuelConsumptionIntervalsMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.SinglePlayerFuelConsumptionIntervalsMultiplier"); }
+	float& PoweredBatteryDurabilityToDecreasePerSecondField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.PoweredBatteryDurabilityToDecreasePerSecond"); }
+	float& DropInventoryDepositTraceDistanceField() { return *GetNativePointerField<float*>(this, "APrimalStructureItemContainer.DropInventoryDepositTraceDistance"); }
+	TArray<TWeakObjectPtr<AShooterPlayerController>>& ValidatedByPinCodePlayerControllersField() { return *GetNativePointerField<TArray<TWeakObjectPtr<AShooterPlayerController>>*>(this, "APrimalStructureItemContainer.ValidatedByPinCodePlayerControllers"); }
 
 	// Bit fields
 
@@ -681,6 +681,7 @@ struct APrimalStructureItemContainer : APrimalStructure
 
 	// Functions
 
+	static UClass * GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "APrimalStructureItemContainer.GetPrivateStaticClass"); }
 	void PostSpawnInitialize() { NativeCall<void>(this, "APrimalStructureItemContainer.PostSpawnInitialize"); }
 	bool IsPowered() { return NativeCall<bool>(this, "APrimalStructureItemContainer.IsPowered"); }
 	bool CanBeActivated() { return NativeCall<bool>(this, "APrimalStructureItemContainer.CanBeActivated"); }
@@ -700,8 +701,10 @@ struct APrimalStructureItemContainer : APrimalStructure
 	void TryActivation() { NativeCall<void>(this, "APrimalStructureItemContainer.TryActivation"); }
 	void SetContainerActive(bool bNewActive) { NativeCall<void, bool>(this, "APrimalStructureItemContainer.SetContainerActive", bNewActive); }
 	bool CanOpen(APlayerController * ForPC) { return NativeCall<bool, APlayerController *>(this, "APrimalStructureItemContainer.CanOpen", ForPC); }
+	void ServerCloseRemoteInventory(AShooterPlayerController * ByPC) { NativeCall<void, AShooterPlayerController *>(this, "APrimalStructureItemContainer.ServerCloseRemoteInventory", ByPC); }
 	FString * GetDescriptiveName(FString * result) { return NativeCall<FString *, FString *>(this, "APrimalStructureItemContainer.GetDescriptiveName", result); }
 	bool ApplyPinCode(AShooterPlayerController * ForPC, int appledPinCode, bool bIsSetting, int TheCustomIndex) { return NativeCall<bool, AShooterPlayerController *, int, bool, int>(this, "APrimalStructureItemContainer.ApplyPinCode", ForPC, appledPinCode, bIsSetting, TheCustomIndex); }
+	bool RemoteInventoryAllowViewing(APlayerController * ForPC) { return NativeCall<bool, APlayerController *>(this, "APrimalStructureItemContainer.RemoteInventoryAllowViewing", ForPC); }
 	bool RemoteInventoryAllowActivation(AShooterPlayerController * ForPC) { return NativeCall<bool, AShooterPlayerController *>(this, "APrimalStructureItemContainer.RemoteInventoryAllowActivation", ForPC); }
 	void UpdateContainerActiveHealthDecrease() { NativeCall<void>(this, "APrimalStructureItemContainer.UpdateContainerActiveHealthDecrease"); }
 	void CheckAutoReactivate() { NativeCall<void>(this, "APrimalStructureItemContainer.CheckAutoReactivate"); }
@@ -740,34 +743,34 @@ struct APrimalStructureItemContainer : APrimalStructure
 
 struct APrimalStructureTurret : APrimalStructureItemContainer
 {
-	FieldValue<TWeakObjectPtr<AActor>> TargetField() { return { this, "APrimalStructureTurret.Target" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> AmmoItemTemplateField() { return { this, "APrimalStructureTurret.AmmoItemTemplate" }; }
-	FieldValue<float> FireIntervalField() { return { this, "APrimalStructureTurret.FireInterval" }; }
-	FieldValue<long double> LastFireTimeField() { return { this, "APrimalStructureTurret.LastFireTime" }; }
-	FieldValue<float> MaxFireYawDeltaField() { return { this, "APrimalStructureTurret.MaxFireYawDelta" }; }
-	FieldValue<float> MaxFirePitchDeltaField() { return { this, "APrimalStructureTurret.MaxFirePitchDelta" }; }
-	FieldValue<FVector> TargetingLocOffsetField() { return { this, "APrimalStructureTurret.TargetingLocOffset" }; }
-	FieldValue<float> TargetingRotationInterpSpeedField() { return { this, "APrimalStructureTurret.TargetingRotationInterpSpeed" }; }
+	TWeakObjectPtr<AActor>& TargetField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "APrimalStructureTurret.Target"); }
+	TSubclassOf<UPrimalItem>& AmmoItemTemplateField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureTurret.AmmoItemTemplate"); }
+	float& FireIntervalField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.FireInterval"); }
+	long double& LastFireTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureTurret.LastFireTime"); }
+	float& MaxFireYawDeltaField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.MaxFireYawDelta"); }
+	float& MaxFirePitchDeltaField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.MaxFirePitchDelta"); }
+	FVector& TargetingLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureTurret.TargetingLocOffset"); }
+	float& TargetingRotationInterpSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.TargetingRotationInterpSpeed"); }
 	FieldArray<float, 3> TargetingRangesField() { return { this, "APrimalStructureTurret.TargetingRanges" }; }
-	FieldValue<FVector> TargetingTraceOffsetField() { return { this, "APrimalStructureTurret.TargetingTraceOffset" }; }
-	FieldValue<TSubclassOf<UDamageType>> FireDamageTypeField() { return { this, "APrimalStructureTurret.FireDamageType" }; }
-	FieldValue<float> FireDamageAmountField() { return { this, "APrimalStructureTurret.FireDamageAmount" }; }
-	FieldValue<float> FireDamageImpulseField() { return { this, "APrimalStructureTurret.FireDamageImpulse" }; }
-	FieldValue<FRotator> TurretAimRotOffsetField() { return { this, "APrimalStructureTurret.TurretAimRotOffset" }; }
-	FieldValue<FVector> AimTargetLocOffsetField() { return { this, "APrimalStructureTurret.AimTargetLocOffset" }; }
-	FieldValue<FVector> PlayerProneTargetOffsetField() { return { this, "APrimalStructureTurret.PlayerProneTargetOffset" }; }
-	FieldValue<float> AimSpreadField() { return { this, "APrimalStructureTurret.AimSpread" }; }
-	FieldValue<char> RangeSettingField() { return { this, "APrimalStructureTurret.RangeSetting" }; }
-	FieldValue<char> AISettingField() { return { this, "APrimalStructureTurret.AISetting" }; }
-	FieldValue<char> WarningSettingField() { return { this, "APrimalStructureTurret.WarningSetting" }; }
-	FieldValue<int> NumBulletsField() { return { this, "APrimalStructureTurret.NumBullets" }; }
-	FieldValue<int> NumBulletsPerShotField() { return { this, "APrimalStructureTurret.NumBulletsPerShot" }; }
-	FieldValue<float> WarningExpirationTimeField() { return { this, "APrimalStructureTurret.WarningExpirationTime" }; }
-	FieldValue<float> BatteryIntervalFromActivationBeforeFiringField() { return { this, "APrimalStructureTurret.BatteryIntervalFromActivationBeforeFiring" }; }
-	FieldValue<bool> bWarnedField() { return { this, "APrimalStructureTurret.bWarned" }; }
-	FieldValue<FRotator> DefaultTurretAimRotOffsetField() { return { this, "APrimalStructureTurret.DefaultTurretAimRotOffset" }; }
-	FieldValue<FVector> MuzzleLocOffsetField() { return { this, "APrimalStructureTurret.MuzzleLocOffset" }; }
-	FieldValue<long double> LastWarningTimeField() { return { this, "APrimalStructureTurret.LastWarningTime" }; }
+	FVector& TargetingTraceOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureTurret.TargetingTraceOffset"); }
+	TSubclassOf<UDamageType>& FireDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "APrimalStructureTurret.FireDamageType"); }
+	float& FireDamageAmountField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.FireDamageAmount"); }
+	float& FireDamageImpulseField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.FireDamageImpulse"); }
+	FRotator& TurretAimRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureTurret.TurretAimRotOffset"); }
+	FVector& AimTargetLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureTurret.AimTargetLocOffset"); }
+	FVector& PlayerProneTargetOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureTurret.PlayerProneTargetOffset"); }
+	float& AimSpreadField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.AimSpread"); }
+	char& RangeSettingField() { return *GetNativePointerField<char*>(this, "APrimalStructureTurret.RangeSetting"); }
+	char& AISettingField() { return *GetNativePointerField<char*>(this, "APrimalStructureTurret.AISetting"); }
+	char& WarningSettingField() { return *GetNativePointerField<char*>(this, "APrimalStructureTurret.WarningSetting"); }
+	int& NumBulletsField() { return *GetNativePointerField<int*>(this, "APrimalStructureTurret.NumBullets"); }
+	int& NumBulletsPerShotField() { return *GetNativePointerField<int*>(this, "APrimalStructureTurret.NumBulletsPerShot"); }
+	float& WarningExpirationTimeField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.WarningExpirationTime"); }
+	float& BatteryIntervalFromActivationBeforeFiringField() { return *GetNativePointerField<float*>(this, "APrimalStructureTurret.BatteryIntervalFromActivationBeforeFiring"); }
+	bool& bWarnedField() { return *GetNativePointerField<bool*>(this, "APrimalStructureTurret.bWarned"); }
+	FRotator& DefaultTurretAimRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureTurret.DefaultTurretAimRotOffset"); }
+	FVector& MuzzleLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureTurret.MuzzleLocOffset"); }
+	long double& LastWarningTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureTurret.LastWarningTime"); }
 
 	// Bit fields
 
@@ -785,6 +788,7 @@ struct APrimalStructureTurret : APrimalStructureItemContainer
 
 	// Functions
 
+	static UClass * GetPrivateStaticClass() { return NativeCall<UClass *>(nullptr, "APrimalStructureTurret.GetPrivateStaticClass"); }
 	void BeginPlay() { NativeCall<void>(this, "APrimalStructureTurret.BeginPlay"); }
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty> * OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty> *>(this, "APrimalStructureTurret.GetLifetimeReplicatedProps", OutLifetimeProps); }
 	AActor * FindTarget() { return NativeCall<AActor *>(this, "APrimalStructureTurret.FindTarget"); }

@@ -55,60 +55,6 @@ void SetNativeBitField(LPVOID _this, const std::string& field_name, RT new_value
 		(*reinterpret_cast<T*>(bf.offset) & ~mask) | ((static_cast<T>(new_value) << bf.bit_position) & mask);
 }
 
-template <typename T>
-class FieldValue
-{
-public:
-	FieldValue(void* parent, const std::string& field_name)
-		: value_(GetNativePointerField<T*>(parent, field_name))
-	{
-	}
-
-	T& operator()() const
-	{
-		return *value_;
-	}
-
-	FieldValue& operator=(const T& other)
-	{
-		*value_ = other;
-		return *this;
-	}
-
-	T& Get() const
-	{
-		return *value_;
-	}
-
-	void Set(const T& other)
-	{
-		*value_ = other;
-	}
-
-private:
-	T* value_;
-};
-
-template <typename T>
-class FieldPointer
-{
-public:
-	FieldPointer(void* parent, const std::string& field_name)
-		: value_(GetNativePointerField<T>(parent, field_name))
-	{
-	}
-
-	T operator()() const
-	{
-		return value_;
-	}
-
-	FieldPointer& operator=(const T& other) = delete;
-
-private:
-	T value_;
-};
-
 template <typename T, size_t size>
 class FieldArray
 {

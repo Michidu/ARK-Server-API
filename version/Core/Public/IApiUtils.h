@@ -102,7 +102,7 @@ namespace ArkApi
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
-			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			const auto& player_controllers = GetWorld()->PlayerControllerListField();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
@@ -128,7 +128,7 @@ namespace ArkApi
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
-			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			const auto& player_controllers = GetWorld()->PlayerControllerListField();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
@@ -154,7 +154,7 @@ namespace ArkApi
 			chat_message.SenderName = sender_name;
 			chat_message.Message = text;
 
-			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			const auto& player_controllers = GetWorld()->PlayerControllerListField();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
@@ -503,7 +503,7 @@ namespace ArkApi
 			FString name;
 			int item_count = 0;
 
-			for (UPrimalItem* item : inventory_component->InventoryItemsField()())
+			for (UPrimalItem* item : inventory_component->InventoryItemsField())
 			{
 				item->GetItemName(&name, true, false, nullptr);
 
@@ -540,7 +540,7 @@ namespace ArkApi
 			if (item)
 			{
 				FString path_name;
-				item->ClassField()()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
+				item->ClassField()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
 
 				if (int find_index = 0; path_name.FindChar(' ', find_index))
 				{

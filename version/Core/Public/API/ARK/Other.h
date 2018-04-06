@@ -4,10 +4,10 @@
 
 struct FDamageEvent
 {
-	FieldValue<float> ImpulseField() { return { this, "FDamageEvent.Impulse" }; }
-	FieldValue<float> OriginalDamageField() { return { this, "FDamageEvent.OriginalDamage" }; }
-	FieldValue<int> InstanceBodyIndexField() { return { this, "FDamageEvent.InstanceBodyIndex" }; }
-	FieldValue<TSubclassOf<UDamageType>> DamageTypeClassField() { return { this, "FDamageEvent.DamageTypeClass" }; }
+	float& ImpulseField() { return *GetNativePointerField<float*>(this, "FDamageEvent.Impulse"); }
+	float& OriginalDamageField() { return *GetNativePointerField<float*>(this, "FDamageEvent.OriginalDamage"); }
+	int& InstanceBodyIndexField() { return *GetNativePointerField<int*>(this, "FDamageEvent.InstanceBodyIndex"); }
+	TSubclassOf<UDamageType>& DamageTypeClassField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "FDamageEvent.DamageTypeClass"); }
 
 	// Functions
 
@@ -64,15 +64,15 @@ struct FInternetAddr
 
 struct FSocket
 {
-	FieldValue<ESocketType> SocketTypeField() { return { this, "FSocket.SocketType" }; }
-	FieldValue<FString> SocketDescriptionField() { return { this, "FSocket.SocketDescription" }; }
+	ESocketType& SocketTypeField() { return *GetNativePointerField<ESocketType*>(this, "FSocket.SocketType"); }
+	FString& SocketDescriptionField() { return *GetNativePointerField<FString*>(this, "FSocket.SocketDescription"); }
+
 };
 
 struct FSocketBSD : FSocket
 {
-	FieldValue<unsigned __int64> SocketField() { return { this, "FSocketBSD.Socket" }; }
-	FieldValue<FDateTime> LastActivityTimeField() { return { this, "FSocketBSD.LastActivityTime" }; }
-	//FieldValue<ISocketSubsystem *> SocketSubsystemField() { return { this, "FSocketBSD.SocketSubsystem" }; }
+	unsigned __int64& SocketField() { return *GetNativePointerField<unsigned __int64*>(this, "FSocketBSD.Socket"); }
+	FDateTime& LastActivityTimeField() { return *GetNativePointerField<FDateTime*>(this, "FSocketBSD.LastActivityTime"); }
 
 	// Functions
 
@@ -80,7 +80,6 @@ struct FSocketBSD : FSocket
 	bool Bind(FInternetAddr * Addr) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.Bind", Addr); }
 	bool Connect(FInternetAddr * Addr) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.Connect", Addr); }
 	bool Listen(int MaxBacklog) { return NativeCall<bool, int>(this, "FSocketBSD.Listen", MaxBacklog); }
-	//ESocketInternalState::Return HasState(ESocketInternalState::Param State, FTimespan WaitTime) { return NativeCall<ESocketInternalState::Return, ESocketInternalState::Param, FTimespan>(this, "FSocketBSD.HasState", State, WaitTime); }
 	bool HasPendingConnection(bool * bHasPendingConnection) { return NativeCall<bool, bool *>(this, "FSocketBSD.HasPendingConnection", bHasPendingConnection); }
 	bool HasPendingData(unsigned int * PendingDataSize) { return NativeCall<bool, unsigned int *>(this, "FSocketBSD.HasPendingData", PendingDataSize); }
 	FSocket * Accept(FString * SocketDescription) { return NativeCall<FSocket *, FString *>(this, "FSocketBSD.Accept", SocketDescription); }
@@ -89,7 +88,6 @@ struct FSocketBSD : FSocket
 	bool Send(const char * Data, int Count, int * BytesSent) { return NativeCall<bool, const char *, int, int *>(this, "FSocketBSD.Send", Data, Count, BytesSent); }
 	bool RecvFrom(char * Data, int BufferSize, int * BytesRead, FInternetAddr * Source, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char *, int, int *, FInternetAddr *, ESocketReceiveFlags::Type>(this, "FSocketBSD.RecvFrom", Data, BufferSize, BytesRead, Source, Flags); }
 	bool Recv(char * Data, int BufferSize, int * BytesRead, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char *, int, int *, ESocketReceiveFlags::Type>(this, "FSocketBSD.Recv", Data, BufferSize, BytesRead, Flags); }
-	//bool Wait(ESocketWaitConditions::Type Condition, FTimespan WaitTime) { return NativeCall<bool, ESocketWaitConditions::Type, FTimespan>(this, "FSocketBSD.Wait", Condition, WaitTime); }
 	ESocketConnectionState GetConnectionState() { return NativeCall<ESocketConnectionState>(this, "FSocketBSD.GetConnectionState"); }
 	void GetAddress(FInternetAddr * OutAddr) { NativeCall<void, FInternetAddr *>(this, "FSocketBSD.GetAddress", OutAddr); }
 	bool SetNonBlocking(bool bIsNonBlocking) { return NativeCall<bool, bool>(this, "FSocketBSD.SetNonBlocking", bIsNonBlocking); }
@@ -103,20 +101,19 @@ struct FSocketBSD : FSocket
 	bool SetSendBufferSize(int Size, int * NewSize) { return NativeCall<bool, int, int *>(this, "FSocketBSD.SetSendBufferSize", Size, NewSize); }
 	bool SetReceiveBufferSize(int Size, int * NewSize) { return NativeCall<bool, int, int *>(this, "FSocketBSD.SetReceiveBufferSize", Size, NewSize); }
 	int GetPortNo() { return NativeCall<int>(this, "FSocketBSD.GetPortNo"); }
-	//void FThreadedFSocketBSD(unsigned __int64 InSocket, ESocketType InSocketType, FString * InSocketDescription, ISocketSubsystem * InSubsystem) { NativeCall<void, unsigned __int64, ESocketType, FString *, ISocketSubsystem *>(this, "FSocketBSD.FThreadedFSocketBSD", InSocket, InSocketType, InSocketDescription, InSubsystem); }
 };
 
 struct RCONClientConnection
 {
-	FieldValue<FSocket *> SocketField() { return { this, "RCONClientConnection.Socket" }; }
-	FieldValue<UShooterCheatManager *> CheatManagerField() { return { this, "RCONClientConnection.CheatManager" }; }
-	FieldValue<bool> IsAuthenticatedField() { return { this, "RCONClientConnection.IsAuthenticated" }; }
-	FieldValue<bool> IsClosedField() { return { this, "RCONClientConnection.IsClosed" }; }
-	FieldValue<TArray<signed char>> DataBufferField() { return { this, "RCONClientConnection.DataBuffer" }; }
-	FieldValue<unsigned int> CurrentPacketSizeField() { return { this, "RCONClientConnection.CurrentPacketSize" }; }
-	FieldValue<long double> LastReceiveTimeField() { return { this, "RCONClientConnection.LastReceiveTime" }; }
-	FieldValue<long double> LastSendKeepAliveTimeField() { return { this, "RCONClientConnection.LastSendKeepAliveTime" }; }
-	FieldValue<FString> ServerPasswordField() { return { this, "RCONClientConnection.ServerPassword" }; }
+	FSocket * SocketField() { return *GetNativePointerField<FSocket **>(this, "RCONClientConnection.Socket"); }
+	UShooterCheatManager * CheatManagerField() { return *GetNativePointerField<UShooterCheatManager **>(this, "RCONClientConnection.CheatManager"); }
+	bool& IsAuthenticatedField() { return *GetNativePointerField<bool*>(this, "RCONClientConnection.IsAuthenticated"); }
+	bool& IsClosedField() { return *GetNativePointerField<bool*>(this, "RCONClientConnection.IsClosed"); }
+	TArray<signed char>& DataBufferField() { return *GetNativePointerField<TArray<signed char>*>(this, "RCONClientConnection.DataBuffer"); }
+	unsigned int& CurrentPacketSizeField() { return *GetNativePointerField<unsigned int*>(this, "RCONClientConnection.CurrentPacketSize"); }
+	long double& LastReceiveTimeField() { return *GetNativePointerField<long double*>(this, "RCONClientConnection.LastReceiveTime"); }
+	long double& LastSendKeepAliveTimeField() { return *GetNativePointerField<long double*>(this, "RCONClientConnection.LastSendKeepAliveTime"); }
+	FString& ServerPasswordField() { return *GetNativePointerField<FString*>(this, "RCONClientConnection.ServerPassword"); }
 
 	// Functions
 
@@ -166,108 +163,198 @@ struct FItemMultiplier
 
 struct APrimalBuff
 {
-	FieldValue<float> DeactivationLifespanField() { return { this, "APrimalBuff.DeactivationLifespan" }; }
-	FieldValue<FName> InstigatorAttachmentSocketField() { return { this, "APrimalBuff.InstigatorAttachmentSocket" }; }
-	FieldValue<FVector> AoETraceToTargetsStartOffsetField() { return { this, "APrimalBuff.AoETraceToTargetsStartOffset" }; }
-	FieldValue<TWeakObjectPtr<AActor>> TargetField() { return { this, "APrimalBuff.Target" }; }
-	FieldValue<TWeakObjectPtr<UPrimalItem>> InstigatorItemField() { return { this, "APrimalBuff.InstigatorItem" }; }
-	FieldValue<float> SlowInstigatorFallingAddZVelocityField() { return { this, "APrimalBuff.SlowInstigatorFallingAddZVelocity" }; }
-	FieldValue<float> SlowInstigatorFallingDampenZVelocityField() { return { this, "APrimalBuff.SlowInstigatorFallingDampenZVelocity" }; }
-	FieldValue<float> DeactivateAfterTimeField() { return { this, "APrimalBuff.DeactivateAfterTime" }; }
-	FieldValue<float> WeaponRecoilMultiplierField() { return { this, "APrimalBuff.WeaponRecoilMultiplier" }; }
-	FieldValue<float> ReceiveDamageMultiplierField() { return { this, "APrimalBuff.ReceiveDamageMultiplier" }; }
-	FieldValue<float> MeleeDamageMultiplierField() { return { this, "APrimalBuff.MeleeDamageMultiplier" }; }
-	FieldValue<float> DepleteInstigatorItemDurabilityPerSecondField() { return { this, "APrimalBuff.DepleteInstigatorItemDurabilityPerSecond" }; }
+	float& DeactivationLifespanField() { return *GetNativePointerField<float*>(this, "APrimalBuff.DeactivationLifespan"); }
+	FName& InstigatorAttachmentSocketField() { return *GetNativePointerField<FName*>(this, "APrimalBuff.InstigatorAttachmentSocket"); }
+	float& RemoteForcedFleeDurationField() { return *GetNativePointerField<float*>(this, "APrimalBuff.RemoteForcedFleeDuration"); }
+	FVector& AoETraceToTargetsStartOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalBuff.AoETraceToTargetsStartOffset"); }
+	TWeakObjectPtr<AActor>& TargetField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "APrimalBuff.Target"); }
+	TWeakObjectPtr<UPrimalItem>& InstigatorItemField() { return *GetNativePointerField<TWeakObjectPtr<UPrimalItem>*>(this, "APrimalBuff.InstigatorItem"); }
+	float& SlowInstigatorFallingAddZVelocityField() { return *GetNativePointerField<float*>(this, "APrimalBuff.SlowInstigatorFallingAddZVelocity"); }
+	float& SlowInstigatorFallingDampenZVelocityField() { return *GetNativePointerField<float*>(this, "APrimalBuff.SlowInstigatorFallingDampenZVelocity"); }
+	float& DeactivateAfterTimeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.DeactivateAfterTime"); }
+	float& WeaponRecoilMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.WeaponRecoilMultiplier"); }
+	float& ReceiveDamageMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.ReceiveDamageMultiplier"); }
+	float& MeleeDamageMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.MeleeDamageMultiplier"); }
+	float& DepleteInstigatorItemDurabilityPerSecondField() { return *GetNativePointerField<float*>(this, "APrimalBuff.DepleteInstigatorItemDurabilityPerSecond"); }
 	FieldArray<float, 12> ValuesToAddPerSecondField() { return { this, "APrimalBuff.ValuesToAddPerSecond" }; }
-	//FieldValue<FStatusValueModifierDescription> BuffDescriptionField() { return { this, "APrimalBuff.BuffDescription" }; }
-	FieldValue<float> CharacterAdd_DefaultHyperthermicInsulationField() { return { this, "APrimalBuff.CharacterAdd_DefaultHyperthermicInsulation" }; }
-	FieldValue<float> CharacterAdd_DefaultHypothermicInsulationField() { return { this, "APrimalBuff.CharacterAdd_DefaultHypothermicInsulation" }; }
-	FieldValue<float> CharacterMultiplier_ExtraWaterConsumptionMultiplierField() { return { this, "APrimalBuff.CharacterMultiplier_ExtraWaterConsumptionMultiplier" }; }
-	FieldValue<float> CharacterMultiplier_ExtraFoodConsumptionMultiplierField() { return { this, "APrimalBuff.CharacterMultiplier_ExtraFoodConsumptionMultiplier" }; }
-	FieldValue<float> CharacterMultiplier_SubmergedOxygenDecreaseSpeedField() { return { this, "APrimalBuff.CharacterMultiplier_SubmergedOxygenDecreaseSpeed" }; }
-	FieldValue<float> ViewMinExposureMultiplierField() { return { this, "APrimalBuff.ViewMinExposureMultiplier" }; }
-	FieldValue<float> ViewMaxExposureMultiplierField() { return { this, "APrimalBuff.ViewMaxExposureMultiplier" }; }
-	FieldValue<float> XPtoAddField() { return { this, "APrimalBuff.XPtoAdd" }; }
-	FieldValue<float> XPtoAddRateField() { return { this, "APrimalBuff.XPtoAddRate" }; }
-	FieldValue<bool> bDeactivateAfterAddingXPField() { return { this, "APrimalBuff.bDeactivateAfterAddingXP" }; }
-	FieldValue<float> SubmergedMaxSpeedModifierField() { return { this, "APrimalBuff.SubmergedMaxSpeedModifier" }; }
-	FieldValue<float> UnsubmergedMaxSpeedModifierField() { return { this, "APrimalBuff.UnsubmergedMaxSpeedModifier" }; }
-	//FieldValue<TArray<FDamagePrimalCharacterStatusValueModifier>> CharacterStatusValueModifiersField() { return { this, "APrimalBuff.CharacterStatusValueModifiers" }; }
-	FieldValue<long double> BuffStartTimeField() { return { this, "APrimalBuff.BuffStartTime" }; }
-	FieldValue<UMaterialInterface *> BuffPostProcessEffectField() { return { this, "APrimalBuff.BuffPostProcessEffect" }; }
-	FieldValue<TArray<TSubclassOf<AActor>>> PreventActorClassesTargetingField() { return { this, "APrimalBuff.PreventActorClassesTargeting" }; }
-	FieldValue<TArray<float>> PreventActorClassesTargetingRangesField() { return { this, "APrimalBuff.PreventActorClassesTargetingRanges" }; }
-	FieldValue<TSubclassOf<APrimalBuff>> AOEOtherBuffToApplyField() { return { this, "APrimalBuff.AOEOtherBuffToApply" }; }
-	FieldValue<float> AOEBuffRangeField() { return { this, "APrimalBuff.AOEBuffRange" }; }
-	FieldValue<float> CharacterAOEBuffDamageField() { return { this, "APrimalBuff.CharacterAOEBuffDamage" }; }
-	FieldValue<float> CharacterAOEBuffResistanceField() { return { this, "APrimalBuff.CharacterAOEBuffResistance" }; }
-	FieldValue<float> Maximum2DVelocityForStaminaRecoveryField() { return { this, "APrimalBuff.Maximum2DVelocityForStaminaRecovery" }; }
-	FieldValue<TArray<UMaterialInterface *>> PostprocessBlendablesToExcludeField() { return { this, "APrimalBuff.PostprocessBlendablesToExclude" }; }
-	FieldValue<TArray<TWeakObjectPtr<APrimalCharacter>>> BuffedCharactersField() { return { this, "APrimalBuff.BuffedCharacters" }; }
-	FieldValue<long double> LastItemDurabilityDepletionTimeField() { return { this, "APrimalBuff.LastItemDurabilityDepletionTime" }; }
-	FieldValue<TSubclassOf<APrimalBuff>> BuffToGiveOnDeactivationField() { return { this, "APrimalBuff.BuffToGiveOnDeactivation" }; }
-	FieldValue<TArray<TSubclassOf<APrimalBuff>>> BuffClassesToCancelOnActivationField() { return { this, "APrimalBuff.BuffClassesToCancelOnActivation" }; }
-	FieldValue<TArray<TSubclassOf<APrimalBuff>>> ActivePreventsBuffClassesField() { return { this, "APrimalBuff.ActivePreventsBuffClasses" }; }
-	FieldValue<TArray<TSubclassOf<APrimalCharacter>>> BuffRequiresOwnerClassField() { return { this, "APrimalBuff.BuffRequiresOwnerClass" }; }
-	FieldValue<TArray<TSubclassOf<APrimalCharacter>>> BuffPreventsOwnerClassField() { return { this, "APrimalBuff.BuffPreventsOwnerClass" }; }
-	FieldValue<float> XPEarningMultiplierField() { return { this, "APrimalBuff.XPEarningMultiplier" }; }
-	FieldValue<bool> bUseBPSetupForInstigatorField() { return { this, "APrimalBuff.bUseBPSetupForInstigator" }; }
-	FieldValue<bool> bUseBPDeactivatedField() { return { this, "APrimalBuff.bUseBPDeactivated" }; }
-	FieldValue<bool> bUseBPCustomAllowAddBuffField() { return { this, "APrimalBuff.bUseBPCustomAllowAddBuff" }; }
-	FieldValue<FVector> staticPathingDestinationField() { return { this, "APrimalBuff.staticPathingDestination" }; }
-	FieldValue<long double> TickingDeactivationTimeField() { return { this, "APrimalBuff.TickingDeactivationTime" }; }
-	//FieldValue<UPrimalBuffPersistentData *> MyBuffPersistentDataField() { return { this, "APrimalBuff.MyBuffPersistentData" }; }
-	//FieldValue<TSubclassOf<UPrimalBuffPersistentData>> BuffPersistentDataClassField() { return { this, "APrimalBuff.BuffPersistentDataClass" }; }
-	//FieldValue<TArray<FMaxStatScaler>> MaxStatScalersField() { return { this, "APrimalBuff.MaxStatScalers" }; }
-	FieldValue<TWeakObjectPtr<AActor>> DamageCauserField() { return { this, "APrimalBuff.DamageCauser" }; }
-	FieldValue<USoundBase *> ExtraActivationSoundToPlayField() { return { this, "APrimalBuff.ExtraActivationSoundToPlay" }; }
-	FieldValue<bool> bPersistentBuffSurvivesLevelUpField() { return { this, "APrimalBuff.bPersistentBuffSurvivesLevelUp" }; }
-	FieldValue<float> AoEApplyDamageField() { return { this, "APrimalBuff.AoEApplyDamage" }; }
-	FieldValue<float> AoEApplyDamageIntervalField() { return { this, "APrimalBuff.AoEApplyDamageInterval" }; }
-	FieldValue<TSubclassOf<UDamageType>> AoEApplyDamageTypeField() { return { this, "APrimalBuff.AoEApplyDamageType" }; }
-	FieldValue<TSubclassOf<APrimalBuff>> ForceNetworkSpatializationMaxLimitBuffTypeField() { return { this, "APrimalBuff.ForceNetworkSpatializationMaxLimitBuffType" }; }
-	FieldValue<int> ForceNetworkSpatializationBuffMaxLimitNumField() { return { this, "APrimalBuff.ForceNetworkSpatializationBuffMaxLimitNum" }; }
-	FieldValue<float> ForceNetworkSpatializationBuffMaxLimitRangeField() { return { this, "APrimalBuff.ForceNetworkSpatializationBuffMaxLimitRange" }; }
-	FieldValue<float> InsulationRangeField() { return { this, "APrimalBuff.InsulationRange" }; }
-	FieldValue<float> HyperThermiaInsulationField() { return { this, "APrimalBuff.HyperThermiaInsulation" }; }
-	FieldValue<float> HypoThermiaInsulationField() { return { this, "APrimalBuff.HypoThermiaInsulation" }; }
-	FieldValue<FVector> AoEBuffLocOffsetField() { return { this, "APrimalBuff.AoEBuffLocOffset" }; }
-	FieldValue<TArray<TSubclassOf<AActor>>> AoEClassesToIncludeField() { return { this, "APrimalBuff.AoEClassesToInclude" }; }
-	FieldValue<TArray<TSubclassOf<AActor>>> AoEClassesToExcludeField() { return { this, "APrimalBuff.AoEClassesToExclude" }; }
-	FieldValue<bool> bUseBPExcludeAoEActorField() { return { this, "APrimalBuff.bUseBPExcludeAoEActor" }; }
-	FieldValue<bool> bOverrideBuffDescriptionField() { return { this, "APrimalBuff.bOverrideBuffDescription" }; }
-	FieldValue<bool> bOnlyTickWhenPossessedField() { return { this, "APrimalBuff.bOnlyTickWhenPossessed" }; }
-	FieldValue<bool> bDestroyWhenUnpossessedField() { return { this, "APrimalBuff.bDestroyWhenUnpossessed" }; }
-	FieldValue<long double> LastAoEApplyDamageTimeField() { return { this, "APrimalBuff.LastAoEApplyDamageTime" }; }
-	FieldValue<float> OnlyForInstigatorSoundFadeInTimeField() { return { this, "APrimalBuff.OnlyForInstigatorSoundFadeInTime" }; }
-	FieldValue<bool> bUseBuffTickServerField() { return { this, "APrimalBuff.bUseBuffTickServer" }; }
-	FieldValue<bool> bUseBuffTickClientField() { return { this, "APrimalBuff.bUseBuffTickClient" }; }
-	FieldValue<float> BuffTickServerMaxTimeField() { return { this, "APrimalBuff.BuffTickServerMaxTime" }; }
-	FieldValue<float> BuffTickServerMinTimeField() { return { this, "APrimalBuff.BuffTickServerMinTime" }; }
-	FieldValue<float> BuffTickClientMaxTimeField() { return { this, "APrimalBuff.BuffTickClientMaxTime" }; }
-	FieldValue<float> BuffTickClientMinTimeField() { return { this, "APrimalBuff.BuffTickClientMinTime" }; }
-	FieldValue<long double> LastBuffTickTimeServerField() { return { this, "APrimalBuff.LastBuffTickTimeServer" }; }
-	FieldValue<long double> LastBuffTickTimeClientField() { return { this, "APrimalBuff.LastBuffTickTimeClient" }; }
-	FieldValue<long double> NextBuffTickTimeServerField() { return { this, "APrimalBuff.NextBuffTickTimeServer" }; }
-	FieldValue<long double> NextBuffTickTimeClientField() { return { this, "APrimalBuff.NextBuffTickTimeClient" }; }
-	FieldValue<bool> bTickFunctionDisabledField() { return { this, "APrimalBuff.bTickFunctionDisabled" }; }
-	FieldValue<bool> bWasStasisedField() { return { this, "APrimalBuff.bWasStasised" }; }
-	FieldValue<int> AddBuffMaxNumStacksField() { return { this, "APrimalBuff.AddBuffMaxNumStacks" }; }
-	FieldValue<USoundBase *> DeactivatedSoundField() { return { this, "APrimalBuff.DeactivatedSound" }; }
-	FieldValue<bool> bDeactivatedSoundOnlyLocalField() { return { this, "APrimalBuff.bDeactivatedSoundOnlyLocal" }; }
-	FieldValue<bool> bDisableBloomField() { return { this, "APrimalBuff.bDisableBloom" }; }
-	FieldValue<bool> bBPOverrideCharacterNewFallVelocityField() { return { this, "APrimalBuff.bBPOverrideCharacterNewFallVelocity" }; }
-	FieldValue<bool> bBPModifyCharacterFOVField() { return { this, "APrimalBuff.bBPModifyCharacterFOV" }; }
-	FieldValue<bool> bDisableLightShaftsField() { return { this, "APrimalBuff.bDisableLightShafts" }; }
-	FieldValue<float> PostProcessInterpSpeedDownField() { return { this, "APrimalBuff.PostProcessInterpSpeedDown" }; }
-	FieldValue<float> PostProcessInterpSpeedUpField() { return { this, "APrimalBuff.PostProcessInterpSpeedUp" }; }
-	FieldValue<float> TPVCameraSpeedInterpolationMultiplierField() { return { this, "APrimalBuff.TPVCameraSpeedInterpolationMultiplier" }; }
-	FieldValue<bool> bIsCarryBuffField() { return { this, "APrimalBuff.bIsCarryBuff" }; }
-	FieldValue<long double> TimeForNextAOECheckField() { return { this, "APrimalBuff.TimeForNextAOECheck" }; }
-	FieldValue<float> AOEBuffIntervalMinField() { return { this, "APrimalBuff.AOEBuffIntervalMin" }; }
-	FieldValue<float> AOEBuffIntervalMaxField() { return { this, "APrimalBuff.AOEBuffIntervalMax" }; }
-	FieldValue<float> MaximumVelocityZForSlowingFallField() { return { this, "APrimalBuff.MaximumVelocityZForSlowingFall" }; }
-	FieldValue<int> FNameIntField() { return { this, "APrimalBuff.FNameInt" }; }
+	float& CharacterAdd_DefaultHyperthermicInsulationField() { return *GetNativePointerField<float*>(this, "APrimalBuff.CharacterAdd_DefaultHyperthermicInsulation"); }
+	float& CharacterAdd_DefaultHypothermicInsulationField() { return *GetNativePointerField<float*>(this, "APrimalBuff.CharacterAdd_DefaultHypothermicInsulation"); }
+	float& CharacterMultiplier_ExtraWaterConsumptionMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.CharacterMultiplier_ExtraWaterConsumptionMultiplier"); }
+	float& CharacterMultiplier_ExtraFoodConsumptionMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.CharacterMultiplier_ExtraFoodConsumptionMultiplier"); }
+	float& CharacterMultiplier_SubmergedOxygenDecreaseSpeedField() { return *GetNativePointerField<float*>(this, "APrimalBuff.CharacterMultiplier_SubmergedOxygenDecreaseSpeed"); }
+	float& ViewMinExposureMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.ViewMinExposureMultiplier"); }
+	float& ViewMaxExposureMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.ViewMaxExposureMultiplier"); }
+	float& XPtoAddField() { return *GetNativePointerField<float*>(this, "APrimalBuff.XPtoAdd"); }
+	float& XPtoAddRateField() { return *GetNativePointerField<float*>(this, "APrimalBuff.XPtoAddRate"); }
+	bool& bDeactivateAfterAddingXPField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bDeactivateAfterAddingXP"); }
+	float& SubmergedMaxSpeedModifierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.SubmergedMaxSpeedModifier"); }
+	float& UnsubmergedMaxSpeedModifierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.UnsubmergedMaxSpeedModifier"); }
+	long double& BuffStartTimeField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.BuffStartTime"); }
+	UMaterialInterface * BuffPostProcessEffectField() { return *GetNativePointerField<UMaterialInterface **>(this, "APrimalBuff.BuffPostProcessEffect"); }
+	TArray<TSubclassOf<AActor>>& PreventActorClassesTargetingField() { return *GetNativePointerField<TArray<TSubclassOf<AActor>>*>(this, "APrimalBuff.PreventActorClassesTargeting"); }
+	TArray<float>& PreventActorClassesTargetingRangesField() { return *GetNativePointerField<TArray<float>*>(this, "APrimalBuff.PreventActorClassesTargetingRanges"); }
+	TSubclassOf<APrimalBuff>& AOEOtherBuffToApplyField() { return *GetNativePointerField<TSubclassOf<APrimalBuff>*>(this, "APrimalBuff.AOEOtherBuffToApply"); }
+	float& AOEBuffRangeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.AOEBuffRange"); }
+	float& CharacterAOEBuffDamageField() { return *GetNativePointerField<float*>(this, "APrimalBuff.CharacterAOEBuffDamage"); }
+	float& CharacterAOEBuffResistanceField() { return *GetNativePointerField<float*>(this, "APrimalBuff.CharacterAOEBuffResistance"); }
+	float& Maximum2DVelocityForStaminaRecoveryField() { return *GetNativePointerField<float*>(this, "APrimalBuff.Maximum2DVelocityForStaminaRecovery"); }
+	TArray<UMaterialInterface *> PostprocessBlendablesToExcludeField() { return *GetNativePointerField<TArray<UMaterialInterface *>*>(this, "APrimalBuff.PostprocessBlendablesToExclude"); }
+	TArray<TWeakObjectPtr<APrimalCharacter>>& BuffedCharactersField() { return *GetNativePointerField<TArray<TWeakObjectPtr<APrimalCharacter>>*>(this, "APrimalBuff.BuffedCharacters"); }
+	long double& LastItemDurabilityDepletionTimeField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.LastItemDurabilityDepletionTime"); }
+	TSubclassOf<APrimalBuff>& BuffToGiveOnDeactivationField() { return *GetNativePointerField<TSubclassOf<APrimalBuff>*>(this, "APrimalBuff.BuffToGiveOnDeactivation"); }
+	TArray<TSubclassOf<APrimalBuff>>& BuffClassesToCancelOnActivationField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalBuff>>*>(this, "APrimalBuff.BuffClassesToCancelOnActivation"); }
+	TArray<TSubclassOf<APrimalBuff>>& ActivePreventsBuffClassesField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalBuff>>*>(this, "APrimalBuff.ActivePreventsBuffClasses"); }
+	TArray<TSubclassOf<APrimalCharacter>>& BuffRequiresOwnerClassField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalCharacter>>*>(this, "APrimalBuff.BuffRequiresOwnerClass"); }
+	TArray<TSubclassOf<APrimalCharacter>>& BuffPreventsOwnerClassField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalCharacter>>*>(this, "APrimalBuff.BuffPreventsOwnerClass"); }
+	float& XPEarningMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.XPEarningMultiplier"); }
+	bool& bUseBPSetupForInstigatorField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bUseBPSetupForInstigator"); }
+	bool& bUseBPDeactivatedField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bUseBPDeactivated"); }
+	bool& bUseBPCustomAllowAddBuffField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bUseBPCustomAllowAddBuff"); }
+	FVector& staticPathingDestinationField() { return *GetNativePointerField<FVector*>(this, "APrimalBuff.staticPathingDestination"); }
+	long double& TickingDeactivationTimeField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.TickingDeactivationTime"); }
+	UPrimalBuffPersistentData * MyBuffPersistentDataField() { return *GetNativePointerField<UPrimalBuffPersistentData **>(this, "APrimalBuff.MyBuffPersistentData"); }
+	TSubclassOf<UPrimalBuffPersistentData>& BuffPersistentDataClassField() { return *GetNativePointerField<TSubclassOf<UPrimalBuffPersistentData>*>(this, "APrimalBuff.BuffPersistentDataClass"); }
+	TWeakObjectPtr<AActor>& DamageCauserField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "APrimalBuff.DamageCauser"); }
+	USoundBase * ExtraActivationSoundToPlayField() { return *GetNativePointerField<USoundBase **>(this, "APrimalBuff.ExtraActivationSoundToPlay"); }
+	bool& bPersistentBuffSurvivesLevelUpField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bPersistentBuffSurvivesLevelUp"); }
+	float& AoEApplyDamageField() { return *GetNativePointerField<float*>(this, "APrimalBuff.AoEApplyDamage"); }
+	float& AoEApplyDamageIntervalField() { return *GetNativePointerField<float*>(this, "APrimalBuff.AoEApplyDamageInterval"); }
+	TSubclassOf<UDamageType>& AoEApplyDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "APrimalBuff.AoEApplyDamageType"); }
+	TSubclassOf<APrimalBuff>& ForceNetworkSpatializationMaxLimitBuffTypeField() { return *GetNativePointerField<TSubclassOf<APrimalBuff>*>(this, "APrimalBuff.ForceNetworkSpatializationMaxLimitBuffType"); }
+	int& ForceNetworkSpatializationBuffMaxLimitNumField() { return *GetNativePointerField<int*>(this, "APrimalBuff.ForceNetworkSpatializationBuffMaxLimitNum"); }
+	float& ForceNetworkSpatializationBuffMaxLimitRangeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.ForceNetworkSpatializationBuffMaxLimitRange"); }
+	float& InsulationRangeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.InsulationRange"); }
+	float& HyperThermiaInsulationField() { return *GetNativePointerField<float*>(this, "APrimalBuff.HyperThermiaInsulation"); }
+	float& HypoThermiaInsulationField() { return *GetNativePointerField<float*>(this, "APrimalBuff.HypoThermiaInsulation"); }
+	FVector& AoEBuffLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalBuff.AoEBuffLocOffset"); }
+	TArray<TSubclassOf<AActor>>& AoEClassesToIncludeField() { return *GetNativePointerField<TArray<TSubclassOf<AActor>>*>(this, "APrimalBuff.AoEClassesToInclude"); }
+	TArray<TSubclassOf<AActor>>& AoEClassesToExcludeField() { return *GetNativePointerField<TArray<TSubclassOf<AActor>>*>(this, "APrimalBuff.AoEClassesToExclude"); }
+	bool& bUseBPExcludeAoEActorField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bUseBPExcludeAoEActor"); }
+	bool& bOverrideBuffDescriptionField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bOverrideBuffDescription"); }
+	bool& bOnlyTickWhenPossessedField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bOnlyTickWhenPossessed"); }
+	bool& bDestroyWhenUnpossessedField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bDestroyWhenUnpossessed"); }
+	long double& LastAoEApplyDamageTimeField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.LastAoEApplyDamageTime"); }
+	float& OnlyForInstigatorSoundFadeInTimeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.OnlyForInstigatorSoundFadeInTime"); }
+	bool& bUseBuffTickServerField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bUseBuffTickServer"); }
+	bool& bUseBuffTickClientField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bUseBuffTickClient"); }
+	float& BuffTickServerMaxTimeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.BuffTickServerMaxTime"); }
+	float& BuffTickServerMinTimeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.BuffTickServerMinTime"); }
+	float& BuffTickClientMaxTimeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.BuffTickClientMaxTime"); }
+	float& BuffTickClientMinTimeField() { return *GetNativePointerField<float*>(this, "APrimalBuff.BuffTickClientMinTime"); }
+	long double& LastBuffTickTimeServerField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.LastBuffTickTimeServer"); }
+	long double& LastBuffTickTimeClientField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.LastBuffTickTimeClient"); }
+	long double& NextBuffTickTimeServerField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.NextBuffTickTimeServer"); }
+	long double& NextBuffTickTimeClientField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.NextBuffTickTimeClient"); }
+	bool& bTickFunctionDisabledField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bTickFunctionDisabled"); }
+	bool& bWasStasisedField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bWasStasised"); }
+	int& AddBuffMaxNumStacksField() { return *GetNativePointerField<int*>(this, "APrimalBuff.AddBuffMaxNumStacks"); }
+	USoundBase * DeactivatedSoundField() { return *GetNativePointerField<USoundBase **>(this, "APrimalBuff.DeactivatedSound"); }
+	bool& bDeactivatedSoundOnlyLocalField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bDeactivatedSoundOnlyLocal"); }
+	bool& bDisableBloomField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bDisableBloom"); }
+	bool& bBPOverrideCharacterNewFallVelocityField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bBPOverrideCharacterNewFallVelocity"); }
+	bool& bBPModifyCharacterFOVField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bBPModifyCharacterFOV"); }
+	bool& bDisableLightShaftsField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bDisableLightShafts"); }
+	float& PostProcessInterpSpeedDownField() { return *GetNativePointerField<float*>(this, "APrimalBuff.PostProcessInterpSpeedDown"); }
+	float& PostProcessInterpSpeedUpField() { return *GetNativePointerField<float*>(this, "APrimalBuff.PostProcessInterpSpeedUp"); }
+	float& TPVCameraSpeedInterpolationMultiplierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.TPVCameraSpeedInterpolationMultiplier"); }
+	bool& bIsCarryBuffField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bIsCarryBuff"); }
+	long double& TimeForNextAOECheckField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.TimeForNextAOECheck"); }
+	float& AOEBuffIntervalMinField() { return *GetNativePointerField<float*>(this, "APrimalBuff.AOEBuffIntervalMin"); }
+	float& AOEBuffIntervalMaxField() { return *GetNativePointerField<float*>(this, "APrimalBuff.AOEBuffIntervalMax"); }
+	float& MaximumVelocityZForSlowingFallField() { return *GetNativePointerField<float*>(this, "APrimalBuff.MaximumVelocityZForSlowingFall"); }
+	int& FNameIntField() { return *GetNativePointerField<int*>(this, "APrimalBuff.FNameInt"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bSlowInstigatorFalling() { return { this, "APrimalBuff.bSlowInstigatorFalling" }; }
+	BitFieldValue<bool, unsigned __int32> bDeactivateOnJump() { return { this, "APrimalBuff.bDeactivateOnJump" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventJump() { return { this, "APrimalBuff.bPreventJump" }; }
+	BitFieldValue<bool, unsigned __int32> bDeactivated() { return { this, "APrimalBuff.bDeactivated" }; }
+	BitFieldValue<bool, unsigned __int32> bUsesInstigator() { return { this, "APrimalBuff.bUsesInstigator" }; }
+	BitFieldValue<bool, unsigned __int32> bFollowTarget() { return { this, "APrimalBuff.bFollowTarget" }; }
+	BitFieldValue<bool, unsigned __int32> bAddCharacterValues() { return { this, "APrimalBuff.bAddCharacterValues" }; }
+	BitFieldValue<bool, unsigned __int32> bOnlyAddCharacterValuesUnderwater() { return { this, "APrimalBuff.bOnlyAddCharacterValuesUnderwater" }; }
+	BitFieldValue<bool, unsigned __int32> bDisableIfCharacterUnderwater() { return { this, "APrimalBuff.bDisableIfCharacterUnderwater" }; }
+	BitFieldValue<bool, unsigned __int32> bUseInstigatorItem() { return { this, "APrimalBuff.bUseInstigatorItem" }; }
+	BitFieldValue<bool, unsigned __int32> bDestroyOnTargetStasis() { return { this, "APrimalBuff.bDestroyOnTargetStasis" }; }
+	BitFieldValue<bool, unsigned __int32> bAoETraceToTargets() { return { this, "APrimalBuff.bAoETraceToTargets" }; }
+	BitFieldValue<bool, unsigned __int32> bAOEOnlyApplyOtherBuffToWildDinos() { return { this, "APrimalBuff.bAOEOnlyApplyOtherBuffToWildDinos" }; }
+	BitFieldValue<bool, unsigned __int32> bAoEIgnoreDinosTargetingInstigator() { return { this, "APrimalBuff.bAoEIgnoreDinosTargetingInstigator" }; }
+	BitFieldValue<bool, unsigned __int32> bAoEOnlyOnDinosTargetingInstigator() { return { this, "APrimalBuff.bAoEOnlyOnDinosTargetingInstigator" }; }
+	BitFieldValue<bool, unsigned __int32> bBuffForceNoTick() { return { this, "APrimalBuff.bBuffForceNoTick" }; }
+	BitFieldValue<bool, unsigned __int32> bBuffForceNoTickDedicated() { return { this, "APrimalBuff.bBuffForceNoTickDedicated" }; }
+	BitFieldValue<bool, unsigned __int32> bCustomDepthStencilIgnoreHealth() { return { this, "APrimalBuff.bCustomDepthStencilIgnoreHealth" }; }
+	BitFieldValue<bool, unsigned __int32> bUseActivateSoundFadeInDuration() { return { this, "APrimalBuff.bUseActivateSoundFadeInDuration" }; }
+	BitFieldValue<bool, unsigned __int32> bDinoIgnoreBuffPostprocessEffectWhenRidden() { return { this, "APrimalBuff.bDinoIgnoreBuffPostprocessEffectWhenRidden" }; }
+	BitFieldValue<bool, unsigned __int32> bPlayerIgnoreBuffPostprocessEffectWhenRidingDino() { return { this, "APrimalBuff.bPlayerIgnoreBuffPostprocessEffectWhenRidingDino" }; }
+	BitFieldValue<bool, unsigned __int32> bRemoteForcedFlee() { return { this, "APrimalBuff.bRemoteForcedFlee" }; }
+	BitFieldValue<bool, unsigned __int32> bOnlyActivateSoundForInstigator() { return { this, "APrimalBuff.bOnlyActivateSoundForInstigator" }; }
+	BitFieldValue<bool, unsigned __int32> bAOEBuffCarnosOnly() { return { this, "APrimalBuff.bAOEBuffCarnosOnly" }; }
+	BitFieldValue<bool, unsigned __int32> bModifyMaxSpeed() { return { this, "APrimalBuff.bModifyMaxSpeed" }; }
+	BitFieldValue<bool, unsigned __int32> bDisplayHUDProgressBar() { return { this, "APrimalBuff.bDisplayHUDProgressBar" }; }
+	BitFieldValue<bool, unsigned __int32> bForceUsePreventTargeting() { return { this, "APrimalBuff.bForceUsePreventTargeting" }; }
+	BitFieldValue<bool, unsigned __int32> bForceUsePreventTargetingTurret() { return { this, "APrimalBuff.bForceUsePreventTargetingTurret" }; }
+	BitFieldValue<bool, unsigned __int32> bBPOverrideWeaponBob() { return { this, "APrimalBuff.bBPOverrideWeaponBob" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPModifyPlayerBoneModifiers() { return { this, "APrimalBuff.bUseBPModifyPlayerBoneModifiers" }; }
+	BitFieldValue<bool, unsigned __int32> bDediServerUseBPModifyPlayerBoneModifiers() { return { this, "APrimalBuff.bDediServerUseBPModifyPlayerBoneModifiers" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPNonDedicatedPlayerPostAnimUpdate() { return { this, "APrimalBuff.bUseBPNonDedicatedPlayerPostAnimUpdate" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPIsCharacterHardAttached() { return { this, "APrimalBuff.bUseBPIsCharacterHardAttached" }; }
+	BitFieldValue<bool, unsigned __int32> bDoCharacterDetachment() { return { this, "APrimalBuff.bDoCharacterDetachment" }; }
+	BitFieldValue<bool, unsigned __int32> bDoCharacterDetachmentIncludeRiding() { return { this, "APrimalBuff.bDoCharacterDetachmentIncludeRiding" }; }
+	BitFieldValue<bool, unsigned __int32> bDoCharacterDetachmentIncludeCarrying() { return { this, "APrimalBuff.bDoCharacterDetachmentIncludeCarrying" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPInitializedCharacterAnimScriptInstance() { return { this, "APrimalBuff.bUseBPInitializedCharacterAnimScriptInstance" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPCanBeCarried() { return { this, "APrimalBuff.bUseBPCanBeCarried" }; }
+	BitFieldValue<bool, unsigned __int32> bUsePostAdjustDamage() { return { this, "APrimalBuff.bUsePostAdjustDamage" }; }
+	BitFieldValue<bool, unsigned __int32> bAOEApplyOtherBuffOnPlayers() { return { this, "APrimalBuff.bAOEApplyOtherBuffOnPlayers" }; }
+	BitFieldValue<bool, unsigned __int32> bAOEApplyOtherBuffOnDinos() { return { this, "APrimalBuff.bAOEApplyOtherBuffOnDinos" }; }
+	BitFieldValue<bool, unsigned __int32> bAOEApplyOtherBuffIgnoreSameTeam() { return { this, "APrimalBuff.bAOEApplyOtherBuffIgnoreSameTeam" }; }
+	BitFieldValue<bool, unsigned __int32> bAOEApplyOtherBuffRequireSameTeam() { return { this, "APrimalBuff.bAOEApplyOtherBuffRequireSameTeam" }; }
+	BitFieldValue<bool, unsigned __int32> bBuffDrawFloatingHUD() { return { this, "APrimalBuff.bBuffDrawFloatingHUD" }; }
+	BitFieldValue<bool, unsigned __int32> bAddResetsBuffTime() { return { this, "APrimalBuff.bAddResetsBuffTime" }; }
+	BitFieldValue<bool, unsigned __int32> bAoEBuffAllowIfAlreadyBuffed() { return { this, "APrimalBuff.bAoEBuffAllowIfAlreadyBuffed" }; }
+	BitFieldValue<bool, unsigned __int32> bNetResetBuffStart() { return { this, "APrimalBuff.bNetResetBuffStart" }; }
+	BitFieldValue<bool, unsigned __int32> bImmobilizeTarget() { return { this, "APrimalBuff.bImmobilizeTarget" }; }
+	BitFieldValue<bool, unsigned __int32> bForcePlayerProne() { return { this, "APrimalBuff.bForcePlayerProne" }; }
+	BitFieldValue<bool, unsigned __int32> bHideBuffFromHUD() { return { this, "APrimalBuff.bHideBuffFromHUD" }; }
+	BitFieldValue<bool, unsigned __int32> bHideTimerFromHUD() { return { this, "APrimalBuff.bHideTimerFromHUD" }; }
+	BitFieldValue<bool, unsigned __int32> bBPAddMultiUseEntries() { return { this, "APrimalBuff.bBPAddMultiUseEntries" }; }
+	BitFieldValue<bool, unsigned __int32> bIsBuffPersistent() { return { this, "APrimalBuff.bIsBuffPersistent" }; }
+	BitFieldValue<bool, unsigned __int32> bBPUseBumpedByPawn() { return { this, "APrimalBuff.bBPUseBumpedByPawn" }; }
+	BitFieldValue<bool, unsigned __int32> bBPUseBumpedPawn() { return { this, "APrimalBuff.bBPUseBumpedPawn" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowBuffWhenInstigatorDead() { return { this, "APrimalBuff.bAllowBuffWhenInstigatorDead" }; }
+	BitFieldValue<bool, unsigned __int32> bNotifyDamage() { return { this, "APrimalBuff.bNotifyDamage" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowBuffStasis() { return { this, "APrimalBuff.bAllowBuffStasis" }; }
+	BitFieldValue<bool, unsigned __int32> bApplyStatModifierToPlayers() { return { this, "APrimalBuff.bApplyStatModifierToPlayers" }; }
+	BitFieldValue<bool, unsigned __int32> bApplyStatModifierToDinos() { return { this, "APrimalBuff.bApplyStatModifierToDinos" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventOnWildDino() { return { this, "APrimalBuff.bPreventOnWildDino" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventOnDino() { return { this, "APrimalBuff.bPreventOnDino" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventOnPlayer() { return { this, "APrimalBuff.bPreventOnPlayer" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventOnBigDino() { return { this, "APrimalBuff.bPreventOnBigDino" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventOnBossDino() { return { this, "APrimalBuff.bPreventOnBossDino" }; }
+	BitFieldValue<bool, unsigned __int32> bIsDisease() { return { this, "APrimalBuff.bIsDisease" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPPreventAddingOtherBuff() { return { this, "APrimalBuff.bUseBPPreventAddingOtherBuff" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPPreventRunning() { return { this, "APrimalBuff.bUseBPPreventRunning" }; }
+	BitFieldValue<bool, unsigned __int32> bAoEApplyDamageAllTargetables() { return { this, "APrimalBuff.bAoEApplyDamageAllTargetables" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPActivated() { return { this, "APrimalBuff.bUseBPActivated" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPPreventFlight() { return { this, "APrimalBuff.bUseBPPreventFlight" }; }
+	BitFieldValue<bool, unsigned __int32> bRequireController() { return { this, "APrimalBuff.bRequireController" }; }
+	BitFieldValue<bool, unsigned __int32> bDontPlayInstigatorActiveSoundOnDino() { return { this, "APrimalBuff.bDontPlayInstigatorActiveSoundOnDino" }; }
+	BitFieldValue<bool, unsigned __int32> bAddExtendBuffTime() { return { this, "APrimalBuff.bAddExtendBuffTime" }; }
+	BitFieldValue<bool, unsigned __int32> bUseTickingDeactivation() { return { this, "APrimalBuff.bUseTickingDeactivation" }; }
+	BitFieldValue<bool, unsigned __int32> bCheckPreventInput() { return { this, "APrimalBuff.bCheckPreventInput" }; }
+	BitFieldValue<bool, unsigned __int32> bBPDrawBuffStatusHUD() { return { this, "APrimalBuff.bBPDrawBuffStatusHUD" }; }
+	BitFieldValue<bool, unsigned __int32> bEnableStaticPathing() { return { this, "APrimalBuff.bEnableStaticPathing" }; }
+	BitFieldValue<bool, unsigned __int32> bHUDFormatTimerAsTimecode() { return { this, "APrimalBuff.bHUDFormatTimerAsTimecode" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPPreventThrowingItem() { return { this, "APrimalBuff.bUseBPPreventThrowingItem" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventInputDoesOffset() { return { this, "APrimalBuff.bPreventInputDoesOffset" }; }
+	BitFieldValue<bool, unsigned __int32> bNotifyExperienceGained() { return { this, "APrimalBuff.bNotifyExperienceGained" }; }
+	BitFieldValue<bool, unsigned __int32> bOnlyTickWhenVisible() { return { this, "APrimalBuff.bOnlyTickWhenVisible" }; }
+	BitFieldValue<bool, unsigned __int32> bBPAdjustStatusValueModification() { return { this, "APrimalBuff.bBPAdjustStatusValueModification" }; }
+	BitFieldValue<bool, unsigned __int32> bWasDestroyed() { return { this, "APrimalBuff.bWasDestroyed" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPNotifyOtherBuffActivated() { return { this, "APrimalBuff.bUseBPNotifyOtherBuffActivated" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPNotifyOtherBuffDeactivated() { return { this, "APrimalBuff.bUseBPNotifyOtherBuffDeactivated" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPPreventFirstPerson() { return { this, "APrimalBuff.bUseBPPreventFirstPerson" }; }
+	BitFieldValue<bool, unsigned __int32> bForceAddUnderwaterCharacterStatusValues() { return { this, "APrimalBuff.bForceAddUnderwaterCharacterStatusValues" }; }
 
 	// Functions
 
@@ -303,6 +390,7 @@ struct APrimalBuff
 	static void StaticRegisterNativesAPrimalBuff() { NativeCall<void>(nullptr, "APrimalBuff.StaticRegisterNativesAPrimalBuff"); }
 	void BPDrawBuffStatusHUD(AShooterHUD * HUD, float XPos, float YPos, float ScaleMult) { NativeCall<void, AShooterHUD *, float, float, float>(this, "APrimalBuff.BPDrawBuffStatusHUD", HUD, XPos, YPos, ScaleMult); }
 	float BuffAdjustDamage(float Damage, FHitResult * HitInfo, AController * EventInstigator, AActor * DamageCauser, TSubclassOf<UDamageType> TheDamgeType) { return NativeCall<float, float, FHitResult *, AController *, AActor *, TSubclassOf<UDamageType>>(this, "APrimalBuff.BuffAdjustDamage", Damage, HitInfo, EventInstigator, DamageCauser, TheDamgeType); }
+	void BuffPostAdjustDamage(float Damage, FHitResult * HitInfo, AController * EventInstigator, AActor * DamageCauser, TSubclassOf<UDamageType> TheDamgeType) { NativeCall<void, float, FHitResult *, AController *, AActor *, TSubclassOf<UDamageType>>(this, "APrimalBuff.BuffPostAdjustDamage", Damage, HitInfo, EventInstigator, DamageCauser, TheDamgeType); }
 	void BuffTickClient(float DeltaTime) { NativeCall<void, float>(this, "APrimalBuff.BuffTickClient", DeltaTime); }
 	void BuffTickServer(float DeltaTime) { NativeCall<void, float>(this, "APrimalBuff.BuffTickServer", DeltaTime); }
 	void DrawBuffFloatingHUD(int BuffIndex, AShooterHUD * HUD, float CenterX, float CenterY, float DrawScale) { NativeCall<void, int, AShooterHUD *, float, float, float>(this, "APrimalBuff.DrawBuffFloatingHUD", BuffIndex, HUD, CenterX, CenterY, DrawScale); }
@@ -313,13 +401,18 @@ struct APrimalBuff
 
 struct UPrimalEngramEntry : UObject
 {
-	FieldValue<int> RequiredCharacterLevelField() { return { this, "UPrimalEngramEntry.RequiredCharacterLevel" }; }
-	FieldValue<int> RequiredEngramPointsField() { return { this, "UPrimalEngramEntry.RequiredEngramPoints" }; }
-	FieldValue<TSubclassOf<UPrimalItem>> BluePrintEntryField() { return { this, "UPrimalEngramEntry.BluePrintEntry" }; }
-	FieldValue<FString> ExtraEngramDescriptionField() { return { this, "UPrimalEngramEntry.ExtraEngramDescription" }; }
-	//FieldValue<TArray<FEngramEntries>> EngramRequirementSetsField() { return { this, "UPrimalEngramEntry.EngramRequirementSets" }; }
-	FieldValue<int> MyEngramIndexField() { return { this, "UPrimalEngramEntry.MyEngramIndex" }; }
-	FieldValue<TEnumAsByte<enum EEngramGroup::Type>> EngramGroupField() { return { this, "UPrimalEngramEntry.EngramGroup" }; }
+	int& RequiredCharacterLevelField() { return *GetNativePointerField<int*>(this, "UPrimalEngramEntry.RequiredCharacterLevel"); }
+	int& RequiredEngramPointsField() { return *GetNativePointerField<int*>(this, "UPrimalEngramEntry.RequiredEngramPoints"); }
+	TSubclassOf<UPrimalItem>& BluePrintEntryField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "UPrimalEngramEntry.BluePrintEntry"); }
+	FString& ExtraEngramDescriptionField() { return *GetNativePointerField<FString*>(this, "UPrimalEngramEntry.ExtraEngramDescription"); }
+	//TArray<FEngramEntries>& EngramRequirementSetsField() { return *GetNativePointerField<TArray<FEngramEntries>*>(this, "UPrimalEngramEntry.EngramRequirementSets"); }
+	int& MyEngramIndexField() { return *GetNativePointerField<int*>(this, "UPrimalEngramEntry.MyEngramIndex"); }
+	TEnumAsByte<enum EEngramGroup::Type>& EngramGroupField() { return *GetNativePointerField<TEnumAsByte<enum EEngramGroup::Type>*>(this, "UPrimalEngramEntry.EngramGroup"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bGiveBlueprintToPlayerInventory() { return { this, "UPrimalEngramEntry.bGiveBlueprintToPlayerInventory" }; }
+	BitFieldValue<bool, unsigned __int32> bCanBeManuallyUnlocked() { return { this, "UPrimalEngramEntry.bCanBeManuallyUnlocked" }; }
 
 	// Functions
 
