@@ -114,7 +114,7 @@ namespace EPrimalItemMessage
 	};
 }
 
-enum class ECollisionChannel
+enum ECollisionChannel
 {
 	ECC_WorldStatic = 0x0,
 	ECC_WorldDynamic = 0x1,
@@ -315,7 +315,7 @@ namespace ESTOFNotificationType
 	};
 }
 
-enum class EMovementMode
+enum EMovementMode
 {
 	MOVE_None,
 	MOVE_Walking,

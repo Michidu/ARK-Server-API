@@ -81,8 +81,8 @@ namespace ArkApi
 	void Hook_AShooterPlayerController_ServerSendChatMessage_Impl(
 		AShooterPlayerController* player_controller, FString* message, EChatSendMode::Type mode)
 	{
-		const long double last_chat_time = player_controller->LastChatMessageTimeField()();
-		const long double time_seconds = ApiUtils::Get().GetWorld()->TimeSecondsField()();
+		const long double last_chat_time = player_controller->LastChatMessageTimeField();
+		const long double time_seconds = ApiUtils::Get().GetWorld()->TimeSecondsField();
 
 		const auto spam_check = last_chat_time > 0 && time_seconds - last_chat_time < 1.0;
 

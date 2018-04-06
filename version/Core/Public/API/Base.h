@@ -85,7 +85,7 @@ struct FAssetRegistry;
 struct FAssetData;
 struct FModuleManager;
 struct UTexture2D;
-struct USoundBase;
+struct USoundBase{};
 struct USoundCue;
 struct FItemMultiplier;
 struct UAnimMontage;

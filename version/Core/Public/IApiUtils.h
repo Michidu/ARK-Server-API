@@ -172,10 +172,10 @@ namespace ArkApi
 
 			if (controller)
 			{
-				APlayerState* player_state = controller->PlayerStateField()();
+				APlayerState* player_state = controller->PlayerStateField();
 				if (player_state)
 				{
-					FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()()
+					FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()
 					                                                                              .UniqueNetId.Get());
 					steam_id = steam_net_id->UniqueNetId;
 				}
@@ -193,10 +193,10 @@ namespace ArkApi
 		{
 			AShooterPlayerController* result = nullptr;
 
-			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			const auto& player_controllers = GetWorld()->PlayerControllerListField();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
-				const FString current_name = player_controller->PlayerStateField()()->PlayerNameField()();
+				const FString current_name = player_controller->PlayerStateField()->PlayerNameField();
 				if (current_name == steam_name)
 				{
 					AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
@@ -218,7 +218,7 @@ namespace ArkApi
 		{
 			AShooterPlayerController* result = nullptr;
 
-			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			const auto& player_controllers = GetWorld()->PlayerControllerListField();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
@@ -247,7 +247,7 @@ namespace ArkApi
 		{
 			TArray<AShooterPlayerController*> found_players;
 
-			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			const auto& player_controllers = GetWorld()->PlayerControllerListField();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_player = static_cast<AShooterPlayerController*>(player_controller.Get());
@@ -270,9 +270,9 @@ namespace ArkApi
 		{
 			if (player_controller)
 			{
-				AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField()());
-				if (player_state && player_state->MyPlayerDataStructField()())
-					return player_state->MyPlayerDataStructField()()->MyPlayerCharacterConfigField()().PlayerCharacterName;
+				AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField());
+				if (player_state && player_state->MyPlayerDataStructField())
+					return player_state->MyPlayerDataStructField()->MyPlayerCharacterConfigField().PlayerCharacterName;
 			}
 
 			return FString("");
@@ -284,7 +284,7 @@ namespace ArkApi
 		*/
 		static FString GetSteamName(AController* player_controller)
 		{
-			return player_controller ? player_controller->PlayerStateField()()->PlayerNameField()() : "";
+			return player_controller ? player_controller->PlayerStateField()->PlayerNameField() : "";
 		}
 
 		/**
@@ -296,7 +296,7 @@ namespace ArkApi
 		{
 			AShooterPlayerController* result = nullptr;
 
-			const auto& player_controllers = GetWorld()->PlayerControllerListField()();
+			const auto& player_controllers = GetWorld()->PlayerControllerListField();
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				const uint64 current_steam_id = GetSteamIdFromController(player_controller.Get());
@@ -374,9 +374,9 @@ namespace ArkApi
 
 				if (force_tame)
 				{
-					dino->TamingTeamIDField() = player->TargetingTeamField()();
+					dino->TamingTeamIDField() = player->TargetingTeamField();
 
-					AShooterPlayerState* state = static_cast<AShooterPlayerState*>(player->PlayerStateField()());
+					AShooterPlayerState* state = static_cast<AShooterPlayerState*>(player->PlayerStateField());
 
 					FString player_name;
 					state->GetPlayerName(&player_name);
@@ -430,7 +430,7 @@ namespace ArkApi
 		*/
 		static FVector GetPosition(APlayerController* player_controller)
 		{
-			return player_controller ? player_controller->DefaultActorLocationField()() : FVector{0, 0, 0};
+			return player_controller ? player_controller->DefaultActorLocationField() : FVector{0, 0, 0};
 		}
 
 		/**
@@ -460,7 +460,7 @@ namespace ArkApi
 				return "Person is too far away";
 			}
 
-			const FVector pos = him->DefaultActorLocationField()();
+			const FVector pos = him->DefaultActorLocationField();
 
 			me->SetPlayerPos(pos.X, pos.Y, pos.Z);
 
@@ -496,7 +496,7 @@ namespace ArkApi
 				return -1;
 
 			UPrimalInventoryComponent* inventory_component =
-				player_controller->GetPlayerCharacter()->MyInventoryComponentField()();
+				player_controller->GetPlayerCharacter()->MyInventoryComponentField();
 			if (!inventory_component)
 				return -1;
 
@@ -523,10 +523,10 @@ namespace ArkApi
 
 			if (player)
 			{
-				AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player->PlayerStateField()());
+				AShooterPlayerState* player_state = static_cast<AShooterPlayerState*>(player->PlayerStateField());
 
-				if (player_state && player_state->MyPlayerDataStructField()())
-					ip_address = player_state->MyPlayerDataStructField()()->SavedNetworkAddressField()();
+				if (player_state && player_state->MyPlayerDataStructField())
+					ip_address = player_state->MyPlayerDataStructField()->SavedNetworkAddressField();
 			}
 
 			return ip_address;

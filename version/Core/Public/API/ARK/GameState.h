@@ -2,13 +2,13 @@
 
 struct AGameState
 {
-	FieldValue<TSubclassOf<AGameMode>> GameModeClassField() { return { this, "AGameState.GameModeClass" }; }
-	FieldValue<AGameMode *> AuthorityGameModeField() { return { this, "AGameState.AuthorityGameMode" }; }
-	FieldValue<FName> MatchStateField() { return { this, "AGameState.MatchState" }; }
-	FieldValue<FName> PreviousMatchStateField() { return { this, "AGameState.PreviousMatchState" }; }
-	FieldValue<int> ElapsedTimeField() { return { this, "AGameState.ElapsedTime" }; }
-	FieldValue<TArray<APlayerState *>> PlayerArrayField() { return { this, "AGameState.PlayerArray" }; }
-	FieldValue<TArray<APlayerState *>> InactivePlayerArrayField() { return { this, "AGameState.InactivePlayerArray" }; }
+	TSubclassOf<AGameMode>& GameModeClassField() { return *GetNativePointerField<TSubclassOf<AGameMode>*>(this, "AGameState.GameModeClass"); }
+	AGameMode * AuthorityGameModeField() { return *GetNativePointerField<AGameMode **>(this, "AGameState.AuthorityGameMode"); }
+	FName& MatchStateField() { return *GetNativePointerField<FName*>(this, "AGameState.MatchState"); }
+	FName& PreviousMatchStateField() { return *GetNativePointerField<FName*>(this, "AGameState.PreviousMatchState"); }
+	int& ElapsedTimeField() { return *GetNativePointerField<int*>(this, "AGameState.ElapsedTime"); }
+	TArray<APlayerState *> PlayerArrayField() { return *GetNativePointerField<TArray<APlayerState *>*>(this, "AGameState.PlayerArray"); }
+	TArray<APlayerState *> InactivePlayerArrayField() { return *GetNativePointerField<TArray<APlayerState *>*>(this, "AGameState.InactivePlayerArray"); }
 
 	// Bit fields
 
@@ -42,164 +42,166 @@ struct AGameState
 
 struct AShooterGameState : AGameState
 {
-	FieldValue<int> NumNPCField() { return { this, "AShooterGameState.NumNPC" }; }
-	FieldValue<int> NumHibernatedNPCField() { return { this, "AShooterGameState.NumHibernatedNPC" }; }
-	FieldValue<int> NumActiveNPCField() { return { this, "AShooterGameState.NumActiveNPC" }; }
-	FieldValue<int> NumDeadNPCField() { return { this, "AShooterGameState.NumDeadNPC" }; }
-	FieldValue<int> NumPlayerActorsField() { return { this, "AShooterGameState.NumPlayerActors" }; }
-	FieldValue<int> NumPlayerConnectedField() { return { this, "AShooterGameState.NumPlayerConnected" }; }
-	FieldValue<bool> bServerUseLocalizedChatField() { return { this, "AShooterGameState.bServerUseLocalizedChat" }; }
-	FieldValue<float> LocalizedChatRadiusField() { return { this, "AShooterGameState.LocalizedChatRadius" }; }
-	FieldValue<float> LocalizedChatRadiusUnconsiousScaleField() { return { this, "AShooterGameState.LocalizedChatRadiusUnconsiousScale" }; }
-	FieldValue<float> ServerFramerateField() { return { this, "AShooterGameState.ServerFramerate" }; }
-	FieldValue<FString> NewStructureDestructionTagField() { return { this, "AShooterGameState.NewStructureDestructionTag" }; }
-	FieldValue<int> DayNumberField() { return { this, "AShooterGameState.DayNumber" }; }
-	FieldValue<float> DayTimeField() { return { this, "AShooterGameState.DayTime" }; }
-	FieldValue<long double> NetworkTimeField() { return { this, "AShooterGameState.NetworkTime" }; }
-	FieldValue<unsigned int> TimeUTCField() { return { this, "AShooterGameState.TimeUTC" }; }
-	FieldValue<bool> bIsOfficialServerField() { return { this, "AShooterGameState.bIsOfficialServer" }; }
-	FieldValue<bool> bIsListenServerField() { return { this, "AShooterGameState.bIsListenServer" }; }
-	FieldValue<bool> bIsDediServerField() { return { this, "AShooterGameState.bIsDediServer" }; }
-	FieldValue<bool> bIsArkTributeAvailableField() { return { this, "AShooterGameState.bIsArkTributeAvailable" }; }
-	FieldValue<bool> bIsArkDownloadsAllowedField() { return { this, "AShooterGameState.bIsArkDownloadsAllowed" }; }
-	FieldValue<bool> bAllowThirdPersonPlayerField() { return { this, "AShooterGameState.bAllowThirdPersonPlayer" }; }
-	FieldValue<bool> bServerHardcoreField() { return { this, "AShooterGameState.bServerHardcore" }; }
-	FieldValue<bool> bServerPVEField() { return { this, "AShooterGameState.bServerPVE" }; }
-	FieldValue<bool> bAutoPvEField() { return { this, "AShooterGameState.bAutoPvE" }; }
-	FieldValue<bool> bServerCrosshairField() { return { this, "AShooterGameState.bServerCrosshair" }; }
-	FieldValue<bool> bServerForceNoHUDField() { return { this, "AShooterGameState.bServerForceNoHUD" }; }
-	FieldValue<bool> bFlyerPlatformAllowUnalignedDinoBasingField() { return { this, "AShooterGameState.bFlyerPlatformAllowUnalignedDinoBasing" }; }
-	FieldValue<bool> bMapPlayerLocationField() { return { this, "AShooterGameState.bMapPlayerLocation" }; }
-	FieldValue<bool> bPvEDisableFriendlyFireField() { return { this, "AShooterGameState.bPvEDisableFriendlyFire" }; }
-	FieldValue<bool> bPvEAllowTribeWarField() { return { this, "AShooterGameState.bPvEAllowTribeWar" }; }
-	FieldValue<bool> bPvEAllowTribeWarCancelField() { return { this, "AShooterGameState.bPvEAllowTribeWarCancel" }; }
-	FieldValue<bool> bEnablePvPGammaField() { return { this, "AShooterGameState.bEnablePvPGamma" }; }
-	FieldValue<bool> bDisablePvEGammaField() { return { this, "AShooterGameState.bDisablePvEGamma" }; }
-	FieldValue<int> NumTamedDinosField() { return { this, "AShooterGameState.NumTamedDinos" }; }
-	FieldValue<int> MaxStructuresInRangeField() { return { this, "AShooterGameState.MaxStructuresInRange" }; }
-	FieldValue<float> DayCycleSpeedScaleField() { return { this, "AShooterGameState.DayCycleSpeedScale" }; }
-	FieldValue<float> DayTimeSpeedScaleField() { return { this, "AShooterGameState.DayTimeSpeedScale" }; }
-	FieldValue<float> NightTimeSpeedScaleField() { return { this, "AShooterGameState.NightTimeSpeedScale" }; }
-	FieldValue<float> PvEStructureDecayPeriodMultiplierField() { return { this, "AShooterGameState.PvEStructureDecayPeriodMultiplier" }; }
-	FieldValue<float> PvEDinoDecayPeriodMultiplierField() { return { this, "AShooterGameState.PvEDinoDecayPeriodMultiplier" }; }
-	FieldValue<float> PerPlatformMaxStructuresMultiplierField() { return { this, "AShooterGameState.PerPlatformMaxStructuresMultiplier" }; }
-	FieldValue<bool> bDisableStructureDecayPvEField() { return { this, "AShooterGameState.bDisableStructureDecayPvE" }; }
-	FieldValue<bool> bDisableDinoDecayPvEField() { return { this, "AShooterGameState.bDisableDinoDecayPvE" }; }
-	FieldValue<bool> bAllowCaveBuildingPvEField() { return { this, "AShooterGameState.bAllowCaveBuildingPvE" }; }
-	FieldValue<bool> bPreventDownloadSurvivorsField() { return { this, "AShooterGameState.bPreventDownloadSurvivors" }; }
-	FieldValue<bool> bReachedPlatformStructureLimitField() { return { this, "AShooterGameState.bReachedPlatformStructureLimit" }; }
-	FieldValue<bool> bAdminLoggingField() { return { this, "AShooterGameState.bAdminLogging" }; }
-	FieldValue<bool> bPvPStructureDecayField() { return { this, "AShooterGameState.bPvPStructureDecay" }; }
-	FieldValue<bool> bPreventDownloadDinosField() { return { this, "AShooterGameState.bPreventDownloadDinos" }; }
-	FieldValue<bool> bPreventDownloadItemsField() { return { this, "AShooterGameState.bPreventDownloadItems" }; }
-	FieldValue<bool> bPreventUploadDinosField() { return { this, "AShooterGameState.bPreventUploadDinos" }; }
-	FieldValue<bool> bPreventUploadItemsField() { return { this, "AShooterGameState.bPreventUploadItems" }; }
-	FieldValue<bool> bPreventUploadSurvivorsField() { return { this, "AShooterGameState.bPreventUploadSurvivors" }; }
-	FieldValue<bool> bPreventMateBoostField() { return { this, "AShooterGameState.bPreventMateBoost" }; }
-	FieldValue<bool> bPreventStructurePaintingField() { return { this, "AShooterGameState.bPreventStructurePainting" }; }
-	FieldValue<bool> bAllowCharacterCreationField() { return { this, "AShooterGameState.bAllowCharacterCreation" }; }
-	FieldValue<bool> bAllowSpawnPointSelectionField() { return { this, "AShooterGameState.bAllowSpawnPointSelection" }; }
-	FieldValue<int> MaxTamedDinosField() { return { this, "AShooterGameState.MaxTamedDinos" }; }
-	FieldValue<bool> bDisableSpawnAnimationsField() { return { this, "AShooterGameState.bDisableSpawnAnimations" }; }
-	FieldValue<FString> PlayerListStringField() { return { this, "AShooterGameState.PlayerListString" }; }
-	FieldValue<float> GlobalSpoilingTimeMultiplierField() { return { this, "AShooterGameState.GlobalSpoilingTimeMultiplier" }; }
-	FieldValue<float> GlobalItemDecompositionTimeMultiplierField() { return { this, "AShooterGameState.GlobalItemDecompositionTimeMultiplier" }; }
-	FieldValue<int> MaxNumberOfPlayersInTribeField() { return { this, "AShooterGameState.MaxNumberOfPlayersInTribe" }; }
-	FieldValue<float> GlobalCorpseDecompositionTimeMultiplierField() { return { this, "AShooterGameState.GlobalCorpseDecompositionTimeMultiplier" }; }
-	FieldValue<float> EggHatchSpeedMultiplierField() { return { this, "AShooterGameState.EggHatchSpeedMultiplier" }; }
-	FieldValue<bool> bAllowPaintingWithoutResourcesField() { return { this, "AShooterGameState.bAllowPaintingWithoutResources" }; }
-	FieldValue<bool> bEnableExtraStructurePreventionVolumesField() { return { this, "AShooterGameState.bEnableExtraStructurePreventionVolumes" }; }
-	FieldValue<long double> LastServerSaveTimeField() { return { this, "AShooterGameState.LastServerSaveTime" }; }
-	FieldValue<float> ServerSaveIntervalField() { return { this, "AShooterGameState.ServerSaveInterval" }; }
-	FieldValue<float> TribeNameChangeCooldownField() { return { this, "AShooterGameState.TribeNameChangeCooldown" }; }
-	FieldValue<bool> bAllowHideDamageSourceFromLogsField() { return { this, "AShooterGameState.bAllowHideDamageSourceFromLogs" }; }
-	FieldValue<UAudioComponent *> DynamicMusicAudioComponentField() { return { this, "AShooterGameState.DynamicMusicAudioComponent" }; }
-	FieldValue<UAudioComponent *> DynamicMusicAudioComponent2Field() { return { this, "AShooterGameState.DynamicMusicAudioComponent2" }; }
-	FieldValue<bool> bPlayingDynamicMusicField() { return { this, "AShooterGameState.bPlayingDynamicMusic" }; }
-	FieldValue<bool> bPlayingDynamicMusic1Field() { return { this, "AShooterGameState.bPlayingDynamicMusic1" }; }
-	FieldValue<bool> bPlayingDynamicMusic2Field() { return { this, "AShooterGameState.bPlayingDynamicMusic2" }; }
-	FieldValue<float> LastHadMusicTimeField() { return { this, "AShooterGameState.LastHadMusicTime" }; }
-	FieldValue<TArray<FLevelExperienceRamp>> LevelExperienceRampOverridesField() { return { this, "AShooterGameState.LevelExperienceRampOverrides" }; }
-	FieldValue<TArray<FString>> PreventDinoTameClassNamesField() { return { this, "AShooterGameState.PreventDinoTameClassNames" }; }
-	FieldValue<float> ListenServerTetherDistanceMultiplierField() { return { this, "AShooterGameState.ListenServerTetherDistanceMultiplier" }; }
-	FieldValue<FString> PGMapNameField() { return { this, "AShooterGameState.PGMapName" }; }
-	FieldValue<TArray<int>> SupportedSpawnRegionsField() { return { this, "AShooterGameState.SupportedSpawnRegions" }; }
-	FieldValue<USoundBase *> StaticOverrideMusicField() { return { this, "AShooterGameState.StaticOverrideMusic" }; }
-	FieldValue<bool> bEnableDeathTeamSpectatorField() { return { this, "AShooterGameState.bEnableDeathTeamSpectator" }; }
-	FieldValue<FVector> PlayerFloatingHUDOffsetField() { return { this, "AShooterGameState.PlayerFloatingHUDOffset" }; }
-	FieldValue<float> PlayerFloatingHUDOffsetScreenYField() { return { this, "AShooterGameState.PlayerFloatingHUDOffsetScreenY" }; }
-	FieldValue<float> StructureDamageRepairCooldownField() { return { this, "AShooterGameState.StructureDamageRepairCooldown" }; }
-	FieldValue<bool> bForceAllStructureLockingField() { return { this, "AShooterGameState.bForceAllStructureLocking" }; }
-	FieldValue<bool> bAllowCustomRecipesField() { return { this, "AShooterGameState.bAllowCustomRecipes" }; }
-	FieldValue<bool> bAllowRaidDinoFeedingField() { return { this, "AShooterGameState.bAllowRaidDinoFeeding" }; }
-	FieldValue<float> CustomRecipeEffectivenessMultiplierField() { return { this, "AShooterGameState.CustomRecipeEffectivenessMultiplier" }; }
-	FieldValue<float> CustomRecipeSkillMultiplierField() { return { this, "AShooterGameState.CustomRecipeSkillMultiplier" }; }
-	FieldValue<USoundBase *> OverrideAreaMusicField() { return { this, "AShooterGameState.OverrideAreaMusic" }; }
-	FieldValue<FVector> OverrideAreaMusicPositionField() { return { this, "AShooterGameState.OverrideAreaMusicPosition" }; }
-	FieldValue<float> OverrideAreaMusicRangeField() { return { this, "AShooterGameState.OverrideAreaMusicRange" }; }
-	FieldValue<bool> bAllowUnclaimDinosField() { return { this, "AShooterGameState.bAllowUnclaimDinos" }; }
-	FieldValue<float> FloatingHUDRangeField() { return { this, "AShooterGameState.FloatingHUDRange" }; }
-	FieldValue<float> FloatingChatRangeField() { return { this, "AShooterGameState.FloatingChatRange" }; }
-	FieldValue<int> ExtinctionEventTimeIntervalField() { return { this, "AShooterGameState.ExtinctionEventTimeInterval" }; }
-	FieldValue<float> ExtinctionEventPercentField() { return { this, "AShooterGameState.ExtinctionEventPercent" }; }
-	FieldValue<int> ExtinctionEventSecondsRemainingField() { return { this, "AShooterGameState.ExtinctionEventSecondsRemaining" }; }
-	FieldValue<bool> bDoExtinctionEventField() { return { this, "AShooterGameState.bDoExtinctionEvent" }; }
-	FieldValue<bool> bPreventOfflinePvPField() { return { this, "AShooterGameState.bPreventOfflinePvP" }; }
-	FieldValue<bool> bPvPDinoDecayField() { return { this, "AShooterGameState.bPvPDinoDecay" }; }
-	FieldValue<bool> bForceUseInventoryAppendsField() { return { this, "AShooterGameState.bForceUseInventoryAppends" }; }
-	FieldValue<bool> bOverideStructurePlatformPreventionField() { return { this, "AShooterGameState.bOverideStructurePlatformPrevention" }; }
-	FieldValue<TArray<int>> PreventOfflinePvPLiveTeamsField() { return { this, "AShooterGameState.PreventOfflinePvPLiveTeams" }; }
-	FieldValue<TArray<int>> PreventOfflinePvPExpiringTeamsField() { return { this, "AShooterGameState.PreventOfflinePvPExpiringTeams" }; }
-	FieldValue<TArray<double>> PreventOfflinePvPExpiringTimesField() { return { this, "AShooterGameState.PreventOfflinePvPExpiringTimes" }; }
-	FieldValue<TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >> PreventOfflinePvPLiveTimesField() { return { this, "AShooterGameState.PreventOfflinePvPLiveTimes" }; }
-	FieldValue<TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >> PreventOfflinePvPFirstLiveTimeField() { return { this, "AShooterGameState.PreventOfflinePvPFirstLiveTime" }; }
-	FieldValue<bool> bAllowAnyoneBabyImprintCuddleField() { return { this, "AShooterGameState.bAllowAnyoneBabyImprintCuddle" }; }
-	FieldValue<bool> bDisableImprintDinoBuffField() { return { this, "AShooterGameState.bDisableImprintDinoBuff" }; }
-	FieldValue<int> MaxPersonalTamedDinosField() { return { this, "AShooterGameState.MaxPersonalTamedDinos" }; }
-	FieldValue<bool> bIsCustomMapField() { return { this, "AShooterGameState.bIsCustomMap" }; }
-	FieldValue<bool> bIsClientField() { return { this, "AShooterGameState.bIsClient" }; }
-	FieldValue<bool> bIsDedicatedServerField() { return { this, "AShooterGameState.bIsDedicatedServer" }; }
-	FieldValue<FString> ClusterIdField() { return { this, "AShooterGameState.ClusterId" }; }
-	FieldValue<FString> AmazonS3AccessKeyIDField() { return { this, "AShooterGameState.AmazonS3AccessKeyID" }; }
-	FieldValue<FString> AmazonS3SecretAccessKeyField() { return { this, "AShooterGameState.AmazonS3SecretAccessKey" }; }
-	FieldValue<FString> AmazonS3BucketNameField() { return { this, "AShooterGameState.AmazonS3BucketName" }; }
-	FieldValue<FString> ServerSessionNameField() { return { this, "AShooterGameState.ServerSessionName" }; }
-	FieldValue<bool> bPreventTribeAlliancesField() { return { this, "AShooterGameState.bPreventTribeAlliances" }; }
-	FieldValue<FString> LoadForceRespawnDinosTagField() { return { this, "AShooterGameState.LoadForceRespawnDinosTag" }; }
-	FieldValue<bool> bOnlyDecayUnsnappedCoreStructuresField() { return { this, "AShooterGameState.bOnlyDecayUnsnappedCoreStructures" }; }
-	FieldValue<bool> bFastDecayUnsnappedCoreStructuresField() { return { this, "AShooterGameState.bFastDecayUnsnappedCoreStructures" }; }
-	FieldValue<bool> bServerUseDinoListField() { return { this, "AShooterGameState.bServerUseDinoList" }; }
-	FieldValue<bool> bPvEAllowStructuresAtSupplyDropsField() { return { this, "AShooterGameState.bPvEAllowStructuresAtSupplyDrops" }; }
-	FieldValue<bool> bAllowForceNetUpdateField() { return { this, "AShooterGameState.bAllowForceNetUpdate" }; }
-	FieldValue<float> MinimumDinoReuploadIntervalField() { return { this, "AShooterGameState.MinimumDinoReuploadInterval" }; }
-	FieldValue<float> HairGrowthSpeedMultiplierField() { return { this, "AShooterGameState.HairGrowthSpeedMultiplier" }; }
-	FieldValue<float> FastDecayIntervalField() { return { this, "AShooterGameState.FastDecayInterval" }; }
-	FieldValue<float> OxygenSwimSpeedStatMultiplierField() { return { this, "AShooterGameState.OxygenSwimSpeedStatMultiplier" }; }
-	FieldValue<bool> bAllowMultipleAttachedC4Field() { return { this, "AShooterGameState.bAllowMultipleAttachedC4" }; }
-	FieldValue<bool> bCrossARKAllowForeignDinoDownloadsField() { return { this, "AShooterGameState.bCrossARKAllowForeignDinoDownloads" }; }
-	FieldValue<long double> LastPlayedDynamicMusic1Field() { return { this, "AShooterGameState.LastPlayedDynamicMusic1" }; }
-	FieldValue<long double> LastPlayedDynamicMusic2Field() { return { this, "AShooterGameState.LastPlayedDynamicMusic2" }; }
-	FieldValue<bool> bUseCorpseLocatorField() { return { this, "AShooterGameState.bUseCorpseLocator" }; }
-	FieldValue<bool> bDisableStructurePlacementCollisionField() { return { this, "AShooterGameState.bDisableStructurePlacementCollision" }; }
-	FieldValue<bool> bUseSingleplayerSettingsField() { return { this, "AShooterGameState.bUseSingleplayerSettings" }; }
-	FieldValue<bool> bAllowPlatformSaddleMultiFloorsField() { return { this, "AShooterGameState.bAllowPlatformSaddleMultiFloors" }; }
-	FieldValue<bool> bPreventSpawnAnimationsField() { return { this, "AShooterGameState.bPreventSpawnAnimations" }; }
-	FieldValue<int> MaxAlliancesPerTribeField() { return { this, "AShooterGameState.MaxAlliancesPerTribe" }; }
-	FieldValue<int> MaxTribesPerAllianceField() { return { this, "AShooterGameState.MaxTribesPerAlliance" }; }
-	FieldValue<bool> bIsLegacyServerField() { return { this, "AShooterGameState.bIsLegacyServer" }; }
-	FieldValue<bool> bDisableDinoDecayClaimingField() { return { this, "AShooterGameState.bDisableDinoDecayClaiming" }; }
-	FieldValue<FName> UseStructurePreventionVolumeTagField() { return { this, "AShooterGameState.UseStructurePreventionVolumeTag" }; }
-	FieldValue<int> MaxStructuresInSmallRadiusField() { return { this, "AShooterGameState.MaxStructuresInSmallRadius" }; }
-	FieldValue<float> RadiusStructuresInSmallRadiusField() { return { this, "AShooterGameState.RadiusStructuresInSmallRadius" }; }
-	FieldValue<bool> bUseTameLimitForStructuresOnlyField() { return { this, "AShooterGameState.bUseTameLimitForStructuresOnly" }; }
-	FieldValue<bool> bLimitTurretsInRangeField() { return { this, "AShooterGameState.bLimitTurretsInRange" }; }
-	FieldValue<float> LimitTurretsRangeField() { return { this, "AShooterGameState.LimitTurretsRange" }; }
-	FieldValue<int> LimitTurretsNumField() { return { this, "AShooterGameState.LimitTurretsNum" }; }
-	FieldValue<bool> bForceAllowAllStructuresField() { return { this, "AShooterGameState.bForceAllowAllStructures" }; }
-	FieldValue<bool> bShowCreativeModeField() { return { this, "AShooterGameState.bShowCreativeMode" }; }
-	FieldValue<int> AmbientSoundCheckIncrementField() { return { this, "AShooterGameState.AmbientSoundCheckIncrement" }; }
-	FieldValue<float> PreventOfflinePvPConnectionInvincibleIntervalField() { return { this, "AShooterGameState.PreventOfflinePvPConnectionInvincibleInterval" }; }
-	FieldValue<float> PassiveTameIntervalMultiplierField() { return { this, "AShooterGameState.PassiveTameIntervalMultiplier" }; }
+	int& NumNPCField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumNPC"); }
+	int& NumHibernatedNPCField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumHibernatedNPC"); }
+	int& NumActiveNPCField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumActiveNPC"); }
+	int& NumDeadNPCField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumDeadNPC"); }
+	int& NumPlayerActorsField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumPlayerActors"); }
+	int& NumPlayerConnectedField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumPlayerConnected"); }
+	bool& bServerUseLocalizedChatField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bServerUseLocalizedChat"); }
+	float& LocalizedChatRadiusField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LocalizedChatRadius"); }
+	float& LocalizedChatRadiusUnconsiousScaleField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LocalizedChatRadiusUnconsiousScale"); }
+	float& ServerFramerateField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ServerFramerate"); }
+	FString& NewStructureDestructionTagField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.NewStructureDestructionTag"); }
+	int& DayNumberField() { return *GetNativePointerField<int*>(this, "AShooterGameState.DayNumber"); }
+	float& DayTimeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.DayTime"); }
+	long double& NetworkTimeField() { return *GetNativePointerField<long double*>(this, "AShooterGameState.NetworkTime"); }
+	unsigned int& TimeUTCField() { return *GetNativePointerField<unsigned int*>(this, "AShooterGameState.TimeUTC"); }
+	bool& bIsOfficialServerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsOfficialServer"); }
+	bool& bIsListenServerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsListenServer"); }
+	bool& bIsDediServerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsDediServer"); }
+	bool& bIsArkTributeAvailableField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsArkTributeAvailable"); }
+	bool& bIsArkDownloadsAllowedField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsArkDownloadsAllowed"); }
+	bool& bAllowThirdPersonPlayerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowThirdPersonPlayer"); }
+	bool& bServerHardcoreField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bServerHardcore"); }
+	bool& bServerPVEField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bServerPVE"); }
+	bool& bAutoPvEField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAutoPvE"); }
+	bool& bServerCrosshairField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bServerCrosshair"); }
+	bool& bServerForceNoHUDField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bServerForceNoHUD"); }
+	bool& bFlyerPlatformAllowUnalignedDinoBasingField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bFlyerPlatformAllowUnalignedDinoBasing"); }
+	bool& bMapPlayerLocationField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bMapPlayerLocation"); }
+	bool& bPvEDisableFriendlyFireField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPvEDisableFriendlyFire"); }
+	bool& bPvEAllowTribeWarField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPvEAllowTribeWar"); }
+	bool& bPvEAllowTribeWarCancelField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPvEAllowTribeWarCancel"); }
+	bool& bEnablePvPGammaField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bEnablePvPGamma"); }
+	bool& bDisablePvEGammaField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisablePvEGamma"); }
+	int& NumTamedDinosField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumTamedDinos"); }
+	int& MaxStructuresInRangeField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxStructuresInRange"); }
+	float& DayCycleSpeedScaleField() { return *GetNativePointerField<float*>(this, "AShooterGameState.DayCycleSpeedScale"); }
+	float& DayTimeSpeedScaleField() { return *GetNativePointerField<float*>(this, "AShooterGameState.DayTimeSpeedScale"); }
+	float& NightTimeSpeedScaleField() { return *GetNativePointerField<float*>(this, "AShooterGameState.NightTimeSpeedScale"); }
+	float& PvEStructureDecayPeriodMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PvEStructureDecayPeriodMultiplier"); }
+	float& PvEDinoDecayPeriodMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PvEDinoDecayPeriodMultiplier"); }
+	float& PerPlatformMaxStructuresMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PerPlatformMaxStructuresMultiplier"); }
+	bool& bDisableStructureDecayPvEField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableStructureDecayPvE"); }
+	bool& bDisableDinoDecayPvEField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableDinoDecayPvE"); }
+	bool& bAllowCaveBuildingPvEField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowCaveBuildingPvE"); }
+	bool& bPreventDownloadSurvivorsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventDownloadSurvivors"); }
+	bool& bReachedPlatformStructureLimitField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bReachedPlatformStructureLimit"); }
+	bool& bAdminLoggingField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAdminLogging"); }
+	bool& bPvPStructureDecayField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPvPStructureDecay"); }
+	bool& bPreventDownloadDinosField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventDownloadDinos"); }
+	bool& bPreventDownloadItemsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventDownloadItems"); }
+	bool& bPreventUploadDinosField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventUploadDinos"); }
+	bool& bPreventUploadItemsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventUploadItems"); }
+	bool& bPreventUploadSurvivorsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventUploadSurvivors"); }
+	bool& bPreventMateBoostField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventMateBoost"); }
+	bool& bPreventStructurePaintingField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventStructurePainting"); }
+	bool& bAllowCharacterCreationField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowCharacterCreation"); }
+	bool& bAllowSpawnPointSelectionField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowSpawnPointSelection"); }
+	int& MaxTamedDinosField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxTamedDinos"); }
+	bool& bDisableSpawnAnimationsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableSpawnAnimations"); }
+	FString& PlayerListStringField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.PlayerListString"); }
+	float& GlobalSpoilingTimeMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.GlobalSpoilingTimeMultiplier"); }
+	float& GlobalItemDecompositionTimeMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.GlobalItemDecompositionTimeMultiplier"); }
+	int& MaxNumberOfPlayersInTribeField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxNumberOfPlayersInTribe"); }
+	float& GlobalCorpseDecompositionTimeMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.GlobalCorpseDecompositionTimeMultiplier"); }
+	float& EggHatchSpeedMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.EggHatchSpeedMultiplier"); }
+	FName& ActiveEventField() { return *GetNativePointerField<FName*>(this, "AShooterGameState.ActiveEvent"); }
+	bool& bAllowPaintingWithoutResourcesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowPaintingWithoutResources"); }
+	bool& bEnableExtraStructurePreventionVolumesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bEnableExtraStructurePreventionVolumes"); }
+	long double& LastServerSaveTimeField() { return *GetNativePointerField<long double*>(this, "AShooterGameState.LastServerSaveTime"); }
+	float& ServerSaveIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ServerSaveInterval"); }
+	float& TribeNameChangeCooldownField() { return *GetNativePointerField<float*>(this, "AShooterGameState.TribeNameChangeCooldown"); }
+	bool& bAllowHideDamageSourceFromLogsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowHideDamageSourceFromLogs"); }
+	UAudioComponent * DynamicMusicAudioComponentField() { return *GetNativePointerField<UAudioComponent **>(this, "AShooterGameState.DynamicMusicAudioComponent"); }
+	UAudioComponent * DynamicMusicAudioComponent2Field() { return *GetNativePointerField<UAudioComponent **>(this, "AShooterGameState.DynamicMusicAudioComponent2"); }
+	bool& bPlayingDynamicMusicField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPlayingDynamicMusic"); }
+	bool& bPlayingDynamicMusic1Field() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPlayingDynamicMusic1"); }
+	bool& bPlayingDynamicMusic2Field() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPlayingDynamicMusic2"); }
+	float& LastHadMusicTimeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LastHadMusicTime"); }
+	TArray<FLevelExperienceRamp>& LevelExperienceRampOverridesField() { return *GetNativePointerField<TArray<FLevelExperienceRamp>*>(this, "AShooterGameState.LevelExperienceRampOverrides"); }
+	//TArray<FEngramEntryOverride>& OverrideEngramEntriesField() { return *GetNativePointerField<TArray<FEngramEntryOverride>*>(this, "AShooterGameState.OverrideEngramEntries"); }
+	TArray<FString>& PreventDinoTameClassNamesField() { return *GetNativePointerField<TArray<FString>*>(this, "AShooterGameState.PreventDinoTameClassNames"); }
+	float& ListenServerTetherDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ListenServerTetherDistanceMultiplier"); }
+	FString& PGMapNameField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.PGMapName"); }
+	TArray<int>& SupportedSpawnRegionsField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameState.SupportedSpawnRegions"); }
+	USoundBase * StaticOverrideMusicField() { return *GetNativePointerField<USoundBase **>(this, "AShooterGameState.StaticOverrideMusic"); }
+	bool& bEnableDeathTeamSpectatorField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bEnableDeathTeamSpectator"); }
+	FVector& PlayerFloatingHUDOffsetField() { return *GetNativePointerField<FVector*>(this, "AShooterGameState.PlayerFloatingHUDOffset"); }
+	float& PlayerFloatingHUDOffsetScreenYField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PlayerFloatingHUDOffsetScreenY"); }
+	float& StructureDamageRepairCooldownField() { return *GetNativePointerField<float*>(this, "AShooterGameState.StructureDamageRepairCooldown"); }
+	bool& bForceAllStructureLockingField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bForceAllStructureLocking"); }
+	bool& bAllowCustomRecipesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowCustomRecipes"); }
+	bool& bAllowRaidDinoFeedingField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowRaidDinoFeeding"); }
+	float& CustomRecipeEffectivenessMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.CustomRecipeEffectivenessMultiplier"); }
+	float& CustomRecipeSkillMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.CustomRecipeSkillMultiplier"); }
+	USoundBase * OverrideAreaMusicField() { return *GetNativePointerField<USoundBase **>(this, "AShooterGameState.OverrideAreaMusic"); }
+	FVector& OverrideAreaMusicPositionField() { return *GetNativePointerField<FVector*>(this, "AShooterGameState.OverrideAreaMusicPosition"); }
+	float& OverrideAreaMusicRangeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.OverrideAreaMusicRange"); }
+	bool& bAllowUnclaimDinosField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowUnclaimDinos"); }
+	float& FloatingHUDRangeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.FloatingHUDRange"); }
+	float& FloatingChatRangeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.FloatingChatRange"); }
+	int& ExtinctionEventTimeIntervalField() { return *GetNativePointerField<int*>(this, "AShooterGameState.ExtinctionEventTimeInterval"); }
+	float& ExtinctionEventPercentField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ExtinctionEventPercent"); }
+	int& ExtinctionEventSecondsRemainingField() { return *GetNativePointerField<int*>(this, "AShooterGameState.ExtinctionEventSecondsRemaining"); }
+	bool& bDoExtinctionEventField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDoExtinctionEvent"); }
+	bool& bPreventOfflinePvPField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventOfflinePvP"); }
+	bool& bPvPDinoDecayField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPvPDinoDecay"); }
+	bool& bForceUseInventoryAppendsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bForceUseInventoryAppends"); }
+	bool& bOverideStructurePlatformPreventionField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bOverideStructurePlatformPrevention"); }
+	TArray<int>& PreventOfflinePvPLiveTeamsField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameState.PreventOfflinePvPLiveTeams"); }
+	TArray<int>& PreventOfflinePvPExpiringTeamsField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameState.PreventOfflinePvPExpiringTeams"); }
+	TArray<double>& PreventOfflinePvPExpiringTimesField() { return *GetNativePointerField<TArray<double>*>(this, "AShooterGameState.PreventOfflinePvPExpiringTimes"); }
+	TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >& PreventOfflinePvPLiveTimesField() { return *GetNativePointerField<TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >*>(this, "AShooterGameState.PreventOfflinePvPLiveTimes"); }
+	TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >& PreventOfflinePvPFirstLiveTimeField() { return *GetNativePointerField<TMap<int, double, FDefaultSetAllocator, TDefaultMapKeyFuncs<int, double, 0> >*>(this, "AShooterGameState.PreventOfflinePvPFirstLiveTime"); }
+	bool& bAllowAnyoneBabyImprintCuddleField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowAnyoneBabyImprintCuddle"); }
+	bool& bDisableImprintDinoBuffField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableImprintDinoBuff"); }
+	int& MaxPersonalTamedDinosField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxPersonalTamedDinos"); }
+	bool& bIsCustomMapField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsCustomMap"); }
+	bool& bIsClientField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsClient"); }
+	bool& bIsDedicatedServerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsDedicatedServer"); }
+	FString& ClusterIdField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.ClusterId"); }
+	FString& AmazonS3AccessKeyIDField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.AmazonS3AccessKeyID"); }
+	FString& AmazonS3SecretAccessKeyField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.AmazonS3SecretAccessKey"); }
+	FString& AmazonS3BucketNameField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.AmazonS3BucketName"); }
+	FString& ServerSessionNameField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.ServerSessionName"); }
+	bool& bPreventTribeAlliancesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventTribeAlliances"); }
+	FString& LoadForceRespawnDinosTagField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.LoadForceRespawnDinosTag"); }
+	bool& bOnlyDecayUnsnappedCoreStructuresField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bOnlyDecayUnsnappedCoreStructures"); }
+	bool& bFastDecayUnsnappedCoreStructuresField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bFastDecayUnsnappedCoreStructures"); }
+	bool& bServerUseDinoListField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bServerUseDinoList"); }
+	bool& bPvEAllowStructuresAtSupplyDropsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPvEAllowStructuresAtSupplyDrops"); }
+	bool& bAllowForceNetUpdateField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowForceNetUpdate"); }
+	float& MinimumDinoReuploadIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.MinimumDinoReuploadInterval"); }
+	float& HairGrowthSpeedMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.HairGrowthSpeedMultiplier"); }
+	float& FastDecayIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.FastDecayInterval"); }
+	float& OxygenSwimSpeedStatMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.OxygenSwimSpeedStatMultiplier"); }
+	bool& bAllowMultipleAttachedC4Field() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowMultipleAttachedC4"); }
+	bool& bCrossARKAllowForeignDinoDownloadsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bCrossARKAllowForeignDinoDownloads"); }
+	long double& LastPlayedDynamicMusic1Field() { return *GetNativePointerField<long double*>(this, "AShooterGameState.LastPlayedDynamicMusic1"); }
+	long double& LastPlayedDynamicMusic2Field() { return *GetNativePointerField<long double*>(this, "AShooterGameState.LastPlayedDynamicMusic2"); }
+	bool& bUseCorpseLocatorField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bUseCorpseLocator"); }
+	bool& bDisableStructurePlacementCollisionField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableStructurePlacementCollision"); }
+	bool& bUseSingleplayerSettingsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bUseSingleplayerSettings"); }
+	bool& bAllowPlatformSaddleMultiFloorsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowPlatformSaddleMultiFloors"); }
+	bool& bPreventSpawnAnimationsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventSpawnAnimations"); }
+	int& MaxAlliancesPerTribeField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxAlliancesPerTribe"); }
+	int& MaxTribesPerAllianceField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxTribesPerAlliance"); }
+	bool& bIsLegacyServerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsLegacyServer"); }
+	bool& bDisableDinoDecayClaimingField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableDinoDecayClaiming"); }
+	FName& UseStructurePreventionVolumeTagField() { return *GetNativePointerField<FName*>(this, "AShooterGameState.UseStructurePreventionVolumeTag"); }
+	int& MaxStructuresInSmallRadiusField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxStructuresInSmallRadius"); }
+	float& RadiusStructuresInSmallRadiusField() { return *GetNativePointerField<float*>(this, "AShooterGameState.RadiusStructuresInSmallRadius"); }
+	bool& bUseTameLimitForStructuresOnlyField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bUseTameLimitForStructuresOnly"); }
+	bool& bLimitTurretsInRangeField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bLimitTurretsInRange"); }
+	float& LimitTurretsRangeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LimitTurretsRange"); }
+	int& LimitTurretsNumField() { return *GetNativePointerField<int*>(this, "AShooterGameState.LimitTurretsNum"); }
+	bool& bForceAllowAllStructuresField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bForceAllowAllStructures"); }
+	bool& bShowCreativeModeField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bShowCreativeMode"); }
+	int& AmbientSoundCheckIncrementField() { return *GetNativePointerField<int*>(this, "AShooterGameState.AmbientSoundCheckIncrement"); }
+	float& PreventOfflinePvPConnectionInvincibleIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PreventOfflinePvPConnectionInvincibleInterval"); }
+	float& PassiveTameIntervalMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PassiveTameIntervalMultiplier"); }
 
 	// Functions
 
@@ -240,7 +242,9 @@ struct AShooterGameState : AGameState
 	void ForceNetUpdate(bool bDormantDontReplicateProperties) { NativeCall<void, bool>(this, "AShooterGameState.ForceNetUpdate", bDormantDontReplicateProperties); }
 	void WorldCompositionRescan() { NativeCall<void>(this, "AShooterGameState.WorldCompositionRescan"); }
 	void HTTPGetRequest(FString InURL) { NativeCall<void, FString>(this, "AShooterGameState.HTTPGetRequest", InURL); }
+	void HTTPGetRequestCompleted(TSharedPtr<IHttpRequest, 0> HttpRequest, TSharedPtr<IHttpResponse, 1> HttpResponse, bool bSucceeded) { NativeCall<void, TSharedPtr<IHttpRequest, 0>, TSharedPtr<IHttpResponse, 1>, bool>(this, "AShooterGameState.HTTPGetRequestCompleted", HttpRequest, HttpResponse, bSucceeded); }
 	void HTTPPostRequest(FString InURL, FString Content) { NativeCall<void, FString, FString>(this, "AShooterGameState.HTTPPostRequest", InURL, Content); }
+	void HTTPPostRequestCompleted(TSharedPtr<IHttpRequest, 0> HttpRequest, TSharedPtr<IHttpResponse, 1> HttpResponse, bool bSucceeded) { NativeCall<void, TSharedPtr<IHttpRequest, 0>, TSharedPtr<IHttpResponse, 1>, bool>(this, "AShooterGameState.HTTPPostRequestCompleted", HttpRequest, HttpResponse, bSucceeded); }
 	void LevelAddedToWorld(ULevel * addedLevel) { NativeCall<void, ULevel *>(this, "AShooterGameState.LevelAddedToWorld", addedLevel); }
 	bool AllowDownloadDino_Implementation(TSubclassOf<APrimalDinoCharacter> TheDinoClass) { return NativeCall<bool, TSubclassOf<APrimalDinoCharacter>>(this, "AShooterGameState.AllowDownloadDino_Implementation", TheDinoClass); }
 	bool IsEngramClassHidden(TSubclassOf<UPrimalItem> ForItemClass) { return NativeCall<bool, TSubclassOf<UPrimalItem>>(this, "AShooterGameState.IsEngramClassHidden", ForItemClass); }
@@ -252,11 +256,11 @@ struct AShooterGameState : AGameState
 
 struct AGameSession
 {
-	FieldValue<int> MaxSpectatorsField() { return { this, "AGameSession.MaxSpectators" }; }
-	FieldValue<int> MaxPlayersField() { return { this, "AGameSession.MaxPlayers" }; }
-	FieldValue<char> MaxSplitscreensPerConnectionField() { return { this, "AGameSession.MaxSplitscreensPerConnection" }; }
-	FieldValue<bool> bRequiresPushToTalkField() { return { this, "AGameSession.bRequiresPushToTalk" }; }
-	FieldValue<FName> SessionNameField() { return { this, "AGameSession.SessionName" }; }
+	int& MaxSpectatorsField() { return *GetNativePointerField<int*>(this, "AGameSession.MaxSpectators"); }
+	int& MaxPlayersField() { return *GetNativePointerField<int*>(this, "AGameSession.MaxPlayers"); }
+	char& MaxSplitscreensPerConnectionField() { return *GetNativePointerField<char*>(this, "AGameSession.MaxSplitscreensPerConnection"); }
+	bool& bRequiresPushToTalkField() { return *GetNativePointerField<bool*>(this, "AGameSession.bRequiresPushToTalk"); }
+	FName& SessionNameField() { return *GetNativePointerField<FName*>(this, "AGameSession.SessionName"); }
 
 	// Functions
 
@@ -265,7 +269,7 @@ struct AGameSession
 	bool ProcessAutoLogin() { return NativeCall<bool>(this, "AGameSession.ProcessAutoLogin"); }
 	void OnLoginComplete(int LocalUserNum, bool bWasSuccessful, FUniqueNetId * UserId, FString * Error) { NativeCall<void, int, bool, FUniqueNetId *, FString *>(this, "AGameSession.OnLoginComplete", LocalUserNum, bWasSuccessful, UserId, Error); }
 	FString * ApproveLogin(FString * result, FString * Options, FString * authToken) { return NativeCall<FString *, FString *, FString *, FString *>(this, "AGameSession.ApproveLogin", result, Options, authToken); }
-	void RegisterPlayer(APlayerController * NewPlayer, TSharedPtr<FUniqueNetId> * UniqueId, bool bWasFromInvite) { NativeCall<void, APlayerController *, TSharedPtr<FUniqueNetId> *, bool>(this, "AGameSession.RegisterPlayer", NewPlayer, UniqueId, bWasFromInvite); }
+	void RegisterPlayer(APlayerController * NewPlayer, TSharedPtr<FUniqueNetId, 0> * UniqueId, bool bWasFromInvite) { NativeCall<void, APlayerController *, TSharedPtr<FUniqueNetId, 0> *, bool>(this, "AGameSession.RegisterPlayer", NewPlayer, UniqueId, bWasFromInvite); }
 	void UnregisterPlayer(APlayerController * ExitingPlayer) { NativeCall<void, APlayerController *>(this, "AGameSession.UnregisterPlayer", ExitingPlayer); }
 	bool AtCapacity(bool bSpectator, FString * AuthToken) { return NativeCall<bool, bool, FString *>(this, "AGameSession.AtCapacity", bSpectator, AuthToken); }
 	void NotifyLogout(APlayerController * PC) { NativeCall<void, APlayerController *>(this, "AGameSession.NotifyLogout", PC); }
@@ -278,9 +282,9 @@ struct AGameSession
 
 struct AShooterGameSession : AGameSession
 {
-	FieldValue<TArray<UNetConnection *>> FailedAuthTokenClientConnectionsField() { return { this, "AShooterGameSession.FailedAuthTokenClientConnections" }; }
-	FieldValue<TArray<FUniqueNetIdUInt64>> FailedAuthTokenClientUniqueIDsField() { return { this, "AShooterGameSession.FailedAuthTokenClientUniqueIDs" }; }
-	FieldValue<bool> bFoundSessionField() { return { this, "AShooterGameSession.bFoundSession" }; }
+	TArray<UNetConnection *> FailedAuthTokenClientConnectionsField() { return *GetNativePointerField<TArray<UNetConnection *>*>(this, "AShooterGameSession.FailedAuthTokenClientConnections"); }
+	TArray<FUniqueNetIdUInt64>& FailedAuthTokenClientUniqueIDsField() { return *GetNativePointerField<TArray<FUniqueNetIdUInt64>*>(this, "AShooterGameSession.FailedAuthTokenClientUniqueIDs"); }
+	bool& bFoundSessionField() { return *GetNativePointerField<bool*>(this, "AShooterGameSession.bFoundSession"); }
 
 	// Functions
 
@@ -300,7 +304,7 @@ struct AShooterGameSession : AGameSession
 	void OnFindSessionsComplete(bool bWasSuccessful) { NativeCall<void, bool>(this, "AShooterGameSession.OnFindSessionsComplete", bWasSuccessful); }
 	void OnFoundSession() { NativeCall<void>(this, "AShooterGameSession.OnFoundSession"); }
 	void CancelFindSessions() { NativeCall<void>(this, "AShooterGameSession.CancelFindSessions"); }
-	bool JoinSession(TSharedPtr<FUniqueNetId> UserId, FName SessionName, int SessionIndexInSearchResults) { return NativeCall<bool, TSharedPtr<FUniqueNetId>, FName, int>(this, "AShooterGameSession.JoinSession", UserId, SessionName, SessionIndexInSearchResults); }
+	bool JoinSession(TSharedPtr<FUniqueNetId, 0> UserId, FName SessionName, int SessionIndexInSearchResults) { return NativeCall<bool, TSharedPtr<FUniqueNetId, 0>, FName, int>(this, "AShooterGameSession.JoinSession", UserId, SessionName, SessionIndexInSearchResults); }
 	bool TravelToSession(int ControllerId, FName SessionName) { return NativeCall<bool, int, FName>(this, "AShooterGameSession.TravelToSession", ControllerId, SessionName); }
 	void Restart() { NativeCall<void>(this, "AShooterGameSession.Restart"); }
 };
