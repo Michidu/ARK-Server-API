@@ -662,6 +662,7 @@ struct FHttpResponseWinInet
 
 	// Functions
 
+	~FHttpResponseWinInet() { NativeCall<void>(this, "FHttpResponseWinInet.~FHttpResponseWinInet"); }
 	FString * GetURL(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpResponseWinInet.GetURL", result); }
 	FString * GetContentAsString(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpResponseWinInet.GetContentAsString", result); }
 	FString * GetURLParameter(FString * result, FString * ParameterName) { return NativeCall<FString *, FString *, FString *>(this, "FHttpResponseWinInet.GetURLParameter", result, ParameterName); }
@@ -697,6 +698,7 @@ struct FHttpRequestWinInet
 
 	// Functions
 
+	~FHttpRequestWinInet() { NativeCall<void>(this, "FHttpRequestWinInet.~FHttpRequestWinInet"); }
 	FString * GetURL(FString * result) { return NativeCall<FString *, FString *>(this, "FHttpRequestWinInet.GetURL", result); }
 	FString * GetURLParameter(FString * result, FString * ParameterName) { return NativeCall<FString *, FString *, FString *>(this, "FHttpRequestWinInet.GetURLParameter", result, ParameterName); }
 	FString * GetHeader(FString * result, FString * HeaderName) { return NativeCall<FString *, FString *, FString *>(this, "FHttpRequestWinInet.GetHeader", result, HeaderName); }
