@@ -164,6 +164,13 @@ namespace ArkApi
 			throw std::runtime_error(
 				"Failed to load plugin - " + plugin_name + "\nError code: " + std::to_string(GetLastError()));
 
+		// Calls Plugin_Init (if found) after loading DLL
+		// Note: DllMain callbacks during LoadLibrary is load-locked so we cannot do things like WaitForMultipleObjects on threads
+		typedef void (_cdecl *pfnPluginInit)();
+		pfnPluginInit pfnInit = (pfnPluginInit)GetProcAddress(h_module, "Plugin_Init");
+		if (pfnInit)
+			pfnInit();
+
 		return loaded_plugins_.emplace_back(std::make_shared<Plugin>(h_module, plugin_name, plugin_info["FullName"],
 		                                                             plugin_info["Description"], plugin_info["Version"],
 		                                                             plugin_info["MinApiVersion"],
@@ -183,6 +190,13 @@ namespace ArkApi
 
 		if (!fs::exists(full_dll_path.c_str()))
 			throw std::runtime_error("Plugin " + plugin_name + " does not exist");
+
+		// Calls Plugin_Unload (if found) just before unloading DLL to let DLL gracefully clean up
+		// Note: DllMain callbacks during FreeLibrary is load-locked so we cannot do things like WaitForMultipleObjects on threads
+		typedef void(_cdecl *pfnPluginUnload)();
+		pfnPluginUnload pfnUnload = (pfnPluginUnload)GetProcAddress((*iter)->h_module, "Plugin_Unload");
+		if (pfnUnload)
+			pfnUnload();
 
 		const BOOL result = FreeLibrary((*iter)->h_module);
 		if (!result)
