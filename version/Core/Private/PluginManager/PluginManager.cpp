@@ -12,13 +12,18 @@
 
 namespace ArkApi
 {
-	PluginManager::PluginManager()
-		: reload_sleep_seconds_(5)
+	PluginManager::PluginManager() :
+		enable_plugin_reload_(false),
+		reload_sleep_seconds_(5),
+		save_world_before_reload_(true),
+		next_reload_check_(0)
 	{
 		Commands& commands = Commands::Get();
 
 		commands.AddConsoleCommand("plugins.load", &LoadPluginCmd);
 		commands.AddConsoleCommand("plugins.unload", &UnloadPluginCmd);
+
+		commands.AddOnTimerCallback(L"PluginManager.DetectPluginChangesTimerCallback", &DetectPluginChangesTimerCallback);
 	}
 
 	PluginManager& PluginManager::Get()
@@ -105,8 +110,19 @@ namespace ArkApi
 
 			const auto filename = path.filename().stem().generic_string();
 
+			const std::string dir_path = Tools::GetCurrentDir() + "/ArkApi/Plugins/" + filename;
+			const std::string full_dll_path = dir_path + "/" + filename + ".dll";
+			const std::string new_full_dll_path = dir_path + "/" + filename + ".dll.ArkApi";
+
 			try
 			{
+				// Loads the new .dll.ArkApi if it exists on startup as well
+				if (fs::exists(new_full_dll_path))
+				{
+					copy_file(new_full_dll_path, full_dll_path, fs::copy_options::overwrite_existing);
+					fs::remove(new_full_dll_path);
+				}
+
 				std::stringstream stream;
 
 				std::shared_ptr<Plugin>& plugin = LoadPlugin(filename);
@@ -127,13 +143,11 @@ namespace ArkApi
 		// Set auto plugins reloading
 		auto settings = ReadSettingsConfig();
 
-		const bool auto_reload_enabled = settings["settings"].value("AutomaticPluginReloading", false);
-		if (auto_reload_enabled)
+		enable_plugin_reload_ = settings["settings"].value("AutomaticPluginReloading", false);
+		if (enable_plugin_reload_)
 		{
-			reload_sleep_seconds_ = settings["settings"].value("AutomaticPluginReloadSeconds", 5) * 1000;
-
-			std::thread thread(&PluginManager::DetectPluginChanges, this);
-			thread.detach();
+			reload_sleep_seconds_ = settings["settings"].value("AutomaticPluginReloadSeconds", 5);
+			save_world_before_reload_ = settings["settings"].value("SaveWorldBeforePluginReload", true);
 		}
 
 		Log::GetLog()->info("Loaded all plugins\n");
@@ -262,49 +276,67 @@ namespace ArkApi
 		return FindPlugin(plugin_name) != loaded_plugins_.end();
 	}
 
+	void PluginManager::DetectPluginChangesTimerCallback()
+	{
+		auto& pluginManager = PluginManager::Get();
+
+		time_t now = time(NULL);
+		if (now < pluginManager.next_reload_check_)
+			return;
+
+		pluginManager.next_reload_check_ = now + pluginManager.reload_sleep_seconds_;
+
+		pluginManager.DetectPluginChanges();
+	}
+
 	void PluginManager::DetectPluginChanges()
 	{
 		namespace fs = std::experimental::filesystem;
 
-		const int sleep_time = reload_sleep_seconds_;
+		// Prevents saving world multiple times if multiple plugins are queued to be reloaded
+		bool save_world = save_world_before_reload_;
 
-		while (true)
+		for (const auto& dir_name : fs::directory_iterator(Tools::GetCurrentDir() + "/ArkApi/Plugins"))
 		{
-			for (const auto& dir_name : fs::directory_iterator(Tools::GetCurrentDir() + "/ArkApi/Plugins"))
+			const auto& path = dir_name.path();
+			if (!is_directory(path))
+				continue;
+
+			const auto filename = path.filename().stem().generic_string();
+
+			const std::string plugin_folder = path.generic_string() + "/";
+
+			const std::string plugin_file_path = plugin_folder + filename + ".dll";
+			const std::string new_plugin_file_path = plugin_folder + filename + ".dll.ArkApi";
+
+			if (fs::exists(new_plugin_file_path) && FindPlugin(filename) != loaded_plugins_.end())
 			{
-				const auto& path = dir_name.path();
-				if (!is_directory(path))
-					continue;
-
-				const auto filename = path.filename().stem().generic_string();
-
-				const std::string plugin_folder = path.generic_string() + "/";
-
-				const std::string plugin_file_path = plugin_folder + filename + ".dll";
-				const std::string new_plugin_file_path = plugin_folder + filename + ".dll.ArkApi";
-
-				if (fs::exists(new_plugin_file_path) && FindPlugin(filename) != loaded_plugins_.end())
+				// Save the world in case the unload/load procedure causes crash
+				if (save_world)
 				{
-					try
-					{
-						UnloadPlugin(filename);
-
-						copy_file(new_plugin_file_path, plugin_file_path, fs::copy_options::overwrite_existing);
-						fs::remove(new_plugin_file_path);
-
-						LoadPlugin(filename);
-					}
-					catch (const std::exception& error)
-					{
-						Log::GetLog()->warn(error.what());
-						continue;
-					}
-
-					Log::GetLog()->info("Reloaded plugin - {}", filename);
+					Log::GetLog()->info("Saving world before reloading plugins ...");
+					ArkApi::GetApiUtils().GetShooterGameMode()->SaveWorld();
+					Log::GetLog()->info("World saved.");
+					save_world = false; // do not save again if multiple plugins are reloaded in this loop
 				}
-			}
 
-			Sleep(sleep_time);
+				try
+				{
+					UnloadPlugin(filename);
+
+					copy_file(new_plugin_file_path, plugin_file_path, fs::copy_options::overwrite_existing);
+					fs::remove(new_plugin_file_path);
+
+					LoadPlugin(filename);
+				}
+				catch (const std::exception& error)
+				{
+					Log::GetLog()->warn(error.what());
+					continue;
+				}
+
+				Log::GetLog()->info("Reloaded plugin - {}", filename);
+			}
 		}
 	}
 
