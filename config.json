@@ -1,7 +1,8 @@
 {
   "settings":{
     "AutomaticPluginReloading":false,
-    "AutomaticPluginReloadSeconds":5
+    "AutomaticPluginReloadSeconds":5,
+    "SaveWorldBeforePluginReload":true
   },
   "structures":[
     "UWorld",

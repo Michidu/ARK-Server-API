@@ -89,6 +89,7 @@ namespace ArkApi
 
 		void CheckPluginsDependencies();
 
+		static void DetectPluginChangesTimerCallback();
 		void DetectPluginChanges();
 
 		// Callbacks
@@ -98,6 +99,9 @@ namespace ArkApi
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;
 
 		// Plugins auto reloading
+		bool enable_plugin_reload_;
 		int reload_sleep_seconds_;
+		bool save_world_before_reload_;
+		time_t next_reload_check_;
 	};
 }
