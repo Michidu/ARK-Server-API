@@ -566,6 +566,45 @@ namespace ArkApi
 
 			return player->GetPlayerCharacter()->IsDead();
 		}
+
+		static uint64 GetPlayerID(APrimalCharacter* character)
+		{
+			AShooterCharacter* shooter_character = static_cast<AShooterCharacter*>(character);
+			return shooter_character && shooter_character->GetPlayerData() ? shooter_character->GetPlayerData()->MyDataField()->PlayerDataIDField() : -1;
+		}
+
+		static uint64 GetPlayerID(AController* controller)
+		{
+			AShooterPlayerController* player = static_cast<AShooterPlayerController*>(controller);
+			return player ? player->LinkedPlayerIDField() : 0;
+		}
+
+		uint64 GetSteamIDForPlayerID(int player_id) const
+		{
+			uint64 steam_id = GetShooterGameMode()->GetSteamIDForPlayerID(player_id);
+			if (steam_id == 0)
+			{
+				const auto& player_controllers = GetWorld()->PlayerControllerListField();
+				for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+				{
+					AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
+					if (shooter_pc && shooter_pc->LinkedPlayerIDField() == player_id)
+					{
+						APlayerState* player_state = shooter_pc->PlayerStateField();
+						if (player_state)
+						{
+							FUniqueNetIdSteam* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField().UniqueNetId.Get());
+							steam_id = steam_net_id->UniqueNetId;
+							break;
+						}
+					}
+				}
+
+				GetShooterGameMode()->AddPlayerID(player_id, steam_id);
+			}
+
+			return steam_id;
+		}
 	};
 
 	ARK_API IApiUtils& APIENTRY GetApiUtils();

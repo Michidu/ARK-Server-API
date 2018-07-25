@@ -2,6 +2,15 @@
 
 struct UWorld;
 
+struct FItemCount
+{
+	FString StringRef;
+	int StackSize;
+	int NumStacks;
+	float Quality;
+	bool bAutoEquip;
+};
+
 struct FItemNetID
 {
 	unsigned int ItemID1;
