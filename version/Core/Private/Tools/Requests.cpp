@@ -19,18 +19,21 @@ namespace ArkApi
 	}
 
 	bool Requests::CreateRequest(FString& url, FString& verb,
-	                             const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback)
+	                             const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback, FString& Content)
 	{
 		TSharedRef<IHttpRequest> request;
 		FHttpModule::Get()->CreateRequest(&request);
 
 		FString header_name = "Content-Type";
 		FString header_value = "text/html";
+		FString Accepts_name = "Accepts";
+		FString Accepts_value = "*/*";
 
-		request->SetHeader(&header_name, &header_value);
+		request->SetHeader(&header_name, &header_value); 
+		request->SetHeader(&Accepts_name, &Accepts_value);
 		request->SetURL(&url);
 		request->SetVerb(&verb);
-
+		request->SetContentAsString(&Content);
 		requests_.Add({request, callback});
 
 		return request->ProcessRequest();
