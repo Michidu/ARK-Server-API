@@ -21,7 +21,7 @@ namespace ArkApi
 		Requests& operator=(Requests&&) = delete;
 
 		ARK_API bool CreateRequest(FString& url, FString& verb,
-		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback);
+		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback, FString& Content = FString());
 
 	private:
 		ARK_API Requests();
