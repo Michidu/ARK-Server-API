@@ -8,6 +8,13 @@ namespace ArkApi
 	{
 		TSharedRef<IHttpRequest> request;
 		std::function<void(TSharedRef<IHttpRequest>, bool)> callback;
+		bool completed;
+		bool remove_manually;
+
+		bool operator==(const Request& rhs) const
+		{
+			return request == rhs.request;
+		}
 	};
 
 	class Requests
@@ -21,7 +28,9 @@ namespace ArkApi
 		Requests& operator=(Requests&&) = delete;
 
 		ARK_API bool CreateRequest(FString& url, FString& verb,
-		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback, FString& Content = FString());
+		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback,
+		                           FString content = FString(), bool auto_remove = true);
+		ARK_API int RemoveRequest(const TSharedRef<IHttpRequest>& request);
 
 	private:
 		ARK_API Requests();
