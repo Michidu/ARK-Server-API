@@ -80,6 +80,11 @@ struct FMemory
 		return FPlatformMemory::StreamingMemcpy(Dest,Src,Count);
 	}
 
+	static FORCEINLINE void Memswap(void* Ptr1, void* Ptr2, SIZE_T Size)
+	{
+		FPlatformMemory::Memswap(Ptr1, Ptr2, Size);
+	}
+
 	//
 	// C style memory allocation stubs that fall back to C runtime
 	//

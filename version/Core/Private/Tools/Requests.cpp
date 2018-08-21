@@ -36,29 +36,33 @@ namespace ArkApi
 		request->SetVerb(&verb);
 		request->SetContentAsString(&content);
 
-		requests_.Add({request, callback, false, !auto_remove});
+		requests_.push_back({request, callback, false, !auto_remove});
 
 		return request->ProcessRequest();
 	}
 
-	int Requests::RemoveRequest(const TSharedRef<IHttpRequest>& request)
+	void Requests::RemoveRequest(const TSharedRef<IHttpRequest>& request)
 	{
-		return requests_.RemoveAll([&request](const Request& cur_request)
-		{
-			return cur_request.request == request;
-		});
+		requests_.erase(remove_if(requests_.begin(), requests_.end(), [&request](const Request& cur_request)
+	                          {
+		                          return cur_request.request == request;
+	                          }), requests_.end());
 	}
 
 	void Requests::Update()
 	{
-		Get().requests_.RemoveAll([](const Request& request)
-		{
-			return !request.remove_manually && request.completed;
-		});
+		auto& requests = Get().requests_;
 
-		TArray<Request>& requests = Get().requests_;
-		for (auto& request : requests)
+		requests.erase(remove_if(requests.begin(), requests.end(), [](const Request& request)
+	                         {
+		                         return !request.remove_manually && request.completed;
+	                         }), requests.end());
+
+		const auto size = requests.size();
+		for (auto i = 0; i < size; ++i)
 		{
+			auto& request = requests[i];
+
 			const auto status = request.request->GetStatus();
 			switch (status)
 			{
@@ -66,8 +70,7 @@ namespace ArkApi
 			case EHttpRequestStatus::Failed:
 				if (!request.completed)
 				{
-					const int idx = Get().requests_.IndexOfByKey(request);
-					Get().requests_[idx].completed = true;
+					request.completed = true;
 
 					request.callback(request.request, status == EHttpRequestStatus::Succeeded);
 				}

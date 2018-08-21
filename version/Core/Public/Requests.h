@@ -30,7 +30,7 @@ namespace ArkApi
 		ARK_API bool CreateRequest(FString& url, FString& verb,
 		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback,
 		                           FString content = FString(), bool auto_remove = true);
-		ARK_API int RemoveRequest(const TSharedRef<IHttpRequest>& request);
+		ARK_API void RemoveRequest(const TSharedRef<IHttpRequest>& request);
 
 	private:
 		ARK_API Requests();
@@ -38,6 +38,6 @@ namespace ArkApi
 
 		ARK_API static void Update();
 
-		TArray<Request> requests_;
+		std::vector<Request> requests_;
 	};
 }
