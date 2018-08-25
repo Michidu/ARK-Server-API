@@ -85,7 +85,11 @@
     "UActorComponent",
     "FHttpModule",
     "FHttpRequestWinInet",
-    "FHttpResponseWinInet"
+    "FHttpResponseWinInet",
+	"FOnlineSubsystemSteam",
+	"APrimalStructureTurret",
+	"FOverlapResult",
+	"UVictoryCore"
   ],
   "functions":[
     "StaticLoadObject",
