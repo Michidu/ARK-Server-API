@@ -364,7 +364,7 @@ struct UPrimalGlobals
 
 struct ULevelBase
 {
-	//TTransArray<AActor *> GetActorsField() const { return GetNativeField<TTransArray<AActor *>>(this, "ULevelBase.Actors"); }
+	TArray<AActor *> GetActorsField() const { return GetNativeField<TArray<AActor *>>(this, "ULevelBase.Actors"); }
 };
 
 struct ULevel : ULevelBase
