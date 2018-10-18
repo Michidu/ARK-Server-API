@@ -29,7 +29,7 @@ namespace ArkApi
 
 		ARK_API bool CreateRequest(FString& url, FString& verb,
 		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback,
-		                           FString content = FString(), bool auto_remove = true);
+		                           FString content = L"", bool auto_remove = true, FString header_value = "text/html");
 		ARK_API void RemoveRequest(const TSharedRef<IHttpRequest>& request);
 
 	private:
