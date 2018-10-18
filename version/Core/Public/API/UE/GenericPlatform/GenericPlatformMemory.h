@@ -8,6 +8,7 @@
 #pragma once
 
 #include "../BasicTypes.h"
+#include "../Math/UnrealMathUtility.h"
 #include <wchar.h>
 
 struct FPlatformMemory

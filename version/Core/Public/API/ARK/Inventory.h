@@ -48,6 +48,31 @@ struct FLevelExperienceRamp
 	TArray<float> ExperiencePointsForLevel;
 };
 
+struct FUseItemAddCharacterStatusValue
+{
+	float BaseAmountToAdd;
+	unsigned __int32 bPercentOfMaxStatusValue : 1;
+	unsigned __int32 bPercentOfCurrentStatusValue : 1;
+	unsigned __int32 bUseItemQuality : 1;
+	unsigned __int32 bDontRequireLessThanMaxToUse : 1;
+	unsigned __int32 bAddOverTime : 1;
+	unsigned __int32 bAddOverTimeSpeedInSeconds : 1;
+	unsigned __int32 bContinueOnUnchangedValue : 1;
+	unsigned __int32 bSetValue : 1;
+	unsigned __int32 bSetAdditionalValue : 1;
+	unsigned __int32 bResetExistingModifierDescriptionIndex : 1;
+	unsigned __int32 bForceUseStatOnDinos : 1;
+	float LimitExistingModifierDescriptionToMaxAmount;
+	float AddOverTimeSpeed;
+	float PercentAbsoluteMaxValue;
+	float PercentAbsoluteMinValue;
+	int StatusValueModifierDescriptionIndex;
+	float ItemQualityAddValueMultiplier;
+	TEnumAsByte<enum EPrimalCharacterStatusValue::Type> StatusValueType;
+	TEnumAsByte<enum EPrimalCharacterStatusValue::Type> StopAtValueNearMax;
+	TSubclassOf<UDamageType> ScaleValueByCharacterDamageType;
+};
+
 struct UAssetUserData : UObject
 {
 };
@@ -470,6 +495,7 @@ struct UPrimalInventoryComponent : UActorComponent
 
 struct UPrimalItem : UObject
 {
+	TArray<FUseItemAddCharacterStatusValue>& UseItemAddCharacterStatusValuesField() { return *GetNativePointerField<TArray<FUseItemAddCharacterStatusValue>*>(this, "UPrimalItem.UseItemAddCharacterStatusValues"); }
 	float& DinoAutoHealingThresholdPercentField() { return *GetNativePointerField<float*>(this, "UPrimalItem.DinoAutoHealingThresholdPercent"); }
 	float& DinoAutoHealingUseTimeIntervalField() { return *GetNativePointerField<float*>(this, "UPrimalItem.DinoAutoHealingUseTimeInterval"); }
 	int& ArkTributeVersionField() { return *GetNativePointerField<int*>(this, "UPrimalItem.ArkTributeVersion"); }
