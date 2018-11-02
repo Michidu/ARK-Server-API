@@ -114,7 +114,7 @@ namespace AlgoImpl
 	template <typename RangeValueType, typename ProjectionType, typename PredicateType>
 	FORCEINLINE void HeapifyInternal(RangeValueType* First, SIZE_T Num, ProjectionType Projection, PredicateType Predicate)
 	{
-		for (int32 Index = HeapGetParentIndex(Num - 1); Index >= 0; Index--)
+		for (int32 Index = HeapGetParentIndex((int32)Num - 1); Index >= 0; Index--)
 		{
 			HeapSiftDown(First, Index, Num, Projection, Predicate);
 		}

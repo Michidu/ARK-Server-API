@@ -12,6 +12,61 @@ struct __declspec(align(8)) FEngramEntryAutoUnlock
 	int LevelToAutoUnlock;
 };
 
+struct UGameViewportClient
+{
+	TArray<UObject *> ViewPortWidgetsField() { return *GetNativePointerField<TArray<UObject *>*>(this, "UGameViewportClient.ViewPortWidgets"); }
+	int& MaxSplitscreenPlayersField() { return *GetNativePointerField<int*>(this, "UGameViewportClient.MaxSplitscreenPlayers"); }
+	UWorld * WorldField() { return *GetNativePointerField<UWorld **>(this, "UGameViewportClient.World"); }
+	bool& bSuppressTransitionMessageField() { return *GetNativePointerField<bool*>(this, "UGameViewportClient.bSuppressTransitionMessage"); }
+	float& ProgressFadeTimeField() { return *GetNativePointerField<float*>(this, "UGameViewportClient.ProgressFadeTime"); }
+	int& ViewModeIndexField() { return *GetNativePointerField<int*>(this, "UGameViewportClient.ViewModeIndex"); }
+	FName& CurrentBufferVisualizationModeField() { return *GetNativePointerField<FName*>(this, "UGameViewportClient.CurrentBufferVisualizationMode"); }
+	bool& bDisableSplitScreenOverrideField() { return *GetNativePointerField<bool*>(this, "UGameViewportClient.bDisableSplitScreenOverride"); }
+	TArray<bool>& IgnoreInputValuesField() { return *GetNativePointerField<TArray<bool>*>(this, "UGameViewportClient.IgnoreInputValues"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bShowTitleSafeZone() { return { this, "UGameViewportClient.bShowTitleSafeZone" }; }
+	BitFieldValue<bool, unsigned __int32> bIsPlayInEditorViewport() { return { this, "UGameViewportClient.bIsPlayInEditorViewport" }; }
+	BitFieldValue<bool, unsigned __int32> bDisableWorldRendering() { return { this, "UGameViewportClient.bDisableWorldRendering" }; }
+
+	// Functions
+
+	bool IsStatEnabled(const wchar_t * InName) { return NativeCall<bool, const wchar_t *>(this, "UGameViewportClient.IsStatEnabled", InName); }
+	void SetEnabledStats(TArray<FString> * InEnabledStats) { NativeCall<void, TArray<FString> *>(this, "UGameViewportClient.SetEnabledStats", InEnabledStats); }
+	TArray<FString> * GetEnabledStats() { return NativeCall<TArray<FString> *>(this, "UGameViewportClient.GetEnabledStats"); }
+	FGuid * GetEngineShowFlags() { return NativeCall<FGuid *>(this, "UGameViewportClient.GetEngineShowFlags"); }
+	void PostInitProperties() { NativeCall<void>(this, "UGameViewportClient.PostInitProperties"); }
+	void BeginDestroy() { NativeCall<void>(this, "UGameViewportClient.BeginDestroy"); }
+	void DetachViewportClient() { NativeCall<void>(this, "UGameViewportClient.DetachViewportClient"); }
+	FString * ConsoleCommand(FString * result, FString * Command) { return NativeCall<FString *, FString *, FString *>(this, "UGameViewportClient.ConsoleCommand", result, Command); }
+	void SetIsSimulateInEditorViewport(bool bInIsSimulateInEditorViewport) { NativeCall<void, bool>(this, "UGameViewportClient.SetIsSimulateInEditorViewport", bInIsSimulateInEditorViewport); }
+	bool GetMousePosition(FVector2D * MousePosition) { return NativeCall<bool, FVector2D *>(this, "UGameViewportClient.GetMousePosition", MousePosition); }
+	bool RequiresUncapturedAxisInput() { return NativeCall<bool>(this, "UGameViewportClient.RequiresUncapturedAxisInput"); }
+	void SetDropDetail(float DeltaSeconds) { NativeCall<void, float>(this, "UGameViewportClient.SetDropDetail", DeltaSeconds); }
+	void GetViewportSize(FVector2D * out_ViewportSize) { NativeCall<void, FVector2D *>(this, "UGameViewportClient.GetViewportSize", out_ViewportSize); }
+	void Precache() { NativeCall<void>(this, "UGameViewportClient.Precache"); }
+	ULocalPlayer * SetupInitialLocalPlayer(FString * OutError) { return NativeCall<ULocalPlayer *, FString *>(this, "UGameViewportClient.SetupInitialLocalPlayer", OutError); }
+	ULocalPlayer * CreatePlayer(int ControllerId, FString * OutError, bool bSpawnActor) { return NativeCall<ULocalPlayer *, int, FString *, bool>(this, "UGameViewportClient.CreatePlayer", ControllerId, OutError, bSpawnActor); }
+	bool RemovePlayer(ULocalPlayer * ExPlayer) { return NativeCall<bool, ULocalPlayer *>(this, "UGameViewportClient.RemovePlayer", ExPlayer); }
+	void UpdateActiveSplitscreenType() { NativeCall<void>(this, "UGameViewportClient.UpdateActiveSplitscreenType"); }
+	void LayoutPlayers() { NativeCall<void>(this, "UGameViewportClient.LayoutPlayers"); }
+	void GetSubtitleRegion(FVector2D * MinPos, FVector2D * MaxPos) { NativeCall<void, FVector2D *, FVector2D *>(this, "UGameViewportClient.GetSubtitleRegion", MinPos, MaxPos); }
+	void NotifyPlayerAdded(int PlayerIndex, ULocalPlayer * RemovedPlayer) { NativeCall<void, int, ULocalPlayer *>(this, "UGameViewportClient.NotifyPlayerAdded", PlayerIndex, RemovedPlayer); }
+	void RemoveAllViewportWidgets() { NativeCall<void>(this, "UGameViewportClient.RemoveAllViewportWidgets"); }
+	void VerifyPathRenderingComponents() { NativeCall<void>(this, "UGameViewportClient.VerifyPathRenderingComponents"); }
+	bool RequestBugScreenShot(const wchar_t * Cmd, bool bDisplayHUDInfo) { return NativeCall<bool, const wchar_t *, bool>(this, "UGameViewportClient.RequestBugScreenShot", Cmd, bDisplayHUDInfo); }
+	void HandleViewportStatCheckEnabled(const wchar_t * InName, bool * bOutCurrentEnabled, bool * bOutOthersEnabled) { NativeCall<void, const wchar_t *, bool *, bool *>(this, "UGameViewportClient.HandleViewportStatCheckEnabled", InName, bOutCurrentEnabled, bOutOthersEnabled); }
+	void HandleViewportStatEnabled(const wchar_t * InName) { NativeCall<void, const wchar_t *>(this, "UGameViewportClient.HandleViewportStatEnabled", InName); }
+	void HandleViewportStatDisabled(const wchar_t * InName) { NativeCall<void, const wchar_t *>(this, "UGameViewportClient.HandleViewportStatDisabled", InName); }
+	void HandleViewportStatDisableAll(const bool bInAnyViewport) { NativeCall<void, const bool>(this, "UGameViewportClient.HandleViewportStatDisableAll", bInAnyViewport); }
+	void SetIgnoreInput(bool Ignore, int ControllerId) { NativeCall<void, bool, int>(this, "UGameViewportClient.SetIgnoreInput", Ignore, ControllerId); }
+	bool IgnoreInput(int ControllerId) { return NativeCall<bool, int>(this, "UGameViewportClient.IgnoreInput", ControllerId); }
+	void OnSplitscreenPlayerJoinFailure(TSharedPtr<FUniqueNetId, 0> * PlayerUniqueNetId, FString * ErrorMsg) { NativeCall<void, TSharedPtr<FUniqueNetId, 0> *, FString *>(this, "UGameViewportClient.OnSplitscreenPlayerJoinFailure", PlayerUniqueNetId, ErrorMsg); }
+	int SetStatEnabled(const wchar_t * InName, const bool bEnable, const bool bAll) { return NativeCall<int, const wchar_t *, const bool, const bool>(this, "UGameViewportClient.SetStatEnabled", InName, bEnable, bAll); }
+	static void StaticRegisterNativesUGameViewportClient() { NativeCall<void>(nullptr, "UGameViewportClient.StaticRegisterNativesUGameViewportClient"); }
+};
+
 struct UWorld : UObject
 {
 	struct InitializationValues
@@ -142,6 +197,7 @@ struct UWorld : UObject
 	bool AreAlwaysLoadedLevelsLoaded() { return NativeCall<bool>(this, "UWorld.AreAlwaysLoadedLevelsLoaded"); }
 	bool AllowLevelLoadRequests() { return NativeCall<bool>(this, "UWorld.AllowLevelLoadRequests"); }
 	void CleanupWorld(bool bSessionEnded, bool bCleanupResources, UWorld * NewWorld) { NativeCall<void, bool, bool, UWorld *>(this, "UWorld.CleanupWorld", bSessionEnded, bCleanupResources, NewWorld); }
+	UGameViewportClient * GetGameViewport() { return NativeCall<UGameViewportClient *>(this, "UWorld.GetGameViewport"); }
 	APlayerController * GetFirstPlayerController() { return NativeCall<APlayerController *>(this, "UWorld.GetFirstPlayerController"); }
 	ULocalPlayer * GetFirstLocalPlayerFromController() { return NativeCall<ULocalPlayer *>(this, "UWorld.GetFirstLocalPlayerFromController"); }
 	void AddController(AController * Controller) { NativeCall<void, AController *>(this, "UWorld.AddController", Controller); }
