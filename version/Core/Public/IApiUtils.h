@@ -385,7 +385,7 @@ namespace ArkApi
 
 					state->SetTribeTamingDinoSettings(dino);
 
-					dino->TameDino(player, false, 0);
+					dino->TameDino(player, true, 0, true, true);
 				}
 
 				if (neutered)
