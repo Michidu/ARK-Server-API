@@ -40,4 +40,4 @@ namespace ArkApi
 
 		std::vector<Request> requests_;
 	};
-}
+} // namespace ArkApi

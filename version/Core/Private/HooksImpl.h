@@ -3,4 +3,4 @@
 namespace ArkApi
 {
 	void InitHooks();
-}
+} // namespace ArkApi

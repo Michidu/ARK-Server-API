@@ -1,7 +1,8 @@
 #pragma once
 
-#include <string>
 #include <API/Base.h>
+
+#include <string>
 
 namespace ArkApi::Tools
 {
@@ -29,4 +30,4 @@ namespace ArkApi::Tools
 	* \brief Returns Current Running Api Version
 	*/
 	ARK_API std::string GetApiVer();
-}
+} // namespace Tools // namespace ArkApi

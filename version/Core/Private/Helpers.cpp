@@ -6,12 +6,16 @@ namespace ArkApi
 {
 	void MergePdbConfig(nlohmann::json& left, const nlohmann::json& right)
 	{
-		left["structures"] = MergeStringArrays(left.value("structures", std::vector<std::string>{}),
+		nlohmann::json pdb_config_result({});
+
+		pdb_config_result["structures"] = MergeStringArrays(left.value("structures", std::vector<std::string>{}),
 		                                       right.value("structures", std::vector<std::string>{}));
-		left["functions"] = MergeStringArrays(left.value("functions", std::vector<std::string>{}),
+		pdb_config_result["functions"] = MergeStringArrays(left.value("functions", std::vector<std::string>{}),
 		                                      right.value("functions", std::vector<std::string>{}));
-		left["globals"] = MergeStringArrays(left.value("globals", std::vector<std::string>{}),
+		pdb_config_result["globals"] = MergeStringArrays(left.value("globals", std::vector<std::string>{}),
 		                                    right.value("globals", std::vector<std::string>{}));
+
+		left = pdb_config_result;
 	}
 
 	std::vector<std::string> MergeStringArrays(std::vector<std::string> first, std::vector<std::string> second)
@@ -61,4 +65,4 @@ namespace ArkApi
 
 		return unique;
 	}
-}
+} // namespace ArkApi

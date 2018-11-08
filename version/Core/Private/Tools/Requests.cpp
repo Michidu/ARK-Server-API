@@ -81,4 +81,4 @@ namespace ArkApi
 			}
 		}
 	}
-}
+} // namespace ArkApi
