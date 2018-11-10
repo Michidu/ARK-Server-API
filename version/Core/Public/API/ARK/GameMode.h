@@ -390,7 +390,7 @@ struct UEngine : UObject
 	bool IsEngineStat(FString * InName) { return NativeCall<bool, FString *>(this, "UEngine.IsEngineStat", InName); }
 };
 
-struct UPrimalGlobals
+struct UPrimalGlobals : UObject
 {
 	UPrimalGameData * PrimalGameDataField() { return *GetNativePointerField<UPrimalGameData **>(this, "UPrimalGlobals.PrimalGameData"); }
 	UPrimalGameData * PrimalGameDataOverrideField() { return *GetNativePointerField<UPrimalGameData **>(this, "UPrimalGlobals.PrimalGameDataOverride"); }

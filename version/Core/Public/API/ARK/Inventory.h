@@ -17,14 +17,26 @@ struct FItemNetID
 	unsigned int ItemID2;
 };
 
+struct FCustomItemByteArray
+{
+	TArray<unsigned char, FDefaultAllocator> Bytes;
+};
+
+
+struct FCustomItemByteArrays
+{
+	TArray<FCustomItemByteArray, FDefaultAllocator> ByteArrays;
+};
+
 struct FCustomItemData
 {
 	FName CustomDataName;
-	TArray<FString> CustomDataStrings;
-	TArray<float> CustomDataFloats;
-	TArray<UObject *> CustomDataObjects;
-	TArray<UClass *> CustomDataClasses;
-	TArray<FName> CustomDataNames;
+	TArray<FString, FDefaultAllocator> CustomDataStrings;
+	TArray<float, FDefaultAllocator> CustomDataFloats;
+	TArray<UObject *, FDefaultAllocator> CustomDataObjects;
+	TArray<UClass *, FDefaultAllocator> CustomDataClasses;
+	TArray<FName, FDefaultAllocator> CustomDataNames;
+	FCustomItemByteArrays CustomDataBytes;
 };
 
 struct FItemCraftQueueEntry

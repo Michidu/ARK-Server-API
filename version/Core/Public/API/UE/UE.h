@@ -294,6 +294,12 @@ struct UStruct : UField
 	void TagSubobjects(EObjectFlags NewFlags) { NativeCall<void, EObjectFlags>(this, "UStruct.TagSubobjects", NewFlags); }
 };
 
+struct FNativeFunctionLookup
+{
+	FName Name;
+	void(__fastcall *Pointer)(UObject *_this, void*, void *const);
+};
+
 struct UClass : UStruct
 {
 	unsigned int& ClassFlagsField() { return *GetNativePointerField<unsigned int*>(this, "UClass.ClassFlags"); }
@@ -306,8 +312,8 @@ struct UClass : UStruct
 	TArray<UField *> NetFieldsField() { return *GetNativePointerField<TArray<UField *>*>(this, "UClass.NetFields"); }
 	UObject * ClassDefaultObjectField() { return *GetNativePointerField<UObject **>(this, "UClass.ClassDefaultObject"); }
 	bool& bCookedField() { return *GetNativePointerField<bool*>(this, "UClass.bCooked"); }
-	//TMap<FName, UFunction *> FuncMapField() { return *GetNativePointerField<TMap<FName, UFunction *>*>(this, "UClass.FuncMap"); }
-	//TArray<FNativeFunctionLookup>& NativeFunctionLookupTableField() { return *GetNativePointerField<TArray<FNativeFunctionLookup>*>(this, "UClass.NativeFunctionLookupTable"); }
+	TMap<DWORD64, UFunction *> FuncMapField() { return *GetNativePointerField<TMap<DWORD64, UFunction *>*>(this, "UClass.FuncMap"); }
+	TArray<FNativeFunctionLookup>& NativeFunctionLookupTableField() { return *GetNativePointerField<TArray<FNativeFunctionLookup>*>(this, "UClass.NativeFunctionLookupTable"); }
 
 	// Functions
 
