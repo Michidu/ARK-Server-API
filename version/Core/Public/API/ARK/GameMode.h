@@ -12,6 +12,61 @@ struct __declspec(align(8)) FEngramEntryAutoUnlock
 	int LevelToAutoUnlock;
 };
 
+struct UGameViewportClient
+{
+	TArray<UObject *> ViewPortWidgetsField() { return *GetNativePointerField<TArray<UObject *>*>(this, "UGameViewportClient.ViewPortWidgets"); }
+	int& MaxSplitscreenPlayersField() { return *GetNativePointerField<int*>(this, "UGameViewportClient.MaxSplitscreenPlayers"); }
+	UWorld * WorldField() { return *GetNativePointerField<UWorld **>(this, "UGameViewportClient.World"); }
+	bool& bSuppressTransitionMessageField() { return *GetNativePointerField<bool*>(this, "UGameViewportClient.bSuppressTransitionMessage"); }
+	float& ProgressFadeTimeField() { return *GetNativePointerField<float*>(this, "UGameViewportClient.ProgressFadeTime"); }
+	int& ViewModeIndexField() { return *GetNativePointerField<int*>(this, "UGameViewportClient.ViewModeIndex"); }
+	FName& CurrentBufferVisualizationModeField() { return *GetNativePointerField<FName*>(this, "UGameViewportClient.CurrentBufferVisualizationMode"); }
+	bool& bDisableSplitScreenOverrideField() { return *GetNativePointerField<bool*>(this, "UGameViewportClient.bDisableSplitScreenOverride"); }
+	TArray<bool>& IgnoreInputValuesField() { return *GetNativePointerField<TArray<bool>*>(this, "UGameViewportClient.IgnoreInputValues"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bShowTitleSafeZone() { return { this, "UGameViewportClient.bShowTitleSafeZone" }; }
+	BitFieldValue<bool, unsigned __int32> bIsPlayInEditorViewport() { return { this, "UGameViewportClient.bIsPlayInEditorViewport" }; }
+	BitFieldValue<bool, unsigned __int32> bDisableWorldRendering() { return { this, "UGameViewportClient.bDisableWorldRendering" }; }
+
+	// Functions
+
+	bool IsStatEnabled(const wchar_t * InName) { return NativeCall<bool, const wchar_t *>(this, "UGameViewportClient.IsStatEnabled", InName); }
+	void SetEnabledStats(TArray<FString> * InEnabledStats) { NativeCall<void, TArray<FString> *>(this, "UGameViewportClient.SetEnabledStats", InEnabledStats); }
+	TArray<FString> * GetEnabledStats() { return NativeCall<TArray<FString> *>(this, "UGameViewportClient.GetEnabledStats"); }
+	FGuid * GetEngineShowFlags() { return NativeCall<FGuid *>(this, "UGameViewportClient.GetEngineShowFlags"); }
+	void PostInitProperties() { NativeCall<void>(this, "UGameViewportClient.PostInitProperties"); }
+	void BeginDestroy() { NativeCall<void>(this, "UGameViewportClient.BeginDestroy"); }
+	void DetachViewportClient() { NativeCall<void>(this, "UGameViewportClient.DetachViewportClient"); }
+	FString * ConsoleCommand(FString * result, FString * Command) { return NativeCall<FString *, FString *, FString *>(this, "UGameViewportClient.ConsoleCommand", result, Command); }
+	void SetIsSimulateInEditorViewport(bool bInIsSimulateInEditorViewport) { NativeCall<void, bool>(this, "UGameViewportClient.SetIsSimulateInEditorViewport", bInIsSimulateInEditorViewport); }
+	bool GetMousePosition(FVector2D * MousePosition) { return NativeCall<bool, FVector2D *>(this, "UGameViewportClient.GetMousePosition", MousePosition); }
+	bool RequiresUncapturedAxisInput() { return NativeCall<bool>(this, "UGameViewportClient.RequiresUncapturedAxisInput"); }
+	void SetDropDetail(float DeltaSeconds) { NativeCall<void, float>(this, "UGameViewportClient.SetDropDetail", DeltaSeconds); }
+	void GetViewportSize(FVector2D * out_ViewportSize) { NativeCall<void, FVector2D *>(this, "UGameViewportClient.GetViewportSize", out_ViewportSize); }
+	void Precache() { NativeCall<void>(this, "UGameViewportClient.Precache"); }
+	ULocalPlayer * SetupInitialLocalPlayer(FString * OutError) { return NativeCall<ULocalPlayer *, FString *>(this, "UGameViewportClient.SetupInitialLocalPlayer", OutError); }
+	ULocalPlayer * CreatePlayer(int ControllerId, FString * OutError, bool bSpawnActor) { return NativeCall<ULocalPlayer *, int, FString *, bool>(this, "UGameViewportClient.CreatePlayer", ControllerId, OutError, bSpawnActor); }
+	bool RemovePlayer(ULocalPlayer * ExPlayer) { return NativeCall<bool, ULocalPlayer *>(this, "UGameViewportClient.RemovePlayer", ExPlayer); }
+	void UpdateActiveSplitscreenType() { NativeCall<void>(this, "UGameViewportClient.UpdateActiveSplitscreenType"); }
+	void LayoutPlayers() { NativeCall<void>(this, "UGameViewportClient.LayoutPlayers"); }
+	void GetSubtitleRegion(FVector2D * MinPos, FVector2D * MaxPos) { NativeCall<void, FVector2D *, FVector2D *>(this, "UGameViewportClient.GetSubtitleRegion", MinPos, MaxPos); }
+	void NotifyPlayerAdded(int PlayerIndex, ULocalPlayer * RemovedPlayer) { NativeCall<void, int, ULocalPlayer *>(this, "UGameViewportClient.NotifyPlayerAdded", PlayerIndex, RemovedPlayer); }
+	void RemoveAllViewportWidgets() { NativeCall<void>(this, "UGameViewportClient.RemoveAllViewportWidgets"); }
+	void VerifyPathRenderingComponents() { NativeCall<void>(this, "UGameViewportClient.VerifyPathRenderingComponents"); }
+	bool RequestBugScreenShot(const wchar_t * Cmd, bool bDisplayHUDInfo) { return NativeCall<bool, const wchar_t *, bool>(this, "UGameViewportClient.RequestBugScreenShot", Cmd, bDisplayHUDInfo); }
+	void HandleViewportStatCheckEnabled(const wchar_t * InName, bool * bOutCurrentEnabled, bool * bOutOthersEnabled) { NativeCall<void, const wchar_t *, bool *, bool *>(this, "UGameViewportClient.HandleViewportStatCheckEnabled", InName, bOutCurrentEnabled, bOutOthersEnabled); }
+	void HandleViewportStatEnabled(const wchar_t * InName) { NativeCall<void, const wchar_t *>(this, "UGameViewportClient.HandleViewportStatEnabled", InName); }
+	void HandleViewportStatDisabled(const wchar_t * InName) { NativeCall<void, const wchar_t *>(this, "UGameViewportClient.HandleViewportStatDisabled", InName); }
+	void HandleViewportStatDisableAll(const bool bInAnyViewport) { NativeCall<void, const bool>(this, "UGameViewportClient.HandleViewportStatDisableAll", bInAnyViewport); }
+	void SetIgnoreInput(bool Ignore, int ControllerId) { NativeCall<void, bool, int>(this, "UGameViewportClient.SetIgnoreInput", Ignore, ControllerId); }
+	bool IgnoreInput(int ControllerId) { return NativeCall<bool, int>(this, "UGameViewportClient.IgnoreInput", ControllerId); }
+	void OnSplitscreenPlayerJoinFailure(TSharedPtr<FUniqueNetId, 0> * PlayerUniqueNetId, FString * ErrorMsg) { NativeCall<void, TSharedPtr<FUniqueNetId, 0> *, FString *>(this, "UGameViewportClient.OnSplitscreenPlayerJoinFailure", PlayerUniqueNetId, ErrorMsg); }
+	int SetStatEnabled(const wchar_t * InName, const bool bEnable, const bool bAll) { return NativeCall<int, const wchar_t *, const bool, const bool>(this, "UGameViewportClient.SetStatEnabled", InName, bEnable, bAll); }
+	static void StaticRegisterNativesUGameViewportClient() { NativeCall<void>(nullptr, "UGameViewportClient.StaticRegisterNativesUGameViewportClient"); }
+};
+
 struct UWorld : UObject
 {
 	struct InitializationValues
@@ -142,12 +197,16 @@ struct UWorld : UObject
 	bool AreAlwaysLoadedLevelsLoaded() { return NativeCall<bool>(this, "UWorld.AreAlwaysLoadedLevelsLoaded"); }
 	bool AllowLevelLoadRequests() { return NativeCall<bool>(this, "UWorld.AllowLevelLoadRequests"); }
 	void CleanupWorld(bool bSessionEnded, bool bCleanupResources, UWorld * NewWorld) { NativeCall<void, bool, bool, UWorld *>(this, "UWorld.CleanupWorld", bSessionEnded, bCleanupResources, NewWorld); }
+	UGameViewportClient * GetGameViewport() { return NativeCall<UGameViewportClient *>(this, "UWorld.GetGameViewport"); }
 	APlayerController * GetFirstPlayerController() { return NativeCall<APlayerController *>(this, "UWorld.GetFirstPlayerController"); }
 	ULocalPlayer * GetFirstLocalPlayerFromController() { return NativeCall<ULocalPlayer *>(this, "UWorld.GetFirstLocalPlayerFromController"); }
 	void AddController(AController * Controller) { NativeCall<void, AController *>(this, "UWorld.AddController", Controller); }
 	void RemoveController(AController * Controller) { NativeCall<void, AController *>(this, "UWorld.RemoveController", Controller); }
 	void AddNetworkActor(AActor * Actor) { NativeCall<void, AActor *>(this, "UWorld.AddNetworkActor", Actor); }
 	void RemoveNetworkActor(AActor * Actor) { NativeCall<void, AActor *>(this, "UWorld.RemoveNetworkActor", Actor); }
+	long double GetTimeSeconds() { return NativeCall<long double>(this, "UWorld.GetTimeSeconds"); }
+	float GetDeltaSeconds() { return NativeCall<float>(this, "UWorld.GetDeltaSeconds"); }
+	long double TimeSince(long double Time) { return NativeCall<long double, long double>(this, "UWorld.TimeSince", Time); }
 	AWorldSettings * GetWorldSettings(bool bCheckStreamingPesistent, bool bChecked) { return NativeCall<AWorldSettings *, bool, bool>(this, "UWorld.GetWorldSettings", bCheckStreamingPesistent, bChecked); }
 	float GetDefaultGravityZ() { return NativeCall<float>(this, "UWorld.GetDefaultGravityZ"); }
 	FString * GetMapName(FString * result) { return NativeCall<FString *, FString *>(this, "UWorld.GetMapName", result); }
@@ -166,6 +225,7 @@ struct UWorld : UObject
 	void BroadcastLevelsChanged() { NativeCall<void>(this, "UWorld.BroadcastLevelsChanged"); }
 	bool IsLevelLoadedByName(FName * LevelName) { return NativeCall<bool, FName *>(this, "UWorld.IsLevelLoadedByName", LevelName); }
 	FString * GetLocalURL(FString * result) { return NativeCall<FString *, FString *>(this, "UWorld.GetLocalURL", result); }
+	bool IsGameWorld() { return NativeCall<bool>(this, "UWorld.IsGameWorld"); }
 	FString * GetAddressURL(FString * result) { return NativeCall<FString *, FString *>(this, "UWorld.GetAddressURL", result); }
 	static FString * RemovePIEPrefix(FString * result, FString * Source) { return NativeCall<FString *, FString *, FString *>(nullptr, "UWorld.RemovePIEPrefix", result, Source); }
 	void ServerTravel(FString * FURL, bool bAbsolute, bool bShouldSkipGameNotify) { NativeCall<void, FString *, bool, bool>(this, "UWorld.ServerTravel", FURL, bAbsolute, bShouldSkipGameNotify); }
@@ -174,7 +234,7 @@ struct UWorld : UObject
 	void UpdateMemoryState(FName PackageName, bool bSave, ULevel * Level) { NativeCall<void, FName, bool, ULevel *>(this, "UWorld.UpdateMemoryState", PackageName, bSave, Level); }
 	void AddToInternalOctree(UPrimitiveComponent * InComponent) { NativeCall<void, UPrimitiveComponent *>(this, "UWorld.AddToInternalOctree", InComponent); }
 	void RemoveFromInternalOctree(UPrimitiveComponent * InComponent) { NativeCall<void, UPrimitiveComponent *>(this, "UWorld.RemoveFromInternalOctree", InComponent); }
-	bool LineTraceSingle(FHitResult * OutHit, FVector * Start, FVector * End, FCollisionQueryParams * Params, FCollisionObjectQueryParams * ObjectQueryParams) { return NativeCall<bool, FHitResult *, FVector *, FVector *, FCollisionQueryParams *, FCollisionObjectQueryParams *>(this, "UWorld.LineTraceSingle", OutHit, Start, End, Params, ObjectQueryParams); }
+	bool LineTraceSingle(FHitResult * OutHit, FVector * Start, FVector * End, FCollisionQueryParams * Params, FCollisionObjectQueryParams * ObjectQueryParams, bool bUsePostFilter, float NegativeDistanceTolerance) { return NativeCall<bool, FHitResult *, FVector *, FVector *, FCollisionQueryParams *, FCollisionObjectQueryParams *, bool, float>(this, "UWorld.LineTraceSingle", OutHit, Start, End, Params, ObjectQueryParams, bUsePostFilter, NegativeDistanceTolerance); }
 	void StartAsyncTrace() { NativeCall<void>(this, "UWorld.StartAsyncTrace"); }
 	void FinishAsyncTrace() { NativeCall<void>(this, "UWorld.FinishAsyncTrace"); }
 	void FinishPhysicsSim() { NativeCall<void>(this, "UWorld.FinishPhysicsSim"); }
@@ -185,11 +245,10 @@ struct UEngine : UObject
 {
 	TWeakObjectPtr<AMatineeActor>& ActiveMatineeField() { return *GetNativePointerField<TWeakObjectPtr<AMatineeActor>*>(this, "UEngine.ActiveMatinee"); }
 	TArray<FString>& AdditionalFontNamesField() { return *GetNativePointerField<TArray<FString>*>(this, "UEngine.AdditionalFontNames"); }
+	TSubclassOf<UGameViewportClient>& GameViewportClientClassField() { return *GetNativePointerField<TSubclassOf<UGameViewportClient>*>(this, "UEngine.GameViewportClientClass"); }
 	TSubclassOf<ULocalPlayer>& LocalPlayerClassField() { return *GetNativePointerField<TSubclassOf<ULocalPlayer>*>(this, "UEngine.LocalPlayerClass"); }
 	TSubclassOf<AWorldSettings>& WorldSettingsClassField() { return *GetNativePointerField<TSubclassOf<AWorldSettings>*>(this, "UEngine.WorldSettingsClass"); }
-	//TSubclassOf<UGameUserSettings>& GameUserSettingsClassField() { return *GetNativePointerField<TSubclassOf<UGameUserSettings>*>(this, "UEngine.GameUserSettingsClass"); }
-	//UGameUserSettings * GameUserSettingsField() { return *GetNativePointerField<UGameUserSettings **>(this, "UEngine.GameUserSettings"); }
-	UPrimalGlobals * GameSingletonField() { return *GetNativePointerField<UPrimalGlobals **>(this, "UEngine.GameSingleton"); }
+	UObject * GameSingletonField() { return *GetNativePointerField<UObject **>(this, "UEngine.GameSingleton"); }
 	TSubclassOf<APawn>& DefaultPreviewPawnClassField() { return *GetNativePointerField<TSubclassOf<APawn>*>(this, "UEngine.DefaultPreviewPawnClass"); }
 	FString& PlayOnConsoleSaveDirField() { return *GetNativePointerField<FString*>(this, "UEngine.PlayOnConsoleSaveDir"); }
 	UTexture2D * DefaultTextureField() { return *GetNativePointerField<UTexture2D **>(this, "UEngine.DefaultTexture"); }
@@ -213,6 +272,7 @@ struct UEngine : UObject
 	UTexture2D * PreIntegratedSkinBRDFTextureField() { return *GetNativePointerField<UTexture2D **>(this, "UEngine.PreIntegratedSkinBRDFTexture"); }
 	UTexture2D * MiniFontTextureField() { return *GetNativePointerField<UTexture2D **>(this, "UEngine.MiniFontTexture"); }
 	UTexture2D * LightMapDensityTextureField() { return *GetNativePointerField<UTexture2D **>(this, "UEngine.LightMapDensityTexture"); }
+	UGameViewportClient * GameViewportField() { return *GetNativePointerField<UGameViewportClient **>(this, "UEngine.GameViewport"); }
 	TArray<FString>& DeferredCommandsField() { return *GetNativePointerField<TArray<FString>*>(this, "UEngine.DeferredCommands"); }
 	int& TickCyclesField() { return *GetNativePointerField<int*>(this, "UEngine.TickCycles"); }
 	int& GameCyclesField() { return *GetNativePointerField<int*>(this, "UEngine.GameCycles"); }
@@ -271,10 +331,6 @@ struct UEngine : UObject
 	FString& LastModDownloadTextField() { return *GetNativePointerField<FString*>(this, "UEngine.LastModDownloadText"); }
 	FString& PrimalNetAuth_MyIPStrField() { return *GetNativePointerField<FString*>(this, "UEngine.PrimalNetAuth_MyIPStr"); }
 	FString& PrimalNetAuth_TokenField() { return *GetNativePointerField<FString*>(this, "UEngine.PrimalNetAuth_Token"); }
-	bool& bIsInitializedField() { return *GetNativePointerField<bool*>(this, "UEngine.bIsInitialized"); }
-	bool& bPendingHardwareSurveyResultsField() { return *GetNativePointerField<bool*>(this, "UEngine.bPendingHardwareSurveyResults"); }
-	TArray<FString>& ServerActorsField() { return *GetNativePointerField<TArray<FString>*>(this, "UEngine.ServerActors"); }
-	int& NextWorldContextHandleField() { return *GetNativePointerField<int*>(this, "UEngine.NextWorldContextHandle"); }
 
 	// Functions
 
@@ -298,6 +354,7 @@ struct UEngine : UObject
 	bool InitializeHMDDevice() { return NativeCall<bool>(this, "UEngine.InitializeHMDDevice"); }
 	void RecordHMDAnalytics() { NativeCall<void>(this, "UEngine.RecordHMDAnalytics"); }
 	bool IsSplitScreen(UWorld * InWorld) { return NativeCall<bool, UWorld *>(this, "UEngine.IsSplitScreen", InWorld); }
+	ULocalPlayer * GetLocalPlayerFromControllerId(UGameViewportClient * InViewport, int ControllerId) { return NativeCall<ULocalPlayer *, UGameViewportClient *, int>(this, "UEngine.GetLocalPlayerFromControllerId", InViewport, ControllerId); }
 	ULocalPlayer * GetLocalPlayerFromControllerId(UWorld * InWorld, int ControllerId) { return NativeCall<ULocalPlayer *, UWorld *, int>(this, "UEngine.GetLocalPlayerFromControllerId", InWorld, ControllerId); }
 	void SwapControllerId(ULocalPlayer * NewPlayer, int CurrentControllerId, int NewControllerID) { NativeCall<void, ULocalPlayer *, int, int>(this, "UEngine.SwapControllerId", NewPlayer, CurrentControllerId, NewControllerID); }
 	APlayerController * GetFirstLocalPlayerController(UWorld * InWorld) { return NativeCall<APlayerController *, UWorld *>(this, "UEngine.GetFirstLocalPlayerController", InWorld); }
@@ -315,6 +372,7 @@ struct UEngine : UObject
 	void WorldDestroyed(UWorld * InWorld) { NativeCall<void, UWorld *>(this, "UEngine.WorldDestroyed", InWorld); }
 	TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> * GetLocalPlayerIterator(TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> * result, UWorld * World) { return NativeCall<TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> *, TIndexedContainerIterator<TArray<ULocalPlayer *> const, ULocalPlayer * const, int> *, UWorld *>(this, "UEngine.GetLocalPlayerIterator", result, World); }
 	TArray<ULocalPlayer *> * GetGamePlayers(UWorld * World) { return NativeCall<TArray<ULocalPlayer *> *, UWorld *>(this, "UEngine.GetGamePlayers", World); }
+	TArray<ULocalPlayer *> * GetGamePlayers(UGameViewportClient * Viewport) { return NativeCall<TArray<ULocalPlayer *> *, UGameViewportClient *>(this, "UEngine.GetGamePlayers", Viewport); }
 	ULocalPlayer * FindFirstLocalPlayerFromControllerId(int ControllerId) { return NativeCall<ULocalPlayer *, int>(this, "UEngine.FindFirstLocalPlayerFromControllerId", ControllerId); }
 	int GetNumGamePlayers(UWorld * InWorld) { return NativeCall<int, UWorld *>(this, "UEngine.GetNumGamePlayers", InWorld); }
 	ULocalPlayer * GetFirstGamePlayer(UWorld * InWorld) { return NativeCall<ULocalPlayer *, UWorld *>(this, "UEngine.GetFirstGamePlayer", InWorld); }
@@ -323,19 +381,16 @@ struct UEngine : UObject
 	void DestroyNamedNetDriver(UWorld * InWorld, FName NetDriverName) { NativeCall<void, UWorld *, FName>(this, "UEngine.DestroyNamedNetDriver", InWorld, NetDriverName); }
 	void SpawnServerActors(UWorld * World) { NativeCall<void, UWorld *>(this, "UEngine.SpawnServerActors", World); }
 	bool MakeSureMapNameIsValid(FString * InOutMapName) { return NativeCall<bool, FString *>(this, "UEngine.MakeSureMapNameIsValid", InOutMapName); }
-	void CancelAllPending() { NativeCall<void>(this, "UEngine.CancelAllPending"); }
-	void ClearDebugDisplayProperties() { NativeCall<void>(this, "UEngine.ClearDebugDisplayProperties"); }
 	void UpdateTransitionType(UWorld * CurrentWorld) { NativeCall<void, UWorld *>(this, "UEngine.UpdateTransitionType", CurrentWorld); }
 	void DestroyWorldContext(UWorld * InWorld) { NativeCall<void, UWorld *>(this, "UEngine.DestroyWorldContext", InWorld); }
 	void VerifyLoadMapWorldCleanup() { NativeCall<void>(this, "UEngine.VerifyLoadMapWorldCleanup"); }
 	void CreateGameUserSettings() { NativeCall<void>(this, "UEngine.CreateGameUserSettings"); }
-	//UGameUserSettings * GetGameUserSettings() { return NativeCall<UGameUserSettings *>(this, "UEngine.GetGameUserSettings"); }
 	bool ShouldAbsorbAuthorityOnlyEvent() { return NativeCall<bool>(this, "UEngine.ShouldAbsorbAuthorityOnlyEvent"); }
 	bool ShouldAbsorbCosmeticOnlyEvent() { return NativeCall<bool>(this, "UEngine.ShouldAbsorbCosmeticOnlyEvent"); }
 	bool IsEngineStat(FString * InName) { return NativeCall<bool, FString *>(this, "UEngine.IsEngineStat", InName); }
 };
 
-struct UPrimalGlobals
+struct UPrimalGlobals : UObject
 {
 	UPrimalGameData * PrimalGameDataField() { return *GetNativePointerField<UPrimalGameData **>(this, "UPrimalGlobals.PrimalGameData"); }
 	UPrimalGameData * PrimalGameDataOverrideField() { return *GetNativePointerField<UPrimalGameData **>(this, "UPrimalGlobals.PrimalGameDataOverride"); }
@@ -646,8 +701,17 @@ struct AShooterGameMode : AGameMode
 	TArray<FLevelExperienceRamp>& LevelExperienceRampOverridesField() { return *GetNativePointerField<TArray<FLevelExperienceRamp>*>(this, "AShooterGameMode.LevelExperienceRampOverrides"); }
 	TArray<int>& OverridePlayerLevelEngramPointsField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameMode.OverridePlayerLevelEngramPoints"); }
 	TArray<int>& ExcludeItemIndicesField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameMode.ExcludeItemIndices"); }
+	//TArray<FEngramEntryOverride>& OverrideEngramEntriesField() { return *GetNativePointerField<TArray<FEngramEntryOverride>*>(this, "AShooterGameMode.OverrideEngramEntries"); }
+	//TArray<FEngramEntryOverride>& OverrideNamedEngramEntriesField() { return *GetNativePointerField<TArray<FEngramEntryOverride>*>(this, "AShooterGameMode.OverrideNamedEngramEntries"); }
 	TArray<FEngramEntryAutoUnlock>& EngramEntryAutoUnlocksField() { return *GetNativePointerField<TArray<FEngramEntryAutoUnlock>*>(this, "AShooterGameMode.EngramEntryAutoUnlocks"); }
 	TArray<FString>& PreventDinoTameClassNamesField() { return *GetNativePointerField<TArray<FString>*>(this, "AShooterGameMode.PreventDinoTameClassNames"); }
+	//TArray<FDinoSpawnWeightMultiplier>& DinoSpawnWeightMultipliersField() { return *GetNativePointerField<TArray<FDinoSpawnWeightMultiplier>*>(this, "AShooterGameMode.DinoSpawnWeightMultipliers"); }
+	//TArray<FClassMultiplier>& DinoClassResistanceMultipliersField() { return *GetNativePointerField<TArray<FClassMultiplier>*>(this, "AShooterGameMode.DinoClassResistanceMultipliers"); }
+	//TArray<FClassMultiplier>& TamedDinoClassResistanceMultipliersField() { return *GetNativePointerField<TArray<FClassMultiplier>*>(this, "AShooterGameMode.TamedDinoClassResistanceMultipliers"); }
+	//TArray<FClassMultiplier>& DinoClassDamageMultipliersField() { return *GetNativePointerField<TArray<FClassMultiplier>*>(this, "AShooterGameMode.DinoClassDamageMultipliers"); }
+	//TArray<FClassMultiplier>& TamedDinoClassDamageMultipliersField() { return *GetNativePointerField<TArray<FClassMultiplier>*>(this, "AShooterGameMode.TamedDinoClassDamageMultipliers"); }
+	//TArray<FClassMultiplier>& HarvestResourceItemAmountClassMultipliersField() { return *GetNativePointerField<TArray<FClassMultiplier>*>(this, "AShooterGameMode.HarvestResourceItemAmountClassMultipliers"); }
+//	TArray<FClassNameReplacement>& NPCReplacementsField() { return *GetNativePointerField<TArray<FClassNameReplacement>*>(this, "AShooterGameMode.NPCReplacements"); }
 	float& PvPZoneStructureDamageMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameMode.PvPZoneStructureDamageMultiplier"); }
 	bool& bOnlyAllowSpecifiedEngramsField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bOnlyAllowSpecifiedEngrams"); }
 	int& OverrideMaxExperiencePointsPlayerField() { return *GetNativePointerField<int*>(this, "AShooterGameMode.OverrideMaxExperiencePointsPlayer"); }
@@ -753,6 +817,12 @@ struct AShooterGameMode : AGameMode
 	bool& bNotifyAdminCommandsInChatField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bNotifyAdminCommandsInChat"); }
 	bool& bRandomSupplyCratePointsField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bRandomSupplyCratePoints"); }
 	float& PreventOfflinePvPIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameMode.PreventOfflinePvPInterval"); }
+	//TArray<FItemCraftingCostOverride>& OverrideItemCraftingCostsField() { return *GetNativePointerField<TArray<FItemCraftingCostOverride>*>(this, "AShooterGameMode.OverrideItemCraftingCosts"); }
+	//TArray<FConfigItemCraftingCostOverride>& ConfigOverrideItemCraftingCostsField() { return *GetNativePointerField<TArray<FConfigItemCraftingCostOverride>*>(this, "AShooterGameMode.ConfigOverrideItemCraftingCosts"); }
+	//TArray<FConfigSupplyCrateItemsOverride>& ConfigOverrideSupplyCrateItemsField() { return *GetNativePointerField<TArray<FConfigSupplyCrateItemsOverride>*>(this, "AShooterGameMode.ConfigOverrideSupplyCrateItems"); }
+	//TArray<FConfigNPCSpawnEntriesContainer>& ConfigOverrideNPCSpawnEntriesContainerField() { return *GetNativePointerField<TArray<FConfigNPCSpawnEntriesContainer>*>(this, "AShooterGameMode.ConfigOverrideNPCSpawnEntriesContainer"); }
+	//TArray<FConfigNPCSpawnEntriesContainer>& ConfigAddNPCSpawnEntriesContainerField() { return *GetNativePointerField<TArray<FConfigNPCSpawnEntriesContainer>*>(this, "AShooterGameMode.ConfigAddNPCSpawnEntriesContainer"); }
+	//TArray<FConfigNPCSpawnEntriesContainer>& ConfigSubtractNPCSpawnEntriesContainerField() { return *GetNativePointerField<TArray<FConfigNPCSpawnEntriesContainer>*>(this, "AShooterGameMode.ConfigSubtractNPCSpawnEntriesContainer"); }
 	float& BabyImprintingStatScaleMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameMode.BabyImprintingStatScaleMultiplier"); }
 	float& BabyCuddleIntervalMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameMode.BabyCuddleIntervalMultiplier"); }
 	float& BabyCuddleGracePeriodMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameMode.BabyCuddleGracePeriodMultiplier"); }
@@ -760,6 +830,7 @@ struct AShooterGameMode : AGameMode
 	float& HairGrowthSpeedMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameMode.HairGrowthSpeedMultiplier"); }
 	bool& bPreventDiseasesField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bPreventDiseases"); }
 	bool& bNonPermanentDiseasesField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bNonPermanentDiseases"); }
+	//UAllClustersInventory * AllClustersInventoryField() { return *GetNativePointerField<UAllClustersInventory **>(this, "AShooterGameMode.AllClustersInventory"); }
 	int& SaveForceRespawnDinosVersionField() { return *GetNativePointerField<int*>(this, "AShooterGameMode.SaveForceRespawnDinosVersion"); }
 	unsigned __int64& ServerIDField() { return *GetNativePointerField<unsigned __int64*>(this, "AShooterGameMode.ServerID"); }
 	int& LoadForceRespawnDinosVersionField() { return *GetNativePointerField<int*>(this, "AShooterGameMode.LoadForceRespawnDinosVersion"); }
@@ -823,6 +894,7 @@ struct AShooterGameMode : AGameMode
 	int& ChatLogFlushIntervalSecondsField() { return *GetNativePointerField<int*>(this, "AShooterGameMode.ChatLogFlushIntervalSeconds"); }
 	int& ChatLogFileSplitIntervalSecondsField() { return *GetNativePointerField<int*>(this, "AShooterGameMode.ChatLogFileSplitIntervalSeconds"); }
 	int& ChatLogMaxAgeInDaysField() { return *GetNativePointerField<int*>(this, "AShooterGameMode.ChatLogMaxAgeInDays"); }
+	//TArray<TSharedPtr<FJsonObject, 0>>& ChatMessageBufferField() { return *GetNativePointerField<TArray<TSharedPtr<FJsonObject, 0>>*>(this, "AShooterGameMode.ChatMessageBuffer"); }
 	FString& CurrentChatLogFilenameField() { return *GetNativePointerField<FString*>(this, "AShooterGameMode.CurrentChatLogFilename"); }
 	FDateTime& LastChatLogFlushTimeField() { return *GetNativePointerField<FDateTime*>(this, "AShooterGameMode.LastChatLogFlushTime"); }
 	FDateTime& LastChatLogFileCreateTimeField() { return *GetNativePointerField<FDateTime*>(this, "AShooterGameMode.LastChatLogFileCreateTime"); }
@@ -991,7 +1063,13 @@ struct UPrimalGameData : UObject
 {
 	FString& ModNameField() { return *GetNativePointerField<FString*>(this, "UPrimalGameData.ModName"); }
 	FString& ModDescriptionField() { return *GetNativePointerField<FString*>(this, "UPrimalGameData.ModDescription"); }
+	//FieldArray<FPrimalCharacterStatusValueDefinition, 12> StatusValueDefinitionsField() { return { this, "UPrimalGameData.StatusValueDefinitions" }; }
+	//FieldArray<FPrimalCharacterStatusStateDefinition, 14> StatusStateDefinitionsField() { return { this, "UPrimalGameData.StatusStateDefinitions" }; }
+	//FieldArray<FPrimalItemStatDefinition, 8> ItemStatDefinitionsField() { return { this, "UPrimalGameData.ItemStatDefinitions" }; }
+	//FieldArray<FPrimalItemDefinition, 9> ItemTypeDefinitionsField() { return { this, "UPrimalGameData.ItemTypeDefinitions" }; }
+	//FieldArray<FPrimalEquipmentDefinition, 11> EquipmentTypeDefinitionsField() { return { this, "UPrimalGameData.EquipmentTypeDefinitions" }; }
 	TArray<TSubclassOf<UPrimalItem>>& MasterItemListField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "UPrimalGameData.MasterItemList"); }
+//	TArray<FPrimalItemQuality>& ItemQualityDefinitionsField() { return *GetNativePointerField<TArray<FPrimalItemQuality>*>(this, "UPrimalGameData.ItemQualityDefinitions"); }
 	TArray<TSubclassOf<UPrimalEngramEntry>>& EngramBlueprintClassesField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalEngramEntry>>*>(this, "UPrimalGameData.EngramBlueprintClasses"); }
 	TArray<TSubclassOf<UPrimalEngramEntry>>& AdditionalEngramBlueprintClassesField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalEngramEntry>>*>(this, "UPrimalGameData.AdditionalEngramBlueprintClasses"); }
 	TArray<TSubclassOf<UPrimalEngramEntry>>& RemoveEngramBlueprintClassesField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalEngramEntry>>*>(this, "UPrimalGameData.RemoveEngramBlueprintClasses"); }
@@ -1057,7 +1135,6 @@ struct UPrimalGameData : UObject
 	float& EnemyFoundationPreventionRadiusField() { return *GetNativePointerField<float*>(this, "UPrimalGameData.EnemyFoundationPreventionRadius"); }
 	TArray<UObject *> ExtraResourcesField() { return *GetNativePointerField<TArray<UObject *>*>(this, "UPrimalGameData.ExtraResources"); }
 	TArray<UObject *> BaseExtraResourcesField() { return *GetNativePointerField<TArray<UObject *>*>(this, "UPrimalGameData.BaseExtraResources"); }
-	TSubclassOf<UObject>& BaseExtraResourcesContainerField() { return *GetNativePointerField<TSubclassOf<UObject>*>(this, "UPrimalGameData.BaseExtraResourcesContainer"); }
 	USoundBase * CombatMusicDayField() { return *GetNativePointerField<USoundBase **>(this, "UPrimalGameData.CombatMusicDay"); }
 	USoundBase * CombatMusicNightField() { return *GetNativePointerField<USoundBase **>(this, "UPrimalGameData.CombatMusicNight"); }
 	USoundBase * CombatMusicDay_HeavyField() { return *GetNativePointerField<USoundBase **>(this, "UPrimalGameData.CombatMusicDay_Heavy"); }
@@ -1069,6 +1146,13 @@ struct UPrimalGameData : UObject
 	TArray<int>& PlayerLevelEngramPointsField() { return *GetNativePointerField<TArray<int>*>(this, "UPrimalGameData.PlayerLevelEngramPoints"); }
 	TArray<int>& PlayerLevelEngramPointsSPField() { return *GetNativePointerField<TArray<int>*>(this, "UPrimalGameData.PlayerLevelEngramPointsSP"); }
 	TArray<FString>& PreventBuildStructureReasonStringsField() { return *GetNativePointerField<TArray<FString>*>(this, "UPrimalGameData.PreventBuildStructureReasonStrings"); }
+	//TArray<FClassRemapping>& Remap_NPCField() { return *GetNativePointerField<TArray<FClassRemapping>*>(this, "UPrimalGameData.Remap_NPC"); }
+	//TArray<FClassRemapping>& Remap_SupplyCratesField() { return *GetNativePointerField<TArray<FClassRemapping>*>(this, "UPrimalGameData.Remap_SupplyCrates"); }
+	//TArray<FClassRemapping>& Remap_ResourceComponentsField() { return *GetNativePointerField<TArray<FClassRemapping>*>(this, "UPrimalGameData.Remap_ResourceComponents"); }
+	//TArray<FClassRemapping>& Remap_NPCSpawnEntriesField() { return *GetNativePointerField<TArray<FClassRemapping>*>(this, "UPrimalGameData.Remap_NPCSpawnEntries"); }
+	//TArray<FClassRemapping>& Remap_EngramsField() { return *GetNativePointerField<TArray<FClassRemapping>*>(this, "UPrimalGameData.Remap_Engrams"); }
+	//TArray<FClassRemapping>& Remap_ItemsField() { return *GetNativePointerField<TArray<FClassRemapping>*>(this, "UPrimalGameData.Remap_Items"); }
+	//TArray<FClassAddition>& AdditionalStructureEngramsField() { return *GetNativePointerField<TArray<FClassAddition>*>(this, "UPrimalGameData.AdditionalStructureEngrams"); }
 	TSubclassOf<AActor>& ActorToSpawnUponEnemyCoreStructureDeathField() { return *GetNativePointerField<TSubclassOf<AActor>*>(this, "UPrimalGameData.ActorToSpawnUponEnemyCoreStructureDeath"); }
 	TArray<TSubclassOf<APrimalStructure>>& AdditionalStructuresToPlaceField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalStructure>>*>(this, "UPrimalGameData.AdditionalStructuresToPlace"); }
 	TArray<FColor>& MasterColorTableField() { return *GetNativePointerField<TArray<FColor>*>(this, "UPrimalGameData.MasterColorTable"); }
@@ -1079,6 +1163,7 @@ struct UPrimalGameData : UObject
 	UTexture2D * MatingIconField() { return *GetNativePointerField<UTexture2D **>(this, "UPrimalGameData.MatingIcon"); }
 	UTexture2D * NearFeedIconField() { return *GetNativePointerField<UTexture2D **>(this, "UPrimalGameData.NearFeedIcon"); }
 	UTexture2D * BuffedIconField() { return *GetNativePointerField<UTexture2D **>(this, "UPrimalGameData.BuffedIcon"); }
+	UTexture2D * TethererdIconField() { return *GetNativePointerField<UTexture2D **>(this, "UPrimalGameData.TethererdIcon"); }
 	UTexture2D * GamepadFaceButtonTopField() { return *GetNativePointerField<UTexture2D **>(this, "UPrimalGameData.GamepadFaceButtonTop"); }
 	UTexture2D * GamepadFaceButtonBottomField() { return *GetNativePointerField<UTexture2D **>(this, "UPrimalGameData.GamepadFaceButtonBottom"); }
 	UTexture2D * GamepadFaceButtonLeftField() { return *GetNativePointerField<UTexture2D **>(this, "UPrimalGameData.GamepadFaceButtonLeft"); }
@@ -1151,6 +1236,7 @@ struct UPrimalGameData : UObject
 	// Functions
 
 	void Initialize() { NativeCall<void>(this, "UPrimalGameData.Initialize"); }
+	FLinearColor * GetColorForDefinition(FLinearColor * result, int DefinitionIndex) { return NativeCall<FLinearColor *, FLinearColor *, int>(this, "UPrimalGameData.GetColorForDefinition", result, DefinitionIndex); }
 	bool CanTeamTarget(int attackerTeam, int victimTeam, int originalVictimTargetingTeam, AActor * Attacker, AActor * Victim) { return NativeCall<bool, int, int, int, AActor *, AActor *>(this, "UPrimalGameData.CanTeamTarget", attackerTeam, victimTeam, originalVictimTargetingTeam, Attacker, Victim); }
 	bool CanTeamDamage(int attackerTeam, int victimTeam, AActor * Attacker) { return NativeCall<bool, int, int, AActor *>(this, "UPrimalGameData.CanTeamDamage", attackerTeam, victimTeam, Attacker); }
 	float GetTeamTargetingDesirabilityMultiplier(int attackerTeam, int victimTeam) { return NativeCall<float, int, int>(this, "UPrimalGameData.GetTeamTargetingDesirabilityMultiplier", attackerTeam, victimTeam); }
@@ -1158,11 +1244,9 @@ struct UPrimalGameData : UObject
 	FLevelExperienceRamp * GetLevelExperienceRamp(ELevelExperienceRampType::Type levelType) { return NativeCall<FLevelExperienceRamp *, ELevelExperienceRampType::Type>(this, "UPrimalGameData.GetLevelExperienceRamp", levelType); }
 	TArray<int> * GetPlayerLevelEngramPoints() { return NativeCall<TArray<int> *>(this, "UPrimalGameData.GetPlayerLevelEngramPoints"); }
 	//static TSubclassOf<UObject> * GetRemappedClass(TSubclassOf<UObject> * result, TArray<FClassRemapping> * RemappedClasses, TSubclassOf<UObject> ForClass) { return NativeCall<TSubclassOf<UObject> *, TSubclassOf<UObject> *, TArray<FClassRemapping> *, TSubclassOf<UObject>>(nullptr, "UPrimalGameData.GetRemappedClass", result, RemappedClasses, ForClass); }
-	//static void GetClassAdditions(TArray<TSubclassOf<UObject>> * TheClassAdditions, TArray<FClassAddition> * ClassAdditions, TSubclassOf<UObject> ForClass) { NativeCall<void, TArray<TSubclassOf<UObject>> *, TArray<FClassAddition> *, TSubclassOf<UObject>>(nullptr, "UPrimalGameData.GetClassAdditions", TheClassAdditions, ClassAdditions, ForClass); }
 	TArray<FString> * GetPlayerSpawnRegions(UWorld * ForWorld) { return NativeCall<TArray<FString> *, UWorld *>(this, "UPrimalGameData.GetPlayerSpawnRegions", ForWorld); }
 	bool MergeModData(UPrimalGameData * InMergeCanidate) { return NativeCall<bool, UPrimalGameData *>(this, "UPrimalGameData.MergeModData", InMergeCanidate); }
 	TArray<FColor> * GetGlobalColorTable(TArray<FColor> * result) { return NativeCall<TArray<FColor> *, TArray<FColor> *>(this, "UPrimalGameData.GetGlobalColorTable", result); }
-	//FDinoBabySetup * GetDinoBabySetup(FName DinoNameTag) { return NativeCall<FDinoBabySetup *, FName>(this, "UPrimalGameData.GetDinoBabySetup", DinoNameTag); }
 	static bool LocalIsPerMapExplorerNoteUnlocked(int ExplorerNoteIndex) { return NativeCall<bool, int>(nullptr, "UPrimalGameData.LocalIsPerMapExplorerNoteUnlocked", ExplorerNoteIndex); }
 	bool LocalIsTamedDinoTagUnlocked(FName DinoNameTag) { return NativeCall<bool, FName>(this, "UPrimalGameData.LocalIsTamedDinoTagUnlocked", DinoNameTag); }
 	static bool LocalIsGlobalExplorerNoteUnlocked(int ExplorerNoteIndex) { return NativeCall<bool, int>(nullptr, "UPrimalGameData.LocalIsGlobalExplorerNoteUnlocked", ExplorerNoteIndex); }

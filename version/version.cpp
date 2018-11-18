@@ -2,9 +2,9 @@
 #include <cstdio>
 #include <filesystem>
 
-#include "Core/Private/PDBReader/PDBReader.h"
-#include "Core/Private/Offsets.h"
 #include "Core/Private/HooksImpl.h"
+#include "Core/Private/Offsets.h"
+#include "Core/Private/PDBReader/PDBReader.h"
 #include "Core/Private/PluginManager/PluginManager.h"
 #include "Core/Public/Logger/Logger.h"
 
@@ -53,14 +53,16 @@ void Init()
 {
 	using namespace ArkApi;
 
-	namespace fs = std::experimental::filesystem;
+	namespace fs = std::filesystem;
 
 	OpenConsole();
 
 	const std::string current_dir = Tools::GetCurrentDir();
 
 	if (!fs::exists(current_dir + "/logs"))
+	{
 		fs::create_directory(current_dir + "/logs");
+	}
 
 	PruneOldLogs();
 
@@ -88,7 +90,7 @@ void Init()
 
 	try
 	{
-		const std::wstring dir = Tools::ConvertToWideStr(current_dir);
+		const std::wstring dir = Tools::Utf8Decode(current_dir);
 		pdb_reader.Read(dir + L"/ShooterGameServer.pdb", plugin_pdb_config, &offsets_dump, &bitfields_dump);
 	}
 	catch (const std::exception& error)
@@ -105,7 +107,7 @@ void Init()
 	Log::GetLog()->info("-----------------------------------------------\n");
 }
 
-BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID)
+BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID /*unused*/)
 {
 	if (fdw_reason == DLL_PROCESS_ATTACH)
 	{
@@ -118,11 +120,15 @@ BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID)
 		sprintf_s(buffer, "%s\\version.dll", sysDir);
 
 		m_hinst_dll = LoadLibraryA(buffer);
-		if (!m_hinst_dll)
+		if (m_hinst_dll == nullptr)
+		{
 			return FALSE;
+		}
 
 		for (int i = 0; i < 17; i++)
+		{
 			mProcs[i] = reinterpret_cast<UINT_PTR>(GetProcAddress(m_hinst_dll, import_names[i]));
+		}
 
 		Init();
 	}

@@ -43,7 +43,9 @@ namespace ArkApi::Tools
 	std::string Utf8Encode(const std::wstring& wstr)
 	{
 		if (wstr.empty())
+		{
 			return std::string();
+		}
 
 		const int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), static_cast<int>(wstr.size()), nullptr, 0,
 		                                            nullptr, nullptr);
@@ -58,7 +60,9 @@ namespace ArkApi::Tools
 	std::wstring Utf8Decode(const std::string& str)
 	{
 		if (str.empty())
+		{
 			return std::wstring();
+		}
 
 		const int size_needed = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), nullptr, 0);
 
@@ -77,4 +81,4 @@ namespace ArkApi::Tools
 	{
 		return API_VERSION;
 	}
-}
+} // namespace Tools // namespace ArkApi

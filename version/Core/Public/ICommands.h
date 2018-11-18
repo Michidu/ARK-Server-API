@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+
 #include <API/ARK/Ark.h>
 
 namespace ArkApi
@@ -32,7 +33,8 @@ namespace ArkApi
 		* \param callback Callback function
 		*/
 		virtual void AddRconCommand(const FString& command,
-		                            const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback) = 0;
+		                            const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback) =
+		0;
 
 		/**
 		 * \brief Added function will be called every frame
@@ -101,4 +103,4 @@ namespace ArkApi
 	};
 
 	ARK_API ICommands& APIENTRY GetCommands();
-}
+} // namespace ArkApi

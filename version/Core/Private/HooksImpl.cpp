@@ -1,11 +1,11 @@
 #include "HooksImpl.h"
 
-#include <Logger/Logger.h>
-
-#include "Hooks.h"
 #include "ApiUtils.h"
 #include "Commands.h"
+#include "Hooks.h"
 #include "PluginManager/PluginManager.h"
+
+#include <Logger/Logger.h>
 
 namespace ArkApi
 {
@@ -28,7 +28,8 @@ namespace ArkApi
 		hooks.SetHook("UEngine.Init", &Hook_UEngine_Init, &UEngine_Init_original);
 		hooks.SetHook("UWorld.InitWorld", &Hook_UWorld_InitWorld, &UWorld_InitWorld_original);
 		hooks.SetHook("UWorld.Tick", &Hook_UWorld_Tick, &UWorld_Tick_original);
-		hooks.SetHook("AShooterGameMode.InitGame", &Hook_AShooterGameMode_InitGame, &AShooterGameMode_InitGame_original);
+		hooks.SetHook("AShooterGameMode.InitGame", &Hook_AShooterGameMode_InitGame,
+		              &AShooterGameMode_InitGame_original);
 		hooks.SetHook("AShooterPlayerController.ServerSendChatMessage_Implementation",
 		              &Hook_AShooterPlayerController_ServerSendChatMessage_Impl,
 		              &AShooterPlayerController_ServerSendChatMessage_Impl_original);
@@ -37,7 +38,8 @@ namespace ArkApi
 		hooks.SetHook("RCONClientConnection.ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
 		              &RCONClientConnection_ProcessRCONPacket_original);
 		hooks.SetHook("AGameState.DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
-		hooks.SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay, &AShooterGameMode_BeginPlay_original);
+		hooks.SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay,
+		              &AShooterGameMode_BeginPlay_original);
 
 		Log::GetLog()->info("Initialized hooks\n");
 	}
@@ -89,14 +91,18 @@ namespace ArkApi
 		const auto command_executed = !spam_check
 			                              ? Commands::Get().CheckChatCommands(player_controller, message, mode)
 			                              : false;
-		if (command_executed) 
+		if (command_executed)
+		{
 			player_controller->LastChatMessageTimeField() = time_seconds;
+		}
 
 		const auto prevent_default = Commands::Get().CheckOnChatMessageCallbacks(
 			player_controller, message, mode, spam_check, command_executed);
 
 		if (spam_check || command_executed || prevent_default)
+		{
 			return;
+		}
 
 		AShooterPlayerController_ServerSendChatMessage_Impl_original(player_controller, message, mode);
 	}
@@ -130,4 +136,4 @@ namespace ArkApi
 
 		ApiUtils::Get().SetStatus(ServerStatus::Ready);
 	}
-}
+} // namespace ArkApi

@@ -23,16 +23,11 @@ namespace ArkApi
 		void SetStatus(ServerStatus status);
 
 	private:
-		ApiUtils()
-			: u_world_(nullptr),
-			  shooter_game_mode_(nullptr)
-		{
-		}
+		ApiUtils() = default;
+		~ApiUtils() override = default;
 
-		~ApiUtils() = default;
-
-		UWorld* u_world_;
-		AShooterGameMode* shooter_game_mode_;
-		ServerStatus status_;
+		UWorld* u_world_{nullptr};
+		AShooterGameMode* shooter_game_mode_{nullptr};
+		ServerStatus status_{0};
 	};
-}
+} // namespace ArkApi

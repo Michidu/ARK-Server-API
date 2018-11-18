@@ -49,4 +49,4 @@ namespace ArkApi
 	{
 		return ApiUtils::Get();
 	}
-}
+} // namespace ArkApi

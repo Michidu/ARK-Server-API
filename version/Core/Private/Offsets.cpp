@@ -83,4 +83,4 @@ namespace ArkApi
 
 		return cf;
 	}
-}
+} // namespace ArkApi

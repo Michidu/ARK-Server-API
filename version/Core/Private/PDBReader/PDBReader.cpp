@@ -1,17 +1,17 @@
 #include "PDBReader.h"
 
-#include <fstream>
 #include <comdef.h>
+#include <fstream>
 
 #include <Logger/Logger.h>
 #include <Tools.h>
 
-#include "../Private/Offsets.h"
 #include "../Private/Helpers.h"
+#include "../Private/Offsets.h"
 
 namespace ArkApi
 {
-	void PdbReader::Read(std::wstring path, nlohmann::json plugin_pdb_config,
+	void PdbReader::Read(const std::wstring& path, const nlohmann::json& plugin_pdb_config,
 	                     std::unordered_map<std::string, intptr_t>* offsets_dump,
 	                     std::unordered_map<std::string, BitField>* bitfields_dump)
 	{
@@ -20,7 +20,9 @@ namespace ArkApi
 
 		std::ifstream f{path};
 		if (!f.good())
+		{
 			throw std::runtime_error("Failed to open pdb file");
+		}
 
 		IDiaDataSource* data_source;
 		IDiaSession* dia_session;
@@ -37,7 +39,9 @@ namespace ArkApi
 		}
 
 		if (!ReadConfig())
+		{
 			throw std::runtime_error("Failed to open config.json");
+		}
 
 		try
 		{
@@ -70,18 +74,24 @@ namespace ArkApi
 
 		std::string lib_path = current_dir + "\\msdia140.dll";
 		const HMODULE h_module = LoadLibraryA(lib_path.c_str());
-		if (!h_module)
+		if (h_module == nullptr)
+		{
 			throw std::runtime_error("Failed to load msdia140.dll. Error code - " + std::to_string(GetLastError()));
+		}
 
 		const auto dll_get_class_object = reinterpret_cast<HRESULT(WINAPI*)(REFCLSID, REFIID, LPVOID)>(GetProcAddress(
 			h_module, "DllGetClassObject"));
-		if (!dll_get_class_object)
+		if (dll_get_class_object == nullptr)
+		{
 			throw std::runtime_error("Can't find DllGetClassObject. Error code - " + std::to_string(GetLastError()));
+		}
 
 		IClassFactory* class_factory;
 		HRESULT hr = dll_get_class_object(__uuidof(DiaSource), IID_IClassFactory, &class_factory);
 		if (FAILED(hr))
+		{
 			throw std::runtime_error("DllGetClassObject has failed. Error code - " + std::to_string(GetLastError()));
+		}
 
 		hr = class_factory->CreateInstance(nullptr, __uuidof(IDiaDataSource), reinterpret_cast<void **>(dia_source));
 		if (FAILED(hr))
@@ -123,7 +133,9 @@ namespace ArkApi
 		const std::string config_path = Tools::GetCurrentDir() + "/config.json";
 		std::ifstream file{config_path};
 		if (!file.is_open())
+		{
 			return false;
+		}
 
 		file >> config_;
 		file.close();
@@ -139,14 +151,18 @@ namespace ArkApi
 
 		IDiaEnumSymbols* enum_symbols;
 		if (FAILED(g_symbol->findChildren(SymTagUDT, nullptr, nsNone, &enum_symbols)))
+		{
 			throw std::runtime_error("Failed to find symbols");
+		}
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
 		{
 			BSTR bstr_name;
 			if (symbol->get_name(&bstr_name) != S_OK)
+			{
 				continue;
+			}
 
 			const _bstr_t bbstr_name(bstr_name);
 			const std::string str_name(bbstr_name);
@@ -154,7 +170,9 @@ namespace ArkApi
 			// Check if structure name is in config
 			const auto find_res = find(structs_array.begin(), structs_array.end(), str_name);
 			if (find_res != structs_array.end())
+			{
 				DumpType(symbol, str_name, 0);
+			}
 
 			SysFreeString(bstr_name);
 
@@ -172,14 +190,18 @@ namespace ArkApi
 
 		IDiaEnumSymbols* enum_symbols;
 		if (FAILED(g_symbol->findChildren(SymTagFunction, nullptr, nsNone, &enum_symbols)))
+		{
 			throw std::runtime_error("Failed to find symbols");
+		}
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
 		{
 			BSTR bstr_name;
 			if (symbol->get_name(&bstr_name) != S_OK)
+			{
 				continue;
+			}
 
 			const _bstr_t bbstr_name(bstr_name);
 			const std::string str_name(bbstr_name);
@@ -189,7 +211,9 @@ namespace ArkApi
 			{
 				DWORD offset;
 				if (symbol->get_addressOffset(&offset) != S_OK)
+				{
 					continue;
+				}
 
 				(*offsets_dump_)["Global." + str_name] = offset;
 			}
@@ -210,14 +234,18 @@ namespace ArkApi
 
 		IDiaEnumSymbols* enum_symbols;
 		if (FAILED(g_symbol->findChildren(SymTagData, nullptr, nsNone, &enum_symbols)))
+		{
 			throw std::runtime_error("Failed to find symbols");
+		}
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
 		{
 			BSTR bstr_name;
 			if (symbol->get_name(&bstr_name) != S_OK)
+			{
 				continue;
+			}
 
 			const _bstr_t bbstr_name(bstr_name);
 			const std::string str_name(bbstr_name);
@@ -227,7 +255,9 @@ namespace ArkApi
 			{
 				DWORD offset;
 				if (symbol->get_addressOffset(&offset) != S_OK)
+				{
 					continue;
+				}
 
 				(*offsets_dump_)["Global." + str_name] = offset;
 			}
@@ -248,10 +278,14 @@ namespace ArkApi
 		ULONG celt = 0;
 
 		if (indent > 5)
+		{
 			return;
+		}
 
 		if (symbol->get_symTag(&sym_tag) != S_OK)
+		{
 			return;
+		}
 
 		switch (sym_tag)
 		{
@@ -284,24 +318,34 @@ namespace ArkApi
 	{
 		DWORD loc_type;
 		if (symbol->get_locationType(&loc_type) != S_OK)
+		{
 			return;
+		}
 
 		if (loc_type != LocIsThisRel && loc_type != LocIsBitField)
+		{
 			return;
+		}
 
 		IDiaSymbol* type;
 		if (symbol->get_type(&type) != S_OK)
+		{
 			return;
+		}
 
-		if (type)
+		if (type != nullptr)
 		{
 			LONG offset;
 			if (symbol->get_offset(&offset) != S_OK)
+			{
 				return;
+			}
 
 			BSTR bstr_name;
 			if (symbol->get_name(&bstr_name) != S_OK)
+			{
 				return;
+			}
 
 			const _bstr_t bbstr_name(bstr_name);
 
@@ -309,15 +353,21 @@ namespace ArkApi
 			{
 				DWORD bit_position;
 				if (symbol->get_bitPosition(&bit_position) != S_OK)
+				{
 					return;
+				}
 
 				ULONGLONG num_bits;
 				if (symbol->get_length(&num_bits) != S_OK)
+				{
 					return;
+				}
 
 				ULONGLONG length;
 				if (type->get_length(&length) != S_OK)
+				{
 					return;
+				}
 
 				const BitField bit_field{static_cast<DWORD64>(offset), bit_position, num_bits, length};
 
@@ -341,7 +391,9 @@ namespace ArkApi
 		BSTR bstr_full_name;
 
 		if (symbol->get_name(&bstr_name) != S_OK)
+		{
 			return "";
+		}
 
 		if (symbol->get_undecoratedName(&bstr_und_name) == S_OK)
 		{
@@ -365,17 +417,24 @@ namespace ArkApi
 	{
 		DWORD offset;
 		if (symbol->get_addressOffset(&offset) != S_OK)
+		{
 			return;
+		}
 
 		BSTR bstr_name;
 		if (symbol->get_name(&bstr_name) != S_OK)
+		{
 			return;
+		}
 
 		const _bstr_t bbstr_name(bstr_name);
 		std::string str_name(bbstr_name);
 
-		if (str_name.find("exec") != std::string::npos) // Filter out functions with "exec" prefix
+		if (str_name.find("exec") != std::string::npos)
+		{
+			// Filter out functions with "exec" prefix
 			return;
+		}
 
 		(*offsets_dump_)[std::string(structure) + "." + str_name] = offset;
 
@@ -384,12 +443,16 @@ namespace ArkApi
 
 	void PdbReader::Cleanup(IDiaSymbol* symbol, IDiaSession* session)
 	{
-		if (symbol)
+		if (symbol != nullptr)
+		{
 			symbol->Release();
+		}
 
-		if (session)
+		if (session != nullptr)
+		{
 			session->Release();
+		}
 
 		CoUninitialize();
 	}
-}
+} // namespace ArkApi

@@ -36,8 +36,8 @@ namespace ArkApi
 		auto& hook_vector = all_hooks_[func_name];
 
 		LPVOID new_target = hook_vector.empty()
-			                          ? target
-			                          : hook_vector.back()->detour;
+			                    ? target
+			                    : hook_vector.back()->detour;
 
 		hook_vector.push_back(std::make_shared<Hook>(new_target, detour, original));
 
@@ -68,10 +68,10 @@ namespace ArkApi
 		auto& hook_vector = all_hooks_[func_name];
 
 		const auto iter = std::find_if(hook_vector.begin(), hook_vector.end(),
-		                         [detour](const std::shared_ptr<Hook>& hook) -> bool
-		                         {
-			                         return hook->detour == detour;
-		                         });
+		                               [detour](const std::shared_ptr<Hook>& hook) -> bool
+		                               {
+			                               return hook->detour == detour;
+		                               });
 
 		if (iter == hook_vector.end())
 		{
@@ -109,4 +109,4 @@ namespace ArkApi
 	{
 		return Hooks::Get();
 	}
-}
+} // namespace ArkApi

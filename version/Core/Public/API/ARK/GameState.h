@@ -111,6 +111,7 @@ struct AShooterGameState : AGameState
 	FName& ActiveEventField() { return *GetNativePointerField<FName*>(this, "AShooterGameState.ActiveEvent"); }
 	bool& bAllowPaintingWithoutResourcesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowPaintingWithoutResources"); }
 	bool& bEnableExtraStructurePreventionVolumesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bEnableExtraStructurePreventionVolumes"); }
+	//TArray<FItemCraftingCostOverride>& OverrideItemCraftingCostsField() { return *GetNativePointerField<TArray<FItemCraftingCostOverride>*>(this, "AShooterGameState.OverrideItemCraftingCosts"); }
 	long double& LastServerSaveTimeField() { return *GetNativePointerField<long double*>(this, "AShooterGameState.LastServerSaveTime"); }
 	float& ServerSaveIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ServerSaveInterval"); }
 	float& TribeNameChangeCooldownField() { return *GetNativePointerField<float*>(this, "AShooterGameState.TribeNameChangeCooldown"); }
@@ -122,6 +123,7 @@ struct AShooterGameState : AGameState
 	bool& bPlayingDynamicMusic2Field() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPlayingDynamicMusic2"); }
 	float& LastHadMusicTimeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LastHadMusicTime"); }
 	TArray<FLevelExperienceRamp>& LevelExperienceRampOverridesField() { return *GetNativePointerField<TArray<FLevelExperienceRamp>*>(this, "AShooterGameState.LevelExperienceRampOverrides"); }
+	//TArray<FEngramEntryOverride>& OverrideEngramEntriesField() { return *GetNativePointerField<TArray<FEngramEntryOverride>*>(this, "AShooterGameState.OverrideEngramEntries"); }
 	TArray<FString>& PreventDinoTameClassNamesField() { return *GetNativePointerField<TArray<FString>*>(this, "AShooterGameState.PreventDinoTameClassNames"); }
 	float& ListenServerTetherDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ListenServerTetherDistanceMultiplier"); }
 	FString& PGMapNameField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.PGMapName"); }
@@ -159,6 +161,7 @@ struct AShooterGameState : AGameState
 	bool& bAllowAnyoneBabyImprintCuddleField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowAnyoneBabyImprintCuddle"); }
 	bool& bDisableImprintDinoBuffField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableImprintDinoBuff"); }
 	int& MaxPersonalTamedDinosField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxPersonalTamedDinos"); }
+	//TArray<FFloatingTextEntry>& FloatingTextEntriesField() { return *GetNativePointerField<TArray<FFloatingTextEntry>*>(this, "AShooterGameState.FloatingTextEntries"); }
 	bool& bIsCustomMapField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsCustomMap"); }
 	bool& bIsClientField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsClient"); }
 	bool& bIsDedicatedServerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsDedicatedServer"); }
@@ -200,9 +203,13 @@ struct AShooterGameState : AGameState
 	int& LimitTurretsNumField() { return *GetNativePointerField<int*>(this, "AShooterGameState.LimitTurretsNum"); }
 	bool& bForceAllowAllStructuresField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bForceAllowAllStructures"); }
 	bool& bShowCreativeModeField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bShowCreativeMode"); }
+	//TArray<FPlayerLocatorEffectMap>& PlayerLocatorEffectMapsField() { return *GetNativePointerField<TArray<FPlayerLocatorEffectMap>*>(this, "AShooterGameState.PlayerLocatorEffectMaps"); }
 	int& AmbientSoundCheckIncrementField() { return *GetNativePointerField<int*>(this, "AShooterGameState.AmbientSoundCheckIncrement"); }
 	float& PreventOfflinePvPConnectionInvincibleIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PreventOfflinePvPConnectionInvincibleInterval"); }
 	float& PassiveTameIntervalMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PassiveTameIntervalMultiplier"); }
+	TArray<TSubclassOf<APrimalDinoCharacter>>& UniqueDinosField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalDinoCharacter>>*>(this, "AShooterGameState.UniqueDinos"); }
+	unsigned int& MinimumUniqueDownloadIntervalField() { return *GetNativePointerField<unsigned int*>(this, "AShooterGameState.MinimumUniqueDownloadInterval"); }
+	unsigned int& MaximumUniqueDownloadIntervalField() { return *GetNativePointerField<unsigned int*>(this, "AShooterGameState.MaximumUniqueDownloadInterval"); }
 
 	// Functions
 
@@ -248,6 +255,7 @@ struct AShooterGameState : AGameState
 	void HTTPPostRequestCompleted(TSharedPtr<IHttpRequest, 0> HttpRequest, TSharedPtr<IHttpResponse, 1> HttpResponse, bool bSucceeded) { NativeCall<void, TSharedPtr<IHttpRequest, 0>, TSharedPtr<IHttpResponse, 1>, bool>(this, "AShooterGameState.HTTPPostRequestCompleted", HttpRequest, HttpResponse, bSucceeded); }
 	void LevelAddedToWorld(ULevel * addedLevel) { NativeCall<void, ULevel *>(this, "AShooterGameState.LevelAddedToWorld", addedLevel); }
 	bool AllowDownloadDino_Implementation(TSubclassOf<APrimalDinoCharacter> TheDinoClass) { return NativeCall<bool, TSubclassOf<APrimalDinoCharacter>>(this, "AShooterGameState.AllowDownloadDino_Implementation", TheDinoClass); }
+	void DinoDownloaded(TSubclassOf<APrimalDinoCharacter> TheDinoClass) { NativeCall<void, TSubclassOf<APrimalDinoCharacter>>(this, "AShooterGameState.DinoDownloaded", TheDinoClass); }
 	bool IsEngramClassHidden(TSubclassOf<UPrimalItem> ForItemClass) { return NativeCall<bool, TSubclassOf<UPrimalItem>>(this, "AShooterGameState.IsEngramClassHidden", ForItemClass); }
 	static void StaticRegisterNativesAShooterGameState() { NativeCall<void>(nullptr, "AShooterGameState.StaticRegisterNativesAShooterGameState"); }
 	bool AllowDownloadDino(TSubclassOf<APrimalDinoCharacter> TheDinoClass) { return NativeCall<bool, TSubclassOf<APrimalDinoCharacter>>(this, "AShooterGameState.AllowDownloadDino", TheDinoClass); }

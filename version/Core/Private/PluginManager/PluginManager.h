@@ -1,9 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
-#include <memory>
 
 #include <API/ARK/Ark.h>
 
@@ -93,15 +93,15 @@ namespace ArkApi
 		void DetectPluginChanges();
 
 		// Callbacks
-		static void LoadPluginCmd(APlayerController*, FString*, bool);
-		static void UnloadPluginCmd(APlayerController*, FString*, bool);
+		static void LoadPluginCmd(APlayerController* /*player_controller*/, FString* /*cmd*/, bool /*unused*/);
+		static void UnloadPluginCmd(APlayerController* /*player_controller*/, FString* /*cmd*/, bool /*unused*/);
 
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;
 
 		// Plugins auto reloading
-		bool enable_plugin_reload_;
-		int reload_sleep_seconds_;
-		bool save_world_before_reload_;
-		time_t next_reload_check_;
+		bool enable_plugin_reload_{false};
+		int reload_sleep_seconds_{5};
+		bool save_world_before_reload_{true};
+		time_t next_reload_check_{0};
 	};
-}
+} // namespace ArkApi

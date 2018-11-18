@@ -2,8 +2,8 @@
 
 #include <IHooks.h>
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
 namespace ArkApi
 {
@@ -37,8 +37,8 @@ namespace ArkApi
 		};
 
 		Hooks();
-		~Hooks() = default;
+		~Hooks() override = default;
 
 		std::unordered_map<std::string, std::vector<std::shared_ptr<Hook>>> all_hooks_;
 	};
-}
+} // namespace ArkApi

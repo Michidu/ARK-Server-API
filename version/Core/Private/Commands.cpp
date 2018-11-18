@@ -88,7 +88,8 @@ namespace ArkApi
 	bool Commands::CheckRconCommands(RCONClientConnection* rcon_client_connection, RCONPacket* rcon_packet,
 	                                 UWorld* u_world)
 	{
-		return CheckCommands<RconCommand>(rcon_packet->Body, rcon_commands_, rcon_client_connection, rcon_packet, u_world);
+		return CheckCommands<RconCommand>(rcon_packet->Body, rcon_commands_, rcon_client_connection, rcon_packet,
+		                                  u_world);
 	}
 
 	void Commands::CheckOnTickCallbacks(float delta_seconds)
@@ -128,4 +129,4 @@ namespace ArkApi
 	{
 		return Commands::Get();
 	}
-}
+} // namespace ArkApi
