@@ -118,7 +118,10 @@ namespace ArkApi
 	void Hook_RCONClientConnection_ProcessRCONPacket(RCONClientConnection* _this, RCONPacket* packet,
 	                                                 UWorld* in_world)
 	{
-		Commands::Get().CheckRconCommands(_this, packet, in_world);
+		if (_this->IsAuthenticatedField())
+		{
+			Commands::Get().CheckRconCommands(_this, packet, in_world);
+		}
 
 		RCONClientConnection_ProcessRCONPacket_original(_this, packet, in_world);
 	}

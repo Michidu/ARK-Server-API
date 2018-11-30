@@ -3,8 +3,10 @@
 #include <filesystem>
 
 #include "Core/Private/HooksImpl.h"
+
 #include "Core/Private/Offsets.h"
 #include "Core/Private/PDBReader/PDBReader.h"
+
 #include "Core/Private/PluginManager/PluginManager.h"
 #include "Core/Public/Logger/Logger.h"
 

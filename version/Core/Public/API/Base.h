@@ -9,7 +9,7 @@
 #define ARK_API __declspec(dllimport)
 #endif
 
-#define API_VERSION "2.8"
+#define API_VERSION "2.9"
 
 // Structs forward declaration
 
