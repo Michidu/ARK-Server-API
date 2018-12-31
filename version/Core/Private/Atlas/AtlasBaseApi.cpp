@@ -27,7 +27,7 @@ namespace API
 	bool AtlasBaseApi::Init()
 	{
 		Log::GetLog()->info("-----------------------------------------------");
-		Log::GetLog()->info("Atlas: Server Api V{:.1f}", GetVersion());
+		Log::GetLog()->info("YAPI V{:.1f}", GetVersion());
 		Log::GetLog()->info("Loading...\n");
 
 		PdbReader pdb_reader;
@@ -76,7 +76,7 @@ namespace API
 
 	std::string AtlasBaseApi::GetApiName()
 	{
-		return "YAPI";
+		return "AtlasApi";
 	}
 
 	std::unique_ptr<ArkApi::ICommands>& AtlasBaseApi::GetCommands()

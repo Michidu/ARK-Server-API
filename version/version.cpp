@@ -63,7 +63,7 @@ std::string DetectGame()
 			{
 				return "Ark";
 			}
-			if (name == "YAPI")
+			if (name == "AtlasApi")
 			{
 				return "Atlas";
 			}
