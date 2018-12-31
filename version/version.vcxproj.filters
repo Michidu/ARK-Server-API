@@ -65,6 +65,21 @@
     <Filter Include="Core\Private\Tools">
       <UniqueIdentifier>{42c6cb7c-645b-4e1d-9da8-7da22b6efea5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Private\Ark">
+      <UniqueIdentifier>{c7d53d29-62a7-4d13-b1a2-8c76c6565ce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Private\Atlas">
+      <UniqueIdentifier>{a0a3062f-3730-4f50-812a-72409ba31928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\API\Atlas">
+      <UniqueIdentifier>{d3166ee6-2d6e-4a77-8ac2-d9fbaca1fd55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\Ark">
+      <UniqueIdentifier>{b3e6d8bd-62de-4dc1-958d-03077e99c9cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Public\Atlas">
+      <UniqueIdentifier>{bab0c67e-ce63-4e52-9209-74abbfd6ffaf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="version_asm.asm" />
@@ -74,12 +89,6 @@
     <ClInclude Include="MinHook.h" />
     <ClInclude Include="Core\Private\PDBReader\PDBReader.h">
       <Filter>Core\Private\PDBReader</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Public\API\Base.h">
-      <Filter>Core\Public\API</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Public\API\Enums.h">
-      <Filter>Core\Public\API</Filter>
     </ClInclude>
     <ClInclude Include="Core\Public\API\UE\UE.h">
       <Filter>Core\Public\API\UE</Filter>
@@ -107,9 +116,6 @@
     </ClInclude>
     <ClInclude Include="Core\Public\API\ARK\Tribe.h">
       <Filter>Core\Public\API\ARK</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Private\HooksImpl.h">
-      <Filter>Core\Private</Filter>
     </ClInclude>
     <ClInclude Include="Core\Public\Tools.h">
       <Filter>Core\Public</Filter>
@@ -141,22 +147,10 @@
     <ClInclude Include="Core\Private\PluginManager\PluginManager.h">
       <Filter>Core\Private\PluginManager</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Public\ICommands.h">
-      <Filter>Core\Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Private\Commands.h">
-      <Filter>Core\Private</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Public\IHooks.h">
       <Filter>Core\Public</Filter>
     </ClInclude>
-    <ClInclude Include="Core\Public\IApiUtils.h">
-      <Filter>Core\Public</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Private\Hooks.h">
-      <Filter>Core\Private</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Private\ApiUtils.h">
       <Filter>Core\Private</Filter>
     </ClInclude>
     <ClInclude Include="Core\Private\Offsets.h">
@@ -360,6 +354,81 @@
     <ClInclude Include="Core\Public\Requests.h">
       <Filter>Core\Public</Filter>
     </ClInclude>
+    <ClInclude Include="Core\Private\IBaseApi.h">
+      <Filter>Core\Private</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\Ark\ArkBaseApi.h">
+      <Filter>Core\Private\Ark</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\Ark\HooksImpl.h">
+      <Filter>Core\Private\Ark</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\Ark\ApiUtils.h">
+      <Filter>Core\Private\Ark</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Base.h">
+      <Filter>Core\Public\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\Atlas\HooksImpl.h">
+      <Filter>Core\Private\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\Atlas\ApiUtils.h">
+      <Filter>Core\Private\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\Atlas\AtlasBaseApi.h">
+      <Filter>Core\Private\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\Other.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\PrimalStructure.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\Tribe.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\Actor.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\GameMode.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\GameState.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\Inventory.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\Atlas.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\ICommands.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\IApiUtils.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Atlas\Enums.h">
+      <Filter>Core\Public\API\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\ARK\Enums.h">
+      <Filter>Core\Public\API\ARK</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\API\Enums.h">
+      <Filter>Core\Public\API</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\Ark\ArkApiUtils.h">
+      <Filter>Core\Public\Ark</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\Atlas\AtlasApiUtils.h">
+      <Filter>Core\Public\Atlas</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Public\Timer.h">
+      <Filter>Core\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Private\Commands.h">
+      <Filter>Core\Private</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="version.cpp" />
@@ -367,15 +436,6 @@
       <Filter>Core\Private\PDBReader</Filter>
     </ClCompile>
     <ClCompile Include="Core\Private\Hooks.cpp">
-      <Filter>Core\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Private\ApiUtils.cpp">
-      <Filter>Core\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Private\HooksImpl.cpp">
-      <Filter>Core\Private</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Private\Commands.cpp">
       <Filter>Core\Private</Filter>
     </ClCompile>
     <ClCompile Include="Core\Private\PluginManager\PluginManager.cpp">
@@ -398,6 +458,30 @@
     </ClCompile>
     <ClCompile Include="Core\Private\Tools\Tools.cpp">
       <Filter>Core\Private\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Ark\ArkBaseApi.cpp">
+      <Filter>Core\Private\Ark</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Ark\HooksImpl.cpp">
+      <Filter>Core\Private\Ark</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Ark\ApiUtils.cpp">
+      <Filter>Core\Private\Ark</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Atlas\HooksImpl.cpp">
+      <Filter>Core\Private\Atlas</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Atlas\ApiUtils.cpp">
+      <Filter>Core\Private\Atlas</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Atlas\AtlasBaseApi.cpp">
+      <Filter>Core\Private\Atlas</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Tools\Timer.cpp">
+      <Filter>Core\Private\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Commands.cpp">
+      <Filter>Core\Private</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

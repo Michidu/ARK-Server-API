@@ -9,7 +9,7 @@
 #include "../Private/Helpers.h"
 #include "../Private/Offsets.h"
 
-namespace ArkApi
+namespace API
 {
 	void PdbReader::Read(const std::wstring& path, const nlohmann::json& plugin_pdb_config,
 	                     std::unordered_map<std::string, intptr_t>* offsets_dump,
@@ -455,4 +455,4 @@ namespace ArkApi
 
 		CoUninitialize();
 	}
-} // namespace ArkApi
+} // namespace API

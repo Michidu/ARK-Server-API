@@ -103,7 +103,12 @@ struct FMemory
 	//
 
 	static void * Malloc(SIZE_T Count, uint32 Alignment = DEFAULT_ALIGNMENT) { return NativeCall<void *, unsigned __int64, unsigned int>(nullptr, "FMemory.Malloc", Count, Alignment); }
-	static void * Realloc(void * Ptr, SIZE_T Size, uint32 Alignment = DEFAULT_ALIGNMENT) { return NativeCall<void *, void *, unsigned __int64>(nullptr, "FMemory.Realloc", Ptr, Size); }
+	static void * Realloc(void * Ptr, SIZE_T Size, uint32 Alignment = DEFAULT_ALIGNMENT)
+	{
+		if (!Ptr)
+			return Malloc(Size);
+		return NativeCall<void *, void *, unsigned __int64>(nullptr, "FMemory.Realloc", Ptr, Size);
+	}
 	static void Free(void* Original) { NativeCall<void, void *>(nullptr, "FMemory.Free", Original); }
 
 	static SIZE_T QuantizeSize(SIZE_T Count, uint32 Alignment = DEFAULT_ALIGNMENT)

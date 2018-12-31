@@ -1,19 +1,21 @@
 #include "Helpers.h"
+
 #include <algorithm>
 #include <cctype>
+#include <locale>
 
-namespace ArkApi
+namespace API
 {
 	void MergePdbConfig(nlohmann::json& left, const nlohmann::json& right)
 	{
 		nlohmann::json pdb_config_result({});
 
 		pdb_config_result["structures"] = MergeStringArrays(left.value("structures", std::vector<std::string>{}),
-		                                       right.value("structures", std::vector<std::string>{}));
+		                                                    right.value("structures", std::vector<std::string>{}));
 		pdb_config_result["functions"] = MergeStringArrays(left.value("functions", std::vector<std::string>{}),
-		                                      right.value("functions", std::vector<std::string>{}));
+		                                                   right.value("functions", std::vector<std::string>{}));
 		pdb_config_result["globals"] = MergeStringArrays(left.value("globals", std::vector<std::string>{}),
-		                                    right.value("globals", std::vector<std::string>{}));
+		                                                 right.value("globals", std::vector<std::string>{}));
 
 		left = pdb_config_result;
 	}
@@ -65,4 +67,4 @@ namespace ArkApi
 
 		return unique;
 	}
-} // namespace ArkApi
+} // namespace API

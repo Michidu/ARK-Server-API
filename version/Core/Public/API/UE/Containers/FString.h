@@ -2556,7 +2556,7 @@ inline int32 FString::ParseIntoArray(TArray<FString>& OutArray, const TCHAR* pch
 	OutArray.Reset();
 	const TCHAR *Start = Data.GetData();
 	const int32 DelimLength = FCString::Strlen(pchDelim);
-	if (Start && DelimLength)
+	if (Start && *Start != TEXT('\0') && DelimLength)
 	{
 		while (const TCHAR *At = FCString::Strstr(Start, pchDelim))
 		{

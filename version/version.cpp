@@ -2,15 +2,13 @@
 #include <cstdio>
 #include <filesystem>
 
-#include "Core/Private/HooksImpl.h"
-
-#include "Core/Private/Offsets.h"
-#include "Core/Private/PDBReader/PDBReader.h"
-
-#include "Core/Private/PluginManager/PluginManager.h"
+#include "Core/Private/Ark/ArkBaseApi.h"
+#include "Core/Private/Atlas/AtlasBaseApi.h"
 #include "Core/Public/Logger/Logger.h"
+#include "Core/Public/Tools.h"
 
 #pragma comment(lib, "libMinHook.x64.lib")
+#pragma comment(lib, "libcurl.lib")
 
 HINSTANCE m_hinst_dll = nullptr;
 extern "C" UINT_PTR mProcs[17]{0};
@@ -31,13 +29,11 @@ void OpenConsole()
 
 void PruneOldLogs()
 {
-	using namespace ArkApi;
-
 	namespace fs = std::experimental::filesystem;
 
 	const auto now = std::chrono::system_clock::now();
 
-	const std::string current_dir = Tools::GetCurrentDir();
+	const std::string current_dir = API::Tools::GetCurrentDir();
 
 	for (const auto& file : fs::directory_iterator(current_dir + "/logs"))
 	{
@@ -51,15 +47,39 @@ void PruneOldLogs()
 	}
 }
 
+std::string DetectGame()
+{
+	namespace fs = std::filesystem;
+
+	const std::string current_dir = API::Tools::GetCurrentDir();
+
+	for (const auto& directory_entry : fs::directory_iterator(current_dir))
+	{
+		const auto& path = directory_entry.path();
+		if (is_directory(path))
+		{
+			const auto name = path.filename().stem().generic_string();
+			if (name == "ArkApi")
+			{
+				return "Ark";
+			}
+			if (name == "YAPI")
+			{
+				return "Atlas";
+			}
+		}
+	}
+
+	return "";
+}
+
 void Init()
 {
-	using namespace ArkApi;
-
 	namespace fs = std::filesystem;
 
 	OpenConsole();
 
-	const std::string current_dir = Tools::GetCurrentDir();
+	const std::string current_dir = API::Tools::GetCurrentDir();
 
 	if (!fs::exists(current_dir + "/logs"))
 	{
@@ -70,43 +90,15 @@ void Init()
 
 	Log::Get().Init("API");
 
-	Log::GetLog()->info("-----------------------------------------------");
-	Log::GetLog()->info("ARK: Server Api V{}", API_VERSION);
-	Log::GetLog()->info("Loading...\n");
+	const std::string game_name = DetectGame();
+	if (game_name == "Ark")
+		API::game_api = std::make_unique<API::ArkBaseApi>();
+	else if (game_name == "Atlas")
+		API::game_api = std::make_unique<API::AtlasBaseApi>();
+	else
+		Log::GetLog()->critical("Failed to detect game");
 
-	PdbReader pdb_reader;
-
-	std::unordered_map<std::string, intptr_t> offsets_dump;
-	std::unordered_map<std::string, BitField> bitfields_dump;
-
-	nlohmann::json plugin_pdb_config;
-	try
-	{
-		plugin_pdb_config = PluginManager::GetAllPDBConfigs();
-	}
-	catch (const std::exception& error)
-	{
-		Log::GetLog()->critical("Failed to read plugin pdb configs - {}", error.what());
-		return;
-	}
-
-	try
-	{
-		const std::wstring dir = Tools::Utf8Decode(current_dir);
-		pdb_reader.Read(dir + L"/ShooterGameServer.pdb", plugin_pdb_config, &offsets_dump, &bitfields_dump);
-	}
-	catch (const std::exception& error)
-	{
-		Log::GetLog()->critical("Failed to read pdb - {}", error.what());
-		return;
-	}
-
-	Offsets::Get().Init(move(offsets_dump), move(bitfields_dump));
-
-	InitHooks();
-
-	Log::GetLog()->info("API was successfully loaded");
-	Log::GetLog()->info("-----------------------------------------------\n");
+	API::game_api->Init();
 }
 
 BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID /*unused*/)

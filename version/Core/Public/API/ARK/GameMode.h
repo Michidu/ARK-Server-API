@@ -1,7 +1,6 @@
 #pragma once
 
 #include "API/UE/UE.h"
-#include "API/Enums.h"
 #include "API/UE/Containers/Map.h"
 
 #include "Other.h"
@@ -248,7 +247,7 @@ struct UEngine : UObject
 	TSubclassOf<UGameViewportClient>& GameViewportClientClassField() { return *GetNativePointerField<TSubclassOf<UGameViewportClient>*>(this, "UEngine.GameViewportClientClass"); }
 	TSubclassOf<ULocalPlayer>& LocalPlayerClassField() { return *GetNativePointerField<TSubclassOf<ULocalPlayer>*>(this, "UEngine.LocalPlayerClass"); }
 	TSubclassOf<AWorldSettings>& WorldSettingsClassField() { return *GetNativePointerField<TSubclassOf<AWorldSettings>*>(this, "UEngine.WorldSettingsClass"); }
-	UObject * GameSingletonField() { return *GetNativePointerField<UObject **>(this, "UEngine.GameSingleton"); }
+	UPrimalGlobals * GameSingletonField() { return *GetNativePointerField<UPrimalGlobals **>(this, "UEngine.GameSingleton"); }
 	TSubclassOf<APawn>& DefaultPreviewPawnClassField() { return *GetNativePointerField<TSubclassOf<APawn>*>(this, "UEngine.DefaultPreviewPawnClass"); }
 	FString& PlayOnConsoleSaveDirField() { return *GetNativePointerField<FString*>(this, "UEngine.PlayOnConsoleSaveDir"); }
 	UTexture2D * DefaultTextureField() { return *GetNativePointerField<UTexture2D **>(this, "UEngine.DefaultTexture"); }

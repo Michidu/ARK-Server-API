@@ -2,7 +2,11 @@
 
 #include <functional>
 
+#ifdef ARK_GAME
 #include <API/ARK/Ark.h>
+#else
+#include <API/Atlas/Atlas.h>
+#endif
 
 namespace ArkApi
 {

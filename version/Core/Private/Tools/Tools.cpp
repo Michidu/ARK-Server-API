@@ -1,5 +1,6 @@
 #include <Tools.h>
 
+#include "../IBaseApi.h"
 #include "../PluginManager/PluginManager.h"
 
 namespace ArkApi::Tools
@@ -74,11 +75,11 @@ namespace ArkApi::Tools
 
 	bool IsPluginLoaded(const std::string& plugin_name)
 	{
-		return PluginManager::Get().IsPluginLoaded(plugin_name);
+		return API::PluginManager::Get().IsPluginLoaded(plugin_name);
 	}
 
-	std::string GetApiVer()
+	float GetApiVersion()
 	{
-		return API_VERSION;
+		return API::game_api->GetVersion();
 	}
 } // namespace Tools // namespace ArkApi

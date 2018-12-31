@@ -1,15 +1,25 @@
 #include <Requests.h>
 
-namespace ArkApi
+#include <curl/curl.h>
+
+#include "../IBaseApi.h"
+
+namespace API
 {
 	Requests::Requests()
+		: curl_(curl_multi_init())
 	{
-		GetCommands().AddOnTimerCallback("RequestsUpdate", &Update);
+		curl_global_init(CURL_GLOBAL_DEFAULT);
+
+		game_api->GetCommands()->AddOnTickCallback("RequestsUpdate",
+		                                           std::bind(&Requests::Update, this, std::placeholders::_1));
 	}
 
 	Requests::~Requests()
 	{
-		GetCommands().RemoveOnTimerCallback("RequestsUpdate");
+		game_api->GetCommands()->RemoveOnTickCallback("RequestsUpdate");
+
+		curl_global_cleanup();
 	}
 
 	Requests& Requests::Get()
@@ -18,67 +28,85 @@ namespace ArkApi
 		return instance;
 	}
 
-	bool Requests::CreateRequest(FString& url, FString& verb,
-	                             const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback, FString content,
-	                             bool auto_remove, FString header_value)
+	bool Requests::CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback)
 	{
-		TSharedRef<IHttpRequest> request;
-		FHttpModule::Get()->CreateRequest(&request);
+		CURL* handle = curl_easy_init();
+		if (!handle)
+		{
+			return false;
+		}
 
-		FString header_name = "Content-Type";
-		FString Accepts_name = "Accepts";
-		FString Accepts_value = "*/*";
+		requests_[handle] = std::make_unique<Request>(callback);
 
-		request->SetHeader(&header_name, &header_value);
-		request->SetHeader(&Accepts_name, &Accepts_value);
-		request->SetURL(&url);
-		request->SetVerb(&verb);
-		request->SetContentAsString(&content);
+		curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
+		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, &Requests::WriteCallback);
+		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
 
-		requests_.push_back({request, callback, false, !auto_remove});
+		curl_multi_add_handle(curl_, handle);
 
-		return request->ProcessRequest();
+		const CURLMcode res = curl_multi_perform(curl_, &handles_count_);
+
+		return res == CURLM_OK;
 	}
 
-	void Requests::RemoveRequest(const TSharedRef<IHttpRequest>& request)
+	bool Requests::CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+	                                 const std::string& post_data)
 	{
-		requests_.erase(remove_if(requests_.begin(), requests_.end(), [&request](const Request& cur_request)
+		CURL* handle = curl_easy_init();
+		if (!handle)
 		{
-			return cur_request.request == request;
-		}), requests_.end());
+			return false;
+		}
+
+		requests_[handle] = std::make_unique<Request>(callback);
+
+		curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
+		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, &Requests::WriteCallback);
+		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
+		curl_easy_setopt(handle, CURLOPT_POST, 1);
+		curl_easy_setopt(handle, CURLOPT_POSTFIELDS, post_data.c_str());
+
+		curl_multi_add_handle(curl_, handle);
+
+		const CURLMcode res = curl_multi_perform(curl_, &handles_count_);
+
+		return res == CURLM_OK;
 	}
 
-	void Requests::Update()
+	size_t Requests::WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
 	{
-		auto& requests = Get().requests_;
+		if (userp == nullptr)
+			return 0;
 
-		requests.erase(remove_if(requests.begin(), requests.end(), [](const Request& request)
+		static_cast<std::string*>(userp)->append(static_cast<char*>(contents), size * nmemb);
+		return size * nmemb;
+	}
+
+	void Requests::Update(float)
+	{
+		if (handles_count_ <= 0)
+			return;
+
+		const CURLMcode res = curl_multi_perform(curl_, &handles_count_);
+		if (res != CURLM_OK)
 		{
-			return !request.remove_manually && request.completed;
-		}), requests.end());
+			return;
+		}
 
-		const auto size = requests.size();
-		for (auto i = 0; i < size; ++i)
+		int msgq;
+		CURLMsg* m = curl_multi_info_read(curl_, &msgq);
+		if (m && m->msg == CURLMSG_DONE)
 		{
-			auto& request = requests[i];
+			CURL* handle = m->easy_handle;
 
-			const auto status = request.request->GetStatus();
-			switch (status)
-			{
-			case EHttpRequestStatus::Succeeded:
-			case EHttpRequestStatus::Failed:
-				if (!request.completed)
-				{
-					request.completed = true;
+			auto& request = requests_[handle];
+			request->callback(m->data.result == CURLE_OK, move(request->read_buffer));
 
-					request.callback(request.request, status == EHttpRequestStatus::Succeeded);
-				}
-				break;
-			case EHttpRequestStatus::NotStarted:
-			case EHttpRequestStatus::Processing:
-				break;
-			default: ;
-			}
+			requests_.erase(handle);
+
+			--handles_count_;
+			curl_multi_remove_handle(curl_, handle);
+			curl_easy_cleanup(handle);
 		}
 	}
-} // namespace ArkApi
+} // namespace API

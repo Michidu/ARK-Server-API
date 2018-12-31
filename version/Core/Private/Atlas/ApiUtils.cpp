@@ -1,13 +1,9 @@
 #include "ApiUtils.h"
 
-namespace ArkApi
-{
-	ApiUtils& ApiUtils::Get()
-	{
-		static ApiUtils instance;
-		return instance;
-	}
+#include "../IBaseApi.h"
 
+namespace AtlasApi
+{
 	// UWorld
 
 	void ApiUtils::SetWorld(UWorld* uworld)
@@ -34,19 +30,19 @@ namespace ArkApi
 
 	// Status
 
-	void ApiUtils::SetStatus(ServerStatus status)
+	void ApiUtils::SetStatus(ArkApi::ServerStatus status)
 	{
 		status_ = status;
 	}
 
-	ServerStatus ApiUtils::GetStatus() const
+	ArkApi::ServerStatus ApiUtils::GetStatus() const
 	{
 		return status_;
 	}
 
 	// Free function
-	IApiUtils& GetApiUtils()
+	ArkApi::IApiUtils& GetApiUtils()
 	{
-		return ApiUtils::Get();
+		return *API::game_api->GetApiUtils();
 	}
-} // namespace ArkApi
+} // namespace AtlasApi

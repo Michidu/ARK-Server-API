@@ -7,12 +7,14 @@ namespace ArkApi
 	class ApiUtils : public IApiUtils
 	{
 	public:
-		static ApiUtils& Get();
+		ApiUtils() = default;
 
 		ApiUtils(const ApiUtils&) = delete;
 		ApiUtils(ApiUtils&&) = delete;
 		ApiUtils& operator=(const ApiUtils&) = delete;
 		ApiUtils& operator=(ApiUtils&&) = delete;
+
+		~ApiUtils() override = default;
 
 		UWorld* GetWorld() const override;
 		AShooterGameMode* GetShooterGameMode() const override;
@@ -23,9 +25,6 @@ namespace ArkApi
 		void SetStatus(ServerStatus status);
 
 	private:
-		ApiUtils() = default;
-		~ApiUtils() override = default;
-
 		UWorld* u_world_{nullptr};
 		AShooterGameMode* shooter_game_mode_{nullptr};
 		ServerStatus status_{0};

@@ -29,5 +29,11 @@ namespace ArkApi::Tools
 	/**
 	* \brief Returns Current Running Api Version
 	*/
-	ARK_API std::string GetApiVer();
+	ARK_API float GetApiVersion();
 } // namespace Tools // namespace ArkApi
+
+// For back compatibility
+namespace API
+{
+	namespace Tools = ArkApi::Tools;
+}

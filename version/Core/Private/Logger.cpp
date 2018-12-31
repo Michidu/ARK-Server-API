@@ -8,7 +8,7 @@ std::vector<spdlog::sink_ptr>& GetLogSinks()
 		std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
 			spdlog::sinks::default_daily_file_name_calculator::
 			calc_filename(
-				ArkApi::Tools::GetCurrentDir() + "/logs/ArkApi_" + std::to_string(GetCurrentProcessId()) + ".log"),
+				API::Tools::GetCurrentDir() + "/logs/ArkApi_" + std::to_string(GetCurrentProcessId()) + ".log"),
 			1024 * 1024, 5)
 	};
 

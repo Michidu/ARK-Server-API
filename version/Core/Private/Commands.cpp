@@ -1,13 +1,9 @@
 #include "Commands.h"
 
+#include "IBaseApi.h"
+
 namespace ArkApi
 {
-	Commands& Commands::Get()
-	{
-		static Commands instance;
-		return instance;
-	}
-
 	void Commands::AddChatCommand(const FString& command,
 	                              const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
 	                              callback)
@@ -127,6 +123,6 @@ namespace ArkApi
 	// Free function
 	ICommands& GetCommands()
 	{
-		return Commands::Get();
+		return *API::game_api->GetCommands();
 	}
 } // namespace ArkApi

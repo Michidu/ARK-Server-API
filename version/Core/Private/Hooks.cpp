@@ -6,8 +6,9 @@
 
 #include "../../MinHook.h"
 #include "Offsets.h"
+#include "IBaseApi.h"
 
-namespace ArkApi
+namespace API
 {
 	Hooks::Hooks()
 	{
@@ -16,12 +17,6 @@ namespace ArkApi
 			Log::GetLog()->critical("Can't initialize MinHook");
 			throw;
 		}
-	}
-
-	Hooks& Hooks::Get()
-	{
-		static Hooks instance;
-		return instance;
 	}
 
 	bool Hooks::SetHookInternal(const std::string& func_name, LPVOID detour, LPVOID* original)
@@ -58,7 +53,7 @@ namespace ArkApi
 
 	bool Hooks::DisableHook(const std::string& func_name, LPVOID detour)
 	{
-		LPVOID target = Offsets::Get().GetAddress(func_name);
+		const LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
 			Log::GetLog()->error("{} does not exist", func_name);
@@ -103,10 +98,10 @@ namespace ArkApi
 
 		return true;
 	}
+} // namespace API
 
-	// Free function
-	IHooks& GetHooks()
-	{
-		return Hooks::Get();
-	}
-} // namespace ArkApi
+// Free function
+ArkApi::IHooks& ArkApi::GetHooks()
+{
+	return reinterpret_cast<IHooks&>(*API::game_api->GetHooks());
+}

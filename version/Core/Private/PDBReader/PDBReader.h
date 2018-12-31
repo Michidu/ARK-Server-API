@@ -4,14 +4,15 @@
 
 #include "../../json.hpp"
 
-#include <API/Base.h>
+#include <API/Fields.h>
 
-namespace ArkApi
+namespace API
 {
 	class PdbReader
 	{
 	public:
 		PdbReader() = default;
+		~PdbReader() = default;
 
 		void Read(const std::wstring& path, const nlohmann::json& plugin_pdb_config,
 		          std::unordered_map<std::string, intptr_t>* offsets_dump,
@@ -35,4 +36,4 @@ namespace ArkApi
 
 		nlohmann::json config_;
 	};
-} // namespace ArkApi
+} // namespace API

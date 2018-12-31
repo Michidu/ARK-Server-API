@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <string>
+#include <utility>
 
 #include "Base.h"
 
@@ -118,8 +119,8 @@ template <typename RT, typename T>
 class BitFieldValue
 {
 public:
-	BitFieldValue(void* parent, const std::string& field_name)
-		: parent_(parent), field_name_(field_name)
+	BitFieldValue(void* parent, std::string field_name)
+		: parent_(parent), field_name_(std::move(field_name))
 	{
 	}
 

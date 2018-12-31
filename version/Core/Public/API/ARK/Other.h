@@ -1,7 +1,5 @@
 #pragma once
 
-#include "API/Enums.h"
-
 struct FDamageEvent
 {
 	float& ImpulseField() { return *GetNativePointerField<float*>(this, "FDamageEvent.Impulse"); }

@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Ark|x64">
+      <Configuration>Ark</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Atlas|x64">
+      <Configuration>Atlas</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
@@ -10,22 +18,37 @@
     <MASM Include="version_asm.asm" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core\Private\ApiUtils.h" />
+    <ClInclude Include="Core\Private\Ark\ApiUtils.h" />
+    <ClInclude Include="Core\Private\Ark\ArkBaseApi.h" />
+    <ClInclude Include="Core\Private\Ark\HooksImpl.h" />
+    <ClInclude Include="Core\Private\Atlas\ApiUtils.h" />
+    <ClInclude Include="Core\Private\Atlas\AtlasBaseApi.h" />
+    <ClInclude Include="Core\Private\Atlas\HooksImpl.h" />
     <ClInclude Include="Core\Private\Commands.h" />
     <ClInclude Include="Core\Private\Helpers.h" />
     <ClInclude Include="Core\Private\Hooks.h" />
-    <ClInclude Include="Core\Private\HooksImpl.h" />
+    <ClInclude Include="Core\Private\IBaseApi.h" />
     <ClInclude Include="Core\Private\Offsets.h" />
     <ClInclude Include="Core\Private\PDBReader\PDBReader.h" />
     <ClInclude Include="Core\Private\PluginManager\PluginManager.h" />
     <ClInclude Include="Core\Public\API\ARK\Actor.h" />
     <ClInclude Include="Core\Public\API\ARK\Ark.h" />
+    <ClInclude Include="Core\Public\API\ARK\Enums.h" />
     <ClInclude Include="Core\Public\API\ARK\GameMode.h" />
     <ClInclude Include="Core\Public\API\ARK\GameState.h" />
     <ClInclude Include="Core\Public\API\ARK\Inventory.h" />
     <ClInclude Include="Core\Public\API\ARK\Other.h" />
     <ClInclude Include="Core\Public\API\ARK\PrimalStructure.h" />
     <ClInclude Include="Core\Public\API\ARK\Tribe.h" />
+    <ClInclude Include="Core\Public\API\Atlas\Actor.h" />
+    <ClInclude Include="Core\Public\API\Atlas\Atlas.h" />
+    <ClInclude Include="Core\Public\API\Atlas\Enums.h" />
+    <ClInclude Include="Core\Public\API\Atlas\GameMode.h" />
+    <ClInclude Include="Core\Public\API\Atlas\GameState.h" />
+    <ClInclude Include="Core\Public\API\Atlas\Inventory.h" />
+    <ClInclude Include="Core\Public\API\Atlas\Other.h" />
+    <ClInclude Include="Core\Public\API\Atlas\PrimalStructure.h" />
+    <ClInclude Include="Core\Public\API\Atlas\Tribe.h" />
     <ClInclude Include="Core\Public\API\Base.h" />
     <ClInclude Include="Core\Public\API\Enums.h" />
     <ClInclude Include="Core\Public\API\Fields.h" />
@@ -100,27 +123,39 @@
     <ClInclude Include="Core\Public\API\UE\UE.h" />
     <ClInclude Include="Core\Public\API\UE\Windows\MicrosoftPlatformString.h" />
     <ClInclude Include="Core\Public\API\UE\Windows\WindowsPlatformAtomics.h" />
+    <ClInclude Include="Core\Public\Ark\ArkApiUtils.h" />
+    <ClInclude Include="Core\Public\Atlas\AtlasApiUtils.h" />
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
     <ClInclude Include="Core\Public\Logger\Logger.h" />
     <ClInclude Include="Core\Public\Requests.h" />
+    <ClInclude Include="Core\Public\Timer.h" />
     <ClInclude Include="Core\Public\Tools.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MinHook.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core\Private\ApiUtils.cpp" />
+    <ClCompile Include="Core\Private\Ark\ApiUtils.cpp" />
+    <ClCompile Include="Core\Private\Ark\ArkBaseApi.cpp" />
+    <ClCompile Include="Core\Private\Ark\HooksImpl.cpp" />
+    <ClCompile Include="Core\Private\Atlas\ApiUtils.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Atlas|x64'">$(IntDir)%(RelativeDir)</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Ark|x64'">$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="Core\Private\Atlas\AtlasBaseApi.cpp" />
+    <ClCompile Include="Core\Private\Atlas\HooksImpl.cpp" />
     <ClCompile Include="Core\Private\Base.cpp" />
     <ClCompile Include="Core\Private\Commands.cpp" />
     <ClCompile Include="Core\Private\Helpers.cpp" />
     <ClCompile Include="Core\Private\Hooks.cpp" />
-    <ClCompile Include="Core\Private\HooksImpl.cpp" />
     <ClCompile Include="Core\Private\Logger.cpp" />
     <ClCompile Include="Core\Private\Offsets.cpp" />
     <ClCompile Include="Core\Private\PDBReader\PDBReader.cpp" />
     <ClCompile Include="Core\Private\PluginManager\PluginManager.cpp" />
     <ClCompile Include="Core\Private\Tools\Requests.cpp" />
+    <ClCompile Include="Core\Private\Tools\Timer.cpp" />
     <ClCompile Include="Core\Private\Tools\Tools.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
@@ -141,6 +176,20 @@
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Atlas|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ark|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
     <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
@@ -148,8 +197,26 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Atlas|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Ark|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(VSInstallDir)\DIA SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib;$(VSInstallDir)\DIA SDK\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Atlas|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <GenerateManifest>false</GenerateManifest>
+    <IncludePath>$(VSInstallDir)\DIA SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\lib;$(VSInstallDir)\DIA SDK\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ark|x64'">
     <LinkIncremental>false</LinkIncremental>
     <GenerateManifest>false</GenerateManifest>
     <IncludePath>$(VSInstallDir)\DIA SDK\include;$(IncludePath)</IncludePath>
@@ -165,6 +232,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>..\version\Core\Public;</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -174,6 +242,54 @@
       <ModuleDefinitionFile>version.def</ModuleDefinitionFile>
       <ImportLibrary>$(OutDir)ArkApi.lib</ImportLibrary>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Atlas|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ATLAS_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>version.def</ModuleDefinitionFile>
+      <ImportLibrary>$(OutDir)AtlasApi.lib</ImportLibrary>
+      <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcurl.lib;Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ark|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ARK_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>version.def</ModuleDefinitionFile>
+      <ImportLibrary>$(OutDir)ArkApi.lib</ImportLibrary>
+      <AdditionalOptions>/NODEFAULTLIB:libcmt.lib %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalDependencies>libcurl.lib;Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

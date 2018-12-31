@@ -1,22 +1,12 @@
 #pragma once
 
-#include <API/ARK/Ark.h>
+#include <functional>
+#include <utility>
 
-namespace ArkApi
+#include "API/Base.h"
+
+namespace API
 {
-	struct Request
-	{
-		TSharedRef<IHttpRequest> request;
-		std::function<void(TSharedRef<IHttpRequest>, bool)> callback;
-		bool completed;
-		bool remove_manually;
-
-		bool operator==(const Request& rhs) const
-		{
-			return request == rhs.request;
-		}
-	};
-
 	class Requests
 	{
 	public:
@@ -27,17 +17,34 @@ namespace ArkApi
 		Requests& operator=(const Requests&) = delete;
 		Requests& operator=(Requests&&) = delete;
 
-		ARK_API bool CreateRequest(FString& url, FString& verb,
-		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback,
-		                           FString content = L"", bool auto_remove = true, FString header_value = "text/html");
-		ARK_API void RemoveRequest(const TSharedRef<IHttpRequest>& request);
+		ARK_API bool CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback);
+
+		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+		                               const std::string& post_data);
 
 	private:
-		ARK_API Requests();
-		ARK_API ~Requests();
+		using CURLM = void;
+		using CURL = void;
 
-		ARK_API static void Update();
+		struct Request
+		{
+			explicit Request(std::function<void(bool, std::string)> callback)
+				: callback(std::move(callback))
+			{
+			}
 
-		std::vector<Request> requests_;
+			std::function<void(bool, std::string)> callback;
+			std::string read_buffer;
+		};
+
+		Requests();
+		~Requests();
+
+		static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
+		void Update(float);
+
+		CURLM* curl_;
+		int handles_count_{};
+		std::unordered_map<CURL*, std::unique_ptr<Request>> requests_;
 	};
-} // namespace ArkApi
+} // namespace API

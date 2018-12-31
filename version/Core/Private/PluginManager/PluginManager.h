@@ -4,12 +4,11 @@
 #include <string>
 #include <utility>
 #include <vector>
-
-#include <API/ARK/Ark.h>
+#include <windows.h>
 
 #include "../../../json.hpp"
 
-namespace ArkApi
+namespace API
 {
 	struct Plugin
 	{
@@ -92,10 +91,6 @@ namespace ArkApi
 		static void DetectPluginChangesTimerCallback();
 		void DetectPluginChanges();
 
-		// Callbacks
-		static void LoadPluginCmd(APlayerController* /*player_controller*/, FString* /*cmd*/, bool /*unused*/);
-		static void UnloadPluginCmd(APlayerController* /*player_controller*/, FString* /*cmd*/, bool /*unused*/);
-
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;
 
 		// Plugins auto reloading
@@ -104,4 +99,4 @@ namespace ArkApi
 		bool save_world_before_reload_{true};
 		time_t next_reload_check_{0};
 	};
-} // namespace ArkApi
+} // namespace API
