@@ -76,7 +76,7 @@ namespace API
 
 	std::string AtlasBaseApi::GetApiName()
 	{
-		return "AtlasApi";
+		return "YAPI";
 	}
 
 	std::unique_ptr<ArkApi::ICommands>& AtlasBaseApi::GetCommands()
