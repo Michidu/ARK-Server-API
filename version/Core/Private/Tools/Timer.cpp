@@ -33,10 +33,18 @@ namespace API
 	{
 		if (async)
 		{
-			std::thread([&callback, execution_interval, execution_counter]()
+			std::thread([callback, execution_interval, execution_counter]()
 			{
-				const int execution_count = execution_counter <= 0 ? 1 : execution_counter;
-				for (int i = 0; i < execution_count; ++i)
+				if (execution_counter == -1)
+				{
+					for (;;)
+					{
+						callback();
+						std::this_thread::sleep_for(std::chrono::seconds(execution_interval));
+					}
+				}
+
+				for (int i = 0; i < execution_counter; ++i)
 				{
 					callback();
 					std::this_thread::sleep_for(std::chrono::seconds(execution_interval));
@@ -66,8 +74,6 @@ namespace API
 		{
 			if (now >= data->next_time)
 			{
-				data->callback();
-
 				if (data->exec_once)
 				{
 					remove = true;
@@ -81,10 +87,13 @@ namespace API
 					else if (data->execution_counter != -1)
 					{
 						remove = true;
+						continue;
 					}
 
 					data->next_time = now + std::chrono::seconds(data->execution_interval);
 				}
+
+				data->callback();
 			}
 		}
 

@@ -17,17 +17,17 @@ namespace API
 		Timer& operator=(const Timer&) = delete;
 		Timer& operator=(Timer&&) = delete;
 
-		template <typename... Args>
-		void DelayExecute(const std::function<void(Args ...)>& callback, int delay, Args&&... args)
+		template <typename Func, typename... Args>
+		void DelayExecute(const Func& callback, int delay, Args&&... args)
 		{
-			DelayExecuteInternal(std::bind(&callback, std::forward<Args>(args)...), delay);
+			DelayExecuteInternal(std::bind(callback, std::forward<Args>(args)...), delay);
 		}
 
-		template <typename... Args>
-		void RecurringExecute(const std::function<void(Args ...)>& callback, int execution_interval,
+		template <typename Func, typename... Args>
+		void RecurringExecute(const Func& callback, int execution_interval,
 		                      int execution_counter, bool async, Args&&... args)
 		{
-			RecurringExecuteInternal(std::bind(&callback, std::forward<Args>(args)...), execution_interval,
+			RecurringExecuteInternal(std::bind(callback, std::forward<Args>(args)...), execution_interval,
 			                         execution_counter, async);
 		}
 
