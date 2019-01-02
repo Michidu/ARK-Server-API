@@ -17,12 +17,30 @@ namespace API
 		Timer& operator=(const Timer&) = delete;
 		Timer& operator=(Timer&&) = delete;
 
+		/**
+		 * \brief Executes function after X seconds
+		 * \tparam Func Callback function type
+		 * \tparam Args Callback arguments types
+		 * \param callback Callback function
+		 * \param delay Delay in seconds
+		 * \param args Callback arguments
+		 */
 		template <typename Func, typename... Args>
 		void DelayExecute(const Func& callback, int delay, Args&&... args)
 		{
 			DelayExecuteInternal(std::bind(callback, std::forward<Args>(args)...), delay);
 		}
 
+		/**
+		 * \brief Executes function every X seconds
+		 * \tparam Func Callback function type
+		 * \tparam Args Callback arguments types
+		 * \param callback Callback function
+		 * \param execution_interval Delay between executions in seconds
+		 * \param execution_counter Amount of times to execute function, -1 for unlimited
+		 * \param async If true, function will be executed in the new thread
+		 * \param args Callback arguments
+		 */
 		template <typename Func, typename... Args>
 		void RecurringExecute(const Func& callback, int execution_interval,
 		                      int execution_counter, bool async, Args&&... args)
