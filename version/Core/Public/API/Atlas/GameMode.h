@@ -5,6 +5,286 @@
 
 struct FSocket;
 
+struct FSeamlessServerInfo
+{
+	unsigned __int16& gridXField() { return *GetNativePointerField<unsigned __int16*>(this, "FSeamlessServerInfo.gridX"); }
+	unsigned __int16& gridYField() { return *GetNativePointerField<unsigned __int16*>(this, "FSeamlessServerInfo.gridY"); }
+	FString& _IpField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo._Ip"); }
+	int& PortField() { return *GetNativePointerField<int*>(this, "FSeamlessServerInfo.Port"); }
+	int& GamePortField() { return *GetNativePointerField<int*>(this, "FSeamlessServerInfo.GamePort"); }
+	int& SeamlessDataPortField() { return *GetNativePointerField<int*>(this, "FSeamlessServerInfo.SeamlessDataPort"); }
+	int& SkyStyleIndexField() { return *GetNativePointerField<int*>(this, "FSeamlessServerInfo.SkyStyleIndex"); }
+	FVector& WaterColorOverrideField() { return *GetNativePointerField<FVector*>(this, "FSeamlessServerInfo.WaterColorOverride"); }
+	TArray<FString>& SubLevelsNamesField() { return *GetNativePointerField<TArray<FString>*>(this, "FSeamlessServerInfo.SubLevelsNames"); }
+	TArray<FTransform>& SubLevelsAdditionalTransformsField() { return *GetNativePointerField<TArray<FTransform>*>(this, "FSeamlessServerInfo.SubLevelsAdditionalTransforms"); }
+	TArray<unsigned int>& SubLevelsUniqueIdsField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "FSeamlessServerInfo.SubLevelsUniqueIds"); }
+	TArray<int>& SubLevelsLandscapeMaterialOverrideField() { return *GetNativePointerField<TArray<int>*>(this, "FSeamlessServerInfo.SubLevelsLandscapeMaterialOverride"); }
+	TSet<FString, DefaultKeyFuncs<FString, 0>, FDefaultSetAllocator>& ExtraSubLevelsNamesField() { return *GetNativePointerField<TSet<FString, DefaultKeyFuncs<FString, 0>, FDefaultSetAllocator>*>(this, "FSeamlessServerInfo.ExtraSubLevelsNames"); }
+	float& OrientationField() { return *GetNativePointerField<float*>(this, "FSeamlessServerInfo.Orientation"); }
+	FVector& OffsetField() { return *GetNativePointerField<FVector*>(this, "FSeamlessServerInfo.Offset"); }
+	bool& bIsHomeServerField() { return *GetNativePointerField<bool*>(this, "FSeamlessServerInfo.bIsHomeServer"); }
+	FString& NameField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.Name"); }
+	float& TransitionMinZField() { return *GetNativePointerField<float*>(this, "FSeamlessServerInfo.TransitionMinZ"); }
+	int& UTCOffSetField() { return *GetNativePointerField<int*>(this, "FSeamlessServerInfo.UTCOffSet"); }
+	float& FloorDistFromOceanSurfaceField() { return *GetNativePointerField<float*>(this, "FSeamlessServerInfo.FloorDistFromOceanSurface"); }
+	FString& OceanDinoDepthEntriesOverrideField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.OceanDinoDepthEntriesOverride"); }
+	FString& TreasureMapLootTablesOverrideField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.TreasureMapLootTablesOverride"); }
+	FString& RegionOverridesField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.RegionOverrides"); }
+	FString& OceanFloatsamCratesOverrideField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.OceanFloatsamCratesOverride"); }
+	FString& NPCShipSpawnEntriesOverrideTemplateNameField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.NPCShipSpawnEntriesOverrideTemplateName"); }
+	FString& OceanEpicSpawnEntriesOverrideValuesField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.OceanEpicSpawnEntriesOverrideValues"); }
+	FString& GlobalBiomeSeamlessServerGridPreOffsetValuesField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.GlobalBiomeSeamlessServerGridPreOffsetValues"); }
+	FString& GlobalBiomeSeamlessServerGridPreOffsetValuesOceanWaterField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.GlobalBiomeSeamlessServerGridPreOffsetValuesOceanWater"); }
+	FString& AdditionalCmdLineParamsField() { return *GetNativePointerField<FString*>(this, "FSeamlessServerInfo.AdditionalCmdLineParams"); }
+	TArray<FString>& ServerCustomDatas1Field() { return *GetNativePointerField<TArray<FString>*>(this, "FSeamlessServerInfo.ServerCustomDatas1"); }
+	TArray<FString>& ServerCustomDatas2Field() { return *GetNativePointerField<TArray<FString>*>(this, "FSeamlessServerInfo.ServerCustomDatas2"); }
+	TArray<FString>& ClientCustomDatas1Field() { return *GetNativePointerField<TArray<FString>*>(this, "FSeamlessServerInfo.ClientCustomDatas1"); }
+	TArray<FString>& ClientCustomDatas2Field() { return *GetNativePointerField<TArray<FString>*>(this, "FSeamlessServerInfo.ClientCustomDatas2"); }
+	//TArray<FSeamlessIslandInfo>& IslandInstancesField() { return *GetNativePointerField<TArray<FSeamlessIslandInfo>*>(this, "FSeamlessServerInfo.IslandInstances"); }
+	unsigned __int64& SteamServerIdField() { return *GetNativePointerField<unsigned __int64*>(this, "FSeamlessServerInfo.SteamServerId"); }
+	//TArray<FDiscoveryZone>& DiscoveryZonesField() { return *GetNativePointerField<TArray<FDiscoveryZone>*>(this, "FSeamlessServerInfo.DiscoveryZones"); }
+	//TArray<FSpawnRegion>& SpawnRegionsField() { return *GetNativePointerField<TArray<FSpawnRegion>*>(this, "FSeamlessServerInfo.SpawnRegions"); }
+
+	// Functions
+
+	unsigned int GetServerId() { return NativeCall<unsigned int>(this, "FSeamlessServerInfo.GetServerId"); }
+	static unsigned int GetServerId(unsigned __int16 x, unsigned __int16 y) { return NativeCall<unsigned int, unsigned __int16, unsigned __int16>(nullptr, "FSeamlessServerInfo.GetServerId", x, y); }
+	static void GetServerCoords(unsigned int id, unsigned __int16 * OutX, unsigned __int16 * OutY) { NativeCall<void, unsigned int, unsigned __int16 *, unsigned __int16 *>(nullptr, "FSeamlessServerInfo.GetServerCoords", id, OutX, OutY); }
+	//FDiscoveryZone * GetDiscoveryZonesById(int ZoneId) { return NativeCall<FDiscoveryZone *, int>(this, "FSeamlessServerInfo.GetDiscoveryZonesById", ZoneId); }
+	//FDiscoveryZone * GetDiscoveryZonesByManualName(FString ManualName) { return NativeCall<FDiscoveryZone *, FString>(this, "FSeamlessServerInfo.GetDiscoveryZonesByManualName", ManualName); }
+};
+
+struct FSeamlessGridInfo
+{
+	//TArray<FShipPath>& ShipPathsField() { return *GetNativePointerField<TArray<FShipPath>*>(this, "FSeamlessGridInfo.ShipPaths"); }
+	FString& QuestDataField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.QuestData"); }
+	FString& AtlasPasswordField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.AtlasPassword"); }
+	int& columnUTCOffsetField() { return *GetNativePointerField<int*>(this, "FSeamlessGridInfo.columnUTCOffset"); }
+	int& TotalGridsXField() { return *GetNativePointerField<int*>(this, "FSeamlessGridInfo.TotalGridsX"); }
+	int& TotalGridsYField() { return *GetNativePointerField<int*>(this, "FSeamlessGridInfo.TotalGridsY"); }
+	__int16& MinXField() { return *GetNativePointerField<__int16*>(this, "FSeamlessGridInfo.MinX"); }
+	__int16& MaxXField() { return *GetNativePointerField<__int16*>(this, "FSeamlessGridInfo.MaxX"); }
+	__int16& MinYField() { return *GetNativePointerField<__int16*>(this, "FSeamlessGridInfo.MinY"); }
+	__int16& MaxYField() { return *GetNativePointerField<__int16*>(this, "FSeamlessGridInfo.MaxY"); }
+	//TSharedPtr<FJsonObject, 0>& ServerConfigJsonObjectField() { return *GetNativePointerField<TSharedPtr<FJsonObject, 0>*>(this, "FSeamlessGridInfo.ServerConfigJsonObject"); }
+	//TSharedPtr<FJsonObject, 0>& CurrentServerJsonObjectField() { return *GetNativePointerField<TSharedPtr<FJsonObject, 0>*>(this, "FSeamlessGridInfo.CurrentServerJsonObject"); }
+	unsigned int& CurrentServerIdField() { return *GetNativePointerField<unsigned int*>(this, "FSeamlessGridInfo.CurrentServerId"); }
+	TMap<unsigned int, FSeamlessServerInfo, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned int, FSeamlessServerInfo, 0> >& ServersInfoField() { return *GetNativePointerField<TMap<unsigned int, FSeamlessServerInfo, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned int, FSeamlessServerInfo, 0> >*>(this, "FSeamlessGridInfo.ServersInfo"); }
+	int& TotalDiscoveryZonesXPField() { return *GetNativePointerField<int*>(this, "FSeamlessGridInfo.TotalDiscoveryZonesXP"); }
+	float& GridSizeField() { return *GetNativePointerField<float*>(this, "FSeamlessGridInfo.GridSize"); }
+	float& GlobalTransitionMinZField() { return *GetNativePointerField<float*>(this, "FSeamlessGridInfo.GlobalTransitionMinZ"); }
+	bool& bUseUTCTimeField() { return *GetNativePointerField<bool*>(this, "FSeamlessGridInfo.bUseUTCTime"); }
+	FString& Day0Field() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.Day0"); }
+	FString& MetaWorldURLField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.MetaWorldURL"); }
+	FString& WorldFriendlyNameField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.WorldFriendlyName"); }
+	FString& WorldAtlasIdField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.WorldAtlasId"); }
+	FString& MapImageURLField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.MapImageURL"); }
+	FString& AuthListURLField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.AuthListURL"); }
+	//TArray<FSeamlessIslandInfo>& CachedIslandsListField() { return *GetNativePointerField<TArray<FSeamlessIslandInfo>*>(this, "FSeamlessGridInfo.CachedIslandsList"); }
+	TArray<FSeamlessServerInfo>& CachedServersInfoField() { return *GetNativePointerField<TArray<FSeamlessServerInfo>*>(this, "FSeamlessGridInfo.CachedServersInfo"); }
+
+	// Functions
+
+	FSeamlessServerInfo * GetCurrentServerInfo() { return NativeCall<FSeamlessServerInfo *>(this, "FSeamlessGridInfo.GetCurrentServerInfo"); }
+	void GetAllServersInfo(TArray<FSeamlessServerInfo> * OutServersList) { NativeCall<void, TArray<FSeamlessServerInfo> *>(this, "FSeamlessGridInfo.GetAllServersInfo", OutServersList); }
+	unsigned int GetCurrentServerId() { return NativeCall<unsigned int>(this, "FSeamlessGridInfo.GetCurrentServerId"); }
+	FString * GetWorldAtlasId(FString * result) { return NativeCall<FString *, FString *>(this, "FSeamlessGridInfo.GetWorldAtlasId", result); }
+	FSeamlessServerInfo * GetServerInfo(unsigned int ServerId) { return NativeCall<FSeamlessServerInfo *, unsigned int>(this, "FSeamlessGridInfo.GetServerInfo", ServerId); }
+	FSeamlessServerInfo * GetServerContainingGPSLocation(FVector2D GPSLocation) { return NativeCall<FSeamlessServerInfo *, FVector2D>(this, "FSeamlessGridInfo.GetServerContainingGPSLocation", GPSLocation); }
+	FSeamlessServerInfo * GetServerContainingGlobalLocation(FVector GlobalLocation) { return NativeCall<FSeamlessServerInfo *, FVector>(this, "FSeamlessGridInfo.GetServerContainingGlobalLocation", GlobalLocation); }
+	FVector2D * GetWorldSize(FVector2D * result) { return NativeCall<FVector2D *, FVector2D *>(this, "FSeamlessGridInfo.GetWorldSize", result); }
+	bool IsCurrentServerInvalid() { return NativeCall<bool>(this, "FSeamlessGridInfo.IsCurrentServerInvalid"); }
+	//TArray<FSpawnRegion> * GetServerSpawnRegions(TArray<FSpawnRegion> * result, unsigned int ServerId) { return NativeCall<TArray<FSpawnRegion> *, TArray<FSpawnRegion> *, unsigned int>(this, "FSeamlessGridInfo.GetServerSpawnRegions", result, ServerId); }
+	FVector * GPSLocationToGlobalLocation(FVector * result, FVector2D GPSLocation) { return NativeCall<FVector *, FVector *, FVector2D>(this, "FSeamlessGridInfo.GPSLocationToGlobalLocation", result, GPSLocation); }
+	FVector * GPSLocationToServerLocation(FVector * result, FVector2D GPSLocation) { return NativeCall<FVector *, FVector *, FVector2D>(this, "FSeamlessGridInfo.GPSLocationToServerLocation", result, GPSLocation); }
+	FVector * GetAbsolutePostionFromRelativePositionInServer(FVector * result, unsigned int ServerId, FVector2D * RelativePos) { return NativeCall<FVector *, FVector *, unsigned int, FVector2D *>(this, "FSeamlessGridInfo.GetAbsolutePostionFromRelativePositionInServer", result, ServerId, RelativePos); }
+	//void GetAllIslandsInfo(TArray<FSeamlessIslandInfo> * OutIslandsList) { NativeCall<void, TArray<FSeamlessIslandInfo> *>(this, "FSeamlessGridInfo.GetAllIslandsInfo", OutIslandsList); }
+	bool GetCurrentServerIPAndPort(FString * IP, int * Port) { return NativeCall<bool, FString *, int *>(this, "FSeamlessGridInfo.GetCurrentServerIPAndPort", IP, Port); }
+	int GetCurrentServerSeamlessDataPort() { return NativeCall<int>(this, "FSeamlessGridInfo.GetCurrentServerSeamlessDataPort"); }
+	FVector * GetGlobalMapSize(FVector * result) { return NativeCall<FVector *, FVector *>(this, "FSeamlessGridInfo.GetGlobalMapSize", result); }
+	char GetMinimumHopsBetweenGridServers(unsigned int FromGridServerId, unsigned int ToGridServerId, ESeamlessVolumeSide::Side * OutFromSide, ESeamlessVolumeSide::Side * OutToSide) { return NativeCall<char, unsigned int, unsigned int, ESeamlessVolumeSide::Side *, ESeamlessVolumeSide::Side *>(this, "FSeamlessGridInfo.GetMinimumHopsBetweenGridServers", FromGridServerId, ToGridServerId, OutFromSide, OutToSide); }
+	FVector2D * GetRelativePostionInServerFromAbsolutePosition(FVector2D * result, unsigned int ServerId, FVector * AbsPos) { return NativeCall<FVector2D *, FVector2D *, unsigned int, FVector *>(this, "FSeamlessGridInfo.GetRelativePostionInServerFromAbsolutePosition", result, ServerId, AbsPos); }
+	bool GetServerIPAndPort(unsigned int InServerId, FString * IP, int * Port) { return NativeCall<bool, unsigned int, FString *, int *>(this, "FSeamlessGridInfo.GetServerIPAndPort", InServerId, IP, Port); }
+	unsigned int GetServerToSide(unsigned int InServerId, ESeamlessVolumeSide::Side InDesiredSide) { return NativeCall<unsigned int, unsigned int, ESeamlessVolumeSide::Side>(this, "FSeamlessGridInfo.GetServerToSide", InServerId, InDesiredSide); }
+	FVector2D * GlobalLocationToGPSLocation(FVector2D * result, FVector GlobalLocation) { return NativeCall<FVector2D *, FVector2D *, FVector>(this, "FSeamlessGridInfo.GlobalLocationToGPSLocation", result, GlobalLocation); }
+	FVector * GlobalLocationToServerLocation(FVector * result, FVector GlobalLocation) { return NativeCall<FVector *, FVector *, FVector>(this, "FSeamlessGridInfo.GlobalLocationToServerLocation", result, GlobalLocation); }
+	FVector * GlobalLocationToServerLocation(FVector * result, FVector GlobalLocation, FSeamlessServerInfo * ServerInfo) { return NativeCall<FVector *, FVector *, FVector, FSeamlessServerInfo *>(this, "FSeamlessGridInfo.GlobalLocationToServerLocation", result, GlobalLocation, ServerInfo); }
+	FVector * GlobalLocationToServerLocation(FVector * result, FVector GlobalLocation, unsigned int ServerId) { return NativeCall<FVector *, FVector *, FVector, unsigned int>(this, "FSeamlessGridInfo.GlobalLocationToServerLocation", result, GlobalLocation, ServerId); }
+	void LoadFromFile(FString FileName, unsigned __int16 InServerX, unsigned __int16 InServerY) { NativeCall<void, FString, unsigned __int16, unsigned __int16>(this, "FSeamlessGridInfo.LoadFromFile", FileName, InServerX, InServerY); }
+	void ParseJsonFromString(FString ServerGridJSON, unsigned __int16 InServerX, unsigned __int16 InServerY) { NativeCall<void, FString, unsigned __int16, unsigned __int16>(this, "FSeamlessGridInfo.ParseJsonFromString", ServerGridJSON, InServerX, InServerY); }
+	FVector2D * ServerLocationToGPSLocation(FVector2D * result, unsigned int ServerId, FVector ServerLocation) { return NativeCall<FVector2D *, FVector2D *, unsigned int, FVector>(this, "FSeamlessGridInfo.ServerLocationToGPSLocation", result, ServerId, ServerLocation); }
+	FVector * ServerLocationToGlobalLocation(FVector * result, unsigned int ServerId, FVector ServerLocation) { return NativeCall<FVector *, FVector *, unsigned int, FVector>(this, "FSeamlessGridInfo.ServerLocationToGlobalLocation", result, ServerId, ServerLocation); }
+	void SetServerId(unsigned int ServerId, FString * Ip, int Port, int GamePort) { NativeCall<void, unsigned int, FString *, int, int>(this, "FSeamlessGridInfo.SetServerId", ServerId, Ip, Port, GamePort); }
+	void SetServerInfoSteamId(unsigned int ServerId, unsigned __int64 SteamServerId) { NativeCall<void, unsigned int, unsigned __int64>(this, "FSeamlessGridInfo.SetServerInfoSteamId", ServerId, SteamServerId); }
+	//FDiscoveryZone * GetGlobalDiscoveryZonesById(int ZoneID) { return NativeCall<FDiscoveryZone *, int>(this, "FSeamlessGridInfo.GetGlobalDiscoveryZonesById", ZoneID); }
+	//FDiscoveryZone * GetGlobalDiscoveryZonesByManualName(FString ManualName) { return NativeCall<FDiscoveryZone *, FString>(this, "FSeamlessGridInfo.GetGlobalDiscoveryZonesByManualName", ManualName); }
+	TArray<FTransform> * GetSeamlessSublevelsAdditionalTransforms(TArray<FTransform> * result) { return NativeCall<TArray<FTransform> *, TArray<FTransform> *>(this, "FSeamlessGridInfo.GetSeamlessSublevelsAdditionalTransforms", result); }
+	TArray<unsigned int> * GetSeamlessSublevelsUniqueIds(TArray<unsigned int> * result) { return NativeCall<TArray<unsigned int> *, TArray<unsigned int> *>(this, "FSeamlessGridInfo.GetSeamlessSublevelsUniqueIds", result); }
+	TArray<FString> * GetSublevelsNames(TArray<FString> * result) { return NativeCall<TArray<FString> *, TArray<FString> *>(this, "FSeamlessGridInfo.GetSublevelsNames", result); }
+	FString * GetDay0(FString * result) { return NativeCall<FString *, FString *>(this, "FSeamlessGridInfo.GetDay0", result); }
+	FString * GetAuthListURL(FString * result) { return NativeCall<FString *, FString *>(this, "FSeamlessGridInfo.GetAuthListURL", result); }
+	FString * GetMapImageURL(FString * result) { return NativeCall<FString *, FString *>(this, "FSeamlessGridInfo.GetMapImageURL", result); }
+	FString * GetWorldFriendlyName(FString * result) { return NativeCall<FString *, FString *>(this, "FSeamlessGridInfo.GetWorldFriendlyName", result); }
+	FSeamlessServerInfo * FindServerInfo(unsigned int ServerId) { return NativeCall<FSeamlessServerInfo *, unsigned int>(this, "FSeamlessGridInfo.FindServerInfo", ServerId); }
+	static void GetServerInfo() { NativeCall<void>(nullptr, "FSeamlessGridInfo.GetServerInfo"); }
+};
+
+struct UGameInstance
+{
+	FWorldContext * WorldContextField() { return *GetNativePointerField<FWorldContext **>(this, "UGameInstance.WorldContext"); }
+	TArray<ULocalPlayer *> LocalPlayersField() { return *GetNativePointerField<TArray<ULocalPlayer *>*>(this, "UGameInstance.LocalPlayers"); }
+	FString& PIEMapNameField() { return *GetNativePointerField<FString*>(this, "UGameInstance.PIEMapName"); }
+	TArray<UObject *> ObjectsPendingTimeShiftField() { return *GetNativePointerField<TArray<UObject *>*>(this, "UGameInstance.ObjectsPendingTimeShift"); }
+};
+
+struct UShooterGameInstance : UGameInstance
+{
+	FName& CurrentStateField() { return *GetNativePointerField<FName*>(this, "UShooterGameInstance.CurrentState"); }
+	bool& bCanUseUserGeneratedContentField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bCanUseUserGeneratedContent"); }
+	bool& bHasCommunicationPriviligeField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bHasCommunicationPrivilige"); }
+	long double& CachedLastServerTimestampField() { return *GetNativePointerField<long double*>(this, "UShooterGameInstance.CachedLastServerTimestamp"); }
+	bool& bAwaitingTravelTimestampField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bAwaitingTravelTimestamp"); }
+	long double& LastTravelShiftField() { return *GetNativePointerField<long double*>(this, "UShooterGameInstance.LastTravelShift"); }
+	TWeakObjectPtr<APlayerCameraManager>& SeamlessTravelPlayerCameraField() { return *GetNativePointerField<TWeakObjectPtr<APlayerCameraManager>*>(this, "UShooterGameInstance.SeamlessTravelPlayerCamera"); }
+	FRotator& SeamlessTravelControlRotationField() { return *GetNativePointerField<FRotator*>(this, "UShooterGameInstance.SeamlessTravelControlRotation"); }
+	TWeakObjectPtr<AHUD>& SeamlessTravelHUDField() { return *GetNativePointerField<TWeakObjectPtr<AHUD>*>(this, "UShooterGameInstance.SeamlessTravelHUD"); }
+	unsigned int& DestinationServerIdField() { return *GetNativePointerField<unsigned int*>(this, "UShooterGameInstance.DestinationServerId"); }
+	TArray<FTransformedSubLevel>& LastLoadedSubLevelsField() { return *GetNativePointerField<TArray<FTransformedSubLevel>*>(this, "UShooterGameInstance.LastLoadedSubLevels"); }
+	FSeamlessGridInfo * GridInfoField() { return *GetNativePointerField<FSeamlessGridInfo **>(this, "UShooterGameInstance.GridInfo"); }
+	bool& ShouldInitSpectatorPosField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.ShouldInitSpectatorPos"); }
+	FVector& SpectatorInitialPosField() { return *GetNativePointerField<FVector*>(this, "UShooterGameInstance.SpectatorInitialPos"); }
+	//UDatabase_ClusterInfo * Database_ClusterInfo_RefField() { return *GetNativePointerField<UDatabase_ClusterInfo **>(this, "UShooterGameInstance.Database_ClusterInfo_Ref"); }
+	TArray<TWeakObjectPtr<AActor>>& SeamlessTravelActorsField() { return *GetNativePointerField<TArray<TWeakObjectPtr<AActor>>*>(this, "UShooterGameInstance.SeamlessTravelActors"); }
+	TWeakObjectPtr<ACharacter>& LastControlledCharacterField() { return *GetNativePointerField<TWeakObjectPtr<ACharacter>*>(this, "UShooterGameInstance.LastControlledCharacter"); }
+	long double& LastSeamlesslyTravelledAtField() { return *GetNativePointerField<long double*>(this, "UShooterGameInstance.LastSeamlesslyTravelledAt"); }
+	FString& WelcomeScreenMapField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.WelcomeScreenMap"); }
+	FString& MainMenuMapField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.MainMenuMap"); }
+	FName& PendingStateField() { return *GetNativePointerField<FName*>(this, "UShooterGameInstance.PendingState"); }
+	FString& TravelURLField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.TravelURL"); }
+	bool& bIsOnlineField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bIsOnline"); }
+	bool& bPendingEnableSplitscreenField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bPendingEnableSplitscreen"); }
+	bool& bIsLicensedField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bIsLicensed"); }
+	bool& bIsTravellingSeamlesslyField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bIsTravellingSeamlessly"); }
+	int& IgnorePairingChangeForControllerIdField() { return *GetNativePointerField<int*>(this, "UShooterGameInstance.IgnorePairingChangeForControllerId"); }
+	TWeakObjectPtr<ADayCycleManager>& DayCycleManagerField() { return *GetNativePointerField<TWeakObjectPtr<ADayCycleManager>*>(this, "UShooterGameInstance.DayCycleManager"); }
+	TWeakObjectPtr<ASOTFNotification>& SOTFNotificationManagerField() { return *GetNativePointerField<TWeakObjectPtr<ASOTFNotification>*>(this, "UShooterGameInstance.SOTFNotificationManager"); }
+	int& bOnReturnToMainMenuNotificationField() { return *GetNativePointerField<int*>(this, "UShooterGameInstance.bOnReturnToMainMenuNotification"); }
+	FString& OnReturnToMainMenuNotificationMessageField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.OnReturnToMainMenuNotificationMessage"); }
+	FString& OnReturnToMainMenuNotificationTitleField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.OnReturnToMainMenuNotificationTitle"); }
+	FString& GlobalMainMenuMessageField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.GlobalMainMenuMessage"); }
+	FString& GlobalMainMenuTitleField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.GlobalMainMenuTitle"); }
+	bool& bHasReceivedNewsMessageField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bHasReceivedNewsMessage"); }
+	bool& bHasOfficialStatusMessageField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bHasOfficialStatusMessage"); }
+	FString& NewsMessageField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.NewsMessage"); }
+	FString& OfficialStatusMessageField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.OfficialStatusMessage"); }
+	FString& TerrainGenerationProgressBarMsgField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.TerrainGenerationProgressBarMsg"); }
+	float& SecondsSpentGeneratingTerrainField() { return *GetNativePointerField<float*>(this, "UShooterGameInstance.SecondsSpentGeneratingTerrain"); }
+	bool& TerrainIsGeneratingField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.TerrainIsGenerating"); }
+	bool& bFindingLastCurrServerField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bFindingLastCurrServer"); }
+	bool& bRedirectingToLastServerField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bRedirectingToLastServer"); }
+	FString& LastServerIdField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.LastServerId"); }
+	FString& LastAtlasIdField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.LastAtlasId"); }
+	FString& LastConnectURLField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.LastConnectURL"); }
+	FString& LastAtlasPasswordField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.LastAtlasPassword"); }
+	FString& LastAtlasNameField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.LastAtlasName"); }
+	FString& LastRegionNameField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.LastRegionName"); }
+	EListSessionStatus::Type& LastSessionSearchTypeField() { return *GetNativePointerField<EListSessionStatus::Type*>(this, "UShooterGameInstance.LastSessionSearchType"); }
+	bool& bGotoListSessionsOnMainMenuLoadField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bGotoListSessionsOnMainMenuLoad"); }
+	bool& bSelectingNewHomeServerField() { return *GetNativePointerField<bool*>(this, "UShooterGameInstance.bSelectingNewHomeServer"); }
+	UTexture2D * InfrastructureImageField() { return *GetNativePointerField<UTexture2D **>(this, "UShooterGameInstance.InfrastructureImage"); }
+	FString& MainMenuLoadListSessionAtlasIdField() { return *GetNativePointerField<FString*>(this, "UShooterGameInstance.MainMenuLoadListSessionAtlasId"); }
+
+	// Functions
+
+	void AddNetworkFailureHandlers() { NativeCall<void>(this, "UShooterGameInstance.AddNetworkFailureHandlers"); }
+	void AttemptJoinLastServer() { NativeCall<void>(this, "UShooterGameInstance.AttemptJoinLastServer"); }
+	FVector * BP_GPSLocationToGlobalLocation(FVector * result, FVector2D GPSLocation) { return NativeCall<FVector *, FVector *, FVector2D>(this, "UShooterGameInstance.BP_GPSLocationToGlobalLocation", result, GPSLocation); }
+	FVector * BP_GPSLocationToLocalLocation(FVector * result, FVector2D GPSLocation) { return NativeCall<FVector *, FVector *, FVector2D>(this, "UShooterGameInstance.BP_GPSLocationToLocalLocation", result, GPSLocation); }
+	FVector2D * BP_GlobalLocationToGPSLocation(FVector2D * result, FVector GlobalLocation) { return NativeCall<FVector2D *, FVector2D *, FVector>(this, "UShooterGameInstance.BP_GlobalLocationToGPSLocation", result, GlobalLocation); }
+	FVector * BP_GlobalLocationToLocalLocation(FVector * result, FVector GlobalLocation) { return NativeCall<FVector *, FVector *, FVector>(this, "UShooterGameInstance.BP_GlobalLocationToLocalLocation", result, GlobalLocation); }
+	FVector2D * BP_LocalLocationToGPSLocation(FVector2D * result, FVector LocalLocation) { return NativeCall<FVector2D *, FVector2D *, FVector>(this, "UShooterGameInstance.BP_LocalLocationToGPSLocation", result, LocalLocation); }
+	FVector * BP_LocalLocationToGlobalLocation(FVector * result, FVector LocalLocation) { return NativeCall<FVector *, FVector *, FVector>(this, "UShooterGameInstance.BP_LocalLocationToGlobalLocation", result, LocalLocation); }
+	void BeginMainMenuState() { NativeCall<void>(this, "UShooterGameInstance.BeginMainMenuState"); }
+	void BeginMessageMenuState() { NativeCall<void>(this, "UShooterGameInstance.BeginMessageMenuState"); }
+	void BeginNewState(FName NewState, FName PrevState) { NativeCall<void, FName, FName>(this, "UShooterGameInstance.BeginNewState", NewState, PrevState); }
+	void BeginPlayingState() { NativeCall<void>(this, "UShooterGameInstance.BeginPlayingState"); }
+	void BeginWelcomeScreenState() { NativeCall<void>(this, "UShooterGameInstance.BeginWelcomeScreenState"); }
+	void CheckConnectString(FString ConnectStr, bool FromRedirection) { NativeCall<void, FString, bool>(this, "UShooterGameInstance.CheckConnectString", ConnectStr, FromRedirection); }
+	void CleanupSessionOnReturnToMenu() { NativeCall<void>(this, "UShooterGameInstance.CleanupSessionOnReturnToMenu"); }
+	void ClientOnCancelSeamlessTravel() { NativeCall<void>(this, "UShooterGameInstance.ClientOnCancelSeamlessTravel"); }
+	void ClientOnDoTravelSeamless(FString * Url, FString AtlasId, FString ServerId) { NativeCall<void, FString *, FString, FString>(this, "UShooterGameInstance.ClientOnDoTravelSeamless", Url, AtlasId, ServerId); }
+	void ClientOnEndSeamlessTravel() { NativeCall<void>(this, "UShooterGameInstance.ClientOnEndSeamlessTravel"); }
+	void ClientReceiveNewServerTime(long double NewServerTime) { NativeCall<void, long double>(this, "UShooterGameInstance.ClientReceiveNewServerTime", NewServerTime); }
+	void ClusterStatusDump() { NativeCall<void>(this, "UShooterGameInstance.ClusterStatusDump"); }
+	TArray<unsigned char> * CompressGridInfo(TArray<unsigned char> * result) { return NativeCall<TArray<unsigned char> *, TArray<unsigned char> *>(this, "UShooterGameInstance.CompressGridInfo", result); }
+	void ConditionalGoToMenuAndDisplayFailureNotification() { NativeCall<void>(this, "UShooterGameInstance.ConditionalGoToMenuAndDisplayFailureNotification"); }
+	void ConstructMapImagesManager() { NativeCall<void>(this, "UShooterGameInstance.ConstructMapImagesManager"); }
+	void DeCompressGridInfo(TArray<unsigned char> ByteArray, bool bSaveToFile) { NativeCall<void, TArray<unsigned char>, bool>(this, "UShooterGameInstance.DeCompressGridInfo", ByteArray, bSaveToFile); }
+	void DisplayGlobalMainMenuNotification() { NativeCall<void>(this, "UShooterGameInstance.DisplayGlobalMainMenuNotification"); }
+	void DoPostLoadMap(bool bForceReinitUI) { NativeCall<void, bool>(this, "UShooterGameInstance.DoPostLoadMap", bForceReinitUI); }
+	void EndCurrentState(FName NextState) { NativeCall<void, FName>(this, "UShooterGameInstance.EndCurrentState", NextState); }
+	void EndPlayingState() { NativeCall<void>(this, "UShooterGameInstance.EndPlayingState"); }
+	TSubclassOf<AGameMode> * GetDefaultGameModeClass(TSubclassOf<AGameMode> * result) { return NativeCall<TSubclassOf<AGameMode> *, TSubclassOf<AGameMode> *>(this, "UShooterGameInstance.GetDefaultGameModeClass", result); }
+	AShooterGameSession * GetGameSession() { return NativeCall<AShooterGameSession *>(this, "UShooterGameInstance.GetGameSession"); }
+	bool GetLastCachedServerConnectString(FString * ConnectURL, FString * AtlasId, FString * ServerId, FString * AtlasPassword, FString * AtlasName, FString * RegionName) { return NativeCall<bool, FString *, FString *, FString *, FString *, FString *, FString *>(this, "UShooterGameInstance.GetLastCachedServerConnectString", ConnectURL, AtlasId, ServerId, AtlasPassword, AtlasName, RegionName); }
+	void GetLoginThrottle() { NativeCall<void>(this, "UShooterGameInstance.GetLoginThrottle"); }
+	TSubclassOf<UObject> * GetRemappedResourceClass(TSubclassOf<UObject> * result, TSubclassOf<UObject> ForClass) { return NativeCall<TSubclassOf<UObject> *, TSubclassOf<UObject> *, TSubclassOf<UObject>>(this, "UShooterGameInstance.GetRemappedResourceClass", result, ForClass); }
+	TArray<TEnumAsByte<enum ECollisionChannel>> * GetSkeletalPhysCustomBodyAdditionalIgnores() { return NativeCall<TArray<TEnumAsByte<enum ECollisionChannel>> *>(this, "UShooterGameInstance.GetSkeletalPhysCustomBodyAdditionalIgnores"); }
+	void GotoInitialState() { NativeCall<void>(this, "UShooterGameInstance.GotoInitialState"); }
+	void GotoState(FName NewState) { NativeCall<void, FName>(this, "UShooterGameInstance.GotoState", NewState); }
+	void HandleAppLicenseUpdate() { NativeCall<void>(this, "UShooterGameInstance.HandleAppLicenseUpdate"); }
+	void HandleAppResume() { NativeCall<void>(this, "UShooterGameInstance.HandleAppResume"); }
+	void HandleAppSuspend() { NativeCall<void>(this, "UShooterGameInstance.HandleAppSuspend"); }
+	void HandleAppWillDeactivate() { NativeCall<void>(this, "UShooterGameInstance.HandleAppWillDeactivate"); }
+	void HandleControllerConnectionChange(bool bIsConnection, int Unused, int GameUserIndex) { NativeCall<void, bool, int, int>(this, "UShooterGameInstance.HandleControllerConnectionChange", bIsConnection, Unused, GameUserIndex); }
+	void HandleSafeFrameChanged() { NativeCall<void>(this, "UShooterGameInstance.HandleSafeFrameChanged"); }
+	void HandleSessionUserInviteAccepted(const bool bWasSuccess, const int ControllerId, TSharedPtr<FUniqueNetId, 0> UserId, FOnlineSessionSearchResult * InviteResult) { NativeCall<void, const bool, const int, TSharedPtr<FUniqueNetId, 0>, FOnlineSessionSearchResult *>(this, "UShooterGameInstance.HandleSessionUserInviteAccepted", bWasSuccess, ControllerId, UserId, InviteResult); }
+	bool HasExtraSublevel(FString * SublevelName) { return NativeCall<bool, FString *>(this, "UShooterGameInstance.HasExtraSublevel", SublevelName); }
+	void HttpGetLoginThrottleRequestComplete(TSharedPtr<IHttpRequest, 0> HttpRequest, TSharedPtr<IHttpResponse, 1> HttpResponse, bool bSucceeded) { NativeCall<void, TSharedPtr<IHttpRequest, 0>, TSharedPtr<IHttpResponse, 1>, bool>(this, "UShooterGameInstance.HttpGetLoginThrottleRequestComplete", HttpRequest, HttpResponse, bSucceeded); }
+	void Init() { NativeCall<void>(this, "UShooterGameInstance.Init"); }
+	void InternalTravelToSession(FName * SessionName) { NativeCall<void, FName *>(this, "UShooterGameInstance.InternalTravelToSession", SessionName); }
+	bool IsCurrentServerInvalid() { return NativeCall<bool>(this, "UShooterGameInstance.IsCurrentServerInvalid"); }
+	bool IsLocalPlayerOnline(ULocalPlayer * LocalPlayer) { return NativeCall<bool, ULocalPlayer *>(this, "UShooterGameInstance.IsLocalPlayerOnline", LocalPlayer); }
+	bool IsLoginAllowed(FString * AtlasId, FString * UserId, FString * ReasonMsg) { return NativeCall<bool, FString *, FString *, FString *>(this, "UShooterGameInstance.IsLoginAllowed", AtlasId, UserId, ReasonMsg); }
+	bool IsTravellingSeamlessly() { return NativeCall<bool>(this, "UShooterGameInstance.IsTravellingSeamlessly"); }
+	bool JoinSession(ULocalPlayer * LocalPlayer, FOnlineSessionSearchResult * SearchResult) { return NativeCall<bool, ULocalPlayer *, FOnlineSessionSearchResult *>(this, "UShooterGameInstance.JoinSession", LocalPlayer, SearchResult); }
+	bool JoinSession(ULocalPlayer * LocalPlayer, int SessionIndexInSearchResults) { return NativeCall<bool, ULocalPlayer *, int>(this, "UShooterGameInstance.JoinSession", LocalPlayer, SessionIndexInSearchResults); }
+	bool JustSeamlesslyTravelledToServer() { return NativeCall<bool>(this, "UShooterGameInstance.JustSeamlesslyTravelledToServer"); }
+	void LabelPlayerAsQuitter(ULocalPlayer * LocalPlayer) { NativeCall<void, ULocalPlayer *>(this, "UShooterGameInstance.LabelPlayerAsQuitter", LocalPlayer); }
+	void LoadDynamicSublevels(UWorld * PlayWorld, bool bForceLoadLevels) { NativeCall<void, UWorld *, bool>(this, "UShooterGameInstance.LoadDynamicSublevels", PlayWorld, bForceLoadLevels); }
+	void LoadFrontEndMap(FString * MapName) { NativeCall<void, FString *>(this, "UShooterGameInstance.LoadFrontEndMap", MapName); }
+	void LoadGameMedia() { NativeCall<void>(this, "UShooterGameInstance.LoadGameMedia"); }
+	void LoadTheGameMedia() { NativeCall<void>(this, "UShooterGameInstance.LoadTheGameMedia"); }
+	void MaybeChangeState() { NativeCall<void>(this, "UShooterGameInstance.MaybeChangeState"); }
+	void OnCurrentServerFindCompleted(bool bSuccess) { NativeCall<void, bool>(this, "UShooterGameInstance.OnCurrentServerFindCompleted", bSuccess); }
+	void OnEndSessionComplete(FName SessionName, bool bWasSuccessful) { NativeCall<void, FName, bool>(this, "UShooterGameInstance.OnEndSessionComplete", SessionName, bWasSuccessful); }
+	void OnGenerateTerrainBegin() { NativeCall<void>(this, "UShooterGameInstance.OnGenerateTerrainBegin"); }
+	void OnGenerateTerrainEnd() { NativeCall<void>(this, "UShooterGameInstance.OnGenerateTerrainEnd"); }
+	void OnPostLoadMap() { NativeCall<void>(this, "UShooterGameInstance.OnPostLoadMap"); }
+	void OnPreLoadMap() { NativeCall<void>(this, "UShooterGameInstance.OnPreLoadMap"); }
+	void OnRedirectToURLReceived(FString * ToURL, FString * ToAtlasId, FString * ToServerId) { NativeCall<void, FString *, FString *, FString *>(this, "UShooterGameInstance.OnRedirectToURLReceived", ToURL, ToAtlasId, ToServerId); }
+	void ProcessSeamlessTravelActorsOnClient() { NativeCall<void>(this, "UShooterGameInstance.ProcessSeamlessTravelActorsOnClient"); }
+	void RefreshSpawnPoints(unsigned int HomeServerId) { NativeCall<void, unsigned int>(this, "UShooterGameInstance.RefreshSpawnPoints", HomeServerId); }
+	void RemoveExistingLocalPlayer(ULocalPlayer * ExistingPlayer) { NativeCall<void, ULocalPlayer *>(this, "UShooterGameInstance.RemoveExistingLocalPlayer", ExistingPlayer); }
+	void RemoveNetworkFailureHandlers() { NativeCall<void>(this, "UShooterGameInstance.RemoveNetworkFailureHandlers"); }
+	void RemovePlayersFromParty() { NativeCall<void>(this, "UShooterGameInstance.RemovePlayersFromParty"); }
+	void RemoveSplitScreenPlayers() { NativeCall<void>(this, "UShooterGameInstance.RemoveSplitScreenPlayers"); }
+	void SetGenerateTerrainProgressMsg(FString Msg) { NativeCall<void, FString>(this, "UShooterGameInstance.SetGenerateTerrainProgressMsg", Msg); }
+	void SetIsOnline(bool bInIsOnline) { NativeCall<void, bool>(this, "UShooterGameInstance.SetIsOnline", bInIsOnline); }
+	void SetLastServerConnectStringCache(FString * ConnectURL, FString AtlasId, FString ServerId, FString AtlasPassword, FString AtlasName, FString RegionName) { NativeCall<void, FString *, FString, FString, FString, FString, FString>(this, "UShooterGameInstance.SetLastServerConnectStringCache", ConnectURL, AtlasId, ServerId, AtlasPassword, AtlasName, RegionName); }
+	void ShowLoadingScreen() { NativeCall<void>(this, "UShooterGameInstance.ShowLoadingScreen"); }
+	void ShowMessageThenGotoState(FString * Message, FString * OKButtonString, FString * CancelButtonString, FName * NewState, const bool OverrideExisting, TWeakObjectPtr<ULocalPlayer> PlayerOwner) { NativeCall<void, FString *, FString *, FString *, FName *, const bool, TWeakObjectPtr<ULocalPlayer>>(this, "UShooterGameInstance.ShowMessageThenGotoState", Message, OKButtonString, CancelButtonString, NewState, OverrideExisting, PlayerOwner); }
+	void Shutdown() { NativeCall<void>(this, "UShooterGameInstance.Shutdown"); }
+	void StartGameInstance() { NativeCall<void>(this, "UShooterGameInstance.StartGameInstance"); }
+	void StartPlayerCurrentServerDownloader() { NativeCall<void>(this, "UShooterGameInstance.StartPlayerCurrentServerDownloader"); }
+	bool Tick(float DeltaSeconds) { return NativeCall<bool, float>(this, "UShooterGameInstance.Tick", DeltaSeconds); }
+	void TravelLocalSessionFailure(UWorld * World, ETravelFailure::Type FailureType, FString * ReasonString) { NativeCall<void, UWorld *, ETravelFailure::Type, FString *>(this, "UShooterGameInstance.TravelLocalSessionFailure", World, FailureType, ReasonString); }
+	void UpdateTerrainGenerationProgressBar(float DeltaSeconds) { NativeCall<void, float>(this, "UShooterGameInstance.UpdateTerrainGenerationProgressBar", DeltaSeconds); }
+	void WorldLoaded() { NativeCall<void>(this, "UShooterGameInstance.WorldLoaded"); }
+	static UClass * GetPrivateStaticClass(const wchar_t * Package) { return NativeCall<UClass *, const wchar_t *>(nullptr, "UShooterGameInstance.GetPrivateStaticClass", Package); }
+	static void StaticRegisterNativesUShooterGameInstance() { NativeCall<void>(nullptr, "UShooterGameInstance.StaticRegisterNativesUShooterGameInstance"); }
+};
+
 struct UWorld : UObject
 {
 	struct InitializationValues
@@ -26,6 +306,7 @@ struct UWorld : UObject
 	TArray<ULevel *> LevelsField() { return *GetNativePointerField<TArray<ULevel *>*>(this, "UWorld.Levels"); }
 	TArray<AActor *> NetworkActorsField() { return *GetNativePointerField<TArray<AActor *>*>(this, "UWorld.NetworkActors"); }
 	ULevel * CurrentLevelField() { return *GetNativePointerField<ULevel **>(this, "UWorld.CurrentLevel"); }
+	UGameInstance * OwningGameInstanceField() { return *GetNativePointerField<UGameInstance **>(this, "UWorld.OwningGameInstance"); }
 	int& FrameCounterField() { return *GetNativePointerField<int*>(this, "UWorld.FrameCounter"); }
 	bool& GamePreviewField() { return *GetNativePointerField<bool*>(this, "UWorld.GamePreview"); }
 	TMap<FString,TArray<TArray<TArray<unsigned int>>>,FDefaultSetAllocator,TDefaultMapKeyFuncs<FString,TArray<TArray<TArray<unsigned int>>>,0> >& LocalInstancedStaticMeshComponentInstancesVisibilityStateField() { return *GetNativePointerField<TMap<FString,TArray<TArray<TArray<unsigned int>>>,FDefaultSetAllocator,TDefaultMapKeyFuncs<FString,TArray<TArray<TArray<unsigned int>>>,0> >*>(this, "UWorld.LocalInstancedStaticMeshComponentInstancesVisibilityState"); }

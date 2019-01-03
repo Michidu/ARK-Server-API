@@ -90,7 +90,9 @@
     "APrimalStructureTurret",
     "FOverlapResult",
     "UVictoryCore",
-    "ULevelBase"
+    "ULevelBase",
+	"FSeamlessServerInfo",
+	"FSeamlessGridInfo"
   ],
   "functions":[  
     "StaticLoadObject",
