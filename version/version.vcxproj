@@ -125,6 +125,8 @@
     <ClInclude Include="Core\Public\API\UE\Windows\WindowsPlatformAtomics.h" />
     <ClInclude Include="Core\Public\Ark\ArkApiUtils.h" />
     <ClInclude Include="Core\Public\Atlas\AtlasApiUtils.h" />
+    <ClInclude Include="Core\Public\Database\Mysql.h" />
+    <ClInclude Include="Core\Public\Database\Sqlite.h" />
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
@@ -160,6 +162,7 @@
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="cpp.hint" />
     <None Include="version.def" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -253,7 +256,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ATLAS_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;..\include\mysql++11;..\include\sqlite;</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -278,7 +281,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ARK_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\;..\include\curl;</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
