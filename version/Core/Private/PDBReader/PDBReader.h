@@ -2,7 +2,7 @@
 
 #include <dia2.h>
 
-#include <json.hpp>
+#include "../../json.hpp"
 
 #include <API/Fields.h>
 
