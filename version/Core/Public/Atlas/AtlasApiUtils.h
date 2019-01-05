@@ -270,30 +270,26 @@ namespace ArkApi
 		* \brief Returns the character name of player
 		* \param player_controller Player
 		*/
-		static FString GetCharacterName(AShooterPlayerController* player_controller, bool include_first_name = true,
-		                                bool include_last_name = false)
+		static FString GetCharacterName(AShooterPlayerController* player_controller, bool first_name_only = false,
+		                                bool last_name_only = false)
 		{
-			auto* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField());
-			if (player_state)
+			FString name;
+			player_controller->GetPlayerCharacterName(&name);
+
+			if (first_name_only)
 			{
-				FString name;
-				player_state->GetPlayerName(&name);
+				int32 index = -1;
+				name.FindLastChar(' ', index);
+				return name.Mid(0, index - 1);
+			}
 
-				if (include_first_name && include_last_name)
-					return name;
-
-				if (include_first_name)
-				{
-					int32 index = -1;
-					name.FindLastChar(' ', index);
-					return name.Mid(0, index - 1);
-				}
-
+			if (last_name_only)
+			{
 				int32 index = -1;
 				name.FindLastChar(' ', index);
 				return name.Mid(index + 1, name.Len() - (index + 1));
 			}
-			return "";
+			return name;
 		}
 
 		/**
