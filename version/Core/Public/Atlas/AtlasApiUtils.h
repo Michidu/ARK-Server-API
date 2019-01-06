@@ -271,7 +271,7 @@ namespace ArkApi
 		* \param player_controller Player
 		*/
 		static FString GetCharacterName(AShooterPlayerController* player_controller, bool include_first_name = true,
-		                                bool include_last_name = false)
+		                                bool include_last_name = true)
 		{
 			auto* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField());
 			if (player_state)
@@ -446,7 +446,9 @@ namespace ArkApi
 		*/
 		static FVector GetPosition(APlayerController* player_controller)
 		{
-			return player_controller != nullptr ? player_controller->DefaultActorLocationField() : FVector{0, 0, 0};
+			FVector WorldPos{ 0, 0, 0 };
+			if (player_controller->RootComponentField()) player_controller->RootComponentField()->GetWorldLocation(&WorldPos);
+			return WorldPos;
 		}
 
 		/**
@@ -541,20 +543,10 @@ namespace ArkApi
 		/**
 		 * \brief Returns IP address of player
 		 */
-		static FString GetIPAddress(AShooterPlayerController* player)
+		static FString GetIPAddress(AShooterPlayerController* player_controller)
 		{
-			FString ip_address = "";
-
-			if (player != nullptr)
-			{
-				auto* player_state = static_cast<AShooterPlayerState*>(player->PlayerStateField());
-
-				if (player_state != nullptr && player_state->MyPlayerDataStructField() != nullptr)
-				{
-					ip_address = player_state->MyPlayerDataStructField()->SavedNetworkAddressField();
-				}
-			}
-
+			FString ip_address;
+			player_controller->GetPlayerNetworkAddress(&ip_address);
 			return ip_address;
 		}
 
