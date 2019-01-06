@@ -15,7 +15,7 @@
 
 namespace API
 {
-	constexpr float api_version = 1.1;
+	constexpr float api_version = 1.2f;
 
 	AtlasBaseApi::AtlasBaseApi()
 		: commands_(std::make_unique<ArkApi::Commands>()),
