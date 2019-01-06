@@ -125,6 +125,8 @@
     <ClInclude Include="Core\Public\API\UE\Windows\WindowsPlatformAtomics.h" />
     <ClInclude Include="Core\Public\Ark\ArkApiUtils.h" />
     <ClInclude Include="Core\Public\Atlas\AtlasApiUtils.h" />
+    <ClInclude Include="Core\Public\Database\Mysql.h" />
+    <ClInclude Include="Core\Public\Database\Sqllite.h" />
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
