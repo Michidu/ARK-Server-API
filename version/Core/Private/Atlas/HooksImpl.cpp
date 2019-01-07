@@ -89,18 +89,21 @@ namespace AtlasApi
 		const long double last_chat_time = player_controller->LastChatMessageTimeField();
 		const long double now_time = ArkApi::GetApiUtils().GetWorld()->TimeSecondsField();
 
-		const auto spam_check = now_time - last_chat_time > 2.0;
-
-		const auto command_executed = !spam_check &&
-			dynamic_cast<ArkApi::Commands&>(*API::game_api->GetCommands()).
-			CheckChatCommands(player_controller, message, mode);
+		const auto spam_check = now_time - last_chat_time < 1.0;
+		if (last_chat_time > 0 && spam_check)
+		{
+			return;
+		}
 
 		player_controller->LastChatMessageTimeField() = now_time;
+
+		const auto command_executed = dynamic_cast<ArkApi::Commands&>(*API::game_api->GetCommands()).
+			CheckChatCommands(player_controller, message, mode);
 
 		const auto prevent_default = dynamic_cast<ArkApi::Commands&>(*API::game_api->GetCommands()).
 			CheckOnChatMessageCallbacks(player_controller, message, mode, spam_check, command_executed);
 
-		if (spam_check || command_executed || prevent_default)
+		if (command_executed || prevent_default)
 		{
 			return;
 		}
