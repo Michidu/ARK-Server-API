@@ -87,15 +87,15 @@ namespace AtlasApi
 		AShooterPlayerController* player_controller, FString* message, EChatSendMode::Type mode)
 	{
 		const long double last_chat_time = player_controller->LastChatMessageTimeField();
-		const long double nNowTime = ArkApi::GetApiUtils().GetWorld()->TimeSecondsField();
+		const long double now_time = ArkApi::GetApiUtils().GetWorld()->TimeSecondsField();
 
-		const auto spam_check = nNowTime >= last_chat_time;
+		const auto spam_check = now_time - last_chat_time > 2.0;
 
 		const auto command_executed = !spam_check &&
 			dynamic_cast<ArkApi::Commands&>(*API::game_api->GetCommands()).
 			CheckChatCommands(player_controller, message, mode);
 
-		player_controller->LastChatMessageTimeField() = nNowTime + 2;
+		player_controller->LastChatMessageTimeField() = now_time;
 
 		const auto prevent_default = dynamic_cast<ArkApi::Commands&>(*API::game_api->GetCommands()).
 			CheckOnChatMessageCallbacks(player_controller, message, mode, spam_check, command_executed);

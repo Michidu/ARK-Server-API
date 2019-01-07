@@ -41,6 +41,7 @@ namespace API
 		curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
 		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, &Requests::WriteCallback);
 		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
+		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
 
 		curl_multi_add_handle(curl_, handle);
 
@@ -65,6 +66,7 @@ namespace API
 		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
 		curl_easy_setopt(handle, CURLOPT_POST, 1);
 		curl_easy_setopt(handle, CURLOPT_POSTFIELDS, post_data.c_str());
+		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
 
 		curl_multi_add_handle(curl_, handle);
 
