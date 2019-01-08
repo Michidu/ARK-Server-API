@@ -28,7 +28,8 @@ namespace API
 		return instance;
 	}
 
-	bool Requests::CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback)
+	bool Requests::CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+	                                std::vector<std::string> headers)
 	{
 		CURL* handle = curl_easy_init();
 		if (!handle)
@@ -38,10 +39,19 @@ namespace API
 
 		requests_[handle] = std::make_unique<Request>(callback);
 
+		curl_slist* chunk = nullptr;
+
+		for (const std::string& header : headers)
+		{
+			chunk = curl_slist_append(chunk, header.c_str());
+		}
+
+		curl_easy_setopt(handle, CURLOPT_HTTPHEADER, chunk);
 		curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
 		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, &Requests::WriteCallback);
 		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
 		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 30L);
 
 		curl_multi_add_handle(curl_, handle);
 
@@ -51,7 +61,7 @@ namespace API
 	}
 
 	bool Requests::CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-	                                 const std::string& post_data)
+	                                 const std::string& post_data, std::vector<std::string> headers)
 	{
 		CURL* handle = curl_easy_init();
 		if (!handle)
@@ -61,12 +71,54 @@ namespace API
 
 		requests_[handle] = std::make_unique<Request>(callback);
 
+		curl_slist* chunk = nullptr;
+
+		for (const std::string& header : headers)
+		{
+			chunk = curl_slist_append(chunk, header.c_str());
+		}
+
+		curl_easy_setopt(handle, CURLOPT_HTTPHEADER, chunk);
 		curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
 		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, &Requests::WriteCallback);
 		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
 		curl_easy_setopt(handle, CURLOPT_POST, 1);
 		curl_easy_setopt(handle, CURLOPT_POSTFIELDS, post_data.c_str());
 		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 30L);
+
+		curl_multi_add_handle(curl_, handle);
+
+		const CURLMcode res = curl_multi_perform(curl_, &handles_count_);
+
+		return res == CURLM_OK;
+	}
+
+	bool Requests::CreateDeleteRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+	                                   std::vector<std::string> headers)
+	{
+		CURL* handle = curl_easy_init();
+		if (!handle)
+		{
+			return false;
+		}
+
+		requests_[handle] = std::make_unique<Request>(callback);
+
+		curl_slist* chunk = nullptr;
+
+		for (const std::string& header : headers)
+		{
+			chunk = curl_slist_append(chunk, header.c_str());
+		}
+
+		curl_easy_setopt(handle, CURLOPT_HTTPHEADER, chunk);
+		curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
+		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, &Requests::WriteCallback);
+		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
+		curl_easy_setopt(handle, CURLOPT_CUSTOMREQUEST, "DELETE");
+		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 30L);
 
 		curl_multi_add_handle(curl_, handle);
 

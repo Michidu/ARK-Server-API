@@ -17,10 +17,13 @@ namespace API
 		Requests& operator=(const Requests&) = delete;
 		Requests& operator=(Requests&&) = delete;
 
-		ARK_API bool CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback);
+		ARK_API bool CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+		                              std::vector<std::string> headers = {});
 
 		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-		                               const std::string& post_data);
+		                               const std::string& post_data, std::vector<std::string> headers = {});
+		ARK_API bool CreateDeleteRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+		                                 std::vector<std::string> headers = {});
 
 	private:
 		using CURLM = void;
