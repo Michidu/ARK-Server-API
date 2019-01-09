@@ -11,13 +11,13 @@ namespace API
 	{
 		curl_global_init(CURL_GLOBAL_DEFAULT);
 
-		game_api->GetCommands()->AddOnTickCallback("RequestsUpdate",
-		                                           std::bind(&Requests::Update, this, std::placeholders::_1));
+		game_api->GetCommands()->AddOnTimerCallback("RequestsUpdate",
+		                                            std::bind(&Requests::Update, this));
 	}
 
 	Requests::~Requests()
 	{
-		game_api->GetCommands()->RemoveOnTickCallback("RequestsUpdate");
+		game_api->GetCommands()->RemoveOnTimerCallback("RequestsUpdate");
 
 		curl_global_cleanup();
 	}
@@ -136,36 +136,26 @@ namespace API
 		return size * nmemb;
 	}
 
-	void Requests::Update(float)
+	void Requests::Update()
 	{
-		if (handles_count_ <= 0)
+		if (handles_count_ == 0)
 			return;
 
-		const CURLMcode res = curl_multi_perform(curl_, &handles_count_);
-		if (res != CURLM_OK || handles_count_ <= 0)
+		curl_multi_perform(curl_, &handles_count_);
+
+		int msgq;
+		CURLMsg* m = curl_multi_info_read(curl_, &msgq);
+		if (m && m->msg == CURLMSG_DONE)
 		{
-			return;
+			CURL* handle = m->easy_handle;
+
+			auto& request = requests_[handle];
+			request->callback(m->data.result == CURLE_OK, move(request->read_buffer));
+
+			requests_.erase(handle);
+
+			curl_multi_remove_handle(curl_, handle);
+			curl_easy_cleanup(handle);
 		}
-
-		CURLMsg* m;
-
-		do
-		{
-			int msgq;
-			m = curl_multi_info_read(curl_, &msgq);
-			if (m && m->msg == CURLMSG_DONE)
-			{
-				CURL* handle = m->easy_handle;
-
-				auto& request = requests_[handle];
-				request->callback(m->data.result == CURLE_OK, move(request->read_buffer));
-
-				requests_.erase(handle);
-
-				curl_multi_remove_handle(curl_, handle);
-				curl_easy_cleanup(handle);
-			}
-		}
-		while (m);
 	}
 } // namespace API

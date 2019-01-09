@@ -44,7 +44,7 @@ namespace API
 		~Requests();
 
 		static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
-		void Update(float);
+		void Update();
 
 		CURLM* curl_;
 		int handles_count_{};
