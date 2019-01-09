@@ -51,7 +51,7 @@ namespace API
 		curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, &Requests::WriteCallback);
 		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
 		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 30L);
+		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 120L);
 
 		curl_multi_add_handle(curl_, handle);
 
@@ -85,7 +85,7 @@ namespace API
 		curl_easy_setopt(handle, CURLOPT_POST, 1);
 		curl_easy_setopt(handle, CURLOPT_POSTFIELDS, post_data.c_str());
 		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 30L);
+		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 120L);
 
 		curl_multi_add_handle(curl_, handle);
 
@@ -118,7 +118,7 @@ namespace API
 		curl_easy_setopt(handle, CURLOPT_WRITEDATA, &requests_[handle]->read_buffer);
 		curl_easy_setopt(handle, CURLOPT_CUSTOMREQUEST, "DELETE");
 		curl_easy_setopt(handle, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 30L);
+		curl_easy_setopt(handle, CURLOPT_TIMEOUT, 120L);
 
 		curl_multi_add_handle(curl_, handle);
 
@@ -142,25 +142,30 @@ namespace API
 			return;
 
 		const CURLMcode res = curl_multi_perform(curl_, &handles_count_);
-		if (res != CURLM_OK)
+		if (res != CURLM_OK || handles_count_ <= 0)
 		{
 			return;
 		}
 
-		int msgq;
-		CURLMsg* m = curl_multi_info_read(curl_, &msgq);
-		if (m && m->msg == CURLMSG_DONE)
+		CURLMsg* m;
+
+		do
 		{
-			CURL* handle = m->easy_handle;
+			int msgq;
+			m = curl_multi_info_read(curl_, &msgq);
+			if (m && m->msg == CURLMSG_DONE)
+			{
+				CURL* handle = m->easy_handle;
 
-			auto& request = requests_[handle];
-			request->callback(m->data.result == CURLE_OK, move(request->read_buffer));
+				auto& request = requests_[handle];
+				request->callback(m->data.result == CURLE_OK, move(request->read_buffer));
 
-			requests_.erase(handle);
+				requests_.erase(handle);
 
-			--handles_count_;
-			curl_multi_remove_handle(curl_, handle);
-			curl_easy_cleanup(handle);
+				curl_multi_remove_handle(curl_, handle);
+				curl_easy_cleanup(handle);
+			}
 		}
+		while (m);
 	}
 } // namespace API
