@@ -41,7 +41,6 @@ struct FTribeGovernment;
 struct FTribeData;
 struct FPlayerDeathReason;
 struct FDamageEvent;
-struct UDamageType;
 struct APrimalTargetableActor;
 struct APrimalStructure;
 struct APrimalStructureDoor;

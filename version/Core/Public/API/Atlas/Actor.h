@@ -5368,6 +5368,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	int& MeleeDamageAmountField() { return *GetNativePointerField<int*>(this, "APrimalDinoCharacter.MeleeDamageAmount"); }
 	float& MeleeDamageImpulseField() { return *GetNativePointerField<float*>(this, "APrimalDinoCharacter.MeleeDamageImpulse"); }
 	float& MeleeSwingRadiusField() { return *GetNativePointerField<float*>(this, "APrimalDinoCharacter.MeleeSwingRadius"); }
+	TArray<FDinoAttackInfo>& AttackInfosField() { return *GetNativePointerField<TArray<FDinoAttackInfo>*>(this, "APrimalDinoCharacter.AttackInfos"); }
 	char& CurrentAttackIndexField() { return *GetNativePointerField<char*>(this, "APrimalDinoCharacter.CurrentAttackIndex"); }
 	char& LastAttackIndexField() { return *GetNativePointerField<char*>(this, "APrimalDinoCharacter.LastAttackIndex"); }
 	TSubclassOf<UDamageType>& MeleeDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "APrimalDinoCharacter.MeleeDamageType"); }
