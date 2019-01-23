@@ -70,7 +70,7 @@
     "UBoolProperty",
     "APrimalDinoAIController",
     "APrimalStructureItemContainer",
-	"APrimalStructureClaimFlag",
+    "APrimalStructureClaimFlag",
     "UShooterGameInstance",
     "AMatineeActor",
     "UEngine",
