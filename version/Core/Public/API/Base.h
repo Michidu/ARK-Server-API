@@ -145,6 +145,7 @@ struct UPrimalGameData;
 struct UEngine;
 struct UPrimalGlobals;
 struct APrimalStructurePlacer;
+struct UActorChannel;
 
 // Atlas
 
