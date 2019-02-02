@@ -716,3 +716,18 @@ namespace EServerOctreeGroup
 		MAX = 0x12,
 	};
 }
+
+namespace EShipType
+{
+	enum Type
+	{
+		Default = 0x0,
+		Brigantine = 0x1,
+		Raft = 0x2,
+		Dinghy = 0x3,
+		Sloop = 0x4,
+		Schooner = 0x5,
+		Galleon = 0x6,
+		MAX = 0x7
+	};
+}

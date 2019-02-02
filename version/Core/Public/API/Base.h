@@ -146,6 +146,10 @@ struct UEngine;
 struct UPrimalGlobals;
 struct APrimalStructurePlacer;
 struct UActorChannel;
+struct UPrimalColorSet{};
+struct FDinoSaddleStruct {};
+struct APrimalStructureShipHull{};
+struct APrimalStructureSail;
 
 // Atlas
 
