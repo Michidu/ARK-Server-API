@@ -34,6 +34,8 @@ namespace API
 		std::unordered_map<std::string, intptr_t>* offsets_dump_{nullptr};
 		std::unordered_map<std::string, BitField>* bitfields_dump_{nullptr};
 
+		bool dump_all_{false};
+
 		nlohmann::json config_;
 	};
 } // namespace API

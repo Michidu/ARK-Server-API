@@ -88,7 +88,6 @@
     <MASM Include="version_asm.asm" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="json.hpp" />
     <ClInclude Include="MinHook.h" />
     <ClInclude Include="Core\Private\PDBReader\PDBReader.h">
       <Filter>Core\Private\PDBReader</Filter>

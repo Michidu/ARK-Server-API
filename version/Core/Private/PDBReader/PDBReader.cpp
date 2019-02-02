@@ -43,6 +43,8 @@ namespace API
 			throw std::runtime_error("Failed to open config.json");
 		}
 
+		dump_all_ = config_["settings"].value("DumpAll", false);
+
 		try
 		{
 			MergePdbConfig(config_, plugin_pdb_config);
@@ -168,8 +170,7 @@ namespace API
 			const std::string str_name(bbstr_name);
 
 			// Check if structure name is in config
-			const auto find_res = find(structs_array.begin(), structs_array.end(), str_name);
-			if (find_res != structs_array.end())
+			if (dump_all_ || find(structs_array.begin(), structs_array.end(), str_name) != structs_array.end())
 			{
 				DumpType(symbol, str_name, 0);
 			}
