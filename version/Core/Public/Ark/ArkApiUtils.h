@@ -333,27 +333,61 @@ namespace ArkApi
 			return result;
 		}
 
-		/*bool SpawnDrop(const wchar_t* blueprint, FVector pos, int amount, float item_quality = 0.0f,
-					   bool force_blueprint = false, float life_span = 0.0f) const
+		/**
+		 * \brief Spawns an item drop
+		 * \param blueprint Item simplified BP
+		 * Example: '/Game/PrimalEarth/CoreBlueprints/Items/Armor/Riot/PrimalItemArmor_RiotPants.PrimalItemArmor_RiotPants_C'
+		 * \param pos Spawn position
+		 * \param amount Quantity
+		 * \param item_quality Quality
+		 * \param force_blueprint Is blueprint
+		 * \param life_span Life span
+		 * \return Returns true if drop was spawned, false otherwise
+		 */
+		bool SpawnDrop(const wchar_t* blueprint, FVector pos, int amount, float item_quality = 0.0f,
+		               bool force_blueprint = false, float life_span = 0.0f) const
 		{
-			UObject* object = Globals::StaticLoadObject(UObject::StaticClass(), nullptr, blueprint, nullptr, 0, 0, true);
-			TSubclassOf<UPrimalItem> archetype;// (reinterpret_cast<UClass*>(object));
+			APlayerController* player = GetWorld()->GetFirstPlayerController();
+			if (!player)
+			{
+				return false;
+			}
+
+			UObject* object = Globals::
+				StaticLoadObject(UObject::StaticClass(), nullptr, blueprint, nullptr, 0, 0, true);
+			if (!object)
+			{
+				return false;
+			}
+
+			TSubclassOf<UPrimalItem> archetype;
 			archetype.uClass = reinterpret_cast<UClass*>(object);
+
+			UPrimalItem* item = UPrimalItem::AddNewItem(archetype, nullptr, false, false, item_quality, false, amount,
+			                                            force_blueprint, 0, false, nullptr, 0);
+			if (!item)
+			{
+				return false;
+			}
+
+			FItemNetInfo* info = static_cast<FItemNetInfo*>(FMemory::Malloc(0x400));
+			RtlSecureZeroMemory(info, 0x400);
+
+			item->GetItemNetInfo(info, false);
+
 			TSubclassOf<ADroppedItem> archetype_dropped;
 			archetype_dropped.uClass = reinterpret_cast<UClass*>(object);
-			APlayerController* player = GetWorld()->GetFirstPlayerController();
-			if (player)
-			{
-				FVector pos2{1, 1, 1};
-				FRotator rot{0, 0, 0};
-				UPrimalInventoryComponent::StaticDropNewItem(player, archetype, item_quality, false, amount, force_blueprint,
-															 archetype_dropped, &rot,
-															 true, &pos2, &rot, true, false, false, true, nullptr, pos2,
-					nullptr, life_span);
-				return true;
-			}
-			return false;
-		}*/
+
+			FVector zero_vector{0, 0, 0};
+			FRotator rot{0, 0, 0};
+
+			UPrimalInventoryComponent::StaticDropItem(player, info, archetype_dropped, &rot, true, &pos, &rot, true,
+			                                          false, false, true, nullptr, &zero_vector, nullptr, life_span);
+
+			FMemory::Free(info);
+
+			return true;
+		}
 
 		/**
 		 * \brief Spawns a dino near player or at specific coordinates
