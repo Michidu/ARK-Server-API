@@ -1,5 +1,7 @@
 #pragma once
 
+#include "API/Base.h"
+
 struct AGameState
 {
 	TSubclassOf<AGameMode>& GameModeClassField() { return *GetNativePointerField<TSubclassOf<AGameMode>*>(this, "AGameState.GameModeClass"); }
@@ -111,7 +113,8 @@ struct AShooterGameState : AGameState
 	FName& ActiveEventField() { return *GetNativePointerField<FName*>(this, "AShooterGameState.ActiveEvent"); }
 	bool& bAllowPaintingWithoutResourcesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowPaintingWithoutResources"); }
 	bool& bEnableExtraStructurePreventionVolumesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bEnableExtraStructurePreventionVolumes"); }
-	//TArray<FItemCraftingCostOverride>& OverrideItemCraftingCostsField() { return *GetNativePointerField<TArray<FItemCraftingCostOverride>*>(this, "AShooterGameState.OverrideItemCraftingCosts"); }
+	TArray<FItemCraftingCostOverride>& OverrideItemCraftingCostsField() { return *GetNativePointerField<TArray<FItemCraftingCostOverride>*>(this, "AShooterGameState.OverrideItemCraftingCosts"); }
+	TArray<FItemMaxItemQuantityOverride>& OverrideItemMaxQuantityField() { return *GetNativePointerField<TArray<FItemMaxItemQuantityOverride>*>(this, "AShooterGameState.OverrideItemMaxQuantity"); }
 	long double& LastServerSaveTimeField() { return *GetNativePointerField<long double*>(this, "AShooterGameState.LastServerSaveTime"); }
 	float& ServerSaveIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ServerSaveInterval"); }
 	float& TribeNameChangeCooldownField() { return *GetNativePointerField<float*>(this, "AShooterGameState.TribeNameChangeCooldown"); }
@@ -123,11 +126,12 @@ struct AShooterGameState : AGameState
 	bool& bPlayingDynamicMusic2Field() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPlayingDynamicMusic2"); }
 	float& LastHadMusicTimeField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LastHadMusicTime"); }
 	TArray<FLevelExperienceRamp>& LevelExperienceRampOverridesField() { return *GetNativePointerField<TArray<FLevelExperienceRamp>*>(this, "AShooterGameState.LevelExperienceRampOverrides"); }
-	//TArray<FEngramEntryOverride>& OverrideEngramEntriesField() { return *GetNativePointerField<TArray<FEngramEntryOverride>*>(this, "AShooterGameState.OverrideEngramEntries"); }
+	TArray<FEngramEntryOverride>& OverrideEngramEntriesField() { return *GetNativePointerField<TArray<FEngramEntryOverride>*>(this, "AShooterGameState.OverrideEngramEntries"); }
 	TArray<FString>& PreventDinoTameClassNamesField() { return *GetNativePointerField<TArray<FString>*>(this, "AShooterGameState.PreventDinoTameClassNames"); }
 	float& ListenServerTetherDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ListenServerTetherDistanceMultiplier"); }
 	FString& PGMapNameField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.PGMapName"); }
 	TArray<int>& SupportedSpawnRegionsField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameState.SupportedSpawnRegions"); }
+	UPaintingCache * PaintingCacheField() { return *GetNativePointerField<UPaintingCache **>(this, "AShooterGameState.PaintingCache"); }
 	USoundBase * StaticOverrideMusicField() { return *GetNativePointerField<USoundBase **>(this, "AShooterGameState.StaticOverrideMusic"); }
 	bool& bEnableDeathTeamSpectatorField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bEnableDeathTeamSpectator"); }
 	FVector& PlayerFloatingHUDOffsetField() { return *GetNativePointerField<FVector*>(this, "AShooterGameState.PlayerFloatingHUDOffset"); }
@@ -148,11 +152,13 @@ struct AShooterGameState : AGameState
 	float& ExtinctionEventPercentField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ExtinctionEventPercent"); }
 	int& ExtinctionEventSecondsRemainingField() { return *GetNativePointerField<int*>(this, "AShooterGameState.ExtinctionEventSecondsRemaining"); }
 	bool& bDoExtinctionEventField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDoExtinctionEvent"); }
+	TArray<FInventoryComponentDefaultItemsAppend>& InventoryComponentAppendsField() { return *GetNativePointerField<TArray<FInventoryComponentDefaultItemsAppend>*>(this, "AShooterGameState.InventoryComponentAppends"); }
 	bool& bPreventOfflinePvPField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPreventOfflinePvP"); }
 	bool& bPvPDinoDecayField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPvPDinoDecay"); }
 	bool& bAllowUnclaimDinosConfigField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowUnclaimDinosConfig"); }
 	bool& bForceUseInventoryAppendsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bForceUseInventoryAppends"); }
 	bool& bOverideStructurePlatformPreventionField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bOverideStructurePlatformPrevention"); }
+	float& ItemStackSizeMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ItemStackSizeMultiplier"); }
 	TArray<int>& PreventOfflinePvPLiveTeamsField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameState.PreventOfflinePvPLiveTeams"); }
 	TArray<int>& PreventOfflinePvPExpiringTeamsField() { return *GetNativePointerField<TArray<int>*>(this, "AShooterGameState.PreventOfflinePvPExpiringTeams"); }
 	TArray<double>& PreventOfflinePvPExpiringTimesField() { return *GetNativePointerField<TArray<double>*>(this, "AShooterGameState.PreventOfflinePvPExpiringTimes"); }
@@ -161,7 +167,7 @@ struct AShooterGameState : AGameState
 	bool& bAllowAnyoneBabyImprintCuddleField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowAnyoneBabyImprintCuddle"); }
 	bool& bDisableImprintDinoBuffField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bDisableImprintDinoBuff"); }
 	int& MaxPersonalTamedDinosField() { return *GetNativePointerField<int*>(this, "AShooterGameState.MaxPersonalTamedDinos"); }
-	//TArray<FFloatingTextEntry>& FloatingTextEntriesField() { return *GetNativePointerField<TArray<FFloatingTextEntry>*>(this, "AShooterGameState.FloatingTextEntries"); }
+	TArray<FFloatingTextEntry>& FloatingTextEntriesField() { return *GetNativePointerField<TArray<FFloatingTextEntry>*>(this, "AShooterGameState.FloatingTextEntries"); }
 	bool& bIsCustomMapField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsCustomMap"); }
 	bool& bIsClientField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsClient"); }
 	bool& bIsDedicatedServerField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIsDedicatedServer"); }
@@ -181,6 +187,8 @@ struct AShooterGameState : AGameState
 	float& HairGrowthSpeedMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.HairGrowthSpeedMultiplier"); }
 	float& FastDecayIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.FastDecayInterval"); }
 	float& OxygenSwimSpeedStatMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.OxygenSwimSpeedStatMultiplier"); }
+	FOnHTTPGetProcessed& OnHTTPGetResponseField() { return *GetNativePointerField<FOnHTTPGetProcessed*>(this, "AShooterGameState.OnHTTPGetResponse"); }
+	FOnHTTPPostResponse& OnHTTPPostResponseField() { return *GetNativePointerField<FOnHTTPPostResponse*>(this, "AShooterGameState.OnHTTPPostResponse"); }
 	bool& bAllowMultipleAttachedC4Field() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowMultipleAttachedC4"); }
 	bool& bCrossARKAllowForeignDinoDownloadsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bCrossARKAllowForeignDinoDownloads"); }
 	long double& LastPlayedDynamicMusic1Field() { return *GetNativePointerField<long double*>(this, "AShooterGameState.LastPlayedDynamicMusic1"); }
@@ -203,7 +211,7 @@ struct AShooterGameState : AGameState
 	int& LimitTurretsNumField() { return *GetNativePointerField<int*>(this, "AShooterGameState.LimitTurretsNum"); }
 	bool& bForceAllowAllStructuresField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bForceAllowAllStructures"); }
 	bool& bShowCreativeModeField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bShowCreativeMode"); }
-	//TArray<FPlayerLocatorEffectMap>& PlayerLocatorEffectMapsField() { return *GetNativePointerField<TArray<FPlayerLocatorEffectMap>*>(this, "AShooterGameState.PlayerLocatorEffectMaps"); }
+	TArray<FPlayerLocatorEffectMap>& PlayerLocatorEffectMapsField() { return *GetNativePointerField<TArray<FPlayerLocatorEffectMap>*>(this, "AShooterGameState.PlayerLocatorEffectMaps"); }
 	int& AmbientSoundCheckIncrementField() { return *GetNativePointerField<int*>(this, "AShooterGameState.AmbientSoundCheckIncrement"); }
 	float& PreventOfflinePvPConnectionInvincibleIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PreventOfflinePvPConnectionInvincibleInterval"); }
 	float& PassiveTameIntervalMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PassiveTameIntervalMultiplier"); }
@@ -217,6 +225,7 @@ struct AShooterGameState : AGameState
 	static APrimalBuff * BaseSpawnBuffAndAttachToCharacter(UClass * Buff, APrimalCharacter * PrimalCharacter, float ExperiencePoints) { return NativeCall<APrimalBuff *, UClass *, APrimalCharacter *, float>(nullptr, "AShooterGameState.BaseSpawnBuffAndAttachToCharacter", Buff, PrimalCharacter, ExperiencePoints); }
 	void Destroyed() { NativeCall<void>(this, "AShooterGameState.Destroyed"); }
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty> * OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty> *>(this, "AShooterGameState.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	bool GetItemMaxQuantityOverride(TSubclassOf<UPrimalItem> ForClass, FMaxItemQuantityOverride * OutMaxQuantity) { return NativeCall<bool, TSubclassOf<UPrimalItem>, FMaxItemQuantityOverride *>(this, "AShooterGameState.GetItemMaxQuantityOverride", ForClass, OutMaxQuantity); }
 	void OnRep_SupportedSpawnRegions() { NativeCall<void>(this, "AShooterGameState.OnRep_SupportedSpawnRegions"); }
 	void OnRep_ReplicateLocalizedChatRadius() { NativeCall<void>(this, "AShooterGameState.OnRep_ReplicateLocalizedChatRadius"); }
 	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "AShooterGameState.Tick", DeltaSeconds); }
@@ -289,10 +298,15 @@ struct AGameSession
 	void UpdateSessionJoinability(FName InSessionName, bool bPublicSearchable, bool bAllowInvites, bool bJoinViaPresence, bool bJoinViaPresenceFriendsOnly) { NativeCall<void, FName, bool, bool, bool, bool>(this, "AGameSession.UpdateSessionJoinability", InSessionName, bPublicSearchable, bAllowInvites, bJoinViaPresence, bJoinViaPresenceFriendsOnly); }
 };
 
-struct AShooterGameSession : AGameSession
+struct AShooterGameSession
 {
+	TArray<FInstalledItemInfo>& CachedModsField() { return *GetNativePointerField<TArray<FInstalledItemInfo>*>(this, "AShooterGameSession.CachedMods"); }
+	TArray<FShooterSessionData>& ThreadSafeSearchResultsField() { return *GetNativePointerField<TArray<FShooterSessionData>*>(this, "AShooterGameSession.ThreadSafeSearchResults"); }
 	TArray<UNetConnection *> FailedAuthTokenClientConnectionsField() { return *GetNativePointerField<TArray<UNetConnection *>*>(this, "AShooterGameSession.FailedAuthTokenClientConnections"); }
 	TArray<FUniqueNetIdUInt64>& FailedAuthTokenClientUniqueIDsField() { return *GetNativePointerField<TArray<FUniqueNetIdUInt64>*>(this, "AShooterGameSession.FailedAuthTokenClientUniqueIDs"); }
+	FShooterGameSessionParams& CurrentSessionParamsField() { return *GetNativePointerField<FShooterGameSessionParams*>(this, "AShooterGameSession.CurrentSessionParams"); }
+	TSharedPtr<FShooterOnlineSessionSettings, 0>& HostSettingsField() { return *GetNativePointerField<TSharedPtr<FShooterOnlineSessionSettings, 0>*>(this, "AShooterGameSession.HostSettings"); }
+	TSharedPtr<FShooterOnlineSearchSettings, 0>& SearchSettingsField() { return *GetNativePointerField<TSharedPtr<FShooterOnlineSearchSettings, 0>*>(this, "AShooterGameSession.SearchSettings"); }
 	bool& bFoundSessionField() { return *GetNativePointerField<bool*>(this, "AShooterGameSession.bFoundSession"); }
 
 	// Functions
@@ -314,6 +328,7 @@ struct AShooterGameSession : AGameSession
 	void OnFoundSession() { NativeCall<void>(this, "AShooterGameSession.OnFoundSession"); }
 	void CancelFindSessions() { NativeCall<void>(this, "AShooterGameSession.CancelFindSessions"); }
 	bool JoinSession(TSharedPtr<FUniqueNetId, 0> UserId, FName SessionName, int SessionIndexInSearchResults) { return NativeCall<bool, TSharedPtr<FUniqueNetId, 0>, FName, int>(this, "AShooterGameSession.JoinSession", UserId, SessionName, SessionIndexInSearchResults); }
+	bool JoinSession(TSharedPtr<FUniqueNetId, 0> UserId, FName SessionName, FOnlineSessionSearchResult * SearchResult) { return NativeCall<bool, TSharedPtr<FUniqueNetId, 0>, FName, FOnlineSessionSearchResult *>(this, "AShooterGameSession.JoinSession", UserId, SessionName, SearchResult); }
 	bool TravelToSession(int ControllerId, FName SessionName) { return NativeCall<bool, int, FName>(this, "AShooterGameSession.TravelToSession", ControllerId, SessionName); }
 	void Restart() { NativeCall<void>(this, "AShooterGameSession.Restart"); }
 };

@@ -40,32 +40,6 @@ enum ECollisionChannel
 	ECC_MAX = 0x23,
 };
 
-namespace EChatSendMode
-{
-	enum Type
-	{
-		GlobalChat = 0x0,
-		ProximityChat = 0x1,
-		RadioChat = 0x2,
-		GlobalTribeChat = 0x3,
-		AllianceChat = 0x4,
-		MAX = 0x5
-	};
-}
-
-namespace EChatType
-{
-	enum Type
-	{
-		GlobalChat = 0x0,
-		ProximityChat = 0x1,
-		RadioChat = 0x2,
-		GlobalTribeChat = 0x3,
-		AllianceChat = 0x4,
-		MAX = 0x5,
-	};
-}
-
 namespace ETextComparisonLevel
 {
 	enum Type
@@ -714,20 +688,5 @@ namespace EServerOctreeGroup
 		LARGEUNSTASISRANGE = 0x10,
 		TRAPS = 0x11,
 		MAX = 0x12,
-	};
-}
-
-namespace EShipType
-{
-	enum Type
-	{
-		Default = 0x0,
-		Brigantine = 0x1,
-		Raft = 0x2,
-		Dinghy = 0x3,
-		Sloop = 0x4,
-		Schooner = 0x5,
-		Galleon = 0x6,
-		MAX = 0x7
 	};
 }

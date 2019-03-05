@@ -39,11 +39,13 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendServerMessage(AShooterPlayerController* player_controller, FLinearColor msg_color, const T* msg,
-		                       Args&&... args)
+			Args&&... args)
 		{
-			FString text(FString::Format(msg, std::forward<Args>(args)...));
-
-			player_controller->ClientServerChatDirectMessage(&text, msg_color, false);
+			if (player_controller)
+			{
+				FString text(FString::Format(msg, std::forward<Args>(args)...));
+				player_controller->ClientServerChatDirectMessage(&text, msg_color, false);
+			}
 		}
 
 		/**
@@ -60,12 +62,15 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendNotification(AShooterPlayerController* player_controller, FLinearColor color, float display_scale,
-		                      float display_time, UTexture2D* icon, const T* msg, Args&&... args)
+			float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
-			FString text(FString::Format(msg, std::forward<Args>(args)...));
+			if (player_controller)
+			{
+				FString text(FString::Format(msg, std::forward<Args>(args)...));
 
-			player_controller->ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon,
-			                                                      nullptr);
+				player_controller->ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon,
+					nullptr);
+			}
 		}
 
 		/**
@@ -79,15 +84,18 @@ namespace ArkApi
 		 */
 		template <typename T, typename... Args>
 		void SendChatMessage(AShooterPlayerController* player_controller, const FString& sender_name, const T* msg,
-		                     Args&&... args)
+			Args&&... args)
 		{
-			const FString text(FString::Format(msg, std::forward<Args>(args)...));
+			if (player_controller)
+			{
+				const FString text(FString::Format(msg, std::forward<Args>(args)...));
 
-			FChatMessage chat_message = FChatMessage();
-			chat_message.SenderName = sender_name;
-			chat_message.Message = text;
+				FChatMessage chat_message = FChatMessage();
+				chat_message.SenderName = sender_name;
+				chat_message.Message = text;
 
-			player_controller->ClientChatMessage(chat_message);
+				player_controller->ClientChatMessage(chat_message);
+			}
 		}
 
 		/**
@@ -100,7 +108,7 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendServerMessageToAll(FLinearColor msg_color, const T* msg,
-		                            Args&&... args)
+			Args&&... args)
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
@@ -108,8 +116,10 @@ namespace ArkApi
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
-
-				shooter_pc->ClientServerChatDirectMessage(&text, msg_color, false);
+				if (shooter_pc)
+				{
+					shooter_pc->ClientServerChatDirectMessage(&text, msg_color, false);
+				}
 			}
 		}
 
@@ -126,7 +136,7 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendNotificationToAll(FLinearColor color, float display_scale,
-		                           float display_time, UTexture2D* icon, const T* msg, Args&&... args)
+			float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
@@ -134,9 +144,11 @@ namespace ArkApi
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
-
-				shooter_pc->
-					ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon, nullptr);
+				if (shooter_pc)
+				{
+					shooter_pc->
+						ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon, nullptr);
+				}
 			}
 		}
 
@@ -161,8 +173,10 @@ namespace ArkApi
 			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 			{
 				AShooterPlayerController* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
-
-				shooter_pc->ClientChatMessage(chat_message);
+				if (shooter_pc)
+				{
+					shooter_pc->ClientChatMessage(chat_message);
+				}
 			}
 		}
 

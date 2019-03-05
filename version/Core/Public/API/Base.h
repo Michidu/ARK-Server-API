@@ -150,6 +150,15 @@ struct UPrimalColorSet{};
 struct FDinoSaddleStruct {};
 struct APrimalStructureShipHull{};
 struct APrimalStructureSail;
+struct FCollisionResponseSet;
+struct FDinoMapMarkerInfo{};
+struct FStatValuePair {};
+struct FHUDElement {};
+struct FConfigMaxItemQuantityOverride {};
+struct FJsonObject {};
+struct FItemMaxItemQuantityOverride {};
+struct FMaxItemQuantityOverride {};
+struct FEventItem {};
 
 // Atlas
 
