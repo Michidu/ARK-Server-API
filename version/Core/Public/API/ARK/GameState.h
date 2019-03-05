@@ -298,7 +298,7 @@ struct AGameSession
 	void UpdateSessionJoinability(FName InSessionName, bool bPublicSearchable, bool bAllowInvites, bool bJoinViaPresence, bool bJoinViaPresenceFriendsOnly) { NativeCall<void, FName, bool, bool, bool, bool>(this, "AGameSession.UpdateSessionJoinability", InSessionName, bPublicSearchable, bAllowInvites, bJoinViaPresence, bJoinViaPresenceFriendsOnly); }
 };
 
-struct AShooterGameSession
+struct AShooterGameSession : AGameSession
 {
 	TArray<FInstalledItemInfo>& CachedModsField() { return *GetNativePointerField<TArray<FInstalledItemInfo>*>(this, "AShooterGameSession.CachedMods"); }
 	TArray<FShooterSessionData>& ThreadSafeSearchResultsField() { return *GetNativePointerField<TArray<FShooterSessionData>*>(this, "AShooterGameSession.ThreadSafeSearchResults"); }
