@@ -138,24 +138,26 @@ namespace API
 
 	void Requests::Update()
 	{
-		if (handles_count_ == 0)
-			return;
+		if (handles_count_ == 0) return;
 
 		curl_multi_perform(curl_, &handles_count_);
 
+		CURLMsg* m = nullptr;
 		int msgq;
-		CURLMsg* m = curl_multi_info_read(curl_, &msgq);
-		if (m && m->msg == CURLMSG_DONE)
+		while((m = curl_multi_info_read(curl_, &msgq)) != nullptr)
 		{
-			CURL* handle = m->easy_handle;
+			if (m && m->msg == CURLMSG_DONE)
+			{
+				CURL* handle = m->easy_handle;
 
-			auto& request = requests_[handle];
-			request->callback(m->data.result == CURLE_OK, move(request->read_buffer));
+				auto& request = requests_[handle];
+				request->callback(m->data.result == CURLE_OK, move(request->read_buffer));
 
-			requests_.erase(handle);
+				requests_.erase(handle);
 
-			curl_multi_remove_handle(curl_, handle);
-			curl_easy_cleanup(handle);
+				curl_multi_remove_handle(curl_, handle);
+				curl_easy_cleanup(handle);
+			}
 		}
 	}
 } // namespace API
