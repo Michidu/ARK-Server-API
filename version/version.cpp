@@ -41,6 +41,20 @@ void PruneOldLogs()
 	{
 		const auto ftime = last_write_time(file);
 
+		if (file.path().filename() == "ArkApi.log")
+		{
+			const std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
+
+			tm tm{};
+			localtime_s(&tm, &cftime);
+
+			char time_str[64];
+			strftime(time_str, 64, "%Y-%m-%d-%H-%M", &tm);
+
+			const std::string new_name = "ArkApi_" + std::string(time_str) + ".log";
+			std::rename(file.path().generic_string().data(), (current_dir + "/logs/" + new_name).data());
+		}
+
 		auto diff = std::chrono::duration_cast<std::chrono::hours>(now - ftime);
 		if (diff.count() >= 24 * 14) // 14 days
 		{

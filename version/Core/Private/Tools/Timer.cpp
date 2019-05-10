@@ -72,7 +72,7 @@ namespace API
 
 		for (const auto& data : timer_funcs_)
 		{
-			if(data == nullptr) continue;
+			if (data == nullptr) continue;
 
 			if (now >= data->next_time)
 			{

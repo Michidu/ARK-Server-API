@@ -144,7 +144,7 @@ namespace API
 
 		CURLMsg* m = nullptr;
 		int msgq;
-		while((m = curl_multi_info_read(curl_, &msgq)) != nullptr)
+		while ((m = curl_multi_info_read(curl_, &msgq)) != nullptr)
 		{
 			if (m && m->msg == CURLMSG_DONE)
 			{
