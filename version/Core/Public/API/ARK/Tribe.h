@@ -42,22 +42,17 @@ struct FTribeData
 
 	// Functions
 
-	FTribeAlliance * FindTribeAlliance(unsigned int AllianceID) { return NativeCall<FTribeAlliance *, unsigned int>(this, "FTribeData.FindTribeAlliance", AllianceID); }
-	int GetBestRankGroupForRank(int Rank) { return NativeCall<int, int>(this, "FTribeData.GetBestRankGroupForRank", Rank); }
-	int GetDefaultRankGroupIndex() { return NativeCall<int>(this, "FTribeData.GetDefaultRankGroupIndex"); }
-	FString * GetRankNameForPlayerID(FString * result, unsigned int PlayerDataID) { return NativeCall<FString *, FString *, unsigned int>(this, "FTribeData.GetRankNameForPlayerID", result, PlayerDataID); }
-	long double GetSecondsSinceLastNameChange(UObject * WorldContextObject) { return NativeCall<long double, UObject *>(this, "FTribeData.GetSecondsSinceLastNameChange", WorldContextObject); }
-	float GetTribeNameChangeCooldownTime(UObject * WorldContextObject) { return NativeCall<float, UObject *>(this, "FTribeData.GetTribeNameChangeCooldownTime", WorldContextObject); }
-	FString * GetTribeNameWithRankGroup(FString * result, unsigned int PlayerDataID) { return NativeCall<FString *, FString *, unsigned int>(this, "FTribeData.GetTribeNameWithRankGroup", result, PlayerDataID); }
-	bool GetTribeRankGroupForPlayer(unsigned int PlayerDataID, FTribeRankGroup * outRankGroup) { return NativeCall<bool, unsigned int, FTribeRankGroup *>(this, "FTribeData.GetTribeRankGroupForPlayer", PlayerDataID, outRankGroup); }
-	int GetTribeRankGroupIndexForPlayer(unsigned int PlayerDataID) { return NativeCall<int, unsigned int>(this, "FTribeData.GetTribeRankGroupIndexForPlayer", PlayerDataID); }
-	bool HasTribeWarRequest(int TribeID, UWorld * ForWorld) { return NativeCall<bool, int, UWorld *>(this, "FTribeData.HasTribeWarRequest", TribeID, ForWorld); }
+	bool IsTribeWarActive(int TribeID, UWorld* ForWorld, bool bIncludeUnstarted) { return NativeCall<bool, int, UWorld*, bool>(this, "FTribeData.IsTribeWarActive", TribeID, ForWorld, bIncludeUnstarted); }
+	bool HasTribeWarRequest(int TribeID, UWorld* ForWorld) { return NativeCall<bool, int, UWorld*>(this, "FTribeData.HasTribeWarRequest", TribeID, ForWorld); }
+	void RefreshTribeWars(UWorld* ForWorld) { NativeCall<void, UWorld*>(this, "FTribeData.RefreshTribeWars", ForWorld); }
+	FTribeAlliance* FindTribeAlliance(unsigned int AllianceID) { return NativeCall<FTribeAlliance*, unsigned int>(this, "FTribeData.FindTribeAlliance", AllianceID); }
 	bool IsTribeAlliedWith(unsigned int OtherTribeID) { return NativeCall<bool, unsigned int>(this, "FTribeData.IsTribeAlliedWith", OtherTribeID); }
-	bool IsTribeWarActive(int TribeID, UWorld * ForWorld, bool bIncludeUnstarted) { return NativeCall<bool, int, UWorld *, bool>(this, "FTribeData.IsTribeWarActive", TribeID, ForWorld, bIncludeUnstarted); }
-	void MarkTribeNameChanged(UObject * WorldContextObject) { NativeCall<void, UObject *>(this, "FTribeData.MarkTribeNameChanged", WorldContextObject); }
-	void RefreshTribeWars(UWorld * ForWorld) { NativeCall<void, UWorld *>(this, "FTribeData.RefreshTribeWars", ForWorld); }
-	FTribeData * operator=(FTribeData * __that) { return NativeCall<FTribeData *, FTribeData *>(this, "FTribeData.operator=", __that); }
-	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeData.StaticStruct"); }
+	bool GetTribeRankGroupForPlayer(unsigned int PlayerDataID, FTribeRankGroup* outRankGroup) { return NativeCall<bool, unsigned int, FTribeRankGroup*>(this, "FTribeData.GetTribeRankGroupForPlayer", PlayerDataID, outRankGroup); }
+	int GetBestRankGroupForRank(int Rank) { return NativeCall<int, int>(this, "FTribeData.GetBestRankGroupForRank", Rank); }
+	long double GetSecondsSinceLastNameChange(UObject* WorldContextObject) { return NativeCall<long double, UObject*>(this, "FTribeData.GetSecondsSinceLastNameChange", WorldContextObject); }
+	int GetDefaultRankGroupIndex() { return NativeCall<int>(this, "FTribeData.GetDefaultRankGroupIndex"); }
+	FTribeData* operator=(FTribeData* __that) { return NativeCall<FTribeData*, FTribeData*>(this, "FTribeData.operator=", __that); }
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FTribeData.StaticStruct"); }
 };
 
 struct FTribeWar
