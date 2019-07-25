@@ -465,7 +465,7 @@ struct UEngine : UObject
 	int RenderStatAI(UWorld* World, FViewport* Viewport, FCanvas* Canvas, int X, int Y, FVector* ViewLocation, FRotator* ViewRotation) { return NativeCall<int, UWorld*, FViewport*, FCanvas*, int, int, FVector*, FRotator*>(this, "UEngine.RenderStatAI", World, Viewport, Canvas, X, Y, ViewLocation, ViewRotation); }
 };
 
-struct UPrimalGlobals
+struct UPrimalGlobals : UObject
 {
 	UPrimalGameData* PrimalGameDataField() { return *GetNativePointerField<UPrimalGameData * *>(this, "UPrimalGlobals.PrimalGameData"); }
 	UPrimalGameData* PrimalGameDataOverrideField() { return *GetNativePointerField<UPrimalGameData * *>(this, "UPrimalGlobals.PrimalGameDataOverride"); }

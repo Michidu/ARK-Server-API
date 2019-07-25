@@ -955,3 +955,50 @@ struct APrimalStructureTurret : APrimalStructureItemContainer
 	static void StaticRegisterNativesAPrimalStructureTurret() { NativeCall<void>(nullptr, "APrimalStructureTurret.StaticRegisterNativesAPrimalStructureTurret"); }
 	bool BPTurretPreventsTargeting(APrimalCharacter* PotentialTarget) { return NativeCall<bool, APrimalCharacter*>(this, "APrimalStructureTurret.BPTurretPreventsTargeting", PotentialTarget); }
 };
+
+struct APrimalStructureExplosive : APrimalStructure
+{
+	unsigned int& ConstructorPlayerDataIDField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureExplosive.ConstructorPlayerDataID"); }
+	AShooterCharacter* ConstructorPawnField() { return *GetNativePointerField<AShooterCharacter * *>(this, "APrimalStructureExplosive.ConstructorPawn"); }
+	int& ConstructorTargetingTeamField() { return *GetNativePointerField<int*>(this, "APrimalStructureExplosive.ConstructorTargetingTeam"); }
+	FVector& ExplosiveLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureExplosive.ExplosiveLocOffset"); }
+	FRotator& ExplosiveRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureExplosive.ExplosiveRotOffset"); }
+	float& PlacementInitialSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.PlacementInitialSpeed"); }
+	float& PlacementMaxSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.PlacementMaxSpeed"); }
+	float& PlacementAccelField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.PlacementAccel"); }
+	float& ExplosionDamageField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.ExplosionDamage"); }
+	float& ExplosionRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.ExplosionRadius"); }
+	float& ExplosionImpulseField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.ExplosionImpulse"); }
+	TSubclassOf<UDamageType>& ExplosionDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "APrimalStructureExplosive.ExplosionDamageType"); }
+	TSubclassOf<UPrimalItem>& ExplosiveAmmoItemTemplateField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureExplosive.ExplosiveAmmoItemTemplate"); }
+	float& AlertDinosRangeField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.AlertDinosRange"); }
+	TSubclassOf<UPrimalItem>& PickupItemClassField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "APrimalStructureExplosive.PickupItemClass"); }
+	int& PickUpQuantityField() { return *GetNativePointerField<int*>(this, "APrimalStructureExplosive.PickUpQuantity"); }
+	float& AnimationTargetHeightField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.AnimationTargetHeight"); }
+	float& PlacementInterpSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureExplosive.PlacementInterpSpeed"); }
+	bool& bExplosiveReadyField() { return *GetNativePointerField<bool*>(this, "APrimalStructureExplosive.bExplosiveReady"); }
+	FVector& OriginalRelativeLocationField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureExplosive.OriginalRelativeLocation"); }
+	FRotator& OriginalRelativeRotationField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureExplosive.OriginalRelativeRotation"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bDoNotUseAmmoOnNextPlace() { return { this, "APrimalStructureExplosive.bDoNotUseAmmoOnNextPlace" }; }
+	BitFieldValue<bool, unsigned __int32> bAnimatePlacement() { return { this, "APrimalStructureExplosive.bAnimatePlacement" }; }
+	BitFieldValue<bool, unsigned __int32> bAlertDinos() { return { this, "APrimalStructureExplosive.bAlertDinos" }; }
+	BitFieldValue<bool, unsigned __int32> bWasJustPlaced() { return { this, "APrimalStructureExplosive.bWasJustPlaced" }; }
+
+	// Functions
+
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructureExplosive.GetPrivateStaticClass"); }
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "APrimalStructureExplosive.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	void LoadedFromSaveGame() { NativeCall<void>(this, "APrimalStructureExplosive.LoadedFromSaveGame"); }
+	void PostSpawnInitialize() { NativeCall<void>(this, "APrimalStructureExplosive.PostSpawnInitialize"); }
+	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "APrimalStructureExplosive.Tick", DeltaSeconds); }
+	void SetPlayerConstructor(APlayerController* PC) { NativeCall<void, APlayerController*>(this, "APrimalStructureExplosive.SetPlayerConstructor", PC); }
+	bool CanDetonateMe(AShooterCharacter* Character, bool bUsingRemote) { return NativeCall<bool, AShooterCharacter*, bool>(this, "APrimalStructureExplosive.CanDetonateMe", Character, bUsingRemote); }
+	void PlayDying(float KillingDamage, FDamageEvent* DamageEvent, APawn* InstigatingPawn, AActor* DamageCauser) { NativeCall<void, float, FDamageEvent*, APawn*, AActor*>(this, "APrimalStructureExplosive.PlayDying", KillingDamage, DamageEvent, InstigatingPawn, DamageCauser); }
+	bool TryMultiUse(APlayerController* ForPC, int UseIndex) { return NativeCall<bool, APlayerController*, int>(this, "APrimalStructureExplosive.TryMultiUse", ForPC, UseIndex); }
+	void PrepareAsPlacementPreview() { NativeCall<void>(this, "APrimalStructureExplosive.PrepareAsPlacementPreview"); }
+	void ApplyPlacementPreview() { NativeCall<void>(this, "APrimalStructureExplosive.ApplyPlacementPreview"); }
+	void NetDoSpawnEffects_Implementation() { NativeCall<void>(this, "APrimalStructureExplosive.NetDoSpawnEffects_Implementation"); }
+};
