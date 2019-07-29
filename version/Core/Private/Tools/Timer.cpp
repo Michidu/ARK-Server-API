@@ -32,7 +32,7 @@ namespace API
 	{
 		const auto& timer_funcs = std::find_if(timer_funcs_.begin(), timer_funcs_.end(), [&timer_name](const auto& data)
 		{
-			return timer_id == data->timer_id;
+			return timer_name == data->timer_name;
 		});
 
 		if (timer_funcs != timer_funcs_.end())
@@ -40,7 +40,7 @@ namespace API
 
 		const auto& timer_thread = std::find_if(timer_threads_.begin(), timer_threads_.end(), [&timer_name](const auto& data)
 		{
-			return timer_id == data->timer_id;
+			return timer_name == data->timer_name;
 		});
 
 		return timer_thread != timer_threads_.end() && timer_thread->get()->alive;
@@ -64,7 +64,7 @@ namespace API
 					
 					timer_threads_.erase(std::remove_if(timer_threads_.begin(), timer_threads_.end(), [&timer_name](const auto& data)
 					{
-						return timer_id == data->timer_id;
+						return timer_name == data->timer_name;
 					}), timer_threads_.end());
 				}
 
