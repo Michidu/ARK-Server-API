@@ -211,7 +211,8 @@ namespace API
 
 	void Requests::Update()
 	{
-		if (handles_count_ == 0) return;
+		if (handles_count_ == 0)
+			return;
 
 		curl_multi_perform(curl_, &handles_count_);
 

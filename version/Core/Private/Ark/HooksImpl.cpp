@@ -16,7 +16,7 @@ namespace ArkApi
 	DECLARE_HOOK(UWorld_Tick, void, DWORD64, DWORD64, float);
 	DECLARE_HOOK(AShooterGameMode_InitGame, void, AShooterGameMode*, FString*, FString*, FString*);
 	DECLARE_HOOK(AShooterPlayerController_ServerSendChatMessage_Impl, void, AShooterPlayerController*, FString*,
-		EChatSendMode::Type);
+	             EChatSendMode::Type);
 	DECLARE_HOOK(APlayerController_ConsoleCommand, FString*, APlayerController*, FString*, FString*, bool);
 	DECLARE_HOOK(RCONClientConnection_ProcessRCONPacket, void, RCONClientConnection*, RCONPacket*, UWorld*);
 	DECLARE_HOOK(AGameState_DefaultTimer, void, AGameState*);
@@ -70,7 +70,11 @@ namespace ArkApi
 
 	void Hook_UWorld_Tick(DWORD64 world, DWORD64 tick_type, float delta_seconds)
 	{
-		dynamic_cast<Commands&>(*API::game_api->GetCommands()).CheckOnTickCallbacks(delta_seconds);
+		Commands* command = dynamic_cast<Commands*>(API::game_api->GetCommands().get());
+		if (command)
+		{
+			command->CheckOnTickCallbacks(delta_seconds);
+		}
 
 		UWorld_Tick_original(world, tick_type, delta_seconds);
 	}
@@ -133,7 +137,11 @@ namespace ArkApi
 
 	void Hook_AGameState_DefaultTimer(AGameState* _this)
 	{
-		dynamic_cast<Commands&>(*API::game_api->GetCommands()).CheckOnTimerCallbacks();
+		Commands* command = dynamic_cast<Commands*>(API::game_api->GetCommands().get());
+		if (command)
+		{
+			command->CheckOnTimerCallbacks();
+		}
 
 		AGameState_DefaultTimer_original(_this);
 	}
