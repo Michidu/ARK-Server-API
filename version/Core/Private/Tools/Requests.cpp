@@ -217,7 +217,7 @@ namespace API
 		curl_multi_perform(curl_, &handles_count_);
 
 		CURLMsg* m = nullptr;
-		int msgq;
+		int msgq = 0;
 		while ((m = curl_multi_info_read(curl_, &msgq)) != nullptr)
 		{
 			if (m && m->msg == CURLMSG_DONE)
