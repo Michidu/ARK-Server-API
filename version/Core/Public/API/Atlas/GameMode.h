@@ -786,6 +786,16 @@ struct UPrimalGlobals
 	static UClass * GetPrivateStaticClass(const wchar_t * Package) { return NativeCall<UClass *, const wchar_t *>(nullptr, "UPrimalGlobals.GetPrivateStaticClass", Package); }
 	static void StaticRegisterNativesUPrimalGlobals() { NativeCall<void>(nullptr, "UPrimalGlobals.StaticRegisterNativesUPrimalGlobals"); }
 };
+// Level
+
+struct ULevelBase : UObject
+{
+	TArray<AActor*> GetActorsField() const { return GetNativeField<TArray<AActor*>>(this, "ULevelBase.Actors"); }
+};
+
+struct ULevel : ULevelBase
+{
+};
 
 struct AGameMode
 {
@@ -1342,6 +1352,9 @@ struct AShooterGameMode : AGameMode
 	FRegionGeneralOverrides& RegionOverridesField() { return *GetNativePointerField<FRegionGeneralOverrides*>(this, "AShooterGameMode.RegionOverrides"); }
 	TSet<unsigned __int64,DefaultKeyFuncs<unsigned __int64,0>,FDefaultSetAllocator>& SeenPlayerAndTribeIdsField() { return *GetNativePointerField<TSet<unsigned __int64,DefaultKeyFuncs<unsigned __int64,0>,FDefaultSetAllocator>*>(this, "AShooterGameMode.SeenPlayerAndTribeIds"); }
 	bool& bOutGoingTransfersEnabledField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bOutGoingTransfersEnabled"); }
+	TArray<FAttachedInstancedHarvestingElement*, FDefaultAllocator>& HiddenHarvestingComponentsField() { return *GetNativePointerField<TArray<FAttachedInstancedHarvestingElement*, FDefaultAllocator>*>(this, "AShooterGameMode.HiddenHarvestingComponents"); }
+
+
 
 	// Functions
 

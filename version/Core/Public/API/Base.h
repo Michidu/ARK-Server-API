@@ -554,6 +554,14 @@ struct UEngine;
 struct UPrimalGlobals;
 struct APrimalStructurePlacer;
 
+struct UPrimalHarvestingComponent;
+struct FHarvestResourceEntry;
+struct FOceanHarvestEntry;
+struct FOceanHarvestedEntry;
+struct AOceanHarvestManager;
+struct FAttachedInstancedHarvestingElement;
+
+
 struct BitField
 {
 	DWORD64 offset;
