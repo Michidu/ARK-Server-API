@@ -9101,9 +9101,7 @@ struct  UInstancedStaticMeshComponent : UStaticMeshComponent
 	TArray<FBodyInstance*, FDefaultAllocator>& InstanceBodies() { return *GetNativePointerField<TArray<FBodyInstance*, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.InstanceBodies"); }
 	TArray<UActorComponent*, FDefaultAllocator>& ReferencedAttachedComponentObjects() { return *GetNativePointerField<TArray<UActorComponent*, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.ReferencedAttachedComponentObjects"); }
 	TIndirectArray<FAttachedInstanced, FDefaultAllocator>& InstanceAttachedComponents() { return *GetNativePointerField<TIndirectArray<FAttachedInstanced, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.InstanceAttachedComponents"); }
-
 };
-
 
 struct UPrimalHarvestingComponent : UActorComponent {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalHarvestingComponent.GetPrivateStaticClass", Package); }
@@ -9203,4 +9201,100 @@ struct  AFoliageAttachmentOverrideVolume : AInfo
 {
 	TArray<FFoliageAttachmentOverride, FDefaultAllocator>& FoliageAttachmentOverrides() { return *GetNativePointerField<TArray<FFoliageAttachmentOverride, FDefaultAllocator>*>(this, "AFoliageAttachmentOverrideVolume.FoliageAttachmentOverrides"); }
 	TMap<FName, TSubclassOf<UActorComponent>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, TSubclassOf<UActorComponent>, 0> > & FoliageOverrideMap() { return *GetNativePointerField< TMap<FName, TSubclassOf<UActorComponent>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, TSubclassOf<UActorComponent>, 0> >*>(this, "AFoliageAttachmentOverrideVolume.FoliageOverrideMap"); }
+};
+
+struct APrimalStructureItemContainer_SupplyCrate
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "APrimalStructureItemContainer_SupplyCrate.GetPrivateStaticClass", Package); }
+
+	float& MinItemSetsField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.MinItemSets"); }
+	float& MaxItemSetsField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.MaxItemSets"); }
+	float& NumItemSetsPowerField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.NumItemSetsPower"); }
+	bool& bSetsRandomWithoutReplacementField() { return *GetNativePointerField<  bool*>(this, "APrimalStructureItemContainer_SupplyCrate.bSetsRandomWithoutReplacement"); }
+	float& MinQualityMultiplierField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.MinQualityMultiplier"); }
+	float& MaxQualityMultiplierField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.MaxQualityMultiplier"); }
+	TArray<FSupplyCrateItemSet, FDefaultAllocator>& ItemSetsField() { return *GetNativePointerField<  TArray<FSupplyCrateItemSet, FDefaultAllocator>*>(this, "APrimalStructureItemContainer_SupplyCrate.ItemSets"); }
+	TSubclassOf<UPrimalSupplyCrateItemSets>& ItemSetsOverrideField() { return *GetNativePointerField<  TSubclassOf<UPrimalSupplyCrateItemSets>*>(this, "APrimalStructureItemContainer_SupplyCrate.ItemSetsOverride"); }
+	TArray<FSupplyCrateItemSet, FDefaultAllocator>& AdditionalItemSetsField() { return *GetNativePointerField<  TArray<FSupplyCrateItemSet, FDefaultAllocator>*>(this, "APrimalStructureItemContainer_SupplyCrate.AdditionalItemSets"); }
+	TSubclassOf<UPrimalSupplyCrateItemSets>& AdditionalItemSetsOverrideField() { return *GetNativePointerField<  TSubclassOf<UPrimalSupplyCrateItemSets>*>(this, "APrimalStructureItemContainer_SupplyCrate.AdditionalItemSetsOverride"); }
+	int& RequiredLevelToAccessField() { return *GetNativePointerField<  int*>(this, "APrimalStructureItemContainer_SupplyCrate.RequiredLevelToAccess"); }
+	int& MaxLevelToAccessField() { return *GetNativePointerField<  int*>(this, "APrimalStructureItemContainer_SupplyCrate.MaxLevelToAccess"); }
+	float& InitialTimeToLoseHealthField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.InitialTimeToLoseHealth"); }
+	float& IntervalToLoseHealthAfterAccessField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.IntervalToLoseHealthAfterAccess"); }
+	float& IntervalTimeToLoseHealthField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.IntervalTimeToLoseHealth"); }
+	float& IntervalPercentHealthToLoseField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.IntervalPercentHealthToLose"); }
+	TSubclassOf<UPrimalItem>& ItemSetExtraItemClassField() { return *GetNativePointerField<  TSubclassOf<UPrimalItem>*>(this, "APrimalStructureItemContainer_SupplyCrate.ItemSetExtraItemClass"); }
+	float& ItemSetExtraItemQuantityByQualityMultiplierField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.ItemSetExtraItemQuantityByQualityMultiplier"); }
+	float& ItemSetExtraItemQuantityByQualityPowerField() { return *GetNativePointerField<  float*>(this, "APrimalStructureItemContainer_SupplyCrate.ItemSetExtraItemQuantityByQualityPower"); }
+
+	BitFieldValue<bool, unsigned __int32> bIsBonusCrateField() { return { this, "APrimalStructureItemContainer_SupplyCrate.bIsBonusCrateField" }; }
+};
+
+struct  FSupplyCrateSpawnEntry
+{
+	float& EntryWeightField() { return *GetNativePointerField<  float*>(this, "FSupplyCrateSpawnEntry.EntryWeight"); }
+	TSubclassOf<APrimalStructureItemContainer_SupplyCrate>& CrateTemplateField() { return *GetNativePointerField<  TSubclassOf<APrimalStructureItemContainer_SupplyCrate>*>(this, "FSupplyCrateSpawnEntry.CrateTemplate"); }
+	bool& bOverrideCrateValuesField() { return *GetNativePointerField<  bool*>(this, "FSupplyCrateSpawnEntry.bOverrideCrateValues"); }
+	FSupplyCrateValuesOverride& OverrideCrateValuesField() { return *GetNativePointerField<  FSupplyCrateValuesOverride*>(this, "FSupplyCrateSpawnEntry.OverrideCrateValues"); }
+	TSubclassOf<UNPCSpawnEntriesContainer>& CrateEnemySpawnEntriesField() { return *GetNativePointerField<  TSubclassOf<UNPCSpawnEntriesContainer>*>(this, "FSupplyCrateSpawnEntry.CrateEnemySpawnEntries"); }
+};
+
+struct  FSupplyCrateSpawnPointEntry
+{
+	AActor* LinkedSpawnPoint;
+	ANPCZoneManager* LinkedEnemySpawnZoneManager;
+	FName LinkedEnemySpawnZoneManagerTag;
+	unsigned __int32 bTraceGroundPoint : 1;
+	FVector TraceGroundPointDownOffset;
+	FVector TraceGroundPointUpOffset;
+	float SpawnPointWeight;
+	TArray<FSupplyCrateSpawnEntry, FDefaultAllocator> OverrideSupplyCrateEntries;
+	long double LastTimeSpawned;
+};
+
+
+
+struct  ASupplyCrateSpawningVolume : AVolume
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ASupplyCrateSpawningVolume.GetPrivateStaticClass", Package); }
+	void SpawnCratesFromAllPoints() { return NativeCall<void>(this, "ASupplyCrateSpawningVolume.SpawnCratesFromAllPoints"); }
+	
+	TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>& LinkedSupplyCrateEntriesField() { return *GetNativePointerField<  TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.LinkedSupplyCrateEntries"); }
+	TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>& OriginalSupplyCrateEntriesField() { return *GetNativePointerField<  TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.OriginalSupplyCrateEntries"); }
+	TArray<FSupplyCrateSpawnPointEntry, FDefaultAllocator>& LinkedSpawnPointEntriesField() { return *GetNativePointerField<  TArray<FSupplyCrateSpawnPointEntry, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.LinkedSpawnPointEntries"); }
+	TArray<FClassRemappingWeight, FDefaultAllocator>& SupplyCrateClassRemappingsField() { return *GetNativePointerField<  TArray<FClassRemappingWeight, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.SupplyCrateClassRemappings"); }
+	float& CrateSpawnDensityPerAreaField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.CrateSpawnDensityPerArea"); }
+	float& CreateSpawnDensityMultiplierField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.CreateSpawnDensityMultiplier"); }
+	float& RandomSpawnPointsExtentsOffsetFromSeamlessGridSizeField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.RandomSpawnPointsExtentsOffsetFromSeamlessGridSize"); }
+	int& MaxNumCratesField() { return *GetNativePointerField<  int*>(this, "ASupplyCrateSpawningVolume.MaxNumCrates"); }
+	float& RandomSpawnPointsExtentsOverrideField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.RandomSpawnPointsExtentsOverride"); }
+	float& RandomSpawnPointsMinDistanceFromShoreField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.RandomSpawnPointsMinDistanceFromShore"); }
+	float& RandomSpawnPointsMaxDistanceFromShoreField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.RandomSpawnPointsMaxDistanceFromShore"); }
+	FVector& RandomSpawnPointsHitLocOffsetField() { return *GetNativePointerField<  FVector*>(this, "ASupplyCrateSpawningVolume.RandomSpawnPointsHitLocOffset"); }
+	float& RandomSpawnPointsMaxZField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.RandomSpawnPointsMaxZ"); }
+	float& RandomSpawnPointsMinZField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.RandomSpawnPointsMinZ"); }
+	float& DelayBeforeFirstCrateField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.DelayBeforeFirstCrate"); }
+	float& MaxDelayBeforeFirstCrateField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MaxDelayBeforeFirstCrate"); }
+	int& ZoneVolumeMaxNumberOfNPCBufferField() { return *GetNativePointerField<  int*>(this, "ASupplyCrateSpawningVolume.ZoneVolumeMaxNumberOfNPCBuffer"); }
+	float& FirstStartupTimePeriodField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.FirstStartupTimePeriod"); }
+	float& FirstStartupIntervalBetweenCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.FirstStartupIntervalBetweenCrateSpawns"); }
+	float& IntervalBetweenCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.IntervalBetweenCrateSpawns"); }
+	float& MaxIntervalBetweenCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MaxIntervalBetweenCrateSpawns"); }
+	float& ExtraCrateQualityMultiplierField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.ExtraCrateQualityMultiplier"); }
+	float& IntervalBetweenMaxedCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.IntervalBetweenMaxedCrateSpawns"); }
+	float& MaxIntervalBetweenMaxedCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MaxIntervalBetweenMaxedCrateSpawns"); }
+	float& SP_IntervalBetweenCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.SP_IntervalBetweenCrateSpawns"); }
+	float& SP_MaxIntervalBetweenCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.SP_MaxIntervalBetweenCrateSpawns"); }
+	float& SP_IntervalBetweenMaxedCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.SP_IntervalBetweenMaxedCrateSpawns"); }
+	float& SP_MaxIntervalBetweenMaxedCrateSpawnsField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.SP_MaxIntervalBetweenMaxedCrateSpawns"); }
+	float& SP_NoValidSpawnRecheckIntervalField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.SP_NoValidSpawnRecheckInterval"); }
+	float& SP_DelayBeforeFirstCrateField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.SP_DelayBeforeFirstCrate"); }
+	float& SP_MaxDelayBeforeFirstCrateField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.SP_MaxDelayBeforeFirstCrate"); }
+	float& MinCrateDistanceFromPlayerField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MinCrateDistanceFromPlayer"); }
+	float& MinCrateDistanceFromStructureField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MinCrateDistanceFromStructure"); }
+	float& NoValidSpawnReCheckIntervalField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.NoValidSpawnReCheckInterval"); }
+	float& MinTimeBetweenCrateSpawnsAtSamePointField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MinTimeBetweenCrateSpawnsAtSamePoint"); }
+	float& MinDistanceFromOtherCrateField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MinDistanceFromOtherCrate"); }
+	FName& CrateSpawningRequiresLoadedSublevelField() { return *GetNativePointerField<  FName*>(this, "ASupplyCrateSpawningVolume.CrateSpawningRequiresLoadedSublevel"); }
+	TArray<APrimalStructureItemContainer_SupplyCrate*, FDefaultAllocator>& MyCratesField() { return *GetNativePointerField<  TArray<APrimalStructureItemContainer_SupplyCrate*, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.MyCrates"); }
 };
