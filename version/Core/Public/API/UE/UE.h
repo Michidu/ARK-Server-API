@@ -189,6 +189,11 @@ struct FUniqueNetIdSteam : FUniqueNetId
 	FString* ToDebugString(FString* result) { return NativeCall<FString*, FString*>(this, "FUniqueNetIdSteam.ToDebugString", result); }
 };
 
+struct FUniqueNetIdString : FUniqueNetId
+{
+	FString UniqueNetIdStr;
+};
+
 struct UObjectBase
 {
 	EObjectFlags& ObjectFlagsField() { return *GetNativePointerField<EObjectFlags*>(this, "UObjectBase.ObjectFlags"); }

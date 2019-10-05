@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include <cstdio>
-#include <filesystem>
+#include <experimental/filesystem>
 
 #include "Core/Private/Ark/ArkBaseApi.h"
 #include "Core/Private/Atlas/AtlasBaseApi.h"
@@ -65,7 +65,7 @@ void PruneOldLogs()
 
 std::string DetectGame()
 {
-	namespace fs = std::filesystem;
+	namespace fs = std::experimental::filesystem;
 
 	const std::string current_dir = API::Tools::GetCurrentDir();
 
@@ -91,7 +91,7 @@ std::string DetectGame()
 
 void Init()
 {
-	namespace fs = std::filesystem;
+	namespace fs = std::experimental::filesystem;
 
 	OpenConsole();
 

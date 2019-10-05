@@ -433,6 +433,7 @@ struct USoundAttenuation;
 
 struct UShooterGameUserSettings;
 struct UDiscoveryZoneDataListEntry;
+struct FTribeLogEntry;
 
 // Structs forward declaration
 
