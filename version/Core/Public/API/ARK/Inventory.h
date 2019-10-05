@@ -28,6 +28,11 @@ struct FCustomItemByteArrays
 	TArray<FCustomItemByteArray, FDefaultAllocator> ByteArrays;
 };
 
+struct FCustomItemDoubles
+{
+	TArray<double, FDefaultAllocator> Doubles;
+};
+
 struct FCustomItemData
 {
 	FName CustomDataName;
@@ -37,6 +42,7 @@ struct FCustomItemData
 	TArray<UClass *, FDefaultAllocator> CustomDataClasses;
 	TArray<FName, FDefaultAllocator> CustomDataNames;
 	FCustomItemByteArrays CustomDataBytes;
+	FCustomItemDoubles FCustomItemDoubles;
 };
 
 struct FItemCraftQueueEntry
