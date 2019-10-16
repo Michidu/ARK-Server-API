@@ -189,13 +189,12 @@ namespace ArkApi
 
 			if (controller != nullptr)
 			{
-				APlayerController* player_controller = static_cast<APlayerController*>(controller);
-
-				UNetConnection* connection = player_controller->NetConnectionField();
-				if (connection != nullptr)
+				APlayerState* player_state = controller->PlayerStateField();
+				if (player_state != nullptr)
 				{
-					auto* steam_net_id = static_cast<FUniqueNetIdString*>(connection->PlayerIdField().Get());
-					
+					auto* steam_net_id = static_cast<FUniqueNetIdString*>(player_state->UniqueIdField()
+					                                                                  .UniqueNetId.Get());
+
 					const FString steam_id_str = steam_net_id->UniqueNetIdStr;
 
 					try
@@ -204,7 +203,7 @@ namespace ArkApi
 					}
 					catch (const std::exception&)
 					{
-						return -1;
+						return 0;
 					}
 				}
 			}
@@ -638,7 +637,7 @@ namespace ArkApi
 				for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
 				{
 					auto* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
-					
+
 					if (shooter_pc != nullptr && shooter_pc->LinkedPlayerIDField() == player_id)
 					{
 						steam_id = GetSteamIdFromController(shooter_pc);
