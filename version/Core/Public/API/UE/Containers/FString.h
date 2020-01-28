@@ -3,7 +3,8 @@
 #pragma once
 
 #include <string>
-
+#include <locale>
+#include <codecvt>
 #include <Logger/Logger.h>
 
 #include "TArray.h"
@@ -1614,11 +1615,10 @@ public:
 		if (!data)
 			return "";
 
-		const auto length = Len();
-		std::string str(length, '\0');
-		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(data, data + length, '?', str.data());
+		using convert_typeX = std::codecvt_utf8<wchar_t>;
+		std::wstring_convert<convert_typeX, wchar_t> converterX;
 
-		return str;
+		return converterX.to_bytes(data);
 	}
 
 	/**

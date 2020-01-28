@@ -159,6 +159,7 @@ struct FJsonObject {};
 struct FItemMaxItemQuantityOverride {};
 struct FMaxItemQuantityOverride {};
 struct FEventItem {};
+struct FPrimalSnapshotPose{};
 
 // Atlas
 

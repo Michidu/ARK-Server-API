@@ -1,6 +1,7 @@
 #pragma once
 
 #define _CRT_SECURE_NO_WARNINGS
+#define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
 
 #ifndef ARK_GAME
 #define ARK_GAME

@@ -1,6 +1,6 @@
 #include <Windows.h>
 #include <cstdio>
-#include <experimental/filesystem>
+#include <filesystem>
 
 #include "Core/Private/Ark/ArkBaseApi.h"
 #include "Core/Private/Atlas/AtlasBaseApi.h"
@@ -29,9 +29,19 @@ void OpenConsole()
 	freopen_s(&p_cout, "conout$", "w", stdout);
 }
 
+std::time_t GetFileWriteTime(const std::filesystem::path& filename)
+{
+	struct _stat64 fileInfo{};
+	if (_wstati64(filename.wstring().c_str(), &fileInfo) != 0)
+	{
+		throw std::runtime_error("Failed to get last write time.");
+	}
+	return fileInfo.st_mtime;
+}
+
 void PruneOldLogs()
 {
-	namespace fs = std::experimental::filesystem;
+	namespace fs = std::filesystem;
 
 	const auto now = std::chrono::system_clock::now();
 
@@ -39,14 +49,12 @@ void PruneOldLogs()
 
 	for (const auto& file : fs::directory_iterator(current_dir + "/logs"))
 	{
-		const auto ftime = last_write_time(file);
+		const std::time_t ftime = GetFileWriteTime(file);
 
 		if (file.path().filename() == "ArkApi.log")
 		{
-			const std::time_t cftime = decltype(ftime)::clock::to_time_t(ftime);
-
 			tm tm{};
-			localtime_s(&tm, &cftime);
+			localtime_s(&tm, &ftime);
 
 			char time_str[64];
 			strftime(time_str, 64, "%Y-%m-%d-%H-%M", &tm);
@@ -55,7 +63,9 @@ void PruneOldLogs()
 			std::rename(file.path().generic_string().data(), (current_dir + "/logs/" + new_name).data());
 		}
 
-		auto diff = std::chrono::duration_cast<std::chrono::hours>(now - ftime);
+		const auto time_point = std::chrono::system_clock::from_time_t(ftime);
+
+		auto diff = std::chrono::duration_cast<std::chrono::hours>(now - time_point);
 		if (diff.count() >= 24 * 14) // 14 days
 		{
 			fs::remove(file);
@@ -65,7 +75,7 @@ void PruneOldLogs()
 
 std::string DetectGame()
 {
-	namespace fs = std::experimental::filesystem;
+	namespace fs = std::filesystem;
 
 	const std::string current_dir = API::Tools::GetCurrentDir();
 
@@ -91,7 +101,7 @@ std::string DetectGame()
 
 void Init()
 {
-	namespace fs = std::experimental::filesystem;
+	namespace fs = std::filesystem;
 
 	OpenConsole();
 
@@ -123,11 +133,11 @@ BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID /*unused*/)
 	{
 		DisableThreadLibraryCalls(hinst_dll);
 
-		CHAR sysDir[MAX_PATH];
-		GetSystemDirectoryA(sysDir, MAX_PATH);
+		CHAR sys_dir[MAX_PATH];
+		GetSystemDirectoryA(sys_dir, MAX_PATH);
 
 		char buffer[MAX_PATH];
-		sprintf_s(buffer, "%s\\version.dll", sysDir);
+		sprintf_s(buffer, "%s\\version.dll", sys_dir);
 
 		m_hinst_dll = LoadLibraryA(buffer);
 		if (m_hinst_dll == nullptr)

@@ -11,13 +11,13 @@ namespace API
 	{
 		curl_global_init(CURL_GLOBAL_DEFAULT);
 
-		game_api->GetCommands()->AddOnTimerCallback("RequestsUpdate",
+		game_api->GetCommands()->AddOnTickCallback("RequestsUpdate",
 		                                            std::bind(&Requests::Update, this));
 	}
 
 	Requests::~Requests()
 	{
-		game_api->GetCommands()->RemoveOnTimerCallback("RequestsUpdate");
+		game_api->GetCommands()->RemoveOnTickCallback("RequestsUpdate");
 
 		curl_global_cleanup();
 	}
@@ -216,7 +216,7 @@ namespace API
 
 		curl_multi_perform(curl_, &handles_count_);
 
-		CURLMsg* m = nullptr;
+		CURLMsg* m;
 		int msgq;
 		while ((m = curl_multi_info_read(curl_, &msgq)) != nullptr)
 		{

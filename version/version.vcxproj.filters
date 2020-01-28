@@ -80,9 +80,6 @@
     <Filter Include="Core\Public\Atlas">
       <UniqueIdentifier>{bab0c67e-ce63-4e52-9209-74abbfd6ffaf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Public\Database">
-      <UniqueIdentifier>{b2b11b2f-f65c-41cd-b3d8-2008bbe88eaa}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="version_asm.asm" />
@@ -430,12 +427,6 @@
     </ClInclude>
     <ClInclude Include="Core\Private\Commands.h">
       <Filter>Core\Private</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Public\Database\Sqllite.h">
-      <Filter>Core\Public\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Public\Database\Mysql.h">
-      <Filter>Core\Public\Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
