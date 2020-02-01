@@ -252,7 +252,6 @@ struct __declspec(align(8)) FPrimalCharacterStatusValueDefinition
 	bool bDisplayAsPercent;
 };
 
-
 struct USceneComponent : UActorComponent
 {
 	FTransform& ComponentToWorldField() { return *GetNativePointerField<FTransform*>(this, "USceneComponent.ComponentToWorld"); }
@@ -963,6 +962,10 @@ struct AActor : UObject
 	void UserConstructionScript() { NativeCall<void>(this, "AActor.UserConstructionScript"); }
 };
 
+struct AInfo : AActor
+{
+};
+
 struct APawn : AActor
 {
 	float& BaseEyeHeightField() { return *GetNativePointerField<float*>(this, "APawn.BaseEyeHeight"); }
@@ -1306,7 +1309,7 @@ struct UPlayer : UObject
 	void SwitchController(APlayerController * PC) { NativeCall<void, APlayerController*>(this, "UPlayer.SwitchController", PC); }
 };
 
-struct APlayerState
+struct APlayerState : AInfo
 {
 	float& ScoreField() { return *GetNativePointerField<float*>(this, "APlayerState.Score"); }
 	char& PingField() { return *GetNativePointerField<char*>(this, "APlayerState.Ping"); }
@@ -6818,11 +6821,6 @@ struct FLinkedZoneSpawnVolumeEntry
 	TArray<AActor *, FDefaultAllocator> ZoneSpawnVolumeFloors;
 	TArray<FName, FDefaultAllocator> ZoneSpawnVolumeFloorTags;
 	float EntryWeight;*/
-};
-
-struct AInfo : AActor
-{
-
 };
 
 struct AWorldSettings : AInfo
