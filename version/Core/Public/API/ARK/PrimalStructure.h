@@ -508,6 +508,7 @@ struct APrimalStructure : APrimalTargetableActor
 	void SetEnabled(bool bEnabled) { NativeCall<void, bool>(this, "APrimalStructure.SetEnabled", bEnabled); }
 	void FinalLoadedFromSaveGame() { NativeCall<void>(this, "APrimalStructure.FinalLoadedFromSaveGame"); }
 	void UpdateStencilValues() { NativeCall<void>(this, "APrimalStructure.UpdateStencilValues"); }
+	//void UpdateStencilValuesWithStenilDepth(EStencilAlliance::Type InAlliance) { NativeCall<void, EStencilAlliance::Type>(this, "APrimalStructure.UpdateStencilValuesWithStenilDepth", InAlliance); }
 	void SetStructureColorValue(int ColorRegionIndex, int SetVal) { NativeCall<void, int, int>(this, "APrimalStructure.SetStructureColorValue", ColorRegionIndex, SetVal); }
 	void SetHarvestingActive(bool bActive, bool bOverrideBaseHealth, float BaseHarvestHealthMult, bool bAssignToTribe, int AssignedToTribeID) { NativeCall<void, bool, bool, float, bool, int>(this, "APrimalStructure.SetHarvestingActive", bActive, bOverrideBaseHealth, BaseHarvestHealthMult, bAssignToTribe, AssignedToTribeID); }
 	FVector * GetTargetPathfindingLocation(FVector * result, AActor * Attacker) { return NativeCall<FVector*, FVector*, AActor*>(this, "APrimalStructure.GetTargetPathfindingLocation", result, Attacker); }
@@ -541,118 +542,6 @@ struct APrimalStructure : APrimalTargetableActor
 	void NetDoSpawnEffects() { NativeCall<void>(this, "APrimalStructure.NetDoSpawnEffects"); }
 	void NetUpdateOriginalOwnerNameAndID(int NewOriginalOwnerID, FString * NewOriginalOwnerName) { NativeCall<void, int, FString*>(this, "APrimalStructure.NetUpdateOriginalOwnerNameAndID", NewOriginalOwnerID, NewOriginalOwnerName); }
 	void NetUpdateTeamAndOwnerName(int NewTeam, FString * NewOwnerName) { NativeCall<void, int, FString*>(this, "APrimalStructure.NetUpdateTeamAndOwnerName", NewTeam, NewOwnerName); }
-};
-
-struct APrimalStructureSeating
-{
-	
-};
-
-struct APrimalStructureBed : APrimalStructureSeating
-{
-	FVector& PlayerSpawnLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureBed.PlayerSpawnLocOffset"); }
-	FRotator& PlayerSpawnRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureBed.PlayerSpawnRotOffset"); }
-	unsigned int& LinkedPlayerIDField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureBed.LinkedPlayerID"); }
-	FString& LinkedPlayerNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructureBed.LinkedPlayerName"); }
-	FString& BedNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructureBed.BedName"); }
-	float& UseCooldownTimeField() { return *GetNativePointerField<float*>(this, "APrimalStructureBed.UseCooldownTime"); }
-	float& UseCooldownRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructureBed.UseCooldownRadius"); }
-	float& AttachedToPlatformStructureEnemySpawnPreventionRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructureBed.AttachedToPlatformStructureEnemySpawnPreventionRadius"); }
-	long double& NextAllowedUseTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureBed.NextAllowedUseTime"); }
-	long double& LastSignNamingTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureBed.LastSignNamingTime"); }
-
-	// Bit fields
-
-	BitFieldValue<bool, unsigned __int32> bDestroyAfterRespawnUse() { return { this, "APrimalStructureBed.bDestroyAfterRespawnUse" }; }
-
-	// Functions
-
-	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructureBed.GetPrivateStaticClass"); }
-	UField* StaticClass() { return NativeCall<UField*>(this, "APrimalStructureBed.StaticClass"); }
-	bool AllowPickupForItem(AShooterPlayerController* ForPC) { return NativeCall<bool, AShooterPlayerController*>(this, "APrimalStructureBed.AllowPickupForItem", ForPC); }
-	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "APrimalStructureBed.GetLifetimeReplicatedProps", OutLifetimeProps); }
-	bool TryMultiUse(APlayerController* ForPC, int UseIndex) { return NativeCall<bool, APlayerController*, int>(this, "APrimalStructureBed.TryMultiUse", ForPC, UseIndex); }
-	void ClientMultiUse(APlayerController* ForPC, int UseIndex) { NativeCall<void, APlayerController*, int>(this, "APrimalStructureBed.ClientMultiUse", ForPC, UseIndex); }
-	void ProcessEditText(AShooterPlayerController* ForPC, FString* TextToUse, bool __formal) { NativeCall<void, AShooterPlayerController*, FString*, bool>(this, "APrimalStructureBed.ProcessEditText", ForPC, TextToUse, __formal); }
-	void DrawHUD(AShooterHUD* HUD) { NativeCall<void, AShooterHUD*>(this, "APrimalStructureBed.DrawHUD", HUD); }
-	void PlacedStructure(AShooterPlayerController* PC) { NativeCall<void, AShooterPlayerController*>(this, "APrimalStructureBed.PlacedStructure", PC); }
-	bool AllowSpawnForPlayer(AShooterPlayerController* PC, bool bCheckCooldownTime, APrimalStructure* FromStructure) { return NativeCall<bool, AShooterPlayerController*, bool, APrimalStructure*>(this, "APrimalStructureBed.AllowSpawnForPlayer", PC, bCheckCooldownTime, FromStructure); }
-	bool AllowSpawnForDownloadedPlayer(unsigned __int64 PlayerDataID, unsigned __int64 TribeID, bool bCheckCooldownTime) { return NativeCall<bool, unsigned __int64, unsigned __int64, bool>(this, "APrimalStructureBed.AllowSpawnForDownloadedPlayer", PlayerDataID, TribeID, bCheckCooldownTime); }
-	bool CheckStructureActivateTribeGroupPermission(unsigned __int64 PlayerDataID, unsigned __int64 TribeID) { return NativeCall<bool, unsigned __int64, unsigned __int64>(this, "APrimalStructureBed.CheckStructureActivateTribeGroupPermission", PlayerDataID, TribeID); }
-	void SpawnedPlayerFor_Implementation(AShooterPlayerController* PC, APawn* ForPawn) { NativeCall<void, AShooterPlayerController*, APawn*>(this, "APrimalStructureBed.SpawnedPlayerFor_Implementation", PC, ForPawn); }
-	void Destroyed() { NativeCall<void>(this, "APrimalStructureBed.Destroyed"); }
-	static APrimalStructure* FindBedWithID(UWorld* forWorld, int theBedID) { return NativeCall<APrimalStructure*, UWorld*, int>(nullptr, "APrimalStructureBed.FindBedWithID", forWorld, theBedID); }
-	FVector* GetPlayerSpawnLocation(FVector* result) { return NativeCall<FVector*, FVector*>(this, "APrimalStructureBed.GetPlayerSpawnLocation", result); }
-	FRotator* GetPlayerSpawnRotation(FRotator* result) { return NativeCall<FRotator*, FRotator*>(this, "APrimalStructureBed.GetPlayerSpawnRotation", result); }
-	void PostInitializeComponents() { NativeCall<void>(this, "APrimalStructureBed.PostInitializeComponents"); }
-	FString* GetDescriptiveName(FString* result) { return NativeCall<FString*, FString*>(this, "APrimalStructureBed.GetDescriptiveName", result); }
-	static void StaticRegisterNativesAPrimalStructureBed() { NativeCall<void>(nullptr, "APrimalStructureBed.StaticRegisterNativesAPrimalStructureBed"); }
-};
-
-struct APrimalStructureDoor : APrimalStructure
-{
-	TSubobjectPtr<USceneComponent>& MyDoorTransformField() { return *GetNativePointerField<TSubobjectPtr<USceneComponent>*>(this, "APrimalStructureDoor.MyDoorTransform"); }
-	float& RotationSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.RotationSpeed"); }
-	USoundCue* DoorOpenSoundField() { return *GetNativePointerField<USoundCue**>(this, "APrimalStructureDoor.DoorOpenSound"); }
-	USoundCue* DoorCloseSoundField() { return *GetNativePointerField<USoundCue**>(this, "APrimalStructureDoor.DoorCloseSound"); }
-	unsigned int& CurrentPinCodeField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureDoor.CurrentPinCode"); }
-	float& DoorStateChangeIgnoreEncroachmentIntervalField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.DoorStateChangeIgnoreEncroachmentInterval"); }
-	char& DoorOpenStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.DoorOpenState"); }
-	char& ClientPrevDoorOpenStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.ClientPrevDoorOpenState"); }
-	long double& LastLockStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastLockStateChangeTime"); }
-	FRotator& SecondDoorDefaultRotField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureDoor.SecondDoorDefaultRot"); }
-	float& CurrentDoorAngleField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.CurrentDoorAngle"); }
-	USoundBase* UnlockDoorSoundField() { return *GetNativePointerField<USoundBase**>(this, "APrimalStructureDoor.UnlockDoorSound"); }
-	USoundBase* LockDoorSoundField() { return *GetNativePointerField<USoundBase**>(this, "APrimalStructureDoor.LockDoorSound"); }
-	USoundBase* LockedSoundField() { return *GetNativePointerField<USoundBase**>(this, "APrimalStructureDoor.LockedSound"); }
-	long double& LastPinOpenSuccessTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastPinOpenSuccessTime"); }
-	long double& LastDoorStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastDoorStateChangeTime"); }
-	char& DelayedDoorStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.DelayedDoorState"); }
-
-	// Bit fields
-
-	BitFieldValue<bool, unsigned __int32> bInvertOpenCloseDirection() { return { this, "APrimalStructureDoor.bInvertOpenCloseDirection" }; }
-	BitFieldValue<bool, unsigned __int32> bSupportsLocking() { return { this, "APrimalStructureDoor.bSupportsLocking" }; }
-	BitFieldValue<bool, unsigned __int32> bUseSecondDoor() { return { this, "APrimalStructureDoor.bUseSecondDoor" }; }
-	BitFieldValue<bool, unsigned __int32> bSupportsPinLocking() { return { this, "APrimalStructureDoor.bSupportsPinLocking" }; }
-	BitFieldValue<bool, unsigned __int32> bIsLocked() { return { this, "APrimalStructureDoor.bIsLocked" }; }
-	BitFieldValue<bool, unsigned __int32> bIsPinLocked() { return { this, "APrimalStructureDoor.bIsPinLocked" }; }
-	BitFieldValue<bool, unsigned __int32> bAdminOnlyAccess() { return { this, "APrimalStructureDoor.bAdminOnlyAccess" }; }
-	BitFieldValue<bool, unsigned __int32> bCanBeForcedOpenByDino() { return { this, "APrimalStructureDoor.bCanBeForcedOpenByDino" }; }
-	BitFieldValue<bool, unsigned __int32> bPreventBasingWhileMoving() { return { this, "APrimalStructureDoor.bPreventBasingWhileMoving" }; }
-	BitFieldValue<bool, unsigned __int32> bForceDoorOpenIn() { return { this, "APrimalStructureDoor.bForceDoorOpenIn" }; }
-	BitFieldValue<bool, unsigned __int32> bForceDoorOpenOut() { return { this, "APrimalStructureDoor.bForceDoorOpenOut" }; }
-	BitFieldValue<bool, unsigned __int32> bIsDoorMoving() { return { this, "APrimalStructureDoor.bIsDoorMoving" }; }
-	BitFieldValue<bool, unsigned __int32> bForceStaticMobility() { return { this, "APrimalStructureDoor.bForceStaticMobility" }; }
-	BitFieldValue<bool, unsigned __int32> bRotatePitch() { return { this, "APrimalStructureDoor.bRotatePitch" }; }
-	BitFieldValue<bool, unsigned __int32> bRotateRoll() { return { this, "APrimalStructureDoor.bRotateRoll" }; }
-	BitFieldValue<bool, unsigned __int32> bRotateYaw() { return { this, "APrimalStructureDoor.bRotateYaw" }; }
-	BitFieldValue<bool, unsigned __int32> bInitializedRotation() { return { this, "APrimalStructureDoor.bInitializedRotation" }; }
-	BitFieldValue<bool, unsigned __int32> bPreventDoorInterpolation() { return { this, "APrimalStructureDoor.bPreventDoorInterpolation" }; }
-	BitFieldValue<bool, unsigned __int32> bUseBPGotoDoorState() { return { this, "APrimalStructureDoor.bUseBPGotoDoorState" }; }
-
-	// Functions
-
-	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructureDoor.GetPrivateStaticClass"); }
-	void BeginPlay() { NativeCall<void>(this, "APrimalStructureDoor.BeginPlay"); }
-	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "APrimalStructureDoor.Tick", DeltaSeconds); }
-	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "APrimalStructureDoor.GetLifetimeReplicatedProps", OutLifetimeProps); }
-	void DrawHUD(AShooterHUD* HUD) { NativeCall<void, AShooterHUD*>(this, "APrimalStructureDoor.DrawHUD", HUD); }
-	void GotoDoorState(char DoorState) { NativeCall<void, char>(this, "APrimalStructureDoor.GotoDoorState", DoorState); }
-	void DelayedGotoDoorState(char DoorState, float DelayTime) { NativeCall<void, char, float>(this, "APrimalStructureDoor.DelayedGotoDoorState", DoorState, DelayTime); }
-	void DelayedGotoDoorStateTimer() { NativeCall<void>(this, "APrimalStructureDoor.DelayedGotoDoorStateTimer"); }
-	bool TryMultiUse(APlayerController* ForPC, int UseIndex) { return NativeCall<bool, APlayerController*, int>(this, "APrimalStructureDoor.TryMultiUse", ForPC, UseIndex); }
-	bool CanOpen(APlayerController* ForPC) { return NativeCall<bool, APlayerController*>(this, "APrimalStructureDoor.CanOpen", ForPC); }
-	FString* GetDescriptiveName(FString* result) { return NativeCall<FString*, FString*>(this, "APrimalStructureDoor.GetDescriptiveName", result); }
-	bool ApplyPinCode(AShooterPlayerController* ForPC, int appledPinCode, bool bIsSetting, int TheCustomIndex) { return NativeCall<bool, AShooterPlayerController*, int, bool, int>(this, "APrimalStructureDoor.ApplyPinCode", ForPC, appledPinCode, bIsSetting, TheCustomIndex); }
-	void SetStaticMobility() { NativeCall<void>(this, "APrimalStructureDoor.SetStaticMobility"); }
-	void NetGotoDoorState_Implementation(char DoorState) { NativeCall<void, char>(this, "APrimalStructureDoor.NetGotoDoorState_Implementation", DoorState); }
-	void PostInitializeComponents() { NativeCall<void>(this, "APrimalStructureDoor.PostInitializeComponents"); }
-	bool AllowStructureAccess(APlayerController* ForPC) { return NativeCall<bool, APlayerController*>(this, "APrimalStructureDoor.AllowStructureAccess", ForPC); }
-	bool PreventCharacterBasing(AActor* OtherActor, UPrimitiveComponent* BasedOnComponent) { return NativeCall<bool, AActor*, UPrimitiveComponent*>(this, "APrimalStructureDoor.PreventCharacterBasing", OtherActor, BasedOnComponent); }
-	bool AllowPickupForItem(AShooterPlayerController* ForPC) { return NativeCall<bool, AShooterPlayerController*>(this, "APrimalStructureDoor.AllowPickupForItem", ForPC); }
-	bool AllowIgnoreCharacterEncroachment_Implementation(UPrimitiveComponent* HitComponent, AActor* EncroachingCharacter) { return NativeCall<bool, UPrimitiveComponent*, AActor*>(this, "APrimalStructureDoor.AllowIgnoreCharacterEncroachment_Implementation", HitComponent, EncroachingCharacter); }
-	static void StaticRegisterNativesAPrimalStructureDoor() { NativeCall<void>(nullptr, "APrimalStructureDoor.StaticRegisterNativesAPrimalStructureDoor"); }
 };
 
 struct APrimalStructureItemContainer : APrimalStructure
@@ -865,6 +754,171 @@ struct APrimalStructureItemContainer : APrimalStructure
 	void NetUpdateBoxName(FString* NewName) { NativeCall<void, FString*>(this, "APrimalStructureItemContainer.NetUpdateBoxName", NewName); }
 	static void StaticRegisterNativesAPrimalStructureItemContainer() { NativeCall<void>(nullptr, "APrimalStructureItemContainer.StaticRegisterNativesAPrimalStructureItemContainer"); }
 	void PowerGeneratorBuiltNearbyPoweredStructure(APrimalStructureItemContainer* PoweredStructure) { NativeCall<void, APrimalStructureItemContainer*>(this, "APrimalStructureItemContainer.PowerGeneratorBuiltNearbyPoweredStructure", PoweredStructure); }
+};
+struct APrimalStructureSeating : APrimalStructureItemContainer
+{
+	TWeakObjectPtr<AShooterCharacter>& SeatedCharacterField() { return *GetNativePointerField<TWeakObjectPtr<AShooterCharacter>*>(this, "APrimalStructureSeating.SeatedCharacter"); }
+	TWeakObjectPtr<AShooterCharacter>& PrevSeatedCharacterField() { return *GetNativePointerField<TWeakObjectPtr<AShooterCharacter>*>(this, "APrimalStructureSeating.PrevSeatedCharacter"); }
+	TWeakObjectPtr<AShooterPlayerController>& SeatedControllerField() { return *GetNativePointerField<TWeakObjectPtr<AShooterPlayerController>*>(this, "APrimalStructureSeating.SeatedController"); }
+	TArray<TWeakObjectPtr<AShooterCharacter>>& CharacterPerSeatField() { return *GetNativePointerField<TArray<TWeakObjectPtr<AShooterCharacter>>*>(this, "APrimalStructureSeating.CharacterPerSeat"); }
+	TArray<TWeakObjectPtr<AShooterCharacter>>& PrevCharacterPerSeatField() { return *GetNativePointerField<TArray<TWeakObjectPtr<AShooterCharacter>>*>(this, "APrimalStructureSeating.PrevCharacterPerSeat"); }
+	int& NumSeatsField() { return *GetNativePointerField<int*>(this, "APrimalStructureSeating.NumSeats"); }
+	FVector& SeatedCharacterLocationOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureSeating.SeatedCharacterLocationOffset"); }
+	FRotator& SeatedCharacterRotationOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureSeating.SeatedCharacterRotationOffset"); }
+	//TArray<FSeatingSpot>& OtherSeatingSpotsField() { return *GetNativePointerField<TArray<FSeatingSpot>*>(this, "APrimalStructureSeating.OtherSeatingSpots"); }
+	float& TPVCameraYawRangeField() { return *GetNativePointerField<float*>(this, "APrimalStructureSeating.TPVCameraYawRange"); }
+	FVector& TPVCameraOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureSeating.TPVCameraOffset"); }
+	FVector& TPVCameraOffsetMultiplierField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureSeating.TPVCameraOffsetMultiplier"); }
+	float& UnboardDistanceField() { return *GetNativePointerField<float*>(this, "APrimalStructureSeating.UnboardDistance"); }
+	FString& SeatingActionTextField() { return *GetNativePointerField<FString*>(this, "APrimalStructureSeating.SeatingActionText"); }
+	USoundCue* RideSoundField() { return *GetNativePointerField<USoundCue**>(this, "APrimalStructureSeating.RideSound"); }
+	USoundCue* UnrideSoundField() { return *GetNativePointerField<USoundCue**>(this, "APrimalStructureSeating.UnrideSound"); }
+	UAnimSequence* SeatingAnimOverrideField() { return *GetNativePointerField<UAnimSequence**>(this, "APrimalStructureSeating.SeatingAnimOverride"); }
+	int& SeatingActionPriorityField() { return *GetNativePointerField<int*>(this, "APrimalStructureSeating.SeatingActionPriority"); }
+	long double& LastServerUpdateSentField() { return *GetNativePointerField<long double*>(this, "APrimalStructureSeating.LastServerUpdateSent"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bAdjustForLegLength() { return { this, "APrimalStructureSeating.bAdjustForLegLength" }; }
+	BitFieldValue<bool, unsigned __int32> bRestrictTPVCameraYaw() { return { this, "APrimalStructureSeating.bRestrictTPVCameraYaw" }; }
+	BitFieldValue<bool, unsigned __int32> bUsesPrimaryFire() { return { this, "APrimalStructureSeating.bUsesPrimaryFire" }; }
+	BitFieldValue<bool, unsigned __int32> bUsesAltFire() { return { this, "APrimalStructureSeating.bUsesAltFire" }; }
+	BitFieldValue<bool, unsigned __int32> bUsesItemSlotKeys() { return { this, "APrimalStructureSeating.bUsesItemSlotKeys" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventSeatingWhenHandcuffed() { return { this, "APrimalStructureSeating.bPreventSeatingWhenHandcuffed" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowSleepingPlayers() { return { this, "APrimalStructureSeating.bAllowSleepingPlayers" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowAnyTeamToSit() { return { this, "APrimalStructureSeating.bAllowAnyTeamToSit" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowOrbitCam() { return { this, "APrimalStructureSeating.bAllowOrbitCam" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventHandcuffLockedSeating() { return { this, "APrimalStructureSeating.bPreventHandcuffLockedSeating" }; }
+
+	// Functions
+
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructureSeating.GetPrivateStaticClass"); }
+	//int BPGetBestSeatNumber_Implementation(FArchive* Ar, int EnumeratorIndex) { return NativeCall<int, FArchive*, int>(this, "APrimalStructureSeating.BPGetBestSeatNumber_Implementation", Ar, EnumeratorIndex); }
+	void Control(AShooterCharacter* ShooterCharacter, int SeatNumber, bool bLockedToSeat) { NativeCall<void, AShooterCharacter*, int, bool>(this, "APrimalStructureSeating.Control", ShooterCharacter, SeatNumber, bLockedToSeat); }
+	void Release(AShooterCharacter* ShooterCharacter) { NativeCall<void, AShooterCharacter*>(this, "APrimalStructureSeating.Release", ShooterCharacter); }
+	void GetNearestSitSpot(FVector CharacterLocation, FVector* OutSitLocation, FRotator* OutSitRotation) { NativeCall<void, FVector, FVector*, FRotator*>(this, "APrimalStructureSeating.GetNearestSitSpot", CharacterLocation, OutSitLocation, OutSitRotation); }
+	void GetNearestSitSpot(FVector CharacterLocation, int SeatNumber, FVector* OutSitLocation, FRotator* OutSitRotation) { NativeCall<void, FVector, int, FVector*, FRotator*>(this, "APrimalStructureSeating.GetNearestSitSpot", CharacterLocation, SeatNumber, OutSitLocation, OutSitRotation); }
+	int GetNearestFreeSpot(AShooterPlayerController* ForPC, FVector CharacterLocation) { return NativeCall<int, AShooterPlayerController*, FVector>(this, "APrimalStructureSeating.GetNearestFreeSpot", ForPC, CharacterLocation); }
+	FVector* GetUnboardLocation(FVector* result, FVector CharacterLocation) { return NativeCall<FVector*, FVector*, FVector>(this, "APrimalStructureSeating.GetUnboardLocation", result, CharacterLocation); }
+	bool CanUse(AShooterPlayerController* ForPC) { return NativeCall<bool, AShooterPlayerController*>(this, "APrimalStructureSeating.CanUse", ForPC); }
+	void OnRep_SeatedCharacter() { NativeCall<void>(this, "APrimalStructureSeating.OnRep_SeatedCharacter"); }
+	void OnRep_CharacterPerSeat() { NativeCall<void>(this, "APrimalStructureSeating.OnRep_CharacterPerSeat"); }
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "APrimalStructureSeating.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	bool AllowPickupForItem(AShooterPlayerController* ForPC) { return NativeCall<bool, AShooterPlayerController*>(this, "APrimalStructureSeating.AllowPickupForItem", ForPC); }
+	bool CanSeat(AShooterPlayerController* ForPC, AShooterCharacter* ForCharacter, bool bForce) { return NativeCall<bool, AShooterPlayerController*, AShooterCharacter*, bool>(this, "APrimalStructureSeating.CanSeat", ForPC, ForCharacter, bForce); }
+	bool TryMultiUse(APlayerController* ForPC, int UseIndex) { return NativeCall<bool, APlayerController*, int>(this, "APrimalStructureSeating.TryMultiUse", ForPC, UseIndex); }
+	bool HasAvailableSeat() { return NativeCall<bool>(this, "APrimalStructureSeating.HasAvailableSeat"); }
+	int GetNumTakenSeats() { return NativeCall<int>(this, "APrimalStructureSeating.GetNumTakenSeats"); }
+	void Demolish(APlayerController* ForPC) { NativeCall<void, APlayerController*>(this, "APrimalStructureSeating.Demolish", ForPC); }
+	void Destroyed() { NativeCall<void>(this, "APrimalStructureSeating.Destroyed"); }
+	static void StaticRegisterNativesAPrimalStructureSeating() { NativeCall<void>(nullptr, "APrimalStructureSeating.StaticRegisterNativesAPrimalStructureSeating"); }
+};
+
+struct APrimalStructureBed : APrimalStructureSeating
+{
+	FVector& PlayerSpawnLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureBed.PlayerSpawnLocOffset"); }
+	FRotator& PlayerSpawnRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureBed.PlayerSpawnRotOffset"); }
+	unsigned int& LinkedPlayerIDField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureBed.LinkedPlayerID"); }
+	FString& LinkedPlayerNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructureBed.LinkedPlayerName"); }
+	FString& BedNameField() { return *GetNativePointerField<FString*>(this, "APrimalStructureBed.BedName"); }
+	float& UseCooldownTimeField() { return *GetNativePointerField<float*>(this, "APrimalStructureBed.UseCooldownTime"); }
+	float& UseCooldownRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructureBed.UseCooldownRadius"); }
+	float& AttachedToPlatformStructureEnemySpawnPreventionRadiusField() { return *GetNativePointerField<float*>(this, "APrimalStructureBed.AttachedToPlatformStructureEnemySpawnPreventionRadius"); }
+	long double& NextAllowedUseTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureBed.NextAllowedUseTime"); }
+	long double& LastSignNamingTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureBed.LastSignNamingTime"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bDestroyAfterRespawnUse() { return { this, "APrimalStructureBed.bDestroyAfterRespawnUse" }; }
+
+	// Functions
+
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructureBed.GetPrivateStaticClass"); }
+	UField* StaticClass() { return NativeCall<UField*>(this, "APrimalStructureBed.StaticClass"); }
+	bool AllowPickupForItem(AShooterPlayerController* ForPC) { return NativeCall<bool, AShooterPlayerController*>(this, "APrimalStructureBed.AllowPickupForItem", ForPC); }
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "APrimalStructureBed.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	bool TryMultiUse(APlayerController* ForPC, int UseIndex) { return NativeCall<bool, APlayerController*, int>(this, "APrimalStructureBed.TryMultiUse", ForPC, UseIndex); }
+	void ClientMultiUse(APlayerController* ForPC, int UseIndex) { NativeCall<void, APlayerController*, int>(this, "APrimalStructureBed.ClientMultiUse", ForPC, UseIndex); }
+	void ProcessEditText(AShooterPlayerController* ForPC, FString* TextToUse, bool __formal) { NativeCall<void, AShooterPlayerController*, FString*, bool>(this, "APrimalStructureBed.ProcessEditText", ForPC, TextToUse, __formal); }
+	void DrawHUD(AShooterHUD* HUD) { NativeCall<void, AShooterHUD*>(this, "APrimalStructureBed.DrawHUD", HUD); }
+	void PlacedStructure(AShooterPlayerController* PC) { NativeCall<void, AShooterPlayerController*>(this, "APrimalStructureBed.PlacedStructure", PC); }
+	bool AllowSpawnForPlayer(AShooterPlayerController* PC, bool bCheckCooldownTime, APrimalStructure* FromStructure) { return NativeCall<bool, AShooterPlayerController*, bool, APrimalStructure*>(this, "APrimalStructureBed.AllowSpawnForPlayer", PC, bCheckCooldownTime, FromStructure); }
+	bool AllowSpawnForDownloadedPlayer(unsigned __int64 PlayerDataID, unsigned __int64 TribeID, bool bCheckCooldownTime) { return NativeCall<bool, unsigned __int64, unsigned __int64, bool>(this, "APrimalStructureBed.AllowSpawnForDownloadedPlayer", PlayerDataID, TribeID, bCheckCooldownTime); }
+	bool CheckStructureActivateTribeGroupPermission(unsigned __int64 PlayerDataID, unsigned __int64 TribeID) { return NativeCall<bool, unsigned __int64, unsigned __int64>(this, "APrimalStructureBed.CheckStructureActivateTribeGroupPermission", PlayerDataID, TribeID); }
+	void SpawnedPlayerFor_Implementation(AShooterPlayerController* PC, APawn* ForPawn) { NativeCall<void, AShooterPlayerController*, APawn*>(this, "APrimalStructureBed.SpawnedPlayerFor_Implementation", PC, ForPawn); }
+	void Destroyed() { NativeCall<void>(this, "APrimalStructureBed.Destroyed"); }
+	static APrimalStructure* FindBedWithID(UWorld* forWorld, int theBedID) { return NativeCall<APrimalStructure*, UWorld*, int>(nullptr, "APrimalStructureBed.FindBedWithID", forWorld, theBedID); }
+	FVector* GetPlayerSpawnLocation(FVector* result) { return NativeCall<FVector*, FVector*>(this, "APrimalStructureBed.GetPlayerSpawnLocation", result); }
+	FRotator* GetPlayerSpawnRotation(FRotator* result) { return NativeCall<FRotator*, FRotator*>(this, "APrimalStructureBed.GetPlayerSpawnRotation", result); }
+	void PostInitializeComponents() { NativeCall<void>(this, "APrimalStructureBed.PostInitializeComponents"); }
+	FString* GetDescriptiveName(FString* result) { return NativeCall<FString*, FString*>(this, "APrimalStructureBed.GetDescriptiveName", result); }
+	static void StaticRegisterNativesAPrimalStructureBed() { NativeCall<void>(nullptr, "APrimalStructureBed.StaticRegisterNativesAPrimalStructureBed"); }
+};
+
+struct APrimalStructureDoor : APrimalStructure
+{
+	TSubobjectPtr<USceneComponent>& MyDoorTransformField() { return *GetNativePointerField<TSubobjectPtr<USceneComponent>*>(this, "APrimalStructureDoor.MyDoorTransform"); }
+	float& RotationSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.RotationSpeed"); }
+	USoundCue* DoorOpenSoundField() { return *GetNativePointerField<USoundCue**>(this, "APrimalStructureDoor.DoorOpenSound"); }
+	USoundCue* DoorCloseSoundField() { return *GetNativePointerField<USoundCue**>(this, "APrimalStructureDoor.DoorCloseSound"); }
+	unsigned int& CurrentPinCodeField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureDoor.CurrentPinCode"); }
+	float& DoorStateChangeIgnoreEncroachmentIntervalField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.DoorStateChangeIgnoreEncroachmentInterval"); }
+	char& DoorOpenStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.DoorOpenState"); }
+	char& ClientPrevDoorOpenStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.ClientPrevDoorOpenState"); }
+	long double& LastLockStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastLockStateChangeTime"); }
+	FRotator& SecondDoorDefaultRotField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureDoor.SecondDoorDefaultRot"); }
+	float& CurrentDoorAngleField() { return *GetNativePointerField<float*>(this, "APrimalStructureDoor.CurrentDoorAngle"); }
+	USoundBase* UnlockDoorSoundField() { return *GetNativePointerField<USoundBase**>(this, "APrimalStructureDoor.UnlockDoorSound"); }
+	USoundBase* LockDoorSoundField() { return *GetNativePointerField<USoundBase**>(this, "APrimalStructureDoor.LockDoorSound"); }
+	USoundBase* LockedSoundField() { return *GetNativePointerField<USoundBase**>(this, "APrimalStructureDoor.LockedSound"); }
+	long double& LastPinOpenSuccessTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastPinOpenSuccessTime"); }
+	long double& LastDoorStateChangeTimeField() { return *GetNativePointerField<long double*>(this, "APrimalStructureDoor.LastDoorStateChangeTime"); }
+	char& DelayedDoorStateField() { return *GetNativePointerField<char*>(this, "APrimalStructureDoor.DelayedDoorState"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bInvertOpenCloseDirection() { return { this, "APrimalStructureDoor.bInvertOpenCloseDirection" }; }
+	BitFieldValue<bool, unsigned __int32> bSupportsLocking() { return { this, "APrimalStructureDoor.bSupportsLocking" }; }
+	BitFieldValue<bool, unsigned __int32> bUseSecondDoor() { return { this, "APrimalStructureDoor.bUseSecondDoor" }; }
+	BitFieldValue<bool, unsigned __int32> bSupportsPinLocking() { return { this, "APrimalStructureDoor.bSupportsPinLocking" }; }
+	BitFieldValue<bool, unsigned __int32> bIsLocked() { return { this, "APrimalStructureDoor.bIsLocked" }; }
+	BitFieldValue<bool, unsigned __int32> bIsPinLocked() { return { this, "APrimalStructureDoor.bIsPinLocked" }; }
+	BitFieldValue<bool, unsigned __int32> bAdminOnlyAccess() { return { this, "APrimalStructureDoor.bAdminOnlyAccess" }; }
+	BitFieldValue<bool, unsigned __int32> bCanBeForcedOpenByDino() { return { this, "APrimalStructureDoor.bCanBeForcedOpenByDino" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventBasingWhileMoving() { return { this, "APrimalStructureDoor.bPreventBasingWhileMoving" }; }
+	BitFieldValue<bool, unsigned __int32> bForceDoorOpenIn() { return { this, "APrimalStructureDoor.bForceDoorOpenIn" }; }
+	BitFieldValue<bool, unsigned __int32> bForceDoorOpenOut() { return { this, "APrimalStructureDoor.bForceDoorOpenOut" }; }
+	BitFieldValue<bool, unsigned __int32> bIsDoorMoving() { return { this, "APrimalStructureDoor.bIsDoorMoving" }; }
+	BitFieldValue<bool, unsigned __int32> bForceStaticMobility() { return { this, "APrimalStructureDoor.bForceStaticMobility" }; }
+	BitFieldValue<bool, unsigned __int32> bRotatePitch() { return { this, "APrimalStructureDoor.bRotatePitch" }; }
+	BitFieldValue<bool, unsigned __int32> bRotateRoll() { return { this, "APrimalStructureDoor.bRotateRoll" }; }
+	BitFieldValue<bool, unsigned __int32> bRotateYaw() { return { this, "APrimalStructureDoor.bRotateYaw" }; }
+	BitFieldValue<bool, unsigned __int32> bInitializedRotation() { return { this, "APrimalStructureDoor.bInitializedRotation" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventDoorInterpolation() { return { this, "APrimalStructureDoor.bPreventDoorInterpolation" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPGotoDoorState() { return { this, "APrimalStructureDoor.bUseBPGotoDoorState" }; }
+
+	// Functions
+
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructureDoor.GetPrivateStaticClass"); }
+	void BeginPlay() { NativeCall<void>(this, "APrimalStructureDoor.BeginPlay"); }
+	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "APrimalStructureDoor.Tick", DeltaSeconds); }
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "APrimalStructureDoor.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	void DrawHUD(AShooterHUD* HUD) { NativeCall<void, AShooterHUD*>(this, "APrimalStructureDoor.DrawHUD", HUD); }
+	void GotoDoorState(char DoorState) { NativeCall<void, char>(this, "APrimalStructureDoor.GotoDoorState", DoorState); }
+	void DelayedGotoDoorState(char DoorState, float DelayTime) { NativeCall<void, char, float>(this, "APrimalStructureDoor.DelayedGotoDoorState", DoorState, DelayTime); }
+	void DelayedGotoDoorStateTimer() { NativeCall<void>(this, "APrimalStructureDoor.DelayedGotoDoorStateTimer"); }
+	bool TryMultiUse(APlayerController* ForPC, int UseIndex) { return NativeCall<bool, APlayerController*, int>(this, "APrimalStructureDoor.TryMultiUse", ForPC, UseIndex); }
+	bool CanOpen(APlayerController* ForPC) { return NativeCall<bool, APlayerController*>(this, "APrimalStructureDoor.CanOpen", ForPC); }
+	FString* GetDescriptiveName(FString* result) { return NativeCall<FString*, FString*>(this, "APrimalStructureDoor.GetDescriptiveName", result); }
+	bool ApplyPinCode(AShooterPlayerController* ForPC, int appledPinCode, bool bIsSetting, int TheCustomIndex) { return NativeCall<bool, AShooterPlayerController*, int, bool, int>(this, "APrimalStructureDoor.ApplyPinCode", ForPC, appledPinCode, bIsSetting, TheCustomIndex); }
+	void SetStaticMobility() { NativeCall<void>(this, "APrimalStructureDoor.SetStaticMobility"); }
+	void NetGotoDoorState_Implementation(char DoorState) { NativeCall<void, char>(this, "APrimalStructureDoor.NetGotoDoorState_Implementation", DoorState); }
+	void PostInitializeComponents() { NativeCall<void>(this, "APrimalStructureDoor.PostInitializeComponents"); }
+	bool AllowStructureAccess(APlayerController* ForPC) { return NativeCall<bool, APlayerController*>(this, "APrimalStructureDoor.AllowStructureAccess", ForPC); }
+	bool PreventCharacterBasing(AActor* OtherActor, UPrimitiveComponent* BasedOnComponent) { return NativeCall<bool, AActor*, UPrimitiveComponent*>(this, "APrimalStructureDoor.PreventCharacterBasing", OtherActor, BasedOnComponent); }
+	bool AllowPickupForItem(AShooterPlayerController* ForPC) { return NativeCall<bool, AShooterPlayerController*>(this, "APrimalStructureDoor.AllowPickupForItem", ForPC); }
+	bool AllowIgnoreCharacterEncroachment_Implementation(UPrimitiveComponent* HitComponent, AActor* EncroachingCharacter) { return NativeCall<bool, UPrimitiveComponent*, AActor*>(this, "APrimalStructureDoor.AllowIgnoreCharacterEncroachment_Implementation", HitComponent, EncroachingCharacter); }
+	static void StaticRegisterNativesAPrimalStructureDoor() { NativeCall<void>(nullptr, "APrimalStructureDoor.StaticRegisterNativesAPrimalStructureDoor"); }
 };
 
 struct APrimalStructureTurret : APrimalStructureItemContainer
