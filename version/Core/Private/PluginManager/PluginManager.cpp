@@ -14,8 +14,7 @@ namespace API
 {
 	PluginManager::PluginManager()
 	{
-		//commands.AddOnTimerCallback(L"PluginManager.DetectPluginChangesTimerCallback",
-		//                          &DetectPluginChangesTimerCallback);
+		ArkApi::GetCommands().AddOnTimerCallback(L"PluginManager.DetectPluginChangesTimerCallback", &DetectPluginChangesTimerCallback);
 	}
 
 	PluginManager& PluginManager::Get()
@@ -317,6 +316,7 @@ namespace API
 
 		pluginManager.next_reload_check_ = now + pluginManager.reload_sleep_seconds_;
 
+		Log::GetLog()->info("Checking for plugin changes ...");
 		pluginManager.DetectPluginChanges();
 	}
 
