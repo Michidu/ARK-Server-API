@@ -4,7 +4,6 @@
 
 #include <string>
 #include <locale>
-#include <codecvt>
 #include <Logger/Logger.h>
 
 #include "TArray.h"
@@ -1615,10 +1614,14 @@ public:
 		if (!data)
 			return "";
 
-		using convert_typeX = std::codecvt_utf8<wchar_t>;
-		std::wstring_convert<convert_typeX, wchar_t> converterX;
+		const int size_needed = WideCharToMultiByte(CP_UTF8, 0, data, static_cast<int>(Len()), nullptr, 0,
+			nullptr, nullptr);
 
-		return converterX.to_bytes(data);
+		std::string str(size_needed, 0);
+		WideCharToMultiByte(CP_UTF8, 0, data, static_cast<int>(Len()), str.data(), size_needed, nullptr,
+			nullptr);
+
+		return str;
 	}
 
 	/**

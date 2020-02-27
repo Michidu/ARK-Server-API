@@ -92,7 +92,8 @@
     "FOverlapResult",
     "UVictoryCore",
     "ULevelBase",
-	"ABasePlayerController"
+	"ABasePlayerController",
+	"FAvailableMission"
   ],
   "functions":[  
     "StaticLoadObject",

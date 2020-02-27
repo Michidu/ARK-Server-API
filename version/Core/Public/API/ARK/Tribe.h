@@ -50,8 +50,11 @@ struct FTribeData
 	FString* GetTribeNameWithRankGroup(FString* result, unsigned int PlayerDataID) { return NativeCall<FString*, FString*, unsigned int>(this, "FTribeData.GetTribeNameWithRankGroup", result, PlayerDataID); }
 	FString* GetRankNameForPlayerID(FString* result, unsigned int PlayerDataID) { return NativeCall<FString*, FString*, unsigned int>(this, "FTribeData.GetRankNameForPlayerID", result, PlayerDataID); }
 	bool GetTribeRankGroupForPlayer(unsigned int PlayerDataID, FTribeRankGroup* outRankGroup) { return NativeCall<bool, unsigned int, FTribeRankGroup*>(this, "FTribeData.GetTribeRankGroupForPlayer", PlayerDataID, outRankGroup); }
+	int GetTribeRankGroupIndexForPlayer(unsigned int PlayerDataID) { return NativeCall<int, unsigned int>(this, "FTribeData.GetTribeRankGroupIndexForPlayer", PlayerDataID); }
 	int GetBestRankGroupForRank(int Rank) { return NativeCall<int, int>(this, "FTribeData.GetBestRankGroupForRank", Rank); }
+	void MarkTribeNameChanged(UObject* WorldContextObject) { NativeCall<void, UObject*>(this, "FTribeData.MarkTribeNameChanged", WorldContextObject); }
 	long double GetSecondsSinceLastNameChange(UObject* WorldContextObject) { return NativeCall<long double, UObject*>(this, "FTribeData.GetSecondsSinceLastNameChange", WorldContextObject); }
+	float GetTribeNameChangeCooldownTime(UObject* WorldContextObject) { return NativeCall<float, UObject*>(this, "FTribeData.GetTribeNameChangeCooldownTime", WorldContextObject); }
 	int GetDefaultRankGroupIndex() { return NativeCall<int>(this, "FTribeData.GetDefaultRankGroupIndex"); }
 	FTribeData* operator=(FTribeData* __that) { return NativeCall<FTribeData*, FTribeData*>(this, "FTribeData.operator=", __that); }
 	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FTribeData.StaticStruct"); }

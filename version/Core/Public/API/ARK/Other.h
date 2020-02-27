@@ -1,5 +1,16 @@
 #pragma once
 
+struct FAvailableMission
+{
+	TSubclassOf<AMissionType>& MissionClassField() { return *GetNativePointerField<TSubclassOf<AMissionType>*>(this, "FAvailableMission.MissionClass"); }
+	FVector& DispatcherLocationField() { return *GetNativePointerField<FVector*>(this, "FAvailableMission.DispatcherLocation"); }
+
+	// Functions
+
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FAvailableMission.StaticStruct"); }
+	void FScriptStruct_ShooterGame_StaticRegisterNativesFAvailableMission() { NativeCall<void>(this, "FAvailableMission.FScriptStruct_ShooterGame_StaticRegisterNativesFAvailableMission"); }
+};
+
 struct FDamageEvent
 {
 	//FDamageEventVtbl* vfptrField() { return *GetNativePointerField<FDamageEventVtbl**>(this, "FDamageEvent.vfptr"); }
