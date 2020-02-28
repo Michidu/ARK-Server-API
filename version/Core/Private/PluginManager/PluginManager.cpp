@@ -316,7 +316,6 @@ namespace API
 
 		pluginManager.next_reload_check_ = now + pluginManager.reload_sleep_seconds_;
 
-		Log::GetLog()->info("Checking for plugin changes ...");
 		pluginManager.DetectPluginChanges();
 	}
 
