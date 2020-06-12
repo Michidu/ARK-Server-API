@@ -186,18 +186,17 @@ namespace ArkApi
 		static uint64 GetSteamIdFromController(AController* controller)
 		{
 			uint64 steam_id = 0;
-
+			
 			if (controller != nullptr)
 			{
-				APlayerState* player_state = controller->PlayerStateField();
-				if (player_state != nullptr)
+				AShooterPlayerController* pc = static_cast<AShooterPlayerController*>(controller->GetOwnerController());
+				if (pc != nullptr)
 				{
-					auto* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state->UniqueIdField()
-					                                                                 .UniqueNetId.Get());
-					steam_id = steam_net_id->UniqueNetId;
+					steam_id = pc->GetUniqueNetIdAsUINT64();
 				}
 			}
 
+			//Log::GetLog()->info("SteamID: {}", steam_id);
 			return steam_id;
 		}
 

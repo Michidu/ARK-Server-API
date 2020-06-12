@@ -266,6 +266,18 @@ namespace EPathFollowingRequestResult
 	};
 }
 
+namespace EMaxConcurrentResolutionRule
+{
+	enum Type
+	{
+		PreventNew = 0x0,
+		PreventOldest = 0x1,
+		StopFarthestThenPreventNew = 0x2,
+		StopFarthestThenOldest = 0x3,
+		MAX = 0x4,
+	};
+}
+
 namespace EPathFollowingResult
 {
 	enum Type

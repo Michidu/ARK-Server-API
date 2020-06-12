@@ -8950,6 +8950,21 @@ struct ADroppedItem : AActor
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ADroppedItem.GetPrivateStaticClass", Package); }
 };
 
+struct ADroppedItemEgg : ADroppedItem
+{
+	float& IndoorsHypoThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.IndoorsHypoThermalInsulation"); }
+	float& IndoorsHyperThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.IndoorsHyperThermalInsulation"); }
+	float& EggThermalInsulationTemperatureMultiplierField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.EggThermalInsulationTemperatureMultiplier"); }
+	double& LastInsulationCalcTimeField() { return *GetNativePointerField<double*>(this, "ADroppedItemEgg.LastInsulationCalcTime"); }
+	float& HyperThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.HyperThermalInsulation"); }
+	float& HypoThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.HypoThermalInsulation"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bIsEggTooHot() { return { this, "ADroppedItemEgg.bIsEggTooHot" }; }
+	BitFieldValue<bool, unsigned __int32> bIsEggTooCold() { return { this, "ADroppedItemEgg.bIsEggTooCold" }; }
+};
+
 struct AMatineeActor : AActor
 {
 	FName& MatineeControllerNameField() { return *GetNativePointerField<FName*>(this, "AMatineeActor.MatineeControllerName"); }

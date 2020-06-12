@@ -170,6 +170,14 @@ struct FARKTributeDino : FArkTributeEntity
 	unsigned int DinoID2;
 };
 
+struct FARKDinoData
+{
+	UClass* DinoClass;
+	TArray<unsigned char, FDefaultAllocator> DinoData;
+	FString DinoNameInMap;
+	FString DinoName;
+};
+
 struct FDinoBaseLevelWeightEntry
 {
 	float EntryWeight;
@@ -6569,6 +6577,8 @@ struct APrimalDinoCharacter : APrimalCharacter
 	void ClearMountCharacter(bool bFromMountCharacter) { NativeCall<void, bool>(this, "APrimalDinoCharacter.ClearMountCharacter", bFromMountCharacter); }
 	bool CanMount(APrimalCharacter * aCharacter) { return NativeCall<bool, APrimalCharacter*>(this, "APrimalDinoCharacter.CanMount", aCharacter); }
 	static APrimalDinoCharacter * SpawnDino(UWorld * World, TSubclassOf<APrimalDinoCharacter> DinoClass, FVector SpawnLoc, FRotator SpawnRot, float LevelMultiplier, int ExtraLevelOffset, bool AddLevelOffsetBeforeMultiplier, bool bOverrideBaseNPCLevel, int BaseLevelOverrideValue, bool bNPCDontWander, float NPCAIRangeMultiplier, int NPCAbsoluteBaseLevel, bool bSpawnWithoutCapsuleOffset) { return NativeCall<APrimalDinoCharacter*, UWorld*, TSubclassOf<APrimalDinoCharacter>, FVector, FRotator, float, int, bool, bool, int, bool, float, int, bool>(nullptr, "APrimalDinoCharacter.SpawnDino", World, DinoClass, SpawnLoc, SpawnRot, LevelMultiplier, ExtraLevelOffset, AddLevelOffsetBeforeMultiplier, bOverrideBaseNPCLevel, BaseLevelOverrideValue, bNPCDontWander, NPCAIRangeMultiplier, NPCAbsoluteBaseLevel, bSpawnWithoutCapsuleOffset); }
+	static APrimalDinoCharacter* SpawnFromDinoData(FARKDinoData* InDinoData, UWorld* InWorld, FVector* AtLocation, FRotator* AtRotation, int ForTeam, bool GenerateNewDinoID, AShooterPlayerController* TamerController) { return NativeCall<APrimalDinoCharacter*, FARKDinoData*, UWorld*, FVector*, FRotator*, int, bool, AShooterPlayerController*>(nullptr, "APrimalDinoCharacter.SpawnFromDinoData", InDinoData, InWorld, AtLocation, AtRotation, ForTeam, GenerateNewDinoID, nullptr); }
+	static APrimalDinoCharacter* SpawnFromDinoDataEx(FARKDinoData* InDinoData, UWorld* InWorld, FVector* AtLocation, FRotator* AtRotation, bool& dupedDino, int ForTeam, bool GenerateNewDinoID, AShooterPlayerController* TamerController) { return NativeCall<APrimalDinoCharacter*, FARKDinoData*, UWorld*, FVector*, FRotator*, bool&, int, bool, AShooterPlayerController*>(nullptr, "APrimalDinoCharacter.SpawnFromDinoDataEx", InDinoData, InWorld, AtLocation, AtRotation, dupedDino, ForTeam, GenerateNewDinoID, TamerController); }
 	void UpdateNextAllowedMatingTime(long double fromTime) { NativeCall<void, long double>(this, "APrimalDinoCharacter.UpdateNextAllowedMatingTime", fromTime); }
 	void SetNextAllowedMatingTime(long double nextAllowedMatingTime) { NativeCall<void, long double>(this, "APrimalDinoCharacter.SetNextAllowedMatingTime", nextAllowedMatingTime); }
 	void InitDownloadedTamedDino(AShooterPlayerController * TamerController, int AltTeam) { NativeCall<void, AShooterPlayerController*, int>(this, "APrimalDinoCharacter.InitDownloadedTamedDino", TamerController, AltTeam); }
@@ -7792,6 +7802,34 @@ struct ADroppedItem : AActor
 	static void StaticRegisterNativesADroppedItem() { NativeCall<void>(nullptr, "ADroppedItem.StaticRegisterNativesADroppedItem"); }
 	static UClass * GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ADroppedItem.GetPrivateStaticClass", Package); }
 	bool IsAllowedToPickupItem(APlayerController * PC) { return NativeCall<bool, APlayerController*>(this, "ADroppedItem.IsAllowedToPickupItem", PC); }
+};
+
+struct ADroppedItemEgg : ADroppedItem
+{
+	float& IndoorsHypoThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.IndoorsHypoThermalInsulation"); }
+	float& IndoorsHyperThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.IndoorsHyperThermalInsulation"); }
+	float& EggThermalInsulationTemperatureMultiplierField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.EggThermalInsulationTemperatureMultiplier"); }
+	double& LastInsulationCalcTimeField() { return *GetNativePointerField<double*>(this, "ADroppedItemEgg.LastInsulationCalcTime"); }
+	float& HyperThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.HyperThermalInsulation"); }
+	float& HypoThermalInsulationField() { return *GetNativePointerField<float*>(this, "ADroppedItemEgg.HypoThermalInsulation"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bIsEggTooHot() { return { this, "ADroppedItemEgg.bIsEggTooHot" }; }
+	BitFieldValue<bool, unsigned __int32> bIsEggTooCold() { return { this, "ADroppedItemEgg.bIsEggTooCold" }; }
+
+	// Functions 
+
+	void UpdateEgg(float DeltaSeconds) { NativeCall<void, float>(this, "ADroppedItemEgg.UpdateEgg", DeltaSeconds); }
+	void Tick(float DeltaTime) { NativeCall<void, float>(this, "ADroppedItemEgg.Tick", DeltaTime); }
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "ADroppedItemEgg.StaticClass"); }
+	void Stasis() { NativeCall<void>(this, "ADroppedItemEgg.Stasis"); }
+	void NetSpawnDinoEmitter() { NativeCall<void>(this, "ADroppedItemEgg.NetSpawnDinoEmitter"); }
+	void NetSpawnDinoEmitter_Implementation() { NativeCall<void>(this, "ADroppedItemEgg.NetSpawnDinoEmitter_Implementation"); }
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ADroppedItemEgg.GetPrivateStaticClass", Package); }
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "ADroppedItemEgg.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	void CalcInsulation() { NativeCall<void>(this, "ADroppedItemEgg.CalcInsulation"); }
+	void BeginPlay() { NativeCall<void>(this, "ADroppedItemEgg.BeginPlay"); }
 };
 
 struct AMatineeActor : AActor
