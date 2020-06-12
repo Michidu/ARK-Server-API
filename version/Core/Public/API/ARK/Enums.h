@@ -15,7 +15,7 @@ namespace EPrimalEquipmentType
 		Shield = 0x8,
 		Weapon = 0x9,
 		Snapshot = 0xA,
-		MAX = 0xB
+		MAX = 0xB,
 	};
 }
 
@@ -31,7 +31,7 @@ namespace EPrimalItemStat
 		HypothermalInsulation = 0x5,
 		Weight = 0x6,
 		HyperthermalInsulation = 0x7,
-		MAX = 0x8
+		MAX = 0x8,
 	};
 }
 
@@ -51,7 +51,7 @@ namespace EPrimalCharacterStatusValue
 		SpeedMultiplier = 0x9,
 		TemperatureFortitude = 0xA,
 		CraftingSpeedMultiplier = 0xB,
-		MAX = 0xC
+		MAX = 0xC,
 	};
 }
 
@@ -73,7 +73,7 @@ namespace EPrimalCharacterStatusState
 		Cold = 0xB,
 		Hot = 0xC,
 		Crafting = 0xD,
-		MAX = 0xE
+		MAX = 0xE,
 	};
 }
 
@@ -90,7 +90,7 @@ namespace EPrimalItemType
 		Skin = 0x6,
 		WeaponAttachment = 0x7,
 		Artifact = 0x8,
-		MAX = 0x9
+		MAX = 0x9,
 	};
 }
 
@@ -102,7 +102,7 @@ namespace EPrimalConsumableType
 		Water = 0x1,
 		Medicine = 0x2,
 		Other = 0x3,
-		MAX = 0x4
+		MAX = 0x4,
 	};
 }
 
@@ -112,7 +112,7 @@ namespace EPrimalItemMessage
 	{
 		Broken = 0x0,
 		Repaired = 0x1,
-		MAX = 0x2
+		MAX = 0x2,
 	};
 }
 
@@ -125,7 +125,8 @@ namespace EXPType
 		XP_HARVEST = 0x2,
 		XP_CRAFT = 0x3,
 		XP_SPECIAL = 0x4,
-		MAX = 0x5
+		XP_ALPHAKILL = 0x5,
+		MAX = 0x6,
 	};
 }
 
@@ -136,7 +137,7 @@ namespace EBabyCuddleType
 		PET = 0x0,
 		FOOD = 0x1,
 		WALK = 0x2,
-		MAX = 0x3
+		MAX = 0x3,
 	};
 }
 
@@ -146,7 +147,7 @@ namespace EAttachLocation
 	{
 		KeepRelativeOffset = 0x0,
 		KeepWorldPosition = 0x1,
-		SnapToTarget = 0x2
+		SnapToTarget = 0x2,
 	};
 }
 
@@ -170,7 +171,7 @@ namespace EPrimalARKTributeDataType
 		Items = 0x0,
 		TamedDinos = 0x1,
 		CharacterData = 0x2,
-		MAX = 0x3
+		MAX = 0x3,
 	};
 }
 
@@ -182,7 +183,7 @@ namespace ESTOFNotificationType
 		TribeEliminated = 0x1,
 		MatchVictory = 0x2,
 		MatchDraw = 0x3,
-		MAX = 0x4
+		MAX = 0x4,
 	};
 }
 
@@ -200,7 +201,7 @@ namespace EDinoTamedOrder
 		CycleFollowDistance = 0x7,
 		SetAggressionPassiveFlee = 0x8,
 		LandingToMe = 0x9,
-		MAX = 0xA
+		MAX = 0xA,
 	};
 }
 
@@ -225,20 +226,21 @@ namespace EShooterPhysMaterialType
 {
 	enum Type
 	{
-		Unknown,
-		Concrete,
-		Dirt,
-		Water,
-		Metal,
-		Wood,
-		Grass,
-		Glass,
-		Flesh,
-		Leaves,
-		Rock,
-		Sand,
-		Snow,
-		MAX
+		Unknown = 0x0,
+		Concrete = 0x1,
+		Dirt = 0x2,
+		Water = 0x3,
+		Metal = 0x4,
+		Wood = 0x5,
+		Grass = 0x6,
+		Glass = 0x7,
+		Flesh = 0x8,
+		Leaves = 0x9,
+		Rock = 0xA,
+		Sand = 0xB,
+		Snow = 0xC,
+		Corruption = 0xD,
+		MAX = 0xE,
 	};
 }
 
@@ -250,7 +252,7 @@ namespace EWeaponState
 		Firing = 0x1,
 		Reloading = 0x2,
 		Equipping = 0x3,
-		UnEquipping = 0x4
+		UnEquipping = 0x4,
 	};
 }
 
@@ -258,9 +260,21 @@ namespace EPathFollowingRequestResult
 {
 	enum Type
 	{
-		Failed,
-		AlreadyAtGoal,
-		RequestSuccessful
+		Failed = 0x0,
+		AlreadyAtGoal = 0x1,
+		RequestSuccessful = 0x2,
+	};
+}
+
+namespace EMaxConcurrentResolutionRule
+{
+	enum Type
+	{
+		PreventNew = 0x0,
+		PreventOldest = 0x1,
+		StopFarthestThenPreventNew = 0x2,
+		StopFarthestThenOldest = 0x3,
+		MAX = 0x4,
 	};
 }
 
@@ -268,12 +282,12 @@ namespace EPathFollowingResult
 {
 	enum Type
 	{
-		Success,
-		Blocked,
-		OffPath,
-		Aborted,
-		Skipped,
-		Invalid
+		Success = 0x0,
+		Blocked = 0x1,
+		OffPath = 0x2,
+		Aborted = 0x3,
+		Skipped = 0x4,
+		Invalid = 0x5,
 	};
 }
 
@@ -330,7 +344,7 @@ namespace ELevelExperienceRampType
 		DinoEasy = 0x1,
 		DinoMedium = 0x2,
 		DinoHard = 0x3,
-		MAX = 0x4
+		MAX = 0x4,
 	};
 }
 
@@ -344,7 +358,7 @@ namespace EEngramGroup
 		ARK_UNLEARNED = 0x10,
 		ARK_ABERRATION = 0x20,
 		ARK_EXTINCTION = 0x40,
-		MAX = 0x41
+		MAX = 0x41,
 	};
 }
 
@@ -359,7 +373,7 @@ namespace EPrimalStatsValueTypes
 		HitsDinoCritical = 0x4,
 		HitsPlayerBody = 0x5,
 		HitsPlayerCritical = 0x6,
-		MAX = 0x7
+		MAX = 0x7,
 	};
 }
 
@@ -371,7 +385,7 @@ namespace EChatSendMode
 		GlobalTribeChat = 0x1,
 		LocalChat = 0x2,
 		AllianceChat = 0x3,
-		MAX = 0x4
+		MAX = 0x4,
 	};
 }
 
@@ -384,6 +398,26 @@ namespace EChatType
 		RadioChat = 0x2,
 		GlobalTribeChat = 0x3,
 		AllianceChat = 0x4,
-		MAX = 0x5
+		MAX = 0x5,
+	};
+}
+
+namespace EMassTeleportState
+{
+	enum Type
+	{
+		INITIATED = 0x0,
+		TRIGGERED_SUCCESS = 0x1,
+		TRIGGERED_FAILED = 0x2,
+		COMPLETED = 0x3,
+		CANCELLED = 0x4,
+	};
+}
+
+namespace ECameraStyle
+{
+	enum Type
+	{
+		
 	};
 }

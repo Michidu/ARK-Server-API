@@ -97,6 +97,6 @@ namespace API
 		bool enable_plugin_reload_{false};
 		int reload_sleep_seconds_{5};
 		bool save_world_before_reload_{true};
-		time_t next_reload_check_{0};
+		time_t next_reload_check_{5};
 	};
 } // namespace API

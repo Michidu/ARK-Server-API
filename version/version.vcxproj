@@ -121,8 +121,6 @@
     <ClInclude Include="Core\Public\API\UE\Windows\WindowsPlatformAtomics.h" />
     <ClInclude Include="Core\Public\Ark\ArkApiUtils.h" />
     <ClInclude Include="Core\Public\Atlas\AtlasApiUtils.h" />
-    <ClInclude Include="Core\Public\Database\Mysql.h" />
-    <ClInclude Include="Core\Public\Database\Sqllite.h" />
     <ClInclude Include="Core\Public\IApiUtils.h" />
     <ClInclude Include="Core\Public\ICommands.h" />
     <ClInclude Include="Core\Public\IHooks.h" />
@@ -162,7 +160,7 @@
     <ProjectGuid>{3941E9F8-2E29-4D69-8717-F74562ED5301}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>version</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Atlas|x64'" Label="Configuration">
@@ -170,14 +168,15 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Ark|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
+    <SpectreMitigation>false</SpectreMitigation>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -209,7 +208,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ATLAS_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING;WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ATLAS_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;..\include\mysql++11;..\include\sqllite;</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
@@ -235,7 +234,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ARK_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ARK_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>

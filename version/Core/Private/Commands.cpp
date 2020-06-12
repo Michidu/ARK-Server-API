@@ -92,7 +92,10 @@ namespace ArkApi
 	{
 		for (const auto& data : on_tick_callbacks_)
 		{
-			data->callback(delta_seconds);
+			if (data)
+			{
+				data->callback(delta_seconds);
+			}
 		}
 	}
 
@@ -100,7 +103,10 @@ namespace ArkApi
 	{
 		for (const auto& data : on_timer_callbacks_)
 		{
-			data->callback();
+			if (data)
+			{
+				data->callback();
+			}
 		}
 	}
 

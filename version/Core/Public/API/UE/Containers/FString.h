@@ -3,7 +3,7 @@
 #pragma once
 
 #include <string>
-
+#include <locale>
 #include <Logger/Logger.h>
 
 #include "TArray.h"
@@ -1614,9 +1614,12 @@ public:
 		if (!data)
 			return "";
 
-		const auto length = Len();
-		std::string str(length, '\0');
-		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(data, data + length, '?', str.data());
+		const int size_needed = WideCharToMultiByte(CP_UTF8, 0, data, static_cast<int>(Len()), nullptr, 0,
+			nullptr, nullptr);
+
+		std::string str(size_needed, 0);
+		WideCharToMultiByte(CP_UTF8, 0, data, static_cast<int>(Len()), str.data(), size_needed, nullptr,
+			nullptr);
 
 		return str;
 	}

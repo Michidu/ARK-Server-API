@@ -42,86 +42,93 @@ struct FTribeData
 
 	// Functions
 
-	FTribeAlliance * FindTribeAlliance(unsigned int AllianceID) { return NativeCall<FTribeAlliance *, unsigned int>(this, "FTribeData.FindTribeAlliance", AllianceID); }
-	int GetBestRankGroupForRank(int Rank) { return NativeCall<int, int>(this, "FTribeData.GetBestRankGroupForRank", Rank); }
-	int GetDefaultRankGroupIndex() { return NativeCall<int>(this, "FTribeData.GetDefaultRankGroupIndex"); }
-	FString * GetRankNameForPlayerID(FString * result, unsigned int PlayerDataID) { return NativeCall<FString *, FString *, unsigned int>(this, "FTribeData.GetRankNameForPlayerID", result, PlayerDataID); }
-	long double GetSecondsSinceLastNameChange(UObject * WorldContextObject) { return NativeCall<long double, UObject *>(this, "FTribeData.GetSecondsSinceLastNameChange", WorldContextObject); }
-	float GetTribeNameChangeCooldownTime(UObject * WorldContextObject) { return NativeCall<float, UObject *>(this, "FTribeData.GetTribeNameChangeCooldownTime", WorldContextObject); }
-	FString * GetTribeNameWithRankGroup(FString * result, unsigned int PlayerDataID) { return NativeCall<FString *, FString *, unsigned int>(this, "FTribeData.GetTribeNameWithRankGroup", result, PlayerDataID); }
-	bool GetTribeRankGroupForPlayer(unsigned int PlayerDataID, FTribeRankGroup * outRankGroup) { return NativeCall<bool, unsigned int, FTribeRankGroup *>(this, "FTribeData.GetTribeRankGroupForPlayer", PlayerDataID, outRankGroup); }
-	int GetTribeRankGroupIndexForPlayer(unsigned int PlayerDataID) { return NativeCall<int, unsigned int>(this, "FTribeData.GetTribeRankGroupIndexForPlayer", PlayerDataID); }
-	bool HasTribeWarRequest(int TribeID, UWorld * ForWorld) { return NativeCall<bool, int, UWorld *>(this, "FTribeData.HasTribeWarRequest", TribeID, ForWorld); }
+	bool IsTribeWarActive(int TribeID, UWorld* ForWorld, bool bIncludeUnstarted) { return NativeCall<bool, int, UWorld*, bool>(this, "FTribeData.IsTribeWarActive", TribeID, ForWorld, bIncludeUnstarted); }
+	bool HasTribeWarRequest(int TribeID, UWorld* ForWorld) { return NativeCall<bool, int, UWorld*>(this, "FTribeData.HasTribeWarRequest", TribeID, ForWorld); }
+	void RefreshTribeWars(UWorld* ForWorld) { NativeCall<void, UWorld*>(this, "FTribeData.RefreshTribeWars", ForWorld); }
+	FTribeAlliance* FindTribeAlliance(unsigned int AllianceID) { return NativeCall<FTribeAlliance*, unsigned int>(this, "FTribeData.FindTribeAlliance", AllianceID); }
 	bool IsTribeAlliedWith(unsigned int OtherTribeID) { return NativeCall<bool, unsigned int>(this, "FTribeData.IsTribeAlliedWith", OtherTribeID); }
-	bool IsTribeWarActive(int TribeID, UWorld * ForWorld, bool bIncludeUnstarted) { return NativeCall<bool, int, UWorld *, bool>(this, "FTribeData.IsTribeWarActive", TribeID, ForWorld, bIncludeUnstarted); }
-	void MarkTribeNameChanged(UObject * WorldContextObject) { NativeCall<void, UObject *>(this, "FTribeData.MarkTribeNameChanged", WorldContextObject); }
-	void RefreshTribeWars(UWorld * ForWorld) { NativeCall<void, UWorld *>(this, "FTribeData.RefreshTribeWars", ForWorld); }
-	FTribeData * operator=(FTribeData * __that) { return NativeCall<FTribeData *, FTribeData *>(this, "FTribeData.operator=", __that); }
-	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeData.StaticStruct"); }
+	FString* GetTribeNameWithRankGroup(FString* result, unsigned int PlayerDataID) { return NativeCall<FString*, FString*, unsigned int>(this, "FTribeData.GetTribeNameWithRankGroup", result, PlayerDataID); }
+	FString* GetRankNameForPlayerID(FString* result, unsigned int PlayerDataID) { return NativeCall<FString*, FString*, unsigned int>(this, "FTribeData.GetRankNameForPlayerID", result, PlayerDataID); }
+	bool GetTribeRankGroupForPlayer(unsigned int PlayerDataID, FTribeRankGroup* outRankGroup) { return NativeCall<bool, unsigned int, FTribeRankGroup*>(this, "FTribeData.GetTribeRankGroupForPlayer", PlayerDataID, outRankGroup); }
+	int GetTribeRankGroupIndexForPlayer(unsigned int PlayerDataID) { return NativeCall<int, unsigned int>(this, "FTribeData.GetTribeRankGroupIndexForPlayer", PlayerDataID); }
+	int GetBestRankGroupForRank(int Rank) { return NativeCall<int, int>(this, "FTribeData.GetBestRankGroupForRank", Rank); }
+	void MarkTribeNameChanged(UObject* WorldContextObject) { NativeCall<void, UObject*>(this, "FTribeData.MarkTribeNameChanged", WorldContextObject); }
+	long double GetSecondsSinceLastNameChange(UObject* WorldContextObject) { return NativeCall<long double, UObject*>(this, "FTribeData.GetSecondsSinceLastNameChange", WorldContextObject); }
+	float GetTribeNameChangeCooldownTime(UObject* WorldContextObject) { return NativeCall<float, UObject*>(this, "FTribeData.GetTribeNameChangeCooldownTime", WorldContextObject); }
+	int GetDefaultRankGroupIndex() { return NativeCall<int>(this, "FTribeData.GetDefaultRankGroupIndex"); }
+	FTribeData* operator=(FTribeData* __that) { return NativeCall<FTribeData*, FTribeData*>(this, "FTribeData.operator=", __that); }
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FTribeData.StaticStruct"); }
 };
 
 struct FTribeWar
 {
-	int EnemyTribeID;
-	int StartDayNumber;
-	int EndDayNumber;
-	float StartDayTime;
-	float EndDayTime;
-	bool bIsApproved;
-	int InitiatingTribeID;
-	FString EnemyTribeName;
+	int& EnemyTribeIDField() { return *GetNativePointerField<int*>(this, "FTribeWar.EnemyTribeID"); }
+	int& StartDayNumberField() { return *GetNativePointerField<int*>(this, "FTribeWar.StartDayNumber"); }
+	int& EndDayNumberField() { return *GetNativePointerField<int*>(this, "FTribeWar.EndDayNumber"); }
+	float& StartDayTimeField() { return *GetNativePointerField<float*>(this, "FTribeWar.StartDayTime"); }
+	float& EndDayTimeField() { return *GetNativePointerField<float*>(this, "FTribeWar.EndDayTime"); }
+	bool& bIsApprovedField() { return *GetNativePointerField<bool*>(this, "FTribeWar.bIsApproved"); }
+	int& InitiatingTribeIDField() { return *GetNativePointerField<int*>(this, "FTribeWar.InitiatingTribeID"); }
+	FString& EnemyTribeNameField() { return *GetNativePointerField<FString*>(this, "FTribeWar.EnemyTribeName"); }
 
 	// Functions
 
-	bool CanBeRejected(UWorld * ForWorld) { return NativeCall<bool, UWorld *>(this, "FTribeWar.CanBeRejected", ForWorld); }
-	bool IsCurrentlyActive(UWorld * ForWorld) { return NativeCall<bool, UWorld *>(this, "FTribeWar.IsCurrentlyActive", ForWorld); }
-	bool IsTribeWarOn(UWorld * ForWorld) { return NativeCall<bool, UWorld *>(this, "FTribeWar.IsTribeWarOn", ForWorld); }
-	FString * GetWarTimeString(FString * result, int DayNumber, float DayTime) { return NativeCall<FString *, FString *, int, float>(this, "FTribeWar.GetWarTimeString", result, DayNumber, DayTime); }
-	bool operator==(FTribeWar * Other) { return NativeCall<bool, FTribeWar *>(this, "FTribeWar.operator==", Other); }
-	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeWar.StaticStruct"); }
+	bool CanBeRejected(UWorld* ForWorld) { return NativeCall<bool, UWorld*>(this, "FTribeWar.CanBeRejected", ForWorld); }
+	bool IsCurrentlyActive(UWorld* ForWorld) { return NativeCall<bool, UWorld*>(this, "FTribeWar.IsCurrentlyActive", ForWorld); }
+	bool IsTribeWarOn(UWorld* ForWorld) { return NativeCall<bool, UWorld*>(this, "FTribeWar.IsTribeWarOn", ForWorld); }
+	FString* GetWarTimeString(FString* result, int DayNumber, float DayTime) { return NativeCall<FString*, FString*, int, float>(this, "FTribeWar.GetWarTimeString", result, DayNumber, DayTime); }
+	bool operator==(FTribeWar* Other) { return NativeCall<bool, FTribeWar*>(this, "FTribeWar.operator==", Other); }
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FTribeWar.StaticStruct"); }
 };
 
 struct FTribeRankGroup
 {
-	FString RankGroupName;
-	char RankGroupRank;
-	char InventoryRank;
-	char StructureActivationRank;
-	char NewStructureActivationRank;
-	char NewStructureInventoryRank;
-	char PetOrderRank;
-	char PetRidingRank;
-	char InviteToGroupRank;
-	char MaxPromotionGroupRank;
-	char MaxDemotionGroupRank;
-	char MaxBanishmentGroupRank;
-	char NumInvitesRemaining;
-	unsigned __int32 bPreventStructureDemolish : 1;
-	unsigned __int32 bPreventStructureAttachment : 1;
-	unsigned __int32 bPreventStructureBuildInRange : 1;
-	unsigned __int32 bPreventUnclaiming : 1;
-	unsigned __int32 bAllowInvites : 1;
-	unsigned __int32 bLimitInvites : 1;
-	unsigned __int32 bAllowDemotions : 1;
-	unsigned __int32 bAllowPromotions : 1;
-	unsigned __int32 bAllowBanishments : 1;
-	unsigned __int32 bDefaultRank : 1;
+	FString& RankGroupNameField() { return *GetNativePointerField<FString*>(this, "FTribeRankGroup.RankGroupName"); }
+	char& RankGroupRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.RankGroupRank"); }
+	char& InventoryRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.InventoryRank"); }
+	char& StructureActivationRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.StructureActivationRank"); }
+	char& NewStructureActivationRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.NewStructureActivationRank"); }
+	char& NewStructureInventoryRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.NewStructureInventoryRank"); }
+	char& PetOrderRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.PetOrderRank"); }
+	char& PetRidingRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.PetRidingRank"); }
+	char& InviteToGroupRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.InviteToGroupRank"); }
+	char& MaxPromotionGroupRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.MaxPromotionGroupRank"); }
+	char& MaxDemotionGroupRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.MaxDemotionGroupRank"); }
+	char& MaxBanishmentGroupRankField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.MaxBanishmentGroupRank"); }
+	char& NumInvitesRemainingField() { return *GetNativePointerField<char*>(this, "FTribeRankGroup.NumInvitesRemaining"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bPreventStructureDemolish() { return { this, "FTribeRankGroup.bPreventStructureDemolish" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventStructureAttachment() { return { this, "FTribeRankGroup.bPreventStructureAttachment" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventStructureBuildInRange() { return { this, "FTribeRankGroup.bPreventStructureBuildInRange" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventUnclaiming() { return { this, "FTribeRankGroup.bPreventUnclaiming" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowInvites() { return { this, "FTribeRankGroup.bAllowInvites" }; }
+	BitFieldValue<bool, unsigned __int32> bLimitInvites() { return { this, "FTribeRankGroup.bLimitInvites" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowDemotions() { return { this, "FTribeRankGroup.bAllowDemotions" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowPromotions() { return { this, "FTribeRankGroup.bAllowPromotions" }; }
+	BitFieldValue<bool, unsigned __int32> bAllowBanishments() { return { this, "FTribeRankGroup.bAllowBanishments" }; }
+	BitFieldValue<bool, unsigned __int32> bDefaultRank() { return { this, "FTribeRankGroup.bDefaultRank" }; }
 
 	// Functions
 
-	FTribeRankGroup(FTribeRankGroup * __that) { NativeCall<void, FTribeRankGroup *>(this, "FTribeRankGroup.FTribeRankGroup", __that); }
-	FTribeRankGroup * operator=(FTribeRankGroup * __that) { return NativeCall<FTribeRankGroup *, FTribeRankGroup *>(this, "FTribeRankGroup.operator=", __that); }
+	FTribeRankGroup* operator=(FTribeRankGroup* __that) { return NativeCall<FTribeRankGroup*, FTribeRankGroup*>(this, "FTribeRankGroup.operator=", __that); }
 	void ValidateSettings() { NativeCall<void>(this, "FTribeRankGroup.ValidateSettings"); }
-	bool operator==(FTribeRankGroup * Other) { return NativeCall<bool, FTribeRankGroup *>(this, "FTribeRankGroup.operator==", Other); }
-	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FTribeRankGroup.StaticStruct"); }
-
+	bool operator==(FTribeRankGroup* Other) { return NativeCall<bool, FTribeRankGroup*>(this, "FTribeRankGroup.operator==", Other); }
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FTribeRankGroup.StaticStruct"); }
 };
 
 struct FTribeAlliance
 {
-	FString AllianceName;
-	unsigned int AllianceID;
-	TArray<FString, FDefaultAllocator> MembersTribeName;
-	TArray<unsigned int, FDefaultAllocator> MembersTribeID;
-	TArray<unsigned int, FDefaultAllocator> AdminsTribeID;
+	FString& AllianceNameField() { return *GetNativePointerField<FString*>(this, "FTribeAlliance.AllianceName"); }
+	unsigned int& AllianceIDField() { return *GetNativePointerField<unsigned int*>(this, "FTribeAlliance.AllianceID"); }
+	TArray<FString>& MembersTribeNameField() { return *GetNativePointerField<TArray<FString>*>(this, "FTribeAlliance.MembersTribeName"); }
+	TArray<unsigned int>& MembersTribeIDField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "FTribeAlliance.MembersTribeID"); }
+	TArray<unsigned int>& AdminsTribeIDField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "FTribeAlliance.AdminsTribeID"); }
+
+	// Functions
+
+	FString* GetDescriptiveString(FString* result) { return NativeCall<FString*, FString*>(this, "FTribeAlliance.GetDescriptiveString", result); }
+	bool operator==(FTribeAlliance* Other) { return NativeCall<bool, FTribeAlliance*>(this, "FTribeAlliance.operator==", Other); }
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FTribeAlliance.StaticStruct"); }
 };

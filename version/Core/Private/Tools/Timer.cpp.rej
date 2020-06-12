@@ -1,0 +1,10 @@
+diff a/version/Core/Private/Tools/Timer.cpp b/version/Core/Private/Tools/Timer.cpp	(rejected hunks)
+@@ -32,7 +32,7 @@
+ 	{
+ 		const auto& timer_funcs = std::find_if(timer_funcs_.begin(), timer_funcs_.end(), [&timer_name](const auto& data)
+ 		{
+-			return timer_id == data->timer_id;
++			return timer_name == data->timer_name;
+ 		});
+ 
+ 		if (timer_funcs != timer_funcs_.end())

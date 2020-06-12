@@ -2,7 +2,8 @@
   "settings":{  
     "AutomaticPluginReloading":false,
     "AutomaticPluginReloadSeconds":5,
-    "SaveWorldBeforePluginReload":true
+    "SaveWorldBeforePluginReload":true,
+	"DumpAll": false
   },
   "structures":[  
     "UWorld",
@@ -59,18 +60,19 @@
     "FChatMessage",
     "FSocketBSD",
     "UField",
+    "FText",
     "FName",
     "FAssetRegistry",
     "FModuleManager",
     "FAssetRegistryModule",
     "FAssetData",
     "UBlueprint",
+    "UTexture2D",
     "FMemory",
     "ADroppedItem",
     "UBoolProperty",
     "APrimalDinoAIController",
     "APrimalStructureItemContainer",
-    "APrimalStructureClaimFlag",
     "UShooterGameInstance",
     "AMatineeActor",
     "UEngine",
@@ -79,17 +81,19 @@
     "UPrimalGameData",
     "UPrimalEngramEntry",
     "UKismetSystemLibrary",
+    "USphereComponent",
     "UPrimitiveComponent",
     "UActorComponent",
     "FHttpModule",
+    "FHttpRequestWinInet",
+    "FHttpResponseWinInet",
     "FOnlineSubsystemSteam",
     "APrimalStructureTurret",
     "FOverlapResult",
     "UVictoryCore",
     "ULevelBase",
-    "FSeamlessServerInfo",
-    "FSeamlessGridInfo",
-    "FInternetAddrBSD"
+	"ABasePlayerController",
+	"FAvailableMission"
   ],
   "functions":[  
     "StaticLoadObject",

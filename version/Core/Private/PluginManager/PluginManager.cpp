@@ -14,8 +14,7 @@ namespace API
 {
 	PluginManager::PluginManager()
 	{
-		//commands.AddOnTimerCallback(L"PluginManager.DetectPluginChangesTimerCallback",
-		//                          &DetectPluginChangesTimerCallback);
+		ArkApi::GetCommands().AddOnTimerCallback(L"PluginManager.DetectPluginChangesTimerCallback", &DetectPluginChangesTimerCallback);
 	}
 
 	PluginManager& PluginManager::Get()
@@ -127,8 +126,7 @@ namespace API
 				std::shared_ptr<Plugin>& plugin = LoadPlugin(filename);
 
 				stream << "Loaded plugin " << (plugin->full_name.empty() ? plugin->name : plugin->full_name) << " V" <<
-					std::fixed
-					<< std::setprecision(1) << plugin->version << " (" << plugin->description << ")";
+					plugin->version << " (" << plugin->description << ")";
 
 				Log::GetLog()->info(stream.str());
 			}

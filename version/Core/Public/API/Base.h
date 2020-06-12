@@ -75,6 +75,7 @@ struct AActor;
 struct UBlueprintCore;
 struct Globals;
 struct ADroppedItem;
+struct ADroppedItemEgg;
 struct UProperty;
 struct UStruct;
 struct UField;
@@ -82,7 +83,7 @@ struct FAssetRegistry;
 struct FAssetData;
 struct FModuleManager;
 struct UTexture2D;
-struct USoundBase {};
+struct USoundBase;
 struct USoundCue;
 struct FItemMultiplier;
 struct UAnimMontage;
@@ -146,12 +147,12 @@ struct UEngine;
 struct UPrimalGlobals;
 struct APrimalStructurePlacer;
 struct UActorChannel;
-struct UPrimalColorSet{};
+struct UPrimalColorSet {};
 struct FDinoSaddleStruct {};
-struct APrimalStructureShipHull{};
+struct APrimalStructureShipHull {};
 struct APrimalStructureSail;
 struct FCollisionResponseSet;
-struct FDinoMapMarkerInfo{};
+struct FDinoMapMarkerInfo {};
 struct FStatValuePair {};
 struct FHUDElement {};
 struct FConfigMaxItemQuantityOverride {};
@@ -159,6 +160,66 @@ struct FJsonObject {};
 struct FItemMaxItemQuantityOverride {};
 struct FMaxItemQuantityOverride {};
 struct FEventItem {};
+struct FPrimalSnapshotPose {};
+struct ULeaderboard {};
+struct FReplicatePingData {};
+struct FTargetingTeamChanged {};
+struct FArchive {};
+struct FSpawnPointInfo;
+struct FPrimalPlayerCharacterConfigStructReplicated {};
+struct UPlayerInput {};
+struct FPlayerMuteList {};
+struct FBox2D {};
+struct IOnlineSubsystem {};
+struct FSteamInventoryItemInfo {};
+struct FPingData {};
+struct UUserWidget {};
+struct APointOfInterestCosmeticActor {};
+struct FPointOfInterestData_ForCompanion {};
+struct FMissionWaypointInfo {};
+struct UShooterPersistentUser {};
+struct APrimalStructureMovingContainer {};
+struct FPrimalMapMarkerEntryData {};
+struct FLeaderboardRow {};
+struct UStructurePaintingComponent {};
+struct FPaintItem {};
+struct APrimalStructureElevatorPlatform {};
+struct FBoneDamageAdjuster {};
+struct AShooterProjectile {};
+struct APrimalBuff_Grappled {};
+struct APrimalStructureLadder {};
+struct APrimalProjectileBoomerang {};
+struct FWeaponEvent {};
+struct APrimalStructureTurretBallista {};
+struct FLatestMissionScore {};
+struct FObjectReader {};
+struct FObjectWriter {};
+struct FPrimalCharacterStatusStateThresholds {};
+struct UPrimalDinoSettings;
+struct FPrimalSaddleStructure {};
+struct FSlateColor {};
+struct FInstantWeaponData {};
+struct ABrush;
+struct UShooterDamageType;
+struct UChannel {};
+struct FBoxCenterAndExtent {};
+struct UFont {};
+struct FLeaderboardEntry {};
+struct FAvailableMission;
+struct FActiveEventSupplyCrateWeight {};
+struct APrimalEmitterSpawnable {};
+struct UHexagonTradableOption {};
+struct UAllClustersInventory {};
+struct FGameIniData {};
+struct FMassTeleportData {};
+struct FTeleportDestination {};
+struct UPrimalWorldSettingsEventOverrides {};
+struct FCropItemPhaseData {};
+struct FStructureVariant {};
+struct AMissionType;
+
+template <typename T>
+struct FDataStore;
 
 // Atlas
 
@@ -433,6 +494,7 @@ struct USoundAttenuation;
 
 struct UShooterGameUserSettings;
 struct UDiscoveryZoneDataListEntry;
+struct FTribeLogEntry;
 
 // Structs forward declaration
 
@@ -500,6 +562,7 @@ struct AActor;
 struct UBlueprintCore;
 struct Globals;
 struct ADroppedItem;
+struct ADroppedItemEgg;
 struct UProperty;
 struct UStruct;
 struct UField;
@@ -553,6 +616,14 @@ struct UPrimalGameData;
 struct UEngine;
 struct UPrimalGlobals;
 struct APrimalStructurePlacer;
+
+struct UPrimalHarvestingComponent;
+struct FHarvestResourceEntry;
+struct FOceanHarvestEntry;
+struct FOceanHarvestedEntry;
+struct AOceanHarvestManager;
+struct FAttachedInstancedHarvestingElement;
+
 
 struct BitField
 {

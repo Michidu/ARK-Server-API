@@ -19,9 +19,12 @@ namespace API
 
 		ARK_API bool CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
 		                              std::vector<std::string> headers = {});
-
 		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
 		                               const std::string& post_data, std::vector<std::string> headers = {});
+		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+		                               const std::vector<std::string>& post_ids,
+		                               const std::vector<std::string>& post_data,
+		                               std::vector<std::string> headers = {});
 		ARK_API bool CreateDeleteRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
 		                                 std::vector<std::string> headers = {});
 
@@ -45,6 +48,8 @@ namespace API
 
 		static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
 		void Update();
+		std::string BuildRequest(CURL* handle, const std::vector<std::string>& post_ids,
+		                         const std::vector<std::string>& post_data) const;
 
 		CURLM* curl_;
 		int handles_count_{};

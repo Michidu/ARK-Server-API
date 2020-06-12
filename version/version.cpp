@@ -29,9 +29,19 @@ void OpenConsole()
 	freopen_s(&p_cout, "conout$", "w", stdout);
 }
 
+std::time_t GetFileWriteTime(const std::filesystem::path& filename)
+{
+	struct _stat64 fileInfo{};
+	if (_wstati64(filename.wstring().c_str(), &fileInfo) != 0)
+	{
+		throw std::runtime_error("Failed to get last write time.");
+	}
+	return fileInfo.st_mtime;
+}
+
 void PruneOldLogs()
 {
-	namespace fs = std::experimental::filesystem;
+	namespace fs = std::filesystem;
 
 	const auto now = std::chrono::system_clock::now();
 
@@ -39,9 +49,23 @@ void PruneOldLogs()
 
 	for (const auto& file : fs::directory_iterator(current_dir + "/logs"))
 	{
-		const auto ftime = last_write_time(file);
+		const std::time_t ftime = GetFileWriteTime(file);
 
-		auto diff = std::chrono::duration_cast<std::chrono::hours>(now - ftime);
+		if (file.path().filename() == "ArkApi.log")
+		{
+			tm tm{};
+			localtime_s(&tm, &ftime);
+
+			char time_str[64];
+			strftime(time_str, 64, "%Y-%m-%d-%H-%M", &tm);
+
+			const std::string new_name = "ArkApi_" + std::string(time_str) + ".log";
+			std::rename(file.path().generic_string().data(), (current_dir + "/logs/" + new_name).data());
+		}
+
+		const auto time_point = std::chrono::system_clock::from_time_t(ftime);
+
+		auto diff = std::chrono::duration_cast<std::chrono::hours>(now - time_point);
 		if (diff.count() >= 24 * 14) // 14 days
 		{
 			fs::remove(file);
@@ -109,11 +133,11 @@ BOOL WINAPI DllMain(HINSTANCE hinst_dll, DWORD fdw_reason, LPVOID /*unused*/)
 	{
 		DisableThreadLibraryCalls(hinst_dll);
 
-		CHAR sysDir[MAX_PATH];
-		GetSystemDirectoryA(sysDir, MAX_PATH);
+		CHAR sys_dir[MAX_PATH];
+		GetSystemDirectoryA(sys_dir, MAX_PATH);
 
 		char buffer[MAX_PATH];
-		sprintf_s(buffer, "%s\\version.dll", sysDir);
+		sprintf_s(buffer, "%s\\version.dll", sys_dir);
 
 		m_hinst_dll = LoadLibraryA(buffer);
 		if (m_hinst_dll == nullptr)

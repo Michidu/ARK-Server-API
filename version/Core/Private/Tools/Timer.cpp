@@ -72,6 +72,8 @@ namespace API
 
 		for (const auto& data : timer_funcs_)
 		{
+			if (data == nullptr) continue;
+
 			if (now >= data->next_time)
 			{
 				if (data->exec_once)
@@ -80,7 +82,7 @@ namespace API
 				}
 				else
 				{
-					if (data->execution_counter != -1 && data->execution_counter > 0)
+					if (data->execution_counter > 0)
 					{
 						--data->execution_counter;
 					}

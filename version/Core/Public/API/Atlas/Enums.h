@@ -761,3 +761,11 @@ namespace EShipType
 		MAX = 0x7
 	};
 }
+
+namespace ETribeEntityType
+{
+	enum Type
+	{
+
+	};
+}
