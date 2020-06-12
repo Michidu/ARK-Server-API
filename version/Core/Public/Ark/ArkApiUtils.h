@@ -186,17 +186,13 @@ namespace ArkApi
 		static uint64 GetSteamIdFromController(AController* controller)
 		{
 			uint64 steam_id = 0;
-			
-			if (controller != nullptr)
+
+			auto* playerController = static_cast<AShooterPlayerController*>(controller);
+			if(playerController != nullptr)
 			{
-				AShooterPlayerController* pc = static_cast<AShooterPlayerController*>(controller->GetOwnerController());
-				if (pc != nullptr)
-				{
-					steam_id = pc->GetUniqueNetIdAsUINT64();
-				}
+				steam_id = playerController->GetUniqueNetIdAsUINT64();
 			}
 
-			//Log::GetLog()->info("SteamID: {}", steam_id);
 			return steam_id;
 		}
 
@@ -652,18 +648,11 @@ namespace ArkApi
 			{
 				const auto& player_controllers = GetWorld()->PlayerControllerListField();
 				for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
-				{
+				{					
 					auto* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
 					if (shooter_pc != nullptr && shooter_pc->LinkedPlayerIDField() == player_id)
 					{
-						APlayerState* player_state = shooter_pc->PlayerStateField();
-						if (player_state != nullptr)
-						{
-							auto* steam_net_id = static_cast<FUniqueNetIdSteam*>(player_state
-							                                                     ->UniqueIdField().UniqueNetId.Get());
-							steam_id = steam_net_id->UniqueNetId;
-							break;
-						}
+						steam_id = shooter_pc->GetUniqueNetIdAsUINT64();
 					}
 				}
 
