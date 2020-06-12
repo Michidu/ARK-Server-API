@@ -222,7 +222,6 @@ struct UPrimalInventoryComponent : UActorComponent
 	TArray<TSubclassOf<UPrimalItem>> & DefaultInventoryItems2Field() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "UPrimalInventoryComponent.DefaultInventoryItems2"); }
 	TArray<TSubclassOf<UPrimalItem>> & DefaultInventoryItems3Field() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "UPrimalInventoryComponent.DefaultInventoryItems3"); }
 	TArray<TSubclassOf<UPrimalItem>> & DefaultInventoryItems4Field() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "UPrimalInventoryComponent.DefaultInventoryItems4"); }
-	//TArray<TAssetPtr<UObject>> & DefaultInventoryItemsClassesField() { return *GetNativePointerField<TArray<TAssetPtr<UObject>>*>(this, "UPrimalInventoryComponent.DefaultInventoryItemsClasses"); }
 	TArray<FString> & DefaultInventoryItemsRandomCustomStringsField() { return *GetNativePointerField<TArray<FString>*>(this, "UPrimalInventoryComponent.DefaultInventoryItemsRandomCustomStrings"); }
 	TArray<float> & DefaultInventoryItemsRandomCustomStringsWeightsField() { return *GetNativePointerField<TArray<float>*>(this, "UPrimalInventoryComponent.DefaultInventoryItemsRandomCustomStringsWeights"); }
 	TArray<TSubclassOf<UPrimalItem>> & CheatInventoryItemsField() { return *GetNativePointerField<TArray<TSubclassOf<UPrimalItem>>*>(this, "UPrimalInventoryComponent.CheatInventoryItems"); }
@@ -366,6 +365,7 @@ struct UPrimalInventoryComponent : UActorComponent
 	BitFieldValue<bool, unsigned __int32> bUseBPRemoteInventoryAllowCrafting() { return { this, "UPrimalInventoryComponent.bUseBPRemoteInventoryAllowCrafting" }; }
 	BitFieldValue<bool, unsigned __int32> bNotifyAddedOnClientReceive() { return { this, "UPrimalInventoryComponent.bNotifyAddedOnClientReceive" }; }
 	BitFieldValue<bool, unsigned __int32> bIsTaxidermyBase() { return { this, "UPrimalInventoryComponent.bIsTaxidermyBase" }; }
+	BitFieldValue<bool, unsigned __int32> bDeferCheckForAutoCraftBlueprintsOnInventoryChange() { return { this, "UPrimalInventoryComponent.bDeferCheckForAutoCraftBlueprintsOnInventoryChange" }; }
 	BitFieldValue<bool, unsigned __int32> bSetsRandomWithoutReplacement() { return { this, "UPrimalInventoryComponent.bSetsRandomWithoutReplacement" }; }
 	BitFieldValue<bool, unsigned __int32> bForceAllowAllUseInInventory() { return { this, "UPrimalInventoryComponent.bForceAllowAllUseInInventory" }; }
 	BitFieldValue<bool, unsigned __int32> bUseBPIsValidCraftingResource() { return { this, "UPrimalInventoryComponent.bUseBPIsValidCraftingResource" }; }
@@ -373,6 +373,8 @@ struct UPrimalInventoryComponent : UActorComponent
 	BitFieldValue<bool, unsigned __int32> bSetCraftingEnabledCheckForAutoCraftBlueprints() { return { this, "UPrimalInventoryComponent.bSetCraftingEnabledCheckForAutoCraftBlueprints" }; }
 	BitFieldValue<bool, unsigned __int32> bUseBPRemoteInventoryAllowViewing() { return { this, "UPrimalInventoryComponent.bUseBPRemoteInventoryAllowViewing" }; }
 	BitFieldValue<bool, unsigned __int32> bAllDefaultInventoryIsEngrams() { return { this, "UPrimalInventoryComponent.bAllDefaultInventoryIsEngrams" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPCanGrindItems() { return { this, "UPrimalInventoryComponent.bUseBPCanGrindItems" }; }
+	BitFieldValue<bool, unsigned __int32> bGrinderCanGrindAll() { return { this, "UPrimalInventoryComponent.bGrinderCanGrindAll" }; }
 	BitFieldValue<bool, unsigned __int32> bInitializedDefaultInventory() { return { this, "UPrimalInventoryComponent.bInitializedDefaultInventory" }; }
 	BitFieldValue<bool, unsigned __int32> bGetDataListEntriesOnlyRootItems() { return { this, "UPrimalInventoryComponent.bGetDataListEntriesOnlyRootItems" }; }
 	BitFieldValue<bool, unsigned __int32> bConfigOverriden() { return { this, "UPrimalInventoryComponent.bConfigOverriden" }; }
@@ -393,7 +395,6 @@ struct UPrimalInventoryComponent : UActorComponent
 	void NotifyItemAdded(UPrimalItem * theItem, bool bEquippedItem) { NativeCall<void, UPrimalItem*, bool>(this, "UPrimalInventoryComponent.NotifyItemAdded", theItem, bEquippedItem); }
 	void NotifyArkItemAdded() { NativeCall<void>(this, "UPrimalInventoryComponent.NotifyArkItemAdded"); }
 	void NotifyItemRemoved(UPrimalItem * theItem) { NativeCall<void, UPrimalItem*>(this, "UPrimalInventoryComponent.NotifyItemRemoved", theItem); }
-	//ENetRole GetRole() { return NativeCall<ENetRole>(this, "UPrimalInventoryComponent.GetRole"); }
 	void RemoveItemSpoilingTimer(UPrimalItem * theItem) { NativeCall<void, UPrimalItem*>(this, "UPrimalInventoryComponent.RemoveItemSpoilingTimer", theItem); }
 	bool LoadAdditionalStructureEngrams() { return NativeCall<bool>(this, "UPrimalInventoryComponent.LoadAdditionalStructureEngrams"); }
 	bool RemoveItem(FItemNetID * itemID, bool bDoDrop, bool bSecondryAction, bool bForceRemoval, bool showHUDMessage) { return NativeCall<bool, FItemNetID*, bool, bool, bool, bool>(this, "UPrimalInventoryComponent.RemoveItem", itemID, bDoDrop, bSecondryAction, bForceRemoval, showHUDMessage); }
@@ -447,9 +448,10 @@ struct UPrimalInventoryComponent : UActorComponent
 	UPrimalItem * GetItemOfTemplate(TSubclassOf<UPrimalItem> ItemTemplate, bool bOnlyInventoryItems, bool bOnlyEquippedItems, bool IgnoreItemsWithFullQuantity, bool bFavorSlotItems, bool bIsBlueprint, UPrimalItem * CheckCanStackWithItem, bool bRequiresExactClassMatch, int* CheckCanStackWithItemQuantityOverride, bool bIgnoreSlotItems, bool bOnlyArkTributeItems, bool bPreferEngram, bool bIsForCraftingConsumption) { return NativeCall<UPrimalItem*, TSubclassOf<UPrimalItem>, bool, bool, bool, bool, bool, UPrimalItem*, bool, int*, bool, bool, bool, bool>(this, "UPrimalInventoryComponent.GetItemOfTemplate", ItemTemplate, bOnlyInventoryItems, bOnlyEquippedItems, IgnoreItemsWithFullQuantity, bFavorSlotItems, bIsBlueprint, CheckCanStackWithItem, bRequiresExactClassMatch, CheckCanStackWithItemQuantityOverride, bIgnoreSlotItems, bOnlyArkTributeItems, bPreferEngram, bIsForCraftingConsumption); }
 	TArray<UPrimalItem*> * FindAllItemsOfType(TArray<UPrimalItem*> * result, TSubclassOf<UPrimalItem> ItemTemplate, bool bRequiresExactClassMatch, bool bIncludeInventoryItems, bool bIncludeEquippedItems, bool bIncludeArkTributeItems, bool bIncludeSlotItems, bool bIncludeBlueprints, bool bIncludeEngrams) { return NativeCall<TArray<UPrimalItem*>*, TArray<UPrimalItem*>*, TSubclassOf<UPrimalItem>, bool, bool, bool, bool, bool, bool, bool>(this, "UPrimalInventoryComponent.FindAllItemsOfType", result, ItemTemplate, bRequiresExactClassMatch, bIncludeInventoryItems, bIncludeEquippedItems, bIncludeArkTributeItems, bIncludeSlotItems, bIncludeBlueprints, bIncludeEngrams); }
 	int GetCraftQueueResourceCost(TSubclassOf<UPrimalItem> ItemTemplate, UPrimalItem * IgnoreFirstItem) { return NativeCall<int, TSubclassOf<UPrimalItem>, UPrimalItem*>(this, "UPrimalInventoryComponent.GetCraftQueueResourceCost", ItemTemplate, IgnoreFirstItem); }
-	int GetItemTemplateQuantity(TSubclassOf<UPrimalItem> ItemTemplate, UPrimalItem * IgnoreItem, bool bIgnoreBlueprints, bool bCheckValidForCrafting, bool bRequireExactClassMatch) { return NativeCall<int, TSubclassOf<UPrimalItem>, UPrimalItem*, bool, bool, bool>(this, "UPrimalInventoryComponent.GetItemTemplateQuantity", ItemTemplate, IgnoreItem, bIgnoreBlueprints, bCheckValidForCrafting, bRequireExactClassMatch); }
+	int GetItemTemplateQuantity(TSubclassOf<UPrimalItem> ItemTemplate, UPrimalItem * IgnoreItem, bool bIgnoreBlueprints, bool bCheckValidForCrafting, bool bRequireExactClassMatch, bool bForceCheckForDupes) { return NativeCall<int, TSubclassOf<UPrimalItem>, UPrimalItem*, bool, bool, bool, bool>(this, "UPrimalInventoryComponent.GetItemTemplateQuantity", ItemTemplate, IgnoreItem, bIgnoreBlueprints, bCheckValidForCrafting, bRequireExactClassMatch, bForceCheckForDupes); }
 	float GetTotalDurabilityOfTemplate(TSubclassOf<UPrimalItem> ItemTemplate) { return NativeCall<float, TSubclassOf<UPrimalItem>>(this, "UPrimalInventoryComponent.GetTotalDurabilityOfTemplate", ItemTemplate); }
 	void LocalUseItemSlot(int slotIndex, bool bForceCraft) { NativeCall<void, int, bool>(this, "UPrimalInventoryComponent.LocalUseItemSlot", slotIndex, bForceCraft); }
+	void ShowBeforeUsingConfirmationDialog(UPrimalItem * Item) { NativeCall<void, UPrimalItem*>(this, "UPrimalInventoryComponent.ShowBeforeUsingConfirmationDialog", Item); }
 	float GetTotalEquippedItemStat(EPrimalItemStat::Type statType) { return NativeCall<float, EPrimalItemStat::Type>(this, "UPrimalInventoryComponent.GetTotalEquippedItemStat", statType); }
 	float GetEquippedArmorRating(EPrimalEquipmentType::Type equipmentType) { return NativeCall<float, EPrimalEquipmentType::Type>(this, "UPrimalInventoryComponent.GetEquippedArmorRating", equipmentType); }
 	void ConsumeArmorDurability(float ConsumptionAmount, bool bAllArmorTypes, EPrimalEquipmentType::Type SpecificArmorType) { NativeCall<void, float, bool, EPrimalEquipmentType::Type>(this, "UPrimalInventoryComponent.ConsumeArmorDurability", ConsumptionAmount, bAllArmorTypes, SpecificArmorType); }
@@ -480,6 +482,8 @@ struct UPrimalInventoryComponent : UActorComponent
 	float GetInventoryWeight() { return NativeCall<float>(this, "UPrimalInventoryComponent.GetInventoryWeight"); }
 	void ServerSplitItemStack_Implementation(FItemNetID ItemID, int AmountToSplit) { NativeCall<void, FItemNetID, int>(this, "UPrimalInventoryComponent.ServerSplitItemStack_Implementation", ItemID, AmountToSplit); }
 	void ServerMergeItemStack_Implementation(FItemNetID ItemID) { NativeCall<void, FItemNetID>(this, "UPrimalInventoryComponent.ServerMergeItemStack_Implementation", ItemID); }
+	void GrindItem(FItemNetID ItemID, const bool grindStack, AShooterPlayerController * PC) { NativeCall<void, FItemNetID, const bool, AShooterPlayerController*>(this, "UPrimalInventoryComponent.GrindItem", ItemID, grindStack, PC); }
+	void OnGrindItem() { NativeCall<void>(this, "UPrimalInventoryComponent.OnGrindItem"); }
 	void ServerForceMergeItemStack_Implementation(FItemNetID Item1ID, FItemNetID Item2ID) { NativeCall<void, FItemNetID, FItemNetID>(this, "UPrimalInventoryComponent.ServerForceMergeItemStack_Implementation", Item1ID, Item2ID); }
 	void RemoteDeleteCustomFolder(FString * CFolderName, int InventoryCompType) { NativeCall<void, FString*, int>(this, "UPrimalInventoryComponent.RemoteDeleteCustomFolder", CFolderName, InventoryCompType); }
 	void RemoteAddItemToCustomFolder(FString * CFolderName, int InventoryCompType, FItemNetID ItemId) { NativeCall<void, FString*, int, FItemNetID>(this, "UPrimalInventoryComponent.RemoteAddItemToCustomFolder", CFolderName, InventoryCompType, ItemId); }
@@ -488,6 +492,7 @@ struct UPrimalInventoryComponent : UActorComponent
 	UPrimalCharacterStatusComponent * GetCharacterStatusComponent() { return NativeCall<UPrimalCharacterStatusComponent*>(this, "UPrimalInventoryComponent.GetCharacterStatusComponent"); }
 	void ClientMultiUse(APlayerController * ForPC, int UseIndex, int hitBodyIndex) { NativeCall<void, APlayerController*, int, int>(this, "UPrimalInventoryComponent.ClientMultiUse", ForPC, UseIndex, hitBodyIndex); }
 	bool TryMultiUse(APlayerController * ForPC, int UseIndex, int hitBodyIndex) { return NativeCall<bool, APlayerController*, int, int>(this, "UPrimalInventoryComponent.TryMultiUse", ForPC, UseIndex, hitBodyIndex); }
+	void GetGrinderSettings_Implementation(int* MaxQuantityToGrind, float* GrindGiveItemsPercent, int* MaxItemsToGivePerGrind) { NativeCall<void, int*, float*, int*>(this, "UPrimalInventoryComponent.GetGrinderSettings_Implementation", MaxQuantityToGrind, GrindGiveItemsPercent, MaxItemsToGivePerGrind); }
 	bool IsAllowedInventoryAccess(APlayerController * ForPC) { return NativeCall<bool, APlayerController*>(this, "UPrimalInventoryComponent.IsAllowedInventoryAccess", ForPC); }
 	void ActivePlayerInventoryTick(float DeltaTime) { NativeCall<void, float>(this, "UPrimalInventoryComponent.ActivePlayerInventoryTick", DeltaTime); }
 	void InventoryRefresh() { NativeCall<void>(this, "UPrimalInventoryComponent.InventoryRefresh"); }
@@ -508,7 +513,7 @@ struct UPrimalInventoryComponent : UActorComponent
 	AActor * CraftedBlueprintSpawnActor(TSubclassOf<UPrimalItem> ForItemClass, TSubclassOf<AActor> ActorClassToSpawn) { return NativeCall<AActor*, TSubclassOf<UPrimalItem>, TSubclassOf<AActor>>(this, "UPrimalInventoryComponent.CraftedBlueprintSpawnActor", ForItemClass, ActorClassToSpawn); }
 	void NotifyCraftedItem(UPrimalItem * anItem) { NativeCall<void, UPrimalItem*>(this, "UPrimalInventoryComponent.NotifyCraftedItem", anItem); }
 	bool GenerateCrateItems(float MinQualityMultiplier, float MaxQualityMultiplier, int NumPasses, float QuantityMultiplier, float SetPowerWeight, float MaxItemDifficultyClamp) { return NativeCall<bool, float, float, int, float, float, float>(this, "UPrimalInventoryComponent.GenerateCrateItems", MinQualityMultiplier, MaxQualityMultiplier, NumPasses, QuantityMultiplier, SetPowerWeight, MaxItemDifficultyClamp); }
-	bool GenerateCustomCrateItems(TSubclassOf<UObject> SourceClass, TArray<FSupplyCrateItemSet> CustomItemSets, float CustomMinItemSets, float CustomMaxItemSets, float CustomNumItemSetsPower, bool bCustomSetsRandomWithoutReplacement, TArray<UPrimalItem*> * GeneratedItems, float MinQualityMultiplier, float MaxQualityMultiplier, int NumPasses, float QuantityMultiplier, float SetPowerWeight, float MaxItemDifficultyClamp) { return NativeCall<bool, TSubclassOf<UObject>, TArray<FSupplyCrateItemSet>, float, float, float, bool, TArray<UPrimalItem*>*, float, float, int, float, float, float>(this, "UPrimalInventoryComponent.GenerateCustomCrateItems", SourceClass, CustomItemSets, CustomMinItemSets, CustomMaxItemSets, CustomNumItemSetsPower, bCustomSetsRandomWithoutReplacement, GeneratedItems, MinQualityMultiplier, MaxQualityMultiplier, NumPasses, QuantityMultiplier, SetPowerWeight, MaxItemDifficultyClamp); }
+	bool GenerateCustomCrateItems(TSubclassOf<UObject> SourceClass, TArray<FSupplyCrateItemSet> CustomItemSets, float CustomMinItemSets, float CustomMaxItemSets, float CustomNumItemSetsPower, bool bCustomSetsRandomWithoutReplacement, TArray<UPrimalItem*> * GeneratedItems, float MinQualityMultiplier, float MaxQualityMultiplier, int NumPasses, float QuantityMultiplier, float SetPowerWeight, float MaxItemDifficultyClamp, bool bIsMissionReward) { return NativeCall<bool, TSubclassOf<UObject>, TArray<FSupplyCrateItemSet>, float, float, float, bool, TArray<UPrimalItem*>*, float, float, int, float, float, float, bool>(this, "UPrimalInventoryComponent.GenerateCustomCrateItems", SourceClass, CustomItemSets, CustomMinItemSets, CustomMaxItemSets, CustomNumItemSetsPower, bCustomSetsRandomWithoutReplacement, GeneratedItems, MinQualityMultiplier, MaxQualityMultiplier, NumPasses, QuantityMultiplier, SetPowerWeight, MaxItemDifficultyClamp, bIsMissionReward); }
 	UPrimalItem * FindArkTributeItem(FItemNetID * ItemID) { return NativeCall<UPrimalItem*, FItemNetID*>(this, "UPrimalInventoryComponent.FindArkTributeItem", ItemID); }
 	void SetNextItemSpoilingID_Implementation(FItemNetID NextItemID) { NativeCall<void, FItemNetID>(this, "UPrimalInventoryComponent.SetNextItemSpoilingID_Implementation", NextItemID); }
 	void SetNextItemConsumptionID_Implementation(FItemNetID NextItemID) { NativeCall<void, FItemNetID>(this, "UPrimalInventoryComponent.SetNextItemConsumptionID_Implementation", NextItemID); }
@@ -583,9 +588,12 @@ struct UPrimalInventoryComponent : UActorComponent
 	bool BPRemoteInventoryAllowViewing(AShooterPlayerController * PC) { return NativeCall<bool, AShooterPlayerController*>(this, "UPrimalInventoryComponent.BPRemoteInventoryAllowViewing", PC); }
 	int BPRemoteInventoryGetMaxVisibleSlots(int NumItems, AShooterPlayerController * PC, bool bIsLocal) { return NativeCall<int, int, AShooterPlayerController*, bool>(this, "UPrimalInventoryComponent.BPRemoteInventoryGetMaxVisibleSlots", NumItems, PC, bIsLocal); }
 	void BPRequestedInventoryItems(AShooterPlayerController * forPC) { NativeCall<void, AShooterPlayerController*>(this, "UPrimalInventoryComponent.BPRequestedInventoryItems", forPC); }
+	bool CanGrindItem(UPrimalItem * item) { return NativeCall<bool, UPrimalItem*>(this, "UPrimalInventoryComponent.CanGrindItem", item); }
+	bool CanGrindItems(AShooterPlayerController * PC) { return NativeCall<bool, AShooterPlayerController*>(this, "UPrimalInventoryComponent.CanGrindItems", PC); }
 	void ClientItemMessageNotification(FItemNetID ItemID, EPrimalItemMessage::Type ItemMessageType) { NativeCall<void, FItemNetID, EPrimalItemMessage::Type>(this, "UPrimalInventoryComponent.ClientItemMessageNotification", ItemID, ItemMessageType); }
 	void ClientOnArkTributeItemsAdded() { NativeCall<void>(this, "UPrimalInventoryComponent.ClientOnArkTributeItemsAdded"); }
 	void ClientUpdateFreeCraftingMode(bool bNewFreeCraftingModeValue) { NativeCall<void, bool>(this, "UPrimalInventoryComponent.ClientUpdateFreeCraftingMode", bNewFreeCraftingModeValue); }
+	void GetGrinderSettings(int* MaxQuantityToGrind, float* GrindGiveItemsPercent, int* MaxItemsToGivePerGrind) { NativeCall<void, int*, float*, int*>(this, "UPrimalInventoryComponent.GetGrinderSettings", MaxQuantityToGrind, GrindGiveItemsPercent, MaxItemsToGivePerGrind); }
 	bool OverrideUseItem(UPrimalItem * theItem) { return NativeCall<bool, UPrimalItem*>(this, "UPrimalInventoryComponent.OverrideUseItem", theItem); }
 	void ServerAddItemToSlot(FItemNetID ItemID, int SlotIndex) { NativeCall<void, FItemNetID, int>(this, "UPrimalInventoryComponent.ServerAddItemToSlot", ItemID, SlotIndex); }
 	void ServerForceMergeItemStack(FItemNetID Item1ID, FItemNetID Item2ID) { NativeCall<void, FItemNetID, FItemNetID>(this, "UPrimalInventoryComponent.ServerForceMergeItemStack", Item1ID, Item2ID); }
@@ -902,6 +910,7 @@ struct UPrimalItem : UObject
 	BitFieldValue<bool, unsigned __int32> bFromSteamInventory() { return { this, "UPrimalItem.bFromSteamInventory" }; }
 	BitFieldValue<bool, unsigned __int32> bIsFromAllClustersInventory() { return { this, "UPrimalItem.bIsFromAllClustersInventory" }; }
 	BitFieldValue<bool, unsigned __int32> bConsumeItemOnUse() { return { this, "UPrimalItem.bConsumeItemOnUse" }; }
+	BitFieldValue<bool, unsigned __int32> bConfirmBeforeUsing() { return { this, "UPrimalItem.bConfirmBeforeUsing" }; }
 	BitFieldValue<bool, unsigned __int32> bOnlyCanUseInWater() { return { this, "UPrimalItem.bOnlyCanUseInWater" }; }
 	BitFieldValue<bool, unsigned __int32> bCanUseSwimming() { return { this, "UPrimalItem.bCanUseSwimming" }; }
 	BitFieldValue<bool, unsigned __int32> bIsDescriptionOnlyItem() { return { this, "UPrimalItem.bIsDescriptionOnlyItem" }; }
@@ -962,6 +971,7 @@ struct UPrimalItem : UObject
 	BitFieldValue<bool, unsigned __int32> bCraftDontActuallyGiveItem() { return { this, "UPrimalItem.bCraftDontActuallyGiveItem" }; }
 	BitFieldValue<bool, unsigned __int32> bPreventUseWhenSleeping() { return { this, "UPrimalItem.bPreventUseWhenSleeping" }; }
 	BitFieldValue<bool, unsigned __int32> bOverrideRepairingRequirements() { return { this, "UPrimalItem.bOverrideRepairingRequirements" }; }
+	BitFieldValue<bool, unsigned __int32> bScaleOverridenRepairingRequirements() { return { this, "UPrimalItem.bScaleOverridenRepairingRequirements" }; }
 	BitFieldValue<bool, unsigned __int32> bForceUseItemAddCharacterStatsOnDinos() { return { this, "UPrimalItem.bForceUseItemAddCharacterStatsOnDinos" }; }
 	BitFieldValue<bool, unsigned __int32> bOnlyEquipWhenUnconscious() { return { this, "UPrimalItem.bOnlyEquipWhenUnconscious" }; }
 	BitFieldValue<bool, unsigned __int32> bForcePreventConsumableWhileHandcuffed() { return { this, "UPrimalItem.bForcePreventConsumableWhileHandcuffed" }; }
@@ -1038,6 +1048,8 @@ struct UPrimalItem : UObject
 	BitFieldValue<bool, unsigned __int32> bIsSPlusItem() { return { this, "UPrimalItem.bIsSPlusItem" }; }
 	BitFieldValue<bool, unsigned __int32> bPreventRemovingClipAmmo() { return { this, "UPrimalItem.bPreventRemovingClipAmmo" }; }
 	BitFieldValue<bool, unsigned __int32> bNonBlockingShield() { return { this, "UPrimalItem.bNonBlockingShield" }; }
+	BitFieldValue<bool, unsigned __int32> bNetInfoFromClient() { return { this, "UPrimalItem.bNetInfoFromClient" }; }
+	BitFieldValue<bool, unsigned __int32> bAddedToWorldItemMap() { return { this, "UPrimalItem.bAddedToWorldItemMap" }; }
 
 	// Functions
 
@@ -1091,6 +1103,7 @@ struct UPrimalItem : UObject
 	float GetRemainingCooldownTime() { return NativeCall<float>(this, "UPrimalItem.GetRemainingCooldownTime"); }
 	bool CanSpawnOverWater(AActor * ownerActor, FTransform * SpawnTransform) { return NativeCall<bool, AActor*, FTransform*>(this, "UPrimalItem.CanSpawnOverWater", ownerActor, SpawnTransform); }
 	bool IsCooldownReadyForUse() { return NativeCall<bool>(this, "UPrimalItem.IsCooldownReadyForUse"); }
+	FString * GetInventoryIconDisplayText_Implementation(FString * result) { return NativeCall<FString*, FString*>(this, "UPrimalItem.GetInventoryIconDisplayText_Implementation", result); }
 	bool CanUse(bool bIgnoreCooldown) { return NativeCall<bool, bool>(this, "UPrimalItem.CanUse", bIgnoreCooldown); }
 	void LocalUse(AShooterPlayerController * ForPC) { NativeCall<void, AShooterPlayerController*>(this, "UPrimalItem.LocalUse", ForPC); }
 	void UnequipWeapon(bool bDelayedUnequip) { NativeCall<void, bool>(this, "UPrimalItem.UnequipWeapon", bDelayedUnequip); }
@@ -1102,6 +1115,7 @@ struct UPrimalItem : UObject
 	void ApplyColorsFromStructure(APrimalStructure * theStructure) { NativeCall<void, APrimalStructure*>(this, "UPrimalItem.ApplyColorsFromStructure", theStructure); }
 	void EquippedWeapon() { NativeCall<void>(this, "UPrimalItem.EquippedWeapon"); }
 	void UnequippedWeapon() { NativeCall<void>(this, "UPrimalItem.UnequippedWeapon"); }
+	unsigned __int16 calcResourceQuantityRequired(TSubclassOf<UPrimalItem> itemType, const float baseRequiredAmount, UPrimalInventoryComponent * inventory, bool isCrafting) { return NativeCall<unsigned __int16, TSubclassOf<UPrimalItem>, const float, UPrimalInventoryComponent*, bool>(this, "UPrimalItem.calcResourceQuantityRequired", itemType, baseRequiredAmount, inventory, isCrafting); }
 	FLinearColor * GetColorForItemColorID(FLinearColor * result, int SetNum, int ID) { return NativeCall<FLinearColor*, FLinearColor*, int, int>(this, "UPrimalItem.GetColorForItemColorID", result, SetNum, ID); }
 	static FLinearColor * StaticGetColorForItemColorID(FLinearColor * result, int ID) { return NativeCall<FLinearColor*, FLinearColor*, int>(nullptr, "UPrimalItem.StaticGetColorForItemColorID", result, ID); }
 	static int StaticGetDinoColorSetIndexForItemColorID(int ID) { return NativeCall<int, int>(nullptr, "UPrimalItem.StaticGetDinoColorSetIndexForItemColorID", ID); }
@@ -1192,6 +1206,8 @@ struct UPrimalItem : UObject
 	TSubclassOf<UDamageType> * GetWeaponTemplateMeleeDamageType(TSubclassOf<UDamageType> * result) { return NativeCall<TSubclassOf<UDamageType>*, TSubclassOf<UDamageType>*>(this, "UPrimalItem.GetWeaponTemplateMeleeDamageType", result); }
 	TSubclassOf<UDamageType> * GetWeaponTemplateHarvestDamageType(TSubclassOf<UDamageType> * result) { return NativeCall<TSubclassOf<UDamageType>*, TSubclassOf<UDamageType>*>(this, "UPrimalItem.GetWeaponTemplateHarvestDamageType", result); }
 	float GetWeaponTemplateHarvestDamageMultiplier() { return NativeCall<float>(this, "UPrimalItem.GetWeaponTemplateHarvestDamageMultiplier"); }
+	void InventoryLoadedFromSaveGame() { NativeCall<void>(this, "UPrimalItem.InventoryLoadedFromSaveGame"); }
+	bool CheckForInventoryDupes() { return NativeCall<bool>(this, "UPrimalItem.CheckForInventoryDupes"); }
 	void CalcRecipeStats() { NativeCall<void>(this, "UPrimalItem.CalcRecipeStats"); }
 	int GetCraftingResourceRequirement(int CraftingResourceIndex) { return NativeCall<int, int>(this, "UPrimalItem.GetCraftingResourceRequirement", CraftingResourceIndex); }
 	void BPGetItemID(int* ItemID1, int* ItemID2) { NativeCall<void, int*, int*>(this, "UPrimalItem.BPGetItemID", ItemID1, ItemID2); }
@@ -1220,7 +1236,10 @@ struct UPrimalItem : UObject
 	TArray<FLinearColor> * GetItemDyeColors(TArray<FLinearColor> * result) { return NativeCall<TArray<FLinearColor>*, TArray<FLinearColor>*>(this, "UPrimalItem.GetItemDyeColors", result); }
 	bool IsActiveEventItem(UWorld * World) { return NativeCall<bool, UWorld*>(this, "UPrimalItem.IsActiveEventItem", World); }
 	bool IsDeprecated(UWorld * World) { return NativeCall<bool, UWorld*>(this, "UPrimalItem.IsDeprecated", World); }
+	void BeginDestroy() { NativeCall<void>(this, "UPrimalItem.BeginDestroy"); }
+	void RemoveFromWorldItemMap() { NativeCall<void>(this, "UPrimalItem.RemoveFromWorldItemMap"); }
 	bool IsBlueprintDeprecated(UWorld * World) { return NativeCall<bool, UWorld*>(this, "UPrimalItem.IsBlueprintDeprecated", World); }
+	void OnVersionChange(bool* doDestroy, UWorld * World, AShooterGameMode * gameMode) { NativeCall<void, bool*, UWorld*, AShooterGameMode*>(this, "UPrimalItem.OnVersionChange", doDestroy, World, gameMode); }
 	static void StaticRegisterNativesUPrimalItem() { NativeCall<void>(nullptr, "UPrimalItem.StaticRegisterNativesUPrimalItem"); }
 	static UClass * GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalItem.GetPrivateStaticClass", Package); }
 	void ApplyingSkinOntoItem(UPrimalItem * ToOwnerItem, bool bIsFirstTime) { NativeCall<void, UPrimalItem*, bool>(this, "UPrimalItem.ApplyingSkinOntoItem", ToOwnerItem, bIsFirstTime); }
@@ -1275,6 +1294,7 @@ struct UPrimalItem : UObject
 	void ClientUpdatedWeaponClipAmmo() { NativeCall<void>(this, "UPrimalItem.ClientUpdatedWeaponClipAmmo"); }
 	void Crafted(bool bWasCraftedFromEngram) { NativeCall<void, bool>(this, "UPrimalItem.Crafted", bWasCraftedFromEngram); }
 	void EquippedBlueprintTick(float DeltaSeconds) { NativeCall<void, float>(this, "UPrimalItem.EquippedBlueprintTick", DeltaSeconds); }
+	FString * GetInventoryIconDisplayText(FString * result) { return NativeCall<FString*, FString*>(this, "UPrimalItem.GetInventoryIconDisplayText", result); }
 	float HandleShieldDamageBlocking(AShooterCharacter * ForShooterCharacter, float DamageIn, FDamageEvent * DamageEvent, AController * EventInstigator, AActor * DamageCauser) { return NativeCall<float, AShooterCharacter*, float, FDamageEvent*, AController*, AActor*>(this, "UPrimalItem.HandleShieldDamageBlocking", ForShooterCharacter, DamageIn, DamageEvent, EventInstigator, DamageCauser); }
 	USoundBase * OverrideCrouchingSound(USoundBase * InSound, bool bIsProne, int soundState) { return NativeCall<USoundBase*, USoundBase*, bool, int>(this, "UPrimalItem.OverrideCrouchingSound", InSound, bIsProne, soundState); }
 	void RemovedSkinFromItem(UPrimalItem * FromOwnerItem, bool bIsFirstTime) { NativeCall<void, UPrimalItem*, bool>(this, "UPrimalItem.RemovedSkinFromItem", FromOwnerItem, bIsFirstTime); }
@@ -1331,6 +1351,7 @@ struct FItemNetInfo
 	int& EggRandomMutationsFemaleField() { return *GetNativePointerField<int*>(this, "FItemNetInfo.EggRandomMutationsFemale"); }
 	int& EggRandomMutationsMaleField() { return *GetNativePointerField<int*>(this, "FItemNetInfo.EggRandomMutationsMale"); }
 	char& ItemProfileVersionField() { return *GetNativePointerField<char*>(this, "FItemNetInfo.ItemProfileVersion"); }
+	bool& bNetInfoFromClientField() { return *GetNativePointerField<bool*>(this, "FItemNetInfo.bNetInfoFromClient"); }
 
 	// Bit fields
 

@@ -39,7 +39,6 @@ struct AGameState
 	void NetSpawnActorAtLocation(TSubclassOf<AActor> AnActorClass, FVector_NetQuantize AtLocation, FRotator_NetQuantize AtRotation, AActor* EffectOwnerToIgnore, float MaxRangeToReplicate, USceneComponent* attachToComponent, int dataIndex, FName attachSocketName, bool bOnlySendToEffectOwner) { NativeCall<void, TSubclassOf<AActor>, FVector_NetQuantize, FRotator_NetQuantize, AActor*, float, USceneComponent*, int, FName, bool>(this, "AGameState.NetSpawnActorAtLocation", AnActorClass, AtLocation, AtRotation, EffectOwnerToIgnore, MaxRangeToReplicate, attachToComponent, dataIndex, attachSocketName, bOnlySendToEffectOwner); }
 	bool Semaphore_TryGrab(FName SemaphoreName, AActor* InObject, float PriorityWeight, int MaxToAllocate) { return NativeCall<bool, FName, AActor*, float, int>(this, "AGameState.Semaphore_TryGrab", SemaphoreName, InObject, PriorityWeight, MaxToAllocate); }
 	bool Semaphore_Release(FName SemaphoreName, AActor* InObject) { return NativeCall<bool, FName, AActor*>(this, "AGameState.Semaphore_Release", SemaphoreName, InObject); }
-	static void StaticRegisterNativesAGameState() { NativeCall<void>(nullptr, "AGameState.StaticRegisterNativesAGameState"); }
 };
 
 struct AShooterGameState : AGameState
@@ -52,7 +51,12 @@ struct AShooterGameState : AGameState
 	int& NumPlayerConnectedField() { return *GetNativePointerField<int*>(this, "AShooterGameState.NumPlayerConnected"); }
 	bool& bServerUseLocalizedChatField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bServerUseLocalizedChat"); }
 	float& LocalizedChatRadiusField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LocalizedChatRadius"); }
+	float& VoiceSuperRangeRadiusField() { return *GetNativePointerField<float*>(this, "AShooterGameState.VoiceSuperRangeRadius"); }
+	float& VoiceWhisperRangeRadiusField() { return *GetNativePointerField<float*>(this, "AShooterGameState.VoiceWhisperRangeRadius"); }
 	float& LocalizedChatRadiusUnconsiousScaleField() { return *GetNativePointerField<float*>(this, "AShooterGameState.LocalizedChatRadiusUnconsiousScale"); }
+	unsigned int& VivoxAttenuationModelField() { return *GetNativePointerField<unsigned int*>(this, "AShooterGameState.VivoxAttenuationModel"); }
+	float& VivoxMinDistanceField() { return *GetNativePointerField<float*>(this, "AShooterGameState.VivoxMinDistance"); }
+	float& VivoxRolloffField() { return *GetNativePointerField<float*>(this, "AShooterGameState.VivoxRolloff"); }
 	float& ServerFramerateField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ServerFramerate"); }
 	FString & NewStructureDestructionTagField() { return *GetNativePointerField<FString*>(this, "AShooterGameState.NewStructureDestructionTag"); }
 	int& DayNumberField() { return *GetNativePointerField<int*>(this, "AShooterGameState.DayNumber"); }
@@ -116,7 +120,6 @@ struct AShooterGameState : AGameState
 	bool& bEnableExtraStructurePreventionVolumesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bEnableExtraStructurePreventionVolumes"); }
 	TArray<FItemCraftingCostOverride> & OverrideItemCraftingCostsField() { return *GetNativePointerField<TArray<FItemCraftingCostOverride>*>(this, "AShooterGameState.OverrideItemCraftingCosts"); }
 	TArray<FItemMaxItemQuantityOverride> & OverrideItemMaxQuantityField() { return *GetNativePointerField<TArray<FItemMaxItemQuantityOverride>*>(this, "AShooterGameState.OverrideItemMaxQuantity"); }
-	//TMap<FClassMapKey,FMaxItemQuantityOverride,FDefaultSetAllocator,TDefaultMapKeyFuncs<FClassMapKey,FMaxItemQuantityOverride,0> > & OverrideItemMaxQuantityMapField() { return *GetNativePointerField<TMap<FClassMapKey,FMaxItemQuantityOverride,FDefaultSetAllocator,TDefaultMapKeyFuncs<FClassMapKey,FMaxItemQuantityOverride,0> >*>(this, "AShooterGameState.OverrideItemMaxQuantityMap"); }
 	long double& LastServerSaveTimeField() { return *GetNativePointerField<long double*>(this, "AShooterGameState.LastServerSaveTime"); }
 	float& ServerSaveIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.ServerSaveInterval"); }
 	float& TribeNameChangeCooldownField() { return *GetNativePointerField<float*>(this, "AShooterGameState.TribeNameChangeCooldown"); }
@@ -126,7 +129,6 @@ struct AShooterGameState : AGameState
 	float& StructurePickupHoldDurationField() { return *GetNativePointerField<float*>(this, "AShooterGameState.StructurePickupHoldDuration"); }
 	bool& bAllowIntegratedSPlusStructuresField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowIntegratedSPlusStructures"); }
 	bool& bAllowHideDamageSourceFromLogsField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowHideDamageSourceFromLogs"); }
-	//FieldArray<ExpensiveFunctionRegister, 1> ExpensiveFunctionsField() { return {this, "AShooterGameState.ExpensiveFunctions"}; }
 	UAudioComponent * DynamicMusicAudioComponentField() { return *GetNativePointerField<UAudioComponent**>(this, "AShooterGameState.DynamicMusicAudioComponent"); }
 	UAudioComponent * DynamicMusicAudioComponent2Field() { return *GetNativePointerField<UAudioComponent**>(this, "AShooterGameState.DynamicMusicAudioComponent2"); }
 	bool& bPlayingDynamicMusicField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bPlayingDynamicMusic"); }
@@ -222,16 +224,18 @@ struct AShooterGameState : AGameState
 	TArray<FPlayerLocatorEffectMap> & PlayerLocatorEffectMapsField() { return *GetNativePointerField<TArray<FPlayerLocatorEffectMap>*>(this, "AShooterGameState.PlayerLocatorEffectMaps"); }
 	int& AmbientSoundCheckIncrementField() { return *GetNativePointerField<int*>(this, "AShooterGameState.AmbientSoundCheckIncrement"); }
 	int& ThrottledTicksModField() { return *GetNativePointerField<int*>(this, "AShooterGameState.ThrottledTicksMod"); }
+	int& PerformanceThrottledTicksModField() { return *GetNativePointerField<int*>(this, "AShooterGameState.PerformanceThrottledTicksMod"); }
 	float& PreventOfflinePvPConnectionInvincibleIntervalField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PreventOfflinePvPConnectionInvincibleInterval"); }
 	float& PassiveTameIntervalMultiplierField() { return *GetNativePointerField<float*>(this, "AShooterGameState.PassiveTameIntervalMultiplier"); }
 	TArray<TSubclassOf<APrimalDinoCharacter>> & UniqueDinosField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalDinoCharacter>>*>(this, "AShooterGameState.UniqueDinos"); }
 	unsigned int& MinimumUniqueDownloadIntervalField() { return *GetNativePointerField<unsigned int*>(this, "AShooterGameState.MinimumUniqueDownloadInterval"); }
 	unsigned int& MaximumUniqueDownloadIntervalField() { return *GetNativePointerField<unsigned int*>(this, "AShooterGameState.MaximumUniqueDownloadInterval"); }
 	bool& bIgnoreStructuresPreventionVolumesField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIgnoreStructuresPreventionVolumes"); }
-	//TArray<FDinoDownloadData> & UniqueDownloadsField() { return *GetNativePointerField<TArray<FDinoDownloadData>*>(this, "AShooterGameState.UniqueDownloads"); }
 	UPrimalWorldSettingsEventOverrides * ActiveEventOverridesField() { return *GetNativePointerField<UPrimalWorldSettingsEventOverrides**>(this, "AShooterGameState.ActiveEventOverrides"); }
 	bool& bIgnoreLimitMaxStructuresInRangeTypeFlagField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bIgnoreLimitMaxStructuresInRangeTypeFlag"); }
 	TArray<FMassTeleportData> & MassTeleportQueueField() { return *GetNativePointerField<TArray<FMassTeleportData>*>(this, "AShooterGameState.MassTeleportQueue"); }
+	TArray<AActor*> MassTeleportQueueToRemoveField() { return *GetNativePointerField<TArray<AActor*>*>(this, "AShooterGameState.MassTeleportQueueToRemove"); }
+	TArray<FMassTeleportData> & MassTeleportQueueToAddField() { return *GetNativePointerField<TArray<FMassTeleportData>*>(this, "AShooterGameState.MassTeleportQueueToAdd"); }
 	bool& bAllowLowGravitySpinField() { return *GetNativePointerField<bool*>(this, "AShooterGameState.bAllowLowGravitySpin"); }
 	TArray<FName> & BiomeBuffTagsField() { return *GetNativePointerField<TArray<FName>*>(this, "AShooterGameState.BiomeBuffTags"); }
 
@@ -307,7 +311,7 @@ struct AShooterGameState : AGameState
 	void NetUpdateOfflinePvPLiveTeams(TArray<int> * NewPreventOfflinePvPLiveTeams) { NativeCall<void, TArray<int>*>(this, "AShooterGameState.NetUpdateOfflinePvPLiveTeams", NewPreventOfflinePvPLiveTeams); }
 };
 
-struct AGameSession
+struct AGameSession 
 {
 	int& MaxSpectatorsField() { return *GetNativePointerField<int*>(this, "AGameSession.MaxSpectators"); }
 	int& MaxPlayersField() { return *GetNativePointerField<int*>(this, "AGameSession.MaxPlayers"); }
@@ -347,7 +351,6 @@ struct AShooterGameSession : AGameSession
 	// Functions
 
 	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "AShooterGameSession.StaticClass"); }
-	void FOnFindSessionsComplete() { NativeCall<void>(this, "AShooterGameSession.FOnFindSessionsComplete"); }
 	void OnStartOnlineGameComplete(FName SessionName, bool bWasSuccessful) { NativeCall<void, FName, bool>(this, "AShooterGameSession.OnStartOnlineGameComplete", SessionName, bWasSuccessful); }
 	void HandleMatchHasStarted() { NativeCall<void>(this, "AShooterGameSession.HandleMatchHasStarted"); }
 	void HandleMatchHasEnded() { NativeCall<void>(this, "AShooterGameSession.HandleMatchHasEnded"); }
