@@ -3,6 +3,52 @@
 enum EFullyLoadPackageType;
 enum ExpensiveFunctionRegister;
 
+namespace EInventoryDataListType
+{
+	enum Type
+	{
+		LocalEquipment = 1,
+		LocalQuickSlots = 1 << 2,
+		LocalItems = 1 << 3,
+		LocalCraftables = 1 << 4,
+		RemoteItems = 1 << 8,
+		RemoteCraftables = 1 << 9,
+		RemoteEquipment = 1 << 10,
+		ArkInventory = 1 << 16,
+		Droppable = 1 << 17,
+		DroppableMinusEquipped = 1 << 18,
+		Colors = 1 << 19,
+		Brushes = 1 << 20,
+		Dyes = 1 << 21,
+		Ingredients = 1 << 22,
+		Mask_Local = 0xFF,
+		Mask_Remote = 0xFF00,
+		Mask_LocalInventory = LocalItems | LocalCraftables,
+		Mask_RemoteInventory = RemoteItems | RemoteCraftables,
+		Mask_LocalDataList = LocalEquipment | Mask_LocalInventory,
+		Mask_RemoteDataList = RemoteEquipment | Mask_RemoteInventory,
+		Mask_Inventories = Mask_LocalInventory | Mask_RemoteInventory | ArkInventory,
+		Mask_Items = LocalItems | RemoteItems,
+		Mask_Craftables = LocalCraftables | RemoteCraftables,
+		Mask_Equipment = LocalEquipment | RemoteEquipment,
+	};
+}
+namespace EInventorySortType
+{
+	enum Type
+	{
+		Default,
+		Alphabetical_Asc,
+		Alphabetical_Dsc,
+		Weight_Asc,
+		Weight_Dsc,
+		Type_Asc,
+		Type_Dsc,
+		SpoilTimer_Asc,
+		SpoilTimer_Dsc,
+	};
+}
+
 namespace EXPType
 {
 	enum Type
