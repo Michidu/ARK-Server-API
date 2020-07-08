@@ -166,7 +166,7 @@ struct FReplicatePingData {};
 struct FTargetingTeamChanged {};
 struct FArchive {};
 struct FSpawnPointInfo;
-struct FPrimalPlayerCharacterConfigStructReplicated {};
+struct FPrimalPlayerCharacterConfigStructReplicated;
 struct UPlayerInput {};
 struct FPlayerMuteList {};
 struct FBox2D {};
