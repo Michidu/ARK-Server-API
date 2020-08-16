@@ -417,20 +417,20 @@ struct UProperty : UField
 	T Get(UObject* object)
 	{
 		if (!object->StaticClass()->HasProperty(this))
-			throw std::invalid_argument("Object does not contain this property.")
-			if (sizeof(T) != this->ElementSizeField())
-				throw std::invalid_argument("Expected size does not match property size.")
-				return *((T*)(object + this->Offset_InternalField()));
+			throw std::invalid_argument("Object does not contain this property.");
+		if (sizeof(T) != this->ElementSizeField())
+			throw std::invalid_argument("Expected size does not match property size.");
+			return *((T*)(object + this->Offset_InternalField()));
 	}
 
 	template<typename T>
 	void Set(UObject* object, T value)
 	{
 		if (!object->StaticClass()->HasProperty(this))
-			throw std::invalid_argument("Object does not contain this property.")
-			if (sizeof(T) != this->ElementSizeField())
-				throw std::invalid_argument("Expected size does not match property size.")
-				* ((T*)(object + this->Offset_InternalField())) = value;
+			throw std::invalid_argument("Object does not contain this property.");
+		if (sizeof(T) != this->ElementSizeField())
+			throw std::invalid_argument("Expected size does not match property size.");
+			* ((T*)(object + this->Offset_InternalField())) = value;
 	}
 };
 
