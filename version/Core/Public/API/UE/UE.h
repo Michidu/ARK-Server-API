@@ -266,7 +266,7 @@ struct UObject : UObjectBaseUtility
 	UFunction* FindFunctionChecked(FName InName) { return NativeCall<UFunction*, FName>(this, "UObject.FindFunctionChecked", InName); }
 	void ProcessEvent(UFunction* Function, void* Parms) { NativeCall<void, UFunction*, void*>(this, "UObject.ProcessEvent", Function, Parms); }
 	static UObject* GetArchetypeFromRequiredInfo(UClass* Class, UObject* Outer, FName Name, bool bIsCDO) { return NativeCall<UObject*, UClass*, UObject*, FName, bool>(nullptr, "UObject.GetArchetypeFromRequiredInfo", Class, Outer, Name, bIsCDO); }
-	UProperty* FindProperty(FName name);
+	__declspec(dllexport) UProperty* FindProperty(FName name);
 };
 
 struct UField : UObject
