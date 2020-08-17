@@ -199,6 +199,8 @@ struct FUniqueNetIdRepl
 	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FUniqueNetIdRepl.StaticStruct"); }
 };
 
+struct FPrimalPlayerCharacterConfigStructReplicated {};
+
 struct FActorSpawnParameters
 {
 	FActorSpawnParameters()

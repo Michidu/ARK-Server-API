@@ -151,6 +151,7 @@
     <ClCompile Include="Core\Private\Tools\Requests.cpp" />
     <ClCompile Include="Core\Private\Tools\Timer.cpp" />
     <ClCompile Include="Core\Private\Tools\Tools.cpp" />
+    <ClCompile Include="Core\Private\UE\UE.cpp" />
     <ClCompile Include="version.cpp" />
   </ItemGroup>
   <ItemGroup>

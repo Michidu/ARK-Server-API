@@ -135,6 +135,59 @@ struct __declspec(align(8)) FPrimalPlayerCharacterConfigStruct
 	FString PlayerCharacterName;
 	float RawBoneModifiers[22];
 	int PlayerSpawnRegionIndex;
+
+	FPrimalPlayerCharacterConfigStruct()
+	{
+		FLinearColor black = FLinearColor(0, 0, 0);
+		bIsFemale = false;
+		for (int i = 0; i < 4; ++i)
+			BodyColors[i] = black;
+		OverrideHeadHairColor = black;
+		OverrideFacialHairColor = black;
+		PlayerSpawnRegionIndex = 0;
+		PlayerCharacterName = L"Survivor";
+		FMemory::Memzero(&RawBoneModifiers, sizeof(RawBoneModifiers));
+	}
+};
+
+struct FPrimalPlayerCharacterConfigStructReplicated
+{
+	uint8 bIsFemale : 1;
+	FLinearColor BodyColors[4];
+	FString PlayerCharacterName;
+	float RawBoneModifiers[22];
+	int32 PlayerSpawnRegionIndex;
+
+	FPrimalPlayerCharacterConfigStructReplicated()
+	{
+		FLinearColor black = FLinearColor(0, 0, 0);
+		bIsFemale = false;
+		for (int i = 0; i < 4; ++i)
+			BodyColors[i] = black;
+		PlayerSpawnRegionIndex = 0;
+		PlayerCharacterName = L"Survivor";
+		FMemory::Memzero(&RawBoneModifiers, sizeof(RawBoneModifiers));
+	}
+
+	FPrimalPlayerCharacterConfigStructReplicated(const FPrimalPlayerCharacterConfigStruct& original)
+	{
+		bIsFemale = original.bIsFemale;
+		PlayerCharacterName = original.PlayerCharacterName;
+		PlayerSpawnRegionIndex = original.PlayerSpawnRegionIndex;
+		FMemory::Memcpy(&BodyColors, &original.BodyColors, sizeof(BodyColors));
+		FMemory::Memcpy(&RawBoneModifiers, &original.RawBoneModifiers, sizeof(RawBoneModifiers));
+	}
+
+	FPrimalPlayerCharacterConfigStruct GetPlayerCharacterConfig()
+	{
+		FPrimalPlayerCharacterConfigStruct toReturn;
+		toReturn.bIsFemale = bIsFemale;
+		toReturn.PlayerCharacterName = PlayerCharacterName;
+		toReturn.PlayerSpawnRegionIndex = PlayerSpawnRegionIndex;
+		FMemory::Memcpy(&toReturn.BodyColors, &BodyColors, sizeof(BodyColors));
+		FMemory::Memcpy(&toReturn.RawBoneModifiers, &RawBoneModifiers, sizeof(RawBoneModifiers));
+		return toReturn;
+	}
 };
 
 struct FPrimalCharacterStatusValueModifier

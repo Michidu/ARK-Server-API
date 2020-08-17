@@ -9,6 +9,7 @@
 #include "Templates/SharedPointer.h"
 #include "API/Fields.h"
 #include "API/Enums.h"
+#include "API/UE/Math/Color.h"
 
 // Base types
 
@@ -265,6 +266,7 @@ struct UObject : UObjectBaseUtility
 	UFunction* FindFunctionChecked(FName InName) { return NativeCall<UFunction*, FName>(this, "UObject.FindFunctionChecked", InName); }
 	void ProcessEvent(UFunction* Function, void* Parms) { NativeCall<void, UFunction*, void*>(this, "UObject.ProcessEvent", Function, Parms); }
 	static UObject* GetArchetypeFromRequiredInfo(UClass* Class, UObject* Outer, FName Name, bool bIsCDO) { return NativeCall<UObject*, UClass*, UObject*, FName, bool>(nullptr, "UObject.GetArchetypeFromRequiredInfo", Class, Outer, Name, bIsCDO); }
+	__declspec(dllexport) UProperty* FindProperty(FName name);
 };
 
 struct UField : UObject
@@ -410,6 +412,26 @@ struct UProperty : UField
 	bool ShouldPort(unsigned int PortFlags) { return NativeCall<bool, unsigned int>(this, "UProperty.ShouldPort", PortFlags); }
 	FName* GetID(FName* result) { return NativeCall<FName*, FName*>(this, "UProperty.GetID", result); }
 	bool SameType(UProperty* Other) { return NativeCall<bool, UProperty*>(this, "UProperty.SameType", Other); }
+
+	template<typename T>
+	T Get(UObject* object)
+	{
+		if (!object->StaticClass()->HasProperty(this))
+			throw std::invalid_argument("Object does not contain this property.");
+		if (sizeof(T) != this->ElementSizeField())
+			throw std::invalid_argument("Expected size does not match property size.");
+			return *((T*)(object + this->Offset_InternalField()));
+	}
+
+	template<typename T>
+	void Set(UObject* object, T value)
+	{
+		if (!object->StaticClass()->HasProperty(this))
+			throw std::invalid_argument("Object does not contain this property.");
+		if (sizeof(T) != this->ElementSizeField())
+			throw std::invalid_argument("Expected size does not match property size.");
+			* ((T*)(object + this->Offset_InternalField())) = value;
+	}
 };
 
 struct UNumericProperty : UProperty

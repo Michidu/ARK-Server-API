@@ -80,6 +80,9 @@
     <Filter Include="Core\Public\Atlas">
       <UniqueIdentifier>{bab0c67e-ce63-4e52-9209-74abbfd6ffaf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Private\UE">
+      <UniqueIdentifier>{15bcd933-8ce4-40d3-81a0-8add08818c9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <MASM Include="version_asm.asm" />
@@ -481,6 +484,9 @@
     </ClCompile>
     <ClCompile Include="Core\Private\Commands.cpp">
       <Filter>Core\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Private\UE\UE.cpp">
+      <Filter>Core\Private\UE</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
