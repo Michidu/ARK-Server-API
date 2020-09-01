@@ -13,7 +13,7 @@ namespace ArkApi
 	{
 	public:
 		Commands() = default;
-		
+
 		Commands(const Commands&) = delete;
 		Commands(Commands&&) = delete;
 		Commands& operator=(const Commands&) = delete;
@@ -21,19 +21,23 @@ namespace ArkApi
 
 		~Commands() override = default;
 
+		TArray<FString> GetChatCommands();
+		TArray<FString> GetConsoleCommands();
+		TArray<FString> GetRconCommands();
+
 		void AddChatCommand(const FString& command,
-		                    const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
-		                    callback) override;
+			const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
+			callback) override;
 		void AddConsoleCommand(const FString& command,
-		                       const std::function<void(APlayerController*, FString*, bool)>& callback) override;
+			const std::function<void(APlayerController*, FString*, bool)>& callback) override;
 		void AddRconCommand(const FString& command,
-		                    const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback) override;
+			const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback) override;
 
 		void AddOnTickCallback(const FString& id, const std::function<void(float)>& callback) override;
 		void AddOnTimerCallback(const FString& id, const std::function<void()>& callback) override;
 		void AddOnChatMessageCallback(const FString& id,
-		                              const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type,
-		                                                       bool, bool)>& callback) override;
+			const std::function<bool(AShooterPlayerController*, FString*, EChatSendMode::Type,
+				bool, bool)>& callback) override;
 
 		bool RemoveChatCommand(const FString& command) override;
 		bool RemoveConsoleCommand(const FString& command) override;
@@ -44,14 +48,14 @@ namespace ArkApi
 		bool RemoveOnChatMessageCallback(const FString& id) override;
 
 		bool CheckChatCommands(AShooterPlayerController* shooter_player_controller, FString* message,
-		                       EChatSendMode::Type mode);
+			EChatSendMode::Type mode);
 		bool CheckConsoleCommands(APlayerController* a_player_controller, FString* cmd, bool write_to_log);
 		bool CheckRconCommands(RCONClientConnection* rcon_client_connection, RCONPacket* rcon_packet,
-		                       UWorld* u_world);
+			UWorld* u_world);
 		void CheckOnTickCallbacks(float delta_seconds);
 		void CheckOnTimerCallbacks();
 		bool CheckOnChatMessageCallbacks(AShooterPlayerController* player_controller, FString* message,
-		                                 EChatSendMode::Type mode, bool spam_check, bool command_executed);
+			EChatSendMode::Type mode, bool spam_check, bool command_executed);
 
 	private:
 		template <typename T>
@@ -59,7 +63,7 @@ namespace ArkApi
 		{
 			Command(FString command, std::function<T> callback)
 				: command(std::move(command)),
-				  callback(std::move(callback))
+				callback(std::move(callback))
 			{
 			}
 
@@ -74,16 +78,16 @@ namespace ArkApi
 		using OnTickCallback = Command<void(float)>;
 		using OnTimerCallback = Command<void()>;
 		using OnChatMessageCallback = Command<bool
-			(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>;
+		(AShooterPlayerController*, FString*, EChatSendMode::Type, bool, bool)>;
 
 		template <typename T>
 		bool RemoveCommand(const FString& command, std::vector<std::shared_ptr<T>>& commands)
 		{
 			auto iter = std::find_if(commands.begin(), commands.end(),
-			                         [&command](const std::shared_ptr<T>& data) -> bool
-			                         {
-				                         return data->command == command;
-			                         });
+				[&command](const std::shared_ptr<T>& data) -> bool
+				{
+					return data->command == command;
+				});
 
 			if (iter != commands.end())
 			{
@@ -120,6 +124,10 @@ namespace ArkApi
 
 			return false;
 		}
+
+		TArray<FString> _RconCommands;
+		TArray<FString> _ConsoleCommands;
+		TArray<FString> _ChatCommands;
 
 		std::vector<std::shared_ptr<ChatCommand>> chat_commands_;
 		std::vector<std::shared_ptr<ConsoleCommand>> console_commands_;

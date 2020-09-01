@@ -4,23 +4,46 @@
 
 namespace ArkApi
 {
+
+
+	TArray<FString> Commands::GetChatCommands()
+	{
+		return _ChatCommands;
+	}
+
+	TArray<FString> Commands::GetConsoleCommands()
+	{
+		return _ConsoleCommands;
+	}
+
+	TArray<FString> Commands::GetRconCommands()
+	{
+		return _RconCommands;
+	}
+
+
 	void Commands::AddChatCommand(const FString& command,
-	                              const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
-	                              callback)
+		const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
+		callback)
 	{
 		chat_commands_.push_back(std::make_shared<ChatCommand>(command, callback));
+		_ChatCommands.Add(command);
 	}
 
 	void Commands::AddConsoleCommand(const FString& command,
-	                                 const std::function<void(APlayerController*, FString*, bool)>& callback)
+		const std::function<void(APlayerController*, FString*, bool)>& callback)
 	{
 		console_commands_.push_back(std::make_shared<ConsoleCommand>(command, callback));
+		_ConsoleCommands.Add(command);
+
 	}
 
 	void Commands::AddRconCommand(const FString& command,
-	                              const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback)
+		const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback)
 	{
 		rcon_commands_.push_back(std::make_shared<RconCommand>(command, callback));
+		_RconCommands.Add(command);
+
 	}
 
 	void Commands::AddOnTickCallback(const FString& id, const std::function<void(float)>& callback)
@@ -34,8 +57,8 @@ namespace ArkApi
 	}
 
 	void Commands::AddOnChatMessageCallback(const FString& id,
-	                                        const std::function<bool(AShooterPlayerController*, FString*,
-	                                                                 EChatSendMode::Type, bool, bool)>& callback)
+		const std::function<bool(AShooterPlayerController*, FString*,
+			EChatSendMode::Type, bool, bool)>& callback)
 	{
 		on_chat_message_callbacks_.push_back(std::make_shared<OnChatMessageCallback>(id, callback));
 	}
@@ -43,16 +66,22 @@ namespace ArkApi
 	bool Commands::RemoveChatCommand(const FString& command)
 	{
 		return RemoveCommand<ChatCommand>(command, chat_commands_);
+		_ChatCommands.Remove(command);
+
 	}
 
 	bool Commands::RemoveConsoleCommand(const FString& command)
 	{
 		return RemoveCommand<ConsoleCommand>(command, console_commands_);
+		_ConsoleCommands.Remove(command);
+
 	}
 
 	bool Commands::RemoveRconCommand(const FString& command)
 	{
 		return RemoveCommand<RconCommand>(command, rcon_commands_);
+		_RconCommands.Remove(command);
+
 	}
 
 	bool Commands::RemoveOnTickCallback(const FString& id)
@@ -71,7 +100,7 @@ namespace ArkApi
 	}
 
 	bool Commands::CheckChatCommands(AShooterPlayerController* shooter_player_controller, FString* message,
-	                                 EChatSendMode::Type mode)
+		EChatSendMode::Type mode)
 	{
 		return CheckCommands<ChatCommand>(*message, chat_commands_, shooter_player_controller, message, mode);
 	}
@@ -82,10 +111,10 @@ namespace ArkApi
 	}
 
 	bool Commands::CheckRconCommands(RCONClientConnection* rcon_client_connection, RCONPacket* rcon_packet,
-	                                 UWorld* u_world)
+		UWorld* u_world)
 	{
 		return CheckCommands<RconCommand>(rcon_packet->Body, rcon_commands_, rcon_client_connection, rcon_packet,
-		                                  u_world);
+			u_world);
 	}
 
 	void Commands::CheckOnTickCallbacks(float delta_seconds)
