@@ -105,8 +105,8 @@ struct FSocketBSD : FSocket
 
 struct RCONClientConnection
 {
-	FSocket* SocketField() { return *GetNativePointerField<FSocket * *>(this, "RCONClientConnection.Socket"); }
-	UShooterCheatManager* CheatManagerField() { return *GetNativePointerField<UShooterCheatManager * *>(this, "RCONClientConnection.CheatManager"); }
+	FSocket* SocketField() { return *GetNativePointerField<FSocket**>(this, "RCONClientConnection.Socket"); }
+	UShooterCheatManager* CheatManagerField() { return *GetNativePointerField<UShooterCheatManager**>(this, "RCONClientConnection.CheatManager"); }
 	bool& IsAuthenticatedField() { return *GetNativePointerField<bool*>(this, "RCONClientConnection.IsAuthenticated"); }
 	bool& IsClosedField() { return *GetNativePointerField<bool*>(this, "RCONClientConnection.IsClosed"); }
 	TArray<signed char>& DataBufferField() { return *GetNativePointerField<TArray<signed char>*>(this, "RCONClientConnection.DataBuffer"); }
@@ -231,7 +231,7 @@ struct APrimalBuff
 	float& SubmergedMaxSpeedModifierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.SubmergedMaxSpeedModifier"); }
 	float& UnsubmergedMaxSpeedModifierField() { return *GetNativePointerField<float*>(this, "APrimalBuff.UnsubmergedMaxSpeedModifier"); }
 	long double& BuffStartTimeField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.BuffStartTime"); }
-	UMaterialInterface* BuffPostProcessEffectField() { return *GetNativePointerField<UMaterialInterface * *>(this, "APrimalBuff.BuffPostProcessEffect"); }
+	UMaterialInterface* BuffPostProcessEffectField() { return *GetNativePointerField<UMaterialInterface**>(this, "APrimalBuff.BuffPostProcessEffect"); }
 	TArray<TSubclassOf<AActor>>& PreventActorClassesTargetingField() { return *GetNativePointerField<TArray<TSubclassOf<AActor>>*>(this, "APrimalBuff.PreventActorClassesTargeting"); }
 	TArray<float>& PreventActorClassesTargetingRangesField() { return *GetNativePointerField<TArray<float>*>(this, "APrimalBuff.PreventActorClassesTargetingRanges"); }
 	TSubclassOf<APrimalBuff>& AOEOtherBuffToApplyField() { return *GetNativePointerField<TSubclassOf<APrimalBuff>*>(this, "APrimalBuff.AOEOtherBuffToApply"); }
@@ -253,10 +253,10 @@ struct APrimalBuff
 	bool& bUseBPCustomAllowAddBuffField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bUseBPCustomAllowAddBuff"); }
 	FVector& staticPathingDestinationField() { return *GetNativePointerField<FVector*>(this, "APrimalBuff.staticPathingDestination"); }
 	long double& TickingDeactivationTimeField() { return *GetNativePointerField<long double*>(this, "APrimalBuff.TickingDeactivationTime"); }
-	UPrimalBuffPersistentData* MyBuffPersistentDataField() { return *GetNativePointerField<UPrimalBuffPersistentData * *>(this, "APrimalBuff.MyBuffPersistentData"); }
+	UPrimalBuffPersistentData* MyBuffPersistentDataField() { return *GetNativePointerField<UPrimalBuffPersistentData**>(this, "APrimalBuff.MyBuffPersistentData"); }
 	TSubclassOf<UPrimalBuffPersistentData>& BuffPersistentDataClassField() { return *GetNativePointerField<TSubclassOf<UPrimalBuffPersistentData>*>(this, "APrimalBuff.BuffPersistentDataClass"); }
 	TWeakObjectPtr<AActor>& DamageCauserField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "APrimalBuff.DamageCauser"); }
-	USoundBase* ExtraActivationSoundToPlayField() { return *GetNativePointerField<USoundBase * *>(this, "APrimalBuff.ExtraActivationSoundToPlay"); }
+	USoundBase* ExtraActivationSoundToPlayField() { return *GetNativePointerField<USoundBase**>(this, "APrimalBuff.ExtraActivationSoundToPlay"); }
 	bool& bPersistentBuffSurvivesLevelUpField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bPersistentBuffSurvivesLevelUp"); }
 	float& AoEApplyDamageField() { return *GetNativePointerField<float*>(this, "APrimalBuff.AoEApplyDamage"); }
 	float& AoEApplyDamageIntervalField() { return *GetNativePointerField<float*>(this, "APrimalBuff.AoEApplyDamageInterval"); }
@@ -289,7 +289,7 @@ struct APrimalBuff
 	bool& bTickFunctionDisabledField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bTickFunctionDisabled"); }
 	bool& bWasStasisedField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bWasStasised"); }
 	int& AddBuffMaxNumStacksField() { return *GetNativePointerField<int*>(this, "APrimalBuff.AddBuffMaxNumStacks"); }
-	USoundBase* DeactivatedSoundField() { return *GetNativePointerField<USoundBase * *>(this, "APrimalBuff.DeactivatedSound"); }
+	USoundBase* DeactivatedSoundField() { return *GetNativePointerField<USoundBase**>(this, "APrimalBuff.DeactivatedSound"); }
 	bool& bDeactivatedSoundOnlyLocalField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bDeactivatedSoundOnlyLocal"); }
 	bool& bDisableBloomField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bDisableBloom"); }
 	bool& bBPOverrideCharacterNewFallVelocityField() { return *GetNativePointerField<bool*>(this, "APrimalBuff.bBPOverrideCharacterNewFallVelocity"); }
@@ -676,6 +676,7 @@ struct UVictoryCore
 	static bool AreRotatorsNearlyEqual(FRotator* RotatorA, FRotator* RotatorB, float WithinError) { return NativeCall<bool, FRotator*, FRotator*, float>(nullptr, "UVictoryCore.AreRotatorsNearlyEqual", RotatorA, RotatorB, WithinError); }
 	static void SetBoolArrayElemTrue(TArray<bool>* TheArray, int TheIndex) { NativeCall<void, TArray<bool>*, int>(nullptr, "UVictoryCore.SetBoolArrayElemTrue", TheArray, TheIndex); }
 	static void SetBoolArrayElemFalse(TArray<bool>* TheArray, int TheIndex) { NativeCall<void, TArray<bool>*, int>(nullptr, "UVictoryCore.SetBoolArrayElemFalse", TheArray, TheIndex); }
+	static void GetIslandCustomDatas(AActor* SomeIslandActor, int* IslandID, TArray<FString>* IslandCustomDatas1, TArray<FString>* IslandCustomDatas2) { NativeCall<void, AActor*, int*, TArray<FString>*, TArray<FString>* >(nullptr, "UVictoryCore.GetIslandCustomDatas", SomeIslandActor, IslandID, IslandCustomDatas1, IslandCustomDatas2); }
 };
 
 struct UDamageType : UObject

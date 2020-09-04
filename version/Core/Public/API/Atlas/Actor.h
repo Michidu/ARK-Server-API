@@ -386,6 +386,9 @@ struct FNPCDifficultyLevelRange
 	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FNPCDifficultyLevelRange.StaticStruct"); }
 };
 
+
+
+
 struct FNPCSpawnEntry
 {
 	FString& AnEntryNameField() { return *GetNativePointerField<FString*>(this, "FNPCSpawnEntry.AnEntryName"); }
@@ -9527,7 +9530,7 @@ struct UPrimalHarvestingComponent : UActorComponent {
 	FAttachedInstancedHarvestingElement* ActiveInstancedElement() { return *GetNativePointerField<FAttachedInstancedHarvestingElement * *>(this, "UPrimalHarvestingComponent.ActiveInstancedElement"); }
 
 	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachments() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachments"); }
-
+	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachmentsDedicated() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachmentsDedicated"); }
 };
 
 struct FOceanHarvestedEntry
@@ -9558,6 +9561,7 @@ struct AInstancedFoliageActor : AActor
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "AInstancedFoliageActor.GetPrivateStaticClass", Package); }
 	TArray<UFoliageType*, FDefaultAllocator>& FoliageTypes() { return *GetNativePointerField<TArray<UFoliageType*, FDefaultAllocator>*>(this, "AInstancedFoliageActor.FoliageTypes"); }
 	TArray<FString, FDefaultAllocator>& BaseMeshLookup() { return *GetNativePointerField<TArray<FString, FDefaultAllocator>*>(this, "AInstancedFoliageActor.BaseMeshLookup"); }
+	TArray<UStaticMesh*, FDefaultAllocator>& StaticMeshRefs() { return *GetNativePointerField<TArray<UStaticMesh*, FDefaultAllocator>*>(this, "AInstancedFoliageActor.StaticMeshRefs"); }
 
 	UFoliageType* SelectedMesh() { return *GetNativePointerField<UFoliageType * *>(this, "AInstancedFoliageActor.SelectedMesh"); }
 };
@@ -9594,6 +9598,11 @@ struct ATreasureSpawnVolume : AVolume
 	float& MaxQuality() { return *GetNativePointerField<float*>(this, "ATreasureSpawnVolume.MaxQuality"); }
 	float& SpawnWeight() { return *GetNativePointerField<float*>(this, "ATreasureSpawnVolume.SpawnWeight"); }
 	float& QualityMultiplier() { return *GetNativePointerField<float*>(this, "ATreasureSpawnVolume.QualityMultiplier"); }
+};
+
+struct ABiomeZoneVolume : AVolume
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ABiomeZoneVolume.GetPrivateStaticClass", Package); }
 };
 
 struct FFoliageAttachmentOverride
@@ -9706,4 +9715,13 @@ struct  ASupplyCrateSpawningVolume : AVolume
 	float& MinDistanceFromOtherCrateField() { return *GetNativePointerField<  float*>(this, "ASupplyCrateSpawningVolume.MinDistanceFromOtherCrate"); }
 	FName& CrateSpawningRequiresLoadedSublevelField() { return *GetNativePointerField<  FName*>(this, "ASupplyCrateSpawningVolume.CrateSpawningRequiresLoadedSublevel"); }
 	TArray<APrimalStructureItemContainer_SupplyCrate*, FDefaultAllocator>& MyCratesField() { return *GetNativePointerField<  TArray<APrimalStructureItemContainer_SupplyCrate*, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.MyCrates"); }
+};
+
+
+struct ANPCZoneManager : AInfo
+{
+	TArray<FNPCSpawnEntry>& NPCSpawnEntriesField() { return *GetNativePointerField<TArray<FNPCSpawnEntry>*>(this, "ANPCZoneManager.NPCSpawnEntries"); }
+	TArray<FNPCSpawnLimit>& NPCSpawnLimitsField() { return *GetNativePointerField<TArray<FNPCSpawnLimit>*>(this, "ANPCZoneManager.NPCSpawnLimits"); }
+	static void StaticRegisterNativesANPCZoneManager() { NativeCall<void>(nullptr, "ANPCZoneManager.StaticRegisterNativesANPCZoneManager"); }
+	UField* GetPrivateStaticClass() { return NativeCall<UField*>(this, "ANPCZoneManager.GetPrivateStaticClass"); }
 };
