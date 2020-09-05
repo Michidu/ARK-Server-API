@@ -9717,11 +9717,25 @@ struct  ASupplyCrateSpawningVolume : AVolume
 	TArray<APrimalStructureItemContainer_SupplyCrate*, FDefaultAllocator>& MyCratesField() { return *GetNativePointerField<  TArray<APrimalStructureItemContainer_SupplyCrate*, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.MyCrates"); }
 };
 
+struct ANPCZoneSpawnVolume : AVolume
+{
+};
+
+struct FLinkedZoneSpawnVolumeEntry
+{
+	// Fields
+	ANPCZoneSpawnVolume* LinkedZoneSpawnVolume;
+	TArray<AActor*> ZoneSpawnVolumeFloors;
+	TArray<FName> ZoneSpawnVolumeFloorTags;
+	float EntryWeight;
+};
 
 struct ANPCZoneManager : AInfo
 {
+	TArray<FLinkedZoneSpawnVolumeEntry>& LinkedZoneSpawnVolumeEntriesField() { return *GetNativePointerField<TArray<FLinkedZoneSpawnVolumeEntry>*>(this, "ANPCZoneManager.LinkedZoneSpawnVolumeEntries"); }
 	TArray<FNPCSpawnEntry>& NPCSpawnEntriesField() { return *GetNativePointerField<TArray<FNPCSpawnEntry>*>(this, "ANPCZoneManager.NPCSpawnEntries"); }
 	TArray<FNPCSpawnLimit>& NPCSpawnLimitsField() { return *GetNativePointerField<TArray<FNPCSpawnLimit>*>(this, "ANPCZoneManager.NPCSpawnLimits"); }
 	static void StaticRegisterNativesANPCZoneManager() { NativeCall<void>(nullptr, "ANPCZoneManager.StaticRegisterNativesANPCZoneManager"); }
 	UField* GetPrivateStaticClass() { return NativeCall<UField*>(this, "ANPCZoneManager.GetPrivateStaticClass"); }
 };
+
