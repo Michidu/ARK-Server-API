@@ -356,13 +356,9 @@ struct FDinoBaseLevelWeightEntry
 
 struct FClassRemappingWeight
 {
-	TSubclassOf<UObject>& FromClassField() { return *GetNativePointerField<TSubclassOf<UObject>*>(this, "FClassRemappingWeight.FromClass"); }
-	TArray<TSubclassOf<UObject>>& ToClassesField() { return *GetNativePointerField<TArray<TSubclassOf<UObject>>*>(this, "FClassRemappingWeight.ToClasses"); }
-	TArray<float>& WeightsField() { return *GetNativePointerField<TArray<float>*>(this, "FClassRemappingWeight.Weights"); }
-
-	// Functions
-
-	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FClassRemappingWeight.StaticStruct"); }
+	TSubclassOf<UObject> FromClass;
+	TArray<TSubclassOf<UObject>> ToClasses;
+	TArray<float> Weights;
 };
 
 struct FClassNameReplacement
@@ -377,67 +373,49 @@ struct FClassNameReplacement
 
 struct FNPCDifficultyLevelRange
 {
-	TArray<float>& EnemyLevelsMinField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCDifficultyLevelRange.EnemyLevelsMin"); }
-	TArray<float>& EnemyLevelsMaxField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCDifficultyLevelRange.EnemyLevelsMax"); }
-	TArray<float>& GameDifficultiesField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCDifficultyLevelRange.GameDifficulties"); }
-
-	// Functions
-
-	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FNPCDifficultyLevelRange.StaticStruct"); }
+	TArray<float> EnemyLevelsMin;
+	TArray<float> EnemyLevelsMax;
+	TArray<float> GameDifficulties;
 };
-
-
-
 
 struct FNPCSpawnEntry
 {
-	FString& AnEntryNameField() { return *GetNativePointerField<FString*>(this, "FNPCSpawnEntry.AnEntryName"); }
-	TArray<TSubclassOf<APrimalDinoCharacter>>& NPCsToSpawnField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalDinoCharacter>>*>(this, "FNPCSpawnEntry.NPCsToSpawn"); }
-	TArray<FString>& NPCsToSpawnStringsField() { return *GetNativePointerField<TArray<FString>*>(this, "FNPCSpawnEntry.NPCsToSpawnStrings"); }
-	TArray<FClassRemappingWeight>& NPCRandomSpawnClassWeightsField() { return *GetNativePointerField<TArray<FClassRemappingWeight>*>(this, "FNPCSpawnEntry.NPCRandomSpawnClassWeights"); }
-	TArray<FVector>& NPCsSpawnOffsetsField() { return *GetNativePointerField<TArray<FVector>*>(this, "FNPCSpawnEntry.NPCsSpawnOffsets"); }
-	TArray<float>& NPCsToSpawnPercentageChanceField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCSpawnEntry.NPCsToSpawnPercentageChance"); }
-	TArray<float>& NPCMinLevelOffsetField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCSpawnEntry.NPCMinLevelOffset"); }
-	TArray<float>& NPCMaxLevelOffsetField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCSpawnEntry.NPCMaxLevelOffset"); }
-	TArray<float>& NPCMinLevelMultiplierField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCSpawnEntry.NPCMinLevelMultiplier"); }
-	TArray<float>& NPCMaxLevelMultiplierField() { return *GetNativePointerField<TArray<float>*>(this, "FNPCSpawnEntry.NPCMaxLevelMultiplier"); }
-	TArray<unsigned char>& NPCOverrideLevelField() { return *GetNativePointerField<TArray<unsigned char>*>(this, "FNPCSpawnEntry.NPCOverrideLevel"); }
-	FVector& ExtentCheckField() { return *GetNativePointerField<FVector*>(this, "FNPCSpawnEntry.ExtentCheck"); }
-	FVector& GroupSpawnOffsetField() { return *GetNativePointerField<FVector*>(this, "FNPCSpawnEntry.GroupSpawnOffset"); }
-	float& EntryWeightField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.EntryWeight"); }
-	float& ManualSpawnPointSpreadRadiusField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.ManualSpawnPointSpreadRadius"); }
-	float& WaterOnlySpawnMinimumWaterHeightField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.WaterOnlySpawnMinimumWaterHeight"); }
-	float& MaximumWaterHeightField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.MaximumWaterHeight"); }
-	TArray<FNPCDifficultyLevelRange>& NPCDifficultyLevelRangesField() { return *GetNativePointerField<TArray<FNPCDifficultyLevelRange>*>(this, "FNPCSpawnEntry.NPCDifficultyLevelRanges"); }
-	float& LevelDifficultyTestOverrideField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.LevelDifficultyTestOverride"); }
-	float& SpawnMinDistanceFromStructuresMultiplierField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.SpawnMinDistanceFromStructuresMultiplier"); }
-	float& SpawnMinDistanceFromPlayersMultiplierField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.SpawnMinDistanceFromPlayersMultiplier"); }
-	float& SpawnMinDistanceFromTamedDinosMultiplierField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.SpawnMinDistanceFromTamedDinosMultiplier"); }
-	float& RandGroupSpawnOffsetZMinField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.RandGroupSpawnOffsetZMin"); }
-	float& RandGroupSpawnOffsetZMaxField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.RandGroupSpawnOffsetZMax"); }
-	float& OverrideYawField() { return *GetNativePointerField<float*>(this, "FNPCSpawnEntry.OverrideYaw"); }
-
-	// Bit fields
-
-	BitFieldValue<bool, unsigned __int32> bAddLevelOffsetBeforeMultiplier() { return { this, "FNPCSpawnEntry.bAddLevelOffsetBeforeMultiplier" }; }
-	BitFieldValue<bool, unsigned __int32> bForcePreventSpawnOnOcean() { return { this, "FNPCSpawnEntry.bForcePreventSpawnOnOcean" }; }
-
-	// Functions
-
-	FNPCSpawnEntry* operator=(FNPCSpawnEntry* __that) { return NativeCall<FNPCSpawnEntry*, FNPCSpawnEntry*>(this, "FNPCSpawnEntry.operator=", __that); }
-	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FNPCSpawnEntry.StaticStruct"); }
+	
+  FString AnEntryName;
+  TArray<TSubclassOf<APrimalDinoCharacter>> NPCsToSpawn;
+  TArray<FString> NPCsToSpawnStrings;
+  TArray<FClassRemappingWeight> NPCRandomSpawnClassWeights;
+  TArray<FVector> NPCsSpawnOffsets;
+  TArray<float> NPCsToSpawnPercentageChance;
+  TArray<float> NPCMinLevelOffset;
+  TArray<float> NPCMaxLevelOffset;
+  TArray<float> NPCMinLevelMultiplier;
+  TArray<float> NPCMaxLevelMultiplier;
+  unsigned __int32 bAddLevelOffsetBeforeMultiplier : 1;
+  unsigned __int32 bForcePreventSpawnOnOcean : 1;
+  TArray<unsigned char> NPCOverrideLevel;
+  FVector ExtentCheck;
+  FVector GroupSpawnOffset;
+  float EntryWeight;
+  float ManualSpawnPointSpreadRadius;
+  float WaterOnlySpawnMinimumWaterHeight;
+  float MaximumWaterHeight;
+  TArray<FNPCDifficultyLevelRange> NPCDifficultyLevelRanges;
+  float LevelDifficultyTestOverride;
+  float SpawnMinDistanceFromStructuresMultiplier;
+  float SpawnMinDistanceFromPlayersMultiplier;
+  float SpawnMinDistanceFromTamedDinosMultiplier;
+  float RandGroupSpawnOffsetZMin;
+  float RandGroupSpawnOffsetZMax;
+  float OverrideYaw;
 };
 
 struct FNPCSpawnLimit
 {
-	TSubclassOf<APrimalDinoCharacter>& NPCClassField() { return *GetNativePointerField<TSubclassOf<APrimalDinoCharacter>*>(this, "FNPCSpawnLimit.NPCClass"); }
-	FString& NPCClassStringField() { return *GetNativePointerField<FString*>(this, "FNPCSpawnLimit.NPCClassString"); }
-	float& MaxPercentageOfDesiredNumToAllowField() { return *GetNativePointerField<float*>(this, "FNPCSpawnLimit.MaxPercentageOfDesiredNumToAllow"); }
-	int& CurrentNumberOfNPCTouchingField() { return *GetNativePointerField<int*>(this, "FNPCSpawnLimit.CurrentNumberOfNPCTouching"); }
-
-	// Functions
-
-	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FNPCSpawnLimit.StaticStruct"); }
+	TSubclassOf<APrimalDinoCharacter> NPCClass;
+	FString NPCClassString;
+	float MaxPercentageOfDesiredNumToAllow;
+	int CurrentNumberOfNPCTouching;
 };
 
 struct UNPCSpawnEntriesContainer : UObject
@@ -9504,6 +9482,7 @@ struct  FComponentAttachmentEntry
 	FVector ComponentLocationOffset;
 	FRotator ComponentRotationOffset;
 };
+
 struct  UInstancedStaticMeshComponent : UStaticMeshComponent
 {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UInstancedStaticMeshComponent.GetPrivateStaticClass", Package); }
@@ -9554,7 +9533,6 @@ struct AOceanHarvestManager : AActor {
 	TArray<FOceanHarvestedEntry, FDefaultAllocator>& HiddenHarvestedOceanEntries() { return *GetNativePointerField<TArray<FOceanHarvestedEntry, FDefaultAllocator>*>(this, "AOceanHarvestManager.HiddenHarvestedOceanEntries"); };
 	TArray<FOceanHarvestEntry, FDefaultAllocator>& OceanHarvestEntries() { return *GetNativePointerField<TArray<FOceanHarvestEntry, FDefaultAllocator>*>(this, "AOceanHarvestManager.OceanHarvestEntries"); };
 };
-
 
 struct AInstancedFoliageActor : AActor
 {
@@ -9733,6 +9711,7 @@ struct FLinkedZoneSpawnVolumeEntry
 struct ANPCZoneManager : AInfo
 {
 	TArray<FLinkedZoneSpawnVolumeEntry>& LinkedZoneSpawnVolumeEntriesField() { return *GetNativePointerField<TArray<FLinkedZoneSpawnVolumeEntry>*>(this, "ANPCZoneManager.LinkedZoneSpawnVolumeEntries"); }
+	TSubclassOf<UNPCSpawnEntriesContainer>& NPCSpawnEntriesContainerObjectField() { return *GetNativePointerField<TSubclassOf<UNPCSpawnEntriesContainer>*>(this, "ANPCZoneManager.NPCSpawnEntriesContainerObject"); }
 	TArray<FNPCSpawnEntry>& NPCSpawnEntriesField() { return *GetNativePointerField<TArray<FNPCSpawnEntry>*>(this, "ANPCZoneManager.NPCSpawnEntries"); }
 	TArray<FNPCSpawnLimit>& NPCSpawnLimitsField() { return *GetNativePointerField<TArray<FNPCSpawnLimit>*>(this, "ANPCZoneManager.NPCSpawnLimits"); }
 	static void StaticRegisterNativesANPCZoneManager() { NativeCall<void>(nullptr, "ANPCZoneManager.StaticRegisterNativesANPCZoneManager"); }
