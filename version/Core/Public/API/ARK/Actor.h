@@ -8825,3 +8825,78 @@ struct APrimalBuff : AActor
 	void SetBuffCauser(AActor* CausedBy) { NativeCall<void, AActor*>(this, "APrimalBuff.SetBuffCauser", CausedBy); }
 };
 
+struct FHarvestResourceEntry
+{
+	int OverrideQuantityMax;
+	int OverrideQuantityMin;
+	float OverrideQuantityRandomPower;
+	float EntryWeight;
+	float EffectivenessQuantityMultiplier;
+	float EffectivenessQualityMultiplier;
+	TSubclassOf<UPrimalItem> ResourceItem;
+	float QualityMin;
+	float QualityMax;
+	float XPGainMax;
+	float XPGainMin;
+	TArray<TSubclassOf<UDamageType>, FDefaultAllocator> DamageTypeEntryValuesOverrides;
+	TArray<float, FDefaultAllocator> DamageTypeEntryWeightOverrides;
+	TArray<float, FDefaultAllocator> DamageTypeEntryMinQuantityOverrides;
+	TArray<float, FDefaultAllocator> DamageTypeEntryMaxQuantityOverrides;
+	__int8 bScaleWithDinoBabyAge : 1;
+};
+
+struct UMeshComponent : UPrimitiveComponent
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UMeshComponent.GetPrivateStaticClass", Package); }
+	TArray<UMaterialInterface*, FDefaultAllocator> Materials;
+	TArray<UMaterialInterface*, FDefaultAllocator> DefaultMaterialsOverride;
+	TSubclassOf<AActor> DamageFXActorToSpawn;
+};
+
+struct FAttachedInstancedHarvestingElement
+{
+	UMeshComponent* BaseMeshComponent;
+	int OriginalIndexIntoBase;
+	float MaxHarvestHealth;
+	float CurrentHarvestHealth;
+	float HarvestDamageCache;
+	float HarvestEffectivenessCache;
+	UPrimalHarvestingComponent* ParentHarvestingComponent;
+	FVector Position;
+	__int8 bIsUnharvestable : 1;
+	__int8 bUseInternalActorComponentOctree : 1;
+	__int8 bRegisteredInternalActorComponentOctree : 1;
+	__int8 bHarvestingComponentHidden : 1;
+	__int8 bDontRegisterWithOctree : 1;
+	long double LastDepletionTime;
+	long double LastReplenishTime;
+	float DepletionExhaustionEffect;
+	float NextReplenishInterval;
+	TArray<UActorComponent*, FDefaultAllocator> AdditionalComponentAttachments;
+};
+
+struct FComponentAttachmentEntry
+{
+	TSubclassOf<UActorComponent> ActorComponentClass;
+	FVector ComponentLocationOffset;
+	FRotator ComponentRotationOffset;
+};
+
+struct UPrimalHarvestingComponent : UActorComponent
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalHarvestingComponent.GetPrivateStaticClass", Package); }
+	static void StaticRegisterNativesUPrimalHarvestingComponent() { NativeCall<void>(nullptr, "UPrimalHarvestingComponent.StaticRegisterNativesUPrimalHarvestingComponent"); }
+	bool TemplateCheckForHarvestRepopulation(bool bForceReinit, UWorld* world, FVector* where) { NativeCall<bool, UWorld*, FVector*>(this, "UPrimalHarvestingComponent.TemplateCheckForHarvestRepopulation", world, where); }
+
+	TArray<FHarvestResourceEntry, FDefaultAllocator>& HarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.HarvestResourceEntries"); }
+	TArray<FHarvestResourceEntry, FDefaultAllocator>& BaseHarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.BaseHarvestResourceEntries"); }
+
+	FString& DescriptiveName() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.DescriptiveName"); }
+	FString& UseHarvestString() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UseHarvestString"); }
+	FString& UnequipWeaponToUseHarvestString() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UnequipWeaponToUseHarvestString"); }
+	FString& HarvestableFriendlyName() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.HarvestableFriendlyName"); }
+	FAttachedInstancedHarvestingElement* ActiveInstancedElement() { return *GetNativePointerField<FAttachedInstancedHarvestingElement**>(this, "UPrimalHarvestingComponent.ActiveInstancedElement"); }
+
+	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachments() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachments"); }
+
+};

@@ -185,7 +185,7 @@ struct UStructurePaintingComponent {};
 struct FPaintItem {};
 struct APrimalStructureElevatorPlatform {};
 struct FBoneDamageAdjuster {};
-struct AShooterProjectile {};
+struct AShooterProjectile;
 struct APrimalBuff_Grappled {};
 struct APrimalStructureLadder {};
 struct APrimalProjectileBoomerang {};
