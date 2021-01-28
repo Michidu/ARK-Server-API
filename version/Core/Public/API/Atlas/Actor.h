@@ -9489,6 +9489,10 @@ struct  UInstancedStaticMeshComponent : UStaticMeshComponent
 	UFoliageType* FoliageTypeReference() { return *GetNativePointerField<UFoliageType * *>(this, "UInstancedStaticMeshComponent.FoliageTypeReference"); }
 	TSubclassOf<UActorComponent>& AttachedComponentClass() { return *GetNativePointerField<TSubclassOf<UActorComponent>*>(this, "UInstancedStaticMeshComponent.AttachedComponentClass"); }
 
+	__int64 GetInstanceCount() { return NativeCall<__int64>(this, "UInstancedStaticMeshComponent.GetInstanceCount"); }
+	//FVector* GetCustomLocation(FVector* result) { return NativeCall<FVector*, FVector*>(this, "USceneComponent.GetCustomLocation", result); }
+	FVector* GetPositionOfInstance(FVector *result, int index) { return NativeCall<FVector*, FVector*, int>(this, "UInstancedStaticMeshComponent.GetPositionOfInstance", result, index); }
+	
 	TArray<FBodyInstance*, FDefaultAllocator>& InstanceBodies() { return *GetNativePointerField<TArray<FBodyInstance*, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.InstanceBodies"); }
 	TArray<UActorComponent*, FDefaultAllocator>& ReferencedAttachedComponentObjects() { return *GetNativePointerField<TArray<UActorComponent*, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.ReferencedAttachedComponentObjects"); }
 	TIndirectArray<FAttachedInstanced, FDefaultAllocator>& InstanceAttachedComponents() { return *GetNativePointerField<TIndirectArray<FAttachedInstanced, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.InstanceAttachedComponents"); }
@@ -9510,6 +9514,12 @@ struct UPrimalHarvestingComponent : UActorComponent {
 
 	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachments() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachments"); }
 	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachmentsDedicated() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachmentsDedicated"); }
+};
+
+struct UHierarchicalInstancedStaticMeshComponent : UInstancedStaticMeshComponent
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UHierarchicalInstancedStaticMeshComponent.GetPrivateStaticClass", Package); }
+
 };
 
 struct FOceanHarvestedEntry
@@ -9626,13 +9636,37 @@ struct APrimalStructureItemContainer_SupplyCrate
 	BitFieldValue<bool, unsigned __int32> bIsBonusCrateField() { return { this, "APrimalStructureItemContainer_SupplyCrate.bIsBonusCrateField" }; }
 };
 
-struct  FSupplyCrateSpawnEntry
+struct FSupplyCrateValuesOverride
 {
-	float& EntryWeightField() { return *GetNativePointerField<  float*>(this, "FSupplyCrateSpawnEntry.EntryWeight"); }
-	TSubclassOf<APrimalStructureItemContainer_SupplyCrate>& CrateTemplateField() { return *GetNativePointerField<  TSubclassOf<APrimalStructureItemContainer_SupplyCrate>*>(this, "FSupplyCrateSpawnEntry.CrateTemplate"); }
-	bool& bOverrideCrateValuesField() { return *GetNativePointerField<  bool*>(this, "FSupplyCrateSpawnEntry.bOverrideCrateValues"); }
-	FSupplyCrateValuesOverride& OverrideCrateValuesField() { return *GetNativePointerField<  FSupplyCrateValuesOverride*>(this, "FSupplyCrateSpawnEntry.OverrideCrateValues"); }
-	TSubclassOf<UNPCSpawnEntriesContainer>& CrateEnemySpawnEntriesField() { return *GetNativePointerField<  TSubclassOf<UNPCSpawnEntriesContainer>*>(this, "FSupplyCrateSpawnEntry.CrateEnemySpawnEntries"); }
+	FName LootTableName;
+	float MinItemSets;
+	float MaxItemSets;
+	float NumItemSetsPower;
+	bool bSetsRandomWithoutReplacement;
+	float MinQualityMultiplier;
+	float MaxQualityMultiplier;
+	TArray<FSupplyCrateItemSet, FDefaultAllocator> ItemSets;
+	TSubclassOf<UPrimalSupplyCrateItemSets> ItemSetsOverride;
+	TArray<FSupplyCrateItemSet, FDefaultAllocator> AdditionalItemSets;
+	TSubclassOf<UPrimalSupplyCrateItemSets> AdditionalItemSetsOverride;
+	int RequiredLevelToAccess;
+	int MaxLevelToAccess;
+	bool bRandomizeMinAndMaxQualityMultiplier;
+	float RandomQualityMultiplierMin;
+	float RandomQualityMultiplierMax;
+	float RandomQualityMultiplierPower;
+	TSubclassOf<UPrimalItem> ItemSetExtraItemClass;
+	float ItemSetExtraItemQuantityByQualityMultiplier;
+	float ItemSetExtraItemQuantityByQualityPower;
+};
+
+struct FSupplyCrateSpawnEntry
+{
+	float EntryWeight;
+	TSubclassOf<APrimalStructureItemContainer_SupplyCrate> CrateTemplate;
+	bool bOverrideCrateValues;
+	FSupplyCrateValuesOverride OverrideCrateValues;
+	TSubclassOf<UNPCSpawnEntriesContainer> CrateEnemySpawnEntries;
 };
 
 struct  FSupplyCrateSpawnPointEntry
