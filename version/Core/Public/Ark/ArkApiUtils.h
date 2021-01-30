@@ -226,7 +226,7 @@ namespace ArkApi
 		* \param character Player character
 		* \return Pointer to AShooterPlayerController
 		*/
-		static AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character)
+		AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character) const
 		{
 			if (character)
 			{
