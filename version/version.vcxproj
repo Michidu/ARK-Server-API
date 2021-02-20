@@ -251,7 +251,7 @@
       <ImportLibrary>$(OutDir)ArkApi.lib</ImportLibrary>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib  /ignore:4099
  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;PocoFoundationmd.lib;PocoNetmd.lib;PocoNetSSLWinmd.lib;PocoUtilmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Iphlpapi.lib;Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;PocoFoundationmd.lib;PocoNetmd.lib;PocoNetSSLWinmd.lib;PocoUtilmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

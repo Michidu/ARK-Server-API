@@ -37,7 +37,6 @@ namespace API
 			std::string result;
 		};
 
-		bool WasTickCalled_ = false;
 		std::vector<RequestData> RequestsVec_;
 		std::mutex RequestMutex_;
 
