@@ -4,6 +4,7 @@
 #include <utility>
 
 #include "API/Base.h"
+#include <mutex>
 
 namespace API
 {
@@ -29,30 +30,22 @@ namespace API
 		                                 std::vector<std::string> headers = {});
 
 	private:
-		using CURLM = void;
-		using CURL = void;
-
-		struct Request
+		struct RequestData
 		{
-			explicit Request(std::function<void(bool, std::string)> callback)
-				: callback(std::move(callback))
-			{
-			}
-
 			std::function<void(bool, std::string)> callback;
-			std::string read_buffer;
+			bool success;
+			std::string result;
 		};
+
+		bool WasTickCalled_ = false;
+		std::vector<RequestData> RequestsVec_;
+		std::mutex RequestMutex_;
 
 		Requests();
 		~Requests();
 
-		static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
 		void Update();
-		std::string BuildRequest(CURL* handle, const std::vector<std::string>& post_ids,
-		                         const std::vector<std::string>& post_data) const;
-
-		CURLM* curl_;
-		int handles_count_{};
-		std::unordered_map<CURL*, std::unique_ptr<Request>> requests_;
+		void WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result);
+		void InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result);
 	};
 } // namespace API
