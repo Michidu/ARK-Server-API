@@ -21,7 +21,7 @@ namespace API
 		ARK_API bool CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
 		                              std::vector<std::string> headers = {});
 		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-		                               const std::string& post_data, std::vector<std::string> headers = {});
+		                               const std::string& post_data, std::vector<std::string> headers = {}, const std::string& content_type = "");
 		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
 		                               const std::vector<std::string>& post_ids,
 		                               const std::vector<std::string>& post_data,
@@ -43,8 +43,8 @@ namespace API
 		Requests();
 		~Requests();
 
-		void Update();
 		void WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result);
 		void InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result);
+		void Update();
 	};
 } // namespace API

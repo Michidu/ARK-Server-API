@@ -15,6 +15,7 @@
 #include <Poco/Path.h>
 #include <Poco/URI.h>
 #include <Poco/Exception.h>
+#include <Poco/UTF8String.h>
 
 namespace API
 {
@@ -48,7 +49,7 @@ namespace API
 				{
 					Poco::URI uri(url);
 
-					std::string path(uri.getPathAndQuery());
+					const std::string& path(uri.getPathAndQuery());
 
 					Poco::Net::HTTPClientSession* session = 0;
 
@@ -78,8 +79,10 @@ namespace API
 						Poco::StreamCopier::copyStream(rs, oss);
 						Result = oss.str();
 					}
+					else
+						Result = response.getStatus();
 				}
-				catch (Poco::Exception& exc)
+				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
@@ -92,9 +95,9 @@ namespace API
 	}
 
 	bool Requests::CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-	                                 const std::string& post_data, std::vector<std::string> headers)
+	                                 const std::string& post_data, std::vector<std::string> headers, const std::string& content_type)
 	{
-		std::thread([this, url, callback, post_data, headers]
+		std::thread([this, url, callback, post_data, headers, content_type]
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
@@ -103,7 +106,7 @@ namespace API
 				{
 					Poco::URI uri(url);
 
-					std::string path(uri.getPathAndQuery());
+					const std::string& path(uri.getPathAndQuery());
 
 					Poco::Net::HTTPClientSession* session = 0;
 
@@ -125,8 +128,12 @@ namespace API
 						}
 					}
 
+					if (!content_type.empty())
+						request.setContentType(content_type);
+					else
+						request.setContentType("text/plain");
+
 					request.setContentLength(post_data.length());
-					request.setContentType("application/json");
 
 					std::ostream& OutputStream = session->sendRequest(request);
 					OutputStream << post_data;
@@ -138,8 +145,10 @@ namespace API
 						Poco::StreamCopier::copyStream(rs, oss);
 						Result = oss.str();
 					}
+					else
+						Result = response.getStatus();
 				}
-				catch (Poco::Exception& exc)
+				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
@@ -164,15 +173,7 @@ namespace API
 				{
 					Poco::URI uri(url);
 
-					std::string path(uri.getPathAndQuery());
-
-					for (size_t i = 0; i < post_ids.size(); ++i)
-					{
-						const std::string& id = post_ids[i];
-						const std::string& data = post_data[i];
-
-						uri.addQueryParameter(id, data);
-					}
+					const std::string& path(uri.getPathAndQuery());
 
 					Poco::Net::HTTPClientSession* session = 0;
 
@@ -194,9 +195,23 @@ namespace API
 						}
 					}
 
-					request.setContentType("application/json");
+					std::string body;
+
+					for (size_t i = 0; i < post_ids.size(); ++i)
+					{
+						const std::string& id = post_ids[i];
+						const std::string& data = post_data[i];
+
+						body += fmt::format("{}={}&", Poco::UTF8::escape(id), Poco::UTF8::escape(data));
+					}
+
+					body.pop_back(); // Remove last '&'
+
+					request.setContentType("application/x-www-form-urlencoded");
+					request.setContentLength(body.size());
 
 					std::ostream& OutputStream = session->sendRequest(request);
+					OutputStream << body;
 
 					std::istream& rs = session->receiveResponse(response);
 					if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
@@ -205,8 +220,10 @@ namespace API
 						Poco::StreamCopier::copyStream(rs, oss);
 						Result = oss.str();
 					}
+					else
+						Result = response.getStatus();
 				}
-				catch (Poco::Exception& exc)
+				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
@@ -230,7 +247,7 @@ namespace API
 				{
 					Poco::URI uri(url);
 
-					std::string path(uri.getPathAndQuery());
+					const std::string& path(uri.getPathAndQuery());
 
 					Poco::Net::HTTPClientSession* session = 0;
 
@@ -260,8 +277,10 @@ namespace API
 						Poco::StreamCopier::copyStream(rs, oss);
 						Result = oss.str();
 					}
+					else
+						Result = response.getStatus();
 				}
-				catch (Poco::Exception& exc)
+				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
