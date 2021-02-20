@@ -574,19 +574,7 @@ namespace ArkApi
 		 */
 		static FString GetIPAddress(AShooterPlayerController* player)
 		{
-			FString ip_address = "";
-
-			if (player != nullptr)
-			{
-				auto* player_state = static_cast<AShooterPlayerState*>(player->PlayerStateField());
-
-				if (player_state != nullptr && player_state->MyPlayerDataStructField() != nullptr)
-				{
-					ip_address = player_state->MyPlayerDataStructField()->SavedNetworkAddressField();
-				}
-			}
-
-			return ip_address;
+			return player && player->GetNetConnection() && !player->GetNetConnection()->ClientGivenIPField().IsEmpty() ? player->GetNetConnection()->ClientGivenIPField() : "";
 		}
 
 		/**

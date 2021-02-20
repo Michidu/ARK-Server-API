@@ -5,18 +5,6 @@
 
 #include <sstream>
 
-#include <Poco/Net/HTTPClientSession.h>
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/Net/HTTPCredentials.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/NullStream.h>
-#include <Poco/Path.h>
-#include <Poco/URI.h>
-#include <Poco/Exception.h>
-#include <Poco/UTF8String.h>
-
 namespace API
 {
 	Requests::Requests() { game_api->GetCommands()->AddOnTickCallback("RequestsUpdate", std::bind(&Requests::Update, this)); }
@@ -37,6 +25,50 @@ namespace API
 		RequestsVec_.push_back({ callback, success, result });
 	}
 
+	Poco::Net::HTTPRequest Requests::ConstructRequest(const std::string& url, Poco::Net::HTTPClientSession*& session, Poco::Net::HTTPResponse& response, 
+		const std::vector<std::string>& headers, const std::string& request_type)
+	{
+		Poco::URI uri(url);
+
+		const std::string& path(uri.getPathAndQuery());
+
+		if (uri.getScheme() == "https")
+			session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
+		else
+			session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
+
+		Poco::Net::HTTPRequest request(request_type, path, Poco::Net::HTTPMessage::HTTP_1_1);
+
+		if (!headers.empty())
+		{
+			for (const auto& header : headers)
+			{
+				const std::string& key = header.substr(0, header.find(":"));
+				const std::string& data = header.substr(header.find(":") + 1);
+
+				request.add(key, data);
+			}
+		}
+
+		return request;
+	}
+
+	std::string Requests::GetResponse(std::istream& rs, const Poco::Net::HTTPResponse& response)
+	{
+		std::string result = "";
+
+		if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
+		{
+			std::ostringstream oss;
+			Poco::StreamCopier::copyStream(rs, oss);
+			result = oss.str();
+		}
+		else
+			result = response.getStatus();
+
+		return result;
+	}
+
 	bool Requests::CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
 	                                std::vector<std::string> headers)
 	{
@@ -47,40 +79,11 @@ namespace API
 
 				try
 				{
-					Poco::URI uri(url);
-
-					const std::string& path(uri.getPathAndQuery());
-
-					Poco::Net::HTTPClientSession* session = 0;
-
-					if (uri.getScheme() == "https")
-						session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
-					else
-						session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
-
-					Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_GET, path, Poco::Net::HTTPMessage::HTTP_1_1);
-
-					if (!headers.empty())
-					{
-						for (const auto &header : headers)
-						{
-							const std::string& key = header.substr(0, header.find(":"));
-							const std::string& data = header.substr(header.find(":") + 1);
-
-							request.add(key, data);
-						}
-					}
+					Poco::Net::HTTPClientSession* session = nullptr;
+					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_GET);
 
 					session->sendRequest(request);
-					std::istream& rs = session->receiveResponse(response);
-					if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
-					{
-						std::ostringstream oss;
-						Poco::StreamCopier::copyStream(rs, oss);
-						Result = oss.str();
-					}
-					else
-						Result = response.getStatus();
+					Result = GetResponse(session->receiveResponse(response), response);
 				}
 				catch (const Poco::Exception& exc)
 				{
@@ -104,49 +107,16 @@ namespace API
 
 				try
 				{
-					Poco::URI uri(url);
+					Poco::Net::HTTPClientSession* session = nullptr;
+					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
-					const std::string& path(uri.getPathAndQuery());
-
-					Poco::Net::HTTPClientSession* session = 0;
-
-					if (uri.getScheme() == "https")
-						session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
-					else
-						session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
-
-					Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, path, Poco::Net::HTTPMessage::HTTP_1_1);
-
-					if (!headers.empty())
-					{
-						for (const auto& header : headers)
-						{
-							const std::string& key = header.substr(0, header.find(":"));
-							const std::string& data = header.substr(header.find(":") + 1);
-
-							request.add(key, data);
-						}
-					}
-
-					if (!content_type.empty())
-						request.setContentType(content_type);
-					else
-						request.setContentType("text/plain");
-
+					request.setContentType(content_type);
 					request.setContentLength(post_data.length());
 
 					std::ostream& OutputStream = session->sendRequest(request);
 					OutputStream << post_data;
 
-					std::istream& rs = session->receiveResponse(response);
-					if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
-					{
-						std::ostringstream oss;
-						Poco::StreamCopier::copyStream(rs, oss);
-						Result = oss.str();
-					}
-					else
-						Result = response.getStatus();
+					Result = GetResponse(session->receiveResponse(response), response);
 				}
 				catch (const Poco::Exception& exc)
 				{
@@ -171,29 +141,8 @@ namespace API
 
 				try
 				{
-					Poco::URI uri(url);
-
-					const std::string& path(uri.getPathAndQuery());
-
-					Poco::Net::HTTPClientSession* session = 0;
-
-					if (uri.getScheme() == "https")
-						session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
-					else
-						session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
-
-					Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_POST, path, Poco::Net::HTTPMessage::HTTP_1_1);
-
-					if (!headers.empty())
-					{
-						for (const auto& header : headers)
-						{
-							const std::string& key = header.substr(0, header.find(":"));
-							const std::string& data = header.substr(header.find(":") + 1);
-
-							request.add(key, data);
-						}
-					}
+					Poco::Net::HTTPClientSession* session = nullptr;
+					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
 					std::string body;
 
@@ -213,15 +162,7 @@ namespace API
 					std::ostream& OutputStream = session->sendRequest(request);
 					OutputStream << body;
 
-					std::istream& rs = session->receiveResponse(response);
-					if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
-					{
-						std::ostringstream oss;
-						Poco::StreamCopier::copyStream(rs, oss);
-						Result = oss.str();
-					}
-					else
-						Result = response.getStatus();
+					Result = GetResponse(session->receiveResponse(response), response);
 				}
 				catch (const Poco::Exception& exc)
 				{
@@ -245,40 +186,11 @@ namespace API
 
 				try
 				{
-					Poco::URI uri(url);
-
-					const std::string& path(uri.getPathAndQuery());
-
-					Poco::Net::HTTPClientSession* session = 0;
-
-					if (uri.getScheme() == "https")
-						session = new Poco::Net::HTTPSClientSession(uri.getHost(), uri.getPort());
-					else
-						session = new Poco::Net::HTTPClientSession(uri.getHost(), uri.getPort());
-
-					Poco::Net::HTTPRequest request(Poco::Net::HTTPRequest::HTTP_DELETE, path, Poco::Net::HTTPMessage::HTTP_1_1);
-
-					if (!headers.empty())
-					{
-						for (const auto& header : headers)
-						{
-							const std::string& key = header.substr(0, header.find(":"));
-							const std::string& data = header.substr(header.find(":") + 1);
-
-							request.add(key, data);
-						}
-					}
+					Poco::Net::HTTPClientSession* session = nullptr;
+					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_DELETE);
 
 					session->sendRequest(request);
-					std::istream& rs = session->receiveResponse(response);
-					if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
-					{
-						std::ostringstream oss;
-						Poco::StreamCopier::copyStream(rs, oss);
-						Result = oss.str();
-					}
-					else
-						Result = response.getStatus();
+					Result = GetResponse(session->receiveResponse(response), response);
 				}
 				catch (const Poco::Exception& exc)
 				{
@@ -298,8 +210,7 @@ namespace API
 			return;
 
 		RequestMutex_.lock();
-		std::vector<RequestData> requests_temp = RequestsVec_;
-		RequestsVec_.clear();
+		std::vector<RequestData> requests_temp = std::move(RequestsVec_);
 		RequestMutex_.unlock();
 
 		for (const auto& request : requests_temp) { InvokeCallback(request.callback, request.success, request.result); }
