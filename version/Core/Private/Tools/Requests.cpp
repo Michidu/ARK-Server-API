@@ -1,13 +1,49 @@
 #define WIN32_LEAN_AND_MEAN
+
 #include <Requests.h>
 
 #include "../IBaseApi.h"
 
 #include <sstream>
 
+#include <Poco/Net/HTTPSClientSession.h>
+#include <Poco/Net/HTTPRequest.h>
+#include <Poco/Net/HTTPResponse.h>
+#include <Poco/StreamCopier.h>
+#include <Poco/Path.h>
+#include <Poco/URI.h>
+#include <Poco/Exception.h>
+#include <Poco/UTF8String.h>
+
 namespace API
 {
-	Requests::Requests() { game_api->GetCommands()->AddOnTickCallback("RequestsUpdate", std::bind(&Requests::Update, this)); }
+	class Requests::impl
+	{
+	public:
+		void InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result);
+
+		void WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result);
+
+		Poco::Net::HTTPRequest ConstructRequest(const std::string& url, Poco::Net::HTTPClientSession*& session,
+			const std::vector<std::string>& headers, const std::string& request_type);
+
+		std::string GetResponse(Poco::Net::HTTPClientSession* session, Poco::Net::HTTPResponse& response);
+
+		void Update();
+	private:
+		struct RequestData
+		{
+			std::function<void(bool, std::string)> callback;
+			bool success;
+			std::string result;
+		};
+
+		std::vector<RequestData> RequestsVec_;
+		std::mutex RequestMutex_;
+	};
+
+	Requests::Requests()
+		: pimpl{ std::make_unique<impl>() } { game_api->GetCommands()->AddOnTickCallback("RequestsUpdate", std::bind(&impl::Update, this->pimpl.get())); }
 
 	Requests::~Requests() { game_api->GetCommands()->RemoveOnTickCallback("RequestsUpdate"); }
 
@@ -17,15 +53,15 @@ namespace API
 		return instance;
 	}
 
-	void Requests::InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result) { callback(success, result); }
+	void Requests::impl::InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result) { callback(success, result); }
 
-	void Requests::WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result)
+	void Requests::impl::WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result)
 	{
 		std::lock_guard<std::mutex> Guard(RequestMutex_);
 		RequestsVec_.push_back({ callback, success, result });
 	}
 
-	Poco::Net::HTTPRequest Requests::ConstructRequest(const std::string& url, Poco::Net::HTTPClientSession*& session, Poco::Net::HTTPResponse& response, 
+	Poco::Net::HTTPRequest Requests::impl::ConstructRequest(const std::string& url, Poco::Net::HTTPClientSession*& session,
 		const std::vector<std::string>& headers, const std::string& request_type)
 	{
 		Poco::URI uri(url);
@@ -53,9 +89,11 @@ namespace API
 		return request;
 	}
 
-	std::string Requests::GetResponse(std::istream& rs, const Poco::Net::HTTPResponse& response)
+	std::string Requests::impl::GetResponse(Poco::Net::HTTPClientSession* session, Poco::Net::HTTPResponse& response)
 	{
 		std::string result = "";
+
+		std::istream& rs = session->receiveResponse(response);
 
 		if (response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK)
 		{
@@ -64,13 +102,13 @@ namespace API
 			result = oss.str();
 		}
 		else
-			result = response.getStatus();
+			result = std::to_string(response.getStatus()) + " " + response.getReason();
 
 		return result;
 	}
 
 	bool Requests::CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-	                                std::vector<std::string> headers)
+		std::vector<std::string> headers)
 	{
 		std::thread([this, url, callback, headers]
 			{
@@ -80,17 +118,17 @@ namespace API
 				try
 				{
 					Poco::Net::HTTPClientSession* session = nullptr;
-					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_GET);
+					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_GET);
 
 					session->sendRequest(request);
-					Result = GetResponse(session->receiveResponse(response), response);
+					Result = pimpl->GetResponse(session, response);
 				}
 				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
 			}
 		).detach();
 
@@ -98,9 +136,9 @@ namespace API
 	}
 
 	bool Requests::CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-	                                 const std::string& post_data, std::vector<std::string> headers, const std::string& content_type)
+		const std::string& post_data, std::vector<std::string> headers)
 	{
-		std::thread([this, url, callback, post_data, headers, content_type]
+		std::thread([this, url, callback, post_data, headers]
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
@@ -108,22 +146,22 @@ namespace API
 				try
 				{
 					Poco::Net::HTTPClientSession* session = nullptr;
-					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_POST);
+					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
-					request.setContentType(content_type);
+					request.setContentType("application/x-www-form-urlencoded");
 					request.setContentLength(post_data.length());
 
 					std::ostream& OutputStream = session->sendRequest(request);
 					OutputStream << post_data;
 
-					Result = GetResponse(session->receiveResponse(response), response);
+					Result = pimpl->GetResponse(session, response);
 				}
 				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
 			}
 		).detach();
 
@@ -131,9 +169,45 @@ namespace API
 	}
 
 	bool Requests::CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-	                                 const std::vector<std::string>& post_ids,
-	                                 const std::vector<std::string>& post_data, std::vector<std::string> headers)
+		const std::string& post_data, const std::string& content_type, std::vector<std::string> headers)
 	{
+		std::thread([this, url, callback, post_data, content_type, headers]
+			{
+				std::string Result = "";
+				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+
+				try
+				{
+					Poco::Net::HTTPClientSession* session = nullptr;
+					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_POST);
+
+					request.setContentType(content_type);
+					request.setContentLength(post_data.length());
+
+					std::ostream& OutputStream = session->sendRequest(request);
+					OutputStream << post_data;
+
+					Result = pimpl->GetResponse(session, response);
+				}
+				catch (const Poco::Exception& exc)
+				{
+					Log::GetLog()->error(exc.displayText());
+				}
+
+				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+			}
+		).detach();
+
+		return true;
+	}
+
+	bool Requests::CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
+		const std::vector<std::string>& post_ids,
+		const std::vector<std::string>& post_data, std::vector<std::string> headers)
+	{
+		if (post_ids.size() != post_data.size())
+			return false;
+
 		std::thread([this, url, callback, post_ids, post_data, headers]
 			{
 				std::string Result = "";
@@ -142,7 +216,7 @@ namespace API
 				try
 				{
 					Poco::Net::HTTPClientSession* session = nullptr;
-					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_POST);
+					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
 					std::string body;
 
@@ -162,14 +236,14 @@ namespace API
 					std::ostream& OutputStream = session->sendRequest(request);
 					OutputStream << body;
 
-					Result = GetResponse(session->receiveResponse(response), response);
+					Result = pimpl->GetResponse(session, response);
 				}
 				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
 			}
 		).detach();
 
@@ -177,7 +251,7 @@ namespace API
 	}
 
 	bool Requests::CreateDeleteRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-	                                   std::vector<std::string> headers)
+		std::vector<std::string> headers)
 	{
 		std::thread([this, url, callback, headers]
 			{
@@ -187,24 +261,24 @@ namespace API
 				try
 				{
 					Poco::Net::HTTPClientSession* session = nullptr;
-					Poco::Net::HTTPRequest& request = ConstructRequest(url, session, response, headers, Poco::Net::HTTPRequest::HTTP_DELETE);
+					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_DELETE);
 
 					session->sendRequest(request);
-					Result = GetResponse(session->receiveResponse(response), response);
+					Result = pimpl->GetResponse(session, response);
 				}
 				catch (const Poco::Exception& exc)
 				{
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
 			}
 		).detach();
 
 		return true;
 	}
 
-	void Requests::Update()
+	void Requests::impl::Update()
 	{
 		if (RequestsVec_.empty())
 			return;

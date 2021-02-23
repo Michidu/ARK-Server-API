@@ -3,17 +3,9 @@
 #include <functional>
 #include <utility>
 
-#include "API/Base.h"
 #include <mutex>
 
-#include <Poco/Net/HTTPSClientSession.h>
-#include <Poco/Net/HTTPRequest.h>
-#include <Poco/Net/HTTPResponse.h>
-#include <Poco/StreamCopier.h>
-#include <Poco/Path.h>
-#include <Poco/URI.h>
-#include <Poco/Exception.h>
-#include <Poco/UTF8String.h>
+#include "API/Base.h"
 
 namespace API
 {
@@ -22,41 +14,75 @@ namespace API
 	public:
 		ARK_API static Requests& Get();
 
+		Requests();
+		~Requests();
+
 		Requests(const Requests&) = delete;
 		Requests(Requests&&) = delete;
 		Requests& operator=(const Requests&) = delete;
 		Requests& operator=(Requests&&) = delete;
 
-		ARK_API bool CreateGetRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-		                              std::vector<std::string> headers = {});
-		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-		                               const std::string& post_data, std::vector<std::string> headers = {}, const std::string& content_type = "text/plain");
-		ARK_API bool CreatePostRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-		                               const std::vector<std::string>& post_ids,
-		                               const std::vector<std::string>& post_data,
-		                               std::vector<std::string> headers = {});
-		ARK_API bool CreateDeleteRequest(const std::string& url, const std::function<void(bool, std::string)>& callback,
-		                                 std::vector<std::string> headers = {});
+		/**
+		 * \brief Creates an async GET Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param included headers
+		 */
+		ARK_API bool CreateGetRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			std::vector<std::string> headers = {});
 
+		/**
+		 * \brief Creates an async POST Request with application/x-www-form-urlencoded content type that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param data to post
+		 * \param included headers
+		 */
+		ARK_API bool CreatePostRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			const std::string& post_data,
+			std::vector<std::string> headers = {});
+
+		/**
+		 * \brief Creates an async POST Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param data to post
+		 * \param content type
+		 * \param included headers
+		 */
+		ARK_API bool CreatePostRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			const std::string& post_data,
+			const std::string& content_type,
+			std::vector<std::string> headers = {});
+
+		/**
+		 * \brief Creates an async POST Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param data key
+		 * \param data value
+		 * \param included headers
+		 */
+		ARK_API bool CreatePostRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			const std::vector<std::string>& post_ids,
+			const std::vector<std::string>& post_data,
+			std::vector<std::string> headers = {});
+
+		/**
+		 * \brief Creates an async DELETE Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param included headers
+		 */
+		ARK_API bool CreateDeleteRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			std::vector<std::string> headers = {});
 	private:
-		struct RequestData
-		{
-			std::function<void(bool, std::string)> callback;
-			bool success;
-			std::string result;
-		};
-
-		std::vector<RequestData> RequestsVec_;
-		std::mutex RequestMutex_;
-
-		Requests();
-		~Requests();
-
-		void WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result);
-		Poco::Net::HTTPRequest ConstructRequest(const std::string& url, Poco::Net::HTTPClientSession*& session, Poco::Net::HTTPResponse& response,
-			const std::vector<std::string>& headers, const std::string& request_type);
-		std::string GetResponse(std::istream& rs, const Poco::Net::HTTPResponse& response);
-		void InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result);
-		void Update();
+		class impl;
+		std::unique_ptr<impl> pimpl;
 	};
 } // namespace API
