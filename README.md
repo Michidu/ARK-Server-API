@@ -8,4 +8,4 @@ http://arkserverapi.com/resources/ark-server-api.4/ <br><br>
 
 ## Compilation
 Requirements:
-* Visual Studio 2017
+* Visual Studio 2019
