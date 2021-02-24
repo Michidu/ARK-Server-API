@@ -230,7 +230,7 @@
       <AdditionalDependencies>Crypt32.lib;Iphlpapi.lib;ws2_32.lib;winmm.lib;wldap32.lib;PocoFoundationmd.lib;PocoNetmd.lib;PocoNetSSLWinmd.lib;PocoUtilmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>move  /Y "$(TargetDir)AtlasApi.lib" "..\out_lib"</Command>
+      <Command>copy  /Y "$(TargetDir)AtlasApi.lib" "..\out_lib"</Command>
       <Message>Move lib</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -260,7 +260,7 @@
     </Link>
     <PostBuildEvent>
       <Message>Move lib</Message>
-      <Command>move  /Y "$(TargetDir)ArkApi.lib" "..\out_lib"</Command>
+      <Command>copy  /Y "$(TargetDir)ArkApi.lib" "..\out_lib"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
