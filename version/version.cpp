@@ -8,8 +8,7 @@
 #include "Core/Public/Tools.h"
 
 #pragma comment(lib, "libMinHook.x64.lib")
-#pragma comment(lib, "libeay32.lib")
-#pragma comment(lib, "ssleay32.lib")
+#pragma comment(lib, "Crypt32.lib")
 #pragma comment(lib, "Iphlpapi.lib")
 
 HINSTANCE m_hinst_dll = nullptr;

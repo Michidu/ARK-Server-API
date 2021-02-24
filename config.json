@@ -3,7 +3,7 @@
     "AutomaticPluginReloading":false,
     "AutomaticPluginReloadSeconds":5,
     "SaveWorldBeforePluginReload":true,
-	"DumpAll": false
+	"DumpAll": true
   },
   "structures":[  
     "UWorld",

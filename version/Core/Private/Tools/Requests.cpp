@@ -6,6 +6,8 @@
 
 #include <sstream>
 
+#include <mutex>
+
 #include <Poco/Net/HTTPSClientSession.h>
 #include <Poco/Net/HTTPRequest.h>
 #include <Poco/Net/HTTPResponse.h>
