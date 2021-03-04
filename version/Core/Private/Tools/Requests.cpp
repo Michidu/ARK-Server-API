@@ -22,8 +22,6 @@ namespace API
 	class Requests::impl
 	{
 	public:
-		void InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result);
-
 		void WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result);
 
 		Poco::Net::HTTPRequest ConstructRequest(const std::string& url, Poco::Net::HTTPClientSession*& session,
@@ -54,8 +52,6 @@ namespace API
 		static Requests instance;
 		return instance;
 	}
-
-	void Requests::impl::InvokeCallback(std::function<void(bool, std::string)> callback, bool success, std::string result) { callback(success, result); }
 
 	void Requests::impl::WriteRequest(std::function<void(bool, std::string)> callback, bool success, std::string result)
 	{
@@ -289,6 +285,6 @@ namespace API
 		std::vector<RequestData> requests_temp = std::move(RequestsVec_);
 		RequestMutex_.unlock();
 
-		for (const auto& request : requests_temp) { InvokeCallback(request.callback, request.success, request.result); }
+		for (const auto& request : requests_temp) { request.callback(request.success, request.result); }
 	}
 } // namespace API
