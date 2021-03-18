@@ -1658,6 +1658,11 @@ struct UPlayer : UObject
 	void SwitchController(APlayerController * PC) { NativeCall<void, APlayerController*>(this, "UPlayer.SwitchController", PC); }
 };
 
+struct UNetConnection : UPlayer
+{
+	FString& ClientGivenIPField() { return *GetNativePointerField<FString*>(this, "UNetConnection.ClientGivenIP"); }
+};
+
 struct APlayerState : AInfo
 {
 	float& ScoreField() { return *GetNativePointerField<float*>(this, "APlayerState.Score"); }

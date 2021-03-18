@@ -202,6 +202,7 @@
     <GenerateManifest>false</GenerateManifest>
     <IncludePath>$(VSInstallDir)\DIA SDK\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\lib;$(VSInstallDir)\DIA SDK\lib;$(LibraryPath)</LibraryPath>
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Atlas|x64'">
     <ClCompile>
@@ -210,9 +211,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING;WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ATLAS_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING;WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ATLAS_GAME;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;..\include\mysql++11;..\include\sqllite;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\Poco;..\include\mysql++11;..\include\sqllite</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
@@ -226,8 +227,12 @@
       <ImportLibrary>$(OutDir)AtlasApi.lib</ImportLibrary>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib  /ignore:4099
  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcurl.lib;Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;Iphlpapi.lib;ws2_32.lib;winmm.lib;wldap32.lib;PocoFoundationmd.lib;PocoNetmd.lib;PocoNetSSLWinmd.lib;PocoUtilmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy  /Y "$(TargetDir)AtlasApi.lib" "..\out_lib"</Command>
+      <Message>Move lib</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Ark|x64'">
     <ClCompile>
@@ -236,9 +241,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ARK_GAME;CURL_STATICLIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ARK_GAME;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\curl;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\Poco</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
@@ -251,8 +256,12 @@
       <ImportLibrary>$(OutDir)ArkApi.lib</ImportLibrary>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib  /ignore:4099
  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>libcurl.lib;Crypt32.lib;ws2_32.lib;winmm.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;Iphlpapi.lib;ws2_32.lib;winmm.lib;wldap32.lib;PocoFoundationmd.lib;PocoNetmd.lib;PocoNetSSLWinmd.lib;PocoUtilmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Message>Move lib</Message>
+      <Command>copy  /Y "$(TargetDir)ArkApi.lib" "..\out_lib"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
