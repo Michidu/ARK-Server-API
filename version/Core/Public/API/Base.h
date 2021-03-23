@@ -624,6 +624,7 @@ struct FOceanHarvestedEntry;
 struct AOceanHarvestManager;
 struct FAttachedInstancedHarvestingElement;
 
+struct UBehaviorTree;
 
 struct BitField
 {

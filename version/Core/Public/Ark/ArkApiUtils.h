@@ -187,8 +187,8 @@ namespace ArkApi
 		{
 			uint64 steam_id = 0;
 
-			auto* playerController = static_cast<AShooterPlayerController*>(controller);
-			if(playerController != nullptr)
+			AShooterPlayerController* playerController = static_cast<AShooterPlayerController*>(controller);
+			if (playerController != nullptr)
 			{
 				steam_id = playerController->GetUniqueNetIdAsUINT64();
 			}
