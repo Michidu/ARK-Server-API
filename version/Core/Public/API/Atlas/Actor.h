@@ -380,7 +380,6 @@ struct FNPCDifficultyLevelRange
 
 struct FNPCSpawnEntry
 {
-	
   FString AnEntryName;
   TArray<TSubclassOf<APrimalDinoCharacter>> NPCsToSpawn;
   TArray<FString> NPCsToSpawnStrings;
@@ -5988,8 +5987,18 @@ struct UPrimalDinoSettings
 	static void StaticRegisterNativesUPrimalDinoSettings() { NativeCall<void>(nullptr, "UPrimalDinoSettings.StaticRegisterNativesUPrimalDinoSettings"); }
 };
 
+struct FWeightedObjectList
+{
+	TArray<float, FDefaultAllocator> Weights;
+	TArray<UObject*, FDefaultAllocator> AssociatedObjects;
+};
+
 struct APrimalDinoCharacter : APrimalCharacter
 {
+	FWeightedObjectList& DeathInventoryTemplatesField() { return *GetNativePointerField<FWeightedObjectList*>(this, "APrimalDinoCharacter.DeathInventoryTemplates"); }
+	TSubclassOf<UPrimalHarvestingComponent>& DeathHarvestingComponentField() { return *GetNativePointerField<TSubclassOf<UPrimalHarvestingComponent>*>(this, "APrimalDinoCharacter.DeathHarvestingComponent"); }
+	UPrimalHarvestingComponent* MyDeathHarvestingComponentField() { return *GetNativePointerField<UPrimalHarvestingComponent**>(this, "APrimalDinoCharacter.MyDeathHarvestingComponentField"); }
+
 	TWeakObjectPtr<AActor>& ForcedMasterTargetField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "APrimalDinoCharacter.ForcedMasterTarget"); }
 	FName& MountCharacterSocketNameField() { return *GetNativePointerField<FName*>(this, "APrimalDinoCharacter.MountCharacterSocketName"); }
 	TWeakObjectPtr<APrimalCharacter>& MountCharacterField() { return *GetNativePointerField<TWeakObjectPtr<APrimalCharacter>*>(this, "APrimalDinoCharacter.MountCharacter"); }
@@ -9420,18 +9429,82 @@ struct FHarvestResourceEntry
 	__int8 bScaleWithDinoBabyAge : 1;
 };
 
+struct  UStaticMesh : UObject
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UStaticMesh.GetPrivateStaticClass", Package); }
+
+	unsigned __int32& bRequiresCPUAccessField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bRequiresCPUAccess"); }
+	unsigned __int32& bRequiresRenderDataOnServerField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bRequiresRenderDataOnServer"); }
+	unsigned __int32& bReallyDoesWantLightMapUVsField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bReallyDoesWantLightMapUVs"); }
+	TArray<UMaterialInterface*, FDefaultAllocator>& MaterialsField() { return *GetNativePointerField<TArray<UMaterialInterface*, FDefaultAllocator>*>(this, "UStaticMesh.Materials"); }
+	unsigned __int32& bIgnoreTriReductionsField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bIgnoreTriReductions"); }
+	int& LightMapResolutionField() { return *GetNativePointerField<int*>(this, "UStaticMesh.LightMapResolution"); }
+	int& LightMapCoordinateIndexField() { return *GetNativePointerField<int*>(this, "UStaticMesh.LightMapCoordinateIndex"); }
+	unsigned __int32& UseFullPrecisionUVs_DEPRECATEDField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.UseFullPrecisionUVs_DEPRECATED"); }
+	unsigned __int32& bUseMaximumStreamingTexelRatioField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bUseMaximumStreamingTexelRatio"); }
+	unsigned __int32& bStripComplexCollisionForConsole_DEPRECATEDField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bStripComplexCollisionForConsole_DEPRECATED"); }
+	unsigned __int32& bHasNavigationDataField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bHasNavigationData"); }
+	unsigned __int32& bUseDistanceFieldTextureField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bUseDistanceFieldTexture"); }
+	unsigned __int32& bOnlyLoadDistanceFieldsOnInteriorLightingMapsField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bOnlyLoadDistanceFieldsOnInteriorLightingMaps"); }
+	unsigned __int32& IgnoreDistanceFieldChecksForUnderwaterPixelDetectionField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.IgnoreDistanceFieldChecksForUnderwaterPixelDetection"); }
+	unsigned __int32& OptOutFromDistanceFieldShadowsField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.OptOutFromDistanceFieldShadows"); }
+	unsigned __int32& bForceAllowMeshStreamingField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bForceAllowMeshStreaming"); }
+	unsigned __int32& bAllowDistanceFieldOnLowEndField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bAllowDistanceFieldOnLowEnd"); }
+	unsigned __int32& bHighQualityDistanceFieldField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bHighQualityDistanceField"); }
+	unsigned __int32& bForceUseDistanceFieldResolutionField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bForceUseDistanceFieldResolution"); }
+	TEnumAsByte<enum EDistanceFieldTwoSidedOverride>& DistanceFieldTwoSidedOverrideField() { return *GetNativePointerField<TEnumAsByte<enum EDistanceFieldTwoSidedOverride>*>(this, "UStaticMesh.DistanceFieldTwoSidedOverride"); }
+	unsigned __int32& bAllowLODStreamingTransientField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bAllowLODStreamingTransient"); }
+	unsigned __int32& bCastFarShadowField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bCastFarShadow"); }
+	unsigned __int32& bAllowLODStreamingField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bAllowLODStreaming"); }
+	unsigned __int32& bStructureStaticMeshOverride_LocationField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bStructureStaticMeshOverride_Location"); }
+	unsigned __int32& bStructureStaticMeshOverride_ScaleField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bStructureStaticMeshOverride_Scale"); }
+	FVector& StructureStaticMeshOverride_LocationField() { return *GetNativePointerField<FVector*>(this, "UStaticMesh.StructureStaticMeshOverride_Location"); }
+	FVector& StructureStaticMeshOverride_ScaleField() { return *GetNativePointerField<FVector*>(this, "UStaticMesh.StructureStaticMeshOverride_Scale"); }
+	FVector& StructureStaticMeshFlipped_LocationField() { return *GetNativePointerField<FVector*>(this, "UStaticMesh.StructureStaticMeshFlipped_Location"); }
+	float& DistanceFieldRuntimeQualityField() { return *GetNativePointerField<float*>(this, "UStaticMesh.DistanceFieldRuntimeQuality"); }
+	unsigned __int32& bForceForStructureDestroyedMeshField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMesh.bForceForStructureDestroyedMesh"); }
+	int& CurrentStreamedInSizeField() { return *GetNativePointerField<int*>(this, "UStaticMesh.CurrentStreamedInSize"); }
+	bool& bStreamInStateField() { return *GetNativePointerField<bool*>(this, "UStaticMesh.bStreamInState"); }
+	bool& bStreamInRequestField() { return *GetNativePointerField<bool*>(this, "UStaticMesh.bStreamInRequest"); }
+	unsigned __int64& RequestLoadField() { return *GetNativePointerField<unsigned __int64*>(this, "UStaticMesh.RequestLoad"); }
+	long double& LastStreamChangeCallField() { return *GetNativePointerField<long double*>(this, "UStaticMesh.LastStreamChangeCall"); }
+	bool& bBuiltSocketMapField() { return *GetNativePointerField<bool*>(this, "UStaticMesh.bBuiltSocketMap"); }
+	float& StreamingDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "UStaticMesh.StreamingDistanceMultiplier"); }
+	float& LpvBiasMultiplierField() { return *GetNativePointerField<float*>(this, "UStaticMesh.LpvBiasMultiplier"); }
+	FString& HighResSourceMeshNameField() { return *GetNativePointerField<FString*>(this, "UStaticMesh.HighResSourceMeshName"); }
+	unsigned int& HighResSourceMeshCRCField() { return *GetNativePointerField<unsigned int*>(this, "UStaticMesh.HighResSourceMeshCRC"); }
+	FGuid& LightingGuidField() { return *GetNativePointerField<FGuid*>(this, "UStaticMesh.LightingGuid"); }
+	long double& LastRenderTimeField() { return *GetNativePointerField<long double*>(this, "UStaticMesh.LastRenderTime"); }
+	float& ClosestDistanceField() { return *GetNativePointerField<float*>(this, "UStaticMesh.ClosestDistance"); }
+	unsigned int& StreamDistanceFrameField() { return *GetNativePointerField<unsigned int*>(this, "UStaticMesh.StreamDistanceFrame"); }
+	int& ElementToIgnoreForTexFactorField() { return *GetNativePointerField<int*>(this, "UStaticMesh.ElementToIgnoreForTexFactor"); }
+	FName& CustomTagField() { return *GetNativePointerField<FName*>(this, "UStaticMesh.CustomTag"); }
+};
 
 struct UMeshComponent : UPrimitiveComponent
 {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UMeshComponent.GetPrivateStaticClass", Package); }
-	TArray<UMaterialInterface*, FDefaultAllocator> Materials;
-	TArray<UMaterialInterface*, FDefaultAllocator> DefaultMaterialsOverride;
-	TSubclassOf<AActor> DamageFXActorToSpawn;
+	TArray<UMaterialInterface*>& MaterialsField() { return *GetNativePointerField<TArray<UMaterialInterface*>*>(this, "UMeshComponent.Materials"); }
+	TArray<UMaterialInterface*>& DefaultMaterialsOverrideField() { return *GetNativePointerField<TArray<UMaterialInterface*>*>(this, "UMeshComponent.DefaultMaterialsOverride"); }
+	TSubclassOf<AActor>& DamageFXActorToSpawnField() { return *GetNativePointerField<TSubclassOf<AActor>*>(this, "UMeshComponent.DamageFXActorToSpawn"); }
 };
 
 struct UStaticMeshComponent : UMeshComponent
 {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UStaticMeshComponent.GetPrivateStaticClass", Package); }
+	UStaticMesh* StaticMeshField() { return *GetNativePointerField<UStaticMesh**>(this, "UStaticMeshComponent.StaticMesh"); }
+	bool& bOverrideWireframeColorField() { return *GetNativePointerField<bool*>(this, "UStaticMeshComponent.bOverrideWireframeColor"); }
+	FColor& WireframeColorOverrideField() { return *GetNativePointerField<FColor*>(this, "UStaticMeshComponent.WireframeColorOverride"); }
+	unsigned __int32& bIgnoreInstanceForTextureStreamingField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMeshComponent.bIgnoreInstanceForTextureStreaming"); }
+	unsigned __int32& bOverrideLightMapResField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMeshComponent.bOverrideLightMapRes"); }
+	unsigned __int32& bRenderLandscapeInfoField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMeshComponent.bRenderLandscapeInfo"); }
+	unsigned __int32& bForcedAllowInstancedVertexColorField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMeshComponent.bForcedAllowInstancedVertexColor"); }
+	int& LandscapeInfoMaskField() { return *GetNativePointerField<int*>(this, "UStaticMeshComponent.LandscapeInfoMask"); }
+	int& OverriddenLightMapResField() { return *GetNativePointerField<int*>(this, "UStaticMeshComponent.OverriddenLightMapRes"); }
+	float& StreamingDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "UStaticMeshComponent.StreamingDistanceMultiplier"); }
+	int& SubDivisionStepSizeField() { return *GetNativePointerField<int*>(this, "UStaticMeshComponent.SubDivisionStepSize"); }
+	unsigned __int32& bUseSubDivisionsField() { return *GetNativePointerField<unsigned __int32*>(this, "UStaticMeshComponent.bUseSubDivisions"); }
+	TArray<FGuid>& IrrelevantLightsField() { return *GetNativePointerField<TArray<FGuid>*>(this, "UStaticMeshComponent.IrrelevantLights"); }
 };
 
 
@@ -9486,34 +9559,106 @@ struct  FComponentAttachmentEntry
 struct  UInstancedStaticMeshComponent : UStaticMeshComponent
 {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UInstancedStaticMeshComponent.GetPrivateStaticClass", Package); }
-	UFoliageType* FoliageTypeReference() { return *GetNativePointerField<UFoliageType * *>(this, "UInstancedStaticMeshComponent.FoliageTypeReference"); }
-	TSubclassOf<UActorComponent>& AttachedComponentClass() { return *GetNativePointerField<TSubclassOf<UActorComponent>*>(this, "UInstancedStaticMeshComponent.AttachedComponentClass"); }
-
 	__int64 GetInstanceCount() { return NativeCall<__int64>(this, "UInstancedStaticMeshComponent.GetInstanceCount"); }
-	//FVector* GetCustomLocation(FVector* result) { return NativeCall<FVector*, FVector*>(this, "USceneComponent.GetCustomLocation", result); }
 	FVector* GetPositionOfInstance(FVector *result, int index) { return NativeCall<FVector*, FVector*, int>(this, "UInstancedStaticMeshComponent.GetPositionOfInstance", result, index); }
-	
-	TArray<FBodyInstance*, FDefaultAllocator>& InstanceBodies() { return *GetNativePointerField<TArray<FBodyInstance*, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.InstanceBodies"); }
-	TArray<UActorComponent*, FDefaultAllocator>& ReferencedAttachedComponentObjects() { return *GetNativePointerField<TArray<UActorComponent*, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.ReferencedAttachedComponentObjects"); }
-	TIndirectArray<FAttachedInstanced, FDefaultAllocator>& InstanceAttachedComponents() { return *GetNativePointerField<TIndirectArray<FAttachedInstanced, FDefaultAllocator>*>(this, "UInstancedStaticMeshComponent.InstanceAttachedComponents"); }
+
+	int& InstancingRandomSeedField() { return *GetNativePointerField<  int*>(this, "UInstancedStaticMeshComponent.InstancingRandomSeed"); }
+	int& InstanceStartCullDistanceField() { return *GetNativePointerField<  int*>(this, "UInstancedStaticMeshComponent.InstanceStartCullDistance"); }
+	int& InstanceEndCullDistanceField() { return *GetNativePointerField<  int*>(this, "UInstancedStaticMeshComponent.InstanceEndCullDistance"); }
+	TArray<int>& InstanceReorderTableField() { return *GetNativePointerField<  TArray<int>*>(this, "UInstancedStaticMeshComponent.InstanceReorderTable"); }
+	TArray<int>& InstanceReorderTableBulkField() { return *GetNativePointerField<  TArray<int>*>(this, "UInstancedStaticMeshComponent.InstanceReorderTableBulk"); }
+	TArray<int>& RemovedInstancesField() { return *GetNativePointerField<  TArray<int>*>(this, "UInstancedStaticMeshComponent.RemovedInstances"); }
+	float& LargestSingleBoundsField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.LargestSingleBounds"); }
+	TSubclassOf<UActorComponent>& AttachedComponentClassField() { return *GetNativePointerField<  TSubclassOf<UActorComponent>*>(this, "UInstancedStaticMeshComponent.AttachedComponentClass"); }
+	float& OverrideWalkableFloorZField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.OverrideWalkableFloorZ"); }
+	float& PlayerOverrideWalkableFloorZField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.PlayerOverrideWalkableFloorZ"); }
+	unsigned __int32& bReplicateThisComponentField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bReplicateThisComponent"); }
+	unsigned __int32& bIsFallingTreeField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bIsFallingTree"); }
+	unsigned __int32& bInstanceRequiresPhysXCollisionField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bInstanceRequiresPhysXCollision"); }
+	unsigned __int32& bIgnoreVisibilityCheckField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bIgnoreVisibilityCheck"); }
+	USoundBase* DestroyedSoundField() { return *GetNativePointerField<USoundBase**>(this, "UInstancedStaticMeshComponent.DestroyedSound"); }
+	unsigned __int32& bPostNetReceiveHideField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bPostNetReceiveHide"); }
+	unsigned __int32& bDidFirstPostNetReceiveField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bDidFirstPostNetReceive"); }
+	unsigned __int32& bFromNonCriticalLevelField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bFromNonCriticalLevel"); }
+	unsigned __int32& bTickOnlyCheckFoliageClippingField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bTickOnlyCheckFoliageClipping"); }
+	unsigned __int32& bWasBlockLoadField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bWasBlockLoad"); }
+	unsigned __int32& bDontScaleAttachedComponentField() { return *GetNativePointerField<  unsigned __int32*>(this, "UInstancedStaticMeshComponent.bDontScaleAttachedComponent"); }
+	float& ScaleMaxXField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.ScaleMaxX"); }
+	float& ScaleMinXField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.ScaleMinX"); }
+	float& AttachedComponentScaleFactorField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.AttachedComponentScaleFactor"); }
+	float& MaxScaleForAttachedComponentField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.MaxScaleForAttachedComponent"); }
+	float& MinScaleForAttachedComponentField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.MinScaleForAttachedComponent"); }
+	UFoliageType* FoliageTypeReferenceField() { return *GetNativePointerField<UFoliageType**>(this, "UInstancedStaticMeshComponent.FoliageTypeReference"); }
+	float& MeshUnscaledBoundsField() { return *GetNativePointerField<  float*>(this, "UInstancedStaticMeshComponent.MeshUnscaledBounds"); }
+	TArray<UMaterialInterface*>& OverrideDestructionMaterialsField() { return *GetNativePointerField<  TArray<UMaterialInterface*>*>(this, "UInstancedStaticMeshComponent.OverrideDestructionMaterials"); }
+	TArray<FBodyInstance*>& InstanceBodiesField() { return *GetNativePointerField<  TArray<FBodyInstance*>*>(this, "UInstancedStaticMeshComponent.InstanceBodies"); }
+	TIndirectArray<FAttachedInstanced>& InstanceAttachedComponentsField() { return *GetNativePointerField<  TIndirectArray<FAttachedInstanced>*>(this, "UInstancedStaticMeshComponent.InstanceAttachedComponents"); }
+	TArray<UActorComponent*>& ReferencedAttachedComponentObjectsField() { return *GetNativePointerField<  TArray<UActorComponent*>*>(this, "UInstancedStaticMeshComponent.ReferencedAttachedComponentObjects"); }
+	int& CurrentAttachedIndexField() { return *GetNativePointerField<  int*>(this, "UInstancedStaticMeshComponent.CurrentAttachedIndex"); }
+	TArray<unsigned int>& InstancesVisibilityField() { return *GetNativePointerField<  TArray<unsigned int>*>(this, "UInstancedStaticMeshComponent.InstancesVisibility"); }
+
+
 };
 
 struct UPrimalHarvestingComponent : UActorComponent {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalHarvestingComponent.GetPrivateStaticClass", Package); }
 	static void StaticRegisterNativesUPrimalHarvestingComponent() { NativeCall<void>(nullptr, "UPrimalHarvestingComponent.StaticRegisterNativesUPrimalHarvestingComponent"); }
 	bool TemplateCheckForHarvestRepopulation(bool bForceReinit, UWorld* world, FVector* where) { NativeCall<bool, UWorld*, FVector*>(this, "UPrimalHarvestingComponent.TemplateCheckForHarvestRepopulation", world, where); }
+	TArray<FHarvestResourceEntry>& HarvestResourceEntriesField() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.HarvestResourceEntries"); }
+	TArray<FHarvestResourceEntry>& BaseHarvestResourceEntriesField() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.BaseHarvestResourceEntries"); }
+	TArray<FDamageHarvestingEntry>& HarvestDamageTypeEntriesField() { return *GetNativePointerField<TArray<FDamageHarvestingEntry>*>(this, "UPrimalHarvestingComponent.HarvestDamageTypeEntries"); }
+	float& MaxHarvestHealthField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.MaxHarvestHealth"); }
+	float& ExtraHarvestingXPMultiplierField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.ExtraHarvestingXPMultiplier"); }
+	float& HarvestHealthGiveResourceIntervalField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.HarvestHealthGiveResourceInterval"); }
+	float& CurrentHarvestHealthField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.CurrentHarvestHealth"); }
+	bool& bIsUnharvestableField() { return *GetNativePointerField<bool*>(this, "UPrimalHarvestingComponent.bIsUnharvestable"); }
+	unsigned __int32& bSetOwnerHealthToHarvestHealthField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bSetOwnerHealthToHarvestHealth"); }
+	unsigned __int32& bUsableHarvestingField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bUsableHarvesting"); }
+	unsigned __int32& bAllowForcedRepopulationField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bAllowForcedRepopulation"); }
+	unsigned __int32& bAllowHarvestHealthScalingField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bAllowHarvestHealthScaling"); }
+	unsigned __int32& bUsableAllowHarvestHealthScalingField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bUsableAllowHarvestHealthScaling"); }
+	unsigned __int32& bNonBlockingUsableHarvestingField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bNonBlockingUsableHarvesting"); }
+	unsigned __int32& bClampResourceHarvestDamageField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bClampResourceHarvestDamage"); }
+	unsigned __int32& bIsDefaultHarvestingComponentField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bIsDefaultHarvestingComponent"); }
+	unsigned __int32& bIsSingleUnitHarvestField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bIsSingleUnitHarvest"); }
+	unsigned __int32& bUseBPAdjustHarvestDamageField() { return *GetNativePointerField<unsigned __int32*>(this, "UPrimalHarvestingComponent.bUseBPAdjustHarvestDamage"); }
+	float& UseHarvestDamageAmountField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.UseHarvestDamageAmount"); }
+	TSubclassOf<UDamageType>& UseHarvestDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "UPrimalHarvestingComponent.UseHarvestDamageType"); }
+	TSubclassOf<UDamageType>& HarvestToolDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "UPrimalHarvestingComponent.HarvestToolDamageType"); }
+	TSubclassOf<UDamageType>& SickleDamageTypeField() { return *GetNativePointerField<TSubclassOf<UDamageType>*>(this, "UPrimalHarvestingComponent.SickleDamageType"); }
+	FString& DescriptiveNameField() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.DescriptiveName"); }
+	FString& UseHarvestStringField() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UseHarvestString"); }
+	FString& UnequipWeaponToUseHarvestStringField() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UnequipWeaponToUseHarvestString"); }
+	float& UsableHarvestSphereRadiusField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.UsableHarvestSphereRadius"); }
+	bool& ShouldReplenishField() { return *GetNativePointerField<bool*>(this, "UPrimalHarvestingComponent.ShouldReplenish"); }
+	float& MinPlayerDistanceReplenishingField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.MinPlayerDistanceReplenishing"); }
+	float& MinStructureDistanceReplenishingField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.MinStructureDistanceReplenishing"); }
+	float& MinNonCoreStructureDistanceReplenishingField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.MinNonCoreStructureDistanceReplenishing"); }
+	float& BaseMinTimeAfterDepletionReplenishingField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.BaseMinTimeAfterDepletionReplenishing"); }
+	float& BaseMaxTimeAfterDepletionReplenishingField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.BaseMaxTimeAfterDepletionReplenishing"); }
+	float& ExhaustedDepletionTimeIntervalField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.ExhaustedDepletionTimeInterval"); }
+	float& ExhaustedDepletionPowerField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.ExhaustedDepletionPower"); }
+	float& ExhaustedDepletionEffectScaleField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.ExhaustedDepletionEffectScale"); }
+	float& ReduceExhaustedDepletionSpeedField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.ReduceExhaustedDepletionSpeed"); }
+	float& AutoReplenishIntervalField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.AutoReplenishInterval"); }
+	float& AutoReplenishPercentField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.AutoReplenishPercent"); }
+	float& DamageInstigatorAmountField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.DamageInstigatorAmount"); }
+	int& GiveItemEntriesMinField() { return *GetNativePointerField<int*>(this, "UPrimalHarvestingComponent.GiveItemEntriesMin"); }
+	int& GiveItemEntriesMaxField() { return *GetNativePointerField<int*>(this, "UPrimalHarvestingComponent.GiveItemEntriesMax"); }
+	float& TamedDinoHarvestGiveHealthMultiplierField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.TamedDinoHarvestGiveHealthMultiplier"); }
+	FString& HarvestableFriendlyNameField() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.HarvestableFriendlyName"); }
+	FString& UIStringIMeleeHitToHarvestField() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UIStringIMeleeHitToHarvest"); }
+	FString& UIStringHarvestRequiresToolField() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UIStringHarvestRequiresTool"); }
+	FString& UIStringCantHarvestUnderwaterField() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UIStringCantHarvestUnderwater"); }
+	float& DinoHarvestGiveHealthAmountField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.DinoHarvestGiveHealthAmount"); }
+	float& DinoHarvestGiveHealthSpeedField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.DinoHarvestGiveHealthSpeed"); }
+	int& DinoHarvestGiveHealthDescriptionIndexField() { return *GetNativePointerField<int*>(this, "UPrimalHarvestingComponent.DinoHarvestGiveHealthDescriptionIndex"); }
+	FAttachedInstancedHarvestingElement* ActiveInstancedElementField() { return *GetNativePointerField<FAttachedInstancedHarvestingElement**>(this, "UPrimalHarvestingComponent.ActiveInstancedElement"); }
+	TArray<TSubclassOf<UDamageType>>& ForceAllowMeleeHarvestingOverridesField() { return *GetNativePointerField<TArray<TSubclassOf<UDamageType>>*>(this, "UPrimalHarvestingComponent.ForceAllowMeleeHarvestingOverrides"); }
+	float& HarvestingPriorityField() { return *GetNativePointerField<float*>(this, "UPrimalHarvestingComponent.HarvestingPriority"); }
+	TArray<FComponentAttachmentEntry>& AdditionalComponentAttachmentsField() { return *GetNativePointerField<TArray<FComponentAttachmentEntry>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachments"); }
+	TArray<FComponentAttachmentEntry>& AdditionalComponentAttachmentsDedicatedField() { return *GetNativePointerField<TArray<FComponentAttachmentEntry>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachmentsDedicated"); }
 
-	TArray < FHarvestResourceEntry, FDefaultAllocator>& HarvestResourceEntries() { return *GetNativePointerField< TArray<FHarvestResourceEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.HarvestResourceEntries"); }
-	TArray < FHarvestResourceEntry, FDefaultAllocator>& BaseHarvestResourceEntries() { return *GetNativePointerField< TArray<FHarvestResourceEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.BaseHarvestResourceEntries"); }
-
-	FString& DescriptiveName() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.DescriptiveName"); }
-	FString& UseHarvestString() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UseHarvestString"); }
-	FString& UnequipWeaponToUseHarvestString() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UnequipWeaponToUseHarvestString"); }
-	FString& HarvestableFriendlyName() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.HarvestableFriendlyName"); }
-	FAttachedInstancedHarvestingElement* ActiveInstancedElement() { return *GetNativePointerField<FAttachedInstancedHarvestingElement * *>(this, "UPrimalHarvestingComponent.ActiveInstancedElement"); }
-
-	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachments() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachments"); }
-	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachmentsDedicated() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachmentsDedicated"); }
 };
 
 struct UHierarchicalInstancedStaticMeshComponent : UInstancedStaticMeshComponent
@@ -9591,6 +9736,19 @@ struct ATreasureSpawnVolume : AVolume
 struct ABiomeZoneVolume : AVolume
 {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ABiomeZoneVolume.GetPrivateStaticClass", Package); }
+	FString& BiomeZoneName() { return *GetNativePointerField<FString*>(this, "ABiomeZoneVolume.BiomeZoneName"); }
+	FString& BiomeZoneNameAltDistanceName() { return *GetNativePointerField<FString*>(this, "ABiomeZoneVolume.BiomeZoneNameAltDistanceName"); }
+
+	TArray<FName>& BiomeZoneTags() { return *GetNativePointerField<TArray<FName>*>(this, "ABiomeZoneVolume.BiomeZoneTags"); }
+	float& AbsoluteMaxTemperature() { return *GetNativePointerField<float*>(this, "ABiomeZoneVolume.AbsoluteMaxTemperature"); }
+	float& AbsoluteMinTemperature() { return *GetNativePointerField<float*>(this, "ABiomeZoneVolume.AbsoluteMinTemperature"); }
+
+	float& FinalTemperatureMultiplier() { return *GetNativePointerField<float*>(this, "ABiomeZoneVolume.FinalTemperatureMultiplier"); }
+	float& FinalTemperatureExponent() { return *GetNativePointerField<float*>(this, "ABiomeZoneVolume.FinalTemperatureExponent"); }
+	float& FinalTemperatureAddition() { return *GetNativePointerField<float*>(this, "ABiomeZoneVolume.FinalTemperatureAddition"); }
+
+	FString* GetBiomeZoneName(FString* result, APrimalCharacter* ForCharacter) { return NativeCall<FString*, FString*, APrimalCharacter*>(this, "ABiomeZoneVolume.GetBiomeZoneName", result, ForCharacter); }
+
 };
 
 struct FFoliageAttachmentOverride
@@ -9688,7 +9846,10 @@ struct  ASupplyCrateSpawningVolume : AVolume
 {
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ASupplyCrateSpawningVolume.GetPrivateStaticClass", Package); }
 	void SpawnCratesFromAllPoints() { return NativeCall<void>(this, "ASupplyCrateSpawningVolume.SpawnCratesFromAllPoints"); }
-	
+	void CheckCrateSpawn() { return NativeCall<void>(this, "ASupplyCrateSpawningVolume.CheckCrateSpawn"); }
+	void BeginPlay(float a2) { return NativeCall<void,float>(this, "ASupplyCrateSpawningVolume.BeginPlay", a2); }
+
+
 	TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>& LinkedSupplyCrateEntriesField() { return *GetNativePointerField<  TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.LinkedSupplyCrateEntries"); }
 	TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>& OriginalSupplyCrateEntriesField() { return *GetNativePointerField<  TArray<FSupplyCrateSpawnEntry, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.OriginalSupplyCrateEntries"); }
 	TArray<FSupplyCrateSpawnPointEntry, FDefaultAllocator>& LinkedSpawnPointEntriesField() { return *GetNativePointerField<  TArray<FSupplyCrateSpawnPointEntry, FDefaultAllocator>*>(this, "ASupplyCrateSpawningVolume.LinkedSpawnPointEntries"); }
@@ -9750,5 +9911,92 @@ struct ANPCZoneManager : AInfo
 	TArray<FNPCSpawnLimit>& NPCSpawnLimitsField() { return *GetNativePointerField<TArray<FNPCSpawnLimit>*>(this, "ANPCZoneManager.NPCSpawnLimits"); }
 	static void StaticRegisterNativesANPCZoneManager() { NativeCall<void>(nullptr, "ANPCZoneManager.StaticRegisterNativesANPCZoneManager"); }
 	UField* GetPrivateStaticClass() { return NativeCall<UField*>(this, "ANPCZoneManager.GetPrivateStaticClass"); }
+
+	bool& bEnabledField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bEnabled"); }
+	bool& bForceInEditorField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bForceInEditor"); }
+	bool& bNewAbsoluteForceInEditorField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bNewAbsoluteForceInEditor"); }
+	bool& bNeverSpawnInWaterField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bNeverSpawnInWater"); }
+	bool& bOnlySpawnInWaterField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bOnlySpawnInWater"); }
+	bool& bSpawnOnOceanField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bSpawnOnOcean"); }
+	bool& bAllowLandSpawnOnNonIKBlockerField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bAllowLandSpawnOnNonIKBlocker"); }
+	float& SpawnPointsExtentsOffsetFromSeamlessGridSizeField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SpawnPointsExtentsOffsetFromSeamlessGridSize"); }
+	float& SpawnMinDistanceFromShoreField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SpawnMinDistanceFromShore"); }
+	float& ConsoleDesiredNumberOfNPCMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.ConsoleDesiredNumberOfNPCMultiplier"); }
+	TArray<FName>& OnlyAllowSpawningOnActorTagsField() { return *GetNativePointerField<TArray<FName>*>(this, "ANPCZoneManager.OnlyAllowSpawningOnActorTags"); }
+	bool& bAllowExtentTestField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bAllowExtentTest"); }
+	bool& bOnlyCheckMySublevelWaterField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bOnlyCheckMySublevelWater"); }
+	int& MinDesiredNumberOfNPCField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.MinDesiredNumberOfNPC"); }
+	int& SP_MinDesiredNumberOfNPCField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.SP_MinDesiredNumberOfNPC"); }
+	float& Override_SP_StasisAutoDestoryIntervalField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.Override_SP_StasisAutoDestoryInterval"); }
+	int& AbsoluteMaxNumberOfNPCField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.AbsoluteMaxNumberOfNPC"); }
+	int& ExtraNPCLevelOffsetField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.ExtraNPCLevelOffset"); }
+	float& DesiredNumberOfNPCMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.DesiredNumberOfNPCMultiplier"); }
+	float& TheSpawnPointMinimumFloorNormalField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheSpawnPointMinimumFloorNormal"); }
+	float& TheNewNewEditorNumberOfNPCMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheNewNewEditorNumberOfNPCMultiplier"); }
+	float& KillOffOverweightNPCStasisTimeField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.KillOffOverweightNPCStasisTime"); }
+	float& TheMaximumWorldTimeForFullIncreaseField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheMaximumWorldTimeForFullIncrease"); }
+	float& TheMinimumPlayerDistanceFromSpawnPointField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheMinimumPlayerDistanceFromSpawnPoint"); }
+	float& TheIncreaseNPCIntervalField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheIncreaseNPCInterval"); }
+	float& SP_TheIncreaseNPCIntervalField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SP_TheIncreaseNPCInterval"); }
+	float& SP_TheMaximumWorldTimeForFullIncreaseField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SP_TheMaximumWorldTimeForFullIncrease"); }
+	float& TheIncreaseNPCIntervalMaxField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheIncreaseNPCIntervalMax"); }
+	float& TheDecreaseNPCIntervalField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheDecreaseNPCInterval"); }
+	float& NPCAIRangeMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.NPCAIRangeMultiplier"); }
+	bool& bNPCDontWanderField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bNPCDontWander"); }
+	bool& bForcePreventDinoSeamlessTravelField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bForcePreventDinoSeamlessTravel"); }
+	bool& bNPCWildIgnoreWildField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bNPCWildIgnoreWild"); }
+	bool& bNPCNoKillXPField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bNPCNoKillXP"); }
+	bool& bNPCPreventSavingField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bNPCPreventSaving"); }
+	bool& bForceUntameableField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bForceUntameable"); }
+	bool& bUsesManualSpawningField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bUsesManualSpawning"); }
+	bool& bIgnoreVolumeEcompassingCheckField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bIgnoreVolumeEcompassingCheck"); }
+	bool& bSpawnAllNPCEntriesField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bSpawnAllNPCEntries"); }
+	bool& bOnlyUseInSingleplayerField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bOnlyUseInSingleplayer"); }
+	bool& bSinglePlayerSpawnAroundPlayerViewField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bSinglePlayerSpawnAroundPlayerView"); }
+	float& SinglePlayerSpawnAroundPlayerViewRadiusMinField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SinglePlayerSpawnAroundPlayerViewRadiusMin"); }
+	float& SinglePlayerSpawnAroundPlayerViewRadiusMaxField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SinglePlayerSpawnAroundPlayerViewRadiusMax"); }
+	bool& bOnlyUseInDedicatedServerField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bOnlyUseInDedicatedServer"); }
+	float& NPCWanderRadiusMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.NPCWanderRadiusMultiplier"); }
+	int& MaxNumberSpawnZoneRandomPointChecksField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.MaxNumberSpawnZoneRandomPointChecks"); }
+	int& TheNPCFullIncreaseMaximumIterationsField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.TheNPCFullIncreaseMaximumIterations"); }
+	float& TheMinimumTamedDinoDistanceFromSpawnPointField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheMinimumTamedDinoDistanceFromSpawnPoint"); }
+	float& TheMinimumStructureDistanceFromSpawnPointField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheMinimumStructureDistanceFromSpawnPoint"); }
+	float& NPCLerpToMaxRandomBaseLevelField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.NPCLerpToMaxRandomBaseLevel"); }
+	float& ManualSpawningNPCLerpToMaxRandomBaseLevelField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.ManualSpawningNPCLerpToMaxRandomBaseLevel"); }
+	float& SpawnOnOceanZOffsetField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SpawnOnOceanZOffset"); }
+	int& MaximumNumberNearbyCoreStructuresField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.MaximumNumberNearbyCoreStructures"); }
+	int& AbsoluteMaximumNumberNearbyCoreStructuresField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.AbsoluteMaximumNumberNearbyCoreStructures"); }
+	bool& bAutoKillUseGlobalStasisArrayField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bAutoKillUseGlobalStasisArray"); }
+	bool& bTraceForSpawnAgainstWaterField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bTraceForSpawnAgainstWater"); }
+	bool& bNPCForcePreventExitingWaterField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bNPCForcePreventExitingWater"); }
+	bool& bDisableOnSeamlessHomeServersField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bDisableOnSeamlessHomeServers"); }
+	bool& bUseSpawnPointOverrideRotationField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bUseSpawnPointOverrideRotation"); }
+	bool& bWasOriginallyEnabledField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bWasOriginallyEnabled"); }
+	float& NPCLevelMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.NPCLevelMultiplier"); }
+	int& ForceOverrideNPCBaseLevelField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.ForceOverrideNPCBaseLevel"); }
+	float& IncreaseNPCIntervalMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.IncreaseNPCIntervalMultiplier"); }
+	int& UseDesiredNumberOfNPCField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.UseDesiredNumberOfNPC"); }
+	int& NumNPCSpawnedField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.NumNPCSpawned"); }
+	int& NumSpawnFailuresField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.NumSpawnFailures"); }
+	bool& bForceRespawnDinosField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bForceRespawnDinos"); }
+	bool& bTriedFullIncreaseField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bTriedFullIncrease"); }
+	bool& bSpawnsWaterDinosField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bSpawnsWaterDinos"); }
+	bool& bSpawnsAmphibiousDinosField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bSpawnsAmphibiousDinos"); }
+	float& TheNextIncreaseNPCIntervalField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.TheNextIncreaseNPCInterval"); }
+	float& CloseStructureDistanceFromSpawnPointField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.CloseStructureDistanceFromSpawnPoint"); }
+	FName& NonDedicatedFreezeWildDinoPhysicsIfLevelUnloadedField() { return *GetNativePointerField<FName*>(this, "ANPCZoneManager.NonDedicatedFreezeWildDinoPhysicsIfLevelUnloaded"); }
+	TArray<FName>& NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloadedField() { return *GetNativePointerField<TArray<FName>*>(this, "ANPCZoneManager.NonDedicatedFreezeWildDinoPhysicsIfLevelsUnloaded"); }
+	float& MinimumManualSpawnIntervalField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.MinimumManualSpawnInterval"); }
+	bool& bIgnoreNPCRandomClassReplacementsField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bIgnoreNPCRandomClassReplacements"); }
+	bool& bDirectLinkDinosWithZoneManagerField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bDirectLinkDinosWithZoneManager"); }
+	bool& bUseSeamlessServerNPCShipSpawnEntriesOverrideField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bUseSeamlessServerNPCShipSpawnEntriesOverride"); }
+	bool& bUseSeamlessServerOceanEpicSpawnEntriesOverrideField() { return *GetNativePointerField<bool*>(this, "ANPCZoneManager.bUseSeamlessServerOceanEpicSpawnEntriesOverride"); }
+	float& NPCZoneLinkedDinoWeightsField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.NPCZoneLinkedDinoWeights"); }
+	int& TheNPCDynamicIncreaseMaximumIterationsField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.TheNPCDynamicIncreaseMaximumIterations"); }
+	float& IslandFinalNPCLevelMultiplierField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.IslandFinalNPCLevelMultiplier"); }
+	int& IslandFinalNPCLevelOffsetField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.IslandFinalNPCLevelOffset"); }
+	float& SingleplayerDeleteCreaturesAwayFromViewDistField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SingleplayerDeleteCreaturesAwayFromViewDist"); }
+	float& SingleplayerDeleteCreaturesAwayFromViewTimeOutField() { return *GetNativePointerField<float*>(this, "ANPCZoneManager.SingleplayerDeleteCreaturesAwayFromViewTimeOut"); }
+	int& MySublevelUniqueIDField() { return *GetNativePointerField<int*>(this, "ANPCZoneManager.MySublevelUniqueID"); }
 };
 

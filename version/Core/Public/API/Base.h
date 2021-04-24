@@ -103,7 +103,7 @@ struct FRadialDamageEvent {};
 struct FMinimalViewInfo;
 struct FItemCraftingConsumptionReplenishment {};
 struct FActorClassAttachmentInfo {};
-struct FSupplyCrateItemSet {};
+struct FSupplyCrateItemSet ;
 struct UPrimalSupplyCrateItemSets;
 struct FItemAttachmentInfo {};
 struct FItemStatInfo;

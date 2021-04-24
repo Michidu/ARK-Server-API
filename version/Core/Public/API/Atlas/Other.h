@@ -746,3 +746,47 @@ struct FDinoAttackInfo
 	FDinoAttackInfo* operator=(FDinoAttackInfo* __that) { return NativeCall<FDinoAttackInfo*, FDinoAttackInfo*>(this, "FDinoAttackInfo.operator=", __that); }
 	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FDinoAttackInfo.StaticStruct"); }
 };
+
+struct UPrimalSupplyCrateItemSet;
+
+struct FSupplyCrateItemEntry
+{
+	FString ItemEntryName;
+	float EntryWeight;
+	TArray<TSubclassOf<UPrimalItem>> Items;
+	TArray<FString> ItemClassStrings;
+	TArray<float> ItemsWeights;
+	TArray<float> ItemsMinQuantities;
+	TArray<float> ItemsMaxQuantities;
+	int GiveRequiresMinimumCharacterLevel;
+	float GiveExtraItemQuantityPercentByOwnerCharacterLevel;
+	float MinQuantity;
+	float MaxQuantity;
+	float QuantityPower;
+	float MinQuality;
+	float MaxQuality;
+	float QualityPower;
+	unsigned __int32 bForceBlueprint ;
+	float ChanceToBeBlueprintOverride;
+	float ChanceToActuallyGiveItem;
+	float RequiresMinQuality;
+	bool bActualItemRandomWithoutReplacement;
+};
+
+struct FSupplyCrateItemSet
+{
+	FString SetName;
+	TArray<FSupplyCrateItemEntry> ItemEntries;
+	float MinNumItems;
+	float MaxNumItems;
+	float NumItemsPower;
+	float SetWeight;
+	bool bItemsRandomWithoutReplacement;
+	TSubclassOf<UPrimalSupplyCrateItemSet> ItemSetOverride;
+};
+
+struct UPrimalSupplyCrateItemSets : UObject
+{
+	TArray<FSupplyCrateItemSet>& ItemSetsField() { return *GetNativePointerField<TArray<FSupplyCrateItemSet>*>(this, "UPrimalSupplyCrateItemSets.ItemSets"); }
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalSupplyCrateItemSets.GetPrivateStaticClass", Package); }
+};
