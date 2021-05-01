@@ -3650,6 +3650,8 @@ struct ACharacter : APawn
 
 struct APrimalCharacter : ACharacter
 {
+	TSubclassOf<UPrimalHarvestingComponent>& DeathHarvestingComponentField() { return *GetNativePointerField<TSubclassOf<UPrimalHarvestingComponent>*>(this, "APrimalCharacter.DeathHarvestingComponent"); }
+	UPrimalHarvestingComponent* MyDeathHarvestingComponentField() { return *GetNativePointerField<UPrimalHarvestingComponent**>(this, "APrimalCharacter.MyDeathHarvestingComponentField"); }
 	FVector& OldLocationField() { return *GetNativePointerField<FVector*>(this, "APrimalCharacter.OldLocation"); }
 	FRotator& OldRotationField() { return *GetNativePointerField<FRotator*>(this, "APrimalCharacter.OldRotation"); }
 	float& EffectorInterpSpeedField() { return *GetNativePointerField<float*>(this, "APrimalCharacter.EffectorInterpSpeed"); }
@@ -5958,10 +5960,23 @@ struct UShooterDamageType : UDamageType
 	static void StaticRegisterNativesUShooterDamageType() { NativeCall<void>(nullptr, "UShooterDamageType.StaticRegisterNativesUShooterDamageType"); }
 };
 
-struct UPrimalDinoSettings
+struct  FDinoFoodEffectivenessMultipliers
 {
-	//TArray<FDinoFoodEffectivenessMultipliers>& FoodEffectivenessMultipliersField() { return *GetNativePointerField<TArray<FDinoFoodEffectivenessMultipliers>*>(this, "UPrimalDinoSettings.FoodEffectivenessMultipliers"); }
-	//TArray<FDinoFoodEffectivenessMultipliers>& ExtraFoodEffectivenessMultipliersField() { return *GetNativePointerField<TArray<FDinoFoodEffectivenessMultipliers>*>(this, "UPrimalDinoSettings.ExtraFoodEffectivenessMultipliers"); }
+	float FoodEffectivenessMultiplier;
+	float HealthEffectivenessMultiplier;
+	float TorpidityEffectivenessMultiplier;
+	float AffinityEffectivenessMultiplier;
+	float AffinityOverride;
+	float StaminaEffectivenessMultiplier;
+	int FoodItemCategory;
+	TSubclassOf<UPrimalItem> FoodItemParent;
+	float UntamedFoodConsumptionPriority;
+};
+
+struct UPrimalDinoSettings : UObject
+{
+	TArray<FDinoFoodEffectivenessMultipliers>& FoodEffectivenessMultipliersField() { return *GetNativePointerField<TArray<FDinoFoodEffectivenessMultipliers>*>(this, "UPrimalDinoSettings.FoodEffectivenessMultipliers"); }
+	TArray<FDinoFoodEffectivenessMultipliers>& ExtraFoodEffectivenessMultipliersField() { return *GetNativePointerField<TArray<FDinoFoodEffectivenessMultipliers>*>(this, "UPrimalDinoSettings.ExtraFoodEffectivenessMultipliers"); }
 	float& TamingAffinityNoFoodDecreasePercentageSpeedField() { return *GetNativePointerField<float*>(this, "UPrimalDinoSettings.TamingAffinityNoFoodDecreasePercentageSpeed"); }
 	float& TamingIneffectivenessNoFoodIncreasePercentageSpeedMultiplierField() { return *GetNativePointerField<float*>(this, "UPrimalDinoSettings.TamingIneffectivenessNoFoodIncreasePercentageSpeedMultiplier"); }
 	int& DinoTierNumField() { return *GetNativePointerField<int*>(this, "UPrimalDinoSettings.DinoTierNum"); }
@@ -5996,8 +6011,6 @@ struct FWeightedObjectList
 struct APrimalDinoCharacter : APrimalCharacter
 {
 	FWeightedObjectList& DeathInventoryTemplatesField() { return *GetNativePointerField<FWeightedObjectList*>(this, "APrimalDinoCharacter.DeathInventoryTemplates"); }
-	TSubclassOf<UPrimalHarvestingComponent>& DeathHarvestingComponentField() { return *GetNativePointerField<TSubclassOf<UPrimalHarvestingComponent>*>(this, "APrimalDinoCharacter.DeathHarvestingComponent"); }
-	UPrimalHarvestingComponent* MyDeathHarvestingComponentField() { return *GetNativePointerField<UPrimalHarvestingComponent**>(this, "APrimalDinoCharacter.MyDeathHarvestingComponentField"); }
 
 	TWeakObjectPtr<AActor>& ForcedMasterTargetField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "APrimalDinoCharacter.ForcedMasterTarget"); }
 	FName& MountCharacterSocketNameField() { return *GetNativePointerField<FName*>(this, "APrimalDinoCharacter.MountCharacterSocketName"); }
@@ -9761,10 +9774,14 @@ struct AInfo : AActor {
 
 };
 
+
 struct  AFoliageAttachmentOverrideVolume : AInfo
 {
+	void BeginPlay(float a2) { return NativeCall<void, float>(this, "AFoliageAttachmentOverrideVolume.BeginPlay", a2); }
 	TArray<FFoliageAttachmentOverride, FDefaultAllocator>& FoliageAttachmentOverrides() { return *GetNativePointerField<TArray<FFoliageAttachmentOverride, FDefaultAllocator>*>(this, "AFoliageAttachmentOverrideVolume.FoliageAttachmentOverrides"); }
 	TMap<FName, TSubclassOf<UActorComponent>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, TSubclassOf<UActorComponent>, 0> > & FoliageOverrideMap() { return *GetNativePointerField< TMap<FName, TSubclassOf<UActorComponent>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, TSubclassOf<UActorComponent>, 0> >*>(this, "AFoliageAttachmentOverrideVolume.FoliageOverrideMap"); }
+	unsigned __int32& bAddedToArrayField() { return *GetNativePointerField<unsigned __int32*>(this, "AFoliageAttachmentOverrideVolume.bAddedToArray"); }
+	unsigned __int32& bExportToCSVField() { return *GetNativePointerField<unsigned __int32*>(this, "AFoliageAttachmentOverrideVolume.bExportToCSV"); }
 };
 
 struct APrimalStructureItemContainer_SupplyCrate

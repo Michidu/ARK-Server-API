@@ -71,6 +71,7 @@ struct UObjectBase;
 struct UObjectBaseUtility;
 struct UClass;
 struct UObject;
+struct UFoliageType;
 struct AActor;
 struct UBlueprintCore;
 struct Globals;
