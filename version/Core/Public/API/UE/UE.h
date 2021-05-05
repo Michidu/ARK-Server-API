@@ -76,9 +76,7 @@ struct FGuid
 	uint32_t D;
 };
 
-struct UFunction : UObject
-{
-};
+struct UFunction;
 
 struct FBox
 {
@@ -312,6 +310,10 @@ struct UStruct : UField
 	void FinishDestroy() { NativeCall<void>(this, "UStruct.FinishDestroy"); }
 	void SetSuperStruct(UStruct* NewSuperStruct) { NativeCall<void, UStruct*>(this, "UStruct.SetSuperStruct", NewSuperStruct); }
 	void TagSubobjects(EObjectFlags NewFlags) { NativeCall<void, EObjectFlags>(this, "UStruct.TagSubobjects", NewFlags); }
+};
+
+struct UFunction : UStruct
+{
 };
 
 struct FNativeFunctionLookup
