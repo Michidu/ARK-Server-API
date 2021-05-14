@@ -16,19 +16,19 @@
 
 namespace API
 {
-	constexpr float api_version = 3.51f;
+	constexpr float api_version = 3.52f;
 
 	ArkBaseApi::ArkBaseApi()
 		: commands_(std::make_unique<ArkApi::Commands>()),
-		  hooks_(std::make_unique<Hooks>()),
-		  api_utils_(std::make_unique<ArkApi::ApiUtils>())
+		hooks_(std::make_unique<Hooks>()),
+		api_utils_(std::make_unique<ArkApi::ApiUtils>())
 	{
 	}
 
 	bool ArkBaseApi::Init()
 	{
 		Log::GetLog()->info("-----------------------------------------------");
-		Log::GetLog()->info("ARK: Server Api V{:.1f}", GetVersion());
+		Log::GetLog()->info("ARK: Server Api V{:.2f} (Lethal Beta)", GetVersion());
 		Log::GetLog()->info("Loading...\n");
 
 		PdbReader pdb_reader;
@@ -178,7 +178,7 @@ namespace API
 	}
 
 	void ArkBaseApi::UnloadPluginRcon(RCONClientConnection* rcon_connection, RCONPacket* rcon_packet,
-	                                  UWorld* /*unused*/)
+		UWorld* /*unused*/)
 	{
 		FString reply = UnloadPlugin(&rcon_packet->Body);
 		rcon_connection->SendMessageW(rcon_packet->Id, 0, &reply);

@@ -8,14 +8,7 @@
 #include "Decay.h"
 #include "../Delegates/IntegerSequence.h"
 
-// Static analysis causes internal compiler errors with auto-deduced return types,
-// but some older VC versions still have return type deduction failures inside the delegate code
-// when they are enabled.  So we currently only enable them for static analysis builds.
-#if defined(_MSC_VER) && !defined(__INTEL_COMPILER)
-	#define USE_TUPLE_AUTO_RETURN_TYPES (PLATFORM_COMPILER_HAS_AUTO_RETURN_TYPES && USING_CODE_ANALYSIS)
-#else
-	#define USE_TUPLE_AUTO_RETURN_TYPES 1
-#endif
+#define USE_TUPLE_AUTO_RETURN_TYPES 1
 
 #define TUPLES_USE_DEFAULTED_FUNCTIONS 1
 
@@ -51,16 +44,16 @@ namespace UE4Tuple_Private
 		template <
 			typename... ArgTypes,
 			typename = typename TEnableIf<
-				TAndValue<
-					sizeof...(ArgTypes) != 0,
-					TOrValue<
-						sizeof...(ArgTypes) != 1,
-						TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTupleElement, ArgTypes...>>
-					>
-				>::Value
+			TAndValue<
+			sizeof...(ArgTypes) != 0,
+			TOrValue<
+			sizeof...(ArgTypes) != 1,
+			TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTupleElement, ArgTypes...>>
+			>
+			>::Value
 			>::Type
 		>
-		explicit TTupleElement(ArgTypes&&... Args)
+			explicit TTupleElement(ArgTypes&&... Args)
 			: Value(Forward<ArgTypes>(Args)...)
 		{
 		}
@@ -70,36 +63,36 @@ namespace UE4Tuple_Private
 		{
 		}
 
-		#if TUPLES_USE_DEFAULTED_FUNCTIONS
+#if TUPLES_USE_DEFAULTED_FUNCTIONS
 
-			TTupleElement(TTupleElement&&) = default;
-			TTupleElement(const TTupleElement&) = default;
-			TTupleElement& operator=(TTupleElement&&) = default;
-			TTupleElement& operator=(const TTupleElement&) = default;
+		TTupleElement(TTupleElement&&) = default;
+		TTupleElement(const TTupleElement&) = default;
+		TTupleElement& operator=(TTupleElement&&) = default;
+		TTupleElement& operator=(const TTupleElement&) = default;
 
-		#else
+#else
 
-			TTupleElement(TTupleElement&& Other)
-				: Value(MoveTemp(Other.Value))
-			{
-			}
+		TTupleElement(TTupleElement&& Other)
+			: Value(MoveTemp(Other.Value))
+		{
+		}
 
-			TTupleElement(const TTupleElement& Other)
-				: Value(Other.Value)
-			{
-			}
+		TTupleElement(const TTupleElement& Other)
+			: Value(Other.Value)
+		{
+		}
 
-			void operator=(TTupleElement&& Other)
-			{
-				Value = MoveTemp(Other.Value);
-			}
+		void operator=(TTupleElement&& Other)
+		{
+			Value = MoveTemp(Other.Value);
+		}
 
-			void operator=(const TTupleElement& Other)
-			{
-				Value = Other.Value;
-			}
+		void operator=(const TTupleElement& Other)
+		{
+			Value = Other.Value;
+		}
 
-		#endif
+#endif
 
 		T Value;
 	};
@@ -194,61 +187,61 @@ namespace UE4Tuple_Private
 		template <
 			typename... ArgTypes,
 			typename = typename TEnableIf<
-				TAndValue<
-					sizeof...(ArgTypes) == sizeof...(Types) && sizeof...(ArgTypes) != 0,
-					TOrValue<
-						sizeof...(ArgTypes) != 1,
-						TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTupleStorage, ArgTypes...>>
-					>
-				>::Value
+			TAndValue<
+			sizeof...(ArgTypes) == sizeof...(Types) && sizeof...(ArgTypes) != 0,
+			TOrValue<
+			sizeof...(ArgTypes) != 1,
+			TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTupleStorage, ArgTypes...>>
+			>
+			>::Value
 			>::Type
 		>
-		explicit TTupleStorage(ArgTypes&&... Args)
+			explicit TTupleStorage(ArgTypes&&... Args)
 			: TTupleElement<Types, Indices>(Forward<ArgTypes>(Args))...
 		{
 		}
 
-		#if TUPLES_USE_DEFAULTED_FUNCTIONS
+#if TUPLES_USE_DEFAULTED_FUNCTIONS
 
-			TTupleStorage() = default;
-			TTupleStorage(TTupleStorage&&) = default;
-			TTupleStorage(const TTupleStorage&) = default;
-			TTupleStorage& operator=(TTupleStorage&&) = default;
-			TTupleStorage& operator=(const TTupleStorage&) = default;
+		TTupleStorage() = default;
+		TTupleStorage(TTupleStorage&&) = default;
+		TTupleStorage(const TTupleStorage&) = default;
+		TTupleStorage& operator=(TTupleStorage&&) = default;
+		TTupleStorage& operator=(const TTupleStorage&) = default;
 
-		#else
+#else
 
-			TTupleStorage()
-				: TTupleElement<Types, Indices>()...
-			{
-			}
+		TTupleStorage()
+			: TTupleElement<Types, Indices>()...
+		{
+		}
 
-			TTupleStorage(TTupleStorage&& Other)
-				: TTupleElement<Types, Indices>(MoveTemp(*(TTupleElement<Types, Indices>*)&Other))...
-			{
-			}
+		TTupleStorage(TTupleStorage&& Other)
+			: TTupleElement<Types, Indices>(MoveTemp(*(TTupleElement<Types, Indices>*)& Other))...
+		{
+		}
 
-			TTupleStorage(const TTupleStorage& Other)
-				: TTupleElement<Types, Indices>(*(const TTupleElement<Types, Indices>*)&Other)...
-			{
-			}
+		TTupleStorage(const TTupleStorage& Other)
+			: TTupleElement<Types, Indices>(*(const TTupleElement<Types, Indices>*)& Other)...
+		{
+		}
 
-			void operator=(TTupleStorage&& Other)
-			{
-				int Temp[] = { 0, (*(TTupleElement<Types, Indices>*)this = MoveTemp(*(TTupleElement<Types, Indices>*)&Other), 0)... };
-				(void)Temp;
-			}
+		void operator=(TTupleStorage&& Other)
+		{
+			int Temp[] = { 0, (*(TTupleElement<Types, Indices>*)this = MoveTemp(*(TTupleElement<Types, Indices>*) & Other), 0)... };
+			(void)Temp;
+		}
 
-			void operator=(const TTupleStorage& Other)
-			{
-				int Temp[] = { 0, (*(TTupleElement<Types, Indices>*)this = *(const TTupleElement<Types, Indices>*)&Other, 0)... };
-				(void)Temp;
-			}
+		void operator=(const TTupleStorage& Other)
+		{
+			int Temp[] = { 0, (*(TTupleElement<Types, Indices>*)this = *(const TTupleElement<Types, Indices>*) & Other, 0)... };
+			(void)Temp;
+		}
 
-		#endif
+#endif
 
 		template <uint32 Index> FORCEINLINE const typename TTupleElementHelper<Index, Types...>::Type& Get() const { return TTupleElementHelper<Index, Types...>::Get(*this); }
-		template <uint32 Index> FORCEINLINE       typename TTupleElementHelper<Index, Types...>::Type& Get()       { return TTupleElementHelper<Index, Types...>::Get(*this); }
+		template <uint32 Index> FORCEINLINE       typename TTupleElementHelper<Index, Types...>::Type& Get() { return TTupleElementHelper<Index, Types...>::Get(*this); }
 	};
 
 	// Specialization of 2-TTuple to give it the API of TPair.
@@ -265,7 +258,7 @@ namespace UE4Tuple_Private
 			typedef InKeyType ResultType;
 
 			static const InKeyType& Get(const TTupleStorage& Tuple) { return Tuple.Key; }
-			static       InKeyType& Get(      TTupleStorage& Tuple) { return Tuple.Key; }
+			static       InKeyType& Get(TTupleStorage& Tuple) { return Tuple.Key; }
 		};
 
 		template <typename Dummy>
@@ -274,7 +267,7 @@ namespace UE4Tuple_Private
 			typedef InValueType ResultType;
 
 			static const InValueType& Get(const TTupleStorage& Tuple) { return Tuple.Value; }
-			static       InValueType& Get(      TTupleStorage& Tuple) { return Tuple.Value; }
+			static       InValueType& Get(TTupleStorage& Tuple) { return Tuple.Value; }
 		};
 
 	public:
@@ -283,7 +276,7 @@ namespace UE4Tuple_Private
 
 		template <typename KeyInitType, typename ValueInitType>
 		explicit TTupleStorage(KeyInitType&& KeyInit, ValueInitType&& ValueInit)
-			: Key  (Forward<KeyInitType  >(KeyInit  ))
+			: Key(Forward<KeyInitType  >(KeyInit))
 			, Value(Forward<ValueInitType>(ValueInit))
 		{
 		}
@@ -294,43 +287,43 @@ namespace UE4Tuple_Private
 		{
 		}
 
-		#if TUPLES_USE_DEFAULTED_FUNCTIONS
+#if TUPLES_USE_DEFAULTED_FUNCTIONS
 
-			TTupleStorage(TTupleStorage&&) = default;
-			TTupleStorage(const TTupleStorage&) = default;
-			TTupleStorage& operator=(TTupleStorage&&) = default;
-			TTupleStorage& operator=(const TTupleStorage&) = default;
+		TTupleStorage(TTupleStorage&&) = default;
+		TTupleStorage(const TTupleStorage&) = default;
+		TTupleStorage& operator=(TTupleStorage&&) = default;
+		TTupleStorage& operator=(const TTupleStorage&) = default;
 
-		#else
+#else
 
-			TTupleStorage(TTupleStorage&& Other)
-				: Key  (MoveTemp(Other.Key))
-				, Value(MoveTemp(Other.Value))
-			{
-			}
+		TTupleStorage(TTupleStorage&& Other)
+			: Key(MoveTemp(Other.Key))
+			, Value(MoveTemp(Other.Value))
+		{
+		}
 
-			TTupleStorage(const TTupleStorage& Other)
-				: Key  (Other.Key)
-				, Value(Other.Value)
-			{
-			}
+		TTupleStorage(const TTupleStorage& Other)
+			: Key(Other.Key)
+			, Value(Other.Value)
+		{
+		}
 
-			void operator=(TTupleStorage&& Other)
-			{
-				Key   = MoveTemp(Other.Key);
-				Value = MoveTemp(Other.Value);
-			}
+		void operator=(TTupleStorage&& Other)
+		{
+			Key = MoveTemp(Other.Key);
+			Value = MoveTemp(Other.Value);
+		}
 
-			void operator=(const TTupleStorage& Other)
-			{
-				Key   = Other.Key;
-				Value = Other.Value;
-			}
+		void operator=(const TTupleStorage& Other)
+		{
+			Key = Other.Key;
+			Value = Other.Value;
+		}
 
-		#endif
+#endif
 
 		template <uint32 Index> FORCEINLINE const typename TGetHelper<Index, void>::ResultType& Get() const { return TGetHelper<Index, void>::Get(*this); }
-		template <uint32 Index> FORCEINLINE       typename TGetHelper<Index, void>::ResultType& Get()       { return TGetHelper<Index, void>::Get(*this); }
+		template <uint32 Index> FORCEINLINE       typename TGetHelper<Index, void>::ResultType& Get() { return TGetHelper<Index, void>::Get(*this); }
 
 		InKeyType   Key;
 		InValueType Value;
@@ -351,73 +344,73 @@ namespace UE4Tuple_Private
 		template <
 			typename... ArgTypes,
 			typename = typename TEnableIf<
-				TAndValue<
-					sizeof...(ArgTypes) == sizeof...(Types) && sizeof...(ArgTypes) != 0,
-					TOrValue<
-						sizeof...(ArgTypes) != 1,
-						TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTupleImpl, ArgTypes...>>
-					>
-				>::Value
+			TAndValue<
+			sizeof...(ArgTypes) == sizeof...(Types) && sizeof...(ArgTypes) != 0,
+			TOrValue<
+			sizeof...(ArgTypes) != 1,
+			TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTupleImpl, ArgTypes...>>
+			>
+			>::Value
 			>::Type
 		>
-		explicit TTupleImpl(ArgTypes&&... Args)
+			explicit TTupleImpl(ArgTypes&&... Args)
 			: Super(Forward<ArgTypes>(Args)...)
 		{
 		}
 
-		#if TUPLES_USE_DEFAULTED_FUNCTIONS
+#if TUPLES_USE_DEFAULTED_FUNCTIONS
 
-			TTupleImpl() = default;
-			TTupleImpl(TTupleImpl&& Other) = default;
-			TTupleImpl(const TTupleImpl& Other) = default;
-			TTupleImpl& operator=(TTupleImpl&& Other) = default;
-			TTupleImpl& operator=(const TTupleImpl& Other) = default;
+		TTupleImpl() = default;
+		TTupleImpl(TTupleImpl&& Other) = default;
+		TTupleImpl(const TTupleImpl& Other) = default;
+		TTupleImpl& operator=(TTupleImpl&& Other) = default;
+		TTupleImpl& operator=(const TTupleImpl& Other) = default;
 
-		#else
+#else
 
-			TTupleImpl()
-				: Super()
-			{
-			}
+		TTupleImpl()
+			: Super()
+		{
+		}
 
-			TTupleImpl(TTupleImpl&& Other)
-				: Super(MoveTemp(*(Super*)&Other))
-			{
-			}
+		TTupleImpl(TTupleImpl&& Other)
+			: Super(MoveTemp(*(Super*)&Other))
+		{
+		}
 
-			TTupleImpl(const TTupleImpl& Other)
-				: Super(*(const Super*)&Other)
-			{
-			}
+		TTupleImpl(const TTupleImpl& Other)
+			: Super(*(const Super*)&Other)
+		{
+		}
 
-			void operator=(TTupleImpl&& Other)
-			{
-				*(Super*)this = MoveTemp(*(Super*)&Other);
-			}
+		void operator=(TTupleImpl&& Other)
+		{
+			*(Super*)this = MoveTemp(*(Super*)&Other);
+		}
 
-			void operator=(const TTupleImpl& Other)
-			{
-				*(Super*)this = *(const Super*)&Other;
-			}
+		void operator=(const TTupleImpl& Other)
+		{
+			*(Super*)this = *(const Super*)&Other;
+		}
 
-		#endif
+#endif
 
 		template <typename FuncType, typename... ArgTypes>
-		#if USE_TUPLE_AUTO_RETURN_TYPES
-			decltype(auto) ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const
-		#else
-			auto ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Forward<ArgTypes>(Args)..., Get<Indices>()...))
-		#endif
+#if USE_TUPLE_AUTO_RETURN_TYPES
+		decltype(auto) ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const
+#else
+		auto ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Forward<ArgTypes>(Args)..., Get<Indices>()...))
+#endif
 		{
 			return Func(Forward<ArgTypes>(Args)..., this->template Get<Indices>()...);
 		}
 
 		template <typename FuncType, typename... ArgTypes>
-		#if USE_TUPLE_AUTO_RETURN_TYPES
-			decltype(auto) ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const
-		#else
-			auto ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Get<Indices>()..., Forward<ArgTypes>(Args)...))
-		#endif
+#if USE_TUPLE_AUTO_RETURN_TYPES
+		decltype(auto) ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const
+#else
+		auto ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Get<Indices>()..., Forward<ArgTypes>(Args)...))
+#endif
 		{
 			return Func(this->template Get<Indices>()..., Forward<ArgTypes>(Args)...);
 		}
@@ -454,73 +447,73 @@ namespace UE4Tuple_Private
 		}
 	};
 
-	#ifdef _MSC_VER
+#ifdef _MSC_VER
 
-		// Not strictly necessary, but some VC versions give a 'syntax error: <fake-expression>' error
-		// for empty tuples.
-		template <>
-		struct TTupleImpl<TIntegerSequence<uint32>>
+	// Not strictly necessary, but some VC versions give a 'syntax error: <fake-expression>' error
+	// for empty tuples.
+	template <>
+	struct TTupleImpl<TIntegerSequence<uint32>>
+	{
+		explicit TTupleImpl()
 		{
-			explicit TTupleImpl()
-			{
-			}
+		}
 
-			// Doesn't matter what these return, or even have a function body, but they need to be declared
-			template <uint32 Index> FORCEINLINE const int32& Get() const;
-			template <uint32 Index> FORCEINLINE       int32& Get();
+		// Doesn't matter what these return, or even have a function body, but they need to be declared
+		template <uint32 Index> FORCEINLINE const int32& Get() const;
+		template <uint32 Index> FORCEINLINE       int32& Get();
 
-			template <typename FuncType, typename... ArgTypes>
-			#if USE_TUPLE_AUTO_RETURN_TYPES
-				decltype(auto) ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const
-			#else
-				auto ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Forward<ArgTypes>(Args)...))
-			#endif
-			{
-				return Func(Forward<ArgTypes>(Args)...);
-			}
+		template <typename FuncType, typename... ArgTypes>
+#if USE_TUPLE_AUTO_RETURN_TYPES
+		decltype(auto) ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const
+#else
+		auto ApplyAfter(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Forward<ArgTypes>(Args)...))
+#endif
+		{
+			return Func(Forward<ArgTypes>(Args)...);
+		}
 
-			template <typename FuncType, typename... ArgTypes>
-			#if USE_TUPLE_AUTO_RETURN_TYPES
-				decltype(auto) ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const
-			#else
-				auto ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Forward<ArgTypes>(Args)...))
-			#endif
-			{
-				return Func(Forward<ArgTypes>(Args)...);
-			}
+		template <typename FuncType, typename... ArgTypes>
+#if USE_TUPLE_AUTO_RETURN_TYPES
+		decltype(auto) ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const
+#else
+		auto ApplyBefore(FuncType&& Func, ArgTypes&&... Args) const -> decltype(Func(Forward<ArgTypes>(Args)...))
+#endif
+		{
+			return Func(Forward<ArgTypes>(Args)...);
+		}
 
-			FORCEINLINE friend bool operator==(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
-			{
-				return true;
-			}
+		FORCEINLINE friend bool operator==(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
+		{
+			return true;
+		}
 
-			FORCEINLINE friend bool operator!=(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
-			{
-				return false;
-			}
+		FORCEINLINE friend bool operator!=(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
+		{
+			return false;
+		}
 
-			FORCEINLINE friend bool operator<(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
-			{
-				return false;
-			}
+		FORCEINLINE friend bool operator<(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
+		{
+			return false;
+		}
 
-			FORCEINLINE friend bool operator<=(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
-			{
-				return true;
-			}
+		FORCEINLINE friend bool operator<=(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
+		{
+			return true;
+		}
 
-			FORCEINLINE friend bool operator>(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
-			{
-				return false;
-			}
+		FORCEINLINE friend bool operator>(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
+		{
+			return false;
+		}
 
-			FORCEINLINE friend bool operator>=(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
-			{
-				return true;
-			}
-		};
+		FORCEINLINE friend bool operator>=(const TTupleImpl& Lhs, const TTupleImpl& Rhs)
+		{
+			return true;
+		}
+	};
 
-	#endif
+#endif
 
 	template <typename IntegerSequence>
 	struct TTransformTuple_Impl;
@@ -529,11 +522,11 @@ namespace UE4Tuple_Private
 	struct TTransformTuple_Impl<TIntegerSequence<uint32, Indices...>>
 	{
 		template <typename TupleType, typename FuncType>
-		#if USE_TUPLE_AUTO_RETURN_TYPES
-			static decltype(auto) Do(TupleType&& Tuple, FuncType Func)
-		#else
-			static auto Do(TupleType&& Tuple, FuncType Func) -> decltype(MakeTuple(Func(Forward<TupleType>(Tuple).template Get<Indices>())...))
-		#endif
+#if USE_TUPLE_AUTO_RETURN_TYPES
+		static decltype(auto) Do(TupleType&& Tuple, FuncType Func)
+#else
+		static auto Do(TupleType&& Tuple, FuncType Func) -> decltype(MakeTuple(Func(Forward<TupleType>(Tuple).template Get<Indices>())...))
+#endif
 		{
 			return MakeTuple(Func(Forward<TupleType>(Tuple).template Get<Indices>())...);
 		}
@@ -553,7 +546,6 @@ namespace UE4Tuple_Private
 			(void)Temp;
 		}
 	};
-
 
 	template <typename TupleType>
 	struct TCVTupleArity;
@@ -575,60 +567,59 @@ public:
 	template <
 		typename... ArgTypes,
 		typename = typename TEnableIf<
-			TAndValue<
-				sizeof...(ArgTypes) == sizeof...(Types) && sizeof...(ArgTypes) != 0,
-				TOrValue<
-					sizeof...(ArgTypes) != 1,
-					TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTuple, ArgTypes...>>
-				>
-			>::Value
+		TAndValue<
+		sizeof...(ArgTypes) == sizeof...(Types) && sizeof...(ArgTypes) != 0,
+		TOrValue<
+		sizeof...(ArgTypes) != 1,
+		TNot<UE4Tuple_Private::TDecayedFrontOfParameterPackIsSameType<TTuple, ArgTypes...>>
+		>
+		>::Value
 		>::Type
 	>
-	explicit TTuple(ArgTypes&&... Args)
+		explicit TTuple(ArgTypes&&... Args)
 		: Super(Forward<ArgTypes>(Args)...)
 	{
 		// This constructor is disabled for TTuple and zero parameters because VC is incorrectly instantiating it as a move/copy/default constructor.
 	}
 
-	#if TUPLES_USE_DEFAULTED_FUNCTIONS
+#if TUPLES_USE_DEFAULTED_FUNCTIONS
 
-		TTuple() = default;
-		TTuple(TTuple&&) = default;
-		TTuple(const TTuple&) = default;
-		TTuple& operator=(TTuple&&) = default;
-		TTuple& operator=(const TTuple&) = default;
+	TTuple() = default;
+	TTuple(TTuple&&) = default;
+	TTuple(const TTuple&) = default;
+	TTuple& operator=(TTuple&&) = default;
+	TTuple& operator=(const TTuple&) = default;
 
-	#else
+#else
 
-		TTuple()
-		{
-		}
+	TTuple()
+	{
+	}
 
-		TTuple(TTuple&& Other)
-			: Super(MoveTemp(*(Super*)&Other))
-		{
-		}
+	TTuple(TTuple&& Other)
+		: Super(MoveTemp(*(Super*)&Other))
+	{
+	}
 
-		TTuple(const TTuple& Other)
-			: Super(*(const Super*)&Other)
-		{
-		}
+	TTuple(const TTuple& Other)
+		: Super(*(const Super*)&Other)
+	{
+	}
 
-		TTuple& operator=(TTuple&& Other)
-		{
-			*(Super*)this = MoveTemp(*(Super*)&Other);
-			return *this;
-		}
+	TTuple& operator=(TTuple&& Other)
+	{
+		*(Super*)this = MoveTemp(*(Super*)&Other);
+		return *this;
+	}
 
-		TTuple& operator=(const TTuple& Other)
-		{
-			*(Super*)this = *(const Super*)&Other;
-			return *this;
-		}
+	TTuple& operator=(const TTuple& Other)
+	{
+		*(Super*)this = *(const Super*)&Other;
+		return *this;
+	}
 
-	#endif
+#endif
 };
-
 
 /**
  * Traits class which calculates the number of elements in a tuple.
@@ -637,7 +628,6 @@ template <typename TupleType>
 struct TTupleArity : UE4Tuple_Private::TCVTupleArity<const volatile TupleType>
 {
 };
-
 
 /**
  * Makes a TTuple from some arguments.  The type of the TTuple elements are the decayed versions of the arguments.
@@ -659,7 +649,6 @@ TTuple<typename TDecay<Types>::Type...> MakeTuple(Types&&... Args)
 {
 	return TTuple<typename TDecay<Types>::Type...>(Forward<Types>(Args)...);
 }
-
 
 /**
  * Creates a new TTuple by applying a functor to each of the elements.
@@ -684,9 +673,9 @@ TTuple<typename TDecay<Types>::Type...> MakeTuple(Types&&... Args)
  */
 template <typename FuncType, typename... Types>
 #if USE_TUPLE_AUTO_RETURN_TYPES
-	FORCEINLINE decltype(auto) TransformTuple(TTuple<Types...>&& Tuple, FuncType Func)
+FORCEINLINE decltype(auto) TransformTuple(TTuple<Types...>&& Tuple, FuncType Func)
 #else
-	FORCEINLINE auto TransformTuple(TTuple<Types...>&& Tuple, FuncType Func) -> decltype(UE4Tuple_Private::TTransformTuple_Impl<TMakeIntegerSequence<uint32, sizeof...(Types)>>::Do(MoveTemp(Tuple), MoveTemp(Func)))
+FORCEINLINE auto TransformTuple(TTuple<Types...>&& Tuple, FuncType Func) -> decltype(UE4Tuple_Private::TTransformTuple_Impl<TMakeIntegerSequence<uint32, sizeof...(Types)>>::Do(MoveTemp(Tuple), MoveTemp(Func)))
 #endif
 {
 	return UE4Tuple_Private::TTransformTuple_Impl<TMakeIntegerSequence<uint32, sizeof...(Types)>>::Do(MoveTemp(Tuple), MoveTemp(Func));
@@ -694,14 +683,13 @@ template <typename FuncType, typename... Types>
 
 template <typename FuncType, typename... Types>
 #if USE_TUPLE_AUTO_RETURN_TYPES
-	FORCEINLINE decltype(auto) TransformTuple(const TTuple<Types...>& Tuple, FuncType Func)
+FORCEINLINE decltype(auto) TransformTuple(const TTuple<Types...>& Tuple, FuncType Func)
 #else
-	FORCEINLINE auto TransformTuple(const TTuple<Types...>& Tuple, FuncType Func) -> decltype(UE4Tuple_Private::TTransformTuple_Impl<TMakeIntegerSequence<uint32, sizeof...(Types)>>::Do(Tuple, MoveTemp(Func)))
+FORCEINLINE auto TransformTuple(const TTuple<Types...>& Tuple, FuncType Func) -> decltype(UE4Tuple_Private::TTransformTuple_Impl<TMakeIntegerSequence<uint32, sizeof...(Types)>>::Do(Tuple, MoveTemp(Func)))
 #endif
 {
 	return UE4Tuple_Private::TTransformTuple_Impl<TMakeIntegerSequence<uint32, sizeof...(Types)>>::Do(Tuple, MoveTemp(Func));
 }
-
 
 /**
  * Visits each element in the tuple in turn and applies the supplied functor to it.

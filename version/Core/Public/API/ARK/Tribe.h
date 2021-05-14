@@ -120,15 +120,9 @@ struct FTribeRankGroup
 
 struct FTribeAlliance
 {
-	FString& AllianceNameField() { return *GetNativePointerField<FString*>(this, "FTribeAlliance.AllianceName"); }
-	unsigned int& AllianceIDField() { return *GetNativePointerField<unsigned int*>(this, "FTribeAlliance.AllianceID"); }
-	TArray<FString>& MembersTribeNameField() { return *GetNativePointerField<TArray<FString>*>(this, "FTribeAlliance.MembersTribeName"); }
-	TArray<unsigned int>& MembersTribeIDField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "FTribeAlliance.MembersTribeID"); }
-	TArray<unsigned int>& AdminsTribeIDField() { return *GetNativePointerField<TArray<unsigned int>*>(this, "FTribeAlliance.AdminsTribeID"); }
-
-	// Functions
-
-	FString* GetDescriptiveString(FString* result) { return NativeCall<FString*, FString*>(this, "FTribeAlliance.GetDescriptiveString", result); }
-	bool operator==(FTribeAlliance* Other) { return NativeCall<bool, FTribeAlliance*>(this, "FTribeAlliance.operator==", Other); }
-	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FTribeAlliance.StaticStruct"); }
+    FString AllianceNameField;
+    unsigned int AllianceIDField;
+    TArray<FString> MembersTribeNameField;
+    TArray<unsigned int> MembersTribeIDField;
+    TArray<unsigned int> AdminsTribeIDField;
 };

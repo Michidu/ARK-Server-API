@@ -16,11 +16,12 @@ namespace AtlasApi
 	DECLARE_HOOK(UWorld_Tick, void, DWORD64, DWORD64, float);
 	DECLARE_HOOK(AShooterGameMode_InitGame, void, AShooterGameMode*, FString*, FString*, FString*);
 	DECLARE_HOOK(AShooterPlayerController_ServerSendChatMessage_Impl, void, AShooterPlayerController*, FString*,
-		EChatSendMode::Type);
+	EChatSendMode::Type);
 	DECLARE_HOOK(APlayerController_ConsoleCommand, FString*, APlayerController*, FString*, FString*, bool);
 	DECLARE_HOOK(RCONClientConnection_ProcessRCONPacket, void, RCONClientConnection*, RCONPacket*, UWorld*);
 	DECLARE_HOOK(AGameState_DefaultTimer, void, AGameState*);
 	DECLARE_HOOK(AShooterGameMode_BeginPlay, void, AShooterGameMode*);
+	DECLARE_HOOK(URCONServer_Init, bool, URCONServer*, FString, int, UShooterCheatManager*);
 
 	void InitHooks()
 	{
@@ -30,17 +31,18 @@ namespace AtlasApi
 		hooks->SetHook("UWorld.InitWorld", &Hook_UWorld_InitWorld, &UWorld_InitWorld_original);
 		hooks->SetHook("UWorld.Tick", &Hook_UWorld_Tick, &UWorld_Tick_original);
 		hooks->SetHook("AShooterGameMode.InitGame", &Hook_AShooterGameMode_InitGame,
-		               &AShooterGameMode_InitGame_original);
+			&AShooterGameMode_InitGame_original);
 		hooks->SetHook("AShooterPlayerController.ServerSendChatMessage_Implementation",
-		               &Hook_AShooterPlayerController_ServerSendChatMessage_Impl,
-		               &AShooterPlayerController_ServerSendChatMessage_Impl_original);
+			&Hook_AShooterPlayerController_ServerSendChatMessage_Impl,
+			&AShooterPlayerController_ServerSendChatMessage_Impl_original);
 		hooks->SetHook("APlayerController.ConsoleCommand", &Hook_APlayerController_ConsoleCommand,
-		               &APlayerController_ConsoleCommand_original);
+			&APlayerController_ConsoleCommand_original);
 		hooks->SetHook("RCONClientConnection.ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
-		               &RCONClientConnection_ProcessRCONPacket_original);
+			&RCONClientConnection_ProcessRCONPacket_original);
 		hooks->SetHook("AGameState.DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
 		hooks->SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay,
-		               &AShooterGameMode_BeginPlay_original);
+			&AShooterGameMode_BeginPlay_original);
+		hooks->SetHook("URCONServer.Init", &Hook_URCONServer_Init, &URCONServer_Init_original);
 
 		Log::GetLog()->info("Initialized hooks\n");
 	}
@@ -76,7 +78,7 @@ namespace AtlasApi
 	}
 
 	void Hook_AShooterGameMode_InitGame(AShooterGameMode* a_shooter_game_mode, FString* map_name, FString* options,
-	                                    FString* error_message)
+		FString* error_message)
 	{
 		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetShooterGameMode(a_shooter_game_mode);
 
@@ -112,7 +114,7 @@ namespace AtlasApi
 	}
 
 	FString* Hook_APlayerController_ConsoleCommand(APlayerController* a_player_controller, FString* result,
-	                                               FString* cmd, bool write_to_log)
+		FString* cmd, bool write_to_log)
 	{
 		dynamic_cast<ArkApi::Commands&>(*API::game_api->GetCommands()).CheckConsoleCommands(
 			a_player_controller, cmd, write_to_log);
@@ -121,7 +123,7 @@ namespace AtlasApi
 	}
 
 	void Hook_RCONClientConnection_ProcessRCONPacket(RCONClientConnection* _this, RCONPacket* packet,
-	                                                 UWorld* in_world)
+		UWorld* in_world)
 	{
 		if (_this->IsAuthenticatedField())
 		{
@@ -143,5 +145,12 @@ namespace AtlasApi
 		AShooterGameMode_BeginPlay_original(_AShooterGameMode);
 
 		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetStatus(ArkApi::ServerStatus::Ready);
+	}
+
+	bool Hook_URCONServer_Init(URCONServer* _this, FString Password, int InPort, UShooterCheatManager* SCheatManager)
+	{
+		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetCheatManager(SCheatManager);
+
+		return URCONServer_Init_original(_this, Password, InPort, SCheatManager);
 	}
 } // namespace AtlasApi

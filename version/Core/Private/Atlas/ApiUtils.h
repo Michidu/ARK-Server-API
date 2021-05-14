@@ -19,14 +19,17 @@ namespace AtlasApi
 		UWorld* GetWorld() const override;
 		AShooterGameMode* GetShooterGameMode() const override;
 		ArkApi::ServerStatus GetStatus() const override;
+		UShooterCheatManager* GetCheatManager() const override;
 
 		void SetWorld(UWorld* uworld);
 		void SetShooterGameMode(AShooterGameMode* shooter_game_mode);
 		void SetStatus(ArkApi::ServerStatus status);
+		void SetCheatManager(UShooterCheatManager* cheatmanager);
 
 	private:
-		UWorld* u_world_{nullptr};
-		AShooterGameMode* shooter_game_mode_{nullptr};
-		ArkApi::ServerStatus status_{0};
+		UWorld* u_world_{ nullptr };
+		AShooterGameMode* shooter_game_mode_{ nullptr };
+		ArkApi::ServerStatus status_{ 0 };
+		UShooterCheatManager* cheatmanager_{ nullptr };
 	};
 } // namespace AtlasApi

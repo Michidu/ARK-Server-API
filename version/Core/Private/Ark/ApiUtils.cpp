@@ -40,6 +40,17 @@ namespace ArkApi
 		return status_;
 	}
 
+	// Cheat Manager
+	void ApiUtils::SetCheatManager(UShooterCheatManager* cheatmanager)
+	{
+		cheatmanager_ = cheatmanager;
+	}
+
+	UShooterCheatManager* ApiUtils::GetCheatManager() const
+	{
+		return cheatmanager_;
+	}
+
 	// Free function
 	IApiUtils& GetApiUtils()
 	{

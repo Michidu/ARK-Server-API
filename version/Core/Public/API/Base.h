@@ -71,6 +71,7 @@ struct UObjectBase;
 struct UObjectBaseUtility;
 struct UClass;
 struct UObject;
+struct UFunction;
 struct AActor;
 struct UBlueprintCore;
 struct Globals;
@@ -242,8 +243,6 @@ struct APrimalStructureSeating_DriverSeat;
 struct APrimalRaft;
 
 struct ADroppedItemLowQuality;
-
-
 
 struct FComponentBeginOverlapSignature;
 struct FComponentEndOverlapSignature;
@@ -441,12 +440,10 @@ struct FDatabase_CreateShapshot;
 struct FDinoBabySetup;
 struct FNPCSpawnEntriesContainerAdditions;
 
-
 struct IEngineLoop;
 struct IStereoRendering;
 struct IHeadMountedDisplay;
 struct IDelegateInstance;
-
 
 struct UWeaponAttackData;
 
