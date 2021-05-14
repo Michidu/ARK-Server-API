@@ -28,7 +28,7 @@ namespace API
 	bool ArkBaseApi::Init()
 	{
 		Log::GetLog()->info("-----------------------------------------------");
-		Log::GetLog()->info("ARK: Server Api V{:.2f} (Lethal Beta)", GetVersion());
+		Log::GetLog()->info("ARK: Server Api V{:.2f}", GetVersion());
 		Log::GetLog()->info("Loading...\n");
 
 		PdbReader pdb_reader;
