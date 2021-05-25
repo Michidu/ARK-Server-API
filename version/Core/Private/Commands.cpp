@@ -100,13 +100,13 @@ namespace ArkApi
 				}
 				catch (...)
 				{
-					try {
-						Log::GetLog()->error(fmt::format("CheckOnTickCallbacks: {}", data->command.ToString()));
-					}
-					catch (...)
-					{
-						Log::GetLog()->error("CheckOnTickCallbacks");
-					}
+					//try {
+						//Log::GetLog()->error(fmt::format("CheckOnTickCallbacks: {}", data->command.ToString()));
+					//}
+					//catch (...)
+					//{
+					Log::GetLog()->error("CheckOnTickCallbacks");
+					//}
 				}
 			}
 		}
@@ -124,13 +124,13 @@ namespace ArkApi
 				}
 				catch (...)
 				{
-					try {
-						Log::GetLog()->error(fmt::format("CheckOnTimerCallbacks: {}", data->command.ToString()));
-					}
-					catch (...)
-					{
-						Log::GetLog()->error("CheckOnTimerCallbacks");
-					}
+					//try {
+						//Log::GetLog()->error(fmt::format("CheckOnTimerCallbacks: {}", data->command.ToString()));
+					//}
+					//catch (...)
+					//{
+					Log::GetLog()->error("CheckOnTimerCallbacks");
+					//}
 				}
 			}
 		}
