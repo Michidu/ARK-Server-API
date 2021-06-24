@@ -43,7 +43,9 @@ namespace API
 	};
 
 	Requests::Requests()
-		: pimpl{ std::make_unique<impl>() } { game_api->GetCommands()->AddOnTickCallback("RequestsUpdate", std::bind(&impl::Update, this->pimpl.get())); }
+		: pimpl{ std::make_unique<impl>() } {
+		game_api->GetCommands()->AddOnTickCallback("RequestsUpdate", std::bind(&impl::Update, this->pimpl.get()));
+	}
 
 	Requests::~Requests() { game_api->GetCommands()->RemoveOnTickCallback("RequestsUpdate"); }
 
@@ -112,6 +114,7 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
@@ -127,6 +130,7 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
 			}
 		).detach();
 
@@ -140,6 +144,7 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
@@ -160,6 +165,7 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
 			}
 		).detach();
 
@@ -173,10 +179,10 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
-					Poco::Net::HTTPClientSession* session = nullptr;
 					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
 					request.setContentType(content_type);
@@ -193,6 +199,7 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
 			}
 		).detach();
 
@@ -210,6 +217,7 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
@@ -242,6 +250,7 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
 			}
 		).detach();
 
@@ -255,6 +264,7 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
@@ -270,6 +280,7 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
 			}
 		).detach();
 

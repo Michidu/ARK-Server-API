@@ -1,6 +1,7 @@
 #include "Commands.h"
 
 #include "IBaseApi.h"
+#include <fstream>
 
 namespace ArkApi
 {
@@ -100,13 +101,10 @@ namespace ArkApi
 				}
 				catch (...)
 				{
-					//try {
-						//Log::GetLog()->error(fmt::format("CheckOnTickCallbacks: {}", data->command.ToString()));
-					//}
-					//catch (...)
-					//{
-					Log::GetLog()->error("CheckOnTickCallbacks");
-					//}
+					if (typeid(data->command) == typeid(FString) && !data->command.IsEmpty())
+						Log::GetLog()->error(fmt::format("Prevented Tick Crash in: {}", data->command.ToString()));
+					else
+						Log::GetLog()->error("Prevented Tick Crash in: Unknown");
 				}
 			}
 		}
@@ -124,13 +122,10 @@ namespace ArkApi
 				}
 				catch (...)
 				{
-					//try {
-						//Log::GetLog()->error(fmt::format("CheckOnTimerCallbacks: {}", data->command.ToString()));
-					//}
-					//catch (...)
-					//{
-					Log::GetLog()->error("CheckOnTimerCallbacks");
-					//}
+					if (typeid(data->command) == typeid(FString) && !data->command.IsEmpty())
+						Log::GetLog()->error(fmt::format("Prevented Timer Crash in: {}", data->command.ToString()));
+					else
+						Log::GetLog()->error("Prevented Timer Crash in: Unknown");
 				}
 			}
 		}

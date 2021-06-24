@@ -130,6 +130,14 @@ struct FDateTime
 {
 };
 
+struct FWeakObjectPtr
+{
+	int ObjectIndex;
+	int ObjectSerialNumber;
+
+	void operator=(UObject const* __that) { return NativeCall<void, UObject const*>(this, "FWeakObjectPtr.operator=", __that); }
+};
+
 template <typename T>
 struct TWeakObjectPtr
 {
@@ -150,6 +158,14 @@ struct TWeakObjectPtr
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr.Get", bEvenIfPendingKill);
 	}
+
+	TWeakObjectPtr()
+	{}
+
+	TWeakObjectPtr(int index, int serialnumber)
+		:ObjectIndex(index),
+		ObjectSerialNumber(serialnumber)
+	{}
 };
 
 template <typename T>
