@@ -12,13 +12,13 @@
 namespace API
 {
 	void PdbReader::Read(const std::wstring& path, const nlohmann::json& plugin_pdb_config,
-	                     std::unordered_map<std::string, intptr_t>* offsets_dump,
-	                     std::unordered_map<std::string, BitField>* bitfields_dump)
+		std::unordered_map<std::string, intptr_t>* offsets_dump,
+		std::unordered_map<std::string, BitField>* bitfields_dump)
 	{
 		offsets_dump_ = offsets_dump;
 		bitfields_dump_ = bitfields_dump;
 
-		std::ifstream f{path};
+		std::ifstream f{ path };
 		if (!f.good())
 		{
 			throw std::runtime_error("Failed to open pdb file");
@@ -43,7 +43,8 @@ namespace API
 			throw std::runtime_error("Failed to open config.json");
 		}
 
-		dump_all_ = config_["settings"].value("DumpAll", false);
+		//dump_all_ = config_["settings"].value("DumpAll", false);
+		dump_all_ = true;
 
 		try
 		{
@@ -70,7 +71,7 @@ namespace API
 	}
 
 	void PdbReader::LoadDataFromPdb(const std::wstring& path, IDiaDataSource** dia_source, IDiaSession** session,
-	                                IDiaSymbol** symbol)
+		IDiaSymbol** symbol)
 	{
 		const std::string current_dir = Tools::GetCurrentDir();
 
@@ -95,7 +96,7 @@ namespace API
 			throw std::runtime_error("DllGetClassObject has failed. Error code - " + std::to_string(GetLastError()));
 		}
 
-		hr = class_factory->CreateInstance(nullptr, __uuidof(IDiaDataSource), reinterpret_cast<void **>(dia_source));
+		hr = class_factory->CreateInstance(nullptr, __uuidof(IDiaDataSource), reinterpret_cast<void**>(dia_source));
 		if (FAILED(hr))
 		{
 			class_factory->Release();
@@ -133,7 +134,7 @@ namespace API
 	bool PdbReader::ReadConfig()
 	{
 		const std::string config_path = Tools::GetCurrentDir() + "/config.json";
-		std::ifstream file{config_path};
+		std::ifstream file{ config_path };
 		if (!file.is_open())
 		{
 			return false;
@@ -370,7 +371,7 @@ namespace API
 					return;
 				}
 
-				const BitField bit_field{static_cast<DWORD64>(offset), bit_position, num_bits, length};
+				const BitField bit_field{ static_cast<DWORD64>(offset), bit_position, num_bits, length };
 
 				(*bitfields_dump_)[structure + "." + std::string(bbstr_name)] = bit_field;
 			}
