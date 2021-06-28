@@ -1,7 +1,6 @@
 #include "Commands.h"
 
 #include "IBaseApi.h"
-#include <fstream>
 
 namespace ArkApi
 {
