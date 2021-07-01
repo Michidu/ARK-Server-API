@@ -243,7 +243,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;WIN32;NDEBUG;_WINDOWS;_USRDLL;VERSION_EXPORTS;ARK_EXPORTS;ARK_GAME;POCO_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\Poco</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\version\Core\Public;..\include\Poco;..\include\openssl</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
@@ -256,7 +256,7 @@
       <ImportLibrary>$(OutDir)ArkApi.lib</ImportLibrary>
       <AdditionalOptions>/NODEFAULTLIB:libcmt.lib  /ignore:4099
  %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>Crypt32.lib;Iphlpapi.lib;ws2_32.lib;winmm.lib;wldap32.lib;PocoFoundationmd.lib;PocoNetmd.lib;PocoNetSSLWinmd.lib;PocoUtilmd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Crypt32.lib;Iphlpapi.lib;ws2_32.lib;winmm.lib;wldap32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Message>Move lib</Message>
