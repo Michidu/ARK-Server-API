@@ -2,6 +2,8 @@
 
 struct UWorld;
 
+struct FSupplyCrateItemSet {};
+
 struct  FItemCount
 {
 	FString StringRef;

@@ -104,6 +104,12 @@ struct FSeamlessServerInfo
 
 struct FSeamlessGridInfo
 {
+	 TMap<FString, TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >, 0> >& 
+		 HarvestOverridesField() {
+		 return *GetNativePointerField<TMap<FString, TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >, 0> >*>
+			 (this, "FSeamlessGridInfo.HarvestOverrides");
+	 }
+
 	//TArray<FShipPath>& ShipPathsField() { return *GetNativePointerField<TArray<FShipPath>*>(this, "FSeamlessGridInfo.ShipPaths"); }
 	FString& QuestDataField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.QuestData"); }
 	FString& AtlasPasswordField() { return *GetNativePointerField<FString*>(this, "FSeamlessGridInfo.AtlasPassword"); }
@@ -246,6 +252,8 @@ struct UShooterGameInstance : UGameInstance
 
 	void AddNetworkFailureHandlers() { NativeCall<void>(this, "UShooterGameInstance.AddNetworkFailureHandlers"); }
 	void AttemptJoinLastServer() { NativeCall<void>(this, "UShooterGameInstance.AttemptJoinLastServer"); }
+	TSubclassOf<UActorComponent>* GetOverridenFoliageAttachment(TSubclassOf<UActorComponent>* result, ULevel* TheLevel, UFoliageType* FoliageTypeReference) { return NativeCall<TSubclassOf<UActorComponent>*, TSubclassOf<UActorComponent>*, ULevel*, UFoliageType*>(this, "UShooterGameInstance.GetOverridenFoliageAttachment", result, TheLevel, FoliageTypeReference); }
+
 	FVector* BP_GPSLocationToGlobalLocation(FVector* result, FVector2D GPSLocation) { return NativeCall<FVector*, FVector*, FVector2D>(this, "UShooterGameInstance.BP_GPSLocationToGlobalLocation", result, GPSLocation); }
 	FVector* BP_GPSLocationToLocalLocation(FVector* result, FVector2D GPSLocation) { return NativeCall<FVector*, FVector*, FVector2D>(this, "UShooterGameInstance.BP_GPSLocationToLocalLocation", result, GPSLocation); }
 	FVector2D* BP_GlobalLocationToGPSLocation(FVector2D* result, FVector GlobalLocation) { return NativeCall<FVector2D*, FVector2D*, FVector>(this, "UShooterGameInstance.BP_GlobalLocationToGPSLocation", result, GlobalLocation); }
@@ -1015,7 +1023,12 @@ struct AShooterGameMode : AGameMode
 	FString& PGMapNameField() { return *GetNativePointerField<FString*>(this, "AShooterGameMode.PGMapName"); }
 	FString& PGTerrainPropertiesStringField() { return *GetNativePointerField<FString*>(this, "AShooterGameMode.PGTerrainPropertiesString"); }
 	TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> > & PGTerrainPropertiesField() { return *GetNativePointerField<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >*>(this, "AShooterGameMode.PGTerrainProperties"); }
+	
 	bool& bAutoCreateNewPlayerDataField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bAutoCreateNewPlayerData"); }
+	bool& bUseNewStructureFoundationSupportChecksField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bUseNewStructureFoundationSupportChecks"); }
+	bool& bDisableFogOfWarField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bDisableFogOfWar"); }
+	float& MaximumCraftingSkillBonusField() { return *GetNativePointerField<float*>(this, "AShooterGameMode.MaximumCraftingSkillBonus"); }
+
 	bool& bIsRestartingField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bIsRestarting"); }
 	bool& bProximityVoiceChatField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bProximityVoiceChat"); }
 	bool& bProximityChatField() { return *GetNativePointerField<bool*>(this, "AShooterGameMode.bProximityChat"); }

@@ -55,6 +55,16 @@ struct FTransform
 	__m128 Rotation;
 	__m128 Translation;
 	__m128 Scale3D;
+	FVector GetLocation() const
+	{
+		return GetTranslation();
+	}
+
+	FVector GetTranslation() const
+	{
+		FVector OutTranslation(Translation.m128_f32[0], Translation.m128_f32[1], Translation.m128_f32[2]);
+		return OutTranslation;
+	}
 };
 
 struct FBoxSphereBounds
