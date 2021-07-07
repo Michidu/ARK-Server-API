@@ -38,7 +38,7 @@ struct FName
 	{
 		Init(Name, 0, FindType, true, -1);
 	}
-	
+
 	FName(const char* Name, EFindName FindType, bool __formal) { NativeCall<void, const char*, EFindName, bool>(this, "FName.FName", Name, FindType, __formal); }
 	bool operator==(const wchar_t* Other) { return NativeCall<bool, const wchar_t*>(this, "FName.operator==", Other); }
 	int Compare(FName* Other) { return NativeCall<int, FName*>(this, "FName.Compare", Other); }
@@ -62,16 +62,6 @@ struct FTransform
 	__m128 Rotation;
 	__m128 Translation;
 	__m128 Scale3D;
-	FVector GetLocation() const
-	{
-		return GetTranslation();
-	}
-
-	FVector GetTranslation() const
-	{
-		FVector OutTranslation(Translation.m128_f32[0], Translation.m128_f32[1], Translation.m128_f32[2]);
-		return OutTranslation;
-	}
 };
 
 struct FBoxSphereBounds
@@ -196,7 +186,6 @@ struct IOnlinePlatformData
 
 struct FUniqueNetId : IOnlinePlatformData
 {
-
 };
 
 struct FUniqueNetIdSteam : FUniqueNetId
@@ -220,9 +209,9 @@ struct UObjectBase
 {
 	EObjectFlags& ObjectFlagsField() { return *GetNativePointerField<EObjectFlags*>(this, "UObjectBase.ObjectFlags"); }
 	int& InternalIndexField() { return *GetNativePointerField<int*>(this, "UObjectBase.InternalIndex"); }
-	UClass* ClassField() { return *GetNativePointerField<UClass * *>(this, "UObjectBase.Class"); }
+	UClass* ClassField() { return *GetNativePointerField<UClass**>(this, "UObjectBase.Class"); }
 	FName& NameField() { return *GetNativePointerField<FName*>(this, "UObjectBase.Name"); }
-	UObject* OuterField() { return *GetNativePointerField<UObject * *>(this, "UObjectBase.Outer"); }
+	UObject* OuterField() { return *GetNativePointerField<UObject**>(this, "UObjectBase.Outer"); }
 
 	// Functions
 
@@ -286,7 +275,7 @@ struct UObject : UObjectBaseUtility
 
 struct UField : UObject
 {
-	UField* NextField() { return *GetNativePointerField<UField * *>(this, "UField.Next"); }
+	UField* NextField() { return *GetNativePointerField<UField**>(this, "UField.Next"); }
 
 	// Functions
 
@@ -298,15 +287,15 @@ struct UField : UObject
 
 struct UStruct : UField
 {
-	UStruct* SuperStructField() { return *GetNativePointerField<UStruct * *>(this, "UStruct.SuperStruct"); }
-	UField* ChildrenField() { return *GetNativePointerField<UField * *>(this, "UStruct.Children"); }
+	UStruct* SuperStructField() { return *GetNativePointerField<UStruct**>(this, "UStruct.SuperStruct"); }
+	UField* ChildrenField() { return *GetNativePointerField<UField**>(this, "UStruct.Children"); }
 	int& PropertiesSizeField() { return *GetNativePointerField<int*>(this, "UStruct.PropertiesSize"); }
 	TArray<unsigned char>& ScriptField() { return *GetNativePointerField<TArray<unsigned char>*>(this, "UStruct.Script"); }
 	int& MinAlignmentField() { return *GetNativePointerField<int*>(this, "UStruct.MinAlignment"); }
-	UProperty* PropertyLinkField() { return *GetNativePointerField<UProperty * *>(this, "UStruct.PropertyLink"); }
-	UProperty* RefLinkField() { return *GetNativePointerField<UProperty * *>(this, "UStruct.RefLink"); }
-	UProperty* DestructorLinkField() { return *GetNativePointerField<UProperty * *>(this, "UStruct.DestructorLink"); }
-	UProperty* PostConstructLinkField() { return *GetNativePointerField<UProperty * *>(this, "UStruct.PostConstructLink"); }
+	UProperty* PropertyLinkField() { return *GetNativePointerField<UProperty**>(this, "UStruct.PropertyLink"); }
+	UProperty* RefLinkField() { return *GetNativePointerField<UProperty**>(this, "UStruct.RefLink"); }
+	UProperty* DestructorLinkField() { return *GetNativePointerField<UProperty**>(this, "UStruct.DestructorLink"); }
+	UProperty* PostConstructLinkField() { return *GetNativePointerField<UProperty**>(this, "UStruct.PostConstructLink"); }
 	TArray<UObject*> ScriptObjectReferencesField() { return *GetNativePointerField<TArray<UObject*>*>(this, "UStruct.ScriptObjectReferences"); }
 
 	// Functions
@@ -337,12 +326,12 @@ struct UClass : UStruct
 	unsigned int& ClassFlagsField() { return *GetNativePointerField<unsigned int*>(this, "UClass.ClassFlags"); }
 	unsigned __int64& ClassCastFlagsField() { return *GetNativePointerField<unsigned __int64*>(this, "UClass.ClassCastFlags"); }
 	int& ClassUniqueField() { return *GetNativePointerField<int*>(this, "UClass.ClassUnique"); }
-	UClass* ClassWithinField() { return *GetNativePointerField<UClass * *>(this, "UClass.ClassWithin"); }
-	UObject* ClassGeneratedByField() { return *GetNativePointerField<UObject * *>(this, "UClass.ClassGeneratedBy"); }
+	UClass* ClassWithinField() { return *GetNativePointerField<UClass**>(this, "UClass.ClassWithin"); }
+	UObject* ClassGeneratedByField() { return *GetNativePointerField<UObject**>(this, "UClass.ClassGeneratedBy"); }
 	bool& bIsGameClassField() { return *GetNativePointerField<bool*>(this, "UClass.bIsGameClass"); }
 	FName& ClassConfigNameField() { return *GetNativePointerField<FName*>(this, "UClass.ClassConfigName"); }
 	TArray<UField*> NetFieldsField() { return *GetNativePointerField<TArray<UField*>*>(this, "UClass.NetFields"); }
-	UObject* ClassDefaultObjectField() { return *GetNativePointerField<UObject * *>(this, "UClass.ClassDefaultObject"); }
+	UObject* ClassDefaultObjectField() { return *GetNativePointerField<UObject**>(this, "UClass.ClassDefaultObject"); }
 	bool& bCookedField() { return *GetNativePointerField<bool*>(this, "UClass.bCooked"); }
 	TMap<DWORD64, UFunction*> FuncMapField() { return *GetNativePointerField<TMap<DWORD64, UFunction*>*>(this, "UClass.FuncMap"); }
 	TArray<FNativeFunctionLookup>& NativeFunctionLookupTableField() { return *GetNativePointerField<TArray<FNativeFunctionLookup>*>(this, "UClass.NativeFunctionLookupTable"); }
@@ -390,7 +379,7 @@ struct UBlueprintCore : UObject
 struct UBlueprint : UBlueprintCore
 {
 	TSubclassOf<UObject>& ParentClassField() { return *GetNativePointerField<TSubclassOf<UObject>*>(this, "UBlueprint.ParentClass"); }
-	UObject* PRIVATE_InnermostPreviousCDOField() { return *GetNativePointerField<UObject * *>(this, "UBlueprint.PRIVATE_InnermostPreviousCDO"); }
+	UObject* PRIVATE_InnermostPreviousCDOField() { return *GetNativePointerField<UObject**>(this, "UBlueprint.PRIVATE_InnermostPreviousCDO"); }
 	TArray<UActorComponent*> ComponentTemplatesField() { return *GetNativePointerField<TArray<UActorComponent*>*>(this, "UBlueprint.ComponentTemplates"); }
 	TEnumAsByte<enum EBlueprintType>& BlueprintTypeField() { return *GetNativePointerField<TEnumAsByte<enum EBlueprintType>*>(this, "UBlueprint.BlueprintType"); }
 	int& BlueprintSystemVersionField() { return *GetNativePointerField<int*>(this, "UBlueprint.BlueprintSystemVersion"); }
@@ -411,10 +400,10 @@ struct UProperty : UField
 	unsigned __int16& RepIndexField() { return *GetNativePointerField<unsigned __int16*>(this, "UProperty.RepIndex"); }
 	FName& RepNotifyFuncField() { return *GetNativePointerField<FName*>(this, "UProperty.RepNotifyFunc"); }
 	int& Offset_InternalField() { return *GetNativePointerField<int*>(this, "UProperty.Offset_Internal"); }
-	UProperty* PropertyLinkNextField() { return *GetNativePointerField<UProperty * *>(this, "UProperty.PropertyLinkNext"); }
-	UProperty* NextRefField() { return *GetNativePointerField<UProperty * *>(this, "UProperty.NextRef"); }
-	UProperty* DestructorLinkNextField() { return *GetNativePointerField<UProperty * *>(this, "UProperty.DestructorLinkNext"); }
-	UProperty* PostConstructLinkNextField() { return *GetNativePointerField<UProperty * *>(this, "UProperty.PostConstructLinkNext"); }
+	UProperty* PropertyLinkNextField() { return *GetNativePointerField<UProperty**>(this, "UProperty.PropertyLinkNext"); }
+	UProperty* NextRefField() { return *GetNativePointerField<UProperty**>(this, "UProperty.NextRef"); }
+	UProperty* DestructorLinkNextField() { return *GetNativePointerField<UProperty**>(this, "UProperty.DestructorLinkNext"); }
+	UProperty* PostConstructLinkNextField() { return *GetNativePointerField<UProperty**>(this, "UProperty.PostConstructLinkNext"); }
 
 	// Functions
 
@@ -439,7 +428,7 @@ struct UProperty : UField
 			throw std::invalid_argument("Object does not contain this property.");
 		if (sizeof(T) != this->ElementSizeField())
 			throw std::invalid_argument("Expected size does not match property size.");
-			return *((T*)(object + this->Offset_InternalField()));
+		return *((T*)(object + this->Offset_InternalField()));
 	}
 
 	template<typename T>
@@ -449,7 +438,7 @@ struct UProperty : UField
 			throw std::invalid_argument("Object does not contain this property.");
 		if (sizeof(T) != this->ElementSizeField())
 			throw std::invalid_argument("Expected size does not match property size.");
-			* ((T*)(object + this->Offset_InternalField())) = value;
+		*((T*)(object + this->Offset_InternalField())) = value;
 	}
 };
 
@@ -683,7 +672,6 @@ struct UNavigationQueryFilter : UObject
 	FNavigationFilterFlags ExcludeFlags;
 };
 
-
 struct FCollisionQueryParams
 {
 	FName TraceTag;
@@ -715,10 +703,10 @@ struct FHttpRequestWinInet;
 
 struct FHttpResponseWinInet
 {
-	FHttpRequestWinInet* RequestField() { return *GetNativePointerField<FHttpRequestWinInet * *>(this, "FHttpResponseWinInet.Request"); }
+	FHttpRequestWinInet* RequestField() { return *GetNativePointerField<FHttpRequestWinInet**>(this, "FHttpResponseWinInet.Request"); }
 	int& AsyncBytesReadField() { return *GetNativePointerField<int*>(this, "FHttpResponseWinInet.AsyncBytesRead"); }
 	int& TotalBytesReadField() { return *GetNativePointerField<int*>(this, "FHttpResponseWinInet.TotalBytesRead"); }
-	TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> > & ResponseHeadersField() { return *GetNativePointerField<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >*>(this, "FHttpResponseWinInet.ResponseHeaders"); }
+	TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >& ResponseHeadersField() { return *GetNativePointerField<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >*>(this, "FHttpResponseWinInet.ResponseHeaders"); }
 	int& ResponseCodeField() { return *GetNativePointerField<int*>(this, "FHttpResponseWinInet.ResponseCode"); }
 	int& ContentLengthField() { return *GetNativePointerField<int*>(this, "FHttpResponseWinInet.ContentLength"); }
 	TArray<unsigned char>& ResponsePayloadField() { return *GetNativePointerField<TArray<unsigned char>*>(this, "FHttpResponseWinInet.ResponsePayload"); }
@@ -751,9 +739,9 @@ struct IHttpResponse : FHttpResponseWinInet
 struct FHttpRequestWinInet
 {
 	FString& RequestVerbField() { return *GetNativePointerField<FString*>(this, "FHttpRequestWinInet.RequestVerb"); }
-	TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> > & RequestHeadersField() { return *GetNativePointerField<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >*>(this, "FHttpRequestWinInet.RequestHeaders"); }
+	TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >& RequestHeadersField() { return *GetNativePointerField<TMap<FString, FString, FDefaultSetAllocator, TDefaultMapKeyFuncs<FString, FString, 0> >*>(this, "FHttpRequestWinInet.RequestHeaders"); }
 	TArray<unsigned char>& RequestPayloadField() { return *GetNativePointerField<TArray<unsigned char>*>(this, "FHttpRequestWinInet.RequestPayload"); }
-	TSharedPtr<FHttpResponseWinInet, 1> & ResponseField() { return *GetNativePointerField<TSharedPtr<FHttpResponseWinInet, 1>*>(this, "FHttpRequestWinInet.Response"); }
+	TSharedPtr<FHttpResponseWinInet, 1>& ResponseField() { return *GetNativePointerField<TSharedPtr<FHttpResponseWinInet, 1>*>(this, "FHttpRequestWinInet.Response"); }
 	EHttpRequestStatus::Type& CompletionStatusField() { return *GetNativePointerField<EHttpRequestStatus::Type*>(this, "FHttpRequestWinInet.CompletionStatus"); }
 	void* ConnectionHandleField() { return *GetNativePointerField<void**>(this, "FHttpRequestWinInet.ConnectionHandle"); }
 	void* RequestHandleField() { return *GetNativePointerField<void**>(this, "FHttpRequestWinInet.RequestHandle"); }
@@ -783,7 +771,7 @@ struct FHttpRequestWinInet
 	FString* GenerateHeaderBuffer(FString* result, unsigned int ContentLength) { return NativeCall<FString*, FString*, unsigned int>(this, "FHttpRequestWinInet.GenerateHeaderBuffer", result, ContentLength); }
 	void CancelRequest() { NativeCall<void>(this, "FHttpRequestWinInet.CancelRequest"); }
 	EHttpRequestStatus::Type GetStatus() { return NativeCall<EHttpRequestStatus::Type>(this, "FHttpRequestWinInet.GetStatus"); }
-	TSharedPtr<IHttpResponse, 1> * GetResponse(TSharedPtr<IHttpResponse, 1> * result) { return NativeCall<TSharedPtr<IHttpResponse, 1>*, TSharedPtr<IHttpResponse, 1>*>(this, "FHttpRequestWinInet.GetResponse", result); }
+	TSharedPtr<IHttpResponse, 1>* GetResponse(TSharedPtr<IHttpResponse, 1>* result) { return NativeCall<TSharedPtr<IHttpResponse, 1>*, TSharedPtr<IHttpResponse, 1>*>(this, "FHttpRequestWinInet.GetResponse", result); }
 	void Tick(float DeltaSeconds) { NativeCall<void, float>(this, "FHttpRequestWinInet.Tick", DeltaSeconds); }
 };
 
@@ -807,5 +795,5 @@ struct FHttpModule
 	void StartupModule() { NativeCall<void>(this, "FHttpModule.StartupModule"); }
 	void ShutdownModule() { NativeCall<void>(this, "FHttpModule.ShutdownModule"); }
 	static FHttpModule* Get() { return NativeCall<FHttpModule*>(nullptr, "FHttpModule.Get"); }
-	TSharedRef<IHttpRequest, 0> * CreateRequest(TSharedRef<IHttpRequest, 0> * result) { return NativeCall<TSharedRef<IHttpRequest, 0>*, TSharedRef<IHttpRequest, 0>*>(this, "FHttpModule.CreateRequest", result); }
+	TSharedRef<IHttpRequest, 0>* CreateRequest(TSharedRef<IHttpRequest, 0>* result) { return NativeCall<TSharedRef<IHttpRequest, 0>*, TSharedRef<IHttpRequest, 0>*>(this, "FHttpModule.CreateRequest", result); }
 };
