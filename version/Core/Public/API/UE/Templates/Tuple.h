@@ -11,11 +11,9 @@
 // Static analysis causes internal compiler errors with auto-deduced return types,
 // but some older VC versions still have return type deduction failures inside the delegate code
 // when they are enabled.  So we currently only enable them for static analysis builds.
-#if defined(_MSC_VER) && !defined(__INTEL_COMPILER)
-	#define USE_TUPLE_AUTO_RETURN_TYPES (PLATFORM_COMPILER_HAS_AUTO_RETURN_TYPES && USING_CODE_ANALYSIS)
-#else
-	#define USE_TUPLE_AUTO_RETURN_TYPES 1
-#endif
+
+#define USE_TUPLE_AUTO_RETURN_TYPES 1 // Fixes newest VS compatibility issue
+
 
 #define TUPLES_USE_DEFAULTED_FUNCTIONS 1
 

@@ -44,6 +44,13 @@ struct FName
 	int Compare(FName* Other) { return NativeCall<int, FName*>(this, "FName.Compare", Other); }
 	void Init(const wchar_t* InName, int InNumber, EFindName FindType, bool bSplitName, int HardcodeIndex) { NativeCall<void, const wchar_t*, int, EFindName, bool, int>(this, "FName.Init", InName, InNumber, FindType, bSplitName, HardcodeIndex); }
 	void ToString(FString* Out) { NativeCall<void, FString*>(this, "FName.ToString", Out); }
+	FString ToString()
+	{
+		FString out;
+		this->ToString(&out);
+
+		return out;
+	}
 	void AppendString(FString* Out) { NativeCall<void, FString*>(this, "FName.AppendString", Out); }
 	static bool SplitNameWithCheck(const wchar_t* OldName, wchar_t* NewName, int NewNameLen, int* NewNumber) { return NativeCall<bool, const wchar_t*, wchar_t*, int, int*>(nullptr, "FName.SplitNameWithCheck", OldName, NewName, NewNameLen, NewNumber); }
 	bool IsValidXName(FString InvalidChars, FText* Reason) { return NativeCall<bool, FString, FText*>(this, "FName.IsValidXName", InvalidChars, Reason); }
@@ -79,9 +86,7 @@ struct FGuid
 	uint32_t D;
 };
 
-struct UFunction
-{
-};
+struct UFunction;
 
 struct FBox
 {
@@ -315,6 +320,10 @@ struct UStruct : UField
 	void FinishDestroy() { NativeCall<void>(this, "UStruct.FinishDestroy"); }
 	void SetSuperStruct(UStruct* NewSuperStruct) { NativeCall<void, UStruct*>(this, "UStruct.SetSuperStruct", NewSuperStruct); }
 	void TagSubobjects(EObjectFlags NewFlags) { NativeCall<void, EObjectFlags>(this, "UStruct.TagSubobjects", NewFlags); }
+};
+
+struct UFunction : UStruct
+{
 };
 
 struct FNativeFunctionLookup
