@@ -43,7 +43,7 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendServerMessage(AShooterPlayerController* player_controller, FLinearColor msg_color, const T* msg,
-		                       Args&&... args)
+			Args&&... args)
 		{
 			if (player_controller)
 			{
@@ -66,14 +66,14 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendNotification(AShooterPlayerController* player_controller, FLinearColor color, float display_scale,
-		                      float display_time, UTexture2D* icon, const T* msg, Args&&... args)
+			float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
 			if (player_controller)
 			{
 				FString text(FString::Format(msg, std::forward<Args>(args)...));
 
 				player_controller->ClientServerSOTFNotificationCustom(&text, color, display_scale, display_time, icon,
-				                                                      nullptr);
+					nullptr);
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace ArkApi
 		 */
 		template <typename T, typename... Args>
 		void SendChatMessage(AShooterPlayerController* player_controller, const FString& sender_name, const T* msg,
-		                     Args&&... args)
+			Args&&... args)
 		{
 			if (player_controller)
 			{
@@ -112,7 +112,7 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendServerMessageToAll(FLinearColor msg_color, const T* msg,
-		                            Args&&... args)
+			Args&&... args)
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
@@ -140,7 +140,7 @@ namespace ArkApi
 		*/
 		template <typename T, typename... Args>
 		void SendNotificationToAll(FLinearColor color, float display_scale,
-		                           float display_time, UTexture2D* icon, const T* msg, Args&&... args)
+			float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
 
@@ -257,8 +257,8 @@ namespace ArkApi
 		* \return Array of AShooterPlayerController*
 		*/
 		TArray<AShooterPlayerController*> FindPlayerFromCharacterName(const FString& character_name,
-		                                                              ESearchCase::Type search,
-		                                                              bool full_match) const
+			ESearchCase::Type search,
+			bool full_match) const
 		{
 			TArray<AShooterPlayerController*> found_players;
 
@@ -269,8 +269,8 @@ namespace ArkApi
 				FString char_name = GetCharacterName(shooter_player);
 
 				if (!char_name.IsEmpty() && (full_match
-					                             ? char_name.Equals(character_name, search)
-					                             : char_name.StartsWith(character_name, search)))
+					? char_name.Equals(character_name, search)
+					: char_name.StartsWith(character_name, search)))
 				{
 					found_players.Add(shooter_player);
 				}
@@ -344,7 +344,7 @@ namespace ArkApi
 		 * \return Returns true if drop was spawned, false otherwise
 		 */
 		bool SpawnDrop(const wchar_t* blueprint, FVector pos, int amount, float item_quality = 0.0f,
-		               bool force_blueprint = false, float life_span = 0.0f) const
+			bool force_blueprint = false, float life_span = 0.0f) const
 		{
 			APlayerController* player = GetWorld()->GetFirstPlayerController();
 			if (!player)
@@ -363,7 +363,7 @@ namespace ArkApi
 			archetype.uClass = reinterpret_cast<UClass*>(object);
 
 			UPrimalItem* item = UPrimalItem::AddNewItem(archetype, nullptr, false, false, item_quality, false, amount,
-			                                            force_blueprint, 0, false, nullptr, 0);
+				force_blueprint, 0, false, nullptr, 0);
 			if (!item)
 			{
 				return false;
@@ -377,11 +377,11 @@ namespace ArkApi
 			TSubclassOf<ADroppedItem> archetype_dropped;
 			archetype_dropped.uClass = reinterpret_cast<UClass*>(object);
 
-			FVector zero_vector{0, 0, 0};
-			FRotator rot{0, 0, 0};
+			FVector zero_vector{ 0, 0, 0 };
+			FRotator rot{ 0, 0, 0 };
 
 			UPrimalInventoryComponent::StaticDropItem(player, info, archetype_dropped, &rot, true, &pos, &rot, true,
-			                                          false, false, true, nullptr, &zero_vector, nullptr, life_span);
+				false, false, true, nullptr, &zero_vector, nullptr, life_span);
 
 			FMemory::Free(info);
 
@@ -399,7 +399,7 @@ namespace ArkApi
 		 * \return Spawned dino or null
 		 */
 		APrimalDinoCharacter* SpawnDino(AShooterPlayerController* player, FString blueprint, FVector* location, int lvl,
-		                                bool force_tame, bool neutered) const
+			bool force_tame, bool neutered) const
 		{
 			if (player == nullptr)
 			{
@@ -417,7 +417,7 @@ namespace ArkApi
 
 				if (location != nullptr && !location->IsZero())
 				{
-					FRotator rotation{0, 0, 0};
+					FRotator rotation{ 0, 0, 0 };
 					dino->TeleportTo(location, &rotation, true, false);
 				}
 
@@ -470,8 +470,8 @@ namespace ArkApi
 		static APrimalDinoCharacter* GetRidingDino(AShooterPlayerController* player_controller)
 		{
 			return player_controller != nullptr && player_controller->GetPlayerCharacter() != nullptr
-				       ? player_controller->GetPlayerCharacter()->GetRidingDino()
-				       : nullptr;
+				? player_controller->GetPlayerCharacter()->GetRidingDino()
+				: nullptr;
 		}
 
 		/**
@@ -481,7 +481,7 @@ namespace ArkApi
 		*/
 		static FVector GetPosition(APlayerController* player_controller)
 		{
-			return player_controller != nullptr ? player_controller->DefaultActorLocationField() : FVector{0, 0, 0};
+			return player_controller != nullptr ? player_controller->DefaultActorLocationField() : FVector{ 0, 0, 0 };
 		}
 
 		/**
@@ -492,13 +492,13 @@ namespace ArkApi
 		* \param max_dist Is the max distance the characters can be away from each other -1 is disabled
 		*/
 		static std::optional<FString> TeleportToPlayer(AShooterPlayerController* me, AShooterPlayerController* him,
-		                                               bool check_for_dino, float max_dist)
+			bool check_for_dino, float max_dist)
 		{
 			if (!(me != nullptr && him != nullptr && me->GetPlayerCharacter() != nullptr && him->
-					GetPlayerCharacter()
-					!= nullptr
-					&& !me->GetPlayerCharacter()->IsDead() && !him->GetPlayerCharacter()->IsDead())
-			)
+				GetPlayerCharacter()
+				!= nullptr
+				&& !me->GetPlayerCharacter()->IsDead() && !him->GetPlayerCharacter()->IsDead())
+				)
 			{
 				return "One of players is dead";
 			}
@@ -535,7 +535,6 @@ namespace ArkApi
 
 			return false;
 		}
-
 
 		/**
 		* \brief Counts a specific items quantity
@@ -594,11 +593,11 @@ namespace ArkApi
 				if (int find_index = 0; path_name.FindChar(' ', find_index))
 				{
 					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
-					                                         path_name.Len() - (find_index + (path_name.EndsWith(
-						                                                                          "_C", ESearchCase::
-						                                                                          CaseSensitive)
-						                                                                          ? 3
-						                                                                          : 1))) + "'";
+						path_name.Len() - (find_index + (path_name.EndsWith(
+							"_C", ESearchCase::
+							CaseSensitive)
+							? 3
+							: 1))) + "'";
 					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
 				}
 			}
@@ -623,8 +622,8 @@ namespace ArkApi
 		{
 			auto* shooter_character = static_cast<AShooterCharacter*>(character);
 			return shooter_character != nullptr && shooter_character->GetPlayerData() != nullptr
-				       ? shooter_character->GetPlayerData()->MyDataField()->PlayerDataIDField()
-				       : -1;
+				? shooter_character->GetPlayerData()->MyDataField()->PlayerDataIDField()
+				: -1;
 		}
 
 		static uint64 GetPlayerID(AController* controller)
@@ -640,11 +639,12 @@ namespace ArkApi
 			{
 				const auto& player_controllers = GetWorld()->PlayerControllerListField();
 				for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
-				{					
+				{
 					auto* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
 					if (shooter_pc != nullptr && shooter_pc->LinkedPlayerIDField() == player_id)
 					{
 						steam_id = shooter_pc->GetUniqueNetIdAsUINT64();
+						break;
 					}
 				}
 

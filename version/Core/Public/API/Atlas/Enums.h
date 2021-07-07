@@ -85,7 +85,6 @@ namespace EAttachLocation
 	};
 }
 
-
 namespace EEndPlayReason
 {
 	enum Type
@@ -314,18 +313,6 @@ namespace ETameUnitType
 		ANCHOREDSHIPS = 0x1,
 		UNANCHOREDSHIPS = 0x2,
 		MAX = 0x3
-	};
-}
-
-namespace ESaveType
-{
-	enum Type
-	{
-		Map = 0x0,
-		Profile = 0x1,
-		Tribe = 0x2,
-		CharacterSetting = 0x3,
-		All = 0x4
 	};
 }
 
@@ -576,7 +563,6 @@ namespace ECaptainOrder
 	};
 }
 
-
 namespace EWeaponType
 {
 	enum Type
@@ -812,6 +798,5 @@ namespace ETribeEntityType
 {
 	enum Type
 	{
-
 	};
 }
