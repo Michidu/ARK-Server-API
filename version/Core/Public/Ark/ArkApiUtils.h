@@ -233,17 +233,14 @@ namespace ArkApi
 		AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character) const
 		{
 			AShooterPlayerController* result = nullptr;
-
-			const auto& player_controllers = GetWorld()->PlayerControllerListField();
-			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
+				
+			if (character != nullptr
+				&& !character->IsDead())
 			{
-				auto* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
-
-				if (shooter_pc->GetPlayerCharacter() == character)
-				{
-					result = shooter_pc;
-					break;
-				}
+				result = (character->GetOwnerController()) ?
+					static_cast<AShooterPlayerController*>(character->GetOwnerController())
+					:
+					static_cast<AShooterPlayerController*>(character->GetInstigatorController());
 			}
 
 			return result;
@@ -287,11 +284,9 @@ namespace ArkApi
 		{
 			if (player_controller != nullptr)
 			{
-				auto* player_state = static_cast<AShooterPlayerState*>(player_controller->PlayerStateField());
-				if (player_state != nullptr && player_state->MyPlayerDataStructField() != nullptr)
-				{
-					return player_state->MyPlayerDataStructField()->MyPlayerCharacterConfigField().PlayerCharacterName;
-				}
+				FString player_name("");
+				player_controller->GetPlayerCharacterName(&player_name);
+				return player_name;
 			}
 
 			return FString("");
@@ -311,25 +306,9 @@ namespace ArkApi
 		 * \param steam_id Steam id
 		 * \return Pointer to AShooterPlayerController
 		 */
-		AShooterPlayerController* FindPlayerFromSteamId(uint64 steam_id) const
+		inline AShooterPlayerController* FindPlayerFromSteamId(uint64 steam_id) const
 		{
-			AShooterPlayerController* result = nullptr;
-
-			const auto& player_controllers = GetWorld()->PlayerControllerListField();
-			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
-			{
-				const uint64 current_steam_id = GetSteamIdFromController(player_controller.Get());
-
-				if (current_steam_id == steam_id)
-				{
-					auto* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
-
-					result = shooter_pc;
-					break;
-				}
-			}
-
-			return result;
+			return FindPlayerFromSteamId_Internal(steam_id);
 		}
 
 		/**
@@ -653,6 +632,164 @@ namespace ArkApi
 
 			return steam_id;
 		}
+
+		/**
+		 * \brief Returns blueprint path from any UObject
+		 */
+		static FString GetBlueprint(UObjectBase* object)
+		{
+			if (object != nullptr && object->ClassField() != nullptr)
+			{
+				FString path_name;
+				object->ClassField()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
+
+				if (int find_index = 0; path_name.FindChar(' ', find_index))
+				{
+					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
+						path_name.Len() - (find_index + (path_name.EndsWith(
+							"_C", ESearchCase::
+							CaseSensitive)
+							? 3
+							: 1))) + "'";
+					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
+				}
+			}
+
+			return FString("");
+		}
+
+		/**
+		 * \brief Returns blueprint path from any UClass
+		 */
+		static FString GetClassBlueprint(UClass* the_class)
+		{
+			if (the_class != nullptr)
+			{
+				FString path_name;
+				the_class->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
+
+				if (int find_index = 0; path_name.FindChar(' ', find_index))
+				{
+					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
+						path_name.Len() - (find_index + (path_name.EndsWith(
+							"_C", ESearchCase::
+							CaseSensitive)
+							? 3
+							: 1))) + "'";
+					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
+				}
+			}
+
+			return FString("");
+		}
+
+		/**
+		* \brief Get Shooter Game State
+		*/
+		AShooterGameState* GetGameState()
+		{
+			return static_cast<AShooterGameState*>(GetWorld()->GameStateField());
+		}
+
+		/**
+		* \brief Get UShooterCheatManager* of player controller
+		*/
+		static UShooterCheatManager* GetCheatManagerByPC(AShooterPlayerController* SPC)
+		{
+			if (!SPC) return nullptr;
+
+			UCheatManager* cheat = SPC->CheatManagerField();
+
+			if (cheat)
+			{
+				return static_cast<UShooterCheatManager*>(cheat);
+			}
+
+			return nullptr;
+		}
+
+		/**
+		* \brief Get Tribe ID of player controller
+		*/
+		static int GetTribeID(AShooterPlayerController* player_controller)
+		{
+			int team = 0;
+
+			if (player_controller)
+			{
+				if (player_controller->IsInTribe())
+				{
+					AShooterPlayerState* player_state = player_controller->GetShooterPlayerState();
+					if (player_state)
+					{
+						FTribeData* tribe_data = player_state->MyTribeDataField();
+						team = (tribe_data != nullptr) ? tribe_data->TribeIDField() : 0;
+					}
+				}
+				else
+				{
+					if (player_controller->GetPlayerCharacter())
+					{
+						team = player_controller->GetPlayerCharacter()->TargetingTeamField();
+					}
+				}
+			}
+
+			return team;
+		}
+
+		/**
+		* \brief Get Tribe ID of character
+		*/
+		static int GetTribeID(AShooterCharacter* player_character)
+		{
+			int team = 0;
+
+			if (player_character)
+			{
+				team = player_character->TargetingTeamField();
+			}
+
+			return team;
+		}
+
+		/**
+		* \brief Returns pointer to Primal Game Data
+		*/
+		UPrimalGameData* GetGameData()
+		{
+			UPrimalGlobals* singleton = static_cast<UPrimalGlobals*>(Globals::GEngine()()->GameSingletonField());
+			return (singleton->PrimalGameDataOverrideField() != nullptr) ? singleton->PrimalGameDataOverrideField() : singleton->PrimalGameDataField();
+		}
+
+		/**
+		* \brief Gets all actors in radius at location
+		*/
+		TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType)
+		{
+			TArray<AActor*> out_actors;
+
+			UVictoryCore::ServerOctreeOverlapActors(&out_actors, GetWorld(), location, radius, ActorType, true);
+
+			return out_actors;
+		}
+
+		/**
+		* \brief Gets all actors in radius at location, with ignore actors
+		*/
+		TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType, TArray<AActor*> ignores)
+		{
+			TArray<AActor*> out_actors;
+
+			UVictoryCore::ServerOctreeOverlapActors(&out_actors, GetWorld(), location, radius, ActorType, true);
+
+			for (AActor* ignore : ignores)
+				out_actors.Remove(ignore);
+
+			return out_actors;
+		}
+private:
+		virtual AShooterPlayerController* FindPlayerFromSteamId_Internal(uint64 steam_id) const = 0;
 	};
 
 	ARK_API IApiUtils& APIENTRY GetApiUtils();

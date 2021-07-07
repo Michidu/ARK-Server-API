@@ -1,6 +1,6 @@
 #pragma once
 
-struct AGameState
+struct AGameState : AInfo
 {
 	TSubclassOf<AGameMode>& GameModeClassField() { return *GetNativePointerField<TSubclassOf<AGameMode>*>(this, "AGameState.GameModeClass"); }
 	AGameMode * AuthorityGameModeField() { return *GetNativePointerField<AGameMode **>(this, "AGameState.AuthorityGameMode"); }

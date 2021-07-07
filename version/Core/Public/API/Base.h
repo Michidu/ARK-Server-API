@@ -648,6 +648,9 @@ struct FAttachedInstancedHarvestingElement;
 
 struct UBehaviorTree;
 
+struct FSeamlessIslandInfo;
+struct AInfo;
+
 struct BitField
 {
 	DWORD64 offset;

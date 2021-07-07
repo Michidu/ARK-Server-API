@@ -1352,6 +1352,14 @@ struct AActor : UObject
 	void UserConstructionScript() { NativeCall<void>(this, "AActor.UserConstructionScript"); }
 };
 
+struct AInfo : AActor
+{
+
+	// Functions
+
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "AInfo.StaticClass"); }
+};
+
 struct APawn : AActor
 {
 	float& BaseEyeHeightField() { return *GetNativePointerField<float*>(this, "APawn.BaseEyeHeight"); }
@@ -9770,10 +9778,6 @@ struct FFoliageAttachmentOverride
 {
 	FName ForFoliageTypeName;
 	TSubclassOf<UActorComponent> OverrideActorComponent;
-};
-
-struct AInfo : AActor {
-
 };
 
 
