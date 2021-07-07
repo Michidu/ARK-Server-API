@@ -717,22 +717,7 @@ namespace ArkApi
 
 			if (player_controller)
 			{
-				if (player_controller->IsInTribe())
-				{
-					AShooterPlayerState* player_state = player_controller->GetShooterPlayerState();
-					if (player_state)
-					{
-						FTribeData* tribe_data = player_state->MyTribeDataField();
-						team = (tribe_data != nullptr) ? tribe_data->TribeIDField() : 0;
-					}
-				}
-				else
-				{
-					if (player_controller->GetPlayerCharacter())
-					{
-						team = player_controller->GetPlayerCharacter()->TargetingTeamField();
-					}
-				}
+				team = player_controller->TargetingTeamField();
 			}
 
 			return team;
