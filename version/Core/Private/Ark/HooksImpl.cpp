@@ -21,6 +21,7 @@ namespace ArkApi
 	DECLARE_HOOK(RCONClientConnection_ProcessRCONPacket, void, RCONClientConnection*, RCONPacket*, UWorld*);
 	DECLARE_HOOK(AGameState_DefaultTimer, void, AGameState*);
 	DECLARE_HOOK(AShooterGameMode_BeginPlay, void, AShooterGameMode*);
+	DECLARE_HOOK(URCONServer_Init, bool, URCONServer*, FString, int, UShooterCheatManager*);
 
 	void InitHooks()
 	{
@@ -41,6 +42,7 @@ namespace ArkApi
 		hooks->SetHook("AGameState.DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
 		hooks->SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay,
 		               &AShooterGameMode_BeginPlay_original);
+		hooks->SetHook("URCONServer.Init", &Hook_URCONServer_Init, &URCONServer_Init_original);
 
 		Log::GetLog()->info("Initialized hooks\n");
 	}
@@ -151,5 +153,12 @@ namespace ArkApi
 		AShooterGameMode_BeginPlay_original(_AShooterGameMode);
 
 		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetStatus(ServerStatus::Ready);
+	}
+
+	bool Hook_URCONServer_Init(URCONServer* _this, FString Password, int InPort, UShooterCheatManager* SCheatManager)
+	{
+		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetCheatManager(SCheatManager);
+
+		return URCONServer_Init_original(_this, Password, InPort, SCheatManager);
 	}
 } // namespace ArkApi

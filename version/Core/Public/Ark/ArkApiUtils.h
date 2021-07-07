@@ -29,6 +29,10 @@ namespace ArkApi
 		virtual ServerStatus GetStatus() const = 0;
 
 		/**
+		* \brief Returns a point to URCON CheatManager
+		*/
+		virtual UShooterCheatManager* GetCheatManager() const = 0;
+		/**
 		* \brief Sends server message to the specific player. Using fmt::format.
 		* \tparam T Either a a char or wchar_t
 		* \tparam Args Optional arguments types

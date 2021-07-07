@@ -40,6 +40,16 @@ namespace AtlasApi
 		return status_;
 	}
 
+	void ApiUtils::SetCheatManager(UShooterCheatManager* cheatmanager)
+	{
+		cheatmanager_ = cheatmanager;
+	}
+
+	UShooterCheatManager* ApiUtils::GetCheatManager() const
+	{
+		return cheatmanager_;
+	}
+
 	// Free function
 	ArkApi::IApiUtils& GetApiUtils()
 	{

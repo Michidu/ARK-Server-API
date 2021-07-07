@@ -82,7 +82,15 @@ struct FSocket
 {
 	ESocketType& SocketTypeField() { return *GetNativePointerField<ESocketType*>(this, "FSocket.SocketType"); }
 	FString& SocketDescriptionField() { return *GetNativePointerField<FString*>(this, "FSocket.SocketDescription"); }
+};
 
+struct URCONServer : UObject
+{
+	FSocket& SocketField() { return *GetNativePointerField<FSocket*>(this, "URCONServer.Socket"); }
+	TSharedPtr<FInternetAddr>& ListenAddrField() { return *GetNativePointerField<TSharedPtr<FInternetAddr>*>(this, "URCONServer.ListenAddr"); }
+	TArray<RCONClientConnection*>& ConnectionsField() { return *GetNativePointerField<TArray<RCONClientConnection*>*>(this, "URCONServer.Connections"); }
+	UShooterCheatManager& CheatManagerField() { return *GetNativePointerField<UShooterCheatManager*>(this, "URCONServer.CheatManager"); }
+	FString& ServerPasswordField() { return *GetNativePointerField<FString*>(this, "URCONServer.ServerPassword"); }
 };
 
 struct FSocketBSD : FSocket
@@ -434,6 +442,7 @@ struct UVictoryCore
 	static bool IsWorkshopIDSubscribed(FString* WorkshopID) { return NativeCall<bool, FString*>(nullptr, "UVictoryCore.IsWorkshopIDSubscribed", WorkshopID); }
 	static FTransform* InverseTransform(FTransform* result, FTransform* TransformIn) { return NativeCall<FTransform*, FTransform*, FTransform*>(nullptr, "UVictoryCore.InverseTransform", result, TransformIn); }
 	static UClass* BPLoadClass(FString* PathName) { return NativeCall<UClass*, FString*>(nullptr, "UVictoryCore.BPLoadClass", PathName); }
+	static UObject* BPLoadObject(FString* PathName) { return NativeCall<UObject*, FString*>(nullptr, "UVictoryCore.BPLoadObject", PathName); }
 	static bool VTraceAgainstActorExpensive(UWorld* theWorld, FVector* Start, FVector* End, FHitResult* HitOut, AActor* ActorToTraceAgainst, ECollisionChannel Channel, int CollisionGroups, float SphereRadius, bool bReturnPhysMaterial, bool bTraceComplex, FVector* BoxExtent, FName TraceTag, bool bSort) { return NativeCall<bool, UWorld*, FVector*, FVector*, FHitResult*, AActor*, ECollisionChannel, int, float, bool, bool, FVector*, FName, bool>(nullptr, "UVictoryCore.VTraceAgainstActorExpensive", theWorld, Start, End, HitOut, ActorToTraceAgainst, Channel, CollisionGroups, SphereRadius, bReturnPhysMaterial, bTraceComplex, BoxExtent, TraceTag, bSort); }
 	static FString* GetClassString(FString* result, UObject* ForObject) { return NativeCall<FString*, FString*, UObject*>(nullptr, "UVictoryCore.GetClassString", result, ForObject); }
 	static FString* GetClassPathName(FString* result, UObject* ForObject) { return NativeCall<FString*, FString*, UObject*>(nullptr, "UVictoryCore.GetClassPathName", result, ForObject); }

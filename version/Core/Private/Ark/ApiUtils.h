@@ -19,14 +19,17 @@ namespace ArkApi
 		UWorld* GetWorld() const override;
 		AShooterGameMode* GetShooterGameMode() const override;
 		ServerStatus GetStatus() const override;
+		UShooterCheatManager* GetCheatManager() const override;
 
 		void SetWorld(UWorld* uworld);
 		void SetShooterGameMode(AShooterGameMode* shooter_game_mode);
 		void SetStatus(ServerStatus status);
+		void SetCheatManager(UShooterCheatManager* cheatmanager);
 
 	private:
 		UWorld* u_world_{nullptr};
 		AShooterGameMode* shooter_game_mode_{nullptr};
 		ServerStatus status_{0};
+		UShooterCheatManager* cheatmanager_{ nullptr };
 	};
 } // namespace ArkApi

@@ -94,7 +94,17 @@ namespace ArkApi
 		{
 			if (data)
 			{
+				try
+				{
 				data->callback(delta_seconds);
+			}
+				catch (...)
+				{
+					if (typeid(data->command) == typeid(FString) && !data->command.IsEmpty())
+						Log::GetLog()->error(fmt::format("Prevented Tick Crash in: {}", data->command.ToString()));
+					else
+						Log::GetLog()->error("Prevented Tick Crash in: Unknown");
+				}
 			}
 		}
 	}
@@ -105,7 +115,17 @@ namespace ArkApi
 		{
 			if (data)
 			{
+				try
+				{
 				data->callback();
+			}
+				catch (...)
+				{
+					if (typeid(data->command) == typeid(FString) && !data->command.IsEmpty())
+						Log::GetLog()->error(fmt::format("Prevented Timer Crash in: {}", data->command.ToString()));
+					else
+						Log::GetLog()->error("Prevented Timer Crash in: Unknown");
+				}
 			}
 		}
 	}

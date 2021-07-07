@@ -44,6 +44,12 @@ struct FUniqueNetIdRepl
 	TSharedPtr<FUniqueNetId> UniqueNetId;
 };
 
+struct FWeightedObjectList
+{
+	TArray<float> Weights;
+	TArray<UObject*> AssociatedObjects;
+};
+
 struct FActorSpawnParameters
 {
 	FActorSpawnParameters()
@@ -104,8 +110,8 @@ struct __declspec(align(8)) FDinoSetup
 	char PlayerAddedPointsPerStat[12];
 	FVector SpawnOffset;
 	TEnumAsByte<enum EDinoTamedOrder::Type> DinoState;
-	TArray<TEnumAsByte<enum EPrimalCharacterStatusValue::Type>, FDefaultAllocator> PrioritizeStats;
-	TArray<FItemSetup, FDefaultAllocator> TamedDinoInventory;
+	TArray<TEnumAsByte<enum EPrimalCharacterStatusValue::Type>> PrioritizeStats;
+	TArray<FItemSetup> TamedDinoInventory;
 	TSubclassOf<UPrimalItem> SaddleType;
 	FString SaddleBlueprintPath;
 	float SaddleQuality;
@@ -213,7 +219,7 @@ struct FARKTributeDino : FArkTributeEntity
 {
 	FString DinoClassName;
 	UClass* DinoClass;
-	TArray<unsigned char, FDefaultAllocator> DinoData;
+	TArray<unsigned char> DinoData;
 	FString DinoName;
 	FString DinoNameInMap;
 	FString DinoStats[12];
@@ -226,7 +232,7 @@ struct FARKTributeDino : FArkTributeEntity
 struct FARKDinoData
 {
 	UClass* DinoClass;
-	TArray<unsigned char, FDefaultAllocator> DinoData;
+	TArray<unsigned char> DinoData;
 	FString DinoNameInMap;
 	FString DinoName;
 };
@@ -241,8 +247,8 @@ struct FDinoBaseLevelWeightEntry
 struct __declspec(align(8)) FClassRemappingWeight
 {
 	TSubclassOf<UObject> FromClass;
-	TArray<TSubclassOf<UObject>, FDefaultAllocator> ToClasses;
-	TArray<float, FDefaultAllocator> Weights;
+	TArray<TSubclassOf<UObject>> ToClasses;
+	TArray<float> Weights;
 	FName ActiveEvent;
 	unsigned __int32 bExactMatch : 1;
 };
@@ -281,24 +287,24 @@ struct FAdminPlayerDataInfo
 struct FNPCSpawnEntry
 {
 	FString AnEntryName;
-	TArray<TSubclassOf<APrimalDinoCharacter>, FDefaultAllocator> NPCsToSpawn;
-	TArray<FString, FDefaultAllocator> NPCsToSpawnStrings;
-	TArray<FClassRemappingWeight, FDefaultAllocator> NPCRandomSpawnClassWeights;
-	TArray<FVector, FDefaultAllocator> NPCsSpawnOffsets;
-	TArray<float, FDefaultAllocator> NPCsToSpawnPercentageChance;
-	TArray<float, FDefaultAllocator> NPCMinLevelOffset;
-	TArray<float, FDefaultAllocator> NPCMaxLevelOffset;
-	TArray<float, FDefaultAllocator> NPCMinLevelMultiplier;
-	TArray<float, FDefaultAllocator> NPCMaxLevelMultiplier;
+	TArray<TSubclassOf<APrimalDinoCharacter>> NPCsToSpawn;
+	TArray<FString> NPCsToSpawnStrings;
+	TArray<FClassRemappingWeight> NPCRandomSpawnClassWeights;
+	TArray<FVector> NPCsSpawnOffsets;
+	TArray<float> NPCsToSpawnPercentageChance;
+	TArray<float> NPCMinLevelOffset;
+	TArray<float> NPCMaxLevelOffset;
+	TArray<float> NPCMinLevelMultiplier;
+	TArray<float> NPCMaxLevelMultiplier;
 	unsigned __int32 bAddLevelOffsetBeforeMultiplier : 1;
-	TArray<unsigned char, FDefaultAllocator> NPCOverrideLevel;
+	TArray<unsigned char> NPCOverrideLevel;
 	FVector ExtentCheck;
 	FVector GroupSpawnOffset;
 	float EntryWeight;
 	float ManualSpawnPointSpreadRadius;
 	float WaterOnlySpawnMinimumWaterHeight;
 	float MaximumWaterHeight;
-	TArray<FNPCDifficultyLevelRange, FDefaultAllocator> NPCDifficultyLevelRanges;
+	TArray<FNPCDifficultyLevelRange> NPCDifficultyLevelRanges;
 	float LevelDifficultyTestOverride;
 	float SpawnMinDistanceFromStructuresMultiplier;
 	float SpawnMinDistanceFromPlayersMultiplier;
@@ -317,8 +323,8 @@ struct FNPCSpawnLimit
 
 struct __declspec(align(8)) UNPCSpawnEntriesContainer : UObject
 {
-	TArray<FNPCSpawnEntry, FDefaultAllocator> NPCSpawnEntries;
-	TArray<FNPCSpawnLimit, FDefaultAllocator> NPCSpawnLimits;
+	TArray<FNPCSpawnEntry> NPCSpawnEntries;
+	TArray<FNPCSpawnLimit> NPCSpawnLimits;
 	float MaxDesiredNumEnemiesMultiplier;
 };
 
@@ -365,11 +371,11 @@ struct FARKTributeData
 {
 	FGuid ID;
 	TEnumAsByte<enum EPrimalARKTributeDataType::Type> DataType;
-	TArray<unsigned char, FDefaultAllocator> DataBytes;
+	TArray<unsigned char> DataBytes;
 	FString DataClassName;
 	FString DataTagName;
 	FString Name;
-	TArray<FString, FDefaultAllocator> DataStats;
+	TArray<FString> DataStats;
 	long double LastReceiveDataTime;
 	unsigned int DataID1;
 	unsigned int DataID2;
@@ -391,7 +397,7 @@ struct FArkTributePlayerDataListing
 struct FArkTributePlayerData : FArkTributeEntity
 {
 	unsigned __int64 PlayerDataID;
-	TArray<unsigned char, FDefaultAllocator> PlayerDataBytes;
+	TArray<unsigned char> PlayerDataBytes;
 	FString PlayerName;
 	FString PlayerStats[12];
 	FString UploadingServerMapName;
@@ -441,7 +447,7 @@ struct USceneComponent : UActorComponent
 
 	// Functions
 
-	UField* StaticClass() { return NativeCall<UField*>(this, "USceneComponent.StaticClass"); }
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "USceneComponent.StaticClass"); }
 	void OnChildAttached(USceneComponent* ChildComponent) { NativeCall<void, USceneComponent*>(this, "USceneComponent.OnChildAttached", ChildComponent); }
 	FVector* GetCustomLocation(FVector* result) { return NativeCall<FVector*, FVector*>(this, "USceneComponent.GetCustomLocation", result); }
 
@@ -625,7 +631,7 @@ struct UPrimitiveComponent : USceneComponent
 	bool AreSymmetricRotations(FQuat* A, FQuat* B, FVector* Scale3D) { return NativeCall<bool, FQuat*, FQuat*, FVector*>(this, "UPrimitiveComponent.AreSymmetricRotations", A, B, Scale3D); }
 	char GetStaticDepthPriorityGroup() { return NativeCall<char>(this, "UPrimitiveComponent.GetStaticDepthPriorityGroup"); }
 	bool HasValidSettingsForStaticLighting() { return NativeCall<bool>(this, "UPrimitiveComponent.HasValidSettingsForStaticLighting"); }
-	UField* GetPrivateStaticClass() { return NativeCall<UField*>(this, "UPrimitiveComponent.GetPrivateStaticClass"); }
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "UPrimitiveComponent.GetPrivateStaticClass"); }
 	void GetLightAndShadowMapMemoryUsage(int* OutNum, int* OutMax) { NativeCall<void, int*, int*>(this, "UPrimitiveComponent.GetLightAndShadowMapMemoryUsage", OutNum, OutMax); }
 	void DestroyRenderState_Concurrent() { NativeCall<void>(this, "UPrimitiveComponent.DestroyRenderState_Concurrent"); }
 	void FinishDestroy() { NativeCall<void>(this, "UPrimitiveComponent.FinishDestroy"); }
@@ -1203,7 +1209,7 @@ struct AInfo : AActor
 
 	// Functions
 
-	UField* StaticClass() { return NativeCall<UField*>(this, "AInfo.StaticClass"); }
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "AInfo.StaticClass"); }
 };
 
 struct APawn : AActor
@@ -5659,6 +5665,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	int& MinPlayerLevelForWakingTameField() { return *GetNativePointerField<int*>(this, "APrimalDinoCharacter.MinPlayerLevelForWakingTame"); }
 	float& ForceNextAttackIndexField() { return *GetNativePointerField<float*>(this, "APrimalDinoCharacter.ForceNextAttackIndex"); }
 	TSubclassOf<UPrimalInventoryComponent> & TamedInventoryComponentTemplateField() { return *GetNativePointerField<TSubclassOf<UPrimalInventoryComponent>*>(this, "APrimalDinoCharacter.TamedInventoryComponentTemplate"); }
+	FWeightedObjectList& DeathInventoryTemplatesField() { return *GetNativePointerField<FWeightedObjectList*>(this, "APrimalDinoCharacter.DeathInventoryTemplates"); }
 	float& DeathInventoryChanceToUseField() { return *GetNativePointerField<float*>(this, "APrimalDinoCharacter.DeathInventoryChanceToUse"); }
 	float& WakingTameFeedIntervalField() { return *GetNativePointerField<float*>(this, "APrimalDinoCharacter.WakingTameFeedInterval"); }
 	long double& LastWakingTameFedTimeField() { return *GetNativePointerField<long double*>(this, "APrimalDinoCharacter.LastWakingTameFedTime"); }
@@ -8427,11 +8434,11 @@ struct ANPCZoneVolume : AVolume
 	/*unsigned __int32 bOnlyCountWaterDinos : 1;
 	unsigned __int32 bOnlyCountLandDinos : 1;
 	unsigned __int32 bCountTamedDinos : 1;
-	TArray<TSubclassOf<APrimalDinoCharacter>, FDefaultAllocator> OnlyCountDinoClasses;
-	TArray<TSubclassOf<APrimalDinoCharacter>, FDefaultAllocator> IgnoreDinoClasses;
-	TArray<FHibernationCountInfo, FDefaultAllocator> HibernatedEntities;
+	TArray<TSubclassOf<APrimalDinoCharacter>> OnlyCountDinoClasses;
+	TArray<TSubclassOf<APrimalDinoCharacter>> IgnoreDinoClasses;
+	TArray<FHibernationCountInfo> HibernatedEntities;
 	float HibernatedCountWeights;
-	TArray<APrimalDinoCharacter *, FDefaultAllocator> OverlappedDinos;
+	TArray<APrimalDinoCharacter *> OverlappedDinos;
 	float CountWeights;*/
 };
 
@@ -8443,8 +8450,8 @@ struct FLinkedZoneSpawnVolumeEntry
 {
 	// Fields
 	/*ANPCZoneSpawnVolume *LinkedZoneSpawnVolume;
-	TArray<AActor *, FDefaultAllocator> ZoneSpawnVolumeFloors;
-	TArray<FName, FDefaultAllocator> ZoneSpawnVolumeFloorTags;
+	TArray<AActor *> ZoneSpawnVolumeFloors;
+	TArray<FName> ZoneSpawnVolumeFloorTags;
 	float EntryWeight;*/
 };
 
@@ -8454,6 +8461,12 @@ struct AWorldSettings : AInfo
 
 struct APrimalWorldSettings : AWorldSettings
 {
+	bool& bOverrideLongitudeAndLatitudeField() { return *GetNativePointerField<bool*>(this, "APrimalWorldSettings.bOverrideLongitudeAndLatitude"); }
+	float& LongitudeScaleField() { return *GetNativePointerField<float*>(this, "APrimalWorldSettings.LongitudeScale"); }
+	float& LatitudeScaleField() { return *GetNativePointerField<float*>(this, "APrimalWorldSettings.LatitudeScale"); }
+	float& LongitudeOriginField() { return *GetNativePointerField<float*>(this, "APrimalWorldSettings.LongitudeOrigin"); }
+	float& LatitudeOriginField() { return *GetNativePointerField<float*>(this, "APrimalWorldSettings.LatitudeOrigin"); }
+	TMap<unsigned int, AActor*>& StructureIDMapField() { return *GetNativePointerField <TMap<unsigned int, AActor*>*>(this, "APrimalWorldSettings.StructureIDMap"); }
 };
 
 struct ANPCZoneManager
@@ -8546,7 +8559,7 @@ struct ANPCZoneManager
 	void EndPlay(EEndPlayReason::Type EndPlayReason) { NativeCall<void, EEndPlayReason::Type>(this, "ANPCZoneManager.EndPlay", EndPlayReason); }
 	static TArray<APrimalDinoCharacter *> * StaticSpawnNPCs(TArray<APrimalDinoCharacter *> * result, UObject * WorldContext, ANPCZoneManager * AtZoneManager, TSubclassOf<UNPCSpawnEntriesContainer> TheNPCSpawnEntries, FVector AtSpawnPoint, FRotator AtRotation, int UseSpawnVolumeIndex) { return NativeCall<TArray<APrimalDinoCharacter *> *, TArray<APrimalDinoCharacter *> *, UObject *, ANPCZoneManager *, TSubclassOf<UNPCSpawnEntriesContainer>, FVector, FRotator, int>(nullptr, "ANPCZoneManager.StaticSpawnNPCs", result, WorldContext, AtZoneManager, TheNPCSpawnEntries, AtSpawnPoint, AtRotation, UseSpawnVolumeIndex); }
 	static void StaticRegisterNativesANPCZoneManager() { NativeCall<void>(nullptr, "ANPCZoneManager.StaticRegisterNativesANPCZoneManager"); }
-	UField * GetPrivateStaticClass() { return NativeCall<UField *>(this, "ANPCZoneManager.GetPrivateStaticClass"); }
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "ANPCZoneManager.GetPrivateStaticClass"); }
 };
 
 struct AShooterProjectile : AActor
@@ -8845,19 +8858,460 @@ struct FHarvestResourceEntry
 	float QualityMax;
 	float XPGainMax;
 	float XPGainMin;
-	TArray<TSubclassOf<UDamageType>, FDefaultAllocator> DamageTypeEntryValuesOverrides;
-	TArray<float, FDefaultAllocator> DamageTypeEntryWeightOverrides;
-	TArray<float, FDefaultAllocator> DamageTypeEntryMinQuantityOverrides;
-	TArray<float, FDefaultAllocator> DamageTypeEntryMaxQuantityOverrides;
+	TArray<TSubclassOf<UDamageType>> DamageTypeEntryValuesOverrides;
+	TArray<float> DamageTypeEntryWeightOverrides;
+	TArray<float> DamageTypeEntryMinQuantityOverrides;
+	TArray<float> DamageTypeEntryMaxQuantityOverrides;
 	__int8 bScaleWithDinoBabyAge : 1;
 };
 
 struct UMeshComponent : UPrimitiveComponent
 {
+	FieldArray<char, 8> MaterialsField() { return { this, "UMeshComponent.Materials" }; }
+
+	// Functions
+
+	void BeginDestroy() { NativeCall<void>(this, "UMeshComponent.BeginDestroy"); }
+	void SetMaterial(int ElementIndex, UMaterialInterface* Material) { NativeCall<void, int, UMaterialInterface*>(this, "UMeshComponent.SetMaterial", ElementIndex, Material); }
+	void GetUsedMaterials(TArray<UMaterialInterface*>* OutMaterials) { NativeCall<void, TArray<UMaterialInterface*>*>(this, "UMeshComponent.GetUsedMaterials", OutMaterials); }
+	void PrestreamTextures(float Seconds, bool bPrioritizeCharacterTextures, int CinematicTextureGroups) { NativeCall<void, float, bool, int>(this, "UMeshComponent.PrestreamTextures", Seconds, bPrioritizeCharacterTextures, CinematicTextureGroups); }
+	void SetTextureForceResidentFlag(bool bForceMiplevelsToBeResident) { NativeCall<void, bool>(this, "UMeshComponent.SetTextureForceResidentFlag", bForceMiplevelsToBeResident); }
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UMeshComponent.GetPrivateStaticClass", Package); }
 	TArray<UMaterialInterface*, FDefaultAllocator> Materials;
 	TArray<UMaterialInterface*, FDefaultAllocator> DefaultMaterialsOverride;
 	TSubclassOf<AActor> DamageFXActorToSpawn;
+};
+
+struct USkinnedMeshComponent : UMeshComponent
+{
+	TArray<FTransform>& SpaceBasesField() { return *GetNativePointerField<TArray<FTransform>*>(this, "USkinnedMeshComponent.SpaceBases"); }
+	TArray<int>& MasterBoneMapField() { return *GetNativePointerField<TArray<int>*>(this, "USkinnedMeshComponent.MasterBoneMap"); }
+	//TArray<FActiveVertexAnim>& ActiveVertexAnimsField() { return *GetNativePointerField<TArray<FActiveVertexAnim>*>(this, "USkinnedMeshComponent.ActiveVertexAnims"); }
+	//UPhysicsAsset* PhysicsAssetOverrideField() { return GetNativePointerField<UPhysicsAsset*>(this, "USkinnedMeshComponent.PhysicsAssetOverride"); }
+	int& ForcedLodModelField() { return *GetNativePointerField<int*>(this, "USkinnedMeshComponent.ForcedLodModel"); }
+	int& MinLodModelField() { return *GetNativePointerField<int*>(this, "USkinnedMeshComponent.MinLodModel"); }
+	int& PredictedLODLevelField() { return *GetNativePointerField<int*>(this, "USkinnedMeshComponent.PredictedLODLevel"); }
+	int& OldPredictedLODLevelField() { return *GetNativePointerField<int*>(this, "USkinnedMeshComponent.OldPredictedLODLevel"); }
+	float& MaxDistanceFactorField() { return *GetNativePointerField<float*>(this, "USkinnedMeshComponent.MaxDistanceFactor"); }
+	float& ShadowedRecentlyRenderedBoundsScaleMultiplierField() { return *GetNativePointerField<float*>(this, "USkinnedMeshComponent.ShadowedRecentlyRenderedBoundsScaleMultiplier"); }
+	//TArray<FSkelMeshComponentLODInfo>& LODInfoField() { return *GetNativePointerField<TArray<FSkelMeshComponentLODInfo>*>(this, "USkinnedMeshComponent.LODInfo"); }
+	float& StreamingDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "USkinnedMeshComponent.StreamingDistanceMultiplier"); }
+	FColor& WireframeColorField() { return *GetNativePointerField<FColor*>(this, "USkinnedMeshComponent.WireframeColor"); }
+	float& ForceTickPoseWithinRangeSquaredField() { return *GetNativePointerField<float*>(this, "USkinnedMeshComponent.ForceTickPoseWithinRangeSquared"); }
+	TArray<unsigned char>& BoneVisibilityStatesField() { return *GetNativePointerField<TArray<unsigned char>*>(this, "USkinnedMeshComponent.BoneVisibilityStates"); }
+	//TEnumAsByte<enum EMeshComponentUpdateFlag::Type>& MeshComponentUpdateFlagField() { return *GetNativePointerField<TEnumAsByte<enum EMeshComponentUpdateFlag::Type>*>(this, "USkinnedMeshComponent.MeshComponentUpdateFlag"); }
+	float& ProgressiveDrawingFractionField() { return *GetNativePointerField<float*>(this, "USkinnedMeshComponent.ProgressiveDrawingFraction"); }
+	char& CustomSortAlternateIndexModeField() { return *GetNativePointerField<char*>(this, "USkinnedMeshComponent.CustomSortAlternateIndexMode"); }
+	FBoxSphereBounds& CachedLocalBoundsField() { return *GetNativePointerField<FBoxSphereBounds*>(this, "USkinnedMeshComponent.CachedLocalBounds"); }
+	bool& bCachedLocalBoundsUpToDateField() { return *GetNativePointerField<bool*>(this, "USkinnedMeshComponent.bCachedLocalBoundsUpToDate"); }
+	bool& bEnableUpdateRateOptimizationsField() { return *GetNativePointerField<bool*>(this, "USkinnedMeshComponent.bEnableUpdateRateOptimizations"); }
+	bool& bDisplayDebugUpdateRateOptimizationsField() { return *GetNativePointerField<bool*>(this, "USkinnedMeshComponent.bDisplayDebugUpdateRateOptimizations"); }
+	float& SkippedTickDeltaTimeField() { return *GetNativePointerField<float*>(this, "USkinnedMeshComponent.SkippedTickDeltaTime"); }
+	bool& bPoseTickedField() { return *GetNativePointerField<bool*>(this, "USkinnedMeshComponent.bPoseTicked"); }
+	//FAnimUpdateRateParameters& AnimUpdateRateParamsField() { return *GetNativePointerField<FAnimUpdateRateParameters*>(this, "USkinnedMeshComponent.AnimUpdateRateParams"); }
+
+	// Functions
+
+	FBoxSphereBounds* CalcBounds(FBoxSphereBounds* result, FTransform* LocalToWorld) { return NativeCall<FBoxSphereBounds*, FBoxSphereBounds*, FTransform*>(this, "USkinnedMeshComponent.CalcBounds", result, LocalToWorld); }
+	void Serialize(FArchive* Ar) { NativeCall<void, FArchive*>(this, "USkinnedMeshComponent.Serialize", Ar); }
+	//unsigned __int64 GetResourceSize(EResourceSizeMode::Type Mode) { return NativeCall<unsigned __int64, EResourceSizeMode::Type>(this, "USkinnedMeshComponent.GetResourceSize", Mode); }
+	void OnRegister() { NativeCall<void>(this, "USkinnedMeshComponent.OnRegister"); }
+	void OnUnregister() { NativeCall<void>(this, "USkinnedMeshComponent.OnUnregister"); }
+	void CreateRenderState_Concurrent() { NativeCall<void>(this, "USkinnedMeshComponent.CreateRenderState_Concurrent"); }
+	void DestroyRenderState_Concurrent() { NativeCall<void>(this, "USkinnedMeshComponent.DestroyRenderState_Concurrent"); }
+	FString* GetDetailedInfoInternal(FString* result) { return NativeCall<FString*, FString*>(this, "USkinnedMeshComponent.GetDetailedInfoInternal", result); }
+	void SendRenderDynamicData_Concurrent() { NativeCall<void>(this, "USkinnedMeshComponent.SendRenderDynamicData_Concurrent"); }
+	void InitLODInfos() { NativeCall<void>(this, "USkinnedMeshComponent.InitLODInfos"); }
+	bool ShouldTickPose() { return NativeCall<bool>(this, "USkinnedMeshComponent.ShouldTickPose"); }
+	bool ShouldUpdateTransform(bool bLODHasChanged) { return NativeCall<bool, bool>(this, "USkinnedMeshComponent.ShouldUpdateTransform", bLODHasChanged); }
+	void TickUpdateRate() { NativeCall<void>(this, "USkinnedMeshComponent.TickUpdateRate"); }
+	int GetNumMaterials() { return NativeCall<int>(this, "USkinnedMeshComponent.GetNumMaterials"); }
+	//void GetStreamingTextureInfo(TArray<FStreamingTexturePrimitiveInfo>* OutStreamingTextures) { NativeCall<void, TArray<FStreamingTexturePrimitiveInfo>*>(this, "USkinnedMeshComponent.GetStreamingTextureInfo", OutStreamingTextures); }
+	bool ShouldUpdateBoneVisibility() { return NativeCall<bool>(this, "USkinnedMeshComponent.ShouldUpdateBoneVisibility"); }
+	void RebuildVisibilityArray() { NativeCall<void>(this, "USkinnedMeshComponent.RebuildVisibilityArray"); }
+	//UPhysicsAsset* GetPhysicsAsset() { return NativeCall<UPhysicsAsset*>(this, "USkinnedMeshComponent.GetPhysicsAsset"); }
+	FBoxSphereBounds* CalcMeshBound(FBoxSphereBounds* result, FVector* RootOffset, bool UsePhysicsAsset, FTransform* LocalToWorld) { return NativeCall<FBoxSphereBounds*, FBoxSphereBounds*, FVector*, bool, FTransform*>(this, "USkinnedMeshComponent.CalcMeshBound", result, RootOffset, UsePhysicsAsset, LocalToWorld); }
+	//FMatrix* GetBoneMatrix(FMatrix* result, int BoneIdx) { return NativeCall<FMatrix*, FMatrix*, int>(this, "USkinnedMeshComponent.GetBoneMatrix", result, BoneIdx); }
+	FTransform* GetBoneTransform(FTransform* result, int BoneIdx) { return NativeCall<FTransform*, FTransform*, int>(this, "USkinnedMeshComponent.GetBoneTransform", result, BoneIdx); }
+	int GetBoneIndex(FName BoneName) { return NativeCall<int, FName>(this, "USkinnedMeshComponent.GetBoneIndex", BoneName); }
+	FName* GetBoneName(FName* result, int BoneIndex) { return NativeCall<FName*, FName*, int>(this, "USkinnedMeshComponent.GetBoneName", result, BoneIndex); }
+	//void SetSkeletalMesh(USkeletalMesh* InSkelMesh) { NativeCall<void, USkeletalMesh*>(this, "USkinnedMeshComponent.SetSkeletalMesh", InSkelMesh); }
+	//FSkeletalMeshResource* GetSkeletalMeshResource() { return NativeCall<FSkeletalMeshResource*>(this, "USkinnedMeshComponent.GetSkeletalMeshResource"); }
+	bool AllocateTransformData() { return NativeCall<bool>(this, "USkinnedMeshComponent.AllocateTransformData"); }
+	void DeallocateTransformData() { NativeCall<void>(this, "USkinnedMeshComponent.DeallocateTransformData"); }
+	//void SetPhysicsAsset(UPhysicsAsset* InPhysicsAsset, bool bForceReInit) { NativeCall<void, UPhysicsAsset*, bool>(this, "USkinnedMeshComponent.SetPhysicsAsset", InPhysicsAsset, bForceReInit); }
+	void SetMasterPoseComponent(USkinnedMeshComponent* NewMasterBoneComponent) { NativeCall<void, USkinnedMeshComponent*>(this, "USkinnedMeshComponent.SetMasterPoseComponent", NewMasterBoneComponent); }
+	void InvalidateCachedBounds() { NativeCall<void>(this, "USkinnedMeshComponent.InvalidateCachedBounds"); }
+	void RefreshSlaveComponents() { NativeCall<void>(this, "USkinnedMeshComponent.RefreshSlaveComponents"); }
+	//UMorphTarget* FindMorphTarget(FName MorphTargetName) { return NativeCall<UMorphTarget*, FName>(this, "USkinnedMeshComponent.FindMorphTarget", MorphTargetName); }
+	void UpdateMasterBoneMap() { NativeCall<void>(this, "USkinnedMeshComponent.UpdateMasterBoneMap"); }
+	TArray<FName>* GetAllSocketNames(TArray<FName>* result) { return NativeCall<TArray<FName>*, TArray<FName>*>(this, "USkinnedMeshComponent.GetAllSocketNames", result); }
+	FTransform* GetSocketTransform(FTransform* result, FName InSocketName, ERelativeTransformSpace TransformSpace) { return NativeCall<FTransform*, FTransform*, FName, ERelativeTransformSpace>(this, "USkinnedMeshComponent.GetSocketTransform", result, InSocketName, TransformSpace); }
+	bool DoesSocketExist(FName InSocketName) { return NativeCall<bool, FName>(this, "USkinnedMeshComponent.DoesSocketExist", InSocketName); }
+	FQuat* GetBoneQuaternion(FQuat* result, FName BoneName, int Space) { return NativeCall<FQuat*, FQuat*, FName, int>(this, "USkinnedMeshComponent.GetBoneQuaternion", result, BoneName, Space); }
+	FVector* GetBoneLocation(FVector* result, FName BoneName, int Space) { return NativeCall<FVector*, FVector*, FName, int>(this, "USkinnedMeshComponent.GetBoneLocation", result, BoneName, Space); }
+	bool HasAnySockets() { return NativeCall<bool>(this, "USkinnedMeshComponent.HasAnySockets"); }
+	//void QuerySupportedSockets(TArray<FComponentSocketDescription>* OutSockets) { NativeCall<void, TArray<FComponentSocketDescription>*>(this, "USkinnedMeshComponent.QuerySupportedSockets", OutSockets); }
+	void UpdateOverlaps(TArray<FOverlapInfo>* PendingOverlaps, bool bDoNotifies, TArray<FOverlapInfo>* OverlapsAtEndLocation) { NativeCall<void, TArray<FOverlapInfo>*, bool, TArray<FOverlapInfo>*>(this, "USkinnedMeshComponent.UpdateOverlaps", PendingOverlaps, bDoNotifies, OverlapsAtEndLocation); }
+	void TransformToBoneSpace(FName BoneName, FVector InPosition, FRotator InRotation, FVector* OutPosition, FRotator* OutRotation) { NativeCall<void, FName, FVector, FRotator, FVector*, FRotator*>(this, "USkinnedMeshComponent.TransformToBoneSpace", BoneName, InPosition, InRotation, OutPosition, OutRotation); }
+	void TransformFromBoneSpace(FName BoneName, FVector InPosition, FRotator InRotation, FVector* OutPosition, FRotator* OutRotation) { NativeCall<void, FName, FVector, FRotator, FVector*, FRotator*>(this, "USkinnedMeshComponent.TransformFromBoneSpace", BoneName, InPosition, InRotation, OutPosition, OutRotation); }
+	FName* FindClosestBone(FName* result, FVector TestLocation, FVector* BoneLocation, float IgnoreScale) { return NativeCall<FName*, FName*, FVector, FVector*, float>(this, "USkinnedMeshComponent.FindClosestBone", result, TestLocation, BoneLocation, IgnoreScale); }
+	void GetUsedMaterials(TArray<UMaterialInterface*>* OutMaterials) { NativeCall<void, TArray<UMaterialInterface*>*>(this, "USkinnedMeshComponent.GetUsedMaterials", OutMaterials); }
+	FVector* GetSkinnedVertexPosition(FVector* result, int VertexIndex) { return NativeCall<FVector*, FVector*, int>(this, "USkinnedMeshComponent.GetSkinnedVertexPosition", result, VertexIndex); }
+	void ComputeSkinnedPositions(TArray<FVector>* OutPositions) { NativeCall<void, TArray<FVector>*>(this, "USkinnedMeshComponent.ComputeSkinnedPositions", OutPositions); }
+	FColor* GetVertexColor(FColor* result, int VertexIndex) { return NativeCall<FColor*, FColor*, int>(this, "USkinnedMeshComponent.GetVertexColor", result, VertexIndex); }
+	//void HideBone(int BoneIndex, EPhysBodyOp PhysBodyOption) { NativeCall<void, int, EPhysBodyOp>(this, "USkinnedMeshComponent.HideBone", BoneIndex, PhysBodyOption); }
+	void UnHideBone(int BoneIndex) { NativeCall<void, int>(this, "USkinnedMeshComponent.UnHideBone", BoneIndex); }
+	bool IsBoneHidden(int BoneIndex) { return NativeCall<bool, int>(this, "USkinnedMeshComponent.IsBoneHidden", BoneIndex); }
+	bool IsBoneHiddenByName(FName BoneName) { return NativeCall<bool, FName>(this, "USkinnedMeshComponent.IsBoneHiddenByName", BoneName); }
+	//void HideBoneByName(FName BoneName, EPhysBodyOp PhysBodyOption) { NativeCall<void, FName, EPhysBodyOp>(this, "USkinnedMeshComponent.HideBoneByName", BoneName, PhysBodyOption); }
+	void UnHideBoneByName(FName BoneName) { NativeCall<void, FName>(this, "USkinnedMeshComponent.UnHideBoneByName", BoneName); }
+	bool UpdateLODStatus() { return NativeCall<bool>(this, "USkinnedMeshComponent.UpdateLODStatus"); }
+	//static TArray<FActiveVertexAnim>* UpdateActiveVertexAnims(TArray<FActiveVertexAnim>* result, USkeletalMesh* InSkeletalMesh, TMap<FName, float, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, float, 0> >* MorphCurveAnims, TArray<FActiveVertexAnim>* ActiveAnims) { return NativeCall<TArray<FActiveVertexAnim>*, TArray<FActiveVertexAnim>*, USkeletalMesh*, TMap<FName, float, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, float, 0> >*, TArray<FActiveVertexAnim>*>(nullptr, "USkinnedMeshComponent.UpdateActiveVertexAnims", result, InSkeletalMesh, MorphCurveAnims, ActiveAnims); }
+	void AnimUpdateRateTick() { NativeCall<void>(this, "USkinnedMeshComponent.AnimUpdateRateTick"); }
+	void AnimUpdateRateSetParams(const bool* bRecentlyRendered, const float* MaxDistanceFactor, const bool* bPlayingRootMotion) { NativeCall<void, const bool*, const float*, const bool*>(this, "USkinnedMeshComponent.AnimUpdateRateSetParams", bRecentlyRendered, MaxDistanceFactor, bPlayingRootMotion); }
+};
+
+struct USkeletalMeshComponent : USkinnedMeshComponent
+{
+	//TEnumAsByte<enum EAnimationMode::Type>& AnimationModeField() { return *GetNativePointerField<TEnumAsByte<enum EAnimationMode::Type>*>(this, "USkeletalMeshComponent.AnimationMode"); }
+	FVector& InterpolatedRootLocationField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.InterpolatedRootLocation"); }
+	FRotator& InterpolatedRootRotationField() { return *GetNativePointerField<FRotator*>(this, "USkeletalMeshComponent.InterpolatedRootRotation"); }
+	FVector& CurrentSkeletonUpDirField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.CurrentSkeletonUpDir"); }
+	TArray<float>& OriginalBonesOffsetsField() { return *GetNativePointerField<TArray<float>*>(this, "USkeletalMeshComponent.OriginalBonesOffsets"); }
+	//TArray<FIKLegInfo>& IkLegsField() { return *GetNativePointerField<TArray<FIKLegInfo>*>(this, "USkeletalMeshComponent.IkLegs"); }
+	//TArray<FIKGroundPlaneOverrideInfo>& IkGroundPlaneOverridesField() { return *GetNativePointerField<TArray<FIKGroundPlaneOverrideInfo>*>(this, "USkeletalMeshComponent.IkGroundPlaneOverrides"); }
+	//TArray<FIKRootAdjustmentInfo>& IkRootAdjustmentPointsField() { return *GetNativePointerField<TArray<FIKRootAdjustmentInfo>*>(this, "USkeletalMeshComponent.IkRootAdjustmentPoints"); }
+	float& IkRootAdjustmentHeightCSField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkRootAdjustmentHeightCS"); }
+	float& IkRootOffsetInterpSpeedField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkRootOffsetInterpSpeed"); }
+	float& IkRootOffsetInterpSpeedUpField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkRootOffsetInterpSpeedUp"); }
+	float& IkRootWorldOffsetInterpSpeedField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkRootWorldOffsetInterpSpeed"); }
+	float& IkRootWorldOffsetInterpSpeedUpField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkRootWorldOffsetInterpSpeedUp"); }
+	float& IkInterpSpeedField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkInterpSpeed"); }
+	float& IkInterpSpeedUpField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkInterpSpeedUp"); }
+	float& IkFabrikInterpSpeedField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkFabrikInterpSpeed"); }
+	float& IkFeetAlignmentInterpSpeedField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkFeetAlignmentInterpSpeed"); }
+	float& IkGroundPlaneInterpSpeedField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.IkGroundPlaneInterpSpeed"); }
+	float& MinHitNormalZForFeetAlignmentField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.MinHitNormalZForFeetAlignment"); }
+	float& FeetAlignmentLimitField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.FeetAlignmentLimit"); }
+	float& LegLimitRatioFromCylinderHeightField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.LegLimitRatioFromCylinderHeight"); }
+	FRotator& IkRootRotationOffsetField() { return *GetNativePointerField<FRotator*>(this, "USkeletalMeshComponent.IkRootRotationOffset"); }
+	FVector& IkRootLocationOffsetField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.IkRootLocationOffset"); }
+	float& DinoIKDelayedTraceFreezeDurationMultiplierField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.DinoIKDelayedTraceFreezeDurationMultiplier"); }
+	float& DinoIKSlopeMatchingRootHeightOffsetField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.DinoIKSlopeMatchingRootHeightOffset"); }
+	float& DinoIKAnimationLegZOffsetingMultiplierField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.DinoIKAnimationLegZOffsetingMultiplier"); }
+	FVector& TwoLegVirtualHitLocationWSField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.TwoLegVirtualHitLocationWS"); }
+	FVector& TwoLegVirtualHitLocationWSTargetField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.TwoLegVirtualHitLocationWSTarget"); }
+	FVector& TwoLegVirtualHitLocationCSField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.TwoLegVirtualHitLocationCS"); }
+	float& DistanceFromGroundToStartIKField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.DistanceFromGroundToStartIK"); }
+	float& DistanceFromGroundToStartIKBiasField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.DistanceFromGroundToStartIKBias"); }
+	int& MaxIterationsField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.MaxIterations"); }
+	float& MatchSlopeRotationSpeedField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.MatchSlopeRotationSpeed"); }
+	float& RootPitchRotationLimitField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.RootPitchRotationLimit"); }
+	float& RootRollRotationLimitField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.RootRollRotationLimit"); }
+	float& ForceUpdateValuesTimeLimitField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.ForceUpdateValuesTimeLimit"); }
+	float& RootOffsetField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.RootOffset"); }
+	FRotator& RootRotationOffsetField() { return *GetNativePointerField<FRotator*>(this, "USkeletalMeshComponent.RootRotationOffset"); }
+	long double& LastIkUpdateTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.LastIkUpdateTime"); }
+	int& LastIKCalculationFrameField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.LastIKCalculationFrame"); }
+	long double& ForceIkUpdateTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.ForceIkUpdateTime"); }
+	long double& IKFirstFrozenUpdatedTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.IKFirstFrozenUpdatedTime"); }
+	long double& LastIKFrozenStartTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.LastIKFrozenStartTime"); }
+	float& LastRootZField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.LastRootZ"); }
+	FQuat& CurrentGroundSlopeField() { return *GetNativePointerField<FQuat*>(this, "USkeletalMeshComponent.CurrentGroundSlope"); }
+	bool& bMovedLastFrameField() { return *GetNativePointerField<bool*>(this, "USkeletalMeshComponent.bMovedLastFrame"); }
+	bool& bNeedsUpdateToCachedLegInfosField() { return *GetNativePointerField<bool*>(this, "USkeletalMeshComponent.bNeedsUpdateToCachedLegInfos"); }
+	bool& bUsingFrozenIKField() { return *GetNativePointerField<bool*>(this, "USkeletalMeshComponent.bUsingFrozenIK"); }
+	long double& TimeToStopUpdatingLegCachesField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.TimeToStopUpdatingLegCaches"); }
+	//TArray<FIKLegInfo>& LastCachedIKLegInfosField() { return *GetNativePointerField<TArray<FIKLegInfo>*>(this, "USkeletalMeshComponent.LastCachedIKLegInfos"); }
+	FVector& CachedTwoLegVirtualHitLocationWSField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.CachedTwoLegVirtualHitLocationWS"); }
+	FVector& CachedTwoLegVirtualHitLocationCSField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.CachedTwoLegVirtualHitLocationCS"); }
+	FVector& LastIKPositionField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.LastIKPosition"); }
+	float& BoneModifiersLegLengthPercentageField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.BoneModifiersLegLengthPercentage"); }
+	//TArray<FBoneModifier>& CurrentBoneModifiersField() { return *GetNativePointerField<TArray<FBoneModifier>*>(this, "USkeletalMeshComponent.CurrentBoneModifiers"); }
+	//UAnimBlueprintGeneratedClass* AnimBlueprintGeneratedClassField() { return GetNativePointerField<UAnimBlueprintGeneratedClass*>(this, "USkeletalMeshComponent.AnimBlueprintGeneratedClass"); }
+	//FSingleAnimationPlayData& AnimationDataField() { return *GetNativePointerField<FSingleAnimationPlayData*>(this, "USkeletalMeshComponent.AnimationData"); }
+	TArray<FTransform>& LocalAtomsField() { return *GetNativePointerField<TArray<FTransform>*>(this, "USkeletalMeshComponent.LocalAtoms"); }
+	long double& LastMeshGameplayRelevantTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.LastMeshGameplayRelevantTime"); }
+	TArray<FTransform>& CachedLocalAtomsField() { return *GetNativePointerField<TArray<FTransform>*>(this, "USkeletalMeshComponent.CachedLocalAtoms"); }
+	TArray<FTransform>& CachedSpaceBasesField() { return *GetNativePointerField<TArray<FTransform>*>(this, "USkeletalMeshComponent.CachedSpaceBases"); }
+	float& GlobalAnimRateScaleField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.GlobalAnimRateScale"); }
+	//TEnumAsByte<enum EKinematicBonesUpdateToPhysics::Type>& KinematicBonesUpdateTypeField() { return *GetNativePointerField<TEnumAsByte<enum EKinematicBonesUpdateToPhysics::Type>*>(this, "USkeletalMeshComponent.KinematicBonesUpdateType"); }
+	float& ComponentMassScaleField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.ComponentMassScale"); }
+	float& MinLinearDampingField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.MinLinearDamping"); }
+	float& MinAngularDampingField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.MinAngularDamping"); }
+	float& TeleportDistanceThresholdField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.TeleportDistanceThreshold"); }
+	float& TeleportRotationThresholdField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.TeleportRotationThreshold"); }
+	float& ClothBlendWeightField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.ClothBlendWeight"); }
+	FVector& RootBoneTranslationField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.RootBoneTranslation"); }
+	int& NumNonZeroLODsField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.NumNonZeroLODs"); }
+	TEnumAsByte<enum ECollisionEnabled::Type>& PreSleepingKinematicsCollisionTypeField() { return *GetNativePointerField<TEnumAsByte<enum ECollisionEnabled::Type>*>(this, "USkeletalMeshComponent.PreSleepingKinematicsCollisionType"); }
+	FVector& LineCheckBoundsScaleField() { return *GetNativePointerField<FVector*>(this, "USkeletalMeshComponent.LineCheckBoundsScale"); }
+	TArray<unsigned short>& RequiredBonesField() { return *GetNativePointerField<TArray<unsigned short>*>(this, "USkeletalMeshComponent.RequiredBones"); }
+	int& RootBodyIndexField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.RootBodyIndex"); }
+	TArray<FBodyInstance*>& BodiesField() { return *GetNativePointerField<TArray<FBodyInstance*>*>(this, "USkeletalMeshComponent.Bodies"); }
+	//TArray<FConstraintInstance*>& ConstraintsField() { return *GetNativePointerField<TArray<FConstraintInstance*>*>(this, "USkeletalMeshComponent.Constraints"); }
+	//physx::PxAggregate* AggregateField() { return GetNativePointerField<physx::PxAggregate*>(this, "USkeletalMeshComponent.Aggregate"); }
+	TMap<FName, float, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, float, 0> >& MorphTargetCurvesField() { return *GetNativePointerField<TMap<FName, float, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, float, 0> >*>(this, "USkeletalMeshComponent.MorphTargetCurves"); }
+	//FAnimationEvaluationContext& AnimEvaluationContextField() { return *GetNativePointerField<FAnimationEvaluationContext*>(this, "USkeletalMeshComponent.AnimEvaluationContext"); }
+	//TRefCountPtr<FGraphEvent>& ParallelAnimationEvaluationTaskField() { return *GetNativePointerField<TRefCountPtr<FGraphEvent>*>(this, "USkeletalMeshComponent.ParallelAnimationEvaluationTask"); }
+	//TRefCountPtr<FGraphEvent>& ParallelBlendPhysicsCompletionTaskField() { return *GetNativePointerField<TRefCountPtr<FGraphEvent>*>(this, "USkeletalMeshComponent.ParallelBlendPhysicsCompletionTask"); }
+	float& ForcedBlueprintBlendCurrentWeightField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.ForcedBlueprintBlendCurrentWeight"); }
+	float& ForcedBlueprintBlendDurationField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.ForcedBlueprintBlendDuration"); }
+	TArray<FTransform>& ForcedBlueprintBlendCachedBonesField() { return *GetNativePointerField<TArray<FTransform>*>(this, "USkeletalMeshComponent.ForcedBlueprintBlendCachedBones"); }
+	UAnimSequence* SequenceToPlay_DEPRECATEDField() { return GetNativePointerField<UAnimSequence*>(this, "USkeletalMeshComponent.SequenceToPlay_DEPRECATED"); }
+	float& DefaultPosition_DEPRECATEDField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.DefaultPosition_DEPRECATED"); }
+	float& DefaultPlayRate_DEPRECATEDField() { return *GetNativePointerField<float*>(this, "USkeletalMeshComponent.DefaultPlayRate_DEPRECATED"); }
+	int& TickingModulusField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.TickingModulus"); }
+	int& LowQualityTickingModulusField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.LowQualityTickingModulus"); }
+	int& LastKinematicWorldUpdateFrameField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.LastKinematicWorldUpdateFrame"); }
+	long double& LastTickTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.LastTickTime"); }
+	long double& PreventSoundCuesTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.PreventSoundCuesTime"); }
+	long double& DisableParallelAnimationsTimeField() { return *GetNativePointerField<long double*>(this, "USkeletalMeshComponent.DisableParallelAnimationsTime"); }
+	bool& IgnoreStaggeredUpdatesThisTickField() { return *GetNativePointerField<bool*>(this, "USkeletalMeshComponent.IgnoreStaggeredUpdatesThisTick"); }
+	int& StaggeredUIDField() { return *GetNativePointerField<int*>(this, "USkeletalMeshComponent.StaggeredUID"); }
+
+	// Functions
+
+	void Serialize(FArchive* Ar) { NativeCall<void, FArchive*>(this, "USkeletalMeshComponent.Serialize", Ar); }
+	void OnRegister() { NativeCall<void>(this, "USkeletalMeshComponent.OnRegister"); }
+	void OnUnregister() { NativeCall<void>(this, "USkeletalMeshComponent.OnUnregister"); }
+	//void BPSetBoneModifiers(TArray<FBoneModifierNamed>* NamedBoneModifiers) { NativeCall<void, TArray<FBoneModifierNamed>*>(this, "USkeletalMeshComponent.BPSetBoneModifiers", NamedBoneModifiers); }
+	void RemoveBasedPawns(USceneComponent* BasedOnComponent) { NativeCall<void, USceneComponent*>(this, "USkeletalMeshComponent.RemoveBasedPawns", BasedOnComponent); }
+	bool IsPlayingAnimationMontagesOnSlotName(FName SlotName) { return NativeCall<bool, FName>(this, "USkeletalMeshComponent.IsPlayingAnimationMontagesOnSlotName", SlotName); }
+	void InitAnim(bool bForceReinit) { NativeCall<void, bool>(this, "USkeletalMeshComponent.InitAnim", bForceReinit); }
+	void InitializeAnimScriptInstance(bool bForceReinit) { NativeCall<void, bool>(this, "USkeletalMeshComponent.InitializeAnimScriptInstance", bForceReinit); }
+	void CreateRenderState_Concurrent() { NativeCall<void>(this, "USkeletalMeshComponent.CreateRenderState_Concurrent"); }
+	void InitializeComponent() { NativeCall<void>(this, "USkeletalMeshComponent.InitializeComponent"); }
+	void TickAnimation(float DeltaTime) { NativeCall<void, float>(this, "USkeletalMeshComponent.TickAnimation", DeltaTime); }
+	bool UpdateLODStatus() { return NativeCall<bool>(this, "USkeletalMeshComponent.UpdateLODStatus"); }
+	bool ShouldUpdateTransform(bool bLODHasChanged) { return NativeCall<bool, bool>(this, "USkeletalMeshComponent.ShouldUpdateTransform", bLODHasChanged); }
+	bool ShouldTickPose() { return NativeCall<bool>(this, "USkeletalMeshComponent.ShouldTickPose"); }
+	void TickPose(float DeltaTime) { NativeCall<void, float>(this, "USkeletalMeshComponent.TickPose", DeltaTime); }
+	//void FillSpaceBases(USkeletalMesh* InSkeletalMesh, TArray<FTransform>* SourceAtoms, TArray<FTransform>* DestSpaceBases) { NativeCall<void, USkeletalMesh*, TArray<FTransform>*, TArray<FTransform>*>(this, "USkeletalMeshComponent.FillSpaceBases", InSkeletalMesh, SourceAtoms, DestSpaceBases); }
+	void RecalcRequiredBones(int LODIndex) { NativeCall<void, int>(this, "USkeletalMeshComponent.RecalcRequiredBones", LODIndex); }
+	//void EvaluateAnimation(USkeletalMesh* InSkeletalMesh, UAnimInstance* InAnimInstance, TArray<FTransform>* OutLocalAtoms, TArray<FActiveVertexAnim>* OutVertexAnims, FVector* OutRootBoneTranslation) { NativeCall<void, USkeletalMesh*, UAnimInstance*, TArray<FTransform>*, TArray<FActiveVertexAnim>*, FVector*>(this, "USkeletalMeshComponent.EvaluateAnimation", InSkeletalMesh, InAnimInstance, OutLocalAtoms, OutVertexAnims, OutRootBoneTranslation); }
+	void UpdateSlaveComponent() { NativeCall<void>(this, "USkeletalMeshComponent.UpdateSlaveComponent"); }
+	//void PerformAnimationEvaluation(USkeletalMesh* InSkeletalMesh, UAnimInstance* InAnimInstance, TArray<FTransform>* OutSpaceBases, TArray<FTransform>* OutLocalAtoms, TArray<FActiveVertexAnim>* OutVertexAnims, FVector* OutRootBoneTranslation) { NativeCall<void, USkeletalMesh*, UAnimInstance*, TArray<FTransform>*, TArray<FTransform>*, TArray<FActiveVertexAnim>*, FVector*>(this, "USkeletalMeshComponent.PerformAnimationEvaluation", InSkeletalMesh, InAnimInstance, OutSpaceBases, OutLocalAtoms, OutVertexAnims, OutRootBoneTranslation); }
+	//void PostAnimEvaluation(FAnimationEvaluationContext* EvaluationContext) { NativeCall<void, FAnimationEvaluationContext*>(this, "USkeletalMeshComponent.PostAnimEvaluation", EvaluationContext); }
+	void UpdateBounds() { NativeCall<void>(this, "USkeletalMeshComponent.UpdateBounds"); }
+	FBoxSphereBounds* CalcBounds(FBoxSphereBounds* result, FTransform* LocalToWorld) { return NativeCall<FBoxSphereBounds*, FBoxSphereBounds*, FTransform*>(this, "USkeletalMeshComponent.CalcBounds", result, LocalToWorld); }
+	FTransform* CalcNewComponentToWorld(FTransform* result, FTransform* NewRelativeTransform, USceneComponent* Parent) { return NativeCall<FTransform*, FTransform*, FTransform*, USceneComponent*>(this, "USkeletalMeshComponent.CalcNewComponentToWorld", result, NewRelativeTransform, Parent); }
+	FVector* GetMeshScaleMultiplier(FVector* result) { return NativeCall<FVector*, FVector*>(this, "USkeletalMeshComponent.GetMeshScaleMultiplier", result); }
+	//void SetSkeletalMesh(USkeletalMesh* InSkelMesh) { NativeCall<void, USkeletalMesh*>(this, "USkeletalMeshComponent.SetSkeletalMesh", InSkelMesh); }
+	bool AllocateTransformData() { return NativeCall<bool>(this, "USkeletalMeshComponent.AllocateTransformData"); }
+	void DeallocateTransformData() { NativeCall<void>(this, "USkeletalMeshComponent.DeallocateTransformData"); }
+	void SetAnimInstanceClass(UClass* NewClass) { NativeCall<void, UClass*>(this, "USkeletalMeshComponent.SetAnimInstanceClass", NewClass); }
+	//FMatrix* GetTransformMatrix(FMatrix* result) { return NativeCall<FMatrix*, FMatrix*>(this, "USkeletalMeshComponent.GetTransformMatrix", result); }
+	//void SkelMeshCompOnParticleSystemFinished(UParticleSystemComponent* PSC) { NativeCall<void, UParticleSystemComponent*>(this, "USkeletalMeshComponent.SkelMeshCompOnParticleSystemFinished", PSC); }
+	//void HideBone(int BoneIndex, EPhysBodyOp PhysBodyOption) { NativeCall<void, int, EPhysBodyOp>(this, "USkeletalMeshComponent.HideBone", BoneIndex, PhysBodyOption); }
+	void UnHideBone(int BoneIndex) { NativeCall<void, int>(this, "USkeletalMeshComponent.UnHideBone", BoneIndex); }
+	bool IsAnySimulatingPhysics() { return NativeCall<bool>(this, "USkeletalMeshComponent.IsAnySimulatingPhysics"); }
+	float GetOverrideWalkableZ(AActor* ForActor) { return NativeCall<float, AActor*>(this, "USkeletalMeshComponent.GetOverrideWalkableZ", ForActor); }
+	//void DebugDrawBones(UCanvas* Canvas, bool bSimpleBones) { NativeCall<void, UCanvas*, bool>(this, "USkeletalMeshComponent.DebugDrawBones", Canvas, bSimpleBones); }
+	//void RenderAxisGizmo(FTransform* Transform, UCanvas* Canvas) { NativeCall<void, FTransform*, UCanvas*>(this, "USkeletalMeshComponent.RenderAxisGizmo", Transform, Canvas); }
+	void SetMorphTarget(FName MorphTargetName, float Value) { NativeCall<void, FName, float>(this, "USkeletalMeshComponent.SetMorphTarget", MorphTargetName, Value); }
+	//unsigned __int64 GetResourceSize(EResourceSizeMode::Type Mode) { return NativeCall<unsigned __int64, EResourceSizeMode::Type>(this, "USkeletalMeshComponent.GetResourceSize", Mode); }
+	//void SetAnimationMode(EAnimationMode::Type InAnimationMode) { NativeCall<void, EAnimationMode::Type>(this, "USkeletalMeshComponent.SetAnimationMode", InAnimationMode); }
+	//void PlayAnimation(UAnimationAsset* NewAnimToPlay, bool bLooping) { NativeCall<void, UAnimationAsset*, bool>(this, "USkeletalMeshComponent.PlayAnimation", NewAnimToPlay, bLooping); }
+	//void SetAnimation(UAnimationAsset* NewAnimToPlay) { NativeCall<void, UAnimationAsset*>(this, "USkeletalMeshComponent.SetAnimation", NewAnimToPlay); }
+	bool IsPlayingMontage(UAnimMontage* Montage, float TimeFromEndToConsiderFinished) { return NativeCall<bool, UAnimMontage*, float>(this, "USkeletalMeshComponent.IsPlayingMontage", Montage, TimeFromEndToConsiderFinished); }
+	void SetPosition(float InPos, bool bFireNotifies) { NativeCall<void, float, bool>(this, "USkeletalMeshComponent.SetPosition", InPos, bFireNotifies); }
+	FTransform* ConvertLocalRootMotionToWorld(FTransform* result, FTransform* InTransform) { return NativeCall<FTransform*, FTransform*, FTransform*>(this, "USkeletalMeshComponent.ConvertLocalRootMotionToWorld", result, InTransform); }
+	float CalculateMass(FName BoneName) { return NativeCall<float, FName>(this, "USkeletalMeshComponent.CalculateMass", BoneName); }
+	bool IsPlayingRootMotion() { return NativeCall<bool>(this, "USkeletalMeshComponent.IsPlayingRootMotion"); }
+	void SetCollisionObjectType(ECollisionChannel Channel) { NativeCall<void, ECollisionChannel>(this, "USkeletalMeshComponent.SetCollisionObjectType", Channel); }
+	void SetCollisionEnabled(ECollisionEnabled::Type NewType) { NativeCall<void, ECollisionEnabled::Type>(this, "USkeletalMeshComponent.SetCollisionEnabled", NewType); }
+	void UpdateComponentToWorld(bool bSkipPhysicsMove) { NativeCall<void, bool>(this, "USkeletalMeshComponent.UpdateComponentToWorld", bSkipPhysicsMove); }
+	void RecreatePhysicsState(bool bRestoreBoneTransforms) { NativeCall<void, bool>(this, "USkeletalMeshComponent.RecreatePhysicsState", bRestoreBoneTransforms); }
+	void SkippedTickPose() { NativeCall<void>(this, "USkeletalMeshComponent.SkippedTickPose"); }
+	bool HandleExistingParallelEvaluationTask(bool bBlockOnTask, bool bPerformPostAnimEvaluation) { return NativeCall<bool, bool, bool>(this, "USkeletalMeshComponent.HandleExistingParallelEvaluationTask", bBlockOnTask, bPerformPostAnimEvaluation); }
+	void FlushMorphTargets() { NativeCall<void>(this, "USkeletalMeshComponent.FlushMorphTargets"); }
+	void CreateBodySetup() { NativeCall<void>(this, "USkeletalMeshComponent.CreateBodySetup"); }
+	bool ContainsPhysicsTriMeshData(bool InUseAllTriData) { return NativeCall<bool, bool>(this, "USkeletalMeshComponent.ContainsPhysicsTriMeshData", InUseAllTriData); }
+	bool CanEditSimulatePhysics() { return NativeCall<bool>(this, "USkeletalMeshComponent.CanEditSimulatePhysics"); }
+	void SetSimulatePhysics(bool bSimulate) { NativeCall<void, bool>(this, "USkeletalMeshComponent.SetSimulatePhysics", bSimulate); }
+	void OnComponentCollisionSettingsChanged() { NativeCall<void>(this, "USkeletalMeshComponent.OnComponentCollisionSettingsChanged"); }
+	void AddRadialImpulse(FVector Origin, float Radius, float Strength, ERadialImpulseFalloff Falloff, bool bVelChange) { NativeCall<void, FVector, float, float, ERadialImpulseFalloff, bool>(this, "USkeletalMeshComponent.AddRadialImpulse", Origin, Radius, Strength, Falloff, bVelChange); }
+	void AddRadialForce(FVector Origin, float Radius, float Strength, ERadialImpulseFalloff Falloff) { NativeCall<void, FVector, float, float, ERadialImpulseFalloff>(this, "USkeletalMeshComponent.AddRadialForce", Origin, Radius, Strength, Falloff); }
+	void WakeAllRigidBodies() { NativeCall<void>(this, "USkeletalMeshComponent.WakeAllRigidBodies"); }
+	void PutAllRigidBodiesToSleep() { NativeCall<void>(this, "USkeletalMeshComponent.PutAllRigidBodiesToSleep"); }
+	bool IsAnyRigidBodyAwake() { return NativeCall<bool>(this, "USkeletalMeshComponent.IsAnyRigidBodyAwake"); }
+	void SetAllPhysicsLinearVelocity(FVector NewVel, bool bAddToCurrent) { NativeCall<void, FVector, bool>(this, "USkeletalMeshComponent.SetAllPhysicsLinearVelocity", NewVel, bAddToCurrent); }
+	void SetAllPhysicsAngularVelocity(FVector* NewAngVel, bool bAddToCurrent) { NativeCall<void, FVector*, bool>(this, "USkeletalMeshComponent.SetAllPhysicsAngularVelocity", NewAngVel, bAddToCurrent); }
+	void SetAllPhysicsPosition(FVector NewPos) { NativeCall<void, FVector>(this, "USkeletalMeshComponent.SetAllPhysicsPosition", NewPos); }
+	void SetAllPhysicsRotation(FRotator NewRot) { NativeCall<void, FRotator>(this, "USkeletalMeshComponent.SetAllPhysicsRotation", NewRot); }
+	void ApplyDeltaToAllPhysicsTransforms(FVector* DeltaLocation, FQuat* DeltaRotation) { NativeCall<void, FVector*, FQuat*>(this, "USkeletalMeshComponent.ApplyDeltaToAllPhysicsTransforms", DeltaLocation, DeltaRotation); }
+	void SetPhysMaterialOverride(UPhysicalMaterial* NewPhysMaterial) { NativeCall<void, UPhysicalMaterial*>(this, "USkeletalMeshComponent.SetPhysMaterialOverride", NewPhysMaterial); }
+	//void InitArticulated(FPhysScene* PhysScene, bool bForceOnDedicatedServer) { NativeCall<void, FPhysScene*, bool>(this, "USkeletalMeshComponent.InitArticulated", PhysScene, bForceOnDedicatedServer); }
+	void TermArticulated() { NativeCall<void>(this, "USkeletalMeshComponent.TermArticulated"); }
+	void TermBodiesBelow(FName ParentBoneName) { NativeCall<void, FName>(this, "USkeletalMeshComponent.TermBodiesBelow", ParentBoneName); }
+	void SetAllBodiesSimulatePhysics(bool bNewSimulate) { NativeCall<void, bool>(this, "USkeletalMeshComponent.SetAllBodiesSimulatePhysics", bNewSimulate); }
+	void SetAllBodiesSleepThreshold(float SleepThresh) { NativeCall<void, float>(this, "USkeletalMeshComponent.SetAllBodiesSleepThreshold", SleepThresh); }
+	void SetAllBodiesBelowSimulatePhysics(FName* InBoneName, bool bNewSimulate) { NativeCall<void, FName*, bool>(this, "USkeletalMeshComponent.SetAllBodiesBelowSimulatePhysics", InBoneName, bNewSimulate); }
+	void ResetAllBodiesSimulatePhysics() { NativeCall<void>(this, "USkeletalMeshComponent.ResetAllBodiesSimulatePhysics"); }
+	void SetPhysicsBlendWeight(float PhysicsBlendWeight) { NativeCall<void, float>(this, "USkeletalMeshComponent.SetPhysicsBlendWeight", PhysicsBlendWeight); }
+	void SetAllBodiesPhysicsBlendWeight(float PhysicsBlendWeight, bool bSkipCustomPhysicsType) { NativeCall<void, float, bool>(this, "USkeletalMeshComponent.SetAllBodiesPhysicsBlendWeight", PhysicsBlendWeight, bSkipCustomPhysicsType); }
+	void SetAllBodiesBelowPhysicsBlendWeight(FName* InBoneName, float PhysicsBlendWeight, bool bSkipCustomPhysicsType) { NativeCall<void, FName*, float, bool>(this, "USkeletalMeshComponent.SetAllBodiesBelowPhysicsBlendWeight", InBoneName, PhysicsBlendWeight, bSkipCustomPhysicsType); }
+	void AccumulateAllBodiesBelowPhysicsBlendWeight(FName* InBoneName, float PhysicsBlendWeight, bool bSkipCustomPhysicsType) { NativeCall<void, FName*, float, bool>(this, "USkeletalMeshComponent.AccumulateAllBodiesBelowPhysicsBlendWeight", InBoneName, PhysicsBlendWeight, bSkipCustomPhysicsType); }
+	void OnUpdateTransform(bool bSkipPhysicsMove) { NativeCall<void, bool>(this, "USkeletalMeshComponent.OnUpdateTransform", bSkipPhysicsMove); }
+	void CreatePhysicsState() { NativeCall<void>(this, "USkeletalMeshComponent.CreatePhysicsState"); }
+	void DestroyPhysicsState() { NativeCall<void>(this, "USkeletalMeshComponent.DestroyPhysicsState"); }
+	FBodyInstance* GetBodyInstance(FName BoneName, bool __formal) { return NativeCall<FBodyInstance*, FName, bool>(this, "USkeletalMeshComponent.GetBodyInstance", BoneName, __formal); }
+	void GetWeldedBodies(TArray<FBodyInstance*>* OutWeldedBodies, TArray<FName>* OutLabels) { NativeCall<void, TArray<FBodyInstance*>*, TArray<FName>*>(this, "USkeletalMeshComponent.GetWeldedBodies", OutWeldedBodies, OutLabels); }
+	//void SetPhysicsAsset(UPhysicsAsset* InPhysicsAsset, bool bForceReInit) { NativeCall<void, UPhysicsAsset*, bool>(this, "USkeletalMeshComponent.SetPhysicsAsset", InPhysicsAsset, bForceReInit); }
+	void UpdateHasValidBodies() { NativeCall<void>(this, "USkeletalMeshComponent.UpdateHasValidBodies"); }
+	void UpdatePhysicsToRBChannels() { NativeCall<void>(this, "USkeletalMeshComponent.UpdatePhysicsToRBChannels"); }
+	FVector* GetSkinnedVertexPosition(FVector* result, int VertexIndex) { return NativeCall<FVector*, FVector*, int>(this, "USkeletalMeshComponent.GetSkinnedVertexPosition", result, VertexIndex); }
+	bool LineTraceComponent(FHitResult* OutHit, FVector Start, FVector End, FCollisionQueryParams* Params) { return NativeCall<bool, FHitResult*, FVector, FVector, FCollisionQueryParams*>(this, "USkeletalMeshComponent.LineTraceComponent", OutHit, Start, End, Params); }
+	//bool SweepComponent(FHitResult* OutHit, FVector Start, FVector End, FCollisionShape* CollisionShape, bool bTraceComplex) { return NativeCall<bool, FHitResult*, FVector, FVector, FCollisionShape*, bool>(this, "USkeletalMeshComponent.SweepComponent", OutHit, Start, End, CollisionShape, bTraceComplex); }
+	bool ComponentOverlapComponentImpl(UPrimitiveComponent* PrimComp, FVector Pos, FQuat* Quat, FCollisionQueryParams* Params) { return NativeCall<bool, UPrimitiveComponent*, FVector, FQuat*, FCollisionQueryParams*>(this, "USkeletalMeshComponent.ComponentOverlapComponentImpl", PrimComp, Pos, Quat, Params); }
+	//bool OverlapComponent(FVector* Pos, FQuat* Rot, FCollisionShape* CollisionShape) { return NativeCall<bool, FVector*, FQuat*, FCollisionShape*>(this, "USkeletalMeshComponent.OverlapComponent", Pos, Rot, CollisionShape); }
+	//bool ComponentOverlapMultiImpl(TArray<FOverlapResult>* OutOverlaps, UWorld* World, FVector* Pos, FQuat* Quat, ECollisionChannel TestChannel, FComponentQueryParams* Params, FCollisionObjectQueryParams* ObjectQueryParams) { return NativeCall<bool, TArray<FOverlapResult>*, UWorld*, FVector*, FQuat*, ECollisionChannel, FComponentQueryParams*, FCollisionObjectQueryParams*>(this, "USkeletalMeshComponent.ComponentOverlapMultiImpl", OutOverlaps, World, Pos, Quat, TestChannel, Params, ObjectQueryParams); }
+	float GetMass() { return NativeCall<float>(this, "USkeletalMeshComponent.GetMass"); }
+	void CompleteParallelAnimationEvaluation(bool bDoPostAnimEvaluation) { NativeCall<void, bool>(this, "USkeletalMeshComponent.CompleteParallelAnimationEvaluation", bDoPostAnimEvaluation); }
+	void ParallelAnimationEvaluation() { NativeCall<void>(this, "USkeletalMeshComponent.ParallelAnimationEvaluation"); }
+	void UpdateKinematicBonesToPhysics(bool bTeleport, bool bNeedsSkinning, bool bForceUpdate, bool bAbsoluteForceUpdate, bool bOnlyDisableKinematicCollisions) { NativeCall<void, bool, bool, bool, bool, bool>(this, "USkeletalMeshComponent.UpdateKinematicBonesToPhysics", bTeleport, bNeedsSkinning, bForceUpdate, bAbsoluteForceUpdate, bOnlyDisableKinematicCollisions); }
+	void UpdateRBJointMotors() { NativeCall<void>(this, "USkeletalMeshComponent.UpdateRBJointMotors"); }
+};
+
+struct UStaticMeshComponent : UMeshComponent
+{
+	UStaticMesh* StaticMeshField() { return GetNativePointerField<UStaticMesh*>(this, "UStaticMeshComponent.StaticMesh"); }
+	bool& bOverrideWireframeColorField() { return *GetNativePointerField<bool*>(this, "UStaticMeshComponent.bOverrideWireframeColor"); }
+	FColor& WireframeColorOverrideField() { return *GetNativePointerField<FColor*>(this, "UStaticMeshComponent.WireframeColorOverride"); }
+	int& LandscapeInfoMaskField() { return *GetNativePointerField<int*>(this, "UStaticMeshComponent.LandscapeInfoMask"); }
+	int& OverriddenLightMapResField() { return *GetNativePointerField<int*>(this, "UStaticMeshComponent.OverriddenLightMapRes"); }
+	float& StreamingDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "UStaticMeshComponent.StreamingDistanceMultiplier"); }
+	int& SubDivisionStepSizeField() { return *GetNativePointerField<int*>(this, "UStaticMeshComponent.SubDivisionStepSize"); }
+	TArray<FGuid>& IrrelevantLightsField() { return *GetNativePointerField<TArray<FGuid>*>(this, "UStaticMeshComponent.IrrelevantLights"); }
+	//TArray<FStaticMeshComponentLODInfo>& LODDataField() { return *GetNativePointerField<TArray<FStaticMeshComponentLODInfo>*>(this, "UStaticMeshComponent.LODData"); }
+	//FLightmassPrimitiveSettings& LightmassSettingsField() { return *GetNativePointerField<FLightmassPrimitiveSettings*>(this, "UStaticMeshComponent.LightmassSettings"); }
+
+	// Functions
+
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "UStaticMeshComponent.StaticClass"); }
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UStaticMeshComponent.GetPrivateStaticClass", Package); }
+	bool GetShadowIndirectOnly() { return NativeCall<bool>(this, "UStaticMeshComponent.GetShadowIndirectOnly"); }
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "UStaticMeshComponent.GetLifetimeReplicatedProps", OutLifetimeProps); }
+	bool HasAnySockets() { return NativeCall<bool>(this, "UStaticMeshComponent.HasAnySockets"); }
+	//void QuerySupportedSockets(TArray<FComponentSocketDescription>* OutSockets) { NativeCall<void, TArray<FComponentSocketDescription>*>(this, "UStaticMeshComponent.QuerySupportedSockets", OutSockets); }
+	TArray<FName>* GetAllSocketNames(TArray<FName>* result) { return NativeCall<TArray<FName>*, TArray<FName>*>(this, "UStaticMeshComponent.GetAllSocketNames", result); }
+	FString* GetDetailedInfoInternal(FString* result) { return NativeCall<FString*, FString*>(this, "UStaticMeshComponent.GetDetailedInfoInternal", result); }
+	//static void AddReferencedObjects(UObject* InThis, FReferenceCollector* Collector) { NativeCall<void, UObject*, FReferenceCollector*>(nullptr, "UStaticMeshComponent.AddReferencedObjects", InThis, Collector); }
+	void Serialize(FArchive* Ar) { NativeCall<void, FArchive*>(this, "UStaticMeshComponent.Serialize", Ar); }
+	bool AreNativePropertiesIdenticalTo(UObject* Other) { return NativeCall<bool, UObject*>(this, "UStaticMeshComponent.AreNativePropertiesIdenticalTo", Other); }
+	FBoxSphereBounds* CalcBounds(FBoxSphereBounds* result, FTransform* LocalToWorld) { return NativeCall<FBoxSphereBounds*, FBoxSphereBounds*, FTransform*>(this, "UStaticMeshComponent.CalcBounds", result, LocalToWorld); }
+	void OnRegister() { NativeCall<void>(this, "UStaticMeshComponent.OnRegister"); }
+	void OnUnregister() { NativeCall<void>(this, "UStaticMeshComponent.OnUnregister"); }
+	//void GetStreamingTextureInfo(TArray<FStreamingTexturePrimitiveInfo>* OutStreamingTextures) { NativeCall<void, TArray<FStreamingTexturePrimitiveInfo>*>(this, "UStaticMeshComponent.GetStreamingTextureInfo", OutStreamingTextures); }
+	bool CanEditSimulatePhysics() { return NativeCall<bool>(this, "UStaticMeshComponent.CanEditSimulatePhysics"); }
+	bool DoesSocketExist(FName InSocketName) { return NativeCall<bool, FName>(this, "UStaticMeshComponent.DoesSocketExist", InSocketName); }
+	UStaticMeshSocket* GetSocketByName(FName InSocketName) { return NativeCall<UStaticMeshSocket*, FName>(this, "UStaticMeshComponent.GetSocketByName", InSocketName); }
+	FTransform* GetSocketTransform(FTransform* result, FName InSocketName, ERelativeTransformSpace TransformSpace) { return NativeCall<FTransform*, FTransform*, FName, ERelativeTransformSpace>(this, "UStaticMeshComponent.GetSocketTransform", result, InSocketName, TransformSpace); }
+	void BeginDestroy() { NativeCall<void>(this, "UStaticMeshComponent.BeginDestroy"); }
+	void ExportCustomProperties(FOutputDevice* Out, unsigned int Indent) { NativeCall<void, FOutputDevice*, unsigned int>(this, "UStaticMeshComponent.ExportCustomProperties", Out, Indent); }
+	//void ImportCustomProperties(const wchar_t* SourceText, FFeedbackContext* Warn) { NativeCall<void, const wchar_t*, FFeedbackContext*>(this, "UStaticMeshComponent.ImportCustomProperties", SourceText, Warn); }
+	void PostLoad() { NativeCall<void>(this, "UStaticMeshComponent.PostLoad"); }
+	bool SetStaticMesh(UStaticMesh* NewMesh) { return NativeCall<bool, UStaticMesh*>(this, "UStaticMeshComponent.SetStaticMesh", NewMesh); }
+	void GetLocalBounds(FVector* Min, FVector* Max) { NativeCall<void, FVector*, FVector*>(this, "UStaticMeshComponent.GetLocalBounds", Min, Max); }
+	bool UsesOnlyUnlitMaterials() { return NativeCall<bool>(this, "UStaticMeshComponent.UsesOnlyUnlitMaterials"); }
+	bool GetLightMapResolution(int* Width, int* Height) { return NativeCall<bool, int*, int*>(this, "UStaticMeshComponent.GetLightMapResolution", Width, Height); }
+	void GetEstimatedLightMapResolution(int* Width, int* Height) { NativeCall<void, int*, int*>(this, "UStaticMeshComponent.GetEstimatedLightMapResolution", Width, Height); }
+	bool HasValidSettingsForStaticLighting() { return NativeCall<bool>(this, "UStaticMeshComponent.HasValidSettingsForStaticLighting"); }
+	bool UsesTextureLightmaps(int InWidth, int InHeight) { return NativeCall<bool, int, int>(this, "UStaticMeshComponent.UsesTextureLightmaps", InWidth, InHeight); }
+	bool HasLightmapTextureCoordinates() { return NativeCall<bool>(this, "UStaticMeshComponent.HasLightmapTextureCoordinates"); }
+	void GetTextureLightAndShadowMapMemoryUsage(int InWidth, int InHeight, int* OutLightMapMemoryUsage, int* OutShadowMapMemoryUsage) { NativeCall<void, int, int, int*, int*>(this, "UStaticMeshComponent.GetTextureLightAndShadowMapMemoryUsage", InWidth, InHeight, OutLightMapMemoryUsage, OutShadowMapMemoryUsage); }
+	void GetLightAndShadowMapMemoryUsage(int* LightMapMemoryUsage, int* ShadowMapMemoryUsage) { NativeCall<void, int*, int*>(this, "UStaticMeshComponent.GetLightAndShadowMapMemoryUsage", LightMapMemoryUsage, ShadowMapMemoryUsage); }
+	bool GetEstimatedLightAndShadowMapMemoryUsage(int* TextureLightMapMemoryUsage, int* TextureShadowMapMemoryUsage, int* VertexLightMapMemoryUsage, int* VertexShadowMapMemoryUsage, int* StaticLightingResolution, bool* bIsUsingTextureMapping, bool* bHasLightmapTexCoords) { return NativeCall<bool, int*, int*, int*, int*, int*, bool*, bool*>(this, "UStaticMeshComponent.GetEstimatedLightAndShadowMapMemoryUsage", TextureLightMapMemoryUsage, TextureShadowMapMemoryUsage, VertexLightMapMemoryUsage, VertexShadowMapMemoryUsage, StaticLightingResolution, bIsUsingTextureMapping, bHasLightmapTexCoords); }
+	int GetNumMaterials() { return NativeCall<int>(this, "UStaticMeshComponent.GetNumMaterials"); }
+	void GetUsedMaterials(TArray<UMaterialInterface*>* OutMaterials) { NativeCall<void, TArray<UMaterialInterface*>*>(this, "UStaticMeshComponent.GetUsedMaterials", OutMaterials); }
+	FName* GetComponentInstanceDataType(FName* result) { return NativeCall<FName*, FName*>(this, "UStaticMeshComponent.GetComponentInstanceDataType", result); }
+	//void ApplyComponentInstanceData(TSharedPtr<FComponentInstanceDataBase, 0> ComponentInstanceData) { NativeCall<void, TSharedPtr<FComponentInstanceDataBase, 0>>(this, "UStaticMeshComponent.ApplyComponentInstanceData", ComponentInstanceData); }
+	//bool DoCustomNavigableGeometryExport(FNavigableGeometryExport* GeomExport) { return NativeCall<bool, FNavigableGeometryExport*>(this, "UStaticMeshComponent.DoCustomNavigableGeometryExport", GeomExport); }
+	//ELightMapInteractionType GetStaticLightingType() { return NativeCall<ELightMapInteractionType>(this, "UStaticMeshComponent.GetStaticLightingType"); }
+	float GetEmissiveBoost(int ElementIndex) { return NativeCall<float, int>(this, "UStaticMeshComponent.GetEmissiveBoost", ElementIndex); }
+	float GetDiffuseBoost(int ElementIndex) { return NativeCall<float, int>(this, "UStaticMeshComponent.GetDiffuseBoost", ElementIndex); }
+	void InvalidateLightingCacheDetailed(bool bInvalidateBuildEnqueuedLighting, bool bTranslationOnly) { NativeCall<void, bool, bool>(this, "UStaticMeshComponent.InvalidateLightingCacheDetailed", bInvalidateBuildEnqueuedLighting, bTranslationOnly); }
+	bool SetStaticLightingMapping(bool bTextureMapping, int ResolutionToUse) { return NativeCall<bool, bool, int>(this, "UStaticMeshComponent.SetStaticLightingMapping", bTextureMapping, ResolutionToUse); }
+	void SetLODDataCount(const unsigned int MinSize, const unsigned int MaxSize) { NativeCall<void, const unsigned int, const unsigned int>(this, "UStaticMeshComponent.SetLODDataCount", MinSize, MaxSize); }
+	bool ShouldRecreateProxyOnUpdateTransform() { return NativeCall<bool>(this, "UStaticMeshComponent.ShouldRecreateProxyOnUpdateTransform"); }
+};
+
+struct UStaticMeshSocket : UObject
+{
+	FName& SocketNameField() { return *GetNativePointerField<FName*>(this, "UStaticMeshSocket.SocketName"); }
+	FVector& RelativeLocationField() { return *GetNativePointerField<FVector*>(this, "UStaticMeshSocket.RelativeLocation"); }
+	FRotator& RelativeRotationField() { return *GetNativePointerField<FRotator*>(this, "UStaticMeshSocket.RelativeRotation"); }
+	FVector& RelativeScaleField() { return *GetNativePointerField<FVector*>(this, "UStaticMeshSocket.RelativeScale"); }
+	FString& TagField() { return *GetNativePointerField<FString*>(this, "UStaticMeshSocket.Tag"); }
+
+	// Functions
+
+	bool GetSocketTransform(FTransform* OutTransform, UStaticMeshComponent* MeshComp) { return NativeCall<bool, FTransform*, UStaticMeshComponent*>(this, "UStaticMeshSocket.GetSocketTransform", OutTransform, MeshComp); }
+};
+
+struct UStaticMesh : UObject
+{
+	TArray<UMaterialInterface*>& MaterialsField() { return *GetNativePointerField<TArray<UMaterialInterface*>*>(this, "UStaticMesh.Materials"); }
+	//TScopedPointer<FStaticMeshRenderData>& RenderDataField() { return *GetNativePointerField<TScopedPointer<FStaticMeshRenderData>*>(this, "UStaticMesh.RenderData"); }
+	int& LightMapResolutionField() { return *GetNativePointerField<int*>(this, "UStaticMesh.LightMapResolution"); }
+	int& LightMapCoordinateIndexField() { return *GetNativePointerField<int*>(this, "UStaticMesh.LightMapCoordinateIndex"); }
+	//TEnumAsByte<enum EDistanceFieldTwoSidedOverride>& DistanceFieldTwoSidedOverrideField() { return *GetNativePointerField<TEnumAsByte<enum EDistanceFieldTwoSidedOverride>*>(this, "UStaticMesh.DistanceFieldTwoSidedOverride"); }
+	float& DistanceFieldRuntimeQualityField() { return *GetNativePointerField<float*>(this, "UStaticMesh.DistanceFieldRuntimeQuality"); }
+	int& CurrentStreamedInSizeField() { return *GetNativePointerField<int*>(this, "UStaticMesh.CurrentStreamedInSize"); }
+	bool& bStreamInStateField() { return *GetNativePointerField<bool*>(this, "UStaticMesh.bStreamInState"); }
+	bool& bStreamInRequestField() { return *GetNativePointerField<bool*>(this, "UStaticMesh.bStreamInRequest"); }
+	unsigned __int64& RequestLoadField() { return *GetNativePointerField<unsigned __int64*>(this, "UStaticMesh.RequestLoad"); }
+	//FThreadSafeCounter& PendingLODRequestField() { return *GetNativePointerField<FThreadSafeCounter*>(this, "UStaticMesh.PendingLODRequest"); }
+	long double& LastStreamChangeCallField() { return *GetNativePointerField<long double*>(this, "UStaticMesh.LastStreamChangeCall"); }
+	//TLinkedList<IAbstractStreamer*>* LinkedStreamersField() { return GetNativePointerField<TLinkedList<IAbstractStreamer*>*>(this, "UStaticMesh.LinkedStreamers"); }
+	float& StreamingDistanceMultiplierField() { return *GetNativePointerField<float*>(this, "UStaticMesh.StreamingDistanceMultiplier"); }
+	float& LpvBiasMultiplierField() { return *GetNativePointerField<float*>(this, "UStaticMesh.LpvBiasMultiplier"); }
+	//FRenderCommandFence& ReleaseResourcesFenceField() { return *GetNativePointerField<FRenderCommandFence*>(this, "UStaticMesh.ReleaseResourcesFence"); }
+	FString& HighResSourceMeshNameField() { return *GetNativePointerField<FString*>(this, "UStaticMesh.HighResSourceMeshName"); }
+	unsigned int& HighResSourceMeshCRCField() { return *GetNativePointerField<unsigned int*>(this, "UStaticMesh.HighResSourceMeshCRC"); }
+	FGuid& LightingGuidField() { return *GetNativePointerField<FGuid*>(this, "UStaticMesh.LightingGuid"); }
+	TArray<UStaticMeshSocket*>& SocketsField() { return *GetNativePointerField<TArray<UStaticMeshSocket*>*>(this, "UStaticMesh.Sockets"); }
+	//TSharedPtr<FSpeedTreeWind, 0>& SpeedTreeWindField() { return *GetNativePointerField<TSharedPtr<FSpeedTreeWind, 0>*>(this, "UStaticMesh.SpeedTreeWind"); }
+	long double& LastRenderTimeField() { return *GetNativePointerField<long double*>(this, "UStaticMesh.LastRenderTime"); }
+	float& ClosestDistanceField() { return *GetNativePointerField<float*>(this, "UStaticMesh.ClosestDistance"); }
+	unsigned int& StreamDistanceFrameField() { return *GetNativePointerField<unsigned int*>(this, "UStaticMesh.StreamDistanceFrame"); }
+	int& ElementToIgnoreForTexFactorField() { return *GetNativePointerField<int*>(this, "UStaticMesh.ElementToIgnoreForTexFactor"); }
+	TArray<UAssetUserData*>& AssetUserDataField() { return *GetNativePointerField<TArray<UAssetUserData*>*>(this, "UStaticMesh.AssetUserData"); }
+	//UNavCollision* NavCollisionField() { return GetNativePointerField<UNavCollision*>(this, "UStaticMesh.NavCollision"); }
+	FName& CustomTagField() { return *GetNativePointerField<FName*>(this, "UStaticMesh.CustomTag"); }
+
+	// Functions
+
+	void InitResources() { NativeCall<void>(this, "UStaticMesh.InitResources"); }
+	//unsigned __int64 GetResourceSize(EResourceSizeMode::Type Mode) { return NativeCall<unsigned __int64, EResourceSizeMode::Type>(this, "UStaticMesh.GetResourceSize", Mode); }
+	bool HasValidRenderData() { return NativeCall<bool>(this, "UStaticMesh.HasValidRenderData"); }
+	FBoxSphereBounds* GetBounds(FBoxSphereBounds* result) { return NativeCall<FBoxSphereBounds*, FBoxSphereBounds*>(this, "UStaticMesh.GetBounds", result); }
+	float GetStreamingTextureFactor(int RequestedUVIndex) { return NativeCall<float, int>(this, "UStaticMesh.GetStreamingTextureFactor", RequestedUVIndex); }
+	void ReleaseResources() { NativeCall<void>(this, "UStaticMesh.ReleaseResources"); }
+	//static void AddReferencedObjects(UObject* InThis, FReferenceCollector* Collector) { NativeCall<void, UObject*, FReferenceCollector*>(nullptr, "UStaticMesh.AddReferencedObjects", InThis, Collector); }
+	void BeginDestroy() { NativeCall<void>(this, "UStaticMesh.BeginDestroy"); }
+	bool IsReadyForFinishDestroy() { return NativeCall<bool>(this, "UStaticMesh.IsReadyForFinishDestroy"); }
+	//void GetAssetRegistryTags(TArray<UObject::FAssetRegistryTag>* OutTags) { NativeCall<void, TArray<UObject::FAssetRegistryTag>*>(this, "UStaticMesh.GetAssetRegistryTags", OutTags); }
+	void Serialize(FArchive* Ar) { NativeCall<void, FArchive*>(this, "UStaticMesh.Serialize", Ar); }
+	void PostLoad() { NativeCall<void>(this, "UStaticMesh.PostLoad"); }
+	FString* GetDesc(FString* result) { return NativeCall<FString*, FString*>(this, "UStaticMesh.GetDesc", result); }
+	bool ContainsPhysicsTriMeshData(bool bInUseAllTriData) { return NativeCall<bool, bool>(this, "UStaticMesh.ContainsPhysicsTriMeshData", bInUseAllTriData); }
+	void AddAssetUserData(UAssetUserData* InUserData) { NativeCall<void, UAssetUserData*>(this, "UStaticMesh.AddAssetUserData", InUserData); }
+	UAssetUserData* GetAssetUserDataOfClass(TSubclassOf<UAssetUserData> InUserDataClass) { return NativeCall<UAssetUserData*, TSubclassOf<UAssetUserData>>(this, "UStaticMesh.GetAssetUserDataOfClass", InUserDataClass); }
+	void RemoveUserDataOfClass(TSubclassOf<UAssetUserData> InUserDataClass) { NativeCall<void, TSubclassOf<UAssetUserData>>(this, "UStaticMesh.RemoveUserDataOfClass", InUserDataClass); }
+	void EnforceLightmapRestrictions() { NativeCall<void>(this, "UStaticMesh.EnforceLightmapRestrictions"); }
+	void UnlinkStreaming() { NativeCall<void>(this, "UStaticMesh.UnlinkStreaming"); }
+	void ResetStreamingState() { NativeCall<void>(this, "UStaticMesh.ResetStreamingState"); }
+	void SetLODStreaming(long double CurrentAppTime) { NativeCall<void, long double>(this, "UStaticMesh.SetLODStreaming", CurrentAppTime); }
+	long double Dyn_GetLastRenderTime() { return NativeCall<long double>(this, "UStaticMesh.Dyn_GetLastRenderTime"); }
+	float Dyn_GetSizePriority() { return NativeCall<float>(this, "UStaticMesh.Dyn_GetSizePriority"); }
+	void Dyn_SetStreaming(bool bShouldStream) { NativeCall<void, bool>(this, "UStaticMesh.Dyn_SetStreaming", bShouldStream); }
+	int Dyn_GetStreamingSize() { return NativeCall<int>(this, "UStaticMesh.Dyn_GetStreamingSize"); }
+	bool Dyn_IsStreamed() { return NativeCall<bool>(this, "UStaticMesh.Dyn_IsStreamed"); }
+	bool UpdateStreaming() { return NativeCall<bool>(this, "UStaticMesh.UpdateStreaming"); }
+	void InitializeLODData() { NativeCall<void>(this, "UStaticMesh.InitializeLODData"); }
 };
 
 struct FAttachedInstancedHarvestingElement
@@ -8879,7 +9333,7 @@ struct FAttachedInstancedHarvestingElement
 	long double LastReplenishTime;
 	float DepletionExhaustionEffect;
 	float NextReplenishInterval;
-	TArray<UActorComponent*, FDefaultAllocator> AdditionalComponentAttachments;
+	TArray<UActorComponent*> AdditionalComponentAttachments;
 };
 
 struct FComponentAttachmentEntry
@@ -8895,8 +9349,8 @@ struct UPrimalHarvestingComponent : UActorComponent
 	static void StaticRegisterNativesUPrimalHarvestingComponent() { NativeCall<void>(nullptr, "UPrimalHarvestingComponent.StaticRegisterNativesUPrimalHarvestingComponent"); }
 	bool TemplateCheckForHarvestRepopulation(bool bForceReinit, UWorld* world, FVector* where) { NativeCall<bool, UWorld*, FVector*>(this, "UPrimalHarvestingComponent.TemplateCheckForHarvestRepopulation", world, where); }
 
-	TArray<FHarvestResourceEntry, FDefaultAllocator>& HarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.HarvestResourceEntries"); }
-	TArray<FHarvestResourceEntry, FDefaultAllocator>& BaseHarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.BaseHarvestResourceEntries"); }
+	TArray<FHarvestResourceEntry>& HarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.HarvestResourceEntries"); }
+	TArray<FHarvestResourceEntry>& BaseHarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.BaseHarvestResourceEntries"); }
 
 	FString& DescriptiveName() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.DescriptiveName"); }
 	FString& UseHarvestString() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.UseHarvestString"); }
@@ -8904,6 +9358,31 @@ struct UPrimalHarvestingComponent : UActorComponent
 	FString& HarvestableFriendlyName() { return *GetNativePointerField<FString*>(this, "UPrimalHarvestingComponent.HarvestableFriendlyName"); }
 	FAttachedInstancedHarvestingElement* ActiveInstancedElement() { return *GetNativePointerField<FAttachedInstancedHarvestingElement**>(this, "UPrimalHarvestingComponent.ActiveInstancedElement"); }
 
-	TArray<FComponentAttachmentEntry, FDefaultAllocator>& AdditionalComponentAttachments() { return *GetNativePointerField< TArray<FComponentAttachmentEntry, FDefaultAllocator>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachments"); }
+	TArray<FComponentAttachmentEntry>& AdditionalComponentAttachments() { return *GetNativePointerField< TArray<FComponentAttachmentEntry>*>(this, "UPrimalHarvestingComponent.AdditionalComponentAttachments"); }
+};
 
+struct AMissionType : AActor
+{
+	static void GetNearbyPlayersAndTamedDinos(UObject* WorldContextObject, TArray<APrimalCharacter*>* OutCharacters, FVector* Location, float Radius) { NativeCall<void, UObject*, TArray<APrimalCharacter*>*, FVector*, float>(nullptr, "AMissionType.GetNearbyPlayersAndTamedDinos", WorldContextObject, OutCharacters, Location, Radius); }
+};
+
+struct ABiomeZoneVolume : AVolume
+{
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ABiomeZoneVolume.GetPrivateStaticClass", Package); }
+};
+
+struct FSpawnPointInfo
+{
+	int& SpawnPointIDField() { return *GetNativePointerField<int*>(this, "FSpawnPointInfo.SpawnPointID"); }
+	FString& BedNameField() { return *GetNativePointerField<FString*>(this, "FSpawnPointInfo.BedName"); }
+	ABiomeZoneVolume* SpawnPointVolumeField() { return GetNativePointerField<ABiomeZoneVolume*>(this, "FSpawnPointInfo.SpawnPointVolume"); }
+	FVector& AtLocationField() { return *GetNativePointerField<FVector*>(this, "FSpawnPointInfo.AtLocation"); }
+	long double& NextAllowedUseTimeField() { return *GetNativePointerField<long double*>(this, "FSpawnPointInfo.NextAllowedUseTime"); }
+	bool& bAllowedUseField() { return *GetNativePointerField<bool*>(this, "FSpawnPointInfo.bAllowedUse"); }
+
+	// Functions
+
+	FString* GetDisplayName(FString* result, FVector* FromPos, bool bIncludeDistance) { return NativeCall<FString*, FString*, FVector*, bool>(this, "FSpawnPointInfo.GetDisplayName", result, FromPos, bIncludeDistance); }
+	FSpawnPointInfo* operator=(FSpawnPointInfo* __that) { return NativeCall<FSpawnPointInfo*, FSpawnPointInfo*>(this, "FSpawnPointInfo.operator=", __that); }
+	bool operator==(FSpawnPointInfo* Other) { return NativeCall<bool, FSpawnPointInfo*>(this, "FSpawnPointInfo.operator==", Other); }
 };

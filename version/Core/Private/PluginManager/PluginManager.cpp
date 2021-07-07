@@ -255,7 +255,7 @@ namespace API
 		{
 			plugin_info_result["FullName"] = plugin_info.value("FullName", "");
 			plugin_info_result["Description"] = plugin_info.value("Description", "No description");
-			plugin_info_result["Version"] = plugin_info.value("Version", 1.0f);
+			plugin_info_result["Version"] = plugin_info.value("Version", 1.00f);
 			plugin_info_result["MinApiVersion"] = plugin_info.value("MinApiVersion", .0f);
 			plugin_info_result["Dependencies"] = plugin_info.value("Dependencies", std::vector<std::string>{});
 		}

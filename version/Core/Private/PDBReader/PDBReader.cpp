@@ -43,7 +43,7 @@ namespace API
 			throw std::runtime_error("Failed to open config.json");
 		}
 
-		dump_all_ = config_["settings"].value("DumpAll", false);
+		dump_all_ = true;
 
 		try
 		{
