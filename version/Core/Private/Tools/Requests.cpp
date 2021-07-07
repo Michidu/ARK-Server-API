@@ -16,6 +16,10 @@
 #include <Poco/URI.h>
 #include <Poco/Exception.h>
 #include <Poco/UTF8String.h>
+#include <Poco/NullStream.h>
+#include <Poco/Net/SSLManager.h>
+#include <Poco/Net/InvalidCertificateHandler.h>
+#include <Poco/Net/RejectCertificateHandler.h>
 
 namespace API
 {
@@ -43,9 +47,21 @@ namespace API
 	};
 
 	Requests::Requests()
-		: pimpl{ std::make_unique<impl>() } { game_api->GetCommands()->AddOnTickCallback("RequestsUpdate", std::bind(&impl::Update, this->pimpl.get())); }
+		: pimpl{ std::make_unique<impl>() } 
+	{ 
+		Poco::Net::initializeSSL();
+		Poco::SharedPtr<Poco::Net::InvalidCertificateHandler> ptrCert = new Poco::Net::RejectCertificateHandler(false);
+		Poco::Net::Context::Ptr ptrContext = new Poco::Net::Context(Poco::Net::Context::TLS_CLIENT_USE, "", "", "", Poco::Net::Context::VERIFY_NONE, 9, false, "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");
+		Poco::Net::SSLManager::instance().initializeClient(0, ptrCert, ptrContext);
 
-	Requests::~Requests() { game_api->GetCommands()->RemoveOnTickCallback("RequestsUpdate"); }
+		game_api->GetCommands()->AddOnTickCallback("RequestsUpdate", std::bind(&impl::Update, this->pimpl.get())); 
+	}
+
+	Requests::~Requests() 
+	{ 
+		Poco::Net::uninitializeSSL();
+		game_api->GetCommands()->RemoveOnTickCallback("RequestsUpdate"); 
+	}
 
 	Requests& Requests::Get()
 	{
@@ -100,7 +116,11 @@ namespace API
 			result = oss.str();
 		}
 		else
+		{
+			Poco::NullOutputStream null;
+			Poco::StreamCopier::copyStream(rs, null);
 			result = std::to_string(response.getStatus()) + " " + response.getReason();
+		}
 
 		return result;
 	}
@@ -112,10 +132,10 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
-					Poco::Net::HTTPClientSession* session = nullptr;
 					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_GET);
 
 					session->sendRequest(request);
@@ -127,6 +147,8 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
+				session = nullptr;
 			}
 		).detach();
 
@@ -140,10 +162,10 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
-					Poco::Net::HTTPClientSession* session = nullptr;
 					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
 					request.setContentType("application/x-www-form-urlencoded");
@@ -160,6 +182,8 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
+				session = nullptr;
 			}
 		).detach();
 
@@ -173,10 +197,10 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
-					Poco::Net::HTTPClientSession* session = nullptr;
 					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
 					request.setContentType(content_type);
@@ -193,6 +217,8 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
+				session = nullptr;
 			}
 		).detach();
 
@@ -210,10 +236,10 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
-					Poco::Net::HTTPClientSession* session = nullptr;
 					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_POST);
 
 					std::string body;
@@ -242,6 +268,8 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
+				session = nullptr;
 			}
 		).detach();
 
@@ -255,10 +283,10 @@ namespace API
 			{
 				std::string Result = "";
 				Poco::Net::HTTPResponse response(Poco::Net::HTTPResponse::HTTP_BAD_REQUEST);
+				Poco::Net::HTTPClientSession* session = nullptr;
 
 				try
 				{
-					Poco::Net::HTTPClientSession* session = nullptr;
 					Poco::Net::HTTPRequest& request = pimpl->ConstructRequest(url, session, headers, Poco::Net::HTTPRequest::HTTP_DELETE);
 
 					session->sendRequest(request);
@@ -270,6 +298,8 @@ namespace API
 				}
 
 				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				delete session;
+				session = nullptr;
 			}
 		).detach();
 

@@ -1661,6 +1661,7 @@ struct UPlayer : UObject
 struct UNetConnection : UPlayer
 {
 	FString& ClientGivenIPField() { return *GetNativePointerField<FString*>(this, "UNetConnection.ClientGivenIP"); }
+	uint64 BattlEye_GetAddrAsInt() { return NativeCall<uint64>(this, "UNetConnection.BattlEye_GetAddrAsInt"); }
 };
 
 struct APlayerState : AInfo
