@@ -55,6 +55,7 @@ struct FName
 	static bool SplitNameWithCheck(const wchar_t* OldName, wchar_t* NewName, int NewNameLen, int* NewNumber) { return NativeCall<bool, const wchar_t*, wchar_t*, int, int*>(nullptr, "FName.SplitNameWithCheck", OldName, NewName, NewNameLen, NewNumber); }
 	bool IsValidXName(FString InvalidChars, FText* Reason) { return NativeCall<bool, FString, FText*>(this, "FName.IsValidXName", InvalidChars, Reason); }
 	void Init(const char* InName, int InNumber, EFindName FindType, bool bSplitName, int HardcodeIndex) { NativeCall<void, const char*, int, EFindName, bool, int>(this, "FName.Init", InName, InNumber, FindType, bSplitName, HardcodeIndex); }
+	FString* GetPlainNameString(FString* result) { return NativeCall<FString*, FString*>(this, "FName.GetPlainNameString", result); }
 };
 
 struct FTransform
@@ -75,8 +76,6 @@ struct FGuid
 	uint32_t C;
 	uint32_t D;
 };
-
-struct UFunction;
 
 struct FBox
 {
@@ -138,6 +137,14 @@ struct FDateTime
 {
 };
 
+struct FWeakObjectPtr
+{
+	int ObjectIndex;
+	int ObjectSerialNumber;
+
+	void operator=(UObject const* __that) { return NativeCall<void, UObject const*>(this, "FWeakObjectPtr.operator=", __that); }
+};
+
 template <typename T>
 struct TWeakObjectPtr
 {
@@ -158,8 +165,24 @@ struct TWeakObjectPtr
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr.Get", bEvenIfPendingKill);
 	}
+
+	TWeakObjectPtr()
+	{}
+
+	TWeakObjectPtr(int index, int serialnumber)
+		:ObjectIndex(index),
+		ObjectSerialNumber(serialnumber)
+	{}
 };
 
+template <typename T>
+TWeakObjectPtr<T> GetWeakReference(T* object)
+{
+	FWeakObjectPtr tempWeak;
+	tempWeak.operator=(object);
+	TWeakObjectPtr<T> tempTWeak(tempWeak.ObjectIndex, tempWeak.ObjectSerialNumber);
+	return tempTWeak;
+}
 template <typename T>
 using TAutoWeakObjectPtr = TWeakObjectPtr<T>;
 
@@ -313,6 +336,14 @@ struct UStruct : UField
 
 struct UFunction : UStruct
 {
+	unsigned int FunctionFlags;
+	unsigned __int16 RepOffset;
+	char NumParms;
+	unsigned __int16 ParmsSize;
+	unsigned __int16 ReturnValueOffset;
+	unsigned __int16 RPCId;
+	unsigned __int16 RPCResponseId;
+	UProperty* FirstPropertyToInit;
 };
 
 struct FNativeFunctionLookup

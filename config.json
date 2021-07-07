@@ -1,6 +1,6 @@
 {  
   "settings":{  
-    "AutomaticPluginReloading":false,
+    "AutomaticPluginReloading":true,
     "AutomaticPluginReloadSeconds":5,
     "SaveWorldBeforePluginReload":true,
 	"DumpAll": true
