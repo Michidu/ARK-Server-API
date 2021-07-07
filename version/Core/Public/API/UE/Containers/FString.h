@@ -1614,13 +1614,9 @@ public:
 		if (!data)
 			return "";
 
-		const int size_needed = WideCharToMultiByte(CP_UTF8, 0, data, static_cast<int>(Len()), nullptr, 0,
-			nullptr, nullptr);
-
+		int size_needed = WideCharToMultiByte(CP_UTF8, 0, &data[0], (int)Len(), NULL, 0, NULL, NULL);
 		std::string str(size_needed, 0);
-		WideCharToMultiByte(CP_UTF8, 0, data, static_cast<int>(Len()), str.data(), size_needed, nullptr,
-			nullptr);
-
+		WideCharToMultiByte(CP_UTF8, 0, &data[0], (int)Len(), &str[0], size_needed, NULL, NULL);
 		return str;
 	}
 
