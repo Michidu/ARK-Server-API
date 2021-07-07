@@ -553,7 +553,7 @@ struct ULevel : ULevelBase
 
 // Game Mode
 
-struct AGameMode
+struct AGameMode : AInfo
 {
 	FName& MatchStateField() { return *GetNativePointerField<FName*>(this, "AGameMode.MatchState"); }
 	FString& OptionsStringField() { return *GetNativePointerField<FString*>(this, "AGameMode.OptionsString"); }

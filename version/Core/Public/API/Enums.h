@@ -677,6 +677,35 @@ namespace EHttpRequestStatus
 	};
 }
 
+#ifdef ARK_GAME
+namespace EServerOctreeGroup
+{
+	enum Type
+	{
+		STASISCOMPONENTS = 0x0,
+		PLAYERPAWNS = 0x1,
+		DINOPAWNS = 0x2,
+		PAWNS = 0x3,
+		STRUCTURES = 0x4,
+		TARGETABLEACTORS = 0x5,
+		PLAYERS_CONNECTED = 0x6,
+		SPATIALNETWORKEDACTORS = 0x7,
+		SPATIALNETWORKEDACTORS_DORMANT = 0x8,
+		ALL_SPATIAL = 0x9,
+		THERMALSTRUCTURES = 0xA,
+		STRUCTURES_CORE = 0xB,
+		DINOPAWNS_TAMED = 0xC,
+		PLAYERS_AND_TAMED_DINOS = 0xD,
+		PLAYERS_CONNECTED_AND_TAMED_DINOS = 0xE,
+		DINOFOODCONTAINER = 0xF,
+		GRENADES = 0x10,
+		TREESAPTAPS = 0x11,
+		LARGEUNSTASISRANGE = 0x12,
+		TRAPS = 0x13,
+		MAX = 0x14,
+	};
+}
+#else
 namespace EServerOctreeGroup
 {
 	enum Type
@@ -702,3 +731,4 @@ namespace EServerOctreeGroup
 		MAX = 0x12,
 	};
 }
+#endif

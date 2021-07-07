@@ -96,8 +96,8 @@ namespace ArkApi
 			{
 				try
 				{
-				data->callback(delta_seconds);
-			}
+					data->callback(delta_seconds);
+				}
 				catch (...)
 				{
 					if (typeid(data->command) == typeid(FString) && !data->command.IsEmpty())
@@ -117,8 +117,8 @@ namespace ArkApi
 			{
 				try
 				{
-				data->callback();
-			}
+					data->callback();
+				}
 				catch (...)
 				{
 					if (typeid(data->command) == typeid(FString) && !data->command.IsEmpty())

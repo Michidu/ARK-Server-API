@@ -22,6 +22,8 @@ namespace AtlasApi
 	DECLARE_HOOK(AGameState_DefaultTimer, void, AGameState*);
 	DECLARE_HOOK(AShooterGameMode_BeginPlay, void, AShooterGameMode*);
 	DECLARE_HOOK(URCONServer_Init, bool, URCONServer*, FString, int, UShooterCheatManager*);
+	DECLARE_HOOK(AShooterPlayerController_Possess, void, AShooterPlayerController*, APawn*);
+	DECLARE_HOOK(AShooterGameMode_Logout, void, AShooterGameMode*, AController*);
 
 	void InitHooks()
 	{
@@ -43,6 +45,9 @@ namespace AtlasApi
 		hooks->SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay,
 		               &AShooterGameMode_BeginPlay_original);
 		hooks->SetHook("URCONServer.Init", &Hook_URCONServer_Init, &URCONServer_Init_original);
+		hooks->SetHook("AShooterPlayerController.Possess", &Hook_AShooterPlayerController_Possess,
+			&AShooterPlayerController_Possess_original);
+		hooks->SetHook("AShooterGameMode.Logout", &Hook_AShooterGameMode_Logout, &AShooterGameMode_Logout_original);
 
 		Log::GetLog()->info("Initialized hooks\n");
 	}
@@ -152,5 +157,20 @@ namespace AtlasApi
 		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetCheatManager(SCheatManager);
 
 		return URCONServer_Init_original(_this, Password, InPort, SCheatManager);
+	}
+
+	void  Hook_AShooterPlayerController_Possess(AShooterPlayerController* _this, APawn* inPawn)
+	{
+		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetPlayerController(_this);
+
+		AShooterPlayerController_Possess_original(_this, inPawn);
+	}
+
+	void  Hook_AShooterGameMode_Logout(AShooterGameMode* _this, AController* Exiting)
+	{
+		AShooterPlayerController* Exiting_SPC = static_cast<AShooterPlayerController*>(Exiting);
+		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).RemovePlayerController(Exiting_SPC);
+
+		AShooterGameMode_Logout_original(_this, Exiting);
 	}
 } // namespace AtlasApi

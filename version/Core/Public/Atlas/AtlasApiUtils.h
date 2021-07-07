@@ -340,23 +340,7 @@ namespace ArkApi
 		 */
 		AShooterPlayerController* FindPlayerFromSteamId(uint64 steam_id) const
 		{
-			AShooterPlayerController* result = nullptr;
-
-			const auto& player_controllers = GetWorld()->PlayerControllerListField();
-			for (TWeakObjectPtr<APlayerController> player_controller : player_controllers)
-			{
-				const uint64 current_steam_id = GetSteamIdFromController(player_controller.Get());
-
-				if (current_steam_id == steam_id)
-				{
-					auto* shooter_pc = static_cast<AShooterPlayerController*>(player_controller.Get());
-
-					result = shooter_pc;
-					break;
-				}
-			}
-
-			return result;
+			return FindPlayerFromSteamId_Internal(steam_id);
 		}
 
 		/*bool SpawnDrop(const wchar_t* blueprint, FVector pos, int amount, float item_quality = 0.0f,
@@ -653,6 +637,119 @@ namespace ArkApi
 
 			return steam_id;
 		}
+
+		/**
+		 * \brief Returns blueprint path from any UObject
+		 */
+		static FString GetBlueprint(UObjectBase* object)
+		{
+			if (object != nullptr && object->ClassField() != nullptr)
+			{
+				FString path_name;
+				object->ClassField()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
+
+				if (int find_index = 0; path_name.FindChar(' ', find_index))
+				{
+					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
+						path_name.Len() - (find_index + (path_name.EndsWith(
+							"_C", ESearchCase::
+							CaseSensitive)
+							? 3
+							: 1))) + "'";
+					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
+				}
+			}
+
+			return FString("");
+		}
+
+		/**
+		 * \brief Returns blueprint path from any UClass
+		 */
+		static FString GetClassBlueprint(UClass* the_class)
+		{
+			if (the_class != nullptr)
+			{
+				FString path_name;
+				the_class->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
+
+				if (int find_index = 0; path_name.FindChar(' ', find_index))
+				{
+					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
+						path_name.Len() - (find_index + (path_name.EndsWith(
+							"_C", ESearchCase::
+							CaseSensitive)
+							? 3
+							: 1))) + "'";
+					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
+				}
+			}
+
+			return FString("");
+		}
+
+		/**
+		* \brief Get Shooter Game State
+		*/
+		AShooterGameState* GetGameState()
+		{
+			return static_cast<AShooterGameState*>(GetWorld()->GameStateField());
+		}
+
+		/**
+		* \brief Get UShooterCheatManager* of player controller
+		*/
+		static UShooterCheatManager* GetCheatManagerByPC(AShooterPlayerController* SPC)
+		{
+			if (!SPC) return nullptr;
+
+			UCheatManager* cheat = SPC->CheatManagerField();
+
+			if (cheat)
+			{
+				return static_cast<UShooterCheatManager*>(cheat);
+			}
+
+			return nullptr;
+		}
+
+		/**
+		* \brief Returns pointer to Primal Game Data
+		*/
+		UPrimalGameData* GetGameData()
+		{
+			UPrimalGlobals* singleton = static_cast<UPrimalGlobals*>(Globals::GEngine()()->GameSingletonField());
+			return (singleton->PrimalGameDataOverrideField() != nullptr) ? singleton->PrimalGameDataOverrideField() : singleton->PrimalGameDataField();
+		}
+
+		/**
+		* \brief Gets all actors in radius at location
+		*/
+		TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType)
+		{
+			TArray<AActor*> out_actors;
+
+			UVictoryCore::ServerOctreeOverlapActors(&out_actors, GetWorld(), location, radius, ActorType, true);
+
+			return out_actors;
+		}
+
+		/**
+		* \brief Gets all actors in radius at location, with ignore actors
+		*/
+		TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType, TArray<AActor*> ignores)
+		{
+			TArray<AActor*> out_actors;
+
+			UVictoryCore::ServerOctreeOverlapActors(&out_actors, GetWorld(), location, radius, ActorType, true);
+
+			for (AActor* ignore : ignores)
+				out_actors.Remove(ignore);
+
+			return out_actors;
+		}
+	private:
+			virtual AShooterPlayerController* FindPlayerFromSteamId_Internal(uint64 steam_id) const = 0;
 	};
 
 	ARK_API IApiUtils& APIENTRY GetApiUtils();
