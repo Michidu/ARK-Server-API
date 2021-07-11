@@ -4339,7 +4339,7 @@ struct APrimalCharacter : ACharacter
 	ECameraStyle::Type BPForceCameraStyle(APrimalCharacter * ForViewTarget) { return NativeCall<ECameraStyle::Type, APrimalCharacter*>(this, "APrimalCharacter.BPForceCameraStyle", ForViewTarget); }
 	FVector * BPOverrideCharacterNewFallVelocity(FVector * result, FVector * InitialVelocity, FVector * Gravity, float DeltaTime) { return NativeCall<FVector*, FVector*, FVector*, FVector*, float>(this, "APrimalCharacter.BPOverrideCharacterNewFallVelocity", result, InitialVelocity, Gravity, DeltaTime); }
 	static void StaticRegisterNativesAPrimalCharacter() { NativeCall<void>(nullptr, "APrimalCharacter.StaticRegisterNativesAPrimalCharacter"); }
-	static UClass * GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "APrimalCharacter.GetPrivateStaticClass", Package); }
+	static UClass * GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "APrimalCharacter.GetPrivateStaticClass"); }
 	bool AllowPlayMontage(UAnimMontage * AnimMontage) { return NativeCall<bool, UAnimMontage*>(this, "APrimalCharacter.AllowPlayMontage", AnimMontage); }
 	bool BP_ForceAllowAddBuff(TSubclassOf<APrimalBuff> BuffClass) { return NativeCall<bool, TSubclassOf<APrimalBuff>>(this, "APrimalCharacter.BP_ForceAllowAddBuff", BuffClass); }
 	bool BP_IsCharacterHardAttached(bool bIgnoreRiding, bool bIgnoreCarried) { return NativeCall<bool, bool, bool>(this, "APrimalCharacter.BP_IsCharacterHardAttached", bIgnoreRiding, bIgnoreCarried); }
@@ -5866,7 +5866,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	long double& NextAllowedMatingTimeField() { return *GetNativePointerField<long double*>(this, "APrimalDinoCharacter.NextAllowedMatingTime"); }
 	float& MatingProgressField() { return *GetNativePointerField<float*>(this, "APrimalDinoCharacter.MatingProgress"); }
 	long double& LastMatingNotificationTimeField() { return *GetNativePointerField<long double*>(this, "APrimalDinoCharacter.LastMatingNotificationTime"); }
-	APrimalDinoCharacter * MatingWithDinoField() { return *GetNativePointerField<APrimalDinoCharacter**>(this, "APrimalDinoCharacter.MatingWithDino"); }
+	APrimalDinoCharacter*& MatingWithDinoField() { return *GetNativePointerField<APrimalDinoCharacter**>(this, "APrimalDinoCharacter.MatingWithDino"); }
 	UAnimMontage * MatingAnimationMaleField() { return *GetNativePointerField<UAnimMontage**>(this, "APrimalDinoCharacter.MatingAnimationMale"); }
 	FieldArray<char, 12> GestationEggNumberOfLevelUpPointsAppliedField() { return {this, "APrimalDinoCharacter.GestationEggNumberOfLevelUpPointsApplied"}; }
 	float& GestationEggTamedIneffectivenessModifierField() { return *GetNativePointerField<float*>(this, "APrimalDinoCharacter.GestationEggTamedIneffectivenessModifier"); }
@@ -8414,10 +8414,6 @@ struct UCharacterMovementComponent
 	void ServerMoveWithRotation(float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char CompressedMoveFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode, FRotator ClientRotation) { NativeCall<void, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent*, FName, char, FRotator>(this, "UCharacterMovementComponent.ServerMoveWithRotation", TimeStamp, InAccel, ClientLoc, CompressedMoveFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode, ClientRotation); }
 };
 
-
-
-
-
 struct ABrush : AActor
 {
 
@@ -8843,6 +8839,11 @@ struct APrimalBuff : AActor
 	void NotifyDamage(float DamageAmount, TSubclassOf<UDamageType> DamageClass, AController* EventInstigator, AActor* TheDamageCauser) { NativeCall<void, float, TSubclassOf<UDamageType>, AController*, AActor*>(this, "APrimalBuff.NotifyDamage", DamageAmount, DamageClass, EventInstigator, TheDamageCauser); }
 	bool PreventActorTargeting(AActor* ByActor) { return NativeCall<bool, AActor*>(this, "APrimalBuff.PreventActorTargeting", ByActor); }
 	void SetBuffCauser(AActor* CausedBy) { NativeCall<void, AActor*>(this, "APrimalBuff.SetBuffCauser", CausedBy); }
+};
+
+struct APrimalBuff_Grappled : APrimalBuff
+{
+
 };
 
 struct FHarvestResourceEntry

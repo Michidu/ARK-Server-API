@@ -566,7 +566,6 @@ struct APrimalStructure : APrimalTargetableActor
 	bool IsActiveEventStructure() { return NativeCall<bool>(this, "APrimalStructure.IsActiveEventStructure"); }
 	void DeferredDeprecationCheck() { NativeCall<void>(this, "APrimalStructure.DeferredDeprecationCheck"); }
 	static void StaticRegisterNativesAPrimalStructure() { NativeCall<void>(nullptr, "APrimalStructure.StaticRegisterNativesAPrimalStructure"); }
-	static UClass * GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "APrimalStructure.GetPrivateStaticClass", Package); }
 	void BlueprintDrawHUD(AShooterHUD * HUD, float CenterX, float CenterY) { NativeCall<void, AShooterHUD*, float, float>(this, "APrimalStructure.BlueprintDrawHUD", HUD, CenterX, CenterY); }
 	void BlueprintDrawPreviewHUD(AShooterHUD * HUD, float CenterX, float CenterY) { NativeCall<void, AShooterHUD*, float, float>(this, "APrimalStructure.BlueprintDrawPreviewHUD", HUD, CenterX, CenterY); }
 	bool BPAllowPickupGiveItem(APlayerController * ForPC) { return NativeCall<bool, APlayerController*>(this, "APrimalStructure.BPAllowPickupGiveItem", ForPC); }

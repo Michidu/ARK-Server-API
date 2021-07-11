@@ -194,7 +194,7 @@ struct FPaintItem {};
 struct APrimalStructureElevatorPlatform {};
 struct FBoneDamageAdjuster {};
 struct AShooterProjectile;
-struct APrimalBuff_Grappled {};
+struct APrimalBuff_Grappled;
 struct APrimalStructureLadder {};
 struct APrimalProjectileBoomerang {};
 struct FWeaponEvent {};
