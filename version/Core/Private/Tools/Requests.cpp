@@ -146,7 +146,10 @@ namespace API
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				const bool success = (int)response.getStatus() >= 200
+					&& (int)response.getStatus() < 300;
+
+				pimpl->WriteRequest(callback, success, Result);
 				delete session;
 				session = nullptr;
 			}
@@ -181,7 +184,10 @@ namespace API
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				const bool success = (int)response.getStatus() >= 200
+					&& (int)response.getStatus() < 300;
+
+				pimpl->WriteRequest(callback, success, Result);
 				delete session;
 				session = nullptr;
 			}
@@ -216,7 +222,10 @@ namespace API
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				const bool success = (int)response.getStatus() >= 200
+					&& (int)response.getStatus() < 300;
+
+				pimpl->WriteRequest(callback, success, Result);
 				delete session;
 				session = nullptr;
 			}
@@ -267,7 +276,10 @@ namespace API
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				const bool success = (int)response.getStatus() >= 200
+					&& (int)response.getStatus() < 300;
+
+				pimpl->WriteRequest(callback, success, Result);
 				delete session;
 				session = nullptr;
 			}
@@ -297,7 +309,10 @@ namespace API
 					Log::GetLog()->error(exc.displayText());
 				}
 
-				pimpl->WriteRequest(callback, response.getStatus() == Poco::Net::HTTPResponse::HTTP_OK, Result);
+				const bool success = (int)response.getStatus() >= 200
+					&& (int)response.getStatus() < 300;
+
+				pimpl->WriteRequest(callback, success, Result);
 				delete session;
 				session = nullptr;
 			}
