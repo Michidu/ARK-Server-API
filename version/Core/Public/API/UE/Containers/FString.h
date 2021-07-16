@@ -12,6 +12,7 @@
 #include "../Templates/UnrealTemplate.h"
 #include "../Math/UnrealMathUtility.h"
 #include "../Misc/CString.h"
+#include "../Crc.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244)
@@ -1638,8 +1639,15 @@ public:
 
 		return FString(formatted_msg.c_str());
 	}
+
+	
 };
 
+FORCEINLINE uint32 GetTypeHash(const FString& Thing)
+{
+	uint32 Hash = FCrc::MemCrc32(&Thing, sizeof(FString));
+	return Hash;
+}
 
 template<>
 struct TContainerTraits<FString> : public TContainerTraitsBase<FString>

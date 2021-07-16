@@ -12,12 +12,12 @@
 
 #include "../Base.h"
 
+#include "Enums.h"
 #include "../UE/Math/Vector.h"
 #include "../UE/Math/Rotator.h"
 #include "../UE/NetSerialization.h"
 #include "../UE/Math/ColorList.h"
 #include "../UE/UE.h"
-#include "Enums.h"
 #include "Inventory.h"
 #include "Other.h"
 #include "Tribe.h"
