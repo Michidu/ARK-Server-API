@@ -63,6 +63,7 @@
     <ClInclude Include="Core\Public\API\UE\Containers\Set.h" />
     <ClInclude Include="Core\Public\API\UE\Containers\SparseArray.h" />
     <ClInclude Include="Core\Public\API\UE\Containers\TArray.h" />
+    <ClInclude Include="Core\Public\API\UE\Crc.h" />
     <ClInclude Include="Core\Public\API\UE\Delegates\IntegerSequence.h" />
     <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformAtomics.h" />
     <ClInclude Include="Core\Public\API\UE\GenericPlatform\GenericPlatformMath.h" />

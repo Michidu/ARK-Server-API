@@ -12,11 +12,7 @@
 #include "../Templates/UnrealTemplate.h"
 #include "../Math/UnrealMathUtility.h"
 #include "../Misc/CString.h"
-
-struct FCrc
-{
-	static uint32 MemCrc32(const void* Data, int32 Lenght) { return NativeCall<uint32, const void*, int32>(nullptr, "FCrc.MemCrc32", Data, Lenght); }
-};
+#include "../Crc.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244)

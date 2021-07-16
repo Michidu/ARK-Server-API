@@ -3,6 +3,7 @@
 #include <comdef.h>
 #include <xmmintrin.h>
 
+#include "Crc.h"
 #include "Containers/TArray.h"
 #include "Containers/FString.h"
 #include "Containers/EnumAsByte.h"
