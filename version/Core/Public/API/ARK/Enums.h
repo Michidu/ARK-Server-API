@@ -1,5 +1,7 @@
 #pragma once
 
+#pragma warning(push)
+#pragma warning(disable : 4369)
 
 enum class USetSpanCondition
 {
@@ -14433,3 +14435,5 @@ enum class ContentTypes
 	ContentTypes_Image = 0x4,
 	ContentTypes_All = 0x7,
 };
+
+#pragma warning(pop)
