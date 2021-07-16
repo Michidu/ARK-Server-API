@@ -13,6 +13,11 @@
 #include "../Math/UnrealMathUtility.h"
 #include "../Misc/CString.h"
 
+struct FCrc
+{
+	static uint32 MemCrc32(const void* Data, int32 Lenght) { return NativeCall<uint32, const void*, int32>(nullptr, "FCrc.MemCrc32", Data, Lenght); }
+};
+
 #pragma warning(push)
 #pragma warning(disable : 4244)
 
@@ -1638,8 +1643,15 @@ public:
 
 		return FString(formatted_msg.c_str());
 	}
+
+	
 };
 
+FORCEINLINE uint32 GetTypeHash(const FString& Thing)
+{
+	uint32 Hash = FCrc::MemCrc32(&Thing, sizeof(FString));
+	return Hash;
+}
 
 template<>
 struct TContainerTraits<FString> : public TContainerTraitsBase<FString>

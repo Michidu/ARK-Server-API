@@ -3333,6 +3333,16 @@ struct AShooterPlayerController : ABasePlayerController
 	void ServerUploadCharaterDataToArk(UPrimalInventoryComponent* inventoryComp) { NativeCall<void, UPrimalInventoryComponent*>(this, "AShooterPlayerController.ServerUploadCharaterDataToArk", inventoryComp); }
 	void ServerUploadCurrentCharacterAndItems(UPrimalInventoryComponent* inventoryComp) { NativeCall<void, UPrimalInventoryComponent*>(this, "AShooterPlayerController.ServerUploadCurrentCharacterAndItems", inventoryComp); }
 	void ServerUploadDino(APrimalDinoCharacter* DownloadedDino) { NativeCall<void, APrimalDinoCharacter*>(this, "AShooterPlayerController.ServerUploadDino", DownloadedDino); }
+
+	// Enums
+
+	enum CharacterTransferState
+	{
+		CTS_None = 0x0,
+		CTS_Transferring = 0x1,
+		CTS_Downloading = 0x2,
+		CTS_Done = 0x3,
+	};
 };
 
 struct ACharacter : APawn
@@ -8412,6 +8422,22 @@ struct UCharacterMovementComponent
 	void ServerMoveOldWithRotation(float OldTimeStamp, FVector_NetQuantize100 OldAccel, char OldMoveFlags, FRotator OldRotation) { NativeCall<void, float, FVector_NetQuantize100, char, FRotator>(this, "UCharacterMovementComponent.ServerMoveOldWithRotation", OldTimeStamp, OldAccel, OldMoveFlags, OldRotation); }
 	void ServerMoveOnlyRotation(float TimeStamp, char ClientRoll, unsigned int View) { NativeCall<void, float, char, unsigned int>(this, "UCharacterMovementComponent.ServerMoveOnlyRotation", TimeStamp, ClientRoll, View); }
 	void ServerMoveWithRotation(float TimeStamp, FVector_NetQuantize100 InAccel, FVector_NetQuantize100 ClientLoc, char CompressedMoveFlags, char ClientRoll, unsigned int View, UPrimitiveComponent * ClientMovementBase, FName ClientBaseBoneName, char ClientMovementMode, FRotator ClientRotation) { NativeCall<void, float, FVector_NetQuantize100, FVector_NetQuantize100, char, char, unsigned int, UPrimitiveComponent*, FName, char, FRotator>(this, "UCharacterMovementComponent.ServerMoveWithRotation", TimeStamp, InAccel, ClientLoc, CompressedMoveFlags, ClientRoll, View, ClientMovementBase, ClientBaseBoneName, ClientMovementMode, ClientRotation); }
+
+	// Enums
+
+	enum EServerMoveType
+	{
+		DefaultMove = 0x0,
+		MoveOnlyRotation = 0x1,
+	};
+
+	enum EShrinkCapsuleExtent
+	{
+		SHRINK_None = 0x0,
+		SHRINK_RadiusCustom = 0x1,
+		SHRINK_HeightCustom = 0x2,
+		SHRINK_AllCustom = 0x3,
+	};
 };
 
 struct ABrush : AActor

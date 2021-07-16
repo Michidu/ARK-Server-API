@@ -1,5 +1,5 @@
 #pragma once
-
+#ifdef ATLAS_GAME
 namespace ESaveType
 {
 	enum Type
@@ -72,16 +72,16 @@ namespace ETextComparisonLevel
 
 enum class EFindName
 {
-	/** Find a name; return 0 if it doesn't exist. */
-	FNAME_Find,
+	// Find a name; return 0 if it doesn't exist.
+	//FNAME_Find,
 
-	/** Find a name or add it if it doesn't exist. */
-	FNAME_Add,
+	// Find a name or add it if it doesn't exist. 
+	//FNAME_Add,
 
-	/** Finds a name and replaces it. Adds it if missing. This is only used by UHT and is generally not safe for threading.
-	* All this really is used for is correcting the case of names. In MT conditions you might get a half-changed name.
-	*/
-	FNAME_Replace_Not_Safe_For_Threading,
+	// Finds a name and replaces it. Adds it if missing. This is only used by UHT and is generally not safe for threading.
+	// All this really is used for is correcting the case of names. In MT conditions you might get a half-changed name.
+	//
+	//FNAME_Replace_Not_Safe_For_Threading,
 };
 
 enum class ECollisionResponse
@@ -355,61 +355,6 @@ namespace EAssetAvailabilityProgressReportingType
 	};
 }
 
-enum class ClassCastFlags : unsigned long long
-{
-	CASTCLASS_None = 0x0000000000000000,
-	CASTCLASS_UField = 0x0000000000000001,
-	CASTCLASS_UInt8Property = 0x0000000000000002,
-	CASTCLASS_UEnum = 0x0000000000000004,
-	CASTCLASS_UStruct = 0x0000000000000008,
-	CASTCLASS_UScriptStruct = 0x0000000000000010,
-	CASTCLASS_UClass = 0x0000000000000020,
-	CASTCLASS_UByteProperty = 0x0000000000000040,
-	CASTCLASS_UIntProperty = 0x0000000000000080,
-	CASTCLASS_UFloatProperty = 0x0000000000000100,
-	CASTCLASS_UUInt64Property = 0x0000000000000200,
-	CASTCLASS_UClassProperty = 0x0000000000000400,
-	CASTCLASS_UUInt32Property = 0x0000000000000800,
-	CASTCLASS_UInterfaceProperty = 0x0000000000001000,
-	CASTCLASS_UNameProperty = 0x0000000000002000,
-	CASTCLASS_UStrProperty = 0x0000000000004000,
-	CASTCLASS_UProperty = 0x0000000000008000,
-	CASTCLASS_UObjectProperty = 0x0000000000010000,
-	CASTCLASS_UBoolProperty = 0x0000000000020000,
-	CASTCLASS_UUInt16Property = 0x0000000000040000,
-	CASTCLASS_UFunction = 0x0000000000080000,
-	CASTCLASS_UStructProperty = 0x0000000000100000,
-	CASTCLASS_UArrayProperty = 0x0000000000200000,
-	CASTCLASS_UInt64Property = 0x0000000000400000,
-	CASTCLASS_UDelegateProperty = 0x0000000000800000,
-	CASTCLASS_UNumericProperty = 0x0000000001000000,
-	CASTCLASS_UMulticastDelegateProperty = 0x0000000002000000,
-	CASTCLASS_UObjectPropertyBase = 0x0000000004000000,
-	CASTCLASS_UWeakObjectProperty = 0x0000000008000000,
-	CASTCLASS_ULazyObjectProperty = 0x0000000010000000,
-	CASTCLASS_UAssetObjectProperty = 0x0000000020000000,
-	CASTCLASS_UTextProperty = 0x0000000040000000,
-	CASTCLASS_UInt16Property = 0x0000000080000000,
-	CASTCLASS_UDoubleProperty = 0x0000000100000000,
-	CASTCLASS_UAssetClassProperty = 0x0000000200000000,
-	CASTCLASS_UPackage = 0x0000000400000000,
-	CASTCLASS_ULevel = 0x0000000800000000,
-	CASTCLASS_AActor = 0x0000001000000000,
-	CASTCLASS_APlayerController = 0x0000002000000000,
-	CASTCLASS_APawn = 0x0000004000000000,
-	CASTCLASS_USceneComponent = 0x0000008000000000,
-	CASTCLASS_UPrimitiveComponent = 0x0000010000000000,
-	CASTCLASS_USkinnedMeshComponent = 0x0000020000000000,
-	CASTCLASS_USkeletalMeshComponent = 0x0000040000000000,
-	CASTCLASS_UBlueprint = 0x0000080000000000,
-	CASTCLASS_UDelegateFunction = 0x0000100000000000,
-	CASTCLASS_UStaticMeshComponent = 0x0000200000000000,
-	CASTCLASS_UMapProperty = 0x0000400000000000,
-	CASTCLASS_USetProperty = 0x0000800000000000,
-	CASTCLASS_UEnumProperty = 0x0001000000000000,
-	CASTCLASS_AllFlags = 0xFFFFFFFFFFFFFFFF
-};
-
 enum EName
 {
 	NAME_None = 0x0,
@@ -676,59 +621,305 @@ namespace EHttpRequestStatus
 		Succeeded = 0x3,
 	};
 }
+#else
 
-#ifdef ARK_GAME
-namespace EServerOctreeGroup
+enum EName
+{
+	NAME_None = 0x0,
+	NAME_ByteProperty = 0x1,
+	NAME_IntProperty = 0x2,
+	NAME_BoolProperty = 0x3,
+	NAME_FloatProperty = 0x4,
+	NAME_ObjectProperty = 0x5,
+	NAME_NameProperty = 0x6,
+	NAME_DelegateProperty = 0x7,
+	NAME_ClassProperty = 0x8,
+	NAME_ArrayProperty = 0x9,
+	NAME_StructProperty = 0xa,
+	NAME_VectorProperty = 0xb,
+	NAME_RotatorProperty = 0xc,
+	NAME_StrProperty = 0xd,
+	NAME_TextProperty = 0xe,
+	NAME_InterfaceProperty = 0xf,
+	NAME_MulticastDelegateProperty = 0x10,
+	NAME_WeakObjectProperty = 0x11,
+	NAME_LazyObjectProperty = 0x12,
+	NAME_AssetObjectProperty = 0x13,
+	NAME_UInt64Property = 0x14,
+	NAME_UInt32Property = 0x15,
+	NAME_UInt16Property = 0x16,
+	NAME_Int64Property = 0x17,
+	NAME_Int16Property = 0x19,
+	NAME_Int8Property = 0x1a,
+	NAME_AssetSubclassOfProperty = 0x1b,
+	NAME_Core = 0x1e,
+	NAME_Engine = 0x1f,
+	NAME_Editor = 0x20,
+	NAME_CoreUObject = 0x21,
+	NAME_Cylinder = 0x32,
+	NAME_BoxSphereBounds = 0x33,
+	NAME_Sphere = 0x34,
+	NAME_Box = 0x35,
+	NAME_Vector2D = 0x36,
+	NAME_IntRect = 0x37,
+	NAME_IntPoint = 0x38,
+	NAME_Vector4 = 0x39,
+	NAME_Name = 0x3a,
+	NAME_Vector = 0x3b,
+	NAME_Rotator = 0x3c,
+	NAME_SHVector = 0x3d,
+	NAME_Color = 0x3e,
+	NAME_Plane = 0x3f,
+	NAME_Matrix = 0x40,
+	NAME_LinearColor = 0x41,
+	NAME_AdvanceFrame = 0x42,
+	NAME_Pointer = 0x43,
+	NAME_Double = 0x44,
+	NAME_Quat = 0x45,
+	NAME_Self = 0x46,
+	NAME_Transform = 0x47,
+	NAME_Object = 0x64,
+	NAME_Camera = 0x65,
+	NAME_Actor = 0x66,
+	NAME_ObjectRedirector = 0x67,
+	NAME_ObjectArchetype = 0x68,
+	NAME_Class = 0x69,
+	NAME_State = 0xc8,
+	NAME_TRUE = 0xc9,
+	NAME_FALSE = 0xca,
+	NAME_Enum = 0xcb,
+	NAME_Default = 0xcc,
+	NAME_Skip = 0xcd,
+	NAME_Input = 0xce,
+	NAME_Package = 0xcf,
+	NAME_Groups = 0xd0,
+	NAME_Interface = 0xd1,
+	NAME_Components = 0xd2,
+	NAME_Global = 0xd3,
+	NAME_Super = 0xd4,
+	NAME_Outer = 0xd5,
+	NAME_Map = 0xd6,
+	NAME_Role = 0xd7,
+	NAME_RemoteRole = 0xd8,
+	NAME_PersistentLevel = 0xd9,
+	NAME_TheWorld = 0xda,
+	NAME_PackageMetaData = 0xdb,
+	NAME_InitialState = 0xdc,
+	NAME_Game = 0xdd,
+	NAME_SelectionColor = 0xde,
+	NAME_UI = 0xdf,
+	NAME_ExecuteUbergraph = 0xe0,
+	NAME_DeviceID = 0xe1,
+	NAME_RootStat = 0xe2,
+	NAME_MoveActor = 0xe3,
+	NAME_All = 0xe6,
+	NAME_MeshEmitterVertexColor = 0xe7,
+	NAME_TextureOffsetParameter = 0xe8,
+	NAME_TextureScaleParameter = 0xe9,
+	NAME_ImpactVel = 0xea,
+	NAME_SlideVel = 0xeb,
+	NAME_TextureOffset1Parameter = 0xec,
+	NAME_MeshEmitterDynamicParameter = 0xed,
+	NAME_ExpressionInput = 0xee,
+	NAME_Untitled = 0xef,
+	NAME_Timer = 0xf0,
+	NAME_Team = 0xf1,
+	NAME_Low = 0xf2,
+	NAME_High = 0xf3,
+	NAME_NetworkGUID = 0xf4,
+	NAME_GameThread = 0xf5,
+	NAME_RenderThread = 0xf6,
+	NAME_OtherChildren = 0xf7,
+	NAME_Location = 0xf8,
+	NAME_Rotation = 0xf9,
+	NAME_BSP = 0xfa,
+	NAME_EditorGameAgnostic = 0xfb,
+	NAME_DGram = 0x118,
+	NAME_Stream = 0x119,
+	NAME_GameNetDriver = 0x11a,
+	NAME_PendingNetDriver = 0x11b,
+	NAME_BeaconNetDriver = 0x11c,
+	NAME_FlushNetDormancy = 0x11d,
+	NAME_Linear = 0x12c,
+	NAME_Point = 0x12d,
+	NAME_Aniso = 0x12e,
+	NAME_LightMapResolution = 0x12f,
+	NAME_UnGrouped = 0x137,
+	NAME_VoiceChat = 0x138,
+	NAME_Playing = 0x140,
+	NAME_Spectating = 0x142,
+	NAME_Inactive = 0x145,
+	NAME_PerfWarning = 0x15e,
+	NAME_Info = 0x15f,
+	NAME_Init = 0x160,
+	NAME_Exit = 0x161,
+	NAME_Cmd = 0x162,
+	NAME_Warning = 0x163,
+	NAME_Error = 0x164,
+	NAME_FontCharacter = 0x190,
+	NAME_InitChild2StartBone = 0x191,
+	NAME_SoundCueLocalized = 0x192,
+	NAME_SoundCue = 0x193,
+	NAME_RawDistributionFloat = 0x194,
+	NAME_RawDistributionVector = 0x195,
+	NAME_InterpCurveFloat = 0x196,
+	NAME_InterpCurveVector2D = 0x197,
+	NAME_InterpCurveVector = 0x198,
+	NAME_InterpCurveTwoVectors = 0x199,
+	NAME_InterpCurveQuat = 0x19a,
+	NAME_AI = 0x1c2,
+	NAME_NavMesh = 0x1c3,
+	NAME_PerformanceCapture = 0x1f4,
+	NAME_MaxHardcodedNameIndex = 0x1f5,
+};
+
+enum class EFindName
+{
+	FNAME_Find = 0x0,
+	FNAME_Add = 0x1,
+	FNAME_Replace_Not_Safe_For_Threading = 0x2,
+};
+
+namespace ETextComparisonLevel
 {
 	enum Type
 	{
-		STASISCOMPONENTS = 0x0,
-		PLAYERPAWNS = 0x1,
-		DINOPAWNS = 0x2,
-		PAWNS = 0x3,
-		STRUCTURES = 0x4,
-		TARGETABLEACTORS = 0x5,
-		PLAYERS_CONNECTED = 0x6,
-		SPATIALNETWORKEDACTORS = 0x7,
-		SPATIALNETWORKEDACTORS_DORMANT = 0x8,
-		ALL_SPATIAL = 0x9,
-		THERMALSTRUCTURES = 0xA,
-		STRUCTURES_CORE = 0xB,
-		DINOPAWNS_TAMED = 0xC,
-		PLAYERS_AND_TAMED_DINOS = 0xD,
-		PLAYERS_CONNECTED_AND_TAMED_DINOS = 0xE,
-		DINOFOODCONTAINER = 0xF,
-		GRENADES = 0x10,
-		TREESAPTAPS = 0x11,
-		LARGEUNSTASISRANGE = 0x12,
-		TRAPS = 0x13,
-		MAX = 0x14,
+		Default = 0x0,
+		Primary = 0x1,
+		Secondary = 0x2,
+		Tertiary = 0x3,
+		Quaternary = 0x4,
+		Quinary = 0x5,
 	};
 }
-#else
-namespace EServerOctreeGroup
+
+enum class EObjectFlags
+{
+	RF_Public = 0x1,
+	RF_Standalone = 0x2,
+	RF_Native = 0x4,
+	RF_Transactional = 0x8,
+	RF_ClassDefaultObject = 0x10,
+	RF_ArchetypeObject = 0x20,
+	RF_Transient = 0x40,
+	RF_RootSet = 0x80,
+	RF_Unreachable = 0x100,
+	RF_TagGarbageTemp = 0x200,
+	RF_NeedLoad = 0x400,
+	RF_AsyncLoading = 0x800,
+	RF_NeedPostLoad = 0x1000,
+	RF_NeedPostLoadSubobjects = 0x2000,
+	RF_PendingKill = 0x4000,
+	RF_BeginDestroyed = 0x8000,
+	RF_FinishDestroyed = 0x10000,
+	RF_BeingRegenerated = 0x20000,
+	RF_DefaultSubObject = 0x40000,
+	RF_WasLoaded = 0x80000,
+	RF_TextExportTransient = 0x100000,
+	RF_LoadCompleted = 0x200000,
+	RF_WhiteListed = 0x400000,
+	RF_AsyncLoadingRef = 0x800000,
+	RF_MarkedByCooker = 0x1000000,
+	RF_ForceTagExp = 0x2000000,
+	RF_OlderObject = 0x4000000,
+	RF_AllFlags = 0x7ffffff,
+	RF_NoFlags = 0x0,
+	RF_Load = 0x14003f,
+	RF_PropagateToSubObjects = 0x69,
+};
+
+namespace EIncludeSuperFlag
 {
 	enum Type
 	{
-		STASISCOMPONENTS = 0x0,
-		PLAYERPAWNS = 0x1,
-		DINOPAWNS = 0x2,
-		PAWNS = 0x3,
-		STRUCTURES = 0x4,
-		TARGETABLEACTORS = 0x5,
-		SPATIALNETWORKEDACTORS = 0x6,
-		SPATIALNETWORKEDACTORS_DORMANT = 0x7,
-		ALL_SPATIAL = 0x8,
-		THERMALSTRUCTURES = 0x9,
-		STRUCTURES_CORE = 0xA,
-		DINOPAWNS_TAMED = 0xB,
-		PLAYERS_AND_TAMED_DINOS = 0xC,
-		DINOFOODCONTAINER = 0xD,
-		GRENADES = 0xE,
-		TREESAPTAPS = 0xF,
-		LARGEUNSTASISRANGE = 0x10,
-		TRAPS = 0x11,
-		MAX = 0x12,
+		ExcludeSuper = 0x0,
+		IncludeSuper = 0x1,
+	};
+}
+
+namespace EAssetAvailability
+{
+	enum Type
+	{
+		DoesNotExist = 0x0,
+		NotAvailable = 0x1,
+		LocalSlow = 0x2,
+		LocalFast = 0x3,
+	};
+}
+
+namespace EAssetAvailabilityProgressReportingType
+{
+	enum Type
+	{
+		ETA = 0x0,
+		PercentageComplete = 0x1,
+	};
+}
+
+namespace EHttpRequestStatus
+{
+	enum Type
+	{
+		NotStarted = 0x0,
+		Processing = 0x1,
+		Failed = 0x2,
+		Succeeded = 0x3,
 	};
 }
 #endif
+
+enum class ClassCastFlags : unsigned long long
+{
+	CASTCLASS_None = 0x0000000000000000,
+	CASTCLASS_UField = 0x0000000000000001,
+	CASTCLASS_UInt8Property = 0x0000000000000002,
+	CASTCLASS_UEnum = 0x0000000000000004,
+	CASTCLASS_UStruct = 0x0000000000000008,
+	CASTCLASS_UScriptStruct = 0x0000000000000010,
+	CASTCLASS_UClass = 0x0000000000000020,
+	CASTCLASS_UByteProperty = 0x0000000000000040,
+	CASTCLASS_UIntProperty = 0x0000000000000080,
+	CASTCLASS_UFloatProperty = 0x0000000000000100,
+	CASTCLASS_UUInt64Property = 0x0000000000000200,
+	CASTCLASS_UClassProperty = 0x0000000000000400,
+	CASTCLASS_UUInt32Property = 0x0000000000000800,
+	CASTCLASS_UInterfaceProperty = 0x0000000000001000,
+	CASTCLASS_UNameProperty = 0x0000000000002000,
+	CASTCLASS_UStrProperty = 0x0000000000004000,
+	CASTCLASS_UProperty = 0x0000000000008000,
+	CASTCLASS_UObjectProperty = 0x0000000000010000,
+	CASTCLASS_UBoolProperty = 0x0000000000020000,
+	CASTCLASS_UUInt16Property = 0x0000000000040000,
+	CASTCLASS_UFunction = 0x0000000000080000,
+	CASTCLASS_UStructProperty = 0x0000000000100000,
+	CASTCLASS_UArrayProperty = 0x0000000000200000,
+	CASTCLASS_UInt64Property = 0x0000000000400000,
+	CASTCLASS_UDelegateProperty = 0x0000000000800000,
+	CASTCLASS_UNumericProperty = 0x0000000001000000,
+	CASTCLASS_UMulticastDelegateProperty = 0x0000000002000000,
+	CASTCLASS_UObjectPropertyBase = 0x0000000004000000,
+	CASTCLASS_UWeakObjectProperty = 0x0000000008000000,
+	CASTCLASS_ULazyObjectProperty = 0x0000000010000000,
+	CASTCLASS_UAssetObjectProperty = 0x0000000020000000,
+	CASTCLASS_UTextProperty = 0x0000000040000000,
+	CASTCLASS_UInt16Property = 0x0000000080000000,
+	CASTCLASS_UDoubleProperty = 0x0000000100000000,
+	CASTCLASS_UAssetClassProperty = 0x0000000200000000,
+	CASTCLASS_UPackage = 0x0000000400000000,
+	CASTCLASS_ULevel = 0x0000000800000000,
+	CASTCLASS_AActor = 0x0000001000000000,
+	CASTCLASS_APlayerController = 0x0000002000000000,
+	CASTCLASS_APawn = 0x0000004000000000,
+	CASTCLASS_USceneComponent = 0x0000008000000000,
+	CASTCLASS_UPrimitiveComponent = 0x0000010000000000,
+	CASTCLASS_USkinnedMeshComponent = 0x0000020000000000,
+	CASTCLASS_USkeletalMeshComponent = 0x0000040000000000,
+	CASTCLASS_UBlueprint = 0x0000080000000000,
+	CASTCLASS_UDelegateFunction = 0x0000100000000000,
+	CASTCLASS_UStaticMeshComponent = 0x0000200000000000,
+	CASTCLASS_UMapProperty = 0x0000400000000000,
+	CASTCLASS_USetProperty = 0x0000800000000000,
+	CASTCLASS_UEnumProperty = 0x0001000000000000,
+	CASTCLASS_AllFlags = 0xFFFFFFFFFFFFFFFF
+};

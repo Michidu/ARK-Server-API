@@ -728,6 +728,13 @@ struct FCollisionResponseParams
 struct FCollisionObjectQueryParams
 {
 	int ObjectTypesToQuery;
+
+	enum InitType
+	{
+		AllObjects = 0x0,
+		AllStaticObjects = 0x1,
+		AllDynamicObjects = 0x2,
+	};
 };
 
 struct FHttpRequestWinInet;

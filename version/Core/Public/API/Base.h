@@ -301,7 +301,22 @@ struct FNetDriverDefinition;
 struct FWorldContext;
 struct FViewport;
 struct FHardwareSurveyResults;
-struct FCanvas;
+struct FCanvas
+{
+	enum EElementType
+	{
+		ET_Line = 0x0,
+		ET_Triangle = 0x1,
+		ET_MAX = 0x2,
+	};
+
+	enum ECanvasAllowModes
+	{
+		Allow_Flush = 0x1,
+		Allow_DeleteOnRender = 0x2,
+	};
+
+};
 struct FSeamlessTravelHandler;
 struct FEvent;
 struct FStreamableManager;
@@ -362,7 +377,6 @@ struct FObjectReader;
 struct FObjectWriter;
 struct FCustomVersion;
 struct FCustomVersionContainer;
-struct ECustomVersionSerializationFormat;
 
 struct FAttachmentPoint;
 
