@@ -92,18 +92,9 @@ namespace ArkApi
 	{
 		for (const auto& data : on_tick_callbacks_)
 		{
-			std::string TickName = "";
 			if (data)
 			{
-				try
-				{
-					TickName = data->command.ToString();
-					data->callback(delta_seconds);
-				}
-				catch (...)
-				{
-					Log::GetLog()->error(fmt::format("Prevented Tick Crash in: {}", TickName));
-				}
+				data->callback(delta_seconds);
 			}
 		}
 	}
@@ -112,18 +103,9 @@ namespace ArkApi
 	{
 		for (const auto& data : on_timer_callbacks_)
 		{
-			std::string TimerName = "";
 			if (data)
 			{
-				try
-				{
-					TimerName = data->command.ToString();
-					data->callback();
-				}
-				catch (...)
-				{
-					Log::GetLog()->error(fmt::format("Prevented Timer Crash in: {}", TimerName));
-				}
+				data->callback();
 			}
 		}
 	}
