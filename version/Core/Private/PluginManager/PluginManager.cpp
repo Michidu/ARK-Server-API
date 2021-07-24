@@ -308,7 +308,8 @@ namespace API
 		auto& pluginManager = Get();
 
 		const time_t now = time(nullptr);
-		if (now < pluginManager.next_reload_check_)
+		if (now < pluginManager.next_reload_check_
+			|| !pluginManager.enable_plugin_reload_)
 		{
 			return;
 		}
