@@ -31,19 +31,15 @@ struct FName
 	{
 	}
 
-	//static TStaticIndirectArrayThreadSafeRead<FNameEntry, 2097152, 16384> * GetNames() { return NativeCall<TStaticIndirectArrayThreadSafeRead<FNameEntry, 2097152, 16384> *>(nullptr, "FName.GetNames"); }
 	static FString* NameToDisplayString(FString* result, FString* InDisplayName, const bool bIsBool) { return NativeCall<FString*, FString*, FString*, const bool>(nullptr, "FName.NameToDisplayString", result, InDisplayName, bIsBool); }
 
-	//FName(const wchar_t* Name, EFindName FindType, bool __formal) { NativeCall<void, const wchar_t*, EFindName, bool>(this, "FName.FName", Name, FindType, __formal); }
-	FName(const wchar_t* Name, EFindName FindType, bool)
+	FName(const char* Name, EFindName FindType)
 	{
 		Init(Name, 0, FindType, true, -1);
 	}
 
-	FName(const char* Name, EFindName FindType, bool __formal) { NativeCall<void, const char*, EFindName, bool>(this, "FName.FName", Name, FindType, __formal); }
 	bool operator==(const wchar_t* Other) { return NativeCall<bool, const wchar_t*>(this, "FName.operator==", Other); }
 	int Compare(FName* Other) { return NativeCall<int, FName*>(this, "FName.Compare", Other); }
-	void Init(const wchar_t* InName, int InNumber, EFindName FindType, bool bSplitName, int HardcodeIndex) { NativeCall<void, const wchar_t*, int, EFindName, bool, int>(this, "FName.Init", InName, InNumber, FindType, bSplitName, HardcodeIndex); }
 	void ToString(FString* Out) { NativeCall<void, FString*>(this, "FName.ToString", Out); }
 	FString ToString()
 	{
