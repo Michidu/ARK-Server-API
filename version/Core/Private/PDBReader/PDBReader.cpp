@@ -1,7 +1,6 @@
 #include "PDBReader.h"
 
 #include <fstream>
-#include <atlbase.h>
 
 #include <Logger/Logger.h>
 #include <Tools.h>
@@ -11,6 +10,37 @@
 
 namespace API
 {
+	template <typename T>
+	class ScopedDiaType
+	{
+	public:
+		ScopedDiaType() : _sym(nullptr)
+		{
+		}
+
+		ScopedDiaType(T* sym) : _sym(sym)
+		{
+		}
+
+		~ScopedDiaType()
+		{
+			if (_sym != nullptr)
+				_sym->Release();
+		}
+
+		T** ref() { return &_sym; }
+		T** operator&() { return ref(); }
+		T* operator->() { return _sym; }
+		operator T*() { return _sym; }
+		void Attach(T* sym) { _sym = sym; }
+
+	private:
+		T* _sym;
+	};
+
+	template <typename T>
+	using CComPtr = ScopedDiaType<T>;
+
 	void PdbReader::Read(const std::wstring& path, std::unordered_map<std::string, intptr_t>* offsets_dump,
 	                     std::unordered_map<std::string, BitField>* bitfields_dump)
 	{
