@@ -22,6 +22,7 @@ namespace ArkApi
 	DECLARE_HOOK(AGameState_DefaultTimer, void, AGameState*);
 	DECLARE_HOOK(AShooterGameMode_BeginPlay, void, AShooterGameMode*);
 	DECLARE_HOOK(URCONServer_Init, bool, URCONServer*, FString, int, UShooterCheatManager*);
+	DECLARE_HOOK(APlayerController_ServerReceivedPlayerControllerAck_Implementation, void, APlayerController*);
 	DECLARE_HOOK(AShooterPlayerController_Possess, void, AShooterPlayerController*, APawn*);
 	DECLARE_HOOK(AShooterGameMode_Logout, void, AShooterGameMode*, AController*);
 
@@ -45,6 +46,8 @@ namespace ArkApi
 		hooks->SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay,
 		               &AShooterGameMode_BeginPlay_original);
 		hooks->SetHook("URCONServer.Init", &Hook_URCONServer_Init, &URCONServer_Init_original);
+		hooks->SetHook("APlayerController.ServerReceivedPlayerControllerAck_Implementation", &Hook_APlayerController_ServerReceivedPlayerControllerAck_Implementation, 
+			&APlayerController_ServerReceivedPlayerControllerAck_Implementation_original);
 		hooks->SetHook("AShooterPlayerController.Possess", &Hook_AShooterPlayerController_Possess,
 						&AShooterPlayerController_Possess_original);
 		hooks->SetHook("AShooterGameMode.Logout", &Hook_AShooterGameMode_Logout, &AShooterGameMode_Logout_original);
@@ -165,6 +168,17 @@ namespace ArkApi
 		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetCheatManager(SCheatManager);
 
 		return URCONServer_Init_original(_this, Password, InPort, SCheatManager);
+	}
+
+	void Hook_APlayerController_ServerReceivedPlayerControllerAck_Implementation(APlayerController* _this)
+	{
+		APlayerController_ServerReceivedPlayerControllerAck_Implementation_original(_this);
+
+		if (_this)
+		{
+			AShooterPlayerController* ASPC = static_cast<AShooterPlayerController*>(_this);
+			dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetPlayerController(ASPC);
+		}
 	}
 
 	void  Hook_AShooterPlayerController_Possess(AShooterPlayerController* _this, APawn* inPawn)
