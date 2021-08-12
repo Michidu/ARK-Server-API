@@ -196,6 +196,13 @@ struct UActorComponent : UObject
 	void AddedAsPrimalItemAttachment() { NativeCall<void>(this, "UActorComponent.AddedAsPrimalItemAttachment"); }
 };
 
+struct FServerCustomFolder
+{
+	int InventoryCompType;
+	FString FolderName;
+	TArray<FItemNetID, FDefaultAllocator> CustomFolderItemIds;
+};
+
 struct UPrimalInventoryComponent : UActorComponent
 {
 	TArray<TWeakObjectPtr<AShooterPlayerController>> & RemoteViewingInventoryPlayerControllersField() { return *GetNativePointerField<TArray<TWeakObjectPtr<AShooterPlayerController>>*>(this, "UPrimalInventoryComponent.RemoteViewingInventoryPlayerControllers"); }
@@ -288,6 +295,7 @@ struct UPrimalInventoryComponent : UActorComponent
 	long double& LastAddToCraftQueueSoundTimeField() { return *GetNativePointerField<long double*>(this, "UPrimalInventoryComponent.LastAddToCraftQueueSoundTime"); }
 	FString & ForceAddToFolderField() { return *GetNativePointerField<FString*>(this, "UPrimalInventoryComponent.ForceAddToFolder"); }
 	FVector & GroundDropTraceLocationOffsetField() { return *GetNativePointerField<FVector*>(this, "UPrimalInventoryComponent.GroundDropTraceLocationOffset"); }
+	TArray<FServerCustomFolder>& CustomFolderItemsField() { return *GetNativePointerField<TArray<FServerCustomFolder>*>(this, "UPrimalInventoryComponent.CustomFolderItems"); }
 
 	// Bit fields
 
