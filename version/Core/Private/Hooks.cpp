@@ -70,7 +70,7 @@ namespace API
 
 		if (iter == hook_vector.end())
 		{
-			Log::GetLog()->warn("Failed to find hook");
+			Log::GetLog()->warn("Failed to find hook ({})", func_name);
 			return false;
 		}
 

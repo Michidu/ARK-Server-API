@@ -1582,3 +1582,8 @@ struct UGameInstance : UObject //, FExec
 	TArray<ULocalPlayer *, FDefaultAllocator> LocalPlayers;
 	FString PIEMapName;*/
 };
+
+struct ACustomActorList : AInfo
+{
+	TArray<AActor*> ActorList;
+};

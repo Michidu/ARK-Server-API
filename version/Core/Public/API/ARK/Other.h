@@ -485,6 +485,8 @@ struct UVictoryCore
 	static FString* BPGetPrimaryMapName(FString* result, UWorld* WorldContext) { return NativeCall<FString*, FString*, UWorld*>(nullptr, "UVictoryCore.BPGetPrimaryMapName", result, WorldContext); }
 	static bool OverlappingStationaryObjectsTrace(UWorld* theWorld, APrimalCharacter* SourceCharacter, TArray<FOverlapResult>* Overlaps, FVector Origin, float Radius, ECollisionChannel TraceChannel, AActor* InIgnoreActor, FName TraceName, bool bComplexOverlapTest) { return NativeCall<bool, UWorld*, APrimalCharacter*, TArray<FOverlapResult>*, FVector, float, ECollisionChannel, AActor*, FName, bool>(nullptr, "UVictoryCore.OverlappingStationaryObjectsTrace", theWorld, SourceCharacter, Overlaps, Origin, Radius, TraceChannel, InIgnoreActor, TraceName, bComplexOverlapTest); }
 	static void StaticRegisterNativesUVictoryCore() { NativeCall<void>(nullptr, "UVictoryCore.StaticRegisterNativesUVictoryCore"); }
+	static FString* ClassToStringReference(FString* result, TSubclassOf<UObject> obj) { return NativeCall<FString*, FString*, TSubclassOf<UObject>>(nullptr, "UVictoryCore.ClassToStringReference", result, obj); }
+	static TSubclassOf<UObject>* StringReferenceToClass(TSubclassOf<UObject>* result, FString* StringReference) { return NativeCall<TSubclassOf<UObject>*, TSubclassOf<UObject>*, FString*>(nullptr, "UVictoryCore.StringReferenceToClass", result, StringReference); }
 };
 
 struct UDamageType

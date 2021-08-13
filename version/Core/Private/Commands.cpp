@@ -90,7 +90,8 @@ namespace ArkApi
 
 	void Commands::CheckOnTickCallbacks(float delta_seconds)
 	{
-		for (const auto& data : on_tick_callbacks_)
+		const auto tmp_tick_callbacks = on_tick_callbacks_;
+		for (const auto& data : tmp_tick_callbacks)
 		{
 			if (data)
 			{
@@ -101,7 +102,8 @@ namespace ArkApi
 
 	void Commands::CheckOnTimerCallbacks()
 	{
-		for (const auto& data : on_timer_callbacks_)
+		const auto tmp_timer_callbacks = on_timer_callbacks_;
+		for (const auto& data : tmp_timer_callbacks)
 		{
 			if (data)
 			{
@@ -117,8 +119,10 @@ namespace ArkApi
 		bool spam_check,
 		bool command_executed)
 	{
+		const auto tmp_chat_callbacks = on_chat_message_callbacks_;
+
 		bool prevent_default = false;
-		for (const auto& data : on_chat_message_callbacks_)
+		for (const auto& data : tmp_chat_callbacks)
 		{
 			prevent_default |= data->callback(player_controller, message, mode, spam_check, command_executed);
 		}

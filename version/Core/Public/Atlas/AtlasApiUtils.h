@@ -566,23 +566,11 @@ namespace ArkApi
 		/**
 		 * \brief Returns blueprint from UPrimalItem
 		 */
-		static FString GetItemBlueprint(UPrimalItem* item)
+		static FORCEINLINE FString GetItemBlueprint(UPrimalItem* item)
 		{
 			if (item != nullptr)
 			{
-				FString path_name;
-				item->ClassField()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
-
-				if (int find_index = 0; path_name.FindChar(' ', find_index))
-				{
-					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
-						path_name.Len() - (find_index + (path_name.EndsWith(
-							"_C", ESearchCase::
-							CaseSensitive)
-							? 3
-							: 1))) + "'";
-					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
-				}
+				return GetBlueprint(item);
 			}
 
 			return FString("");
@@ -641,23 +629,11 @@ namespace ArkApi
 		/**
 		 * \brief Returns blueprint path from any UObject
 		 */
-		static FString GetBlueprint(UObjectBase* object)
+		static FORCEINLINE FString GetBlueprint(UObjectBase* object)
 		{
 			if (object != nullptr && object->ClassField() != nullptr)
 			{
-				FString path_name;
-				object->ClassField()->GetDefaultObject(true)->GetFullName(&path_name, nullptr);
-
-				if (int find_index = 0; path_name.FindChar(' ', find_index))
-				{
-					path_name = "Blueprint'" + path_name.Mid(find_index + 1,
-						path_name.Len() - (find_index + (path_name.EndsWith(
-							"_C", ESearchCase::
-							CaseSensitive)
-							? 3
-							: 1))) + "'";
-					return path_name.Replace(L"Default__", L"", ESearchCase::CaseSensitive);
-				}
+				return GetClassBlueprint(object->ClassField());
 			}
 
 			return FString("");
@@ -666,7 +642,7 @@ namespace ArkApi
 		/**
 		 * \brief Returns blueprint path from any UClass
 		 */
-		static FString GetClassBlueprint(UClass* the_class)
+		static FORCEINLINE FString GetClassBlueprint(UClass* the_class)
 		{
 			if (the_class != nullptr)
 			{
