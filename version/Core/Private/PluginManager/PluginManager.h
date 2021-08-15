@@ -86,6 +86,8 @@ namespace API
 		static nlohmann::json ReadPluginPDBConfig(const std::string& plugin_name);
 		static nlohmann::json ReadSettingsConfig();
 
+		static int GetPluginLoadOrder(const std::string& plugin_name);
+
 		void CheckPluginsDependencies();
 
 		static void DetectPluginChangesTimerCallback();

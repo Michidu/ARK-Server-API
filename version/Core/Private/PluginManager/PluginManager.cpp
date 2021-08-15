@@ -91,32 +91,46 @@ namespace API
 		return config;
 	}
 
+	int PluginManager::GetPluginLoadOrder(const std::string& plugin_name)
+	{
+		const auto plugin_info = ReadPluginInfo(plugin_name);
+		return static_cast<int>(plugin_info["LoadOrder"]);
+	}
+
 	void PluginManager::LoadAllPlugins()
 	{
 		namespace fs = std::filesystem;
 
 		const std::string dir_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins";
 
-		for (const auto& dir_name : fs::directory_iterator(dir_path))
-		{
+		std::vector<std::pair<int, std::string>> load_order;
+		for (const auto& dir_name : fs::directory_iterator(dir_path)) {
+			
 			const auto& path = dir_name.path();
-			if (!is_directory(path))
-			{
+			if (!is_directory(path)) {
 				continue;
 			}
 
 			const auto filename = path.filename().stem().generic_string();
+			const auto order = GetPluginLoadOrder(filename);
 
-			const std::string dir_file_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins/" +
-				filename;
+			load_order.emplace_back(order, filename);
+		}
+
+		// Sort
+		std::sort(load_order.begin(), load_order.end());
+
+		// Load
+		for (auto& [order, filename] : load_order) {
+
+			const std::string dir_file_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins/" + filename;
 			const std::string full_dll_path = dir_file_path + "/" + filename + ".dll";
 			const std::string new_full_dll_path = dir_file_path + "/" + filename + ".dll.ArkApi";
 
 			try
 			{
 				// Loads the new .dll.ArkApi if it exists on startup as well
-				if (fs::exists(new_full_dll_path))
-				{
+				if (fs::exists(new_full_dll_path)) {
 					copy_file(new_full_dll_path, full_dll_path, fs::copy_options::overwrite_existing);
 					fs::remove(new_full_dll_path);
 				}
@@ -141,7 +155,7 @@ namespace API
 		// Set auto plugins reloading
 		auto settings = ReadSettingsConfig();
 
-		enable_plugin_reload_ = settings["settings"].value("AutomaticPluginReloading", false);
+		enable_plugin_reload_ = settings["settings"].value("AutomaticPluginReloading", true);
 		if (enable_plugin_reload_)
 		{
 			reload_sleep_seconds_ = settings["settings"].value("AutomaticPluginReloadSeconds", 5);
@@ -258,6 +272,7 @@ namespace API
 			plugin_info_result["Version"] = plugin_info.value("Version", 1.00f);
 			plugin_info_result["MinApiVersion"] = plugin_info.value("MinApiVersion", .0f);
 			plugin_info_result["Dependencies"] = plugin_info.value("Dependencies", std::vector<std::string>{});
+			plugin_info_result["LoadOrder"] = plugin_info.value("LoadOrder", INT_MAX);
 		}
 		catch (const std::exception& error)
 		{
