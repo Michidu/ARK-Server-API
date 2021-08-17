@@ -42,7 +42,7 @@ namespace ArkApi
 		* \param args Optional arguments
 		*/
 		template <typename T, typename... Args>
-		void SendServerMessage(AShooterPlayerController* player_controller, FLinearColor msg_color, const T* msg,
+		FORCEINLINE void SendServerMessage(AShooterPlayerController* player_controller, FLinearColor msg_color, const T* msg,
 			Args&&... args)
 		{
 			if (player_controller)
@@ -65,7 +65,7 @@ namespace ArkApi
 		* \param args Optional arguments
 		*/
 		template <typename T, typename... Args>
-		void SendNotification(AShooterPlayerController* player_controller, FLinearColor color, float display_scale,
+		FORCEINLINE void SendNotification(AShooterPlayerController* player_controller, FLinearColor color, float display_scale,
 			float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
 			if (player_controller)
@@ -87,7 +87,7 @@ namespace ArkApi
 		 * \param args Optional arguments
 		 */
 		template <typename T, typename... Args>
-		void SendChatMessage(AShooterPlayerController* player_controller, const FString& sender_name, const T* msg,
+		FORCEINLINE void SendChatMessage(AShooterPlayerController* player_controller, const FString& sender_name, const T* msg,
 			Args&&... args)
 		{
 			if (player_controller)
@@ -111,7 +111,7 @@ namespace ArkApi
 		* \param args Optional arguments
 		*/
 		template <typename T, typename... Args>
-		void SendServerMessageToAll(FLinearColor msg_color, const T* msg,
+		FORCEINLINE void SendServerMessageToAll(FLinearColor msg_color, const T* msg,
 			Args&&... args)
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
@@ -139,7 +139,7 @@ namespace ArkApi
 		* \param args Optional arguments
 		*/
 		template <typename T, typename... Args>
-		void SendNotificationToAll(FLinearColor color, float display_scale,
+		FORCEINLINE void SendNotificationToAll(FLinearColor color, float display_scale,
 			float display_time, UTexture2D* icon, const T* msg, Args&&... args)
 		{
 			FString text(FString::Format(msg, std::forward<Args>(args)...));
@@ -165,7 +165,7 @@ namespace ArkApi
 		* \param args Optional arguments
 		*/
 		template <typename T, typename... Args>
-		void SendChatMessageToAll(const FString& sender_name, const T* msg, Args&&... args)
+		FORCEINLINE void SendChatMessageToAll(const FString& sender_name, const T* msg, Args&&... args)
 		{
 			const FString text(FString::Format(msg, std::forward<Args>(args)...));
 
@@ -187,7 +187,7 @@ namespace ArkApi
 		/**
 		 * \brief Returns Steam ID from player controller
 		 */
-		static uint64 GetSteamIdFromController(AController* controller)
+		static FORCEINLINE uint64 GetSteamIdFromController(AController* controller)
 		{
 			uint64 steam_id = 0;
 
@@ -205,7 +205,7 @@ namespace ArkApi
 		 * \param steam_name Steam name
 		 * \return Pointer to AShooterPlayerController
 		 */
-		AShooterPlayerController* FindPlayerFromSteamName(const FString& steam_name) const
+		FORCEINLINE AShooterPlayerController* FindPlayerFromSteamName(const FString& steam_name) const
 		{
 			AShooterPlayerController* result = nullptr;
 
@@ -230,7 +230,7 @@ namespace ArkApi
 		* \param character Player character
 		* \return Pointer to AShooterPlayerController
 		*/
-		AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character) const
+		FORCEINLINE AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character) const
 		{
 			AShooterPlayerController* result = nullptr;
 				
@@ -253,7 +253,7 @@ namespace ArkApi
 		* \param full_match Will match the full length of the string if true
 		* \return Array of AShooterPlayerController*
 		*/
-		TArray<AShooterPlayerController*> FindPlayerFromCharacterName(const FString& character_name,
+		FORCEINLINE TArray<AShooterPlayerController*> FindPlayerFromCharacterName(const FString& character_name,
 			ESearchCase::Type search,
 			bool full_match) const
 		{
@@ -280,7 +280,7 @@ namespace ArkApi
 		* \brief Returns the character name of player
 		* \param player_controller Player
 		*/
-		static FString GetCharacterName(AShooterPlayerController* player_controller)
+		static FORCEINLINE FString GetCharacterName(AShooterPlayerController* player_controller)
 		{
 			if (player_controller != nullptr)
 			{
@@ -296,7 +296,7 @@ namespace ArkApi
 		* \brief Returns the steam name of player
 		* \param player_controller Player
 		*/
-		static FString GetSteamName(AController* player_controller)
+		static FORCEINLINE FString GetSteamName(AController* player_controller)
 		{
 			return player_controller != nullptr ? player_controller->PlayerStateField()->PlayerNameField() : "";
 		}
@@ -306,7 +306,7 @@ namespace ArkApi
 		 * \param steam_id Steam id
 		 * \return Pointer to AShooterPlayerController
 		 */
-		inline AShooterPlayerController* FindPlayerFromSteamId(uint64 steam_id) const
+		FORCEINLINE AShooterPlayerController* FindPlayerFromSteamId(uint64 steam_id) const
 		{
 			return FindPlayerFromSteamId_Internal(steam_id);
 		}
@@ -322,7 +322,7 @@ namespace ArkApi
 		 * \param life_span Life span
 		 * \return Returns true if drop was spawned, false otherwise
 		 */
-		bool SpawnDrop(const wchar_t* blueprint, FVector pos, int amount, float item_quality = 0.0f,
+		FORCEINLINE bool SpawnDrop(const wchar_t* blueprint, FVector pos, int amount, float item_quality = 0.0f,
 			bool force_blueprint = false, float life_span = 0.0f) const
 		{
 			APlayerController* player = GetWorld()->GetFirstPlayerController();
@@ -377,7 +377,7 @@ namespace ArkApi
 		 * \param neutered Neuter dino
 		 * \return Spawned dino or null
 		 */
-		APrimalDinoCharacter* SpawnDino(AShooterPlayerController* player, FString blueprint, FVector* location, int lvl,
+		FORCEINLINE APrimalDinoCharacter* SpawnDino(AShooterPlayerController* player, FString blueprint, FVector* location, int lvl,
 			bool force_tame, bool neutered) const
 		{
 			if (player == nullptr)
@@ -435,7 +435,7 @@ namespace ArkApi
 		* \brief Returns true if character is riding a dino, false otherwise
 		* \param player_controller Player
 		*/
-		static bool IsRidingDino(AShooterPlayerController* player_controller)
+		static FORCEINLINE bool IsRidingDino(AShooterPlayerController* player_controller)
 		{
 			return player_controller != nullptr && player_controller->GetPlayerCharacter() != nullptr
 				&& player_controller->GetPlayerCharacter()->GetRidingDino() != nullptr;
@@ -446,7 +446,7 @@ namespace ArkApi
 		* \param player_controller Player
 		* \return APrimalDinoCharacter*
 		*/
-		static APrimalDinoCharacter* GetRidingDino(AShooterPlayerController* player_controller)
+		static FORCEINLINE APrimalDinoCharacter* GetRidingDino(AShooterPlayerController* player_controller)
 		{
 			return player_controller != nullptr && player_controller->GetPlayerCharacter() != nullptr
 				? player_controller->GetPlayerCharacter()->GetRidingDino()
@@ -458,7 +458,7 @@ namespace ArkApi
 		* \param player_controller Player
 		* \return FVector
 		*/
-		static FVector GetPosition(APlayerController* player_controller)
+		static FORCEINLINE FVector GetPosition(APlayerController* player_controller)
 		{
 			return player_controller != nullptr ? player_controller->DefaultActorLocationField() : FVector{ 0, 0, 0 };
 		}
@@ -470,7 +470,7 @@ namespace ArkApi
 		* \param check_for_dino If set true prevents players teleporting with dino's or teleporting to a player on a dino
 		* \param max_dist Is the max distance the characters can be away from each other -1 is disabled
 		*/
-		static std::optional<FString> TeleportToPlayer(AShooterPlayerController* me, AShooterPlayerController* him,
+		static FORCEINLINE std::optional<FString> TeleportToPlayer(AShooterPlayerController* me, AShooterPlayerController* him,
 			bool check_for_dino, float max_dist)
 		{
 			if (!(me != nullptr && him != nullptr && me->GetPlayerCharacter() != nullptr && him->
@@ -504,7 +504,7 @@ namespace ArkApi
 		* \param player_controller Player
 		* \param pos New position
 		*/
-		static bool TeleportToPos(AShooterPlayerController* player_controller, const FVector& pos)
+		static FORCEINLINE bool TeleportToPos(AShooterPlayerController* player_controller, const FVector& pos)
 		{
 			if (player_controller != nullptr && !IsPlayerDead(player_controller))
 			{
@@ -521,7 +521,7 @@ namespace ArkApi
 		* \param item_name The name of the item you want to count the quantity of
 		 * \return On success, the function returns amount of items player has. Returns -1 if the function has failed.
 		 */
-		static int GetInventoryItemCount(AShooterPlayerController* player_controller, const FString& item_name)
+		static FORCEINLINE int GetInventoryItemCount(AShooterPlayerController* player_controller, const FString& item_name)
 		{
 			if (player_controller == nullptr)
 			{
@@ -554,7 +554,7 @@ namespace ArkApi
 		/**
 		 * \brief Returns IP address of player
 		 */
-		static FString GetIPAddress(AShooterPlayerController* player)
+		static FORCEINLINE FString GetIPAddress(AShooterPlayerController* player)
 		{
 			return player && player->GetNetConnection() && !player->GetNetConnection()->ClientGivenIPField().IsEmpty() ? player->GetNetConnection()->ClientGivenIPField() : "";
 		}
@@ -570,7 +570,7 @@ namespace ArkApi
 		/**
 		 * \brief Returns true if player is dead, false otherwise
 		 */
-		static bool IsPlayerDead(AShooterPlayerController* player)
+		static FORCEINLINE bool IsPlayerDead(AShooterPlayerController* player)
 		{
 			if (player == nullptr || player->GetPlayerCharacter() == nullptr)
 			{
@@ -580,7 +580,7 @@ namespace ArkApi
 			return player->GetPlayerCharacter()->IsDead();
 		}
 
-		static uint64 GetPlayerID(APrimalCharacter* character)
+		static FORCEINLINE uint64 GetPlayerID(APrimalCharacter* character)
 		{
 			auto* shooter_character = static_cast<AShooterCharacter*>(character);
 			return shooter_character != nullptr && shooter_character->GetPlayerData() != nullptr
@@ -588,13 +588,13 @@ namespace ArkApi
 				: -1;
 		}
 
-		static uint64 GetPlayerID(AController* controller)
+		static FORCEINLINE uint64 GetPlayerID(AController* controller)
 		{
 			auto* player = static_cast<AShooterPlayerController*>(controller);
 			return player != nullptr ? player->LinkedPlayerIDField() : 0;
 		}
 
-		uint64 GetSteamIDForPlayerID(int player_id) const
+		FORCEINLINE uint64 GetSteamIDForPlayerID(int player_id) const
 		{
 			uint64 steam_id = GetShooterGameMode()->GetSteamIDForPlayerID(player_id);
 			if (steam_id == 0)
@@ -637,7 +637,7 @@ namespace ArkApi
 			if (the_class != nullptr)
 			{
 				FString path;
-				UVictoryCore::ClassToStringReference(&path, the_class);
+				UVictoryCore::ClassToStringReference(&path, TSubclassOf<UObject>(the_class));
 				return "Blueprint'" + path.LeftChop(2) + "'";
 			}
 
@@ -647,7 +647,7 @@ namespace ArkApi
 		/**
 		* \brief Get Shooter Game State
 		*/
-		AShooterGameState* GetGameState()
+		FORCEINLINE AShooterGameState* GetGameState()
 		{
 			return static_cast<AShooterGameState*>(GetWorld()->GameStateField());
 		}
@@ -655,7 +655,7 @@ namespace ArkApi
 		/**
 		* \brief Get UShooterCheatManager* of player controller
 		*/
-		static UShooterCheatManager* GetCheatManagerByPC(AShooterPlayerController* SPC)
+		static FORCEINLINE UShooterCheatManager* GetCheatManagerByPC(AShooterPlayerController* SPC)
 		{
 			if (!SPC) return nullptr;
 
@@ -672,7 +672,7 @@ namespace ArkApi
 		/**
 		* \brief Get Tribe ID of player controller
 		*/
-		static int GetTribeID(AShooterPlayerController* player_controller)
+		static FORCEINLINE int GetTribeID(AShooterPlayerController* player_controller)
 		{
 			int team = 0;
 
@@ -687,7 +687,7 @@ namespace ArkApi
 		/**
 		* \brief Get Tribe ID of character
 		*/
-		static int GetTribeID(AShooterCharacter* player_character)
+		static FORCEINLINE int GetTribeID(AShooterCharacter* player_character)
 		{
 			int team = 0;
 
@@ -702,7 +702,7 @@ namespace ArkApi
 		/**
 		* \brief Returns pointer to Primal Game Data
 		*/
-		UPrimalGameData* GetGameData()
+		FORCEINLINE UPrimalGameData* GetGameData()
 		{
 			UPrimalGlobals* singleton = static_cast<UPrimalGlobals*>(Globals::GEngine()()->GameSingletonField());
 			return (singleton->PrimalGameDataOverrideField() != nullptr) ? singleton->PrimalGameDataOverrideField() : singleton->PrimalGameDataField();
@@ -711,7 +711,7 @@ namespace ArkApi
 		/**
 		* \brief Gets all actors in radius at location
 		*/
-		TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType)
+		FORCEINLINE TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType)
 		{
 			TArray<AActor*> out_actors;
 
@@ -723,7 +723,7 @@ namespace ArkApi
 		/**
 		* \brief Gets all actors in radius at location, with ignore actors
 		*/
-		TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType, TArray<AActor*> ignores)
+		FORCEINLINE TArray<AActor*> GetAllActorsInRange(FVector location, float radius, EServerOctreeGroup::Type ActorType, TArray<AActor*> ignores)
 		{
 			TArray<AActor*> out_actors;
 

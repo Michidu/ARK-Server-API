@@ -7995,7 +7995,7 @@ struct ADroppedItemEgg : ADroppedItem
 	void Stasis() { NativeCall<void>(this, "ADroppedItemEgg.Stasis"); }
 	void NetSpawnDinoEmitter() { NativeCall<void>(this, "ADroppedItemEgg.NetSpawnDinoEmitter"); }
 	void NetSpawnDinoEmitter_Implementation() { NativeCall<void>(this, "ADroppedItemEgg.NetSpawnDinoEmitter_Implementation"); }
-	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "ADroppedItemEgg.GetPrivateStaticClass", Package); }
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "ADroppedItemEgg.GetPrivateStaticClass"); }
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>* OutLifetimeProps) { NativeCall<void, TArray<FLifetimeProperty>*>(this, "ADroppedItemEgg.GetLifetimeReplicatedProps", OutLifetimeProps); }
 	void CalcInsulation() { NativeCall<void>(this, "ADroppedItemEgg.CalcInsulation"); }
 	void BeginPlay() { NativeCall<void>(this, "ADroppedItemEgg.BeginPlay"); }
