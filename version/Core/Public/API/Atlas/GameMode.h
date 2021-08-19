@@ -369,7 +369,25 @@ struct UWorld : UObject
 	TMap<FName, TWeakObjectPtr<UClass>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, TWeakObjectPtr<UClass>, 0> > & PrioritizedObjectMapField() { return *GetNativePointerField<TMap<FName, TWeakObjectPtr<UClass>, FDefaultSetAllocator, TDefaultMapKeyFuncs<FName, TWeakObjectPtr<UClass>, 0> >*>(this, "UWorld.PrioritizedObjectMap"); }
 	TMap<unsigned int, TWeakObjectPtr<AActor>, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned int, TWeakObjectPtr<AActor>, 0> > & UniqueActorIdsField() { return *GetNativePointerField<TMap<unsigned int, TWeakObjectPtr<AActor>, FDefaultSetAllocator, TDefaultMapKeyFuncs<unsigned int, TWeakObjectPtr<AActor>, 0> >*>(this, "UWorld.UniqueActorIds"); }
 	TArray<TAutoWeakObjectPtr<AController>>& ControllerListField() { return *GetNativePointerField<TArray<TAutoWeakObjectPtr<AController>>*>(this, "UWorld.ControllerList"); }
-	TArray<TAutoWeakObjectPtr<APlayerController>>& PlayerControllerListField() { return *GetNativePointerField<TArray<TAutoWeakObjectPtr<APlayerController>>*>(this, "UWorld.PlayerControllerList"); }
+
+	//TArray<TAutoWeakObjectPtr<APlayerController>>& PlayerControllerListField() { return *GetNativePointerField<TArray<TAutoWeakObjectPtr<APlayerController>>*>(this, "UWorld.PlayerControllerList"); }
+	TArray<TAutoWeakObjectPtr<APlayerController>>/*&*/ PlayerControllerListField()
+	{
+		auto/*&*/ player_controllers = *GetNativePointerField<TArray<TAutoWeakObjectPtr<APlayerController>>*>(this, "UWorld.PlayerControllerList");
+		for (int32 i = player_controllers.Num() - 1; i >= 0; i--) {
+			if (auto* player_controller = player_controllers[i].Get()) {
+				auto* shooter_pc = static_cast<AShooterPlayerController*>(player_controller);
+				if (shooter_pc && shooter_pc->IsA(AShooterPlayerController::GetPrivateStaticClass())) {
+					continue;
+				}
+			}
+			player_controllers.RemoveAt(i);
+		}
+
+		return player_controllers;
+
+	}
+
 	TArray<TAutoWeakObjectPtr<APawn>>& PawnListField() { return *GetNativePointerField<TArray<TAutoWeakObjectPtr<APawn>>*>(this, "UWorld.PawnList"); }
 	TSet<TWeakObjectPtr<UActorComponent>, DefaultKeyFuncs<TWeakObjectPtr<UActorComponent>, 0>, FDefaultSetAllocator>& ComponentsThatNeedEndOfFrameUpdateField() { return *GetNativePointerField<TSet<TWeakObjectPtr<UActorComponent>, DefaultKeyFuncs<TWeakObjectPtr<UActorComponent>, 0>, FDefaultSetAllocator>*>(this, "UWorld.ComponentsThatNeedEndOfFrameUpdate"); }
 	TSet<TWeakObjectPtr<UActorComponent>, DefaultKeyFuncs<TWeakObjectPtr<UActorComponent>, 0>, FDefaultSetAllocator>& ComponentsThatNeedEndOfFrameUpdate_OnGameThreadField() { return *GetNativePointerField<TSet<TWeakObjectPtr<UActorComponent>, DefaultKeyFuncs<TWeakObjectPtr<UActorComponent>, 0>, FDefaultSetAllocator>*>(this, "UWorld.ComponentsThatNeedEndOfFrameUpdate_OnGameThread"); }
