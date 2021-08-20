@@ -628,7 +628,6 @@ struct APrimalWorldSettings;
 struct FWeightedObjectList;
 struct UNetDriver;
 struct AHUD;
-struct APrimalStructureExplosive;
 struct UPaintingTexture;
 struct APrimalStructureExplosiveTransGPS;
 struct ITargetableInterface;
