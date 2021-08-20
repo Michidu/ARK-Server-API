@@ -8,6 +8,12 @@ namespace ArkApi
 {
 	enum class ServerStatus { Loading, Ready };
 
+	struct MapCoords
+	{
+		float x = 0.f;
+		float y = 0.f;
+	};
+
 	class ARK_API IApiUtils
 	{
 	public:
@@ -733,6 +739,57 @@ namespace ArkApi
 				out_actors.Remove(ignore);
 
 			return out_actors;
+		}
+
+		/**
+		* \brief Converts FVector into coords that are displayed when you view the ingame map
+		*/
+		FORCEINLINE MapCoords FVectorToCoords(FVector actor_position)
+		{
+			AWorldSettings* world_settings = GetWorld()->GetWorldSettings(false, true);
+			APrimalWorldSettings* p_world_settings = static_cast<APrimalWorldSettings*>(world_settings);
+			MapCoords coords;
+
+			float lat_scale = p_world_settings->LatitudeScaleField() != 0 ? p_world_settings->LatitudeScaleField() : 800.0f;
+			float lon_scale = p_world_settings->LongitudeScaleField() != 0 ? p_world_settings->LongitudeScaleField() : 800.0f;
+
+			float lat_origin = p_world_settings->LatitudeOriginField() != 0 ? p_world_settings->LatitudeOriginField() : -400000.0f;
+			float lon_origin = p_world_settings->LongitudeOriginField() != 0 ? p_world_settings->LongitudeOriginField() : -400000.0f;
+
+			float lat_div = 100.f / lat_scale;
+			float lat = (lat_div * actor_position.Y + lat_div * abs(lat_origin)) / 1000.f;
+
+			float lon_div = 100.f / lon_scale;
+			float lon = (lon_div * actor_position.X + lon_div * abs(lon_origin)) / 1000.f;
+
+			coords.x = std::floor(lon * 10.) / 10.;
+			coords.y = std::floor(lat * 10.) / 10.;
+
+			return coords;
+		}
+
+		/**
+		* \brief obtains the steam ID of an attacker, meant to be used in hooks such as TakeDamage
+		* \param tribe_check if set to true will return NULL if the target is from the same tribe as the attacker
+		*/
+		FORCEINLINE uint64 GetAttackerSteamID(AActor* target, AController* killer, AActor* damage_causer, bool tribe_check = true)
+		{
+			uint64 steam_id = NULL;
+
+			if (target)
+			{
+				if (killer && !killer->IsLocalController() && killer->IsA(AShooterPlayerController::GetPrivateStaticClass()) 
+					&& (!tribe_check || (tribe_check && target->TargetingTeamField() != killer->TargetingTeamField())))
+					steam_id = GetSteamIdFromController(static_cast<AShooterPlayerController*>(killer));
+				else if (damage_causer && (!tribe_check || (tribe_check && target->TargetingTeamField() != damage_causer->TargetingTeamField())) 
+					&& damage_causer->IsA(APrimalStructureExplosive::StaticClass()))
+				{
+					APrimalStructureExplosive* explosive = static_cast<APrimalStructureExplosive*>(damage_causer);
+					steam_id = GetSteamIDForPlayerID(explosive->ConstructorPlayerDataIDField());
+				}
+			}
+
+			return steam_id;
 		}
 private:
 		virtual AShooterPlayerController* FindPlayerFromSteamId_Internal(uint64 steam_id) const = 0;
