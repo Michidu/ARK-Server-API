@@ -762,8 +762,8 @@ namespace ArkApi
 			float lon_div = 100.f / lon_scale;
 			float lon = (lon_div * actor_position.X + lon_div * abs(lon_origin)) / 1000.f;
 
-			coords.x = std::floor(lon * 10.) / 10.;
-			coords.y = std::floor(lat * 10.) / 10.;
+			coords.x = std::floor(lon * 10.0f) / 10.0f;
+			coords.y = std::floor(lat * 10.0f) / 10.0f;
 
 			return coords;
 		}
