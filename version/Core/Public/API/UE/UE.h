@@ -11,6 +11,7 @@
 #include "API/Fields.h"
 #include "API/Enums.h"
 #include "API/UE/Math/Color.h"
+#include "Misc/GlobalObjectsArray.h"
 
 // Base types
 
@@ -563,6 +564,26 @@ struct Globals
 	}
 
 	static DataValue<UEngine*> GEngine() { return { "Global.GEngine" }; }
+
+	static DataValue<FUObjectArray> GUObjectArray() { return { "Global.GUObjectArray" }; }
+
+	static FORCEINLINE UClass* FindClass(const std::string& name)
+	{
+		for (auto i = 0; i < Globals::GUObjectArray()().ObjObjects.NumElements; i++)
+		{
+			auto obj = Globals::GUObjectArray()().ObjObjects.GetObjectPtr(i)->Object;
+			if (obj != nullptr)
+			{
+				FString full_name;
+				obj->GetFullName(&full_name, nullptr);
+				if (name == full_name.ToString())
+				{
+					return (UClass*)obj;
+				}
+			}
+		}
+		return nullptr;
+	}
 };
 
 template <>

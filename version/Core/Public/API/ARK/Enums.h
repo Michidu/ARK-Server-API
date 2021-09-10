@@ -5910,14 +5910,6 @@ enum class EScrollDirection
 	Scroll_Up = 0x1,
 };
 
-namespace FUObjectArray
-{
-	enum ESerialNumberConstants
-	{
-		START_SERIAL_NUMBER = 0x3e8,
-	};
-}
-
 enum class EAngularConstraintMotion
 {
 	ACM_Free = 0x0,

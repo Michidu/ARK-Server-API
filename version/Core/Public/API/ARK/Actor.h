@@ -2760,8 +2760,7 @@ struct AShooterPlayerController : ABasePlayerController
 	void ClientShowCharacterCreationUI_Implementation(bool bShowDownloadCharacter) { NativeCall<void, bool>(this, "AShooterPlayerController.ClientShowCharacterCreationUI_Implementation", bShowDownloadCharacter); }
 	AActor* SpawnActor(FString* blueprintPath, float spawnDistance, float spawnYOffset, float ZOffset, bool bDoDeferBeginPlay) { return NativeCall<AActor*, FString*, float, float, float, bool>(this, "AShooterPlayerController.SpawnActor", blueprintPath, spawnDistance, spawnYOffset, ZOffset, bDoDeferBeginPlay); }
 	bool GiveItem(TArray<UPrimalItem*>* outItems, FString* blueprintPath, int quantityOverride, float qualityOverride, bool bForceBlueprint, bool bAutoEquip, float MinRandomQuality) { return NativeCall<bool, TArray<UPrimalItem*>*, FString*, int, float, bool, bool, float>(this, "AShooterPlayerController.GiveItem", outItems, blueprintPath, quantityOverride, qualityOverride, bForceBlueprint, bAutoEquip, MinRandomQuality); }
-	bool GiveItem(FString* blueprintPath, int quantityOverride, float qualityOverride, bool bForceBlueprint, bool bAutoEquip, float MinRandomQuality) { return NativeCall<bool, FString*, int, float, bool, bool, float>(this, "AShooterPlayerController.GiveItem", blueprintPath, quantityOverride, qualityOverride, bForceBlueprint, bAutoEquip, MinRandomQuality); }
-	bool GiveFast(FName* blueprintPath, int quantityOverride, float qualityOverride, bool bForceBlueprint, float MinRandomQuality) { return NativeCall<bool, FName*, int, float, bool, float>(this, "AShooterPlayerController.GiveFast", blueprintPath, quantityOverride, qualityOverride, bForceBlueprint, MinRandomQuality); }
+    bool GiveFast(FName* blueprintPath, int quantityOverride, float qualityOverride, bool bForceBlueprint, float MinRandomQuality) { return NativeCall<bool, FName*, int, float, bool, float>(this, "AShooterPlayerController.GiveFast", blueprintPath, quantityOverride, qualityOverride, bForceBlueprint, MinRandomQuality); }
 	bool GiveSlotItem(FString* blueprintPath, int slotNum, int quantityOverride) { return NativeCall<bool, FString*, int, int>(this, "AShooterPlayerController.GiveSlotItem", blueprintPath, slotNum, quantityOverride); }
 	bool GiveSlotItemNum(int masterIndexNum, int slotNum, int quantityOverride) { return NativeCall<bool, int, int, int>(this, "AShooterPlayerController.GiveSlotItemNum", masterIndexNum, slotNum, quantityOverride); }
 	bool GiveItemNum(int masterIndexNum, int quantityOverride, float qualityOverride, bool bForceBlueprint) { return NativeCall<bool, int, int, float, bool>(this, "AShooterPlayerController.GiveItemNum", masterIndexNum, quantityOverride, qualityOverride, bForceBlueprint); }
@@ -3551,6 +3550,7 @@ struct APrimalCharacter : ACharacter
 	float& ReplicatedCurrentTorporField() { return *GetNativePointerField<float*>(this, "APrimalCharacter.ReplicatedCurrentTorpor"); }
 	float& ReplicatedMaxTorporField() { return *GetNativePointerField<float*>(this, "APrimalCharacter.ReplicatedMaxTorpor"); }
 	AShooterCharacter * LastGrapHookPullingOwnerField() { return *GetNativePointerField<AShooterCharacter**>(this, "APrimalCharacter.LastGrapHookPullingOwner"); }
+	AActor*& LastGrapHookPullingMeField() { return *GetNativePointerField<AActor**>(this, "APrimalCharacter.LastGrapHookPullingMe"); }
 	FVector & DragOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalCharacter.DragOffset"); }
 	long double& LastIkUpdateTimeField() { return *GetNativePointerField<long double*>(this, "APrimalCharacter.LastIkUpdateTime"); }
 	long double& LastUpdatedAimOffsetsTimeField() { return *GetNativePointerField<long double*>(this, "APrimalCharacter.LastUpdatedAimOffsetsTime"); }
@@ -8048,7 +8048,12 @@ struct AMatineeActor : AActor
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "AMatineeActor.GetPrivateStaticClass", Package); }
 };
 
-struct UCharacterMovementComponent
+struct UMovementComponent : UActorComponent
+{
+	FVector& VelocityField() { return *GetNativePointerField<FVector*>(this, "UMovementComponent.Velocity"); }
+};
+
+struct UCharacterMovementComponent : UMovementComponent
 {
 	ACharacter * CharacterOwnerField() { return *GetNativePointerField<ACharacter**>(this, "UCharacterMovementComponent.CharacterOwner"); }
 	float& MaxStepHeightField() { return *GetNativePointerField<float*>(this, "UCharacterMovementComponent.MaxStepHeight"); }
