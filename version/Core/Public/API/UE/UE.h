@@ -203,10 +203,28 @@ struct TSubclassOf
 struct IOnlinePlatformData
 {
 	void* vfptr;
+	FString* ToHumanReadableString(FString* result) { return NativeCall<FString*, FString*>(this, "IOnlinePlatformData.ToHumanReadableString", result); }
 };
 
 struct FUniqueNetId : IOnlinePlatformData
 {
+};
+
+struct FUniqueNetIdUInt64 : FUniqueNetId
+{
+	unsigned __int64& UniqueNetIdField() { return *GetNativePointerField<unsigned __int64*>(this, "FUniqueNetIdUInt64.UniqueNetId"); }
+
+	// Functions
+
+	FUniqueNetIdUInt64(FString* Str) { NativeCall<void, FString*>(this, "FUniqueNetIdUInt64.FUniqueNetIdUInt64", Str); }
+	FUniqueNetIdUInt64(FUniqueNetIdUInt64* Src) { NativeCall<void, FUniqueNetIdUInt64*>(this, "FUniqueNetIdUInt64.FUniqueNetIdUInt64", Src); }
+	FUniqueNetIdUInt64(FUniqueNetId* InUniqueNetId) { NativeCall<void, FUniqueNetId*>(this, "FUniqueNetIdUInt64.FUniqueNetIdUInt64", InUniqueNetId); }
+	FUniqueNetIdUInt64(uint64 InUniqueNetId) { NativeCall<void, uint64>(this, "FUniqueNetIdUInt64.FUniqueNetIdUInt64", InUniqueNetId); }
+
+	bool IsValid() { return NativeCall<bool>(this, "FUniqueNetIdUInt64.IsValid"); }
+	FString* ToDebugString(FString* result) { return NativeCall<FString*, FString*>(this, "FUniqueNetIdUInt64.ToDebugString", result); }
+	unsigned int GetHash() { return NativeCall<int>(this, "FUniqueNetIdUInt64.GetHash"); }
+	FString* ToString(FString* result) { return NativeCall<FString*, FString*>(this, "FUniqueNetIdUInt64.ToString", result); }
 };
 
 struct FUniqueNetIdSteam : FUniqueNetId

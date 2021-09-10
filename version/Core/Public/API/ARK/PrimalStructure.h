@@ -1161,3 +1161,14 @@ struct APrimalStructureItemContainer_CropPlot : APrimalStructureItemContainer
 	bool AllowBlueprintCraftingRequirement(TSubclassOf<UPrimalItem> ItemTemplate, int ItemQuantity) { return NativeCall<bool, TSubclassOf<UPrimalItem>, int>(this, "APrimalStructureItemContainer_CropPlot.AllowBlueprintCraftingRequirement", ItemTemplate, ItemQuantity); }
 	bool AllowCraftingResourceConsumption(TSubclassOf<UPrimalItem> ItemTemplate, int ItemQuantity) { return NativeCall<bool, TSubclassOf<UPrimalItem>, int>(this, "APrimalStructureItemContainer_CropPlot.AllowCraftingResourceConsumption", ItemTemplate, ItemQuantity); }
 };
+
+struct UPrimalStructureSettings : UObject
+{
+	float& DecayDestructionPeriodMultiplierField() { return *GetNativePointerField<float*>(this, "UPrimalStructureSettings.DecayDestructionPeriodMultiplier"); }
+};
+
+struct APrimalStructureExplosive : APrimalStructure
+{
+	unsigned int& ConstructorPlayerDataIDField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureExplosive.ConstructorPlayerDataID"); }
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructureExplosive.StaticClass"); }
+};
