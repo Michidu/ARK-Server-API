@@ -163,6 +163,16 @@ struct TWeakObjectPtr
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr.Get", bEvenIfPendingKill);
 	}
+	
+	FORCEINLINE operator bool()
+	{
+		return Get() != nullptr;
+	}
+
+	FORCEINLINE operator T* ()
+	{
+		return Get();
+	}
 
 	TWeakObjectPtr()
 	{}
