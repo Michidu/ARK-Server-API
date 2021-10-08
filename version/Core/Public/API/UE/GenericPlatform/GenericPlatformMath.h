@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <cmath>
+
 #include "../BasicTypes.h"
 
 class FDefaultAllocator;
@@ -216,6 +218,7 @@ struct FGenericPlatformMath
 	static FORCEINLINE float Acos( float Value ) { return acosf( (Value<-1.f) ? -1.f : ((Value<1.f) ? Value : 1.f) ); }
 	static FORCEINLINE float Tan( float Value ) { return tanf(Value); }
 	static FORCEINLINE float Atan( float Value ) { return atanf(Value); }
+	static FORCEINLINE float Atan2(float A, float B) { return atan2(A, B); }
 	static FORCEINLINE float Sqrt( float Value ) { return sqrtf(Value); }
 	static FORCEINLINE float Pow( float A, float B ) { return powf(A,B); }
 

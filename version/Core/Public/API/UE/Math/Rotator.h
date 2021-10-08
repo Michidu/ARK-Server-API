@@ -3,8 +3,8 @@
 #pragma once
 
 #include "../BasicTypes.h"
-#include "UnrealMathUtility.h"
 #include "Vector.h"
+#include "UnrealMathUtility.h"
 
 /**
  * Implements a container for rotation information.

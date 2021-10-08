@@ -239,7 +239,7 @@ namespace ArkApi
 		FORCEINLINE AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character) const
 		{
 			AShooterPlayerController* result = nullptr;
-				
+
 			if (character != nullptr
 				&& !character->IsDead())
 			{
@@ -762,8 +762,8 @@ namespace ArkApi
 			float lon_div = 100.f / lon_scale;
 			float lon = (lon_div * actor_position.X + lon_div * abs(lon_origin)) / 1000.f;
 
-			coords.x = std::floor(lon * 10.0f) / 10.0f;
-			coords.y = std::floor(lat * 10.0f) / 10.0f;
+			coords.x = std::floor(lon * 10.f) / 10.f;
+			coords.y = std::floor(lat * 10.f) / 10.f;
 
 			return coords;
 		}
@@ -778,10 +778,10 @@ namespace ArkApi
 
 			if (target)
 			{
-				if (killer && !killer->IsLocalController() && killer->IsA(AShooterPlayerController::GetPrivateStaticClass()) 
+				if (killer && !killer->IsLocalController() && killer->IsA(AShooterPlayerController::GetPrivateStaticClass())
 					&& (!tribe_check || (tribe_check && target->TargetingTeamField() != killer->TargetingTeamField())))
 					steam_id = GetSteamIdFromController(static_cast<AShooterPlayerController*>(killer));
-				else if (damage_causer && (!tribe_check || (tribe_check && target->TargetingTeamField() != damage_causer->TargetingTeamField())) 
+				else if (damage_causer && (!tribe_check || (tribe_check && target->TargetingTeamField() != damage_causer->TargetingTeamField()))
 					&& damage_causer->IsA(APrimalStructureExplosive::StaticClass()))
 				{
 					APrimalStructureExplosive* explosive = static_cast<APrimalStructureExplosive*>(damage_causer);
@@ -791,7 +791,7 @@ namespace ArkApi
 
 			return steam_id;
 		}
-private:
+	private:
 		virtual AShooterPlayerController* FindPlayerFromSteamId_Internal(uint64 steam_id) const = 0;
 	};
 

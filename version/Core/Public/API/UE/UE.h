@@ -11,6 +11,7 @@
 #include "API/Fields.h"
 #include "API/Enums.h"
 #include "API/UE/Math/Color.h"
+#include "API/UE/Math/Quat.h"
 #include "Misc/GlobalObjectsArray.h"
 
 // Base types
@@ -58,14 +59,18 @@ struct FName
 
 struct FTransform
 {
-	__m128 Rotation;
-	__m128 Translation;
-	__m128 Scale3D;
+	FQuat Rotation;
+	FQuat Translation;
+	FQuat Scale3D;
 };
 
 struct FBoxSphereBounds
 {
+	FVector Origin;
+	FVector BoxExtent;
+	float SphereRadius;
 };
+
 
 struct FGuid
 {
@@ -77,6 +82,9 @@ struct FGuid
 
 struct FBox
 {
+	FVector Min;
+	FVector Max; 
+	char IsValid;
 };
 
 template <typename ObjectType>
@@ -92,6 +100,22 @@ struct TSubobjectPtr
 	FORCEINLINE ObjectType* operator->() const
 	{
 		return Object;
+	}
+};
+
+template <typename ReferenceType>
+struct TScopedPointer
+{
+	ReferenceType* Reference;
+
+	FORCEINLINE ReferenceType& operator*() const
+	{
+		return *Reference;
+	}
+
+	FORCEINLINE ReferenceType* operator->() const
+	{
+		return Reference;
 	}
 };
 
@@ -135,6 +159,7 @@ struct FDateTime
 {
 };
 
+
 struct FWeakObjectPtr
 {
 	int ObjectIndex;
@@ -162,6 +187,16 @@ struct TWeakObjectPtr
 	T* Get(bool bEvenIfPendingKill = false)
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr.Get", bEvenIfPendingKill);
+	}
+
+	FORCEINLINE operator bool()
+	{
+		return Get() != nullptr;
+	}
+
+	FORCEINLINE operator T* ()
+	{
+		return Get();
 	}
 
 	TWeakObjectPtr()
@@ -587,16 +622,16 @@ struct Globals
 
 	static FORCEINLINE UClass* FindClass(const std::string& name)
 	{
-		for (auto i = 0; i < Globals::GUObjectArray()().ObjObjects.NumElements; i++)
+		for (auto i = 0; i < GUObjectArray()().ObjObjects.NumElements; i++)
 		{
-			auto obj = Globals::GUObjectArray()().ObjObjects.GetObjectPtr(i)->Object;
+			auto* obj = GUObjectArray()().ObjObjects.GetObjectPtr(i)->Object;
 			if (obj != nullptr)
 			{
 				FString full_name;
 				obj->GetFullName(&full_name, nullptr);
 				if (name == full_name.ToString())
 				{
-					return (UClass*)obj;
+					return static_cast<UClass*>(obj);
 				}
 			}
 		}
@@ -749,6 +784,16 @@ struct FCollisionQueryParams
 	bool bReturnFaceIndex;
 	bool bReturnPhysicalMaterial;
 	TArray<unsigned int> IgnoreActors;
+
+	FCollisionQueryParams(bool bInTraceComplex = false)
+	{
+		bTraceComplex = bInTraceComplex;
+		TraceTag = NAME_None;
+		bTraceAsyncScene = false;
+		bFindInitialOverlaps = true;
+		bReturnFaceIndex = false;
+		bReturnPhysicalMaterial = false;
+	}
 };
 
 struct FCollisionResponseContainer

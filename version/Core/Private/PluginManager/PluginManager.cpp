@@ -64,7 +64,7 @@ namespace API
 			return plugin_pdb_config;
 		}
 
-		std::ifstream file{config_path};
+		std::ifstream file{ config_path };
 		if (file.is_open())
 		{
 			file >> plugin_pdb_config;
@@ -79,7 +79,7 @@ namespace API
 		nlohmann::json config = nlohmann::json::object({});
 
 		const std::string config_path = Tools::GetCurrentDir() + "/config.json";
-		std::ifstream file{config_path};
+		std::ifstream file{ config_path };
 		if (!file.is_open())
 		{
 			return config;
@@ -91,24 +91,39 @@ namespace API
 		return config;
 	}
 
+	int PluginManager::GetPluginLoadOrder(const std::string& plugin_name)
+	{
+		const auto plugin_info = ReadPluginInfo(plugin_name);
+		return static_cast<int>(plugin_info["LoadOrder"]);
+	}
+
 	void PluginManager::LoadAllPlugins()
 	{
 		namespace fs = std::filesystem;
 
 		const std::string dir_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins";
 
+		std::vector<std::pair<int, std::string>> load_order;
 		for (const auto& dir_name : fs::directory_iterator(dir_path))
 		{
 			const auto& path = dir_name.path();
-			if (!is_directory(path))
-			{
+			if (!is_directory(path))			{
 				continue;
 			}
 
 			const auto filename = path.filename().stem().generic_string();
+			auto order = GetPluginLoadOrder(filename);
 
-			const std::string dir_file_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins/" +
-				filename;
+			load_order.emplace_back(order, filename);
+		}
+
+		// Sort
+		std::sort(load_order.begin(), load_order.end());
+		
+		// Load
+		for (auto& [order, filename] : load_order)		{
+
+			const std::string dir_file_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins/" + filename;
 			const std::string full_dll_path = dir_file_path + "/" + filename + ".dll";
 			const std::string new_full_dll_path = dir_file_path + "/" + filename + ".dll.ArkApi";
 
@@ -141,7 +156,7 @@ namespace API
 		// Set auto plugins reloading
 		auto settings = ReadSettingsConfig();
 
-		enable_plugin_reload_ = settings["settings"].value("AutomaticPluginReloading", false);
+		enable_plugin_reload_ = settings["settings"].value("AutomaticPluginReloading", true);
 		if (enable_plugin_reload_)
 		{
 			reload_sleep_seconds_ = settings["settings"].value("AutomaticPluginReloadSeconds", 5);
@@ -155,9 +170,9 @@ namespace API
 	{
 		namespace fs = std::filesystem;
 
-		const std::string dir_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins/" + plugin_name;
-		const std::string full_dll_path = dir_path + "/" + plugin_name + ".dll";
-
+		const auto dir_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins/" + plugin_name;
+		const auto full_dll_path = dir_path + "/" + plugin_name + ".dll";
+		
 		if (!fs::exists(full_dll_path))
 		{
 			throw std::runtime_error("Plugin " + plugin_name + " does not exist");
@@ -193,10 +208,14 @@ namespace API
 			pfn_init();
 		}
 
-		return loaded_plugins_.emplace_back(std::make_shared<Plugin>(h_module, plugin_name, plugin_info["FullName"],
-		                                                             plugin_info["Description"], plugin_info["Version"],
-		                                                             plugin_info["MinApiVersion"],
-		                                                             plugin_info["Dependencies"]));
+		return loaded_plugins_.emplace_back(std::make_shared<Plugin>(
+			h_module,
+			plugin_name,
+			plugin_info["FullName"],
+			plugin_info["Description"],
+			plugin_info["Version"],
+			plugin_info["MinApiVersion"],
+			plugin_info["Dependencies"]));
 	}
 
 	void PluginManager::UnloadPlugin(const std::string& plugin_name) noexcept(false)
@@ -244,7 +263,7 @@ namespace API
 		const std::string dir_path = Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins/" + plugin_name;
 		const std::string config_path = dir_path + "/PluginInfo.json";
 
-		std::ifstream file{config_path};
+		std::ifstream file{ config_path };
 		if (file.is_open())
 		{
 			file >> plugin_info;
@@ -258,6 +277,7 @@ namespace API
 			plugin_info_result["Version"] = plugin_info.value("Version", 1.00f);
 			plugin_info_result["MinApiVersion"] = plugin_info.value("MinApiVersion", .0f);
 			plugin_info_result["Dependencies"] = plugin_info.value("Dependencies", std::vector<std::string>{});
+			plugin_info_result["LoadOrder"] = plugin_info.value("LoadOrder", UCHAR_MAX);
 		}
 		catch (const std::exception& error)
 		{
@@ -281,7 +301,7 @@ namespace API
 				if (!IsPluginLoaded(dependency))
 				{
 					Log::GetLog()->error("Plugin {} is  missing! {} might not work correctly", dependency,
-					                     plugin->name);
+						plugin->name);
 				}
 			}
 		}
@@ -290,10 +310,10 @@ namespace API
 	std::vector<std::shared_ptr<Plugin>>::const_iterator PluginManager::FindPlugin(const std::string& plugin_name)
 	{
 		const auto iter = std::find_if(loaded_plugins_.begin(), loaded_plugins_.end(),
-		                               [plugin_name](const std::shared_ptr<Plugin>& plugin) -> bool
-		                               {
-			                               return plugin->name == plugin_name;
-		                               });
+			[plugin_name](const std::shared_ptr<Plugin>& plugin) -> bool
+			{
+				return plugin->name == plugin_name;
+			});
 
 		return iter;
 	}
@@ -327,7 +347,7 @@ namespace API
 		bool save_world = save_world_before_reload_;
 
 		for (const auto& dir_name : fs::directory_iterator(
-			     Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins"))
+			Tools::GetCurrentDir() + "/" + game_api->GetApiName() + "/Plugins"))
 		{
 			const auto& path = dir_name.path();
 			if (!is_directory(path))

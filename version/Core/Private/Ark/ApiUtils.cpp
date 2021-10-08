@@ -41,6 +41,7 @@ namespace ArkApi
 	}
 
 	// Cheat Manager
+	
 	void ApiUtils::SetCheatManager(UShooterCheatManager* cheatmanager)
 	{
 		cheatmanager_ = cheatmanager;
@@ -79,12 +80,12 @@ namespace ArkApi
 		if (steam_id == 0)
 			return found_player;
 
-		auto iter = steam_id_map_.find(steam_id);
+		const auto it = steam_id_map_.find(steam_id);
 
-		if (iter != steam_id_map_.end()
-			&& iter->first == steam_id)
+		if (it != steam_id_map_.end()
+			&& it->first == steam_id)
 		{
-			found_player = iter->second;
+			found_player = it->second;
 		}
 
 		return found_player;

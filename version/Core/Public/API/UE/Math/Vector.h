@@ -10,8 +10,9 @@
 #include "Vector2D.h"
 #include "../Misc/ByteSwap.h"
 #include "IntVector.h"
+#include "Rotator.h"
 
-struct FRotator;
+//struct FRotator;
 
 #pragma warning(push)
 #pragma warning(disable : 4244)
