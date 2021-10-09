@@ -214,27 +214,27 @@ namespace ArkApi
 
 		const char* se_description;
 		switch (ExceptionInfo->ExceptionRecord->ExceptionCode) {
-		case EXCEPTION_ACCESS_VIOLATION:          se_description = "EXCEPTION_ACCESS_VIOLATION";
-		case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:     se_description = "EXCEPTION_ARRAY_BOUNDS_EXCEEDED";
-		case EXCEPTION_BREAKPOINT:                se_description = "EXCEPTION_BREAKPOINT";
-		case EXCEPTION_DATATYPE_MISALIGNMENT:     se_description = "EXCEPTION_DATATYPE_MISALIGNMENT";
-		case EXCEPTION_FLT_DENORMAL_OPERAND:      se_description = "EXCEPTION_FLT_DENORMAL_OPERAND";
-		case EXCEPTION_FLT_DIVIDE_BY_ZERO:        se_description = "EXCEPTION_FLT_DIVIDE_BY_ZERO";
-		case EXCEPTION_FLT_INEXACT_RESULT:        se_description = "EXCEPTION_FLT_INEXACT_RESULT";
-		case EXCEPTION_FLT_INVALID_OPERATION:     se_description = "EXCEPTION_FLT_INVALID_OPERATION";
-		case EXCEPTION_FLT_OVERFLOW:              se_description = "EXCEPTION_FLT_OVERFLOW";
-		case EXCEPTION_FLT_STACK_CHECK:           se_description = "EXCEPTION_FLT_STACK_CHECK";
-		case EXCEPTION_FLT_UNDERFLOW:             se_description = "EXCEPTION_FLT_UNDERFLOW";
-		case EXCEPTION_ILLEGAL_INSTRUCTION:       se_description = "EXCEPTION_ILLEGAL_INSTRUCTION";
-		case EXCEPTION_IN_PAGE_ERROR:             se_description = "EXCEPTION_IN_PAGE_ERROR";
-		case EXCEPTION_INT_DIVIDE_BY_ZERO:        se_description = "EXCEPTION_INT_DIVIDE_BY_ZERO";
-		case EXCEPTION_INT_OVERFLOW:              se_description = "EXCEPTION_INT_OVERFLOW";
-		case EXCEPTION_INVALID_DISPOSITION:       se_description = "EXCEPTION_INVALID_DISPOSITION";
-		case EXCEPTION_NONCONTINUABLE_EXCEPTION:  se_description = "EXCEPTION_NONCONTINUABLE_EXCEPTION";
-		case EXCEPTION_PRIV_INSTRUCTION:          se_description = "EXCEPTION_PRIV_INSTRUCTION";
-		case EXCEPTION_SINGLE_STEP:               se_description = "EXCEPTION_SINGLE_STEP";
-		case EXCEPTION_STACK_OVERFLOW:            se_description = "EXCEPTION_STACK_OVERFLOW";
-		default: se_description = "UNKNOWN EXCEPTION";
+		case EXCEPTION_ACCESS_VIOLATION:          se_description = "EXCEPTION_ACCESS_VIOLATION";		 break;
+		case EXCEPTION_ARRAY_BOUNDS_EXCEEDED:     se_description = "EXCEPTION_ARRAY_BOUNDS_EXCEEDED";	 break;
+		case EXCEPTION_BREAKPOINT:                se_description = "EXCEPTION_BREAKPOINT";				 break;
+		case EXCEPTION_DATATYPE_MISALIGNMENT:     se_description = "EXCEPTION_DATATYPE_MISALIGNMENT";	 break;
+		case EXCEPTION_FLT_DENORMAL_OPERAND:      se_description = "EXCEPTION_FLT_DENORMAL_OPERAND";	 break;
+		case EXCEPTION_FLT_DIVIDE_BY_ZERO:        se_description = "EXCEPTION_FLT_DIVIDE_BY_ZERO";		 break;
+		case EXCEPTION_FLT_INEXACT_RESULT:        se_description = "EXCEPTION_FLT_INEXACT_RESULT";		 break;
+		case EXCEPTION_FLT_INVALID_OPERATION:     se_description = "EXCEPTION_FLT_INVALID_OPERATION";	 break;
+		case EXCEPTION_FLT_OVERFLOW:              se_description = "EXCEPTION_FLT_OVERFLOW";			 break;
+		case EXCEPTION_FLT_STACK_CHECK:           se_description = "EXCEPTION_FLT_STACK_CHECK";			 break;
+		case EXCEPTION_FLT_UNDERFLOW:             se_description = "EXCEPTION_FLT_UNDERFLOW";			 break;
+		case EXCEPTION_ILLEGAL_INSTRUCTION:       se_description = "EXCEPTION_ILLEGAL_INSTRUCTION";		 break;
+		case EXCEPTION_IN_PAGE_ERROR:             se_description = "EXCEPTION_IN_PAGE_ERROR";			 break;
+		case EXCEPTION_INT_DIVIDE_BY_ZERO:        se_description = "EXCEPTION_INT_DIVIDE_BY_ZERO";		 break;
+		case EXCEPTION_INT_OVERFLOW:              se_description = "EXCEPTION_INT_OVERFLOW";			 break;
+		case EXCEPTION_INVALID_DISPOSITION:       se_description = "EXCEPTION_INVALID_DISPOSITION";		 break;
+		case EXCEPTION_NONCONTINUABLE_EXCEPTION:  se_description = "EXCEPTION_NONCONTINUABLE_EXCEPTION"; break;
+		case EXCEPTION_PRIV_INSTRUCTION:          se_description = "EXCEPTION_PRIV_INSTRUCTION";		 break;
+		case EXCEPTION_SINGLE_STEP:               se_description = "EXCEPTION_SINGLE_STEP";				 break;
+		case EXCEPTION_STACK_OVERFLOW:            se_description = "EXCEPTION_STACK_OVERFLOW";			 break;
+		default:								  se_description = "UNKNOWN EXCEPTION";					 break;
 		}
 
 		oss << "SE " << se_description << " at address 0x" << std::hex << ExceptionInfo->ExceptionRecord->ExceptionAddress << std::dec
@@ -246,10 +246,10 @@ namespace ArkApi
 			const char* op_description;
 
 			switch (ExceptionInfo->ExceptionRecord->ExceptionInformation[0]) {
-			case 0: op_description = "read";
-			case 1: op_description = "write";
-			case 8: op_description = "user-mode data execution prevention (DEP) violation";
-			default: op_description = "unknown";
+			case 0:		op_description = "read";												break;
+			case 1:		op_description = "write";												break;
+			case 8:		op_description = "user-mode data execution prevention (DEP) violation"; break;
+			default:	op_description = "unknown";												break;
 			}
 
 			oss << "Invalid operation: " << op_description << " at address 0x" << std::hex << ExceptionInfo->ExceptionRecord->ExceptionInformation[1] << std::dec << "\n";
