@@ -28,6 +28,12 @@ struct FDamageEvent
 struct UPhysicalMaterial
 {
 };
+
+struct UEngineTypes
+{
+	static EObjectTypeQuery ConvertToObjectType(ECollisionChannel CollisionChannel) { return NativeCall<EObjectTypeQuery, ECollisionChannel>(nullptr, "UEngineTypes.ConvertToObjectType", CollisionChannel); }
+};
+
 struct FBodyInstance
 {
 };
