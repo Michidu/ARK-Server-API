@@ -415,7 +415,6 @@ struct FPlayerCharacterGenderDefinition;
 
 struct FMeleeHitInfo;
 struct FWeaponAttack {};
-struct FPenetrationTraceHit;
 
 struct FRecoveryRateOverride;
 

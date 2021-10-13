@@ -51,6 +51,13 @@ struct __declspec(align(8)) FHitResult
 	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FHitResult.StaticStruct"); }
 };
 
+struct FPenetrationTraceHit
+{
+	FHitResult& Hit() { return *GetNativePointerField<FHitResult*>(this, "FPenetrationTraceHit.Hit"); }
+	float& DistanceFromLastHit() { return *GetNativePointerField<float*>(this, "FPenetrationTraceHit.DistanceFromLastHit"); }
+	float& TotalDistance() { return *GetNativePointerField<float*>(this, "FPenetrationTraceHit.TotalDistance"); }
+};
+
 struct FOverlapInfo
 {
 	bool bFromSweep;
