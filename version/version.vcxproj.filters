@@ -434,6 +434,15 @@
     <ClInclude Include="Core\Public\API\UE\Crc.h">
       <Filter>Core\Public\API\UE</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\_git_private\ARK-Server-API\version\Core\Public\API\UE\Templates\IsMemberPointer.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\_git_private\ARK-Server-API\version\Core\Public\API\UE\Templates\IsConstructible.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\_git_private\ARK-Server-API\version\Core\Public\API\UE\Templates\IsInvocable.h">
+      <Filter>Core\Public\API\UE\Templates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="version.cpp" />

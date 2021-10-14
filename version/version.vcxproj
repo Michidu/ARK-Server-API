@@ -14,6 +14,9 @@
     <MASM Include="version_asm.asm" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\_git_private\ARK-Server-API\version\Core\Public\API\UE\Templates\IsConstructible.h" />
+    <ClInclude Include="..\..\..\_git_private\ARK-Server-API\version\Core\Public\API\UE\Templates\IsInvocable.h" />
+    <ClInclude Include="..\..\..\_git_private\ARK-Server-API\version\Core\Public\API\UE\Templates\IsMemberPointer.h" />
     <ClInclude Include="Core\Private\Ark\ApiUtils.h" />
     <ClInclude Include="Core\Private\Ark\ArkBaseApi.h" />
     <ClInclude Include="Core\Private\Ark\HooksImpl.h" />

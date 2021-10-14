@@ -1,23 +1,28 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
 #include "../BasicTypes.h"
-#include "../HAL/UnrealMemory.h"
+
 #include "AreTypesEqual.h"
-#include "UnrealTypeTraits.h"
-#include "RemoveReference.h"
 #include "Decay.h"
 #include "Invoke.h"
+#include "IsConstructible.h"
+#include "IsInvocable.h"
+#include "IsMemberPointer.h"
+#include "RemoveReference.h"
+#include "UnrealTypeTraits.h"
+
 #include "../Containers/ContainerAllocationPolicies.h"
+#include "../HAL/UnrealMemory.h"
 #include "../Math/UnrealMathUtility.h"
 
 
 // Disable visualization hack for shipping or test builds.
 #if !(UE_BUILD_SHIPPING || UE_BUILD_TEST)
-	#define ENABLE_TFUNCTIONREF_VISUALIZATION 1
+#define ENABLE_TFUNCTIONREF_VISUALIZATION 1
 #else
-	#define ENABLE_TFUNCTIONREF_VISUALIZATION 0
+#define ENABLE_TFUNCTIONREF_VISUALIZATION 0
 #endif
 
 template <typename FuncType> class TFunction;
@@ -32,6 +37,14 @@ template <typename FuncType>
 class TFunction;
 
 /**
+ * TUniqueFunction<FuncType>
+ *
+ * See the class definition for intended usage.
+ */
+template <typename FuncType>
+class TUniqueFunction;
+
+/**
  * TFunctionRef<FuncType>
  *
  * See the class definition for intended usage.
@@ -42,21 +55,39 @@ class TFunctionRef;
 /**
  * Traits class which checks if T is a TFunction<> type.
  */
-template <typename T> struct TIsATFunction               { enum { Value = false }; };
-template <typename T> struct TIsATFunction<TFunction<T>> { enum { Value = true  }; };
+template <typename T> struct TIsTFunction { enum { Value = false }; };
+template <typename T> struct TIsTFunction<TFunction<T>> { enum { Value = true }; };
+
+template <typename T> struct TIsTFunction<const          T> { enum { Value = TIsTFunction<T>::Value }; };
+template <typename T> struct TIsTFunction<      volatile T> { enum { Value = TIsTFunction<T>::Value }; };
+template <typename T> struct TIsTFunction<const volatile T> { enum { Value = TIsTFunction<T>::Value }; };
 
 /**
  * Traits class which checks if T is a TFunction<> type.
  */
-template <typename T> struct TIsATFunctionRef                  { enum { Value = false }; };
-template <typename T> struct TIsATFunctionRef<TFunctionRef<T>> { enum { Value = true  }; };
+template <typename T> struct TIsTUniqueFunction { enum { Value = false }; };
+template <typename T> struct TIsTUniqueFunction<TUniqueFunction<T>> { enum { Value = true }; };
+
+template <typename T> struct TIsTUniqueFunction<const          T> { enum { Value = TIsTUniqueFunction<T>::Value }; };
+template <typename T> struct TIsTUniqueFunction<      volatile T> { enum { Value = TIsTUniqueFunction<T>::Value }; };
+template <typename T> struct TIsTUniqueFunction<const volatile T> { enum { Value = TIsTUniqueFunction<T>::Value }; };
+
+/**
+ * Traits class which checks if T is a TFunctionRef<> type.
+ */
+template <typename T> struct TIsTFunctionRef { enum { Value = false }; };
+template <typename T> struct TIsTFunctionRef<TFunctionRef<T>> { enum { Value = true }; };
+
+template <typename T> struct TIsTFunctionRef<const          T> { enum { Value = TIsTFunctionRef<T>::Value }; };
+template <typename T> struct TIsTFunctionRef<      volatile T> { enum { Value = TIsTFunctionRef<T>::Value }; };
+template <typename T> struct TIsTFunctionRef<const volatile T> { enum { Value = TIsTFunctionRef<T>::Value }; };
 
 /**
  * Private implementation details of TFunction and TFunctionRef.
  */
 namespace UE4Function_Private
 {
-	struct FFunctionStorage;
+	struct FUniqueFunctionStorage;
 
 	/**
 	 * Common interface to a callable object owned by TFunction.
@@ -66,7 +97,7 @@ namespace UE4Function_Private
 		/**
 		 * Creates a copy of the object in the allocator and returns a pointer to it.
 		 */
-		virtual IFunction_OwnedObject* CopyToEmptyStorage(FFunctionStorage& Storage) const = 0;
+		virtual IFunction_OwnedObject* CopyToEmptyStorage(FUniqueFunctionStorage& Storage) const = 0;
 
 		/**
 		 * Returns the address of the object.
@@ -76,89 +107,21 @@ namespace UE4Function_Private
 		/**
 		 * Destructor.
 		 */
-		virtual ~IFunction_OwnedObject() = 0;
+		virtual ~IFunction_OwnedObject()
+		{
+		}
 	};
 
 	/**
-	 * Destructor.
-	 */
-	inline IFunction_OwnedObject::~IFunction_OwnedObject()
-	{
-	}
-
-	#if !defined(_WIN32) || defined(_WIN64)
-		// Let TFunction store up to 32 bytes which are 16-byte aligned before we heap allocate
-		typedef TAlignedBytes<16, 16> AlignedInlineFunctionType;
-		typedef TInlineAllocator<2> FunctionAllocatorType;
-	#else
-		// ... except on Win32, because we can't pass 16-byte aligned types by value, as some TFunctions are.
-		// So we'll just keep it heap-allocated, which is always sufficiently aligned.
-		typedef TAlignedBytes<16, 8> AlignedInlineFunctionType;
-		typedef FHeapAllocator FunctionAllocatorType;
-	#endif
-
-	struct FFunctionStorage
-	{
-		FFunctionStorage()
-			: AllocatedSize(0)
-		{
-		}
-
-		FFunctionStorage(FFunctionStorage&& Other)
-			: AllocatedSize(0)
-		{
-			Allocator.MoveToEmpty(Other.Allocator);
-			AllocatedSize       = Other.AllocatedSize;
-			Other.AllocatedSize = 0;
-		}
-
-		void Empty()
-		{
-			Allocator.ResizeAllocation(0, 0, sizeof(UE4Function_Private::AlignedInlineFunctionType));
-			AllocatedSize = 0;
-		}
-
-		typedef FunctionAllocatorType::ForElementType<AlignedInlineFunctionType> AllocatorType;
-
-		IFunction_OwnedObject* GetBoundObject() const
-		{
-			return AllocatedSize ? (IFunction_OwnedObject*)Allocator.GetAllocation() : nullptr;
-		}
-
-		AllocatorType Allocator;
-		int32         AllocatedSize;
-	};
-}
-
-inline void* operator new(size_t Size, UE4Function_Private::FFunctionStorage& Storage)
-{
-	if (UE4Function_Private::IFunction_OwnedObject* Obj = Storage.GetBoundObject())
-	{
-		Obj->~IFunction_OwnedObject();
-	}
-
-	int32 NewSize = static_cast<int32>(FMath::DivideAndRoundUp(Size, sizeof(UE4Function_Private::AlignedInlineFunctionType)));
-	if (Storage.AllocatedSize != NewSize)
-	{
-		Storage.Allocator.ResizeAllocation(0, NewSize, sizeof(UE4Function_Private::AlignedInlineFunctionType));
-		Storage.AllocatedSize = NewSize;
-	}
-
-	return Storage.Allocator.GetAllocation();
-}
-
-namespace UE4Function_Private
-{
-	/**
-	 * Implementation of IFunction_OwnedObject for a given T.
+	 * Implementation of IFunction_OwnedObject for a given copyable T.
 	 */
 	template <typename T>
-	struct TFunction_OwnedObject : public IFunction_OwnedObject
+	struct TFunction_CopyableOwnedObject final : public IFunction_OwnedObject
 	{
 		/**
 		 * Constructor which creates its T by copying.
 		 */
-		explicit TFunction_OwnedObject(const T& InObj)
+		explicit TFunction_CopyableOwnedObject(const T& InObj)
 			: Obj(InObj)
 		{
 		}
@@ -166,14 +129,14 @@ namespace UE4Function_Private
 		/**
 		 * Constructor which creates its T by moving.
 		 */
-		explicit TFunction_OwnedObject(T&& InObj)
+		explicit TFunction_CopyableOwnedObject(T&& InObj)
 			: Obj(MoveTemp(InObj))
 		{
 		}
 
-		IFunction_OwnedObject* CopyToEmptyStorage(FFunctionStorage& Storage) const override
+		IFunction_OwnedObject* CopyToEmptyStorage(FUniqueFunctionStorage& Storage) const override
 		{
-			return new (Storage) TFunction_OwnedObject(Obj);
+			return new (Storage) TFunction_CopyableOwnedObject(Obj);
 		}
 
 		virtual void* GetAddress() override
@@ -185,48 +148,211 @@ namespace UE4Function_Private
 	};
 
 	/**
+	 * Implementation of IFunction_OwnedObject for a given non-copyable T.
+	 */
+	template <typename T>
+	struct TFunction_UniqueOwnedObject final : public IFunction_OwnedObject
+	{
+		/**
+		 * Constructor which creates its T by moving.
+		 */
+		explicit TFunction_UniqueOwnedObject(T&& InObj)
+			: Obj(MoveTemp(InObj))
+		{
+		}
+
+		IFunction_OwnedObject* CopyToEmptyStorage(FUniqueFunctionStorage& Storage) const override
+		{
+			// Should never get here - copy functions are deleted for TUniqueFunction
+			check(false);
+			return nullptr;
+		}
+
+		virtual void* GetAddress() override
+		{
+			return &Obj;
+		}
+
+		T Obj;
+	};
+
+#if !defined(_WIN32) || defined(_WIN64)
+	// Let TFunction store up to 32 bytes which are 16-byte aligned before we heap allocate
+	typedef TAlignedBytes<16, 16> FAlignedInlineFunctionType;
+#if USE_SMALL_TFUNCTIONS
+	typedef FHeapAllocator FFunctionAllocatorType;
+#else
+	typedef TInlineAllocator<2> FFunctionAllocatorType;
+#endif
+#else
+	// ... except on Win32, because we can't pass 16-byte aligned types by value, as some TFunctions are.
+	// So we'll just keep it heap-allocated, which is always sufficiently aligned.
+	typedef TAlignedBytes<16, 8> FAlignedInlineFunctionType;
+	typedef FHeapAllocator FFunctionAllocatorType;
+#endif
+
+	template <typename T>
+	struct TIsNullableBinding :
+		TOr<
+		TIsPointer<T>,
+		TIsMemberPointer<T>,
+		TIsTFunction<T>
+		>
+	{
+	};
+
+	template <typename T>
+	FORCEINLINE typename TEnableIf<TIsNullableBinding<T>::Value, bool>::Type IsBound(const T& Func)
+	{
+		// Function pointers, data member pointers, member function pointers and TFunctions
+		// can all be null/unbound, so test them using their boolean state.
+		return !!Func;
+	}
+
+	template <typename T>
+	FORCEINLINE typename TEnableIf<!TIsNullableBinding<T>::Value, bool>::Type IsBound(const T& Func)
+	{
+		// We can't tell if any other generic callable can be invoked, so just assume they can be.
+		return true;
+	}
+
+	struct FFunctionStorage;
+
+	struct FUniqueFunctionStorage
+	{
+		FUniqueFunctionStorage() = default;
+
+		FUniqueFunctionStorage(FUniqueFunctionStorage&& Other)
+		{
+			Allocator.MoveToEmpty(Other.Allocator);
+		}
+
+		// Allow moving from a TFunction's storage
+		FUniqueFunctionStorage(FFunctionStorage&& Other);
+
+		FUniqueFunctionStorage& operator=(FUniqueFunctionStorage&& Other) = delete;
+		FUniqueFunctionStorage& operator=(const FUniqueFunctionStorage& Other) = delete;
+
+		template <typename FunctorType>
+		typename TDecay<FunctorType>::Type* Bind(FunctorType&& InFunc)
+		{
+			if (!IsBound(InFunc))
+			{
+				return nullptr;
+			}
+
+			using OwnedType = TFunction_UniqueOwnedObject<typename TDecay<FunctorType>::Type>;
+
+			OwnedType* NewObj = new (*this) OwnedType(Forward<FunctorType>(InFunc));
+			return &NewObj->Obj;
+		}
+
+		void* BindCopy(const FFunctionStorage& Other);
+
+		IFunction_OwnedObject* GetBoundObject() const
+		{
+			return (IFunction_OwnedObject*)Allocator.GetAllocation();
+		}
+
+		/**
+		 * Returns a pointer to the callable object - needed by TFunctionRefBase.
+		 */
+		void* GetPtr() const
+		{
+			return GetBoundObject()->GetAddress();
+		}
+
+		/**
+		 * Destroy any owned bindings - called by TFunctionRefBase only if Bind() or BindCopy() was called.
+		 */
+		void Unbind()
+		{
+			GetBoundObject()->~IFunction_OwnedObject();
+		}
+
+		FFunctionAllocatorType::ForElementType<FAlignedInlineFunctionType> Allocator;
+	};
+
+	struct FFunctionStorage : public FUniqueFunctionStorage
+	{
+		FFunctionStorage() = default;
+
+		FFunctionStorage(FFunctionStorage&& Other)
+			: FUniqueFunctionStorage(MoveTemp((FUniqueFunctionStorage&)Other))
+		{
+		}
+
+		template <typename FunctorType>
+		typename TDecay<FunctorType>::Type* Bind(FunctorType&& InFunc)
+		{
+			if (!IsBound(InFunc))
+			{
+				return nullptr;
+			}
+
+			using OwnedType = TFunction_CopyableOwnedObject<typename TDecay<FunctorType>::Type>;
+
+			OwnedType* NewObj = new (*this) OwnedType(Forward<FunctorType>(InFunc));
+			return &NewObj->Obj;
+		}
+
+		void* BindCopy(const FFunctionStorage& Other)
+		{
+			IFunction_OwnedObject* ThisFunc = Other.GetBoundObject()->CopyToEmptyStorage(*this);
+			return ThisFunc->GetAddress();
+		}
+	};
+
+	inline FUniqueFunctionStorage::FUniqueFunctionStorage(FFunctionStorage&& Other)
+	{
+		Allocator.MoveToEmpty(Other.Allocator);
+	}
+
+	inline void* FUniqueFunctionStorage::BindCopy(const FFunctionStorage& Other)
+	{
+		IFunction_OwnedObject* ThisFunc = Other.GetBoundObject()->CopyToEmptyStorage(*this);
+		return ThisFunc->GetAddress();
+	}
+}
+
+inline void* operator new(size_t Size, UE4Function_Private::FUniqueFunctionStorage& Storage)
+{
+	size_t NewSize = FMath::DivideAndRoundUp(Size, sizeof(UE4Function_Private::FAlignedInlineFunctionType));
+	Storage.Allocator.ResizeAllocation(0, (int32)NewSize, sizeof(UE4Function_Private::FAlignedInlineFunctionType));
+
+	return Storage.Allocator.GetAllocation();
+}
+
+namespace UE4Function_Private
+{
+#if ENABLE_TFUNCTIONREF_VISUALIZATION
+	/**
+	 * Helper classes to help debugger visualization.
+	 */
+	struct IDebugHelper
+	{
+		virtual ~IDebugHelper() = 0;
+	};
+
+	inline IDebugHelper::~IDebugHelper()
+	{
+	}
+
+	template <typename T>
+	struct TDebugHelper : IDebugHelper
+	{
+		T* Ptr;
+	};
+#endif
+
+	/**
 	 * A class which is used to instantiate the code needed to call a bound function.
 	 */
 	template <typename Functor, typename FuncType>
 	struct TFunctionRefCaller;
 
-	/**
-	 * A class which is used to instantiate the code needed to assert when called - used for unset bindings.
-	 */
-	template <typename FuncType>
-	struct TFunctionRefAsserter;
-
-	/**
-	 * A class which defines an operator() which will invoke the TFunctionRefCaller::Call function.
-	 */
-	template <typename DerivedType, typename FuncType>
-	struct TFunctionRefBase;
-
-	#if ENABLE_TFUNCTIONREF_VISUALIZATION
-		/**
-		 * Helper classes to help debugger visualization.
-		 */
-		struct IDebugHelper
-		{
-			virtual ~IDebugHelper() = 0;
-		};
-
-		inline IDebugHelper::~IDebugHelper()
-		{
-		}
-
-		template <typename T>
-		struct TDebugHelper : IDebugHelper
-		{
-			T* Ptr;
-		};
-	#endif
-
-	/**
-	 * Function which invokes the passed callable when invoked.
-	 */
 	template <typename Functor, typename Ret, typename... ParamTypes>
-	struct TFunctionRefCaller<Functor, Ret (ParamTypes...)>
+	struct TFunctionRefCaller<Functor, Ret(ParamTypes...)>
 	{
 		static Ret Call(void* Obj, ParamTypes&... Params)
 		{
@@ -235,7 +361,7 @@ namespace UE4Function_Private
 	};
 
 	template <typename Functor, typename... ParamTypes>
-	struct TFunctionRefCaller<Functor, void (ParamTypes...)>
+	struct TFunctionRefCaller<Functor, void(ParamTypes...)>
 	{
 		static void Call(void* Obj, ParamTypes&... Params)
 		{
@@ -244,84 +370,237 @@ namespace UE4Function_Private
 	};
 
 	/**
-	 * Function which asserts when invoked.
+	 * A class which defines an operator() which will own storage of a callable and invoke the TFunctionRefCaller::Call function on it.
 	 */
-	template <typename Ret, typename... ParamTypes>
-	struct TFunctionRefAsserter<Ret (ParamTypes...)>
+	template <typename StorageType, typename FuncType>
+	struct TFunctionRefBase;
+
+	template <typename StorageType, typename Ret, typename... ParamTypes>
+	struct TFunctionRefBase<StorageType, Ret(ParamTypes...)>
 	{
-		static Ret Call(void* Obj, ParamTypes&...)
-		{
-			checkf(false, TEXT("Attempting to call an unbound TFunction!"));
+		template <typename OtherStorageType, typename OtherFuncType>
+		friend struct TFunctionRefBase;
 
-			// This doesn't need to be valid, because it'll never be reached, but it does at least need to compile.
-			return Forward<Ret&&>(*(typename TRemoveReference<Ret>::Type*)Obj);
-		}
-	};
-
-	template <typename... ParamTypes>
-	struct TFunctionRefAsserter<void (ParamTypes...)>
-	{
-		static void Call(void*, ParamTypes&...)
+		TFunctionRefBase()
+			: Callable(nullptr)
 		{
-			checkf(false, TEXT("Attempting to call an unbound TFunction!"));
-		}
-	};
-
-	template <typename DerivedType, typename Ret, typename... ParamTypes>
-	struct TFunctionRefBase<DerivedType, Ret (ParamTypes...)>
-	{
-		explicit TFunctionRefBase(ENoInit)
-		{
-			// Not really designed to be initialized directly, but we want to be explicit about that.
 		}
 
-		Ret operator()(ParamTypes... Params) const
+		TFunctionRefBase(TFunctionRefBase&& Other)
+			: Callable(Other.Callable)
+			, Storage(MoveTemp(Other.Storage))
 		{
-			const DerivedType* Derived = static_cast<const DerivedType*>(this);
-			return Callable(Derived->GetPtr(), Params...);
+			if (Callable)
+			{
+#if ENABLE_TFUNCTIONREF_VISUALIZATION
+				// Use Memcpy to copy the other DebugPtrStorage, including vptr (because we don't know the bound type
+				// here), and then reseat the underlying pointer.  Possibly even more evil than the Set code.
+				FMemory::Memcpy(&DebugPtrStorage, &Other.DebugPtrStorage, sizeof(DebugPtrStorage));
+				DebugPtrStorage.Ptr = Storage.GetPtr();
+#endif
+
+				Other.Callable = nullptr;
+			}
 		}
 
-	protected:
-		template <typename FunctorType>
-		void Set(FunctorType* Functor)
+		template <typename OtherStorage>
+		TFunctionRefBase(TFunctionRefBase<OtherStorage, Ret(ParamTypes...)>&& Other)
+			: Callable(Other.Callable)
+			, Storage(MoveTemp(Other.Storage))
 		{
-			Callable = &UE4Function_Private::TFunctionRefCaller<FunctorType, Ret (ParamTypes...)>::Call;
+			if (Callable)
+			{
+#if ENABLE_TFUNCTIONREF_VISUALIZATION
+				// Use Memcpy to copy the other DebugPtrStorage, including vptr (because we don't know the bound type
+				// here), and then reseat the underlying pointer.  Possibly even more evil than the Set code.
+				FMemory::Memcpy(&DebugPtrStorage, &Other.DebugPtrStorage, sizeof(DebugPtrStorage));
+				DebugPtrStorage.Ptr = Storage.GetPtr();
+#endif
 
-			#if ENABLE_TFUNCTIONREF_VISUALIZATION
+				Other.Callable = nullptr;
+			}
+		}
+
+		template <typename OtherStorage>
+		TFunctionRefBase(const TFunctionRefBase<OtherStorage, Ret(ParamTypes...)>& Other)
+			: Callable(Other.Callable)
+		{
+			if (Callable)
+			{
+				void* NewPtr = Storage.BindCopy(Other.Storage);
+
+#if ENABLE_TFUNCTIONREF_VISUALIZATION
+				// Use Memcpy to copy the other DebugPtrStorage, including vptr (because we don't know the bound type
+				// here), and then reseat the underlying pointer.  Possibly even more evil than the Set code.
+				FMemory::Memcpy(&DebugPtrStorage, &Other.DebugPtrStorage, sizeof(DebugPtrStorage));
+				DebugPtrStorage.Ptr = NewPtr;
+#endif
+			}
+		}
+
+		TFunctionRefBase(const TFunctionRefBase& Other)
+			: Callable(Other.Callable)
+		{
+			if (Callable)
+			{
+				void* NewPtr = Storage.BindCopy(Other.Storage);
+
+#if ENABLE_TFUNCTIONREF_VISUALIZATION
+				// Use Memcpy to copy the other DebugPtrStorage, including vptr (because we don't know the bound type
+				// here), and then reseat the underlying pointer.  Possibly even more evil than the Set code.
+				FMemory::Memcpy(&DebugPtrStorage, &Other.DebugPtrStorage, sizeof(DebugPtrStorage));
+				DebugPtrStorage.Ptr = NewPtr;
+#endif
+			}
+		}
+
+		template <
+			typename FunctorType,
+			typename = typename TEnableIf<
+			TNot<
+			TIsSame<TFunctionRefBase, typename TDecay<FunctorType>::Type>
+			>::Value
+			>::Type
+		>
+			TFunctionRefBase(FunctorType&& InFunc)
+		{
+			if (auto* Binding = Storage.Bind(Forward<FunctorType>(InFunc)))
+			{
+				using DecayedFunctorType = typename TRemovePointer<decltype(Binding)>::Type;
+
+				Callable = &TFunctionRefCaller<DecayedFunctorType, Ret(ParamTypes...)>::Call;
+
+#if ENABLE_TFUNCTIONREF_VISUALIZATION
 				// We placement new over the top of the same object each time.  This is illegal,
 				// but it ensures that the vptr is set correctly for the bound type, and so is
 				// visualizable.  We never depend on the state of this object at runtime, so it's
 				// ok.
-				new ((void*)&DebugPtrStorage) UE4Function_Private::TDebugHelper<FunctorType>;
-				DebugPtrStorage.Ptr = (void*)Functor;
-			#endif
+				new ((void*)&DebugPtrStorage) TDebugHelper<DecayedFunctorType>;
+				DebugPtrStorage.Ptr = (void*)Binding;
+#endif
+			}
 		}
 
-		void CopyAndReseat(const TFunctionRefBase& Other, void* Functor)
-		{
-			Callable = Other.Callable;
+		TFunctionRefBase& operator=(TFunctionRefBase&&) = delete;
+		TFunctionRefBase& operator=(const TFunctionRefBase&) = delete;
 
-			#if ENABLE_TFUNCTIONREF_VISUALIZATION
-				// Use Memcpy to copy the other DebugPtrStorage, including vptr (because we don't know the bound type
-				// here), and then reseat the underlying pointer.  Possibly even more evil than the Set code.
-				FMemory::Memcpy(&DebugPtrStorage, &Other.DebugPtrStorage, sizeof(DebugPtrStorage));
-				DebugPtrStorage.Ptr = Functor;
-			#endif
+		Ret operator()(ParamTypes... Params) const
+		{
+			checkf(Callable, TEXT("Attempting to call an unbound TFunction!"));
+			return Callable(Storage.GetPtr(), Params...);
 		}
 
-		void Unset()
+		~TFunctionRefBase()
 		{
-			Callable = &UE4Function_Private::TFunctionRefAsserter<Ret (ParamTypes...)>::Call;
+			if (Callable)
+			{
+				Storage.Unbind();
+			}
+		}
+
+	protected:
+		bool IsSet() const
+		{
+			return !!Callable;
 		}
 
 	private:
 		// A pointer to a function which invokes the call operator on the callable object
-		Ret (*Callable)(void*, ParamTypes&...);
+		Ret(*Callable)(void*, ParamTypes&...);
 
-		#if ENABLE_TFUNCTIONREF_VISUALIZATION
-			// To help debug visualizers
-			UE4Function_Private::TDebugHelper<void> DebugPtrStorage;
-		#endif
+		StorageType Storage;
+
+#if ENABLE_TFUNCTIONREF_VISUALIZATION
+		// To help debug visualizers
+		TDebugHelper<void> DebugPtrStorage;
+#endif
+	};
+
+	template <typename FunctorType, typename Ret, typename... ParamTypes>
+	struct TFunctorReturnTypeIsCompatible
+		: TIsConstructible<Ret, decltype(DeclVal<FunctorType>()(DeclVal<ParamTypes>()...))>
+	{
+	};
+
+	template <typename MemberRet, typename Class, typename Ret, typename... ParamTypes>
+	struct TFunctorReturnTypeIsCompatible<MemberRet Class::*, Ret, ParamTypes...>
+		: TIsConstructible<Ret, MemberRet>
+	{
+	};
+
+	template <typename MemberRet, typename Class, typename Ret, typename... ParamTypes>
+	struct TFunctorReturnTypeIsCompatible<MemberRet Class::* const, Ret, ParamTypes...>
+		: TIsConstructible<Ret, MemberRet>
+	{
+	};
+
+	template <typename MemberRet, typename Class, typename... MemberParamTypes, typename Ret, typename... ParamTypes>
+	struct TFunctorReturnTypeIsCompatible<MemberRet(Class::*)(MemberParamTypes...), Ret, ParamTypes...>
+		: TIsConstructible<Ret, MemberRet>
+	{
+	};
+
+	template <typename MemberRet, typename Class, typename... MemberParamTypes, typename Ret, typename... ParamTypes>
+	struct TFunctorReturnTypeIsCompatible<MemberRet(Class::*)(MemberParamTypes...) const, Ret, ParamTypes...>
+		: TIsConstructible<Ret, MemberRet>
+	{
+	};
+
+	template <typename FuncType, typename FunctorType>
+	struct TFuncCanBindToFunctor;
+
+	template <typename FunctorType, typename Ret, typename... ParamTypes>
+	struct TFuncCanBindToFunctor<Ret(ParamTypes...), FunctorType> :
+		TAnd<
+		TIsInvocable<FunctorType, ParamTypes...>,
+		TFunctorReturnTypeIsCompatible<FunctorType, Ret, ParamTypes...>
+		>
+	{
+	};
+
+	template <typename FunctorType, typename... ParamTypes>
+	struct TFuncCanBindToFunctor<void(ParamTypes...), FunctorType> :
+		TIsInvocable<FunctorType, ParamTypes...>
+	{
+	};
+
+	struct FFunctionRefStoragePolicy
+	{
+		template <typename FunctorType>
+		typename TRemoveReference<FunctorType>::Type* Bind(FunctorType&& InFunc)
+		{
+			checkf(IsBound(InFunc), TEXT("Cannot bind a null/unbound callable to a TFunctionRef"));
+
+			Ptr = (void*)&InFunc;
+			return &InFunc;
+		}
+
+		void* BindCopy(const FFunctionRefStoragePolicy& Other)
+		{
+			void* OtherPtr = Other.Ptr;
+			Ptr = OtherPtr;
+			return OtherPtr;
+		}
+
+		/**
+		 * Returns a pointer to the callable object - needed by TFunctionRefBase.
+		 */
+		void* GetPtr() const
+		{
+			return Ptr;
+		}
+
+		/**
+		 * Destroy any owned bindings - called by TFunctionRefBase only if Bind() or BindCopy() was called.
+		 */
+		void Unbind() const
+		{
+			// FunctionRefs don't own their binding - do nothing
+		}
+
+	private:
+		// A pointer to the callable object
+		void* Ptr;
 	};
 }
 
@@ -377,122 +656,36 @@ namespace UE4Function_Private
  * }
  */
 template <typename FuncType>
-class TFunctionRef : public UE4Function_Private::TFunctionRefBase<TFunctionRef<FuncType>, FuncType>
+class TFunctionRef : public UE4Function_Private::TFunctionRefBase<UE4Function_Private::FFunctionRefStoragePolicy, FuncType>
 {
-	friend struct UE4Function_Private::TFunctionRefBase<TFunctionRef<FuncType>, FuncType>;
-
-	typedef UE4Function_Private::TFunctionRefBase<TFunctionRef<FuncType>, FuncType> Super;
+	using Super = UE4Function_Private::TFunctionRefBase<UE4Function_Private::FFunctionRefStoragePolicy, FuncType>;
 
 public:
 	/**
-	 * Constructor which binds a TFunctionRef to a non-const lvalue function object.
+	 * Constructor which binds a TFunctionRef to a callable object.
 	 */
-	template <typename FunctorType, typename = typename TEnableIf<!TIsFunction<FunctorType>::Value && !TAreTypesEqual<TFunctionRef, FunctorType>::Value>::Type>
-	TFunctionRef(FunctorType& Functor)
-		: Super(NoInit)
+	template <
+		typename FunctorType,
+		typename = typename TEnableIf<
+		TAnd<
+		TNot<TIsTFunctionRef<typename TDecay<FunctorType>::Type>>,
+		UE4Function_Private::TFuncCanBindToFunctor<FuncType, typename TDecay<FunctorType>::Type>
+		>::Value
+		>::Type
+	>
+		TFunctionRef(FunctorType&& InFunc)
+		: Super(Forward<FunctorType>(InFunc))
 	{
-		// This constructor is disabled for function types because we want it to call the function pointer overload.
-		// It is also disabled for TFunctionRef types because VC is incorrectly treating it as a copy constructor.
-
-		Set(&Functor);
+		// This constructor is disabled for TFunctionRef types so it isn't incorrectly selected as copy/move constructors.
 	}
 
-	/**
-	 * Constructor which binds a TFunctionRef to an rvalue or const lvalue function object.
-	 */
-	template <typename FunctorType, typename = typename TEnableIf<!TIsFunction<FunctorType>::Value && !TAreTypesEqual<TFunctionRef, FunctorType>::Value>::Type>
-	TFunctionRef(const FunctorType& Functor)
-		: Super(NoInit)
-	{
-		// This constructor is disabled for function types because we want it to call the function pointer overload.
-		// It is also disabled for TFunctionRef types because VC is incorrectly treating it as a copy constructor.
-
-		Set(&Functor);
-	}
-
-	/**
-	 * Constructor which binds a TFunctionRef to a function pointer.
-	 */
-	template <typename FunctionType, typename = typename TEnableIf<TIsFunction<FunctionType>::Value>::Type>
-	TFunctionRef(FunctionType* Function)
-		: Super(NoInit)
-	{
-		// This constructor is enabled only for function types because we don't want weird errors from it being called with arbitrary pointers.
-
-		Set(Function);
-	}
-
-	#if ENABLE_TFUNCTIONREF_VISUALIZATION
-
-		/**
-		 * Copy constructor.
-		 */
-		TFunctionRef(const TFunctionRef& Other)
-			: Super(NoInit)
-		{
-			// If visualization is enabled, then we need to do an explicit copy
-			// to ensure that our hacky DebugPtrStorage's vptr is copied.
-			CopyAndReseat(Other, Other.Ptr);
-		}
-
-	#endif
+	TFunctionRef(const TFunctionRef&) = default;
 
 	// We delete the assignment operators because we don't want it to be confused with being related to
 	// regular C++ reference assignment - i.e. calling the assignment operator of whatever the reference
 	// is bound to - because that's not what TFunctionRef does, nor is it even capable of doing that.
-	#if PLATFORM_COMPILER_HAS_DEFAULTED_FUNCTIONS
-
-		#if !ENABLE_TFUNCTIONREF_VISUALIZATION
-			TFunctionRef(const TFunctionRef&) = default;
-		#endif
-		TFunctionRef& operator=(const TFunctionRef&) const = delete;
-		~TFunctionRef()                                    = default;
-
-	#else
-
-		// We mark copy assignment as private.  We don't define the others because it's mostly likely
-		// that this code path is only for VC and the compiler will still generate the others fine anyway,
-		// despite such behavior being deprecated.
-		private:
-			TFunctionRef& operator=(const TFunctionRef&) const;
-		public:
-
-	#endif
-
-private:
-	/**
-	 * Sets the state of the TFunctionRef given a pointer to a callable thing.
-	 */
-	template <typename FunctorType>
-	void Set(FunctorType* Functor)
-	{
-		// We force a void* cast here because if FunctorType is an actual function then
-		// this won't compile.  We convert it back again before we use it anyway.
-
-		Ptr  = (void*)Functor;
-		Super::Set(Functor);
-	}
-
-	/**
-	 * Copies another TFunctionRef and rebinds it to another object of the same type which was originally bound.
-	 * Only intended to be used by TFunction's copy constructor/assignment operator.
-	 */
-	void CopyAndReseat(const TFunctionRef& Other, void* Functor)
-	{
-		Ptr = Functor;
-		Super::CopyAndReseat(Other, Functor);
-	}
-
-	/**
-	 * Returns a pointer to the callable object - needed by TFunctionRefBase.
-	 */
-	void* GetPtr() const
-	{
-		return Ptr;
-	}
-
-	// A pointer to the callable object
-	void* Ptr;
+	TFunctionRef& operator=(const TFunctionRef&) const = delete;
+	~TFunctionRef() = default;
 };
 
 /**
@@ -533,33 +726,34 @@ private:
  * }
  */
 template <typename FuncType>
-class TFunction : public UE4Function_Private::TFunctionRefBase<TFunction<FuncType>, FuncType>
+class TFunction final : public UE4Function_Private::TFunctionRefBase<UE4Function_Private::FFunctionStorage, FuncType>
 {
-	friend struct UE4Function_Private::TFunctionRefBase<TFunction<FuncType>, FuncType>;
-
-	typedef UE4Function_Private::TFunctionRefBase<TFunction<FuncType>, FuncType> Super;
+	using Super = UE4Function_Private::TFunctionRefBase<UE4Function_Private::FFunctionStorage, FuncType>;
 
 public:
 	/**
 	 * Default constructor.
 	 */
 	TFunction(TYPE_OF_NULLPTR = nullptr)
-		: Super(NoInit)
 	{
-		Super::Unset();
 	}
 
 	/**
 	 * Constructor which binds a TFunction to any function object.
 	 */
-	template <typename FunctorType, typename = typename TEnableIf<!TAreTypesEqual<TFunction, typename TDecay<FunctorType>::Type>::Value>::Type>
-	TFunction(FunctorType&& InFunc)
-		: Super(NoInit)
+	template <
+		typename FunctorType,
+		typename = typename TEnableIf<
+		TAnd<
+		TNot<TIsTFunction<typename TDecay<FunctorType>::Type>>,
+		UE4Function_Private::TFuncCanBindToFunctor<FuncType, FunctorType>
+		>::Value
+		>::Type
+	>
+		TFunction(FunctorType&& InFunc)
+		: Super(Forward<FunctorType>(InFunc))
 	{
-		// This constructor is disabled for TFunction types because VC is incorrectly treating it as copy/move constructors.
-
-		typedef typename TDecay<FunctorType>::Type                             DecayedFunctorType;
-		typedef UE4Function_Private::TFunction_OwnedObject<DecayedFunctorType> OwnedType;
+		// This constructor is disabled for TFunction types so it isn't incorrectly selected as copy/move constructors.
 
 		// This is probably a mistake if you expect TFunction to take a copy of what
 		// TFunctionRef is bound to, because that's not possible.
@@ -568,73 +762,31 @@ public:
 		// wrap it in a lambda (and thus it's clear you're just binding to a call to another
 		// reference):
 		//
-		// TFunction<int32(float)> MyFunction = [=](float F) -> int32 { return MyFunctionRef(F); };
-		static_assert(!TIsATFunctionRef<DecayedFunctorType>::Value, "Cannot construct a TFunction from a TFunctionRef");
-
-		OwnedType* NewObj = new (Storage) OwnedType(Forward<FunctorType>(InFunc));
-		Super::Set(&NewObj->Obj);
+		// TFunction<int32(float)> MyFunction = [MyFunctionRef](float F) { return MyFunctionRef(F); };
+		static_assert(!TIsTFunctionRef<typename TDecay<FunctorType>::Type>::Value, "Cannot construct a TFunction from a TFunctionRef");
 	}
 
-	/**
-	 * Copy constructor.
-	 */
-	TFunction(const TFunction& Other)
-		: Super(NoInit)
-	{
-		if (UE4Function_Private::IFunction_OwnedObject* OtherFunc = Other.Storage.GetBoundObject())
-		{
-			UE4Function_Private::IFunction_OwnedObject* ThisFunc = OtherFunc->CopyToEmptyStorage(Storage);
-			Super::CopyAndReseat(Other, ThisFunc->GetAddress());
-		}
-		else
-		{
-			Super::Unset();
-		}
-	}
+	TFunction(TFunction&&) = default;
+	TFunction(const TFunction& Other) = default;
+	~TFunction() = default;
 
 	/**
-	 * Move constructor.
+	 * Move assignment operator.
 	 */
-	TFunction(TFunction&& Other)
-		: Super  (NoInit)
-		, Storage(MoveTemp(Other.Storage))
+	TFunction& operator=(TFunction&& Other)
 	{
-		if (UE4Function_Private::IFunction_OwnedObject* Func = Storage.GetBoundObject())
-		{
-			Super::CopyAndReseat(Other, Func->GetAddress());
-		}
-		else
-		{
-			Super::Unset();
-		}
-
-		Other.Unset();
-	}
-
-	/**
-	 * Nullptr assignment operator - unbinds any bound function.
-	 */
-	TFunction& operator=(TYPE_OF_NULLPTR)
-	{
-		if (UE4Function_Private::IFunction_OwnedObject* Obj = Storage.GetBoundObject())
-		{
-			Obj->~IFunction_OwnedObject();
-		}
-		Storage.Empty();
-		Super::Unset();
-
+		Swap(*this, Other);
 		return *this;
 	}
 
 	/**
-	 * Destructor.
+	 * Copy assignment operator.
 	 */
-	~TFunction()
+	TFunction& operator=(const TFunction& Other)
 	{
-		if (UE4Function_Private::IFunction_OwnedObject* Obj = Storage.GetBoundObject())
-		{
-			Obj->~IFunction_OwnedObject();
-		}
+		TFunction Temp = Other;
+		Swap(*this, Temp);
+		return *this;
 	}
 
 	/**
@@ -642,20 +794,104 @@ public:
 	 */
 	FORCEINLINE explicit operator bool() const
 	{
-		return !!Storage.GetBoundObject();
+		return Super::IsSet();
 	}
+};
 
-private:
+/**
+ * TUniqueFunction<FuncType>
+ *
+ * Used like TFunction above, but is move-only.  This allows non-copyable functors to be bound to it.
+ *
+ * Example:
+ *
+ * TUniquePtr<FThing> Thing = MakeUnique<FThing>();
+ *
+ * TFunction      <void()> CopyableFunc = [Thing = MoveTemp(Thing)](){ Thing->DoSomething(); }; // error - lambda is not copyable
+ * TUniqueFunction<void()> MovableFunc  = [Thing = MoveTemp(Thing)](){ Thing->DoSomething(); }; // ok
+ *
+ * void Foo(TUniqueFunction<void()> Func);
+ * Foo(MovableFunc);           // error - TUniqueFunction is not copyable
+ * Foo(MoveTemp(MovableFunc)); // ok
+ */
+template <typename FuncType>
+class TUniqueFunction final : public UE4Function_Private::TFunctionRefBase<UE4Function_Private::FUniqueFunctionStorage, FuncType>
+{
+	using Super = UE4Function_Private::TFunctionRefBase<UE4Function_Private::FUniqueFunctionStorage, FuncType>;
+
+public:
 	/**
-	 * Returns a pointer to the callable object - needed by TFunctionRefBase.
+	 * Default constructor.
 	 */
-	void* GetPtr() const
+	TUniqueFunction(TYPE_OF_NULLPTR = nullptr)
 	{
-		UE4Function_Private::IFunction_OwnedObject* Ptr = Storage.GetBoundObject();
-		return Ptr ? Ptr->GetAddress() : nullptr;
 	}
 
-	UE4Function_Private::FFunctionStorage Storage;
+	/**
+	 * Constructor which binds a TFunction to any function object.
+	 */
+	template <
+		typename FunctorType,
+		typename = typename TEnableIf<
+		TAnd<
+		TNot<TOr<TIsTUniqueFunction<typename TDecay<FunctorType>::Type>, TIsTFunction<typename TDecay<FunctorType>::Type>>>,
+		UE4Function_Private::TFuncCanBindToFunctor<FuncType, FunctorType>
+		>::Value
+		>::Type
+	>
+		TUniqueFunction(FunctorType&& InFunc)
+		: Super(Forward<FunctorType>(InFunc))
+	{
+		// This constructor is disabled for TUniqueFunction types so it isn't incorrectly selected as copy/move constructors.
+
+		// This is probably a mistake if you expect TFunction to take a copy of what
+		// TFunctionRef is bound to, because that's not possible.
+		//
+		// If you really intended to bind a TFunction to a TFunctionRef, you can just
+		// wrap it in a lambda (and thus it's clear you're just binding to a call to another
+		// reference):
+		//
+		// TFunction<int32(float)> MyFunction = [MyFunctionRef](float F) { return MyFunctionRef(F); };
+		static_assert(!TIsTFunctionRef<typename TDecay<FunctorType>::Type>::Value, "Cannot construct a TUniqueFunction from a TFunctionRef");
+	}
+
+	/**
+	 * Constructor which takes ownership of a TFunction's functor.
+	 */
+	TUniqueFunction(TFunction<FuncType>&& Other)
+		: Super(MoveTemp(*(UE4Function_Private::TFunctionRefBase<UE4Function_Private::FFunctionStorage, FuncType>*)& Other))
+	{
+	}
+
+	/**
+	 * Constructor which takes ownership of a TFunction's functor.
+	 */
+	TUniqueFunction(const TFunction<FuncType>& Other)
+		: Super(*(const UE4Function_Private::TFunctionRefBase<UE4Function_Private::FFunctionStorage, FuncType>*)& Other)
+	{
+	}
+
+	/**
+	 * Copy/move assignment operator.
+	 */
+	TUniqueFunction& operator=(TUniqueFunction&& Other)
+	{
+		Swap(*this, Other);
+		return *this;
+	}
+
+	TUniqueFunction(TUniqueFunction&&) = default;
+	TUniqueFunction(const TUniqueFunction& Other) = delete;
+	TUniqueFunction& operator=(const TUniqueFunction& Other) = delete;
+	~TUniqueFunction() = default;
+
+	/**
+	 * Tests if the TUniqueFunction is callable.
+	 */
+	FORCEINLINE explicit operator bool() const
+	{
+		return Super::IsSet();
+	}
 };
 
 /**
