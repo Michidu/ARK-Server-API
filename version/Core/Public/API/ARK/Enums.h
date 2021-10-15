@@ -5271,11 +5271,37 @@ namespace ENamedThreads
 {
 	enum Type
 	{
-		UnusedAnchor = 0xff,
+		UnusedAnchor = 0xFFFFFFFF,
 		RHIThread = 0x0,
 		AudioThread = 0x1,
 		GameThread = 0x2,
 		ActualRenderingThread = 0x3,
+		AnyThread = 0xFF,
+		MainQueue = 0x0,
+		LocalQueue = 0x100,
+		NumQueues = 0x2,
+		ThreadIndexMask = 0xFF,
+		QueueIndexMask = 0x100,
+		QueueIndexShift = 0x8,
+		NormalTaskPriority = 0x0,
+		HighTaskPriority = 0x200,
+		NumTaskPriorities = 0x2,
+		TaskPriorityMask = 0x200,
+		TaskPriorityShift = 0x9,
+		NormalThreadPriority = 0x0,
+		HighThreadPriority = 0x400,
+		BackgroundThreadPriority = 0x800,
+		NumThreadPriorities = 0x3,
+		ThreadPriorityMask = 0xC00,
+		ThreadPriorityShift = 0xA,
+		GameThread_Local = 0x102,
+		ActualRenderingThread_Local = 0x103,
+		AnyHiPriThreadNormalTask = 0x4FF,
+		AnyHiPriThreadHiPriTask = 0x6FF,
+		AnyNormalThreadNormalTask = 0xFF,
+		AnyNormalThreadHiPriTask = 0x2FF,
+		AnyBackgroundThreadNormalTask = 0x8FF,
+		AnyBackgroundHiPriTask = 0xAFF,
 	};
 }
 
