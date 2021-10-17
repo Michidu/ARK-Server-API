@@ -14454,4 +14454,12 @@ enum class ContentTypes
 	ContentTypes_All = 0x7,
 };
 
+enum class EPrimalStructurePlacerState
+{
+	EPrimalStructurePlacerState__Default = 0,
+	EPrimalStructurePlacerState__FadeAway = 1,
+	EPrimalStructurePlacerState__PlacingStructure = 2,
+	EPrimalStructurePlacerState__EPrimalStructurePlacerState_MAX = 3
+};
+
 #pragma warning(pop)

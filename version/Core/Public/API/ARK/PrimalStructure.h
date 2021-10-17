@@ -1177,17 +1177,23 @@ struct APrimalStructureExplosive : APrimalStructure
 
 struct FPlacementData
 {
-	FVector AdjustedLocation;
-	FRotator AdjustedRotation;
-	bool bSnapped;
-	bool bDisableEncroachmentCheck;
-	int MySnapToIndex;
-	int TheirSnapToIndex;
-	AActor* FloorHitActor;
-	APrimalStructure* ParentStructure;
-	APrimalStructure* ForcePlacedOnFloorParentStructure;
-	APrimalStructure* ReplacesStructure;
-	APawn* AttachToPawn;
-	FName AttachToBone;
-	APrimalDinoCharacter* DinoCharacter;
+	FVector& AdjustedLocationField() { return *GetNativePointerField<FVector*>(this, "FPlacementData.AdjustedLocation"); }
+	FRotator& AdjustedRotationField() { return *GetNativePointerField<FRotator*>(this, "FPlacementData.AdjustedRotation"); }
+	bool& bSnappedField() { return *GetNativePointerField<bool*>(this, "FPlacementData.bSnapped"); }
+	bool& bDisableEncroachmentCheckField() { return *GetNativePointerField<bool*>(this, "FPlacementData.bDisableEncroachmentCheck"); }
+	int& MySnapToIndexField() { return *GetNativePointerField<int*>(this, "FPlacementData.MySnapToIndex"); }
+	int& TheirSnapToIndexField() { return *GetNativePointerField<int*>(this, "FPlacementData.TheirSnapToIndex"); }
+	AActor* FloorHitActorField() { return *GetNativePointerField<AActor**>(this, "FPlacementData.FloorHitActor"); }
+	APrimalStructure* ParentStructureField() { return *GetNativePointerField<APrimalStructure**>(this, "FPlacementData.ParentStructure"); }
+	APrimalStructure* ForcePlacedOnFloorParentStructureField() { return *GetNativePointerField<APrimalStructure**>(this, "FPlacementData.ForcePlacedOnFloorParentStructure"); }
+	APrimalStructure* ReplacesStructureField() { return *GetNativePointerField<APrimalStructure**>(this, "FPlacementData.ReplacesStructure"); }
+	APawn* AttachToPawnField() { return *GetNativePointerField<APawn**>(this, "FPlacementData.AttachToPawn"); }
+	FName& AttachToBoneField() { return *GetNativePointerField<FName*>(this, "FPlacementData.AttachToBone"); }
+	APrimalDinoCharacter& DinoCharacterField() { return *GetNativePointerField<APrimalDinoCharacter*>(this, "FPlacementData.DinoCharacter"); }
+
+	// Bit fields
+
+
+	// Functions
+
 };

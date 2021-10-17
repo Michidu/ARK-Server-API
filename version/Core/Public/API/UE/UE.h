@@ -916,3 +916,12 @@ struct FHttpModule
 	static FHttpModule* Get() { return NativeCall<FHttpModule*>(nullptr, "FHttpModule.Get"); }
 	TSharedRef<IHttpRequest, 0>* CreateRequest(TSharedRef<IHttpRequest, 0>* result) { return NativeCall<TSharedRef<IHttpRequest, 0>*, TSharedRef<IHttpRequest, 0>*>(this, "FHttpModule.CreateRequest", result); }
 };
+
+struct FCanvasIcon
+{
+	UTexture* Texture;
+	float U;
+	float V;
+	float UL;
+	float VL;
+};

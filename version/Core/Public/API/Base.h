@@ -663,6 +663,8 @@ struct UBehaviorTree;
 struct FSeamlessIslandInfo;
 struct AInfo;
 
+struct FCanvasIcon;
+
 struct BitField
 {
 	DWORD64 offset;

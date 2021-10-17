@@ -9422,3 +9422,30 @@ struct FSpawnPointInfo
 	FSpawnPointInfo* operator=(FSpawnPointInfo* __that) { return NativeCall<FSpawnPointInfo*, FSpawnPointInfo*>(this, "FSpawnPointInfo.operator=", __that); }
 	bool operator==(FSpawnPointInfo* Other) { return NativeCall<bool, FSpawnPointInfo*>(this, "FSpawnPointInfo.operator==", Other); }
 };
+
+struct APrimalStructurePlacer : AInfo
+{
+	TArray<UClass*> PlaceableStructuresField() { return *GetNativePointerField<TArray<UClass*>*>(this, "APrimalStructurePlacer.PlaceableStructures"); }
+	TEnumAsByte<EPrimalStructurePlacerState>& CurrentStateField() { return *GetNativePointerField<TEnumAsByte<EPrimalStructurePlacerState>*>(this, "APrimalStructurePlacer.CurrentState"); }
+	int& CurrentPlacingStructureIndexField() { return *GetNativePointerField<int*>(this, "APrimalStructurePlacer.CurrentPlacingStructureIndex"); }
+	APrimalStructure* CurrentPlacingStructureField() { return *GetNativePointerField<APrimalStructure**>(this, "APrimalStructurePlacer.CurrentPlacingStructure"); }
+	FName& RotationAxisNameField() { return *GetNativePointerField<FName*>(this, "APrimalStructurePlacer.RotationAxisName"); }
+	float& RotationSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructurePlacer.RotationSpeed"); }
+	FName& AltRotationAxisNameField() { return *GetNativePointerField<FName*>(this, "APrimalStructurePlacer.AltRotationAxisName"); }
+	float& AltRotationSpeedField() { return *GetNativePointerField<float*>(this, "APrimalStructurePlacer.AltRotationSpeed"); }
+	FCanvasIcon& RotationIconField() { return *GetNativePointerField<FCanvasIcon*>(this, "APrimalStructurePlacer.RotationIcon"); }
+	float& RotationIconSizeField() { return *GetNativePointerField<float*>(this, "APrimalStructurePlacer.RotationIconSize"); }
+	float& RotationIconScaleField() { return *GetNativePointerField<float*>(this, "APrimalStructurePlacer.RotationIconScale"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bDebugStructures() { return { this, "APrimalStructurePlacer.bDebugStructures" }; }
+	BitFieldValue<bool, unsigned __int32> bForceDisplayMissionAreaStructureNoBuildZones() { return { this, "APrimalStructurePlacer.bForceDisplayMissionAreaStructureNoBuildZones" }; }
+
+	// Functions
+
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "APrimalStructurePlacer.StaticClass"); }
+	bool IsPlacingActive() { return NativeCall<bool>(this, "APrimalStructurePlacer.IsPlacingActive"); }
+	void GetLastPlacementProperties(FVector* OutLastHitLoc, FRotator* OutLastHitRot, FRotator* OutLastViewRot) { NativeCall<void, FVector*, FRotator*, FRotator*>(this, "APrimalStructurePlacer.GetLastPlacementProperties", OutLastHitLoc, OutLastHitRot, OutLastViewRot); }
+	void DrawStructurePreviewHUD(AShooterHUD* HUD, APrimalStructure* PlacingStructure) { NativeCall<void, AShooterHUD*, APrimalStructure*>(this, "APrimalStructurePlacer.DrawStructurePreviewHUD", HUD, PlacingStructure); }
+};
