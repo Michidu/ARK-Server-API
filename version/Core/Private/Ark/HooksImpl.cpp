@@ -239,7 +239,7 @@ namespace ArkApi
 
 		oss << "SE " << se_description << " at address 0x" << std::hex << ExceptionInfo->ExceptionRecord->ExceptionAddress << std::dec
 			<< " inside " << fn << " loaded at base address 0x" << std::hex << mi.lpBaseOfDll << "\n";
-
+		
 		if ((ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_ACCESS_VIOLATION ||
 			ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_IN_PAGE_ERROR)) {
 
@@ -252,17 +252,20 @@ namespace ArkApi
 			default:	op_description = "unknown";												break;
 			}
 
-			oss << "Invalid operation: " << op_description << " at address 0x" << std::hex << ExceptionInfo->ExceptionRecord->ExceptionInformation[1] << std::dec << "\n";
+			oss << "Invalid operation: " << op_description << " at address 0x" << std::hex << ExceptionInfo->ExceptionRecord->ExceptionInformation[1] << "\n";
 		}
 
 		if (ExceptionInfo->ExceptionRecord->ExceptionCode == EXCEPTION_IN_PAGE_ERROR) {
-			oss << "Underlying NTSTATUS code that resulted in the exception " << ExceptionInfo->ExceptionRecord->ExceptionInformation[2] << "\n";
+			oss << "Underlying NTSTATUS code that resulted in the exception " << std::dec << ExceptionInfo->ExceptionRecord->ExceptionInformation[2] << "\n";
 		}
 
-		Log::GetLog()->error("{}", oss.str());
-
-
-		//return result;
-		return ReportCrash_original(ExceptionInfo); // report native
+		TArray<FString> exception_info;
+		const FString oss_f(oss.str());
+		oss_f.ParseIntoArray(exception_info, L"\n", true);
+		for (const auto& info : exception_info) {
+			Log::GetLog()->error("{}", info.ToString());
+		}
+		
+		return ReportCrash_original(ExceptionInfo);
 	}
 } // namespace ArkApi
