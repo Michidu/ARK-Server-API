@@ -8492,18 +8492,21 @@ struct AWorldSettings : AInfo
 
 struct UHexagonTradableOption : UObject
 {
-	UClass* ItemClassField() { return *GetNativePointerField<UClass**>(this, "UHexagonTradableOption.ItemClass"); }
+	TSubclassOf<UPrimalItem>& ItemClassField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*> (this, "UHexagonTradableOption.ItemClass"); }
 	FString& OverrideNameField() { return *GetNativePointerField<FString*>(this, "UHexagonTradableOption.OverrideName"); }
 	int& QuantityField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.Quantity"); }
 	int& ItemCostField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.ItemCost"); }
 	FString& OverrideDescriptionField() { return *GetNativePointerField<FString*>(this, "UHexagonTradableOption.OverrideDescription"); }
 	int& OverwrittenRecievedItemCountField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.OverwrittenRecievedItemCount"); }
 	int& MaxItemPurchaseTimesField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.MaxItemPurchaseTimes"); }
-
+	UTexture2D& OverrideIcon() { return *GetNativePointerField<UTexture2D*>(this, "UHexagonTradableOption.OverrideIcon"); }
+	
 	// Bit fields
 
 	BitFieldValue<bool, unsigned __int32> bOverrideTradeAction() { return { this, "UHexagonTradableOption.bOverrideTradeAction" }; }
 	BitFieldValue<bool, unsigned __int32> bUseBPAllowedToBePurchased() { return { this, "UHexagonTradableOption.bUseBPAllowedToBePurchased" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPGetItemCost() { return { this, "UHexagonTradableOption.bUseBPGetItemCost" }; }
+	BitFieldValue<bool, unsigned __int32> bIsEngramTradeOption() { return { this, "UHexagonTradableOption.bIsEngramTradeOption" }; }
 
 	// Functions
 
