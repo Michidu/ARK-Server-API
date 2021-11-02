@@ -216,7 +216,7 @@ struct FLeaderboardEntry {};
 struct FAvailableMission;
 struct FActiveEventSupplyCrateWeight {};
 struct APrimalEmitterSpawnable {};
-struct UHexagonTradableOption {};
+struct UHexagonTradableOption;
 struct UAllClustersInventory {};
 struct FGameIniData {};
 struct FMassTeleportData {};

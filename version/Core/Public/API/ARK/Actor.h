@@ -8490,6 +8490,101 @@ struct AWorldSettings : AInfo
 {
 };
 
+struct UHexagonTradableOption : UObject
+{
+	UClass* ItemClassField() { return *GetNativePointerField<UClass**>(this, "UHexagonTradableOption.ItemClass"); }
+	FString& OverrideNameField() { return *GetNativePointerField<FString*>(this, "UHexagonTradableOption.OverrideName"); }
+	int& QuantityField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.Quantity"); }
+	int& ItemCostField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.ItemCost"); }
+	FString& OverrideDescriptionField() { return *GetNativePointerField<FString*>(this, "UHexagonTradableOption.OverrideDescription"); }
+	int& OverwrittenRecievedItemCountField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.OverwrittenRecievedItemCount"); }
+	int& MaxItemPurchaseTimesField() { return *GetNativePointerField<int*>(this, "UHexagonTradableOption.MaxItemPurchaseTimes"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bOverrideTradeAction() { return { this, "UHexagonTradableOption.bOverrideTradeAction" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPAllowedToBePurchased() { return { this, "UHexagonTradableOption.bUseBPAllowedToBePurchased" }; }
+
+	// Functions
+
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "UHexagonTradableOption.StaticClass"); }
+	bool AllowedToBePurchased(AShooterPlayerController* PlayerController) { return NativeCall<bool, AShooterPlayerController*>(this, "UHexagonTradableOption.AllowedToBePurchased", PlayerController); }
+};
+
+struct ADayCycleManager : AInfo
+{
+	float& CurrentTimeField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.CurrentTime"); }
+	float& TrueSkyTimeField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.TrueSkyTime"); }
+	float& GlobalTrueSkyBrightnessField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.GlobalTrueSkyBrightness"); }
+	FVector& GlobalTrueSkyColorMultiplierField() { return *GetNativePointerField<FVector*>(this, "ADayCycleManager.GlobalTrueSkyColorMultiplier"); }
+	float& GlobalIBLCaptureBrightnessField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.GlobalIBLCaptureBrightness"); }
+	float& GlobalBakeAndStreamIBLMultiplierField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.GlobalBakeAndStreamIBLMultiplier"); }
+	float& GlobalGroundColorMultiplierField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.GlobalGroundColorMultiplier"); }
+	float& GlobalSkyColorMultiplierField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.GlobalSkyColorMultiplier"); }
+	float& SM4SkyLightMultField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SM4SkyLightMult"); }
+	float& SM4DirLightMultField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SM4DirLightMult"); }
+	FVector& AtmosphericFogMultiplierField() { return *GetNativePointerField<FVector*>(this, "ADayCycleManager.AtmosphericFogMultiplier"); }
+	float& SkyIBLIntensityMultiplierField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SkyIBLIntensityMultiplier"); }
+	float& BaseTemperatureField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.BaseTemperature"); }
+	float& BaseWindField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.BaseWind"); }
+	float& SkyWeatherSequenceBlend_NormalField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SkyWeatherSequenceBlend_Normal"); }
+	float& SkyWeatherSequenceBlend_HotField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SkyWeatherSequenceBlend_Hot"); }
+	float& SkyWeatherSequenceBlend_ColdField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SkyWeatherSequenceBlend_Cold"); }
+	float& SkyWeatherSequenceBlend_RainyField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SkyWeatherSequenceBlend_Rainy"); }
+	float& SkyWeatherSequenceBlend_FogField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.SkyWeatherSequenceBlend_Fog"); }
+	bool& bIsRainingField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bIsRaining"); }
+	USoundBase* Sound_TransitionToMorningField() { return *GetNativePointerField<USoundBase**>(this, "ADayCycleManager.Sound_TransitionToMorning"); }
+	USoundBase* Sound_TransitionToMidDayField() { return *GetNativePointerField<USoundBase**>(this, "ADayCycleManager.Sound_TransitionToMidDay"); }
+	USoundBase* Sound_TransitionToNightField() { return *GetNativePointerField<USoundBase**>(this, "ADayCycleManager.Sound_TransitionToNight"); }
+	float& Sound_TransitionToMorningTimeField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.Sound_TransitionToMorningTime"); }
+	float& Sound_TransitionToNightTimeField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.Sound_TransitionToNightTime"); }
+	float& Sound_TransitionToMidDayTimeField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.Sound_TransitionToMidDayTime"); }
+	float& DayTimeStartField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.DayTimeStart"); }
+	float& DayTimeEndField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.DayTimeEnd"); }
+	float& DayTimeLengthMultiplierField() { return *GetNativePointerField<float*>(this, "ADayCycleManager.DayTimeLengthMultiplier"); }
+	bool& bCheckForStructureActivationField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bCheckForStructureActivation"); }
+	bool& bUsesWindField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bUsesWind"); }
+	bool& bCheckForWeaponFiringField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bCheckForWeaponFiring"); }
+	bool& bUseBPOverrideItemAutoDecreaseDurabilityField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bUseBPOverrideItemAutoDecreaseDurability"); }
+	bool& bHideSupplyCratesField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bHideSupplyCrates"); }
+	TArray<UClass*> PreventBuffClassesInDayCycleLevelField() { return *GetNativePointerField<TArray<UClass*>*>(this, "ADayCycleManager.PreventBuffClassesInDayCycleLevel"); }
+	//FScriptMulticastDelegate& OnStartDaytimeField() { return *GetNativePointerField<FScriptMulticastDelegate*>(this, "ADayCycleManager.OnStartDaytime"); }
+	//FScriptMulticastDelegate& OnStartNighttimeField() { return *GetNativePointerField<FScriptMulticastDelegate*>(this, "ADayCycleManager.OnStartNighttime"); }
+	//FScriptMulticastDelegate& OnDayChangeField() { return *GetNativePointerField<FScriptMulticastDelegate*>(this, "ADayCycleManager.OnDayChange"); }
+	TArray<UHexagonTradableOption*> GenesisTradableOptionsField() { return *GetNativePointerField<TArray<UHexagonTradableOption*>*>(this, "ADayCycleManager.GenesisTradableOptions"); }
+	UClass* HexagonVFXActorClassField() { return *GetNativePointerField<UClass**>(this, "ADayCycleManager.HexagonVFXActorClass"); }
+	TArray<UClass*> GivePlayersBuffsOnSpawnField() { return *GetNativePointerField<TArray<UClass*>*>(this, "ADayCycleManager.GivePlayersBuffsOnSpawn"); }
+	//TArray<FStringAssetReference>& GivePlayersBuffAssetsOnSpawnField() { return *GetNativePointerField<TArray<FStringAssetReference>*>(this, "ADayCycleManager.GivePlayersBuffAssetsOnSpawn"); }
+
+	// Bit fields
+
+
+	// Functions
+
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "ADayCycleManager.StaticClass"); }
+	bool IsRainingAtLocation(FVector& Location) { return NativeCall<bool, FVector&>(this, "ADayCycleManager.IsRainingAtLocation", Location); }
+	bool IsDaytime() { return NativeCall<bool>(this, "ADayCycleManager.IsDaytime"); }
+	float GetWindAtLocation(FVector& AtLocation, APrimalCharacter* ForPrimalCharacter) { return NativeCall<float, FVector&, APrimalCharacter*>(this, "ADayCycleManager.GetWindAtLocation", AtLocation, ForPrimalCharacter); }
+	float GetWaterLineStartZ(FVector& AtLocation) { return NativeCall<float, FVector&>(this, "ADayCycleManager.GetWaterLineStartZ", AtLocation); }
+	float GetTemperatureAtLocation(FVector& AtLocation, APrimalCharacter* ForPrimalCharacter) { return NativeCall<float, FVector&, APrimalCharacter*>(this, "ADayCycleManager.GetTemperatureAtLocation", AtLocation, ForPrimalCharacter); }
+	TArray<UClass*> GetPreventBuffClassesInDayCycleLevel() { return NativeCall<TArray<UClass*>>(this, "ADayCycleManager.GetPreventBuffClassesInDayCycleLevel"); }
+	float GetDeepWaterStartZ(FVector& AtLocation) { return NativeCall<float, FVector&>(this, "ADayCycleManager.GetDeepWaterStartZ", AtLocation); }
+	FString GetDayNumberString(bool bIncludeDayString) { return NativeCall<FString, bool>(this, "ADayCycleManager.GetDayNumberString", bIncludeDayString); }
+	void DayCycleManagerStartNighttime__DelegateSignature() { NativeCall<void>(this, "ADayCycleManager.DayCycleManagerStartNighttime__DelegateSignature"); }
+	void DayCycleManagerStartDaytime__DelegateSignature() { NativeCall<void>(this, "ADayCycleManager.DayCycleManagerStartDaytime__DelegateSignature"); }
+	void DayCycleManagerOnDayChange__DelegateSignature(int DayNumber) { NativeCall<void, int>(this, "ADayCycleManager.DayCycleManagerOnDayChange__DelegateSignature", DayNumber); }
+	//void BPPostDrawSpawnMap(AShooterPlayerController* ForPC, UCanvas* ItemCanvas, FVector2D& ItemCanvasSize) { NativeCall<void, AShooterPlayerController*, UCanvas*, FVector2D&>(this, "ADayCycleManager.BPPostDrawSpawnMap", ForPC, ItemCanvas, ItemCanvasSize); }
+	bool BPOverrideItemAutoDecreaseDurability(UPrimalItem* anItem) { return NativeCall<bool, UPrimalItem*>(this, "ADayCycleManager.BPOverrideItemAutoDecreaseDurability", anItem); }
+	float BPOverrideGameStateMatineePlayRate(AActor* forMatinee, float InPlayRate) { return NativeCall<float, AActor*, float>(this, "ADayCycleManager.BPOverrideGameStateMatineePlayRate", forMatinee, InPlayRate); }
+	TArray<FPrimalMapMarkerEntryData> BPGetAdditionalMapMarkers(AShooterPlayerController* ForPC) { return NativeCall<TArray<FPrimalMapMarkerEntryData>, AShooterPlayerController*>(this, "ADayCycleManager.BPGetAdditionalMapMarkers", ForPC); }
+	//float BPAdjustTemperature(float TemperatureIn, ABiomeZoneVolume* BiomeZoneVolume, FVector& AtLocation, APrimalCharacter* ForPrimalCharacter) { return NativeCall<float, float, ABiomeZoneVolume*, FVector&, APrimalCharacter*>(this, "ADayCycleManager.BPAdjustTemperature", TemperatureIn, BiomeZoneVolume, AtLocation, ForPrimalCharacter); }
+	void AttemptWeaponFiring(AShooterWeapon* theWeapon) { NativeCall<void, AShooterWeapon*>(this, "ADayCycleManager.AttemptWeaponFiring", theWeapon); }
+	bool AllowWeaponFiring(AActor* theWeaponOrStructure) { return NativeCall<bool, AActor*>(this, "ADayCycleManager.AllowWeaponFiring", theWeaponOrStructure); }
+	bool AllowStructureActivation(APrimalStructure* theStructure) { return NativeCall<bool, APrimalStructure*>(this, "ADayCycleManager.AllowStructureActivation", theStructure); }
+	//float AdjustStructureItemInsulation(AShooterCharacter* forCharacter, UPrimalItem* ForPrimalItem, TEnumAsByte<EPrimalItemStat> TypeInsulation, float insulationValue) { return NativeCall<float, AShooterCharacter*, UPrimalItem*, TEnumAsByte<EPrimalItemStat>, float>(this, "ADayCycleManager.AdjustStructureItemInsulation", forCharacter, ForPrimalItem, TypeInsulation, insulationValue); }
+};
+
+
 struct APrimalWorldSettings : AWorldSettings
 {
 	bool& bOverrideLongitudeAndLatitudeField() { return *GetNativePointerField<bool*>(this, "APrimalWorldSettings.bOverrideLongitudeAndLatitude"); }
