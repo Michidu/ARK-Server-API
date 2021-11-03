@@ -8558,7 +8558,7 @@ struct ADayCycleManager : AInfo
 	UClass* HexagonVFXActorClassField() { return *GetNativePointerField<UClass**>(this, "ADayCycleManager.HexagonVFXActorClass"); }
 	bool& bWasDaytime() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bWasDaytime"); }
 	bool& bFirstDaytime() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bFirstDaytime"); }
-	TArray<TSubclassOf<APrimalBuff>> GivePlayersBuffsOnSpawnField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalBuff>>*>(this, "ADayCycleManager.GivePlayersBuffsOnSpawn"); }
+	TArray<TSubclassOf<APrimalBuff>>& GivePlayersBuffsOnSpawnField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalBuff>>*>(this, "ADayCycleManager.GivePlayersBuffsOnSpawn"); }
 	//TArray<FStringAssetReference>& GivePlayersBuffAssetsOnSpawnField() { return *GetNativePointerField<TArray<FStringAssetReference>*>(this, "ADayCycleManager.GivePlayersBuffAssetsOnSpawn"); }
 
 	
