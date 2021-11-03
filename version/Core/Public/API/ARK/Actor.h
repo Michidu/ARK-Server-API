@@ -8550,15 +8550,18 @@ struct ADayCycleManager : AInfo
 	bool& bCheckForWeaponFiringField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bCheckForWeaponFiring"); }
 	bool& bUseBPOverrideItemAutoDecreaseDurabilityField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bUseBPOverrideItemAutoDecreaseDurability"); }
 	bool& bHideSupplyCratesField() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bHideSupplyCrates"); }
-	TArray<UClass*> PreventBuffClassesInDayCycleLevelField() { return *GetNativePointerField<TArray<UClass*>*>(this, "ADayCycleManager.PreventBuffClassesInDayCycleLevel"); }
+	TArray<TSubclassOf<APrimalBuff>>& PreventBuffClassesInDayCycleLevelField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalBuff>>*>(this, "ADayCycleManager.PreventBuffClassesInDayCycleLevel"); }
 	//FScriptMulticastDelegate& OnStartDaytimeField() { return *GetNativePointerField<FScriptMulticastDelegate*>(this, "ADayCycleManager.OnStartDaytime"); }
 	//FScriptMulticastDelegate& OnStartNighttimeField() { return *GetNativePointerField<FScriptMulticastDelegate*>(this, "ADayCycleManager.OnStartNighttime"); }
 	//FScriptMulticastDelegate& OnDayChangeField() { return *GetNativePointerField<FScriptMulticastDelegate*>(this, "ADayCycleManager.OnDayChange"); }
-	TArray<UHexagonTradableOption*> GenesisTradableOptionsField() { return *GetNativePointerField<TArray<UHexagonTradableOption*>*>(this, "ADayCycleManager.GenesisTradableOptions"); }
+	TArray<TSubclassOf<UHexagonTradableOption>>& GenesisTradableOptionsField() { return *GetNativePointerField<TArray<TSubclassOf<UHexagonTradableOption>>*>(this, "ADayCycleManager.GenesisTradableOptions"); }
 	UClass* HexagonVFXActorClassField() { return *GetNativePointerField<UClass**>(this, "ADayCycleManager.HexagonVFXActorClass"); }
-	TArray<UClass*> GivePlayersBuffsOnSpawnField() { return *GetNativePointerField<TArray<UClass*>*>(this, "ADayCycleManager.GivePlayersBuffsOnSpawn"); }
+	bool& bWasDaytime() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bWasDaytime"); }
+	bool& bFirstDaytime() { return *GetNativePointerField<bool*>(this, "ADayCycleManager.bFirstDaytime"); }
+	TArray<TSubclassOf<APrimalBuff>> GivePlayersBuffsOnSpawnField() { return *GetNativePointerField<TArray<TSubclassOf<APrimalBuff>>*>(this, "ADayCycleManager.GivePlayersBuffsOnSpawn"); }
 	//TArray<FStringAssetReference>& GivePlayersBuffAssetsOnSpawnField() { return *GetNativePointerField<TArray<FStringAssetReference>*>(this, "ADayCycleManager.GivePlayersBuffAssetsOnSpawn"); }
 
+	
 	// Bit fields
 
 
