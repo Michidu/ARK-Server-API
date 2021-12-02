@@ -5965,7 +5965,7 @@ struct UShooterDamageType : UDamageType
 
 	float BPAdjustDamage(AActor* Victim, float IncomingDamage, FDamageEvent* TheDamageEvent, AController* EventInstigator, AActor* DamageCauser) { return NativeCall<float, AActor*, float, FDamageEvent*, AController*, AActor*>(this, "UShooterDamageType.BPAdjustDamage", Victim, IncomingDamage, TheDamageEvent, EventInstigator, DamageCauser); }
 	float BPAdjustHarvestingDamage(AActor* Victim, float IncomingDamage, FDamageEvent* TheDamageEvent, AController* EventInstigator, AActor* DamageCauser) { return NativeCall<float, AActor*, float, FDamageEvent*, AController*, AActor*>(this, "UShooterDamageType.BPAdjustHarvestingDamage", Victim, IncomingDamage, TheDamageEvent, EventInstigator, DamageCauser); }
-	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UShooterDamageType.GetPrivateStaticClass", Package); }
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*, const wchar_t*>(nullptr, "UShooterDamageType.GetPrivateStaticClass"); }
 	TSubclassOf<APrimalBuff>* OverrideBuffToGiveVictimCharacter(TSubclassOf<APrimalBuff>* result, APrimalCharacter* Victim, float IncomingDamage, FDamageEvent* TheDamageEvent, AController* EventInstigator, AActor* DamageCauser) { return NativeCall<TSubclassOf<APrimalBuff>*, TSubclassOf<APrimalBuff>*, APrimalCharacter*, float, FDamageEvent*, AController*, AActor*>(this, "UShooterDamageType.OverrideBuffToGiveVictimCharacter", result, Victim, IncomingDamage, TheDamageEvent, EventInstigator, DamageCauser); }
 	static void StaticRegisterNativesUShooterDamageType() { NativeCall<void>(nullptr, "UShooterDamageType.StaticRegisterNativesUShooterDamageType"); }
 };
