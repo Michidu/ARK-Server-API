@@ -8696,7 +8696,129 @@ struct ANPCZoneManager
 
 struct AShooterProjectile : AActor
 {
-	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "AShooterProjectile.GetPrivateStaticClass"); }
+	//UProjectile& MovementCompField() { return *GetNativePointerField<UProjectile*>(this, "AShooterProjectile.MovementComp"); }
+	bool& bFragmentateField() { return *GetNativePointerField<bool*>(this, "AShooterProjectile.bFragmentate"); }
+	float& FragmentOriginOffsetField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.FragmentOriginOffset"); }
+	float& FragmentConeHalfAngleField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.FragmentConeHalfAngle"); }
+	int& NumberOfFragmentProjectilesField() { return *GetNativePointerField<int*>(this, "AShooterProjectile.NumberOfFragmentProjectiles"); }
+	UClass* FragmentProjectileTemplateField() { return *GetNativePointerField<UClass**>(this, "AShooterProjectile.FragmentProjectileTemplate"); }
+	bool& bUseOwnerProjectileLifeField() { return *GetNativePointerField<bool*>(this, "AShooterProjectile.bUseOwnerProjectileLife"); }
+	USphereComponent* CollisionCompField() { return *GetNativePointerField<USphereComponent**>(this, "AShooterProjectile.CollisionComp"); }
+	//UParticleSystemComponent* ParticleCompField() { return *GetNativePointerField<UParticleSystemComponent**>(this, "AShooterProjectile.ParticleComp"); }
+	//UStaticMeshComponent& StaticMeshCompField() { return *GetNativePointerField<UStaticMeshComponent*>(this, "AShooterProjectile.StaticMeshComp"); }
+	UClass* ExplosionEmitterField() { return *GetNativePointerField<UClass**>(this, "AShooterProjectile.ExplosionEmitter"); }
+	UClass* ImpactEmitterField() { return *GetNativePointerField<UClass**>(this, "AShooterProjectile.ImpactEmitter"); }
+	float& ClientSideCollisionRadiusField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.ClientSideCollisionRadius"); }
+	float& TraceForBlockingRadiusField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.TraceForBlockingRadius"); }
+	float& CustomColorDesaturationField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.CustomColorDesaturation"); }
+	FRotator& RotateMeshFactorField() { return *GetNativePointerField<FRotator*>(this, "AShooterProjectile.RotateMeshFactor"); }
+	UClass* ImpactTemplateField() { return *GetNativePointerField<UClass**>(this, "AShooterProjectile.ImpactTemplate"); }
+	float& TornOffLifeSpanField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.TornOffLifeSpan"); }
+	float& PostExplosionKeepAliveLifeSpanField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.PostExplosionKeepAliveLifeSpan"); }
+	double& ExplosionNetworkTimeField() { return *GetNativePointerField<double*>(this, "AShooterProjectile.ExplosionNetworkTime"); }
+	float& NudgedImpactDistanceField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.NudgedImpactDistance"); }
+	bool& bIgnoreDirectImpactRadialDamageField() { return *GetNativePointerField<bool*>(this, "AShooterProjectile.bIgnoreDirectImpactRadialDamage"); }
+	bool& bForceNetUpdateField() { return *GetNativePointerField<bool*>(this, "AShooterProjectile.bForceNetUpdate"); }
+	float& ForceNetUpdateTimeIntervalField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.ForceNetUpdateTimeInterval"); }
+	//FProjectileWeaponData& WeaponConfigField() { return *GetNativePointerField<FProjectileWeaponData*>(this, "AShooterProjectile.WeaponConfig"); }
+	//TWeakObjectPtr<AShooterWeapon_Projectile>& weaponField() { return *GetNativePointerField<TWeakObjectPtr<AShooterWeapon_Projectile>*>(this, "AShooterProjectile.weapon"); }
+	float& ParticleColorIntensityField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.ParticleColorIntensity"); }
+	float& ClientFailsafeLifespanField() { return *GetNativePointerField<float*>(this, "AShooterProjectile.ClientFailsafeLifespan"); }
+	FLinearColor& CustomColorField() { return *GetNativePointerField<FLinearColor*>(this, "AShooterProjectile.CustomColor"); }
+	TWeakObjectPtr<AActor>& DamageCauserField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "AShooterProjectile.DamageCauser"); }
+	bool& bHasImpactedField() { return *GetNativePointerField<bool*>(this, "AShooterProjectile.bHasImpacted"); }
+	FHitResult& ReplicatedHitInfoField() { return *GetNativePointerField<FHitResult*>(this, "AShooterProjectile.ReplicatedHitInfo"); }
+	USoundCue* ProjectileBounceSoundField() { return *GetNativePointerField<USoundCue**>(this, "AShooterProjectile.ProjectileBounceSound"); }
+	TArray<AActor*> ImpactedActorsField() { return *GetNativePointerField<TArray<AActor*>*>(this, "AShooterProjectile.ImpactedActors"); }
+	FVector& LastVelocityField() { return *GetNativePointerField<FVector*>(this, "AShooterProjectile.LastVelocity"); }
+	TArray<UClass*> IgnoreNonBlockingHitClassesField() { return *GetNativePointerField<TArray<UClass*>*>(this, "AShooterProjectile.IgnoreNonBlockingHitClasses"); }
+	bool& bForceIgnoreBlockingHitClassesField() { return *GetNativePointerField<bool*>(this, "AShooterProjectile.bForceIgnoreBlockingHitClasses"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bExploded() { return { this, "AShooterProjectile.bExploded" }; }
+	BitFieldValue<bool, unsigned __int32> bSpawnExplosionTemplateOnClient() { return { this, "AShooterProjectile.bSpawnExplosionTemplateOnClient" }; }
+	BitFieldValue<bool, unsigned __int32> bExplodeOnClient() { return { this, "AShooterProjectile.bExplodeOnClient" }; }
+	BitFieldValue<bool, unsigned __int32> bExplodeOnImpact() { return { this, "AShooterProjectile.bExplodeOnImpact" }; }
+	BitFieldValue<bool, unsigned __int32> bExplodeOnLifeTimeEnd() { return { this, "AShooterProjectile.bExplodeOnLifeTimeEnd" }; }
+	BitFieldValue<bool, unsigned __int32> bDestroyOnExplode() { return { this, "AShooterProjectile.bDestroyOnExplode" }; }
+	BitFieldValue<bool, unsigned __int32> bForceUseTickFunction() { return { this, "AShooterProjectile.bForceUseTickFunction" }; }
+	BitFieldValue<bool, unsigned __int32> bForceIgnoreFriendlyFire() { return { this, "AShooterProjectile.bForceIgnoreFriendlyFire" }; }
+	BitFieldValue<bool, unsigned __int32> bAttachOnImpact() { return { this, "AShooterProjectile.bAttachOnImpact" }; }
+	BitFieldValue<bool, unsigned __int32> bSpawnImpactEffectOnHit() { return { this, "AShooterProjectile.bSpawnImpactEffectOnHit" }; }
+	BitFieldValue<bool, unsigned __int32> bReplicateImpact() { return { this, "AShooterProjectile.bReplicateImpact" }; }
+	BitFieldValue<bool, unsigned __int32> bImpactSetRotationToNormal() { return { this, "AShooterProjectile.bImpactSetRotationToNormal" }; }
+	BitFieldValue<bool, unsigned __int32> bNoImpactEmitterOnCharacterHit() { return { this, "AShooterProjectile.bNoImpactEmitterOnCharacterHit" }; }
+	BitFieldValue<bool, unsigned __int32> bRotateMeshWhileMoving() { return { this, "AShooterProjectile.bRotateMeshWhileMoving" }; }
+	BitFieldValue<bool, unsigned __int32> bCheckForNonBlockingHitImpactFX() { return { this, "AShooterProjectile.bCheckForNonBlockingHitImpactFX" }; }
+	BitFieldValue<bool, unsigned __int32> bTickedNonBlockingHitImpactFX() { return { this, "AShooterProjectile.bTickedNonBlockingHitImpactFX" }; }
+	BitFieldValue<bool, unsigned __int32> bUseTraceForBlocking() { return { this, "AShooterProjectile.bUseTraceForBlocking" }; }
+	BitFieldValue<bool, unsigned __int32> bHadAttachParent() { return { this, "AShooterProjectile.bHadAttachParent" }; }
+	BitFieldValue<bool, unsigned __int32> bStopOnExplode() { return { this, "AShooterProjectile.bStopOnExplode" }; }
+	BitFieldValue<bool, unsigned __int32> bUseTraceForBlockingStopOnExplode() { return { this, "AShooterProjectile.bUseTraceForBlockingStopOnExplode" }; }
+	BitFieldValue<bool, unsigned __int32> bUseMultiTraceForBlocking() { return { this, "AShooterProjectile.bUseMultiTraceForBlocking" }; }
+	BitFieldValue<bool, unsigned __int32> bExplodeEffectOnDestroy() { return { this, "AShooterProjectile.bExplodeEffectOnDestroy" }; }
+	BitFieldValue<bool, unsigned __int32> bImpactRequiresDinoLineOfSight() { return { this, "AShooterProjectile.bImpactRequiresDinoLineOfSight" }; }
+	BitFieldValue<bool, unsigned __int32> bImpactPvEOnlyAlly() { return { this, "AShooterProjectile.bImpactPvEOnlyAlly" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPProjectileBounced() { return { this, "AShooterProjectile.bUseBPProjectileBounced" }; }
+	BitFieldValue<bool, unsigned __int32> bAttachOnProjectileBounced() { return { this, "AShooterProjectile.bAttachOnProjectileBounced" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPIgnoreProjectileImpact() { return { this, "AShooterProjectile.bUseBPIgnoreProjectileImpact" }; }
+	BitFieldValue<bool, unsigned __int32> bIgnoredByTurrets() { return { this, "AShooterProjectile.bIgnoredByTurrets" }; }
+	BitFieldValue<bool, unsigned __int32> bResetHasImpactedOnMultiTraceForBlocking() { return { this, "AShooterProjectile.bResetHasImpactedOnMultiTraceForBlocking" }; }
+	BitFieldValue<bool, unsigned __int32> bNonBlockingVolumeMustBeWater() { return { this, "AShooterProjectile.bNonBlockingVolumeMustBeWater" }; }
+	BitFieldValue<bool, unsigned __int32> bUseWeaponColorization() { return { this, "AShooterProjectile.bUseWeaponColorization" }; }
+	BitFieldValue<bool, unsigned __int32> bUseCustomColor() { return { this, "AShooterProjectile.bUseCustomColor" }; }
+	BitFieldValue<bool, unsigned __int32> bDoFullRadialDamage() { return { this, "AShooterProjectile.bDoFullRadialDamage" }; }
+	BitFieldValue<bool, unsigned __int32> bExplodeOnNonBlockingImpact() { return { this, "AShooterProjectile.bExplodeOnNonBlockingImpact" }; }
+	BitFieldValue<bool, unsigned __int32> bRadialDamageIgnoreDamageCauser() { return { this, "AShooterProjectile.bRadialDamageIgnoreDamageCauser" }; }
+	BitFieldValue<bool, unsigned __int32> bMultiTraceCollideAgainstPawns() { return { this, "AShooterProjectile.bMultiTraceCollideAgainstPawns" }; }
+	BitFieldValue<bool, unsigned __int32> bTraceForBlockingDoImpactBackTrace() { return { this, "AShooterProjectile.bTraceForBlockingDoImpactBackTrace" }; }
+	BitFieldValue<bool, unsigned __int32> bExplosionOrientUpwards() { return { this, "AShooterProjectile.bExplosionOrientUpwards" }; }
+	BitFieldValue<bool, unsigned __int32> bColorizeStructureOnImpact() { return { this, "AShooterProjectile.bColorizeStructureOnImpact" }; }
+	BitFieldValue<bool, unsigned __int32> bNonBlockingImpactNoExplosionEmitter() { return { this, "AShooterProjectile.bNonBlockingImpactNoExplosionEmitter" }; }
+	BitFieldValue<bool, unsigned __int32> bDestroyOnExplodeNonBlockingImpact() { return { this, "AShooterProjectile.bDestroyOnExplodeNonBlockingImpact" }; }
+	BitFieldValue<bool, unsigned __int32> bDontFragmentOnDamage() { return { this, "AShooterProjectile.bDontFragmentOnDamage" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventReflecting() { return { this, "AShooterProjectile.bPreventReflecting" }; }
+	BitFieldValue<bool, unsigned __int32> bUseBPIgnoreRadialDamageVictim() { return { this, "AShooterProjectile.bUseBPIgnoreRadialDamageVictim" }; }
+	BitFieldValue<bool, unsigned __int32> bDoFinalTraceCheckToDirectDamageVictim() { return { this, "AShooterProjectile.bDoFinalTraceCheckToDirectDamageVictim" }; }
+	BitFieldValue<bool, unsigned __int32> bDoFinalTraceCheckFromInstigatorToDirectDamageVictim() { return { this, "AShooterProjectile.bDoFinalTraceCheckFromInstigatorToDirectDamageVictim" }; }
+	BitFieldValue<bool, unsigned __int32> bUseProjectileTraceChannel() { return { this, "AShooterProjectile.bUseProjectileTraceChannel" }; }
+
+	// Functions
+
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "AShooterProjectile.StaticClass"); }
+	void SpawnImpactEffect(FHitResult& Impact) { NativeCall<void, FHitResult&>(this, "AShooterProjectile.SpawnImpactEffect", Impact); }
+	void Reset() { NativeCall<void>(this, "AShooterProjectile.Reset"); }
+	void ProjectileBounced(FHitResult& ImpactResult, FVector& ImpactVelocity) { NativeCall<void, FHitResult&, FVector&>(this, "AShooterProjectile.ProjectileBounced", ImpactResult, ImpactVelocity); }
+	bool PreventExplosionEmitter(FHitResult& Impact) { return NativeCall<bool, FHitResult&>(this, "AShooterProjectile.PreventExplosionEmitter", Impact); }
+	void OnTouch(AActor* Actor) { NativeCall<void, AActor*>(this, "AShooterProjectile.OnTouch", Actor); }
+	void OnProjectileStop(FHitResult& HitResult) { NativeCall<void, FHitResult&>(this, "AShooterProjectile.OnProjectileStop", HitResult); }
+	void OnImpact(FHitResult& HitResult, bool bFromReplication) { NativeCall<void, FHitResult&, bool>(this, "AShooterProjectile.OnImpact", HitResult, bFromReplication); }
+	void OnExplode(FHitResult& Result) { NativeCall<void, FHitResult&>(this, "AShooterProjectile.OnExplode", Result); }
+	void NetUpdateTimer() { NativeCall<void>(this, "AShooterProjectile.NetUpdateTimer"); }
+	void NetResetTransformAndVelocity(FVector& NewLocation, FRotator& NewRotation, FVector& NewVelocity, TArray<AActor*> NewMoveIgnoreActors) { NativeCall<void, FVector&, FRotator&, FVector&, TArray<AActor*>>(this, "AShooterProjectile.NetResetTransformAndVelocity", NewLocation, NewRotation, NewVelocity, NewMoveIgnoreActors); }
+	FName GetSocketForFinalTraceCheckFromInstigatorToDirectDamageVictim() { return NativeCall<FName>(this, "AShooterProjectile.GetSocketForFinalTraceCheckFromInstigatorToDirectDamageVictim"); }
+	void ExplodeAtLocation(FVector& AtLocation, FVector& AtNormal) { NativeCall<void, FVector&, FVector&>(this, "AShooterProjectile.ExplodeAtLocation", AtLocation, AtNormal); }
+	void Explode(FHitResult& Impact) { NativeCall<void, FHitResult&>(this, "AShooterProjectile.Explode", Impact); }
+	void DisableAndDestroy() { NativeCall<void>(this, "AShooterProjectile.DisableAndDestroy"); }
+	void DeactivateProjectileEffects() { NativeCall<void>(this, "AShooterProjectile.DeactivateProjectileEffects"); }
+	void Colorize() { NativeCall<void>(this, "AShooterProjectile.Colorize"); }
+	void ClientOnImpact(FVector& ProjectileLocation, FRotator& ProjectileRotation, FHitResult& HitResult) { NativeCall<void, FVector&, FRotator&, FHitResult&>(this, "AShooterProjectile.ClientOnImpact", ProjectileLocation, ProjectileRotation, HitResult); }
+	void ClientNetImpactFX(FHitResult& HitResult) { NativeCall<void, FHitResult&>(this, "AShooterProjectile.ClientNetImpactFX", HitResult); }
+	void ClientNetExplode(FHitResult& HitResult) { NativeCall<void, FHitResult&>(this, "AShooterProjectile.ClientNetExplode", HitResult); }
+	void ClientNetDestroy() { NativeCall<void>(this, "AShooterProjectile.ClientNetDestroy"); }
+	void ClearHomingTarget() { NativeCall<void>(this, "AShooterProjectile.ClearHomingTarget"); }
+	void BPSpawnedFragments(TArray<AShooterProjectile*> FragmentArray) { NativeCall<void, TArray<AShooterProjectile*>>(this, "AShooterProjectile.BPSpawnedFragments", FragmentArray); }
+	void BPProjectileBounced(FHitResult& ImpactResult, FVector& ImpactVelocity) { NativeCall<void, FHitResult&, FVector&>(this, "AShooterProjectile.BPProjectileBounced", ImpactResult, ImpactVelocity); }
+	void BPInitVelocity(FVector& ShootDirection) { NativeCall<void, FVector&>(this, "AShooterProjectile.BPInitVelocity", ShootDirection); }
+	void BPInitializedVelocity(FVector& InVelocity, float CustomSpeed) { NativeCall<void, FVector&, float>(this, "AShooterProjectile.BPInitializedVelocity", InVelocity, CustomSpeed); }
+	bool BPIgnoreRadialDamageVictim(AActor* Victim) { return NativeCall<bool, AActor*>(this, "AShooterProjectile.BPIgnoreRadialDamageVictim", Victim); }
+	void BPDestroyLikeDamage() { NativeCall<void>(this, "AShooterProjectile.BPDestroyLikeDamage"); }
+	void BPDamageScalarApplied(float Scalar) { NativeCall<void, float>(this, "AShooterProjectile.BPDamageScalarApplied", Scalar); }
+	void BPApplyExplosionDamageAndVFX(FHitResult& Impact, bool bForceSpawnExplosionEmitter) { NativeCall<void, FHitResult&, bool>(this, "AShooterProjectile.BPApplyExplosionDamageAndVFX", Impact, bForceSpawnExplosionEmitter); }
+	bool BP_IgnoreProjectileImpact(FHitResult& ImpactHit) { return NativeCall<bool, FHitResult&>(this, "AShooterProjectile.BP_IgnoreProjectileImpact", ImpactHit); }
+	void ApplyDamageScalar(float Scalar) { NativeCall<void, float>(this, "AShooterProjectile.ApplyDamageScalar", Scalar); }
+	void AddMoveIgnoreActor(AActor* IgnoreActor) { NativeCall<void, AActor*>(this, "AShooterProjectile.AddMoveIgnoreActor", IgnoreActor); }
 };
 
 struct APrimalBuff : AActor
