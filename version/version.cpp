@@ -10,6 +10,7 @@
 #pragma comment(lib, "libMinHook.x64.lib")
 #pragma comment(lib, "Crypt32.lib")
 #pragma comment(lib, "Iphlpapi.lib")
+#pragma execution_character_set("utf-8")
 
 HINSTANCE m_hinst_dll = nullptr;
 extern "C" UINT_PTR mProcs[17]{0};
@@ -26,6 +27,7 @@ void OpenConsole()
 	AllocConsole();
 	FILE* p_cout;
 	freopen_s(&p_cout, "conout$", "w", stdout);
+	SetConsoleOutputCP(65001);
 }
 
 std::time_t GetFileWriteTime(const std::filesystem::path& filename)
