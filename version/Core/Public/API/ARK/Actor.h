@@ -7085,10 +7085,10 @@ struct APrimalDinoCharacter : APrimalCharacter
 	void UpdateImprintingDetails(FString* NewImprinterName, unsigned __int64 NewImprinterPlayerDataID) { NativeCall<void, FString*, unsigned __int64>(this, "APrimalDinoCharacter.UpdateImprintingDetails", NewImprinterName, NewImprinterPlayerDataID); }
 	void UpdateImprintingQuality(float NewImprintingQuality) { NativeCall<void, float>(this, "APrimalDinoCharacter.UpdateImprintingQuality", NewImprintingQuality); }
 	void UpdateTribeGroupRanks(char NewTribeGroupPetOrderingRank, char NewTribeGroupPetRidingRank) { NativeCall<void, char, char>(this, "APrimalDinoCharacter.UpdateTribeGroupRanks", NewTribeGroupPetOrderingRank, NewTribeGroupPetRidingRank); }
-	void GetDinoData(FARKDinoData* OutDinoData) { NativeCall<void, FARKDinoData*>(this, "APrimalDinoCharacter.GetDinoData", OutDinoData); }
+	void GetDinoData(FARKDinoData * OutDinoData) { NativeCall<void, FARKDinoData *>(this, "APrimalDinoCharacter.GetDinoData", OutDinoData); }
 	FString* GetColorSetInidcesAsString(FString* result) { return NativeCall<FString*, FString*>(this, "APrimalDinoCharacter.GetColorSetInidcesAsString", result); }
 	TArray<FName>* GetColorSetNamesAsArray(TArray<FName>* result) { return NativeCall<TArray<FName>*, TArray<FName>*>(this, "APrimalDinoCharacter.GetColorSetNamesAsArray", result); }
-
+	static APrimalDinoCharacter* SpawnFromDinoDataEx(FARKDinoData* InDinoData, UWorld* InWorld, FVector* AtLocation, FRotator* AtRotation, bool* dupedDino, int ForTeam, bool bGenerateNewDinoID, AShooterPlayerController* TamerController, bool beginPlay) { return NativeCall<APrimalDinoCharacter*, FARKDinoData*, UWorld*, FVector*, FRotator*, bool*, int, bool, AShooterPlayerController*, bool>(nullptr, "APrimalDinoCharacter.SpawnFromDinoData", InDinoData, InWorld, AtLocation, AtRotation, dupedDino, ForTeam, bGenerateNewDinoID, TamerController, beginPlay); }
 };
 
 struct AShooterWeapon : AActor
@@ -9497,6 +9497,11 @@ struct UStaticMeshComponent : UMeshComponent
 	bool ShouldRecreateProxyOnUpdateTransform() { return NativeCall<bool>(this, "UStaticMeshComponent.ShouldRecreateProxyOnUpdateTransform"); }
 };
 
+struct UInstancedStaticMeshComponent : UStaticMeshComponent
+{
+	void DealDirectDamage(APlayerController* ForPC, float DamageAmount, TSubclassOf<UDamageType> DamageTypeClass, int hitBodyIndex) { NativeCall<void, APlayerController*, float, TSubclassOf<UDamageType>, int>(this, "UInstancedStaticMeshComponent.DealDirectDamage", ForPC, DamageAmount, DamageTypeClass, hitBodyIndex); }
+};
+
 struct UStaticMeshSocket : UObject
 {
 	FName& SocketNameField() { return *GetNativePointerField<FName*>(this, "UStaticMeshSocket.SocketName"); }
@@ -9607,6 +9612,7 @@ struct UPrimalHarvestingComponent : UActorComponent
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalHarvestingComponent.GetPrivateStaticClass", Package); }
 	static void StaticRegisterNativesUPrimalHarvestingComponent() { NativeCall<void>(nullptr, "UPrimalHarvestingComponent.StaticRegisterNativesUPrimalHarvestingComponent"); }
 	bool TemplateCheckForHarvestRepopulation(bool bForceReinit, UWorld* world, FVector* where) { NativeCall<bool, UWorld*, FVector*>(this, "UPrimalHarvestingComponent.TemplateCheckForHarvestRepopulation", world, where); }
+	void DealDirectDamage(APlayerController* ForPC, float DamageAmount, TSubclassOf<UDamageType> DamageTypeClass) { NativeCall<void, APlayerController*, float, TSubclassOf<UDamageType>>(this, "UPrimalHarvestingComponent.DealDirectDamage", ForPC, DamageAmount, DamageTypeClass); }
 
 	TArray<FHarvestResourceEntry>& HarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.HarvestResourceEntries"); }
 	TArray<FHarvestResourceEntry>& BaseHarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.BaseHarvestResourceEntries"); }
@@ -9622,6 +9628,8 @@ struct UPrimalHarvestingComponent : UActorComponent
 
 struct AMissionType : AActor
 {
+	FString& MissionDisplayNameField() { return *GetNativePointerField<FString*>(this, "AMissionType.MissionDisplayName"); }
+
 	static void GetNearbyPlayersAndTamedDinos(UObject* WorldContextObject, TArray<APrimalCharacter*>* OutCharacters, FVector* Location, float Radius) { NativeCall<void, UObject*, TArray<APrimalCharacter*>*, FVector*, float>(nullptr, "AMissionType.GetNearbyPlayersAndTamedDinos", WorldContextObject, OutCharacters, Location, Radius); }
 };
 

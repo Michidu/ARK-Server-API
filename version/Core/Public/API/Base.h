@@ -225,6 +225,7 @@ struct UPrimalWorldSettingsEventOverrides {};
 struct FCropItemPhaseData {};
 struct FStructureVariant {};
 struct AMissionType;
+struct FMultiUseEntry;
 
 template <typename T>
 struct FDataStore;
@@ -662,6 +663,8 @@ struct UBehaviorTree;
 
 struct FSeamlessIslandInfo;
 struct AInfo;
+
+struct UInstancedStaticMeshComponent;
 
 struct FCanvasIcon;
 

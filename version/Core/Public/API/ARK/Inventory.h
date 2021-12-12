@@ -1399,7 +1399,7 @@ struct FItemStatInfo
 
 	// Bit fields
 
-	BitFieldValue<bool, unsigned __int32> bUsed() { return { this, "FItemStatInfo.bUsed" }; }
+	BitFieldValue<bool, unsigned __int32> bUsed() { return {this, "FItemStatInfo.bUsed"}; }
 	BitFieldValue<bool, unsigned __int32> bCalculateAsPercent() { return { this, "FItemStatInfo.bCalculateAsPercent" }; }
 	BitFieldValue<bool, unsigned __int32> bDisplayAsPercent() { return { this, "FItemStatInfo.bDisplayAsPercent" }; }
 	BitFieldValue<bool, unsigned __int32> bRequiresSubmerged() { return { this, "FItemStatInfo.bRequiresSubmerged" }; }
