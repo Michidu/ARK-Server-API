@@ -199,7 +199,13 @@ struct TWeakObjectPtr
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr.Get", bEvenIfPendingKill);
 	}
-	
+
+	FORCEINLINE bool operator==(const TWeakObjectPtr<T>& __that)
+	{
+		return this->ObjectIndex == __that.ObjectIndex
+			&& this->ObjectSerialNumber == __that.ObjectSerialNumber;
+	}
+
 	FORCEINLINE operator bool()
 	{
 		return Get() != nullptr;
@@ -210,12 +216,6 @@ struct TWeakObjectPtr
 		return Get();
 	}
 
-	FORCEINLINE bool operator==(const TWeakObjectPtr<T>& __that)
-	{
-		return this->ObjectIndex == __that.ObjectIndex
-			&& this->ObjectSerialNumber == __that.ObjectSerialNumber;
-	}
-	
 	TWeakObjectPtr()
 	{}
 
