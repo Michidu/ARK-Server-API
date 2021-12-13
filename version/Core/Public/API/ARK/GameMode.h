@@ -163,6 +163,7 @@ struct UWorld : UObject
 	FName& CommittedPersistentLevelNameField() { return *GetNativePointerField<FName*>(this, "UWorld.CommittedPersistentLevelName"); }
 	FString& CurrentDayTimeField() { return *GetNativePointerField<FString*>(this, "UWorld.CurrentDayTime"); }
 	unsigned int& NumLightingUnbuiltObjectsField() { return *GetNativePointerField<unsigned int*>(this, "UWorld.NumLightingUnbuiltObjects"); }
+	AGameNetworkManager* NetworkManagerField() { return *GetNativePointerField<AGameNetworkManager**>(this, "UWorld.NetworkManager"); }
 
 	// Functions
 
@@ -549,6 +550,40 @@ struct ULevelBase
 
 struct ULevel : ULevelBase
 {
+};
+
+// Game Network Manager
+
+struct AGameNetworkManager : AInfo
+{
+	int& AdjustedNetSpeedField() { return *GetNativePointerField<int*>(this, "AGameNetworkManager.AdjustedNetSpeed"); }
+	float& LastNetSpeedUpdateTimeField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.LastNetSpeedUpdateTime"); }
+	int& TotalNetBandwidthField() { return *GetNativePointerField<int*>(this, "AGameNetworkManager.TotalNetBandwidth"); }
+	int& MinDynamicBandwidthField() { return *GetNativePointerField<int*>(this, "AGameNetworkManager.MinDynamicBandwidth"); }
+	int& MaxDynamicBandwidthField() { return *GetNativePointerField<int*>(this, "AGameNetworkManager.MaxDynamicBandwidth"); }
+	float& StandbyRxCheatTimeField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.StandbyRxCheatTime"); }
+	float& StandbyTxCheatTimeField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.StandbyTxCheatTime"); }
+	int& BadPingThresholdField() { return *GetNativePointerField<int*>(this, "AGameNetworkManager.BadPingThreshold"); }
+	float& PercentMissingForRxStandbyField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.PercentMissingForRxStandby"); }
+	float& PercentMissingForTxStandbyField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.PercentMissingForTxStandby"); }
+	float& PercentForBadPingField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.PercentForBadPing"); }
+	float& JoinInProgressStandbyWaitTimeField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.JoinInProgressStandbyWaitTime"); }
+	float& MoveRepSizeField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.MoveRepSize"); }
+	float& MAXPOSITIONERRORSQUAREDField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.MAXPOSITIONERRORSQUARED"); }
+	float& MAXNEARZEROVELOCITYSQUAREDField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.MAXNEARZEROVELOCITYSQUARED"); }
+	float& CLIENTADJUSTUPDATECOSTField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.CLIENTADJUSTUPDATECOST"); }
+	float& MAXCLIENTUPDATEINTERVALField() { return *GetNativePointerField<float*>(this, "AGameNetworkManager.MAXCLIENTUPDATEINTERVAL"); }
+	bool& ClientAuthorativePositionField() { return *GetNativePointerField<bool*>(this, "AGameNetworkManager.ClientAuthorativePosition"); }
+	bool& bUseDistanceBasedRelevancyField() { return *GetNativePointerField<bool*>(this, "AGameNetworkManager.bUseDistanceBasedRelevancy"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bIsStandbyCheckingEnabled() { return { this, "AGameNetworkManager.bIsStandbyCheckingEnabled" }; }
+	BitFieldValue<bool, unsigned __int32> bHasStandbyCheatTriggered() { return { this, "AGameNetworkManager.bHasStandbyCheatTriggered" }; }
+
+	// Functions
+
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "AGameNetworkManager.StaticClass"); }
 };
 
 // Game Mode

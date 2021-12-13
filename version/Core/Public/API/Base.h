@@ -59,6 +59,7 @@ struct UPrimalCharacterStatusComponent;
 struct USceneComponent;
 struct ULevel;
 struct ULevelBase;
+struct AGameNetworkManager;
 struct FDamageEvent;
 struct FHitResult;
 struct AShooterGameState;
