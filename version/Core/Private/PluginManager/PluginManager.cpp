@@ -12,11 +12,6 @@
 
 namespace API
 {
-	PluginManager::PluginManager()
-	{
-		//ArkApi::GetCommands().AddOnTimerCallback(L"PluginManager.DetectPluginChangesTimerCallback", &DetectPluginChangesTimerCallback);
-	}
-
 	PluginManager& PluginManager::Get()
 	{
 		static PluginManager instance;
@@ -376,28 +371,5 @@ namespace API
 				}
 			}
 		}
-	}
-
-	void PluginManager::ProcessPendingAutoReload()
-	{
-		if (auto_reload_pending_plugins_.size() == 0)
-			return;
-
-		for (auto it = auto_reload_pending_plugins_.begin(); it != auto_reload_pending_plugins_.end(); it++)
-		{
-			const std::string filename = *it;
-
-			try
-			{
-				
-			}
-			catch (const std::exception& ex)
-			{
-				Log::GetLog()->warn("({}) {}", __FUNCTION__, ex.what());
-				continue;
-			}
-		}
-
-		auto_reload_pending_plugins_.empty();
 	}
 } // namespace API

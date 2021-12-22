@@ -8880,8 +8880,6 @@ struct APrimalBuff : AActor
 
 struct APrimalBuff_Grappled : APrimalBuff
 {
-	TArray<FGrappleTether>& CurrentGrappleTethersField() { return *GetNativePointerField<TArray<FGrappleTether>*>(this, "APrimalBuff_Grappled.CurrentGrappleTethers"); }
-
 	// Functions
 
 	void BreakAllTethers() { NativeCall<void>(this, "APrimalBuff_Grappled.BreakAllTethers"); }

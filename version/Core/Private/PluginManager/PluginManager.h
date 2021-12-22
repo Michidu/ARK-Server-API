@@ -83,7 +83,7 @@ namespace API
 		*/
 		static void DetectPluginChangesTimerCallback();
 	private:
-		PluginManager();
+		PluginManager() = default;
 		~PluginManager() = default;
 
 		static nlohmann::json ReadPluginInfo(const std::string& plugin_name);
@@ -93,7 +93,6 @@ namespace API
 		void CheckPluginsDependencies();
 
 		void DetectPluginChanges();
-		void ProcessPendingAutoReload();
 
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;
 
@@ -102,8 +101,5 @@ namespace API
 		int reload_sleep_seconds_{5};
 		bool save_world_before_reload_{true};
 		time_t next_reload_check_{5};
-
-		// Auto reload variable to delay auto loading of the plugin
-		std::vector<std::string> auto_reload_pending_plugins_;
 	};
 } // namespace API
