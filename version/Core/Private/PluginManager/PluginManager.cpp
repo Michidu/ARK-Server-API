@@ -12,11 +12,6 @@
 
 namespace API
 {
-	PluginManager::PluginManager()
-	{
-		ArkApi::GetCommands().AddOnTimerCallback(L"PluginManager.DetectPluginChangesTimerCallback", &DetectPluginChangesTimerCallback);
-	}
-
 	PluginManager& PluginManager::Get()
 	{
 		static PluginManager instance;
@@ -347,9 +342,10 @@ namespace API
 				// Save the world in case the unload/load procedure causes crash
 				if (save_world)
 				{
-					//Log::GetLog()->info("Saving world before reloading plugins ...");
-					//ArkApi::GetApiUtils().GetShooterGameMode()->SaveWorld();
-					//Log::GetLog()->info("World saved.");
+					Log::GetLog()->info("Saving world before reloading plugins ...");
+					ArkApi::GetApiUtils().GetShooterGameMode()->SaveWorld();
+					Log::GetLog()->info("World saved.");
+
 					save_world = false; // do not save again if multiple plugins are reloaded in this loop
 				}
 
@@ -360,15 +356,19 @@ namespace API
 					copy_file(new_plugin_file_path, plugin_file_path, fs::copy_options::overwrite_existing);
 					fs::remove(new_plugin_file_path);
 
+					// Wait 1 second before loading to let things clean up correctly...
+					// This will load the plugin in the next timer callback
+					//auto_reload_pending_plugins_.emplace_back(filename);
+
 					LoadPlugin(filename);
+
+					Log::GetLog()->info("Reloaded plugin - {}", filename);
 				}
 				catch (const std::exception& error)
 				{
 					Log::GetLog()->warn("({}) {}", __FUNCTION__, error.what());
 					continue;
 				}
-
-				Log::GetLog()->info("Reloaded plugin - {}", filename);
 			}
 		}
 	}

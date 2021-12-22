@@ -441,7 +441,7 @@ struct TUseBitwiseSwap
 template <typename T>
 inline typename TEnableIf<TUseBitwiseSwap<T>::Value>::Type Swap(T& A, T& B)
 {
-	if (LIKELY(&A != &B))
+	if (&A != &B)
 	{
 		TTypeCompatibleBytes<T> Temp;
 		FMemory::Memcpy(&Temp, &A, sizeof(T));
@@ -450,6 +450,9 @@ inline typename TEnableIf<TUseBitwiseSwap<T>::Value>::Type Swap(T& A, T& B)
 	}
 }
 
+/**
+ * Swap two values.  Assumes the types are trivially relocatable.
+ */
 template <typename T>
 inline typename TEnableIf<!TUseBitwiseSwap<T>::Value>::Type Swap(T& A, T& B)
 {
