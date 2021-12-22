@@ -78,6 +78,10 @@ namespace API
 		*/
 		bool IsPluginLoaded(const std::string& plugin_name);
 
+		/**
+		* \brief Checks for auto plugin reloads
+		*/
+		static void DetectPluginChangesTimerCallback();
 	private:
 		PluginManager();
 		~PluginManager() = default;
@@ -88,8 +92,8 @@ namespace API
 
 		void CheckPluginsDependencies();
 
-		static void DetectPluginChangesTimerCallback();
 		void DetectPluginChanges();
+		void ProcessPendingAutoReload();
 
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;
 
@@ -98,5 +102,8 @@ namespace API
 		int reload_sleep_seconds_{5};
 		bool save_world_before_reload_{true};
 		time_t next_reload_check_{5};
+
+		// Auto reload variable to delay auto loading of the plugin
+		std::vector<std::string> auto_reload_pending_plugins_;
 	};
 } // namespace API

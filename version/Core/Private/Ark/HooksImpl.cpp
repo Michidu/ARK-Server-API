@@ -153,6 +153,8 @@ namespace ArkApi
 			command->CheckOnTimerCallbacks();
 		}
 
+		API::PluginManager::DetectPluginChangesTimerCallback(); // We call this here to avoid UnknownModule crashes
+
 		AGameState_DefaultTimer_original(_this);
 	}
 
