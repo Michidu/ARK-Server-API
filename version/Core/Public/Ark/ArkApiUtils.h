@@ -3,6 +3,7 @@
 #include <optional>
 
 #include <API/ARK/Ark.h>
+#include <../Private/Ark/Globals.h>
 
 namespace ArkApi
 {
@@ -18,7 +19,7 @@ namespace ArkApi
 	{
 	public:
 		virtual ~IApiUtils() = default;
-
+		//bool HideCommand = false;
 		/**
 		* \brief Returns a pointer to UWorld
 		*/
@@ -239,7 +240,7 @@ namespace ArkApi
 		FORCEINLINE AShooterPlayerController* FindControllerFromCharacter(AShooterCharacter* character) const
 		{
 			AShooterPlayerController* result = nullptr;
-				
+
 			if (character != nullptr
 				&& !character->IsDead())
 			{
@@ -778,10 +779,10 @@ namespace ArkApi
 
 			if (target)
 			{
-				if (killer && !killer->IsLocalController() && killer->IsA(AShooterPlayerController::GetPrivateStaticClass()) 
+				if (killer && !killer->IsLocalController() && killer->IsA(AShooterPlayerController::GetPrivateStaticClass())
 					&& (!tribe_check || (tribe_check && target->TargetingTeamField() != killer->TargetingTeamField())))
 					steam_id = GetSteamIdFromController(static_cast<AShooterPlayerController*>(killer));
-				else if (damage_causer && (!tribe_check || (tribe_check && target->TargetingTeamField() != damage_causer->TargetingTeamField())) 
+				else if (damage_causer && (!tribe_check || (tribe_check && target->TargetingTeamField() != damage_causer->TargetingTeamField()))
 					&& damage_causer->IsA(APrimalStructureExplosive::StaticClass()))
 				{
 					APrimalStructureExplosive* explosive = static_cast<APrimalStructureExplosive*>(damage_causer);
@@ -791,7 +792,15 @@ namespace ArkApi
 
 			return steam_id;
 		}
-private:
+
+		FORCEINLINE void RunHiddenCommand(AShooterPlayerController* _this, FString* Command)
+		{
+			FString result;
+			HideCommand = true;
+			_this->ConsoleCommand(&result, Command, false);
+			HideCommand = false;
+		}
+	private:
 		virtual AShooterPlayerController* FindPlayerFromSteamId_Internal(uint64 steam_id) const = 0;
 	};
 

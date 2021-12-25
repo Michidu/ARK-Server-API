@@ -5,6 +5,7 @@
 #include "../Hooks.h"
 #include "../PluginManager/PluginManager.h"
 #include "../IBaseApi.h"
+#include <../Private/Ark/Globals.h>
 
 #include <Logger/Logger.h>
 
@@ -16,8 +17,9 @@ namespace ArkApi
 	DECLARE_HOOK(UWorld_Tick, void, DWORD64, DWORD64, float);
 	DECLARE_HOOK(AShooterGameMode_InitGame, void, AShooterGameMode*, FString*, FString*, FString*);
 	DECLARE_HOOK(AShooterPlayerController_ServerSendChatMessage_Impl, void, AShooterPlayerController*, FString*,
-	             EChatSendMode::Type);
+	EChatSendMode::Type);
 	DECLARE_HOOK(APlayerController_ConsoleCommand, FString*, APlayerController*, FString*, FString*, bool);
+	DECLARE_HOOK(AShooterPlayerController_ConsoleCommand, FString*, AShooterPlayerController*, FString*, FString*, bool);
 	DECLARE_HOOK(RCONClientConnection_ProcessRCONPacket, void, RCONClientConnection*, RCONPacket*, UWorld*);
 	DECLARE_HOOK(AGameState_DefaultTimer, void, AGameState*);
 	DECLARE_HOOK(AShooterGameMode_BeginPlay, void, AShooterGameMode*);
@@ -34,22 +36,24 @@ namespace ArkApi
 		hooks->SetHook("UWorld.InitWorld", &Hook_UWorld_InitWorld, &UWorld_InitWorld_original);
 		hooks->SetHook("UWorld.Tick", &Hook_UWorld_Tick, &UWorld_Tick_original);
 		hooks->SetHook("AShooterGameMode.InitGame", &Hook_AShooterGameMode_InitGame,
-		               &AShooterGameMode_InitGame_original);
+			&AShooterGameMode_InitGame_original);
 		hooks->SetHook("AShooterPlayerController.ServerSendChatMessage_Implementation",
-		               &Hook_AShooterPlayerController_ServerSendChatMessage_Impl,
-		               &AShooterPlayerController_ServerSendChatMessage_Impl_original);
+			&Hook_AShooterPlayerController_ServerSendChatMessage_Impl,
+			&AShooterPlayerController_ServerSendChatMessage_Impl_original);
 		hooks->SetHook("APlayerController.ConsoleCommand", &Hook_APlayerController_ConsoleCommand,
-		               &APlayerController_ConsoleCommand_original);
+			&APlayerController_ConsoleCommand_original);
+		hooks->SetHook("AShooterPlayerController.ConsoleCommand", &Hook_AShooterPlayerController_ConsoleCommand,
+			&AShooterPlayerController_ConsoleCommand_original);
 		hooks->SetHook("RCONClientConnection.ProcessRCONPacket", &Hook_RCONClientConnection_ProcessRCONPacket,
-		               &RCONClientConnection_ProcessRCONPacket_original);
+			&RCONClientConnection_ProcessRCONPacket_original);
 		hooks->SetHook("AGameState.DefaultTimer", &Hook_AGameState_DefaultTimer, &AGameState_DefaultTimer_original);
 		hooks->SetHook("AShooterGameMode.BeginPlay", &Hook_AShooterGameMode_BeginPlay,
-		               &AShooterGameMode_BeginPlay_original);
+			&AShooterGameMode_BeginPlay_original);
 		hooks->SetHook("URCONServer.Init", &Hook_URCONServer_Init, &URCONServer_Init_original);
-		hooks->SetHook("APlayerController.ServerReceivedPlayerControllerAck_Implementation", &Hook_APlayerController_ServerReceivedPlayerControllerAck_Implementation, 
+		hooks->SetHook("APlayerController.ServerReceivedPlayerControllerAck_Implementation", &Hook_APlayerController_ServerReceivedPlayerControllerAck_Implementation,
 			&APlayerController_ServerReceivedPlayerControllerAck_Implementation_original);
 		hooks->SetHook("AShooterPlayerController.Possess", &Hook_AShooterPlayerController_Possess,
-						&AShooterPlayerController_Possess_original);
+			&AShooterPlayerController_Possess_original);
 		hooks->SetHook("AShooterGameMode.Logout", &Hook_AShooterGameMode_Logout, &AShooterGameMode_Logout_original);
 
 		Log::GetLog()->info("Initialized hooks\n");
@@ -90,7 +94,7 @@ namespace ArkApi
 	}
 
 	void Hook_AShooterGameMode_InitGame(AShooterGameMode* a_shooter_game_mode, FString* map_name, FString* options,
-	                                    FString* error_message)
+		FString* error_message)
 	{
 		dynamic_cast<ApiUtils&>(*API::game_api->GetApiUtils()).SetShooterGameMode(a_shooter_game_mode);
 
@@ -126,7 +130,7 @@ namespace ArkApi
 	}
 
 	FString* Hook_APlayerController_ConsoleCommand(APlayerController* a_player_controller, FString* result,
-	                                               FString* cmd, bool write_to_log)
+		FString* cmd, bool write_to_log)
 	{
 		dynamic_cast<Commands&>(*API::game_api->GetCommands()).CheckConsoleCommands(
 			a_player_controller, cmd, write_to_log);
@@ -134,8 +138,16 @@ namespace ArkApi
 		return APlayerController_ConsoleCommand_original(a_player_controller, result, cmd, write_to_log);
 	}
 
+	FString* Hook_AShooterPlayerController_ConsoleCommand(AShooterPlayerController* _this, FString* result, FString* Command, bool bWriteToLog)
+	{
+		if (HideCommand)
+			return ((APlayerController*)_this)->ConsoleCommand(result, Command, false);
+		else
+			return AShooterPlayerController_ConsoleCommand_original(_this, result, Command, bWriteToLog);
+	}
+
 	void Hook_RCONClientConnection_ProcessRCONPacket(RCONClientConnection* _this, RCONPacket* packet,
-	                                                 UWorld* in_world)
+		UWorld* in_world)
 	{
 		if (_this->IsAuthenticatedField())
 		{
@@ -152,6 +164,8 @@ namespace ArkApi
 		{
 			command->CheckOnTimerCallbacks();
 		}
+
+		API::PluginManager::DetectPluginChangesTimerCallback(); // We call this here to avoid UnknownModule crashes
 
 		AGameState_DefaultTimer_original(_this);
 	}
