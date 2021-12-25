@@ -1166,16 +1166,16 @@ struct AActor : UObject
 	void K2_OnBecomeViewTarget(APlayerController* PC) { NativeCall<void, APlayerController*>(this, "AActor.K2_OnBecomeViewTarget", PC); }
 	void K2_OnEndViewTarget(APlayerController* PC) { NativeCall<void, APlayerController*>(this, "AActor.K2_OnEndViewTarget", PC); }
 	void ModifyHudMultiUseLoc(FVector2D* theVec, APlayerController* PC, int index) { NativeCall<void, FVector2D*, APlayerController*, int>(this, "AActor.ModifyHudMultiUseLoc", theVec, PC, index); }
-	void MulticastDrawDebugArrow(FVector LineStart, FVector LineEnd, float ArrowSize, FLinearColor LineColor, float Duration) { NativeCall<void, FVector, FVector, float, FLinearColor, float>(this, "AActor.MulticastDrawDebugArrow", LineStart, LineEnd, ArrowSize, LineColor, Duration); }
-	void MulticastDrawDebugBox(FVector Center, FVector Extent, FLinearColor LineColor, FRotator Rotation, float Duration) { NativeCall<void, FVector, FVector, FLinearColor, FRotator, float>(this, "AActor.MulticastDrawDebugBox", Center, Extent, LineColor, Rotation, Duration); }
+	void MulticastDrawDebugArrow(FVector LineStart, FVector LineEnd, float ArrowSize, FLinearColor LineColor, float Duration, bool enableInShipping) { NativeCall<void, FVector, FVector, float, FLinearColor, float, bool>(this, "AActor.MulticastDrawDebugArrow", LineStart, LineEnd, ArrowSize, LineColor, Duration, enableInShipping); }
+	void MulticastDrawDebugBox(FVector Center, FVector Extent, FLinearColor LineColor, FRotator Rotation, float Duration, bool enableInShipping) { NativeCall<void, FVector, FVector, FLinearColor, FRotator, float, bool>(this, "AActor.MulticastDrawDebugBox", Center, Extent, LineColor, Rotation, Duration, enableInShipping); }
 	void MulticastDrawDebugCapsule(FVector Center, float HalfHeight, float Radius, FRotator Rotation, FLinearColor LineColor, float Duration, bool enableInShipping) { NativeCall<void, FVector, float, float, FRotator, FLinearColor, float, bool>(this, "AActor.MulticastDrawDebugCapsule", Center, HalfHeight, Radius, Rotation, LineColor, Duration, enableInShipping); }
 	void MulticastDrawDebugCapsuleWithExtents(FVector Top, FVector Bottom, float Radius, FLinearColor LineColor, float Duration, bool bPersistent) { NativeCall<void, FVector, FVector, float, FLinearColor, float, bool>(this, "AActor.MulticastDrawDebugCapsuleWithExtents", Top, Bottom, Radius, LineColor, Duration, bPersistent); }
 	void MulticastDrawDebugCoordinateSystem(FVector AxisLoc, FRotator AxisRot, float Scale, float Duration, float Thickness) { NativeCall<void, FVector, FRotator, float, float, float>(this, "AActor.MulticastDrawDebugCoordinateSystem", AxisLoc, AxisRot, Scale, Duration, Thickness); }
 	void MulticastDrawDebugCylinder(FVector Start, FVector End, float Radius, int Segments, FLinearColor LineColor, float Duration) { NativeCall<void, FVector, FVector, float, int, FLinearColor, float>(this, "AActor.MulticastDrawDebugCylinder", Start, End, Radius, Segments, LineColor, Duration); }
 	void MulticastDrawDebugLine(FVector LineStart, FVector LineEnd, FLinearColor LineColor, float Duration, float Thickness, bool enableInShipping) { NativeCall<void, FVector, FVector, FLinearColor, float, float, bool>(this, "AActor.MulticastDrawDebugLine", LineStart, LineEnd, LineColor, Duration, Thickness, enableInShipping); }
-	void MulticastDrawDebugPoint(FVector Position, float Size, FLinearColor PointColor, float Duration) { NativeCall<void, FVector, float, FLinearColor, float>(this, "AActor.MulticastDrawDebugPoint", Position, Size, PointColor, Duration); }
+	void MulticastDrawDebugPoint(FVector Position, float Size, FLinearColor PointColor, float Duration, bool enableInShipping) { NativeCall<void, FVector, float, FLinearColor, float, bool>(this, "AActor.MulticastDrawDebugPoint", Position, Size, PointColor, Duration, enableInShipping); }
 	void MulticastDrawDebugSphere(FVector Center, float Radius, int Segments, FLinearColor LineColor, float Duration, bool enableInShipping) { NativeCall<void, FVector, float, int, FLinearColor, float, bool>(this, "AActor.MulticastDrawDebugSphere", Center, Radius, Segments, LineColor, Duration, enableInShipping); }
-	void MulticastDrawDebugString(FVector TextLocation, FString* Text, AActor* TestBaseActor, FLinearColor TextColor, float Duration) { NativeCall<void, FVector, FString*, AActor*, FLinearColor, float>(this, "AActor.MulticastDrawDebugString", TextLocation, Text, TestBaseActor, TextColor, Duration); }
+	void MulticastDrawDebugString(FVector TextLocation, FString* Text, AActor* TestBaseActor, FLinearColor TextColor, float Duration, bool enableInShipping) { NativeCall<void, FVector, FString*, AActor*, FLinearColor, float, bool>(this, "AActor.MulticastDrawDebugString", TextLocation, Text, TestBaseActor, TextColor, Duration, enableInShipping); }
 	void NetAttachRootComponentTo(USceneComponent* InParent, FName InSocketName, FVector RelativeLocation, FRotator RelativeRotation) { NativeCall<void, USceneComponent*, FName, FVector, FRotator>(this, "AActor.NetAttachRootComponentTo", InParent, InSocketName, RelativeLocation, RelativeRotation); }
 	void OnInventoryItemGrind() { NativeCall<void>(this, "AActor.OnInventoryItemGrind"); }
 	void PerformanceThrottledTick() { NativeCall<void>(this, "AActor.PerformanceThrottledTick"); }
@@ -7085,6 +7085,9 @@ struct APrimalDinoCharacter : APrimalCharacter
 	void UpdateImprintingQuality(float NewImprintingQuality) { NativeCall<void, float>(this, "APrimalDinoCharacter.UpdateImprintingQuality", NewImprintingQuality); }
 	void UpdateTribeGroupRanks(char NewTribeGroupPetOrderingRank, char NewTribeGroupPetRidingRank) { NativeCall<void, char, char>(this, "APrimalDinoCharacter.UpdateTribeGroupRanks", NewTribeGroupPetOrderingRank, NewTribeGroupPetRidingRank); }
 	void GetDinoData(FARKDinoData * OutDinoData) { NativeCall<void, FARKDinoData *>(this, "APrimalDinoCharacter.GetDinoData", OutDinoData); }
+	FString* GetColorSetInidcesAsString(FString* result) { return NativeCall<FString*, FString*>(this, "APrimalDinoCharacter.GetColorSetInidcesAsString", result); }
+	TArray<FName>* GetColorSetNamesAsArray(TArray<FName>* result) { return NativeCall<TArray<FName>*, TArray<FName>*>(this, "APrimalDinoCharacter.GetColorSetNamesAsArray", result); }
+	static APrimalDinoCharacter* SpawnFromDinoDataEx(FARKDinoData* InDinoData, UWorld* InWorld, FVector* AtLocation, FRotator* AtRotation, bool* dupedDino, int ForTeam, bool bGenerateNewDinoID, AShooterPlayerController* TamerController, bool beginPlay) { return NativeCall<APrimalDinoCharacter*, FARKDinoData*, UWorld*, FVector*, FRotator*, bool*, int, bool, AShooterPlayerController*, bool>(nullptr, "APrimalDinoCharacter.SpawnFromDinoData", InDinoData, InWorld, AtLocation, AtRotation, dupedDino, ForTeam, bGenerateNewDinoID, TamerController, beginPlay); }
 };
 
 struct AShooterWeapon : AActor
@@ -8591,6 +8594,9 @@ struct ANPCZoneManager
 
 struct AShooterProjectile : AActor
 {
+	TWeakObjectPtr<AActor>& DamageCauserField() { return *GetNativePointerField<TWeakObjectPtr<AActor>*>(this, "AShooterProjectile.DamageCauser"); }
+	// Functions 
+
 	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "AShooterProjectile.GetPrivateStaticClass"); }
 };
 
@@ -8874,7 +8880,9 @@ struct APrimalBuff : AActor
 
 struct APrimalBuff_Grappled : APrimalBuff
 {
+	// Functions
 
+	void BreakAllTethers() { NativeCall<void>(this, "APrimalBuff_Grappled.BreakAllTethers"); }
 };
 
 struct FHarvestResourceEntry
@@ -9270,6 +9278,11 @@ struct UStaticMeshComponent : UMeshComponent
 	bool ShouldRecreateProxyOnUpdateTransform() { return NativeCall<bool>(this, "UStaticMeshComponent.ShouldRecreateProxyOnUpdateTransform"); }
 };
 
+struct UInstancedStaticMeshComponent : UStaticMeshComponent
+{
+	void DealDirectDamage(APlayerController* ForPC, float DamageAmount, TSubclassOf<UDamageType> DamageTypeClass, int hitBodyIndex) { NativeCall<void, APlayerController*, float, TSubclassOf<UDamageType>, int>(this, "UInstancedStaticMeshComponent.DealDirectDamage", ForPC, DamageAmount, DamageTypeClass, hitBodyIndex); }
+};
+
 struct UStaticMeshSocket : UObject
 {
 	FName& SocketNameField() { return *GetNativePointerField<FName*>(this, "UStaticMeshSocket.SocketName"); }
@@ -9380,6 +9393,7 @@ struct UPrimalHarvestingComponent : UActorComponent
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalHarvestingComponent.GetPrivateStaticClass", Package); }
 	static void StaticRegisterNativesUPrimalHarvestingComponent() { NativeCall<void>(nullptr, "UPrimalHarvestingComponent.StaticRegisterNativesUPrimalHarvestingComponent"); }
 	bool TemplateCheckForHarvestRepopulation(bool bForceReinit, UWorld* world, FVector* where) { NativeCall<bool, UWorld*, FVector*>(this, "UPrimalHarvestingComponent.TemplateCheckForHarvestRepopulation", world, where); }
+	void DealDirectDamage(APlayerController* ForPC, float DamageAmount, TSubclassOf<UDamageType> DamageTypeClass) { NativeCall<void, APlayerController*, float, TSubclassOf<UDamageType>>(this, "UPrimalHarvestingComponent.DealDirectDamage", ForPC, DamageAmount, DamageTypeClass); }
 
 	TArray<FHarvestResourceEntry>& HarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.HarvestResourceEntries"); }
 	TArray<FHarvestResourceEntry>& BaseHarvestResourceEntries() { return *GetNativePointerField<TArray<FHarvestResourceEntry>*>(this, "UPrimalHarvestingComponent.BaseHarvestResourceEntries"); }
@@ -9395,6 +9409,8 @@ struct UPrimalHarvestingComponent : UActorComponent
 
 struct AMissionType : AActor
 {
+	FString& MissionDisplayNameField() { return *GetNativePointerField<FString*>(this, "AMissionType.MissionDisplayName"); }
+
 	int& MissionVersionField() { return *GetNativePointerField<int*>(this, "AMissionType.MissionVersion"); }
 	FName& CachedMissionTagField() { return *GetNativePointerField<FName*>(this, "AMissionType.CachedMissionTag"); }
 

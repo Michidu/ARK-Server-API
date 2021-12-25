@@ -78,8 +78,12 @@ namespace API
 		*/
 		bool IsPluginLoaded(const std::string& plugin_name);
 
+		/**
+		* \brief Checks for auto plugin reloads
+		*/
+		static void DetectPluginChangesTimerCallback();
 	private:
-		PluginManager();
+		PluginManager() = default;
 		~PluginManager() = default;
 
 		static nlohmann::json ReadPluginInfo(const std::string& plugin_name);
@@ -88,7 +92,6 @@ namespace API
 
 		void CheckPluginsDependencies();
 
-		static void DetectPluginChangesTimerCallback();
 		void DetectPluginChanges();
 
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;

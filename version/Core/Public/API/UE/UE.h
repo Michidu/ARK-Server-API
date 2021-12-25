@@ -40,12 +40,15 @@ struct FName
 	}
 
 	bool operator==(const wchar_t* Other) { return NativeCall<bool, const wchar_t*>(this, "FName.operator==", Other); }
+	
 	int Compare(FName* Other) { return NativeCall<int, FName*>(this, "FName.Compare", Other); }
 	void ToString(FString* Out) { NativeCall<void, FString*>(this, "FName.ToString", Out); }
-	FString ToString()
+	FString ToString() const
 	{
 		FString out;
-		this->ToString(&out);
+		FName tmp = *this;
+
+		tmp.ToString(&out);
 
 		return out;
 	}
@@ -54,7 +57,15 @@ struct FName
 	bool IsValidXName(FString InvalidChars, FText* Reason) { return NativeCall<bool, FString, FText*>(this, "FName.IsValidXName", InvalidChars, Reason); }
 	void Init(const char* InName, int InNumber, EFindName FindType, bool bSplitName, int HardcodeIndex) { NativeCall<void, const char*, int, EFindName, bool, int>(this, "FName.Init", InName, InNumber, FindType, bSplitName, HardcodeIndex); }
 	FString* GetPlainNameString(FString* result) { return NativeCall<FString*, FString*>(this, "FName.GetPlainNameString", result); }
+
+	bool operator==(const FName& Other) const { return Other.ToString() == this->ToString(); }
 };
+
+FORCEINLINE uint32 GetTypeHash(const FName& name)
+{
+	return FCrc::MemCrc32(&name, sizeof(FName));
+}
+
 
 struct FTransform
 {
@@ -162,6 +173,22 @@ struct TWeakObjectPtr
 	T* Get(bool bEvenIfPendingKill = false)
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr.Get", bEvenIfPendingKill);
+	}
+	
+	FORCEINLINE operator bool()
+	{
+		return Get() != nullptr;
+	}
+
+	FORCEINLINE operator T* ()
+	{
+		return Get();
+	}
+
+	FORCEINLINE bool operator==(const TWeakObjectPtr<T>& __that)
+	{
+		return this->ObjectIndex == __that.ObjectIndex
+			&& this->ObjectSerialNumber == __that.ObjectSerialNumber;
 	}
 
 	TWeakObjectPtr()
@@ -380,7 +407,7 @@ struct UClass : UStruct
 	TArray<UField*> NetFieldsField() { return *GetNativePointerField<TArray<UField*>*>(this, "UClass.NetFields"); }
 	UObject* ClassDefaultObjectField() { return *GetNativePointerField<UObject**>(this, "UClass.ClassDefaultObject"); }
 	bool& bCookedField() { return *GetNativePointerField<bool*>(this, "UClass.bCooked"); }
-	TMap<DWORD64, UFunction*> FuncMapField() { return *GetNativePointerField<TMap<DWORD64, UFunction*>*>(this, "UClass.FuncMap"); }
+	TMap<FName, UFunction*> FuncMapField() { return *GetNativePointerField<TMap<FName, UFunction*>*>(this, "UClass.FuncMap"); }
 	TArray<FNativeFunctionLookup>& NativeFunctionLookupTableField() { return *GetNativePointerField<TArray<FNativeFunctionLookup>*>(this, "UClass.NativeFunctionLookupTable"); }
 
 	// Functions

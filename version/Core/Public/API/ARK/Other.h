@@ -83,6 +83,35 @@ struct FSocket
 	FString& SocketDescriptionField() { return *GetNativePointerField<FString*>(this, "FSocket.SocketDescription"); }
 };
 
+struct FMultiUseEntry
+{
+	UActorComponent* ForComponent;
+	FString UseString;
+	int UseIndex;
+	int Priority;
+	unsigned __int32 bHideFromUI : 1;
+	unsigned __int32 bDisableUse : 1;
+	unsigned __int32 bHideActivationKey : 1;
+	unsigned __int32 bRepeatMultiUse : 1;
+	unsigned __int32 bDisplayOnInventoryUI : 1;
+	unsigned __int32 bDisplayOnInventoryUISecondary : 1;
+	unsigned __int32 bHarvestable : 1;
+	unsigned __int32 bIsSecondaryUse : 1;
+	unsigned __int32 bPersistWheelOnActivation : 1;
+	unsigned __int32 bOverrideUseTextColor : 1;
+	unsigned __int32 bDisplayOnInventoryUITertiary : 1;
+	unsigned __int32 bClientSideOnly : 1;
+	unsigned __int32 bPersistWheelRequiresDirectActivation : 1;
+	unsigned __int32 bDrawTooltip : 1;
+	int WheelCategory;
+	FColor DisableUseColor;
+	FColor UseTextColor;
+	float EntryActivationTimer;
+	float DefaultEntryActivationTimer;
+	USoundBase* ActivationSound;
+	int UseInventoryButtonStyleOverrideIndex;
+};
+
 struct URCONServer : UObject
 {
 	FSocket& SocketField() { return *GetNativePointerField<FSocket*>(this, "URCONServer.Socket"); }
@@ -331,6 +360,19 @@ struct FOverlapResult
 	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FOverlapResult.StaticStruct"); }
 };
 
+struct FOverlappedFoliageElement
+{
+	AActor* HarvestActor;
+	UInstancedStaticMeshComponent* InstancedStaticMeshComponent;
+	UPrimalHarvestingComponent* HarvestingComponent;
+	FVector HarvestLocation;
+	int HitBodyIndex;
+	float MaxHarvestHealth;
+	float CurrentHarvestHealth;
+	__int8 bIsUnharvestable : 1;
+	__int8 bIsVisibleAndActive : 1;
+};
+
 struct UVictoryCore
 {
 	// Functions
@@ -484,6 +526,7 @@ struct UVictoryCore
 	static void StaticRegisterNativesUVictoryCore() { NativeCall<void>(nullptr, "UVictoryCore.StaticRegisterNativesUVictoryCore"); }
 	static FString* ClassToStringReference(FString* result, TSubclassOf<UObject> obj) { return NativeCall<FString*, FString*, TSubclassOf<UObject>>(nullptr, "UVictoryCore.ClassToStringReference", result, obj); }
 	static TSubclassOf<UObject>* StringReferenceToClass(TSubclassOf<UObject>* result, FString* StringReference) { return NativeCall<TSubclassOf<UObject>*, TSubclassOf<UObject>*, FString*>(nullptr, "UVictoryCore.StringReferenceToClass", result, StringReference); }
+	static void ServerSearchFoliage(UObject* WorldContextObject, FVector* Origin, float Radius, TArray<FOverlappedFoliageElement>* OutFoliage, bool bVisibleAndActiveOnly, bool bIncludeUsableFoliage, bool bIncludeMeshFoliage, bool bSortByDistance, bool bReverseSort) { NativeCall<void, UObject*, FVector*, float, TArray<FOverlappedFoliageElement>*, bool, bool, bool, bool, bool>(nullptr, "UVictoryCore.ServerSearchFoliage", WorldContextObject, Origin, Radius, OutFoliage, bVisibleAndActiveOnly, bIncludeUsableFoliage, bIncludeMeshFoliage, bSortByDistance, bReverseSort); }
 };
 
 struct UDamageType

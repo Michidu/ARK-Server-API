@@ -1528,7 +1528,7 @@ FORCEINLINE FVector FVector::GetSafeNormal(float Tolerance) const
 	}		
 	else if(SquareSum < Tolerance)
 	{
-		return FVector::ZeroVector;
+		return FVector(0);
 	}
 	const float Scale = FMath::InvSqrt(SquareSum);
 	return FVector(X*Scale, Y*Scale, Z*Scale);
