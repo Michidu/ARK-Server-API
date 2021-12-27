@@ -1387,20 +1387,23 @@ struct FItemNetInfo
 
 struct FItemStatInfo
 {
-	unsigned __int32 bUsed : 1;
-	unsigned __int32 bCalculateAsPercent : 1;
-	unsigned __int32 bDisplayAsPercent : 1;
-	unsigned __int32 bRequiresSubmerged : 1;
-	unsigned __int32 bPreventIfSubmerged : 1;
-	unsigned __int32 bHideStatFromTooltip : 1;
-	int DefaultModifierValue;
-	int RandomizerRangeOverride;
-	float RandomizerRangeMultiplier;
-	float TheRandomizerPower;
-	float StateModifierScale;
-	float InitialValueConstant;
-	float RatingValueMultiplier;
-	float AbsoluteMaxValue;
+	int& DefaultModifierValueField() { return *GetNativePointerField<int*>(this, "FItemStatInfo.DefaultModifierValue"); }
+	int& RandomizerRangeOverrideField() { return *GetNativePointerField<int*>(this, "FItemStatInfo.RandomizerRangeOverride"); }
+	float& RandomizerRangeMultiplierField() { return *GetNativePointerField<float*>(this, "FItemStatInfo.RandomizerRangeMultiplier"); }
+	float& TheRandomizerPowerField() { return *GetNativePointerField<float*>(this, "FItemStatInfo.TheRandomizerPower"); }
+	float& StateModifierScaleField() { return *GetNativePointerField<float*>(this, "FItemStatInfo.StateModifierScale"); }
+	float& InitialValueConstantField() { return *GetNativePointerField<float*>(this, "FItemStatInfo.InitialValueConstant"); }
+	float& RatingValueMultiplierField() { return *GetNativePointerField<float*>(this, "FItemStatInfo.RatingValueMultiplier"); }
+	float& AbsoluteMaxValueField() { return *GetNativePointerField<float*>(this, "FItemStatInfo.AbsoluteMaxValue"); }
+
+	// Bit fields
+
+	BitFieldValue<bool, unsigned __int32> bUsed() { return { this, "FItemStatInfo.bUsed" }; }
+	BitFieldValue<bool, unsigned __int32> bCalculateAsPercent() { return { this, "FItemStatInfo.bCalculateAsPercent" }; }
+	BitFieldValue<bool, unsigned __int32> bDisplayAsPercent() { return { this, "FItemStatInfo.bDisplayAsPercent" }; }
+	BitFieldValue<bool, unsigned __int32> bRequiresSubmerged() { return { this, "FItemStatInfo.bRequiresSubmerged" }; }
+	BitFieldValue<bool, unsigned __int32> bPreventIfSubmerged() { return { this, "FItemStatInfo.bPreventIfSubmerged" }; }
+	BitFieldValue<bool, unsigned __int32> bHideStatFromTooltip() { return { this, "FItemStatInfo.bHideStatFromTooltip" }; }
 
 	// Functions
 

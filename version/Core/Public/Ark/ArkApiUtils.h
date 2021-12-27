@@ -793,7 +793,7 @@ namespace ArkApi
 			return steam_id;
 		}
 
-		FORCEINLINE void RunHiddenCommand(AShooterPlayerController* _this, FString* Command)
+		void RunHiddenCommand(AShooterPlayerController* _this, FString* Command)
 		{
 			FString result;
 			HideCommand = true;

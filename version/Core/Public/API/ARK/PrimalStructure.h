@@ -1174,7 +1174,7 @@ struct APrimalStructureExplosive : APrimalStructure
 {
 	char __padding[0xa0L];
 	unsigned int& ConstructorPlayerDataIDField() { return *GetNativePointerField<unsigned int*>(this, "APrimalStructureExplosive.ConstructorPlayerDataID"); }
-	AShooterCharacter* ConstructorPawnField() { return GetNativePointerField<AShooterCharacter**>(this, "APrimalStructureExplosive.ConstructorPawn"); }
+	AShooterCharacter* ConstructorPawnField() { return *GetNativePointerField<AShooterCharacter**>(this, "APrimalStructureExplosive.ConstructorPawn"); }
 	int& ConstructorTargetingTeamField() { return *GetNativePointerField<int*>(this, "APrimalStructureExplosive.ConstructorTargetingTeam"); }
 	FVector& ExplosiveLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureExplosive.ExplosiveLocOffset"); }
 	FRotator& ExplosiveRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureExplosive.ExplosiveRotOffset"); }
