@@ -71,7 +71,6 @@ struct FOverlapInfo
 	void* CachedCompPtrField() { return *GetNativePointerField<void**>(this, "FOverlapInfo.CachedCompPtr"); }
 
 	// Functions
-
 };
 
 struct FInternetAddr
@@ -130,29 +129,29 @@ struct FSocketBSD : FSocket
 	// Functions
 
 	bool Close() { return NativeCall<bool>(this, "FSocketBSD.Close"); }
-	bool Bind(FInternetAddr * Addr) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.Bind", Addr); }
-	bool Connect(FInternetAddr * Addr) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.Connect", Addr); }
+	bool Bind(FInternetAddr* Addr) { return NativeCall<bool, FInternetAddr*>(this, "FSocketBSD.Bind", Addr); }
+	bool Connect(FInternetAddr* Addr) { return NativeCall<bool, FInternetAddr*>(this, "FSocketBSD.Connect", Addr); }
 	bool Listen(int MaxBacklog) { return NativeCall<bool, int>(this, "FSocketBSD.Listen", MaxBacklog); }
-	bool HasPendingConnection(bool * bHasPendingConnection) { return NativeCall<bool, bool *>(this, "FSocketBSD.HasPendingConnection", bHasPendingConnection); }
-	bool HasPendingData(unsigned int * PendingDataSize) { return NativeCall<bool, unsigned int *>(this, "FSocketBSD.HasPendingData", PendingDataSize); }
-	FSocket * Accept(FString * SocketDescription) { return NativeCall<FSocket *, FString *>(this, "FSocketBSD.Accept", SocketDescription); }
-	FSocket * Accept(FInternetAddr * OutAddr, FString * SocketDescription) { return NativeCall<FSocket *, FInternetAddr *, FString *>(this, "FSocketBSD.Accept", OutAddr, SocketDescription); }
-	bool SendTo(const char * Data, int Count, int * BytesSent, FInternetAddr * Destination) { return NativeCall<bool, const char *, int, int *, FInternetAddr *>(this, "FSocketBSD.SendTo", Data, Count, BytesSent, Destination); }
-	bool Send(const char * Data, int Count, int * BytesSent) { return NativeCall<bool, const char *, int, int *>(this, "FSocketBSD.Send", Data, Count, BytesSent); }
-	bool RecvFrom(char * Data, int BufferSize, int * BytesRead, FInternetAddr * Source, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char *, int, int *, FInternetAddr *, ESocketReceiveFlags::Type>(this, "FSocketBSD.RecvFrom", Data, BufferSize, BytesRead, Source, Flags); }
-	bool Recv(char * Data, int BufferSize, int * BytesRead, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char *, int, int *, ESocketReceiveFlags::Type>(this, "FSocketBSD.Recv", Data, BufferSize, BytesRead, Flags); }
+	bool HasPendingConnection(bool* bHasPendingConnection) { return NativeCall<bool, bool*>(this, "FSocketBSD.HasPendingConnection", bHasPendingConnection); }
+	bool HasPendingData(unsigned int* PendingDataSize) { return NativeCall<bool, unsigned int*>(this, "FSocketBSD.HasPendingData", PendingDataSize); }
+	FSocket* Accept(FString* SocketDescription) { return NativeCall<FSocket*, FString*>(this, "FSocketBSD.Accept", SocketDescription); }
+	FSocket* Accept(FInternetAddr* OutAddr, FString* SocketDescription) { return NativeCall<FSocket*, FInternetAddr*, FString*>(this, "FSocketBSD.Accept", OutAddr, SocketDescription); }
+	bool SendTo(const char* Data, int Count, int* BytesSent, FInternetAddr* Destination) { return NativeCall<bool, const char*, int, int*, FInternetAddr*>(this, "FSocketBSD.SendTo", Data, Count, BytesSent, Destination); }
+	bool Send(const char* Data, int Count, int* BytesSent) { return NativeCall<bool, const char*, int, int*>(this, "FSocketBSD.Send", Data, Count, BytesSent); }
+	bool RecvFrom(char* Data, int BufferSize, int* BytesRead, FInternetAddr* Source, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char*, int, int*, FInternetAddr*, ESocketReceiveFlags::Type>(this, "FSocketBSD.RecvFrom", Data, BufferSize, BytesRead, Source, Flags); }
+	bool Recv(char* Data, int BufferSize, int* BytesRead, ESocketReceiveFlags::Type Flags) { return NativeCall<bool, char*, int, int*, ESocketReceiveFlags::Type>(this, "FSocketBSD.Recv", Data, BufferSize, BytesRead, Flags); }
 	ESocketConnectionState GetConnectionState() { return NativeCall<ESocketConnectionState>(this, "FSocketBSD.GetConnectionState"); }
-	void GetAddress(FInternetAddr * OutAddr) { NativeCall<void, FInternetAddr *>(this, "FSocketBSD.GetAddress", OutAddr); }
+	void GetAddress(FInternetAddr* OutAddr) { NativeCall<void, FInternetAddr*>(this, "FSocketBSD.GetAddress", OutAddr); }
 	bool SetNonBlocking(bool bIsNonBlocking) { return NativeCall<bool, bool>(this, "FSocketBSD.SetNonBlocking", bIsNonBlocking); }
 	bool SetBroadcast(bool bAllowBroadcast) { return NativeCall<bool, bool>(this, "FSocketBSD.SetBroadcast", bAllowBroadcast); }
-	bool JoinMulticastGroup(FInternetAddr * GroupAddress) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.JoinMulticastGroup", GroupAddress); }
-	bool LeaveMulticastGroup(FInternetAddr * GroupAddress) { return NativeCall<bool, FInternetAddr *>(this, "FSocketBSD.LeaveMulticastGroup", GroupAddress); }
+	bool JoinMulticastGroup(FInternetAddr* GroupAddress) { return NativeCall<bool, FInternetAddr*>(this, "FSocketBSD.JoinMulticastGroup", GroupAddress); }
+	bool LeaveMulticastGroup(FInternetAddr* GroupAddress) { return NativeCall<bool, FInternetAddr*>(this, "FSocketBSD.LeaveMulticastGroup", GroupAddress); }
 	bool SetMulticastLoopback(bool bLoopback) { return NativeCall<bool, bool>(this, "FSocketBSD.SetMulticastLoopback", bLoopback); }
 	bool SetMulticastTtl(char TimeToLive) { return NativeCall<bool, char>(this, "FSocketBSD.SetMulticastTtl", TimeToLive); }
 	bool SetReuseAddr(bool bAllowReuse) { return NativeCall<bool, bool>(this, "FSocketBSD.SetReuseAddr", bAllowReuse); }
 	bool SetLinger(bool bShouldLinger, int Timeout) { return NativeCall<bool, bool, int>(this, "FSocketBSD.SetLinger", bShouldLinger, Timeout); }
-	bool SetSendBufferSize(int Size, int * NewSize) { return NativeCall<bool, int, int *>(this, "FSocketBSD.SetSendBufferSize", Size, NewSize); }
-	bool SetReceiveBufferSize(int Size, int * NewSize) { return NativeCall<bool, int, int *>(this, "FSocketBSD.SetReceiveBufferSize", Size, NewSize); }
+	bool SetSendBufferSize(int Size, int* NewSize) { return NativeCall<bool, int, int*>(this, "FSocketBSD.SetSendBufferSize", Size, NewSize); }
+	bool SetReceiveBufferSize(int Size, int* NewSize) { return NativeCall<bool, int, int*>(this, "FSocketBSD.SetReceiveBufferSize", Size, NewSize); }
 	int GetPortNo() { return NativeCall<int>(this, "FSocketBSD.GetPortNo"); }
 };
 
@@ -188,7 +187,6 @@ struct UGameInstance;
 
 struct UGameplayStatics
 {
-
 	// Functions
 
 	static APlayerController* GetPlayerController(UObject* WorldContextObject, int PlayerIndex) { return NativeCall<APlayerController*, UObject*, int>(nullptr, "UGameplayStatics.GetPlayerController", WorldContextObject, PlayerIndex); }
@@ -199,7 +197,8 @@ struct UGameplayStatics
 	static bool ApplyRadialDamageIgnoreDamageActors(UObject* WorldContextObject, float BaseDamage, FVector* Origin, float DamageRadius, TSubclassOf<UDamageType> DamageTypeClass, TArray<AActor*>* IgnoreActors, TArray<AActor*>* IgnoreDamageActors, AActor* DamageCauser, AController* InstigatedByController, bool bDoFullDamage, ECollisionChannel DamagePreventionChannel, float Impulse) { return NativeCall<bool, UObject*, float, FVector*, float, TSubclassOf<UDamageType>, TArray<AActor*>*, TArray<AActor*>*, AActor*, AController*, bool, ECollisionChannel, float>(nullptr, "UGameplayStatics.ApplyRadialDamageIgnoreDamageActors", WorldContextObject, BaseDamage, Origin, DamageRadius, DamageTypeClass, IgnoreActors, IgnoreDamageActors, DamageCauser, InstigatedByController, bDoFullDamage, DamagePreventionChannel, Impulse); }
 	static bool ApplyRadialDamageWithFalloff(UObject* WorldContextObject, float BaseDamage, float MinimumDamage, FVector* Origin, float DamageInnerRadius, float DamageOuterRadius, float DamageFalloff, TSubclassOf<UDamageType> DamageTypeClass, TArray<AActor*>* IgnoreActors, AActor* DamageCauser, AController* InstigatedByController, ECollisionChannel DamagePreventionChannel, float Impulse, TArray<AActor*>* IgnoreDamageActors, int NumAdditionalAttempts) { return NativeCall<bool, UObject*, float, float, FVector*, float, float, float, TSubclassOf<UDamageType>, TArray<AActor*>*, AActor*, AController*, ECollisionChannel, float, TArray<AActor*>*, int>(nullptr, "UGameplayStatics.ApplyRadialDamageWithFalloff", WorldContextObject, BaseDamage, MinimumDamage, Origin, DamageInnerRadius, DamageOuterRadius, DamageFalloff, DamageTypeClass, IgnoreActors, DamageCauser, InstigatedByController, DamagePreventionChannel, Impulse, IgnoreDamageActors, NumAdditionalAttempts); }
 	static void ApplyPointDamage(AActor* DamagedActor, float BaseDamage, FVector* HitFromDirection, FHitResult* HitInfo, AController* EventInstigator, AActor* DamageCauser, TSubclassOf<UDamageType> DamageTypeClass, float Impulse, bool bForceCollisionCheck, ECollisionChannel ForceCollisionCheckTraceChannel) { NativeCall<void, AActor*, float, FVector*, FHitResult*, AController*, AActor*, TSubclassOf<UDamageType>, float, bool, ECollisionChannel>(nullptr, "UGameplayStatics.ApplyPointDamage", DamagedActor, BaseDamage, HitFromDirection, HitInfo, EventInstigator, DamageCauser, DamageTypeClass, Impulse, bForceCollisionCheck, ForceCollisionCheckTraceChannel); }
-	static void ApplyDamage(AActor* DamagedActor, float BaseDamage, AController* EventInstigator, AActor* DamageCauser, TSubclassOf<UDamageType> DamageTypeClass, float Impulse) { NativeCall<void, AActor*, float, AController*, AActor*, TSubclassOf<UDamageType>, float>(nullptr, "UGameplayStatics.ApplyDamage", DamagedActor, BaseDamage, EventInstigator, DamageCauser, DamageTypeClass, Impulse); }
+	//static void ApplyDamage(AActor* DamagedActor, float BaseDamage, AController* EventInstigator, AActor* DamageCauser, TSubclassOf<UDamageType> DamageTypeClass, float Impulse) { NativeCall<void, AActor*, float, AController*, AActor*, TSubclassOf<UDamageType>, float>(nullptr, "UGameplayStatics.ApplyDamage", DamagedActor, BaseDamage, EventInstigator, DamageCauser, DamageTypeClass, Impulse); }
+	static void ApplyDamage(AActor* DamagedActor, float BaseDamage, AController* EventInstigator, AActor* DamageCauser) { NativeCall<void, AActor*, float, AController*, AActor*>(nullptr, "UGameplayStatics.ApplyDamage", DamagedActor, BaseDamage, EventInstigator, DamageCauser); }
 	static AActor* BeginSpawningActorFromBlueprint(UObject* WorldContextObject, UBlueprint* Blueprint, FTransform* SpawnTransform, bool bNoCollisionFail) { return NativeCall<AActor*, UObject*, UBlueprint*, FTransform*, bool>(nullptr, "UGameplayStatics.BeginSpawningActorFromBlueprint", WorldContextObject, Blueprint, SpawnTransform, bNoCollisionFail); }
 	static AActor* BeginSpawningActorFromClass(UObject* WorldContextObject, TSubclassOf<AActor> ActorClass, FTransform* SpawnTransform, bool bNoCollisionFail) { return NativeCall<AActor*, UObject*, TSubclassOf<AActor>, FTransform*, bool>(nullptr, "UGameplayStatics.BeginSpawningActorFromClass", WorldContextObject, ActorClass, SpawnTransform, bNoCollisionFail); }
 	static AActor* FinishSpawningActor(AActor* Actor, FTransform* SpawnTransform) { return NativeCall<AActor*, AActor*, FTransform*>(nullptr, "UGameplayStatics.FinishSpawningActor", Actor, SpawnTransform); }
@@ -237,11 +236,11 @@ struct UPrimalEngramEntry : UObject
 {
 	int& RequiredCharacterLevelField() { return *GetNativePointerField<int*>(this, "UPrimalEngramEntry.RequiredCharacterLevel"); }
 	int& RequiredEngramPointsField() { return *GetNativePointerField<int*>(this, "UPrimalEngramEntry.RequiredEngramPoints"); }
-	TSubclassOf<UPrimalItem> & BluePrintEntryField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "UPrimalEngramEntry.BluePrintEntry"); }
-	FString & ExtraEngramDescriptionField() { return *GetNativePointerField<FString*>(this, "UPrimalEngramEntry.ExtraEngramDescription"); }
-	TArray<FEngramEntries> & EngramRequirementSetsField() { return *GetNativePointerField<TArray<FEngramEntries>*>(this, "UPrimalEngramEntry.EngramRequirementSets"); }
+	TSubclassOf<UPrimalItem>& BluePrintEntryField() { return *GetNativePointerField<TSubclassOf<UPrimalItem>*>(this, "UPrimalEngramEntry.BluePrintEntry"); }
+	FString& ExtraEngramDescriptionField() { return *GetNativePointerField<FString*>(this, "UPrimalEngramEntry.ExtraEngramDescription"); }
+	TArray<FEngramEntries>& EngramRequirementSetsField() { return *GetNativePointerField<TArray<FEngramEntries>*>(this, "UPrimalEngramEntry.EngramRequirementSets"); }
 	int& MyEngramIndexField() { return *GetNativePointerField<int*>(this, "UPrimalEngramEntry.MyEngramIndex"); }
-	TEnumAsByte<enum EEngramGroup::Type> & EngramGroupField() { return *GetNativePointerField<TEnumAsByte<enum EEngramGroup::Type>*>(this, "UPrimalEngramEntry.EngramGroup"); }
+	TEnumAsByte<enum EEngramGroup::Type>& EngramGroupField() { return *GetNativePointerField<TEnumAsByte<enum EEngramGroup::Type>*>(this, "UPrimalEngramEntry.EngramGroup"); }
 
 	// Bit fields
 
@@ -251,19 +250,19 @@ struct UPrimalEngramEntry : UObject
 
 	// Functions
 
-	UObject * GetObjectW() { return NativeCall<UObject*>(this, "UPrimalEngramEntry.GetObjectW"); }
-	FString * GetEntryString(FString * result) { return NativeCall<FString*, FString*>(this, "UPrimalEngramEntry.GetEntryString", result); }
-	UTexture2D * GetEntryIcon(UObject * AssociatedDataObject, bool bIsEnabled) { return NativeCall<UTexture2D*, UObject*, bool>(this, "UPrimalEngramEntry.GetEntryIcon", AssociatedDataObject, bIsEnabled); }
-	bool MeetsEngramRequirements(AShooterPlayerState * aPlayerState, bool bOnlyCheckLevel, bool bDontCheckEngramPreRequirements) { return NativeCall<bool, AShooterPlayerState*, bool, bool>(this, "UPrimalEngramEntry.MeetsEngramRequirements", aPlayerState, bOnlyCheckLevel, bDontCheckEngramPreRequirements); }
-	bool MeetsEngramChainRequirements(AShooterPlayerState * aPlayerState) { return NativeCall<bool, AShooterPlayerState*>(this, "UPrimalEngramEntry.MeetsEngramChainRequirements", aPlayerState); }
-	FString * GetEngramDescription(FString * result, AShooterPlayerState * aPlayerState) { return NativeCall<FString*, FString*, AShooterPlayerState*>(this, "UPrimalEngramEntry.GetEngramDescription", result, aPlayerState); }
-	FString * GetEngramName(FString * result) { return NativeCall<FString*, FString*>(this, "UPrimalEngramEntry.GetEngramName", result); }
+	UObject* GetObjectW() { return NativeCall<UObject*>(this, "UPrimalEngramEntry.GetObjectW"); }
+	FString* GetEntryString(FString* result) { return NativeCall<FString*, FString*>(this, "UPrimalEngramEntry.GetEntryString", result); }
+	UTexture2D* GetEntryIcon(UObject* AssociatedDataObject, bool bIsEnabled) { return NativeCall<UTexture2D*, UObject*, bool>(this, "UPrimalEngramEntry.GetEntryIcon", AssociatedDataObject, bIsEnabled); }
+	bool MeetsEngramRequirements(AShooterPlayerState* aPlayerState, bool bOnlyCheckLevel, bool bDontCheckEngramPreRequirements) { return NativeCall<bool, AShooterPlayerState*, bool, bool>(this, "UPrimalEngramEntry.MeetsEngramRequirements", aPlayerState, bOnlyCheckLevel, bDontCheckEngramPreRequirements); }
+	bool MeetsEngramChainRequirements(AShooterPlayerState* aPlayerState) { return NativeCall<bool, AShooterPlayerState*>(this, "UPrimalEngramEntry.MeetsEngramChainRequirements", aPlayerState); }
+	FString* GetEngramDescription(FString* result, AShooterPlayerState* aPlayerState) { return NativeCall<FString*, FString*, AShooterPlayerState*>(this, "UPrimalEngramEntry.GetEngramDescription", result, aPlayerState); }
+	FString* GetEngramName(FString* result) { return NativeCall<FString*, FString*>(this, "UPrimalEngramEntry.GetEngramName", result); }
 	int GetRequiredEngramPoints() { return NativeCall<int>(this, "UPrimalEngramEntry.GetRequiredEngramPoints"); }
 	int GetRequiredLevel() { return NativeCall<int>(this, "UPrimalEngramEntry.GetRequiredLevel"); }
 	bool UseEngramRequirementSets() { return NativeCall<bool>(this, "UPrimalEngramEntry.UseEngramRequirementSets"); }
 	bool IsEngramClassHidden(TSubclassOf<UPrimalItem> ForItemClass) { return NativeCall<bool, TSubclassOf<UPrimalItem>>(this, "UPrimalEngramEntry.IsEngramClassHidden", ForItemClass); }
-	void GetAllChainedPreReqs(AShooterPlayerState * aPlayerState, TArray<TSubclassOf<UPrimalEngramEntry>> * TestedEntries) { NativeCall<void, AShooterPlayerState*, TArray<TSubclassOf<UPrimalEngramEntry>>*>(this, "UPrimalEngramEntry.GetAllChainedPreReqs", aPlayerState, TestedEntries); }
-	int GetChainRequiredEngramPoints(TArray<TSubclassOf<UPrimalEngramEntry>> * TestedEntries) { return NativeCall<int, TArray<TSubclassOf<UPrimalEngramEntry>>*>(this, "UPrimalEngramEntry.GetChainRequiredEngramPoints", TestedEntries); }
+	void GetAllChainedPreReqs(AShooterPlayerState* aPlayerState, TArray<TSubclassOf<UPrimalEngramEntry>>* TestedEntries) { NativeCall<void, AShooterPlayerState*, TArray<TSubclassOf<UPrimalEngramEntry>>*>(this, "UPrimalEngramEntry.GetAllChainedPreReqs", aPlayerState, TestedEntries); }
+	int GetChainRequiredEngramPoints(TArray<TSubclassOf<UPrimalEngramEntry>>* TestedEntries) { return NativeCall<int, TArray<TSubclassOf<UPrimalEngramEntry>>*>(this, "UPrimalEngramEntry.GetChainRequiredEngramPoints", TestedEntries); }
 	void ClearHiddenEngramRequirements() { NativeCall<void>(this, "UPrimalEngramEntry.ClearHiddenEngramRequirements"); }
 };
 
@@ -286,7 +285,6 @@ struct FCraftingResourceRequirement
 
 struct UKismetSystemLibrary
 {
-
 	// Functions
 
 	static FString* MakeLiteralString(FString* result, FString* Value) { return NativeCall<FString*, FString*, FString*>(nullptr, "UKismetSystemLibrary.MakeLiteralString", result, Value); }
@@ -358,8 +356,8 @@ struct FOverlapResult
 
 	// Functions
 
-	AActor * GetActor() { return NativeCall<AActor *>(this, "FOverlapResult.GetActor"); }
-	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FOverlapResult.StaticStruct"); }
+	AActor* GetActor() { return NativeCall<AActor*>(this, "FOverlapResult.GetActor"); }
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FOverlapResult.StaticStruct"); }
 };
 
 struct FOverlappedFoliageElement
@@ -377,7 +375,6 @@ struct FOverlappedFoliageElement
 
 struct UVictoryCore
 {
-
 	// Functions
 
 	static bool OverlappingActors(UWorld* theWorld, TArray<FOverlapResult>* Overlaps, FVector Origin, float Radius, int CollisionGroups, AActor* InIgnoreActor, FName TraceName, bool bComplexOverlapTest) { return NativeCall<bool, UWorld*, TArray<FOverlapResult>*, FVector, float, int, AActor*, FName, bool>(nullptr, "UVictoryCore.OverlappingActors", theWorld, Overlaps, Origin, Radius, CollisionGroups, InIgnoreActor, TraceName, bComplexOverlapTest); }
@@ -555,7 +552,7 @@ struct UDamageType
 
 	// Functions
 
-	static UClass * GetPrivateStaticClass(const wchar_t * Package) { return NativeCall<UClass *, const wchar_t *>(nullptr, "UDamageType.GetPrivateStaticClass", Package); }
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UDamageType.GetPrivateStaticClass", Package); }
 	static void StaticRegisterNativesUDamageType() { NativeCall<void>(nullptr, "UDamageType.StaticRegisterNativesUDamageType"); }
 };
 
@@ -587,7 +584,7 @@ struct FDinoAttackInfo
 	float& RiderAttackIntervalField() { return *GetNativePointerField<float*>(this, "FDinoAttackInfo.RiderAttackInterval"); }
 	float& DotProductCheckMinField() { return *GetNativePointerField<float*>(this, "FDinoAttackInfo.DotProductCheckMin"); }
 	float& DotProductCheckMaxField() { return *GetNativePointerField<float*>(this, "FDinoAttackInfo.DotProductCheckMax"); }
-	TArray<UAnimMontage *> AttackAnimationsField() { return *GetNativePointerField<TArray<UAnimMontage *>*>(this, "FDinoAttackInfo.AttackAnimations"); }
+	TArray<UAnimMontage*> AttackAnimationsField() { return *GetNativePointerField<TArray<UAnimMontage*>*>(this, "FDinoAttackInfo.AttackAnimations"); }
 	TArray<float>& AttackAnimationWeightsField() { return *GetNativePointerField<TArray<float>*>(this, "FDinoAttackInfo.AttackAnimationWeights"); }
 	TArray<float>& AttackAnimationsTimeFromEndToConsiderFinishedField() { return *GetNativePointerField<TArray<float>*>(this, "FDinoAttackInfo.AttackAnimationsTimeFromEndToConsiderFinished"); }
 	float& AttackRunningSpeedModifierField() { return *GetNativePointerField<float*>(this, "FDinoAttackInfo.AttackRunningSpeedModifier"); }
@@ -598,6 +595,13 @@ struct FDinoAttackInfo
 
 	// Functions
 
-	FDinoAttackInfo * operator=(FDinoAttackInfo * __that) { return NativeCall<FDinoAttackInfo *, FDinoAttackInfo *>(this, "FDinoAttackInfo.operator=", __that); }
-	static UScriptStruct * StaticStruct() { return NativeCall<UScriptStruct *>(nullptr, "FDinoAttackInfo.StaticStruct"); }
+	FDinoAttackInfo* operator=(FDinoAttackInfo* __that) { return NativeCall<FDinoAttackInfo*, FDinoAttackInfo*>(this, "FDinoAttackInfo.operator=", __that); }
+	static UScriptStruct* StaticStruct() { return NativeCall<UScriptStruct*>(nullptr, "FDinoAttackInfo.StaticStruct"); }
+};
+
+struct FHordeCrateNPCGroup {};
+struct FHordeCrateWave {};
+struct __declspec(align(8)) FHordeCrateDifficultyLevel
+{
+	int& DifficultyLevelField() { return *GetNativePointerField<int*>(this, "FHordeCrateDifficultyLevel.DifficultyLevel"); }
 };

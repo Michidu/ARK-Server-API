@@ -16,6 +16,7 @@
   <ItemGroup>
     <ClInclude Include="Core\Private\Ark\ApiUtils.h" />
     <ClInclude Include="Core\Private\Ark\ArkBaseApi.h" />
+    <ClInclude Include="Core\Private\Ark\Globals.h" />
     <ClInclude Include="Core\Private\Ark\HooksImpl.h" />
     <ClInclude Include="Core\Private\Atlas\ApiUtils.h" />
     <ClInclude Include="Core\Private\Atlas\AtlasBaseApi.h" />

@@ -9411,7 +9411,16 @@ struct AMissionType : AActor
 {
 	FString& MissionDisplayNameField() { return *GetNativePointerField<FString*>(this, "AMissionType.MissionDisplayName"); }
 
+	int& MissionVersionField() { return *GetNativePointerField<int*>(this, "AMissionType.MissionVersion"); }
+	FName& CachedMissionTagField() { return *GetNativePointerField<FName*>(this, "AMissionType.CachedMissionTag"); }
+
 	static void GetNearbyPlayersAndTamedDinos(UObject* WorldContextObject, TArray<APrimalCharacter*>* OutCharacters, FVector* Location, float Radius) { NativeCall<void, UObject*, TArray<APrimalCharacter*>*, FVector*, float>(nullptr, "AMissionType.GetNearbyPlayersAndTamedDinos", WorldContextObject, OutCharacters, Location, Radius); }
+};
+
+struct FCharacterAndControllerPair
+{
+	AShooterCharacter* Character;
+	AShooterPlayerController* Controller;
 };
 
 struct ABiomeZoneVolume : AVolume
@@ -9433,4 +9442,20 @@ struct FSpawnPointInfo
 	FString* GetDisplayName(FString* result, FVector* FromPos, bool bIncludeDistance) { return NativeCall<FString*, FString*, FVector*, bool>(this, "FSpawnPointInfo.GetDisplayName", result, FromPos, bIncludeDistance); }
 	FSpawnPointInfo* operator=(FSpawnPointInfo* __that) { return NativeCall<FSpawnPointInfo*, FSpawnPointInfo*>(this, "FSpawnPointInfo.operator=", __that); }
 	bool operator==(FSpawnPointInfo* Other) { return NativeCall<bool, FSpawnPointInfo*>(this, "FSpawnPointInfo.operator==", Other); }
+};
+
+struct ATriggerBase : AActor
+{
+	static UClass* GetPrivateStaticClass() { return NativeCall<UClass*>(nullptr, "ATriggerBase.GetPrivateStaticClass"); }
+	TSubobjectPtr<UShapeComponent>& CollisionComponentField() { return *GetNativePointerField<TSubobjectPtr<UShapeComponent>*>(this, "ATriggerBase.CollisionComponent"); }
+};
+
+struct ATriggerSphere : ATriggerBase
+{
+	static UClass* GetClass()
+	{
+		static UClass* Class = Globals::FindClass("Class /Script/Engine.TriggerSphere");
+
+		return Class;
+	}
 };
