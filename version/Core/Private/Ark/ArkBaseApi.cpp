@@ -16,12 +16,12 @@
 
 namespace API
 {
-	constexpr float api_version = 3.54f;
+	constexpr float api_version = 3.55f;
 
 	ArkBaseApi::ArkBaseApi()
 		: commands_(std::make_unique<ArkApi::Commands>()),
-		  hooks_(std::make_unique<Hooks>()),
-		  api_utils_(std::make_unique<ArkApi::ApiUtils>())
+		hooks_(std::make_unique<Hooks>()),
+		api_utils_(std::make_unique<ArkApi::ApiUtils>())
 	{
 	}
 
@@ -167,7 +167,7 @@ namespace API
 	}
 
 	void ArkBaseApi::UnloadPluginRcon(RCONClientConnection* rcon_connection, RCONPacket* rcon_packet,
-	                                  UWorld* /*unused*/)
+		UWorld* /*unused*/)
 	{
 		FString reply = UnloadPlugin(&rcon_packet->Body);
 		rcon_connection->SendMessageW(rcon_packet->Id, 0, &reply);
