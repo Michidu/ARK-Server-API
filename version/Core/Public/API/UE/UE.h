@@ -185,7 +185,7 @@ struct TWeakObjectPtr
 		return Get();
 	}
 
-	FORCEINLINE bool operator==(const TWeakObjectPtr<T>& __that)
+	FORCEINLINE bool operator==(const TWeakObjectPtr<T>& __that) const
 	{
 		return this->ObjectIndex == __that.ObjectIndex
 			&& this->ObjectSerialNumber == __that.ObjectSerialNumber;

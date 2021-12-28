@@ -160,21 +160,17 @@ template <typename T>
 int GetObjectClassSize()
 {
 	// Credits to Substitute#0001 for the idea
-	int size = 0;
 	UClass* objClass = T::StaticClass();
 	if (objClass)
 	{
-		for (UProperty* prop = objClass->PropertyLinkField(); prop = prop->PropertyLinkNextField();)
-		{
-			size += prop->ElementSizeField();
-		}
+		return objClass->PropertiesSizeField();
 	}
 
-	return size;
+	return 0;
 }
 
 /*
-* \brief Gets the size in bytes of an struct class. Example: GetObjectClassSize<FTribeData>() - Credit to @Substitute#0001 for the idea
+* \brief Gets the size in bytes of an struct class. Example: GetObjectClassSize<FTribeData>()
 * 
 * \tparam T - Struct class
 * \return The size in bytes
@@ -187,10 +183,7 @@ int GetStructSize()
 	UScriptStruct* staticStruct = T::StaticStruct();
 	if (staticStruct)
 	{
-		for (UProperty* prop = staticStruct->PropertyLinkField(); prop = prop->PropertyLinkNextField();)
-		{
-			size += prop->ElementSizeField();
-		}
+		return staticStruct->PropertiesSizeField();
 	}
-	return size;
+	return 0;
 }
