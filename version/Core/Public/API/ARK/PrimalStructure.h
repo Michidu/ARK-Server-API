@@ -626,7 +626,7 @@ struct APrimalStructure : APrimalTargetableActor
 	void GetMultiUseEntries(APlayerController* ForPC, TArray<FMultiUseEntry>* MultiUseEntries) { NativeCall<void, APlayerController*, TArray<FMultiUseEntry>*>(this, "APrimalStructure.GetMultiUseEntries", ForPC, MultiUseEntries); }
 };
 
-struct APrimalStructureBed
+struct APrimalStructureBed 
 {
 	FVector& PlayerSpawnLocOffsetField() { return *GetNativePointerField<FVector*>(this, "APrimalStructureBed.PlayerSpawnLocOffset"); }
 	FRotator& PlayerSpawnRotOffsetField() { return *GetNativePointerField<FRotator*>(this, "APrimalStructureBed.PlayerSpawnRotOffset"); }
