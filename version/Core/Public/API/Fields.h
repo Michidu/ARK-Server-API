@@ -149,3 +149,41 @@ private:
 	void* parent_;
 	std::string field_name_;
 };
+
+/*
+* \brief Gets the size in bytes of an Object class. Example: GetObjectClassSize<AActor>()
+* 
+* tparam T - Object class
+* \return The size of the class in bytes
+*/
+template <typename T> 
+int GetObjectClassSize()
+{
+	// Credits to Substitute#0001 for the idea
+	UClass* objClass = T::StaticClass();
+	if (objClass)
+	{
+		return objClass->PropertiesSizeField();
+	}
+
+	return 0;
+}
+
+/*
+* \brief Gets the size in bytes of an struct class. Example: GetObjectClassSize<FTribeData>()
+* 
+* \tparam T - Struct class
+* \return The size in bytes
+*/
+template <typename T>
+int GetStructSize()
+{
+	// Credits to Substitute#0001 for the idea
+	int size = 0;
+	UScriptStruct* staticStruct = T::StaticStruct();
+	if (staticStruct)
+	{
+		return staticStruct->PropertiesSizeField();
+	}
+	return 0;
+}
