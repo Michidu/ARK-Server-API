@@ -377,6 +377,11 @@ struct UStruct : UField
 	void TagSubobjects(EObjectFlags NewFlags) { NativeCall<void, EObjectFlags>(this, "UStruct.TagSubobjects", NewFlags); }
 };
 
+struct UScriptStruct : UStruct
+{
+
+};
+
 struct UFunction : UStruct
 {
 	unsigned int FunctionFlags;
