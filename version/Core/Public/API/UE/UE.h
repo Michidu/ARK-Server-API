@@ -185,7 +185,7 @@ struct TWeakObjectPtr
 		return Get();
 	}
 
-	FORCEINLINE bool operator==(const TWeakObjectPtr<T>& __that)
+	FORCEINLINE bool operator==(const TWeakObjectPtr<T>& __that) const
 	{
 		return this->ObjectIndex == __that.ObjectIndex
 			&& this->ObjectSerialNumber == __that.ObjectSerialNumber;
@@ -375,6 +375,11 @@ struct UStruct : UField
 	void FinishDestroy() { NativeCall<void>(this, "UStruct.FinishDestroy"); }
 	void SetSuperStruct(UStruct* NewSuperStruct) { NativeCall<void, UStruct*>(this, "UStruct.SetSuperStruct", NewSuperStruct); }
 	void TagSubobjects(EObjectFlags NewFlags) { NativeCall<void, EObjectFlags>(this, "UStruct.TagSubobjects", NewFlags); }
+};
+
+struct UScriptStruct : UStruct
+{
+
 };
 
 struct UFunction : UStruct
