@@ -1688,6 +1688,12 @@ struct APrimalRaft : APrimalDinoCharacter
 	static void StaticRegisterNativesAPrimalRaft() { NativeCall<void>(nullptr, "APrimalRaft.StaticRegisterNativesAPrimalRaft"); }
 };
 
+struct  APrimalStructureSeating : APrimalStructureItemContainer {};
+
+struct  APrimalStructureSeating_DriverSeat : APrimalStructureSeating
+{
+};
+
 struct APrimalStructureSail
 {
 	TArray<USceneComponent *> Sail_CanvasRootComponentField() { return *GetNativePointerField<TArray<USceneComponent *>*>(this, "APrimalStructureSail.Sail_CanvasRootComponent"); }

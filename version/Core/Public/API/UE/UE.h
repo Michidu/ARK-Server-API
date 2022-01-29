@@ -702,9 +702,43 @@ struct FAssetRegistry
 	//static void GetAssets(FAssetData ** First, const int Num, TDereferenceWrapper<FAssetData *, `FAssetRegistry::GetAssets'::`124'::FCompareFAssetData> * Predicate) { NativeCall<void, FAssetData **, const int, TDereferenceWrapper<FAssetData *, `FAssetRegistry::GetAssets'::`124'::FCompareFAssetData> *>(nullptr, "FAssetRegistry.GetAssets", First, Num, Predicate); }
 };
 
-struct UTexture2D
+enum EResourceSizeMode
+{
+	Exclusive = 0x0,
+	Inclusive = 0x1,
+	Open = 0x2,
+};
+
+struct FRenderResource
+{
+};
+
+struct FTexture : FRenderResource
+{
+};
+
+struct FTextureResource : FTexture
+{
+};
+
+
+struct UTexture : UObject
+{
+	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "UTexture.StaticClass"); }
+};
+
+struct UTexture2D: UTexture
 {
 	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "UTexture2D.StaticClass"); }
+	void GetMipData(int FirstMipToLoad, void** OutMipData) { return NativeCall<void, int, void**>(this, "UTexture2D.GetMipData", FirstMipToLoad, OutMipData); }
+	void UpdateResourceW() { return NativeCall<void>(this, "UTexture2D.UpdateResourceW"); }
+	FTextureResource* CreateResource() { return NativeCall<FTextureResource*>(this, "UTexture2D.CreateResource"); }
+	__int64 GetResourceSize(EResourceSizeMode type) { return NativeCall<__int64, EResourceSizeMode>(this, "UTexture2D.GetResourceSize", type); }
+	float GetSurfaceHeight() { return NativeCall<float>(this, "UTexture2D.GetSurfaceHeight"); }
+	int& SizeX_DEPRECATED() { return *GetNativePointerField<int*>(this, "UTexture2D.SizeX_DEPRECATED"); }
+	int& SizeY_DEPRECATED() { return *GetNativePointerField<int*>(this, "UTexture2D.SizeY_DEPRECATED"); }
+	
+
 };
 
 struct FNavigationFilterFlags
