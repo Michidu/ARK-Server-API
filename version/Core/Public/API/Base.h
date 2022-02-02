@@ -152,6 +152,7 @@ struct FWeaponData {};
 struct FAIRequestID {};
 struct UPrimalGameData;
 struct UEngine;
+struct UGameEngine;
 struct UPrimalGlobals;
 struct APrimalStructurePlacer;
 struct UActorChannel;
@@ -650,6 +651,7 @@ struct UPrimalBuffPersistentData;
 struct UCharacterMovementComponent;
 struct UPrimalGameData;
 struct UEngine;
+struct UGameEngine;
 struct UPrimalGlobals;
 struct APrimalStructurePlacer;
 
