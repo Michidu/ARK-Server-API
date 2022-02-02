@@ -518,6 +518,35 @@ struct UPrimalInventoryComponent : UActorComponent
 	void UpdateTribeGroupInventoryRank(char NewRank) { NativeCall<void, char>(this, "UPrimalInventoryComponent.UpdateTribeGroupInventoryRank", NewRank); }
 };
 
+struct  FUseItemAddCharacterStatusValue
+{
+	float BaseAmountToAdd;
+	unsigned __int32 bPercentOfMaxStatusValue : 1;
+	unsigned __int32 bPercentOfCurrentStatusValue : 1;
+	unsigned __int32 bUseItemQuality : 1;
+	unsigned __int32 bDontRequireLessThanMaxToUse : 1;
+	unsigned __int32 bAddOverTime : 1;
+	unsigned __int32 bAddOverTimeSpeedInSeconds : 1;
+	unsigned __int32 bContinueOnUnchangedValue : 1;
+	unsigned __int32 bSetValue : 1;
+	unsigned __int32 bSetAdditionalValue : 1;
+	unsigned __int32 bResetExistingModifierDescriptionIndex : 1;
+	unsigned __int32 bForceUseStatOnDinos : 1;
+	unsigned __int32 bMoveTowardsEquilibrium : 1;
+	unsigned __int32 bAddTowardsEquilibrium : 1;
+	unsigned __int32 bLimitToMaxValue : 1;
+	unsigned __int32 bConsumeDurability : 1;
+	float LimitExistingModifierDescriptionToMaxAmount;
+	float AddOverTimeSpeed;
+	float PercentAbsoluteMaxValue;
+	float PercentAbsoluteMinValue;
+	int StatusValueModifierDescriptionIndex;
+	float ItemQualityAddValueMultiplier;
+	TEnumAsByte<enum EPrimalCharacterStatusValue::Type> StatusValueType;
+	TEnumAsByte<enum EPrimalCharacterStatusValue::Type> StopAtValueNearMax;
+	TSubclassOf<UDamageType> ScaleValueByCharacterDamageType;
+};
+
 struct UPrimalItem : UObject
 {
 	float& MinBlueprintCraftsPercentageField() { return *GetNativePointerField<float*>(this, "UPrimalItem.MinBlueprintCraftsPercentage"); }
@@ -526,6 +555,7 @@ struct UPrimalItem : UObject
 	float& DinoAutoHealingThresholdPercentField() { return *GetNativePointerField<float*>(this, "UPrimalItem.DinoAutoHealingThresholdPercent"); }
 	float& DinoAutoHealingUseTimeIntervalField() { return *GetNativePointerField<float*>(this, "UPrimalItem.DinoAutoHealingUseTimeInterval"); }
 	float& ItemWeightMultiplierField() { return *GetNativePointerField<float*>(this, "UPrimalItem.ItemWeightMultiplier"); }
+	float& BaseItemWeightMultiplierField() { return *GetNativePointerField<float*>(this, "UPrimalItem.BaseItemWeightMultiplier"); }
 	int& ArkTributeVersionField() { return *GetNativePointerField<int*>(this, "UPrimalItem.ArkTributeVersion"); }
 	TArray<TSubclassOf<AActor>>& EquipRequiresExplicitOwnerClassesField() { return *GetNativePointerField<TArray<TSubclassOf<AActor>>*>(this, "UPrimalItem.EquipRequiresExplicitOwnerClasses"); }
 	TArray<FName>& EquipRequiresExplicitOwnerTagsField() { return *GetNativePointerField<TArray<FName>*>(this, "UPrimalItem.EquipRequiresExplicitOwnerTags"); }
@@ -583,6 +613,7 @@ struct UPrimalItem : UObject
 	TArray<TSubclassOf<AShooterWeapon>>& SkinWeaponTemplatesField() { return *GetNativePointerField<TArray<TSubclassOf<AShooterWeapon>>*>(this, "UPrimalItem.SkinWeaponTemplates"); }
 	TSubclassOf<AShooterWeapon>& AmmoSupportDragOntoWeaponItemWeaponTemplateField() { return *GetNativePointerField<TSubclassOf<AShooterWeapon>*>(this, "UPrimalItem.AmmoSupportDragOntoWeaponItemWeaponTemplate"); }
 	TArray<TSubclassOf<AShooterWeapon>>& AmmoSupportDragOntoWeaponItemWeaponTemplatesField() { return *GetNativePointerField<TArray<TSubclassOf<AShooterWeapon>>*>(this, "UPrimalItem.AmmoSupportDragOntoWeaponItemWeaponTemplates"); }
+	TArray<FUseItemAddCharacterStatusValue>& UseItemAddCharacterStatusValuesField() { return *GetNativePointerField<TArray<FUseItemAddCharacterStatusValue>*>(this, "UPrimalItem.UseItemAddCharacterStatusValues"); }
 	float& Ingredient_WeightIncreasePerQuantityField() { return *GetNativePointerField<float*>(this, "UPrimalItem.Ingredient_WeightIncreasePerQuantity"); }
 	float& Ingredient_FoodIncreasePerQuantityField() { return *GetNativePointerField<float*>(this, "UPrimalItem.Ingredient_FoodIncreasePerQuantity"); }
 	float& Ingredient_HealthIncreasePerQuantityField() { return *GetNativePointerField<float*>(this, "UPrimalItem.Ingredient_HealthIncreasePerQuantity"); }

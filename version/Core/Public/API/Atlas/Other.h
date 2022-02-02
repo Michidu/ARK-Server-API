@@ -785,6 +785,12 @@ struct FSupplyCrateItemSet
 	TSubclassOf<UPrimalSupplyCrateItemSet> ItemSetOverride;
 };
 
+struct UPrimalSupplyCrateItemSet : UObject
+{
+	FSupplyCrateItemSet& ItemSetField() { return *GetNativePointerField<FSupplyCrateItemSet*>(this, "UPrimalSupplyCrateItemSet.ItemSet"); }
+	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UPrimalSupplyCrateItemSet.GetPrivateStaticClass", Package); }
+	};
+
 struct UPrimalSupplyCrateItemSets : UObject
 {
 	TArray<FSupplyCrateItemSet>& ItemSetsField() { return *GetNativePointerField<TArray<FSupplyCrateItemSet>*>(this, "UPrimalSupplyCrateItemSets.ItemSets"); }

@@ -814,6 +814,11 @@ struct UEngine : UObject
 	static UClass* GetPrivateStaticClass(const wchar_t* Package) { return NativeCall<UClass*, const wchar_t*>(nullptr, "UEngine.GetPrivateStaticClass", Package); }
 };
 
+struct UGameEngine : UEngine
+{
+
+};
+
 struct UPrimalGlobals
 {
 	UPrimalGameData* PrimalGameDataField() { return *GetNativePointerField<UPrimalGameData * *>(this, "UPrimalGlobals.PrimalGameData"); }
