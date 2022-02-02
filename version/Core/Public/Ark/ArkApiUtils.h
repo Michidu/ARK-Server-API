@@ -349,7 +349,7 @@ namespace ArkApi
 			archetype.uClass = reinterpret_cast<UClass*>(object);
 
 			UPrimalItem* item = UPrimalItem::AddNewItem(archetype, nullptr, false, false, item_quality, false, amount,
-				force_blueprint, 0, false, nullptr, 0);
+				force_blueprint, 0, false, nullptr, 0, 0, 0);
 			if (!item)
 			{
 				return false;
