@@ -40,7 +40,6 @@ struct FName
 	}
 
 	bool operator==(const wchar_t* Other) { return NativeCall<bool, const wchar_t*>(this, "FName.operator==", Other); }
-	
 	int Compare(FName* Other) { return NativeCall<int, FName*>(this, "FName.Compare", Other); }
 	void ToString(FString* Out) { NativeCall<void, FString*>(this, "FName.ToString", Out); }
 	FString ToString() const
@@ -65,7 +64,6 @@ FORCEINLINE uint32 GetTypeHash(const FName& name)
 {
 	return FCrc::MemCrc32(&name, sizeof(FName));
 }
-
 
 struct FTransform
 {
@@ -174,7 +172,7 @@ struct TWeakObjectPtr
 	{
 		return NativeCall<T*, bool>(this, "FWeakObjectPtr.Get", bEvenIfPendingKill);
 	}
-	
+
 	FORCEINLINE operator bool()
 	{
 		return Get() != nullptr;
@@ -379,7 +377,6 @@ struct UStruct : UField
 
 struct UScriptStruct : UStruct
 {
-
 };
 
 struct UFunction : UStruct
@@ -753,13 +750,12 @@ struct FTextureResource : FTexture
 {
 };
 
-
 struct UTexture : UObject
 {
 	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "UTexture.StaticClass"); }
 };
 
-struct UTexture2D: UTexture
+struct UTexture2D : UTexture
 {
 	static UClass* StaticClass() { return NativeCall<UClass*>(nullptr, "UTexture2D.StaticClass"); }
 	void GetMipData(int FirstMipToLoad, void** OutMipData) { return NativeCall<void, int, void**>(this, "UTexture2D.GetMipData", FirstMipToLoad, OutMipData); }
@@ -769,8 +765,6 @@ struct UTexture2D: UTexture
 	float GetSurfaceHeight() { return NativeCall<float>(this, "UTexture2D.GetSurfaceHeight"); }
 	int& SizeX_DEPRECATED() { return *GetNativePointerField<int*>(this, "UTexture2D.SizeX_DEPRECATED"); }
 	int& SizeY_DEPRECATED() { return *GetNativePointerField<int*>(this, "UTexture2D.SizeY_DEPRECATED"); }
-	
-
 };
 
 struct FNavigationFilterFlags

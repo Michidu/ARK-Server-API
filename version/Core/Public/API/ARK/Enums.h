@@ -5787,15 +5787,6 @@ namespace EComponentSocketType
 	};
 }
 
-namespace EResourceSizeMode
-{
-	enum Type
-	{
-		Exclusive = 0x0,
-		Inclusive = 0x1,
-	};
-}
-
 enum class EAdManagerDelegate
 {
 	AMD_ClickedBanner = 0x0,
