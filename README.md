@@ -16,8 +16,8 @@
 
 ## API Installation Steps:
 
-- Download the resource by clicking the "Download" button.<br>
-- Unzip the contents of the ".ZIP" file into "ARK\ShooterGame\Binaries\Win64"<br>
+- Download the resource by clicking the "<b>Download</b>" button.<br>
+- Unzip the contents of the "<b>.ZIP</b>" file into "<b>ARK\ShooterGame\Binaries\Win64</b>"<br>
 - You can now start your ark survival evolved game server.<br><br>
 
 ## Plugin Installation Steps:
@@ -28,8 +28,8 @@
 
 ## Product Notes:
 
-- The API will generate log files in this location "ShooterGame/Win64/logs/ArkApi.log"<br>
-- The API has built-in crash logs, which can be located inside "ShooterGame/Saved/Logs/"<br>
-- The API has no connection or affiliation with "Wildcard Studios" directly, nor should it ever be considered that "Wildcard Studios" endorses the API. The API is an open-source tool the - community can use to run plugins for their video game servers, similar to how "Minecraft / Rust" and other video games have plugin systems where you can improve the overall health and gameplay of your community servers.<br>
-- Please note when installing plugins into the "ARK\ShooterGame\Binaries\Win64\ArkApi\Plugins" folder, you must make sure the ".DLL" plugin name matches the same "folder" name. Changing the folder name to something different or unique will prevent the ".DLL" from reading the folder and preventing it from starting.<br>
-- You may join our "discord server" if you have any questions/feedback or want general support regarding ArkServerAPI.
+- The API will generate log files in this location "<b>ShooterGame/Win64/logs/ArkApi.log</b>"<br>
+- The API has built-in crash logs, which can be located inside "<b>ShooterGame/Saved/Logs/</b>"<br>
+- The API has no connection or affiliation with "Wildcard Studios" directly, nor should it ever be considered that "<b>Wildcard Studios</b>" endorses the API. The API is an open-source tool the - community can use to run plugins for their video game servers, similar to how "<b>Minecraft / Rust</b>" and other video games have plugin systems where you can improve the overall health and gameplay of your community servers.<br>
+- Please note when installing plugins into the "<b>ARK\ShooterGame\Binaries\Win64\ArkApi\Plugins</b>" folder, you must make sure the "<b>.DLL</b>" plugin name matches the same "<b>folder</b>" name. Changing the folder name to something different or unique will prevent the "<b>.DLL</b>" from reading the folder and preventing it from starting.<br>
+- You may join our <a href="https://gameservershub.com/forums/pages/discord/">discord server</a> if you have any questions/feedback or want general support regarding ArkServerAPI.
