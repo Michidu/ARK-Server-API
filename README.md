@@ -1,14 +1,13 @@
 # ArkServerAPI Information:
 
-<a href="https://gameservershub.com/forums/resources/ark-server-api.12/">ArkServerAPI</a> is open source software you can install directly into windows versions of "Ark Survival Evolved" this software allows you to manage and create plugins to enhance your video game servers. <a href="https://gameservershub.com/forums/resources/ark-server-api.12/">ArkServerAPI</a> is currently run and supported by <a href="https://gameservershub.com/forums">GameServersHub</a>.<br><br>
+<a href="https://gameservershub.com/forums/resources/ark-server-api.12/">ArkServerAPI</a> is open source software you can install directly into windows versions of <a href="https://store.steampowered.com/app/346110/ARK_Survival_Evolved/">Ark Survival Evolved</a> this software allows you to manage and create plugins to enhance your video game servers. <a href="https://gameservershub.com/forums/resources/ark-server-api.12/">ArkServerAPI</a> is currently run and supported by <a href="https://gameservershub.com/forums">GameServersHub</a>.<br><br>
 
 <a href="https://gameservershub.com/forums">GameServersHub</a> intends to keep this project 100% open-sourced and accessible to the public; we fully intend to ensure that the project is maintained and supported for future releases of <a href="https://store.steampowered.com/app/346110/ARK_Survival_Evolved/">Ark Survival Evolved</a> game updates.<br>
 
 ## Direct Download:
 
-Website: https://gameservershub.com/forums/resources/ark-server-api.12/ <br><br>
-
-[Plugins](https://gameservershub.com/forums/resources/categories/ark-survival-evolved.2/)<br>
+<b>Website:</b> https://gameservershub.com/forums/resources/ark-server-api.12/<br>
+<b>Plugins:</b> https://gameservershub.com/forums/resources/categories/ark-survival-evolved.2/<br><br>
 
 ## Requirements:
 
