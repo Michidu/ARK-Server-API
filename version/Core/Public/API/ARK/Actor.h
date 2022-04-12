@@ -7087,7 +7087,7 @@ struct APrimalDinoCharacter : APrimalCharacter
 	void GetDinoData(FARKDinoData * OutDinoData) { NativeCall<void, FARKDinoData *>(this, "APrimalDinoCharacter.GetDinoData", OutDinoData); }
 	FString* GetColorSetInidcesAsString(FString* result) { return NativeCall<FString*, FString*>(this, "APrimalDinoCharacter.GetColorSetInidcesAsString", result); }
 	TArray<FName>* GetColorSetNamesAsArray(TArray<FName>* result) { return NativeCall<TArray<FName>*, TArray<FName>*>(this, "APrimalDinoCharacter.GetColorSetNamesAsArray", result); }
-	static APrimalDinoCharacter* SpawnFromDinoDataEx(FARKDinoData* InDinoData, UWorld* InWorld, FVector* AtLocation, FRotator* AtRotation, bool* dupedDino, int ForTeam, bool bGenerateNewDinoID, AShooterPlayerController* TamerController, bool beginPlay) { return NativeCall<APrimalDinoCharacter*, FARKDinoData*, UWorld*, FVector*, FRotator*, bool*, int, bool, AShooterPlayerController*, bool>(nullptr, "APrimalDinoCharacter.SpawnFromDinoData", InDinoData, InWorld, AtLocation, AtRotation, dupedDino, ForTeam, bGenerateNewDinoID, TamerController, beginPlay); }
+	static APrimalDinoCharacter* SpawnFromDinoDataEx(FARKDinoData* InDinoData, UWorld* InWorld, FVector* AtLocation, FRotator* AtRotation, bool* dupedDino, int ForTeam, bool bGenerateNewDinoID, AShooterPlayerController* TamerController, bool beginPlay) { return NativeCall<APrimalDinoCharacter*, FARKDinoData*, UWorld*, FVector*, FRotator*, bool*, int, bool, AShooterPlayerController*, bool>(nullptr, "APrimalDinoCharacter.SpawnFromDinoDataEx", InDinoData, InWorld, AtLocation, AtRotation, dupedDino, ForTeam, bGenerateNewDinoID, TamerController, beginPlay); }
 };
 
 struct AShooterWeapon : AActor
