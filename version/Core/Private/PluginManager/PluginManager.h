@@ -1,15 +1,14 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
-#include <memory>
+#include <windows.h>
 
-#include <API/ARK/Ark.h>
+#include "json.hpp"
 
-#include "../../../json.hpp"
-
-namespace ArkApi
+namespace API
 {
 	struct Plugin
 	{
@@ -79,8 +78,12 @@ namespace ArkApi
 		*/
 		bool IsPluginLoaded(const std::string& plugin_name);
 
+		/**
+		* \brief Checks for auto plugin reloads
+		*/
+		static void DetectPluginChangesTimerCallback();
 	private:
-		PluginManager();
+		PluginManager() = default;
 		~PluginManager() = default;
 
 		static nlohmann::json ReadPluginInfo(const std::string& plugin_name);
@@ -89,19 +92,14 @@ namespace ArkApi
 
 		void CheckPluginsDependencies();
 
-		static void DetectPluginChangesTimerCallback();
 		void DetectPluginChanges();
-
-		// Callbacks
-		static void LoadPluginCmd(APlayerController*, FString*, bool);
-		static void UnloadPluginCmd(APlayerController*, FString*, bool);
 
 		std::vector<std::shared_ptr<Plugin>> loaded_plugins_;
 
 		// Plugins auto reloading
-		bool enable_plugin_reload_;
-		int reload_sleep_seconds_;
-		bool save_world_before_reload_;
-		time_t next_reload_check_;
+		bool enable_plugin_reload_{false};
+		int reload_sleep_seconds_{5};
+		bool save_world_before_reload_{true};
+		time_t next_reload_check_{5};
 	};
-}
+} // namespace API

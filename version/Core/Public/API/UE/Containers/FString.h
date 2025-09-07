@@ -3,7 +3,7 @@
 #pragma once
 
 #include <string>
-
+#include <locale>
 #include <Logger/Logger.h>
 
 #include "TArray.h"
@@ -12,6 +12,7 @@
 #include "../Templates/UnrealTemplate.h"
 #include "../Math/UnrealMathUtility.h"
 #include "../Misc/CString.h"
+#include "../Crc.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244)
@@ -1614,10 +1615,9 @@ public:
 		if (!data)
 			return "";
 
-		const auto length = Len();
-		std::string str(length, '\0');
-		std::use_facet<std::ctype<wchar_t>>(std::locale()).narrow(data, data + length, '?', str.data());
-
+		int size_needed = WideCharToMultiByte(CP_UTF8, 0, &data[0], (int)Len(), NULL, 0, NULL, NULL);
+		std::string str(size_needed, 0);
+		WideCharToMultiByte(CP_UTF8, 0, &data[0], (int)Len(), &str[0], size_needed, NULL, NULL);
 		return str;
 	}
 
@@ -1639,8 +1639,15 @@ public:
 
 		return FString(formatted_msg.c_str());
 	}
+
+	
 };
 
+FORCEINLINE uint32 GetTypeHash(const FString& Thing)
+{
+	uint32 Hash = FCrc::MemCrc32(&Thing, sizeof(FString));
+	return Hash;
+}
 
 template<>
 struct TContainerTraits<FString> : public TContainerTraitsBase<FString>
@@ -2556,7 +2563,7 @@ inline int32 FString::ParseIntoArray(TArray<FString>& OutArray, const TCHAR* pch
 	OutArray.Reset();
 	const TCHAR *Start = Data.GetData();
 	const int32 DelimLength = FCString::Strlen(pchDelim);
-	if (Start && DelimLength)
+	if (Start && *Start != TEXT('\0') && DelimLength)
 	{
 		while (const TCHAR *At = FCString::Strstr(Start, pchDelim))
 		{

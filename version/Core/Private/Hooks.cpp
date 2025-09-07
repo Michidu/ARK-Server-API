@@ -6,8 +6,9 @@
 
 #include "../../MinHook.h"
 #include "Offsets.h"
+#include "IBaseApi.h"
 
-namespace ArkApi
+namespace API
 {
 	Hooks::Hooks()
 	{
@@ -16,12 +17,6 @@ namespace ArkApi
 			Log::GetLog()->critical("Can't initialize MinHook");
 			throw;
 		}
-	}
-
-	Hooks& Hooks::Get()
-	{
-		static Hooks instance;
-		return instance;
 	}
 
 	bool Hooks::SetHookInternal(const std::string& func_name, LPVOID detour, LPVOID* original)
@@ -36,8 +31,8 @@ namespace ArkApi
 		auto& hook_vector = all_hooks_[func_name];
 
 		LPVOID new_target = hook_vector.empty()
-			                          ? target
-			                          : hook_vector.back()->detour;
+			                    ? target
+			                    : hook_vector.back()->detour;
 
 		hook_vector.push_back(std::make_shared<Hook>(new_target, detour, original));
 
@@ -58,7 +53,7 @@ namespace ArkApi
 
 	bool Hooks::DisableHook(const std::string& func_name, LPVOID detour)
 	{
-		LPVOID target = Offsets::Get().GetAddress(func_name);
+		const LPVOID target = Offsets::Get().GetAddress(func_name);
 		if (target == nullptr)
 		{
 			Log::GetLog()->error("{} does not exist", func_name);
@@ -68,14 +63,14 @@ namespace ArkApi
 		auto& hook_vector = all_hooks_[func_name];
 
 		const auto iter = std::find_if(hook_vector.begin(), hook_vector.end(),
-		                         [detour](const std::shared_ptr<Hook>& hook) -> bool
-		                         {
-			                         return hook->detour == detour;
-		                         });
+		                               [detour](const std::shared_ptr<Hook>& hook) -> bool
+		                               {
+			                               return hook->detour == detour;
+		                               });
 
 		if (iter == hook_vector.end())
 		{
-			Log::GetLog()->warn("Failed to find hook");
+			Log::GetLog()->warn("Failed to find hook ({})", func_name);
 			return false;
 		}
 
@@ -103,10 +98,10 @@ namespace ArkApi
 
 		return true;
 	}
+} // namespace API
 
-	// Free function
-	IHooks& GetHooks()
-	{
-		return Hooks::Get();
-	}
+// Free function
+ArkApi::IHooks& ArkApi::GetHooks()
+{
+	return reinterpret_cast<IHooks&>(*API::game_api->GetHooks());
 }

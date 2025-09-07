@@ -1,14 +1,15 @@
 #pragma once
 
-#include <string>
 #include <API/Base.h>
+
+#include <string>
 
 namespace ArkApi::Tools
 {
 	ARK_API std::string GetCurrentDir();
 
-	ARK_API std::wstring ConvertToWideStr(const std::string& text);
-	ARK_API std::string ConvertToAnsiStr(const std::wstring& text);
+	[[deprecated]] ARK_API std::wstring ConvertToWideStr(const std::string& text);
+	[[deprecated]] ARK_API std::string ConvertToAnsiStr(const std::wstring& text);
 
 	/**
 	 * \brief Converts a wide Unicode string to an UTF8 string
@@ -28,5 +29,11 @@ namespace ArkApi::Tools
 	/**
 	* \brief Returns Current Running Api Version
 	*/
-	ARK_API std::string GetApiVer();
+	ARK_API float GetApiVersion();
+} // namespace Tools // namespace ArkApi
+
+// For back compatibility
+namespace API
+{
+	namespace Tools = ArkApi::Tools;
 }

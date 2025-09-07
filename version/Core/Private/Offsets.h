@@ -1,9 +1,10 @@
 #pragma once
 
-#include <unordered_map>
-#include "../Public/API/Base.h"
+#include <API/Base.h>
 
-namespace ArkApi
+#include <unordered_map>
+
+namespace API
 {
 	class Offsets
 	{
@@ -38,4 +39,4 @@ namespace ArkApi
 		std::unordered_map<std::string, intptr_t> offsets_dump_;
 		std::unordered_map<std::string, BitField> bitfields_dump_;
 	};
-}
+} // namespace API

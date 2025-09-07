@@ -1,28 +1,24 @@
 #include "Commands.h"
 
+#include "IBaseApi.h"
+
 namespace ArkApi
 {
-	Commands& Commands::Get()
-	{
-		static Commands instance;
-		return instance;
-	}
-
 	void Commands::AddChatCommand(const FString& command,
-	                              const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
-	                              callback)
+		const std::function<void(AShooterPlayerController*, FString*, EChatSendMode::Type)>&
+		callback)
 	{
 		chat_commands_.push_back(std::make_shared<ChatCommand>(command, callback));
 	}
 
 	void Commands::AddConsoleCommand(const FString& command,
-	                                 const std::function<void(APlayerController*, FString*, bool)>& callback)
+		const std::function<void(APlayerController*, FString*, bool)>& callback)
 	{
 		console_commands_.push_back(std::make_shared<ConsoleCommand>(command, callback));
 	}
 
 	void Commands::AddRconCommand(const FString& command,
-	                              const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback)
+		const std::function<void(RCONClientConnection*, RCONPacket*, UWorld*)>& callback)
 	{
 		rcon_commands_.push_back(std::make_shared<RconCommand>(command, callback));
 	}
@@ -38,8 +34,8 @@ namespace ArkApi
 	}
 
 	void Commands::AddOnChatMessageCallback(const FString& id,
-	                                        const std::function<bool(AShooterPlayerController*, FString*,
-	                                                                 EChatSendMode::Type, bool, bool)>& callback)
+		const std::function<bool(AShooterPlayerController*, FString*,
+			EChatSendMode::Type, bool, bool)>& callback)
 	{
 		on_chat_message_callbacks_.push_back(std::make_shared<OnChatMessageCallback>(id, callback));
 	}
@@ -75,7 +71,7 @@ namespace ArkApi
 	}
 
 	bool Commands::CheckChatCommands(AShooterPlayerController* shooter_player_controller, FString* message,
-	                                 EChatSendMode::Type mode)
+		EChatSendMode::Type mode)
 	{
 		return CheckCommands<ChatCommand>(*message, chat_commands_, shooter_player_controller, message, mode);
 	}
@@ -86,24 +82,33 @@ namespace ArkApi
 	}
 
 	bool Commands::CheckRconCommands(RCONClientConnection* rcon_client_connection, RCONPacket* rcon_packet,
-	                                 UWorld* u_world)
+		UWorld* u_world)
 	{
-		return CheckCommands<RconCommand>(rcon_packet->Body, rcon_commands_, rcon_client_connection, rcon_packet, u_world);
+		return CheckCommands<RconCommand>(rcon_packet->Body, rcon_commands_, rcon_client_connection, rcon_packet,
+			u_world);
 	}
 
 	void Commands::CheckOnTickCallbacks(float delta_seconds)
 	{
-		for (const auto& data : on_tick_callbacks_)
+		const auto tmp_tick_callbacks = on_tick_callbacks_;
+		for (const auto& data : tmp_tick_callbacks)
 		{
-			data->callback(delta_seconds);
+			if (data)
+			{
+				data->callback(delta_seconds);
+			}
 		}
 	}
 
 	void Commands::CheckOnTimerCallbacks()
 	{
-		for (const auto& data : on_timer_callbacks_)
+		const auto tmp_timer_callbacks = on_timer_callbacks_;
+		for (const auto& data : tmp_timer_callbacks)
 		{
-			data->callback();
+			if (data)
+			{
+				data->callback();
+			}
 		}
 	}
 
@@ -114,8 +119,10 @@ namespace ArkApi
 		bool spam_check,
 		bool command_executed)
 	{
+		const auto tmp_chat_callbacks = on_chat_message_callbacks_;
+
 		bool prevent_default = false;
-		for (const auto& data : on_chat_message_callbacks_)
+		for (const auto& data : tmp_chat_callbacks)
 		{
 			prevent_default |= data->callback(player_controller, message, mode, spam_check, command_executed);
 		}
@@ -126,6 +133,6 @@ namespace ArkApi
 	// Free function
 	ICommands& GetCommands()
 	{
-		return Commands::Get();
+		return *API::game_api->GetCommands();
 	}
-}
+} // namespace ArkApi

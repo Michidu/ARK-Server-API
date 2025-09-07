@@ -1,43 +1,85 @@
 #pragma once
 
-#include <API/ARK/Ark.h>
+#include <functional>
 
-namespace ArkApi
+#include "API/Base.h"
+
+namespace API
 {
-	struct Request
-	{
-		TSharedRef<IHttpRequest> request;
-		std::function<void(TSharedRef<IHttpRequest>, bool)> callback;
-		bool completed;
-		bool remove_manually;
-
-		bool operator==(const Request& rhs) const
-		{
-			return request == rhs.request;
-		}
-	};
-
 	class Requests
 	{
 	public:
 		ARK_API static Requests& Get();
+
+		Requests();
+		~Requests();
 
 		Requests(const Requests&) = delete;
 		Requests(Requests&&) = delete;
 		Requests& operator=(const Requests&) = delete;
 		Requests& operator=(Requests&&) = delete;
 
-		ARK_API bool CreateRequest(FString& url, FString& verb,
-		                           const std::function<void(TSharedRef<IHttpRequest>, bool)>& callback,
-		                           FString content = L"", bool auto_remove = true, FString header_value = "text/html");
-		ARK_API void RemoveRequest(const TSharedRef<IHttpRequest>& request);
+		/**
+		 * \brief Creates an async GET Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param included headers
+		 */
+		ARK_API bool CreateGetRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			std::vector<std::string> headers = {});
 
+		/**
+		 * \brief Creates an async POST Request with application/x-www-form-urlencoded content type that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param data to post
+		 * \param included headers
+		 */
+		ARK_API bool CreatePostRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			const std::string& post_data,
+			std::vector<std::string> headers = {});
+
+		/**
+		 * \brief Creates an async POST Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param data to post
+		 * \param content type
+		 * \param included headers
+		 */
+		ARK_API bool CreatePostRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			const std::string& post_data,
+			const std::string& content_type,
+			std::vector<std::string> headers = {});
+
+		/**
+		 * \brief Creates an async POST Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param data key
+		 * \param data value
+		 * \param included headers
+		 */
+		ARK_API bool CreatePostRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			const std::vector<std::string>& post_ids,
+			const std::vector<std::string>& post_data,
+			std::vector<std::string> headers = {});
+
+		/**
+		 * \brief Creates an async DELETE Request that runs in another thread but calls the callback from the main thread
+		 * \param request URL
+		 * \param the callback function, binds sucess(bool) and result(string), result is error code if request failed and the response otherwise
+		 * \param included headers
+		 */
+		ARK_API bool CreateDeleteRequest(const std::string& url,
+			const std::function<void(bool, std::string)>& callback,
+			std::vector<std::string> headers = {});
 	private:
-		ARK_API Requests();
-		ARK_API ~Requests();
-
-		ARK_API static void Update();
-
-		std::vector<Request> requests_;
+		class impl;
+		std::unique_ptr<impl> pimpl;
 	};
-}
+} // namespace API

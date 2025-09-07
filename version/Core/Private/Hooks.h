@@ -2,20 +2,22 @@
 
 #include <IHooks.h>
 
-#include <unordered_map>
 #include <memory>
+#include <unordered_map>
 
-namespace ArkApi
+namespace API
 {
-	class Hooks : public IHooks
+	class Hooks : public ArkApi::IHooks
 	{
 	public:
-		static Hooks& Get();
+		Hooks();
 
 		Hooks(const Hooks&) = delete;
 		Hooks(Hooks&&) = delete;
 		Hooks& operator=(const Hooks&) = delete;
 		Hooks& operator=(Hooks&&) = delete;
+
+		~Hooks() override = default;
 
 		bool SetHookInternal(const std::string& func_name, LPVOID detour, LPVOID* original) override;
 
@@ -36,9 +38,6 @@ namespace ArkApi
 			LPVOID* original;
 		};
 
-		Hooks();
-		~Hooks() = default;
-
 		std::unordered_map<std::string, std::vector<std::shared_ptr<Hook>>> all_hooks_;
 	};
-}
+} // namespace API

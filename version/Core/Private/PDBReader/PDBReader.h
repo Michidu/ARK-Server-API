@@ -1,40 +1,40 @@
 #pragma once
 
 #include <dia2.h>
+#include <unordered_set>
 
-#include <API/Base.h>
-#include "../../json.hpp"
+#include "json.hpp"
 
-namespace ArkApi
+#include <API/Fields.h>
+
+namespace API
 {
 	class PdbReader
 	{
 	public:
-		PdbReader()
-			: offsets_dump_(nullptr),
-			  bitfields_dump_(nullptr)
-		{
-		}
+		PdbReader() = default;
+		~PdbReader() = default;
 
-		void Read(std::wstring path, nlohmann::json plugin_pdb_config,
-		          std::unordered_map<std::string, intptr_t>* offsets_dump,
+		void Read(const std::wstring& path, std::unordered_map<std::string, intptr_t>* offsets_dump,
 		          std::unordered_map<std::string, BitField>* bitfields_dump);
 
 	private:
-		static void LoadDataFromPdb(const std::wstring&, IDiaDataSource**, IDiaSession**, IDiaSymbol**);
-		bool ReadConfig();
-		void DumpStructs(IDiaSymbol*);
-		void DumpFreeFunctions(IDiaSymbol*);
-		void DumpGlobalVariables(IDiaSymbol*);
-		void DumpType(IDiaSymbol*, const std::string&, int) const;
-		void DumpData(IDiaSymbol*, const std::string&) const;
-		static std::string GetName(IDiaSymbol*);
-		void DumpFunction(IDiaSymbol*, const std::string&) const;
-		static void Cleanup(IDiaSymbol*, IDiaSession*);
+		static void LoadDataFromPdb(const std::wstring& /*path*/, IDiaDataSource** /*dia_source*/, IDiaSession**
+		                            /*session*/, IDiaSymbol** /*symbol*/);
 
-		std::unordered_map<std::string, intptr_t>* offsets_dump_;
-		std::unordered_map<std::string, BitField>* bitfields_dump_;
+		void DumpStructs(IDiaSymbol* /*g_symbol*/);
+		void DumpFunctions(IDiaSymbol* /*g_symbol*/);
+		void DumpGlobalVariables(IDiaSymbol* /*g_symbol*/);
+		void DumpType(IDiaSymbol* /*symbol*/, const std::string& /*structure*/, int /*indent*/) const;
+		void DumpData(IDiaSymbol* /*symbol*/, const std::string& /*structure*/) const;
 
-		nlohmann::json config_;
+		static std::string GetSymbolNameString(IDiaSymbol* /*symbol*/);
+		static uint32_t GetSymbolId(IDiaSymbol* /*symbol*/);
+		static void Cleanup(IDiaSymbol* /*symbol*/, IDiaSession* /*session*/, IDiaDataSource* /*source*/);
+
+		std::unordered_map<std::string, intptr_t>* offsets_dump_{nullptr};
+		std::unordered_map<std::string, BitField>* bitfields_dump_{nullptr};
+
+		std::unordered_set<uint32_t> visited_;
 	};
-}
+} // namespace API

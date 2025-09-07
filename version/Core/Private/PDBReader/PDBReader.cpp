@@ -1,18 +1,47 @@
 #include "PDBReader.h"
 
 #include <fstream>
-#include <comdef.h>
 
 #include <Logger/Logger.h>
 #include <Tools.h>
 
-#include "../Private/Offsets.h"
 #include "../Private/Helpers.h"
+#include "../Private/Offsets.h"
 
-namespace ArkApi
+namespace API
 {
-	void PdbReader::Read(std::wstring path, nlohmann::json plugin_pdb_config,
-	                     std::unordered_map<std::string, intptr_t>* offsets_dump,
+	template <typename T>
+	class ScopedDiaType
+	{
+	public:
+		ScopedDiaType() : _sym(nullptr)
+		{
+		}
+
+		ScopedDiaType(T* sym) : _sym(sym)
+		{
+		}
+
+		~ScopedDiaType()
+		{
+			if (_sym != nullptr)
+				_sym->Release();
+		}
+
+		T** ref() { return &_sym; }
+		T** operator&() { return ref(); }
+		T* operator->() { return _sym; }
+		operator T*() { return _sym; }
+		void Attach(T* sym) { _sym = sym; }
+
+	private:
+		T* _sym;
+	};
+
+	template <typename T>
+	using CComPtr = ScopedDiaType<T>;
+
+	void PdbReader::Read(const std::wstring& path, std::unordered_map<std::string, intptr_t>* offsets_dump,
 	                     std::unordered_map<std::string, BitField>* bitfields_dump)
 	{
 		offsets_dump_ = offsets_dump;
@@ -36,29 +65,16 @@ namespace ArkApi
 			throw;
 		}
 
-		if (!ReadConfig())
-			throw std::runtime_error("Failed to open config.json");
-
-		try
-		{
-			MergePdbConfig(config_, plugin_pdb_config);
-		}
-		catch (const std::runtime_error&)
-		{
-			Log::GetLog()->error("Failed to merge api config with pdb configs");
-			throw;
-		}
-
 		Log::GetLog()->info("Dumping structures..");
 		DumpStructs(symbol);
 
 		Log::GetLog()->info("Dumping functions..");
-		DumpFreeFunctions(symbol);
+		DumpFunctions(symbol);
 
 		Log::GetLog()->info("Dumping globals..");
 		DumpGlobalVariables(symbol);
 
-		Cleanup(symbol, dia_session);
+		Cleanup(symbol, dia_session, data_source);
 
 		Log::GetLog()->info("Successfully read information from PDB\n");
 	}
@@ -68,22 +84,28 @@ namespace ArkApi
 	{
 		const std::string current_dir = Tools::GetCurrentDir();
 
-		std::string lib_path = current_dir + "\\msdia140.dll";
+		const std::string lib_path = current_dir + "\\msdia140.dll";
 		const HMODULE h_module = LoadLibraryA(lib_path.c_str());
-		if (!h_module)
+		if (h_module == nullptr)
+		{
 			throw std::runtime_error("Failed to load msdia140.dll. Error code - " + std::to_string(GetLastError()));
+		}
 
 		const auto dll_get_class_object = reinterpret_cast<HRESULT(WINAPI*)(REFCLSID, REFIID, LPVOID)>(GetProcAddress(
 			h_module, "DllGetClassObject"));
-		if (!dll_get_class_object)
+		if (dll_get_class_object == nullptr)
+		{
 			throw std::runtime_error("Can't find DllGetClassObject. Error code - " + std::to_string(GetLastError()));
+		}
 
 		IClassFactory* class_factory;
 		HRESULT hr = dll_get_class_object(__uuidof(DiaSource), IID_IClassFactory, &class_factory);
 		if (FAILED(hr))
+		{
 			throw std::runtime_error("DllGetClassObject has failed. Error code - " + std::to_string(GetLastError()));
+		}
 
-		hr = class_factory->CreateInstance(nullptr, __uuidof(IDiaDataSource), reinterpret_cast<void **>(dia_source));
+		hr = class_factory->CreateInstance(nullptr, __uuidof(IDiaDataSource), reinterpret_cast<void**>(dia_source));
 		if (FAILED(hr))
 		{
 			class_factory->Release();
@@ -118,131 +140,120 @@ namespace ArkApi
 		class_factory->Release();
 	}
 
-	bool PdbReader::ReadConfig()
-	{
-		const std::string config_path = Tools::GetCurrentDir() + "/config.json";
-		std::ifstream file{config_path};
-		if (!file.is_open())
-			return false;
-
-		file >> config_;
-		file.close();
-
-		return true;
-	}
-
 	void PdbReader::DumpStructs(IDiaSymbol* g_symbol)
 	{
-		IDiaSymbol* symbol;
+		IDiaSymbol* symbol = nullptr;
 
-		auto structs_array = config_["structures"].get<std::vector<std::string>>();
-
-		IDiaEnumSymbols* enum_symbols;
+		CComPtr<IDiaEnumSymbols> enum_symbols;
 		if (FAILED(g_symbol->findChildren(SymTagUDT, nullptr, nsNone, &enum_symbols)))
 			throw std::runtime_error("Failed to find symbols");
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
 		{
-			BSTR bstr_name;
-			if (symbol->get_name(&bstr_name) != S_OK)
+			CComPtr<IDiaSymbol> sym(symbol);
+
+			const uint32_t sym_id = GetSymbolId(symbol);
+			if (visited_.find(sym_id) != visited_.end())
+				return;
+
+			visited_.insert(sym_id);
+
+			std::string str_name = GetSymbolNameString(sym);
+			if (str_name.empty())
 				continue;
 
-			const _bstr_t bbstr_name(bstr_name);
-			const std::string str_name(bbstr_name);
-
-			// Check if structure name is in config
-			const auto find_res = find(structs_array.begin(), structs_array.end(), str_name);
-			if (find_res != structs_array.end())
-				DumpType(symbol, str_name, 0);
-
-			SysFreeString(bstr_name);
-
-			symbol->Release();
+			DumpType(sym, str_name, 0);
 		}
-
-		enum_symbols->Release();
 	}
 
-	void PdbReader::DumpFreeFunctions(IDiaSymbol* g_symbol)
+	void PdbReader::DumpFunctions(IDiaSymbol* g_symbol)
 	{
 		IDiaSymbol* symbol;
 
-		auto funcs_array = config_["functions"].get<std::vector<std::string>>();
-
-		IDiaEnumSymbols* enum_symbols;
+		CComPtr<IDiaEnumSymbols> enum_symbols;
 		if (FAILED(g_symbol->findChildren(SymTagFunction, nullptr, nsNone, &enum_symbols)))
 			throw std::runtime_error("Failed to find symbols");
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
 		{
-			BSTR bstr_name;
-			if (symbol->get_name(&bstr_name) != S_OK)
+			CComPtr<IDiaSymbol> sym(symbol);
+
+			DWORD sym_tag_type;
+			if (sym->get_symTag(&sym_tag_type) != S_OK)
 				continue;
 
-			const _bstr_t bbstr_name(bstr_name);
-			const std::string str_name(bbstr_name);
+			const uint32_t sym_id = GetSymbolId(sym);
+			if (visited_.find(sym_id) != visited_.end())
+				continue;
 
-			const auto find_res = find(funcs_array.begin(), funcs_array.end(), str_name);
-			if (find_res != funcs_array.end())
+			visited_.insert(sym_id);
+
+			std::string str_name = GetSymbolNameString(sym);
+			if (str_name.empty())
+				continue;
+
+			DWORD offset;
+			if (sym->get_addressOffset(&offset) != S_OK)
+				continue;
+
+			// Filter out some useless functions
+			if (str_name.find('`') != std::string::npos)
+				continue;
+
+			// Check if it's a member function
+			if (str_name.find(':') != std::string::npos)
 			{
-				DWORD offset;
-				if (symbol->get_addressOffset(&offset) != S_OK)
-					continue;
+				const std::string new_str = ReplaceString(str_name, "::", ".");
 
+				(*offsets_dump_)[new_str] = offset;
+			}
+			else
+			{
 				(*offsets_dump_)["Global." + str_name] = offset;
 			}
-
-			SysFreeString(bstr_name);
-
-			symbol->Release();
 		}
-
-		enum_symbols->Release();
 	}
 
 	void PdbReader::DumpGlobalVariables(IDiaSymbol* g_symbol)
 	{
 		IDiaSymbol* symbol;
 
-		auto globals_array = config_["globals"].get<std::vector<std::string>>();
-
-		IDiaEnumSymbols* enum_symbols;
+		CComPtr<IDiaEnumSymbols> enum_symbols;
 		if (FAILED(g_symbol->findChildren(SymTagData, nullptr, nsNone, &enum_symbols)))
 			throw std::runtime_error("Failed to find symbols");
 
 		ULONG celt = 0;
 		while (SUCCEEDED(enum_symbols->Next(1, &symbol, &celt)) && celt == 1)
 		{
-			BSTR bstr_name;
-			if (symbol->get_name(&bstr_name) != S_OK)
+			CComPtr<IDiaSymbol> sym(symbol);
+
+			const uint32_t sym_id = GetSymbolId(symbol);
+			if (visited_.find(sym_id) != visited_.end())
+				return;
+
+			visited_.insert(sym_id);
+
+			std::string str_name = GetSymbolNameString(sym);
+			if (str_name.empty())
 				continue;
 
-			const _bstr_t bbstr_name(bstr_name);
-			const std::string str_name(bbstr_name);
+			DWORD sym_tag;
+			if (sym->get_symTag(&sym_tag) != S_OK)
+				continue;
 
-			const auto find_res = find(globals_array.begin(), globals_array.end(), str_name);
-			if (find_res != globals_array.end())
-			{
-				DWORD offset;
-				if (symbol->get_addressOffset(&offset) != S_OK)
-					continue;
+			DWORD offset;
+			if (sym->get_addressOffset(&offset) != S_OK)
+				continue;
 
-				(*offsets_dump_)["Global." + str_name] = offset;
-			}
-
-			SysFreeString(bstr_name);
-
-			symbol->Release();
+			(*offsets_dump_)["Global." + str_name] = offset;
 		}
-
-		enum_symbols->Release();
 	}
 
 	void PdbReader::DumpType(IDiaSymbol* symbol, const std::string& structure, int indent) const
 	{
-		IDiaEnumSymbols* enum_children;
+		CComPtr<IDiaEnumSymbols> enum_children;
 		IDiaSymbol* symbol_child;
 		DWORD sym_tag;
 		ULONG celt = 0;
@@ -264,16 +275,11 @@ namespace ArkApi
 			{
 				while (SUCCEEDED(enum_children->Next(1, &symbol_child, &celt)) && celt == 1)
 				{
-					DumpType(symbol_child, structure, indent + 2);
+					CComPtr<IDiaSymbol> sym_child(symbol_child);
 
-					symbol_child->Release();
+					DumpType(sym_child, structure, indent + 2);
 				}
-
-				enum_children->Release();
 			}
-			break;
-		case SymTagFunction:
-			DumpFunction(symbol, structure);
 			break;
 		default:
 			break;
@@ -289,107 +295,82 @@ namespace ArkApi
 		if (loc_type != LocIsThisRel && loc_type != LocIsBitField)
 			return;
 
-		IDiaSymbol* type;
+		CComPtr<IDiaSymbol> type;
 		if (symbol->get_type(&type) != S_OK)
 			return;
 
-		if (type)
+		if (type == nullptr)
+			return;
+
+		LONG offset;
+		if (symbol->get_offset(&offset) != S_OK)
+			return;
+
+		std::string str_name = GetSymbolNameString(symbol);
+		if (str_name.empty())
+			return;
+
+		if (loc_type == LocIsBitField)
 		{
-			LONG offset;
-			if (symbol->get_offset(&offset) != S_OK)
+			DWORD bit_position;
+			if (symbol->get_bitPosition(&bit_position) != S_OK)
 				return;
 
-			BSTR bstr_name;
-			if (symbol->get_name(&bstr_name) != S_OK)
+			ULONGLONG num_bits;
+			if (symbol->get_length(&num_bits) != S_OK)
 				return;
 
-			const _bstr_t bbstr_name(bstr_name);
+			ULONGLONG length;
+			if (type->get_length(&length) != S_OK)
+				return;
 
-			if (loc_type == LocIsBitField)
-			{
-				DWORD bit_position;
-				if (symbol->get_bitPosition(&bit_position) != S_OK)
-					return;
+			const BitField bit_field{static_cast<DWORD64>(offset), bit_position, num_bits, length};
 
-				ULONGLONG num_bits;
-				if (symbol->get_length(&num_bits) != S_OK)
-					return;
-
-				ULONGLONG length;
-				if (type->get_length(&length) != S_OK)
-					return;
-
-				const BitField bit_field{static_cast<DWORD64>(offset), bit_position, num_bits, length};
-
-				(*bitfields_dump_)[structure + "." + std::string(bbstr_name)] = bit_field;
-			}
-			else if (loc_type == LocIsThisRel)
-			{
-				(*offsets_dump_)[structure + "." + std::string(bbstr_name)] = offset;
-			}
-
-			SysFreeString(bstr_name);
+			(*bitfields_dump_)[structure + "." + str_name] = bit_field;
 		}
-
-		type->Release();
-	}
-
-	std::string PdbReader::GetName(IDiaSymbol* symbol)
-	{
-		BSTR bstr_name;
-		BSTR bstr_und_name;
-		BSTR bstr_full_name;
-
-		if (symbol->get_name(&bstr_name) != S_OK)
-			return "";
-
-		if (symbol->get_undecoratedName(&bstr_und_name) == S_OK)
+		else if (loc_type == LocIsThisRel)
 		{
-			bstr_full_name = wcscmp(bstr_name, bstr_und_name) == 0 ? bstr_name : bstr_und_name;
+			(*offsets_dump_)[structure + "." + str_name] = offset;
 		}
-		else
+	}
+
+	std::string PdbReader::GetSymbolNameString(IDiaSymbol* symbol)
+	{
+		BSTR str = nullptr;
+
+		std::string name;
+
+		HRESULT hr = symbol->get_name(&str);
+		if (hr != S_OK)
+			return name;
+
+		if (str != nullptr)
 		{
-			bstr_full_name = bstr_name;
+			name = Tools::Utf8Encode(str);
 		}
 
-		const _bstr_t str_name(bstr_name);
+		SysFreeString(str);
 
-		SysFreeString(bstr_name);
-		SysFreeString(bstr_und_name);
-		SysFreeString(bstr_full_name);
-
-		return std::string(str_name);
+		return name;
 	}
 
-	void PdbReader::DumpFunction(IDiaSymbol* symbol, const std::string& structure) const
+	uint32_t PdbReader::GetSymbolId(IDiaSymbol* symbol)
 	{
-		DWORD offset;
-		if (symbol->get_addressOffset(&offset) != S_OK)
-			return;
+		DWORD id;
+		symbol->get_symIndexId(&id);
 
-		BSTR bstr_name;
-		if (symbol->get_name(&bstr_name) != S_OK)
-			return;
-
-		const _bstr_t bbstr_name(bstr_name);
-		std::string str_name(bbstr_name);
-
-		if (str_name.find("exec") != std::string::npos) // Filter out functions with "exec" prefix
-			return;
-
-		(*offsets_dump_)[std::string(structure) + "." + str_name] = offset;
-
-		SysFreeString(bstr_name);
+		return id;
 	}
 
-	void PdbReader::Cleanup(IDiaSymbol* symbol, IDiaSession* session)
+	void PdbReader::Cleanup(IDiaSymbol* symbol, IDiaSession* session, IDiaDataSource* source)
 	{
-		if (symbol)
+		if (symbol != nullptr)
 			symbol->Release();
-
-		if (session)
+		if (session != nullptr)
 			session->Release();
+		if (source != nullptr)
+			source->Release();
 
 		CoUninitialize();
 	}
-}
+} // namespace API

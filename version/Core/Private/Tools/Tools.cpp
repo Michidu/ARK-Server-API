@@ -1,5 +1,6 @@
 #include <Tools.h>
 
+#include "../IBaseApi.h"
 #include "../PluginManager/PluginManager.h"
 
 namespace ArkApi::Tools
@@ -14,7 +15,7 @@ namespace ArkApi::Tools
 		return std::string(buffer).substr(0, pos);
 	}
 
-	std::wstring ConvertToWideStr(const std::string& text)
+	[[deprecated]] std::wstring ConvertToWideStr(const std::string& text)
 	{
 		const size_t size = text.size();
 
@@ -30,7 +31,7 @@ namespace ArkApi::Tools
 		return wstr;
 	}
 
-	std::string ConvertToAnsiStr(const std::wstring& text)
+	[[deprecated]] std::string ConvertToAnsiStr(const std::wstring& text)
 	{
 		const size_t length = text.size();
 
@@ -42,39 +43,52 @@ namespace ArkApi::Tools
 
 	std::string Utf8Encode(const std::wstring& wstr)
 	{
+		std::string converted_string;
+
 		if (wstr.empty())
-			return std::string();
+			return converted_string;
 
-		const int size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), static_cast<int>(wstr.size()), nullptr, 0,
-		                                            nullptr, nullptr);
+		const auto size_needed = WideCharToMultiByte(CP_UTF8, 0, wstr.data(), static_cast<int>(wstr.size()), nullptr, 0,
+		                                             nullptr, nullptr);
+		if (size_needed > 0)
+		{
+			converted_string.resize(size_needed);
 
-		std::string str(size_needed, 0);
-		WideCharToMultiByte(CP_UTF8, 0, wstr.data(), static_cast<int>(wstr.size()), str.data(), size_needed, nullptr,
-		                    nullptr);
+			WideCharToMultiByte(CP_UTF8, 0, wstr.data(), static_cast<int>(wstr.size()), converted_string.data(),
+			                    size_needed, nullptr, nullptr);
+		}
 
-		return str;
+		return converted_string;
 	}
 
 	std::wstring Utf8Decode(const std::string& str)
 	{
+		std::wstring converted_string;
+
 		if (str.empty())
-			return std::wstring();
+		{
+			return converted_string;
+		}
 
-		const int size_needed = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), nullptr, 0);
+		const auto size_needed = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), nullptr, 0);
+		if (size_needed > 0)
+		{
+			converted_string.resize(size_needed);
 
-		std::wstring wstr(size_needed, 0);
-		MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), wstr.data(), size_needed);
+			MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), converted_string.data(),
+			                    size_needed);
+		}
 
-		return wstr;
+		return converted_string;
 	}
 
 	bool IsPluginLoaded(const std::string& plugin_name)
 	{
-		return PluginManager::Get().IsPluginLoaded(plugin_name);
+		return API::PluginManager::Get().IsPluginLoaded(plugin_name);
 	}
 
-	std::string GetApiVer()
+	float GetApiVersion()
 	{
-		return API_VERSION;
+		return API::game_api->GetVersion();
 	}
-}
+} // namespace Tools // namespace ArkApi

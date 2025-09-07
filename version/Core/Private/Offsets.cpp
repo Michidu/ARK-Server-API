@@ -1,7 +1,7 @@
 #include "Offsets.h"
 #include "Logger/Logger.h"
 
-namespace ArkApi
+namespace API
 {
 	Offsets::Offsets()
 	{
@@ -74,7 +74,7 @@ namespace ArkApi
 
 	BitField Offsets::GetBitFieldInternal(const void* base, const std::string& name)
 	{
-		auto bf = bitfields_dump_[name];
+		const auto bf = bitfields_dump_[name];
 		auto cf = BitField();
 		cf.bit_position = bf.bit_position;
 		cf.length = bf.length;
@@ -83,4 +83,4 @@ namespace ArkApi
 
 		return cf;
 	}
-}
+} // namespace API

@@ -36,4 +36,4 @@ namespace ArkApi
 	};
 
 	ARK_API IHooks& APIENTRY GetHooks();
-}
+} // namespace ArkApi
